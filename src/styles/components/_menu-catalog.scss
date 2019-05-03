@@ -1,0 +1,139 @@
+.backdrop-articles {
+    background-image: linear-gradient(to bottom, rgba(255, 192, 203, 0.25), rgba(255, 192, 203, 0));
+    background-image: linear-gradient(to top, rgba(255, 192, 203, 0.25), rgba(255, 192, 203, 0));
+}
+.backdrop-yesTheory {
+    background-image: linear-gradient(to bottom, rgba(255, 192, 203, 0.25), rgba(255, 192, 203, 0));
+    background-image: linear-gradient(to top, rgba(62, 178, 196, .3), rgba(255, 192, 203, 0));
+}
+.backdrop-red {
+    background-image: linear-gradient(to bottom, rgba(255, 192, 203, 0.25), rgba(255, 192, 203, 0));
+    background-image: linear-gradient(to top, rgb(224, 76, 91), rgba(255, 192, 203, 0));
+}
+.backdrop-blue {
+    background-image: linear-gradient(to bottom, rgba(255, 192, 203, 0.25), rgba(255, 192, 203, 0));
+    background-image: linear-gradient(to top, rgba(50, 149, 255, .5), rgba(255, 192, 203, 0));
+}
+
+.floor-articles {
+    background-image: linear-gradient(to bottom, #fff3f5, #000000);
+}
+.floor-yesTheory {
+    background-image: linear-gradient(to bottom, rgba(59, 177, 195, .5), #000000);
+}
+.floor-red {
+    background-image: linear-gradient(to bottom, rgba(224, 76, 90, .5), #000000);
+}
+.floor-blue {
+    background-image: linear-gradient(to bottom, rgba(29, 138, 255, .5), #000000);
+}
+
+.menu-catalog {
+    position: rlative;
+    &-item {
+        display: flex;
+        flex-direction: column;
+        // height: 500px;
+        position: relative;
+
+        &-number {
+             color: black;
+            position: absolute;
+            top: 30%;
+            font-size: 3rem;
+            font-family: forte;
+            right: 50%;
+            transform: translateX(50%);
+        }
+
+        &-photo {
+            height: 250px;
+            background-color: black;
+            position: relative;
+
+            &-experimental {
+                margin-top: 220px;
+                height: 30px;
+                -webkit-clip-path: polygon(25% 85%, 75% 85%, 100% 100%, 0% 100%);
+                clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%);
+                &-background {
+                    // background-color: gray;
+                    position: absolute;
+                    height: 250px;
+                    top: 28px;
+                    left: 15%;
+                    width: 70%;
+                    
+                } 
+            }
+
+            &-gallery {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                background-color: black;
+                margin-top: 1px;
+                padding-right: 2.5px;
+                padding-left: 2.5px;
+                justify-content: space-around;
+
+                .btn {
+                    // flex-grow: 0;
+                    background-color: white;
+                    border-radius: 0px;
+                    padding: .0rem .4rem;
+                    // margin-top: 0px;
+                    margin: .2rem 0px;
+                    &:hover {
+                        background-color: black;
+                        color: white;
+                    }
+                    &:active {
+                        background-color: pink;
+                        color: black;
+                    }
+                }
+                .active {
+                    color: white;
+                }
+                .btn-articles.active {
+                    background-color: pink;
+                }
+                .btn-yesTheory.active {
+                    background-color: #76c8d5;
+                }
+                .btn-red.active {
+                    background-color: #e25765;
+                }
+                .btn-blue.active {
+                    background-color: #3295ff;
+                }
+            }
+        }
+
+        button {
+            margin-top: 10px;
+        }
+
+        &-banner {
+            background-color: white;
+            position: absolute;
+            right: -15px;
+            top: -35px;
+            // color: rgb(0, 0, 0);
+            z-index: 99;
+            // border: solid 1px;
+            border-style: solid;
+            padding: 0rem .3rem;
+        }
+    }
+}
+
+.slick-slide {
+    margin-top: 10px;
+    // height: 400px;
+}
+
+.side-menu-recent .slick-container .slick-slide {
+    height: 400px;
+}
