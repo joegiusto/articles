@@ -76,9 +76,19 @@ const StorePage = () => (
 
 			<div className="slick-container">
 
-				<StoreItem title="Wolf Sweatshirt" color="articles"/>
+				<StoreItem 
+					title="Wolf Sweatshirt" 
+					banner="Original" 
+					color="articles"
+				/>
 
-				<StoreItem title="Sheep Sweatshirt" color="articles"/>
+				<StoreItem title="Sheep Sweatshirt" banner="Original" color="articles"/>
+
+				<StoreItem title="Partner Item" banner="Partner" color="info"/>
+
+				<StoreItem title="Partner Item" banner="Sponsered" color="danger"/>
+
+				<StoreItem title="Partner Item" banner="Sponsered" color="primary"/>
 
 				<div className="slick-slide d-inline-block" style={{width: '200px'}}>
 					<div className="menu-catalog-item">

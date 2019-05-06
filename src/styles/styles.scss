@@ -39,12 +39,15 @@ body {
   }
 }
 
-.badge-black {
-  color: #fff;
-  background-color: #000000;
+.badge-shape-poly {
   clip-path: polygon(7px 0%, 100% 0%, calc(100% - 7px) 100%, 0% 100%);
   padding-left: 10px;
   border-radius: 0rem;
+}
+
+.badge-black {
+  color: #fff;
+  background-color: #000000;
   &:hover {
     border-bottom: 1px solid #fff;
     cursor: pointer;
@@ -167,7 +170,22 @@ hr {
   font-weight: 400;
   // font-style: italic;
   // font-size: 4rem;
+  &-cookie {
+    animation: bounce 1s ease infinite alternate;
+    transform: scale(1);
+    margin-left: 350px;
+  }
 }
+
+@keyframes bounce {
+  0% {
+    transform: scale(.975);
+  }
+  100% {
+    transform: scale(1.025);
+  }
+}
+
 
 .dual-header {
   display: flex;
@@ -590,21 +608,6 @@ hr {
 
 }
 
-.slick-container {
-  // background-color: #000000;
-  width: 100%;
-  padding: 20px 30px;
-  .slick-slide {
-    margin-right: 5px;
-    margin-left: 5px;
-    padding: 20px;
-    padding-bottom: 5px;
-    background-color: white;
-    box-shadow: 0px 0px 5px 5px #eeeeee;
-    border-radius: 10px;
-  }
-}
-
 .side-pin {
   // padding-top: 50px;
   margin-top: 50px;
@@ -831,6 +834,43 @@ body[opened] {
 
 .section-showcase-mobile .slick-dotted.slick-slider {
   margin-bottom: 65px;
+}
+
+.wiggle {
+  display: table-cell;
+  animation: wiggle 3s ease infinite;
+  transform: rotate(0deg);
+}
+
+@keyframes wiggle {
+  0% {
+    transform: rotate(0deg);
+      // transform: rotateX(-20deg);
+  }
+  35%{
+    transform: rotate(0deg);
+      // transform: rotateX(0deg);
+  }
+  40%{
+    transform: rotate(20deg);
+      // transform: rotateX(0deg);
+  }
+  50%{
+    transform: rotate(-20deg);
+      // transform: rotateX(0deg);
+  }
+  60%{
+    transform: rotate(20deg);
+      // transform: rotateX(0deg);
+  }
+  65%{
+    transform: rotate(0deg);
+      // transform: rotateX(0deg);
+  }
+  100% {
+    transform: rotate(0deg);
+      // transform: rotateX(20deg);
+  }
 }
 
 .slick-showcase {
@@ -1180,6 +1220,41 @@ iframe {
     right: 20px;
     bottom: 10px;
     color: black;
+  }
+
+  .roadmap-expanded {
+    // display: none;
+    height: 0px;
+
+    // visibility: hidden;
+
+    opacity: 0;
+    z-index: -10;
+    // position: absolute;
+    // top: 0px;
+    // height: 425px;
+    // transition-duration: 200ms;
+    transition: opacity 1s ease;
+    pointer-events:none;
+    overflow: hidden;
+    
+    &.show {
+      opacity: 1;
+
+      display: block;
+      height: auto;
+
+      // visibility: visible;
+
+      margin-top: -405px;
+      margin-bottom: 45px;
+    }
+  }
+
+  .roadmap-bottom {
+    // position: absolute;
+    // bottom: 20px;
+    // left: 10px;
   }
 
 }
