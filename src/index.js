@@ -10,7 +10,11 @@ import { currentUser } from './actions/site';
 
 import * as serviceWorker from './serviceWorker';
 
+import $ from 'jquery';
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.css';
 import './styles/styles.scss';
+
 
 const store = configureStore();
 

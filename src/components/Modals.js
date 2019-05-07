@@ -3,7 +3,7 @@ import React from 'react';
 const Modals = () => (
   <div>
     {/* <!-- Mueller Modal --> */}
-    <div className="modal fade" id="muellerReports" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div className="modal fade" id="muellerReports" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered" role="document">
             <div className="modal-content">
             <div className="modal-header">
@@ -24,7 +24,7 @@ const Modals = () => (
     </div>
 
     {/* <!-- Sale Modal --> */}
-    <div className="modal fade" id="sale" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div className="modal fade" id="sale" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered" role="document">
             <div className="modal-content">
             <div className="modal-header">
@@ -45,7 +45,7 @@ const Modals = () => (
     </div>
 
     {/* <!-- Pin Modal --> */}
-    <div className="modal fade" id="pin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div className="modal fade" id="pin" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered" role="document">
             <div className="modal-content">
             <div className="modal-header">

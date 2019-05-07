@@ -46,7 +46,7 @@ const MenuRebuild = (props) => (
                     
                     <h3 data-toggle="modal" data-target="#muellerReports" className="top-headline mx-1 ml-5 d-inline"><span className="badge badge-black badge-shape-poly ">Mueller Report Highlights<span className="badge badge-danger badge-sub-red ml-2">!</span></span></h3>
                     <h3 data-toggle="modal" data-target="#sale" className="top-headline mx-1 d-inline"><span className="badge badge-black badge-shape-poly ">20% Sale<span className="badge badge-danger badge-sub-red ml-2">!</span></span></h3>
-                    <h3 data-toggle="modal" data-target="#cookie" className="top-headline top-headline-cookie d-inline"><span className="badge badge-danger badge-shape-poly ">Agree to Cookies?<span className="badge badge-success badge-sub-red ml-2"><i class="far fa-check-square mx-1"></i></span><span className="badge badge-warning badge-sub-red ml-1"><i class="far fa-times-circle mx-1"></i></span></span></h3>
+                    {/* <h3 data-toggle="modal" data-target="#cookie" className="top-headline top-headline-cookie d-inline"><span className="badge badge-danger badge-shape-poly ">Agree to Cookies?<span className="badge badge-success badge-sub-red ml-2"><i class="far fa-check-square mx-1"></i></span><span className="badge badge-warning badge-sub-red ml-1"><i class="far fa-times-circle mx-1"></i></span></span></h3> */}
                 </div>
                 <div className={'d-none d-lg-flex'}>
                     <h3 style ={{cursor: 'pointer'}} data-toggle="modal" data-target="#pin" className="top-headline mx-1 d-inline"><span className="badge badge-light"><i className="fas fa-map-pin"></i>Flint Water Cleanup<span className="badge badge-danger ml-2">1</span></span></h3>
