@@ -1,6 +1,10 @@
 import React, {useState} from 'react';
 
-export default function StoreItem(props) {
+import { connect } from 'react-redux';
+import { addExpense } from '../actions/expenses';
+import moment from 'moment';
+
+const StoreItem = (props) => {
 
   // constructor(props) {
   //   super(props);
@@ -26,6 +30,7 @@ export default function StoreItem(props) {
 
     const [slide, changeSlide] = useState(1);
     const [flipped, changeFlipped] = useState(false);
+    const [size, changeSize] = useState('S');
 
     return (
         <div className={"slick-slide d-inline-block " + (flipped ? 'flip' : '')} style={{width: '200px'}}>
@@ -50,18 +55,45 @@ export default function StoreItem(props) {
               </div>
 
               <div className="dual-header">
-                <select className={"mt-1 btn btn-outline-" + (props.color === "articles" ? 'dark' : props.color)}>
+                <select 
+                  className={"mt-1 btn btn-outline-" + (props.color === "articles" ? 'dark' : props.color)}
+                  onChange={(e) => {
+                    if (e.target.value === 'S') {
+                      changeSize('S');
+                    } else if (e.target.value === 'M') {
+                      changeSize('M')
+                    } else if (e.target.value === 'L') {
+                      changeSize('L')
+                    }
+                  }}
+                >
                   <option value="S">S</option>
                   <option value="M">M</option>
                   <option value="L">L</option>
                 </select>
-                <button style={{flexGrow: '1'}} className={"m-0 mt-1 ml-1 btn btn-outline-" + (props.color === "articles" ? 'dark' : props.color)}>Buy</button>
+
+                <button 
+                  style={{flexGrow: '1'}} 
+                  className={"m-0 mt-1 ml-1 btn btn-outline-" + (props.color === "articles" ? 'dark' : props.color)}
+                  onClick={(expense) => {
+                    props.dispatch(addExpense({
+                    description: props.title,
+                    note: props.catalogId,
+                    amount: 3000,
+                    size: size,
+                    createdAt: moment().unix()
+                    }));
+                    // props.history.push('/');
+                  }}
+                >
+                  Add
+                </button>
+
               </div>
               <p className="text-muted text-center subheading-font mb-0 pt-1 details-select" onClick={() => changeFlipped(!flipped)}>More details</p>
           </div>
           <div className="menu-catalog-item-back pt-5">
               <div className="hide-banner"></div>
-              <p>Back of card test</p>
               <p>Material: Cotton</p>
               <p>Cost of Manufacture: $21</p>
               <p>Sale Amount: $30</p>
@@ -70,4 +102,6 @@ export default function StoreItem(props) {
         </div>
     )
   }
+
+  export default connect()(StoreItem);
 // }

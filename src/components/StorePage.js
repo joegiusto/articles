@@ -48,17 +48,98 @@ const storeContent = [
 
 const StorePage = () => (
   <div className='container'>
+
+		<h1 className="text-center store-heading">Featured</h1>
+
     <div className='row'>
 
-    {storeContent.map((item, index) => (
-				<div className="col-3">
+			<div className="slick-container">
+
+				<StoreItem catalogId='1' title="Wolf Sweatshirt" banner="Original" color="articles" />
+
+				<StoreItem catalogId='2' title="Sheep Sweatshirt" banner="Original" color="articles"/>
+
+				<StoreItem catalogId='3' title="Partner Item" banner="Partner" color="info"/>
+
+				<StoreItem catalogId='4' title="Sponsered Item" banner="Sponsered" color="danger"/>
+
+				<StoreItem catalogId='5' title="Sponsered Item" banner="Sponsered" color="primary"/>
+
+			</div>
+			
+			<div className="col-12">
+				<div className="row text-center">
+
+					<div className="col-6 p-0">
+						<div className="store-panel store-panel-image-1">
+
+						</div>
+					</div>
+					<div className="col-6 p-0">
+						<div className="store-panel store-panel-1">
+
+						</div>
+					</div>
+
+					<div className="col-6 p-0">
+						<div className="store-panel store-panel-image-2">
+
+						</div>
+					</div>
+					<div className="col-6 p-0">
+						<div className="store-panel store-panel-2">
+
+						</div>
+					</div>
+
+					{/* <div className="col-4 p-0">
+						<div className="store-panel store-panel-image-3">
+
+						</div>
+					</div>
+					<div className="col-8 p-0">
+						<div className="store-panel store-panel-3">
+
+						</div>
+					</div> */}
+
+				</div>
+			</div>
+
+			<div className="col-12">
+				<h3 className="text-center mt-5 mb-4">Top Right Badge Key</h3>
+				<div className="shadow-sm mx-4 mb-4 px-4 py-2 rounded bg-white">
+					<h5>Original Item</h5>
+					<p>Items that are designed and sold by us</p>
+					<p className="text-muted">Income: Highest profit margin, with aim of being 60% of clothing sales</p>
+				</div>
+			</div>
+
+			<div className="col-12">
+				<div className="shadow-sm mx-4 mb-4 px-4 py-2 rounded bg-white">
+					<h5>Partner Item</h5>
+					<p>Items that we partnered up to sell and split a part of the profit with the company/creators</p>
+					<p className="text-muted">Income: Split Profit (Give or take 5%-30%) with partner, expected to be 30% of clothing sales</p>
+				</div>
+			</div>
+
+			<div className="col-12 ">
+				<div className="shadow-sm mx-4 mb-4 px-4 py-2 rounded bg-white">
+					<h5>Sponsered Item</h5>
+					<p>Items that we promote for a company/creator that we feel have a reasonable means to be on the platform. A small referral fee will be charged for the item.</p>
+					<p className="text-muted">Income: Lowest Profit, here we really just want to promote people that are also doing good and sending a message out. should not exceed 5%-10% of all clothing sales</p>
+				</div>
+			</div>
+
+			{storeContent.map((item, index) => (
+				<div className="col-3 my-5">
 
   					<div className="inner h-100 d-flex">
   						<h1>{item.title}</h1>
   						<p>{item.description}</p>
               <div className="d-flex pr-5" style={{justifyContent: 'space-between'}}>
-                <p>{item.cost}</p>
-                <p>{item.profit}</p>
+                <p>{item.cost ? item.cost : '$0.00'}</p>
+                <p>{item.profit ? item.profit : '$0.00'}</p>
               </div>
               <div>
               	<select className="btn btn-black">
@@ -72,96 +153,8 @@ const StorePage = () => (
 				</div>
       ))}
 
-      {/* <div style={{height: '100px'}} className="col-12"></div> */}
-
-			<div className="slick-container">
-
-				<StoreItem 
-					title="Wolf Sweatshirt" 
-					banner="Original" 
-					color="articles"
-				/>
-
-				<StoreItem title="Sheep Sweatshirt" banner="Original" color="articles"/>
-
-				<StoreItem title="Partner Item" banner="Partner" color="info"/>
-
-				<StoreItem title="Partner Item" banner="Sponsered" color="danger"/>
-
-				<StoreItem title="Partner Item" banner="Sponsered" color="primary"/>
-
-				<div className="slick-slide d-inline-block" style={{width: '200px'}}>
-					<div className="menu-catalog-item">
-						<div className="menu-catalog-item-banner btn-outline-info">
-								<span>Partner</span>
-						</div>
-						{/* <!-- <h5>...</h5> --> */}
-						<h5 className="mb-0 pb-1">...</h5>
-						{/* <!-- <div className="menu-catalog-item-photo"></div> --> */}
-						<div className="menu-catalog-item-photo-experimental-background backdrop-yesTheory"></div>
-						<div className="menu-catalog-item-photo-experimental floor-yesTheory"></div>
-						<div className="menu-catalog-item-photo-gallery">
-								<button className="btn btn-yesTheory active">1</button>
-								<button className="btn btn-yesTheory">2</button>
-								<button className="btn btn-yesTheory">3</button>
-								<button className="btn btn-yesTheory">4</button>
-								<button className="btn btn-yesTheory">5</button>
-								<button className="btn btn-yesTheory">6</button>
-						</div>
-						<button className="btn btn-outline-info">View</button>
-						<button className="btn btn-outline-info">+</button>
-					</div>
-				</div>
-
-				<div className="slick-slide d-inline-block" style={{width: '200px'}}>
-					<div className="menu-catalog-item">
-						<div className="menu-catalog-item-banner btn-outline-danger">
-								<span>Sponsered</span>
-						</div>
-						{/* <!-- <h5>...</h5> --> */}
-						<h5 className="mb-0 pb-1">...</h5>
-						{/* <!-- <div className="menu-catalog-item-photo"></div> --> */}
-						<div className="menu-catalog-item-photo-experimental-background backdrop-red"></div>
-						<div className="menu-catalog-item-photo-experimental floor-red"></div>
-						<div className="menu-catalog-item-photo-gallery">
-								<button className="btn btn-red active">1</button>
-								<button className="btn btn-red">2</button>
-								<button className="btn btn-red">3</button>
-								<button className="btn btn-red">4</button>
-								<button className="btn btn-red">5</button>
-								<button className="btn btn-red">6</button>
-						</div>
-						<button className="btn btn-outline-danger">View</button>
-						<button className="btn btn-outline-danger">+</button>
-					</div>
-				</div>
-
-				<div className="slick-slide d-inline-block" style={{width: '200px'}}>
-					<div className="menu-catalog-item">
-						<div className="menu-catalog-item-banner btn-outline-primary">
-								<span>Partner</span>
-						</div>
-						{/* <!-- <h5>...</h5> --> */}
-						<h5 className="mb-0 pb-1">...</h5>
-						{/* <!-- <div className="menu-catalog-item-photo"></div> --> */}
-						<div className="menu-catalog-item-photo-experimental-background backdrop-blue"></div>
-						<div className="menu-catalog-item-photo-experimental floor-blue"></div>
-						<div className="menu-catalog-item-photo-gallery">
-								<button className="btn btn-blue active">1</button>
-								<button className="btn btn-blue">2</button>
-								<button className="btn btn-blue">3</button>
-								<button className="btn btn-blue">4</button>
-								<button className="btn btn-blue">5</button>
-								<button className="btn btn-blue">6</button>
-						</div>
-						<button className="btn btn-outline-primary">View</button>
-						<button className="btn btn-outline-primary">+</button>
-					</div>
-				</div>
-
-			</div>
-
     </div>
+	
   </div>
 );
 

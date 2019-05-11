@@ -22,6 +22,10 @@ import Mesh from '../components/Mesh';
 import ArticlesMission from '../components/ArticlesMission';
 import NewsHomepage from '../components/NewsHomepage';
 
+import CheckoutPage from '../components/CheckoutPage';
+
+import AddItem from '../components/AddItem';
+
 import { connect } from 'react-redux';
 import { uiToggle, menuToggle, pinToggle } from '../actions/site';
 import { startLogout } from '../actions/auth'
@@ -55,10 +59,13 @@ const AppRouter = (props) => (
         uiNight={() => {
           props.dispatch(uiToggle('night'));
           document.getElementById("body").style.backgroundImage=darkBackCSS;
+          document.body.classList.add("night-mode");
         }}
         uiDay={() => {
           props.dispatch(uiToggle('day'));
           document.getElementById("body").style.backgroundImage=whiteBackCSS;
+          document.body.classList.remove("night-mode");
+          document.body.removeAttribute("class");
         }}
         onClickLogout={startLogout}
       />
@@ -92,6 +99,8 @@ const AppRouter = (props) => (
         <Route path="/news" component={NewsHomepage} />
         <Route path="/submissions" component={Submissions} />
         <Route path="/myths" component={Myths} />
+        <Route path="/add" component={AddItem} />
+        <Route path="/checkout" component={CheckoutPage} />
 
         <Route path="/employees" component={EmployeeList} exact={true}/>
         <Route path="/employees/:id" component={EmployeePage} />

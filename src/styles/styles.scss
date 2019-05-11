@@ -159,6 +159,47 @@ hr {
   font-size: 1.2rem;
 }
 
+.store-heading {
+  // font-family: agenda, sans-serif;
+  font-family: forte, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 3rem;
+}
+
+.store-panel {
+  height: 400px;
+  &-1 {
+    background: rgb(0,0,0);
+  }
+  &-2 {
+    background: rgb(255, 255, 255);
+    background-image: url(http://historygarage.com/wp-content/uploads/2016/04/Jeep-driving-up-stairs.jpg);
+    background-position: -11% 0%;
+    background-size: contain;
+    filter: blur(5px);
+  }
+  &-3 {
+    background: rgb(204,204,204);
+    background: linear-gradient(0deg, rgba(204,204,204,1) 0%, rgba(255,255,255,1) 100%);
+  }
+  &-image-1 {
+    background-image: url(https://mymodernmet.com/wp/wp-content/uploads/archive/w-leZAxreDXSpoMROe6G_1082098865.jpeg);
+    background-position: 50%;
+  }
+  &-image-2 {
+    background-image: url(http://historygarage.com/wp-content/uploads/2016/04/Jeep-driving-up-stairs.jpg);
+    background-position: 0%;
+    background-size: contain;
+  }
+  &-image-3 {
+    background-image: url(http://www4.images.coolspotters.com/wallpapers/119931/steve-o-mobile-wallpaper.jpg);
+    background-position: 0%;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+}
+
 .subheading-font {
   font-family: agenda, sans-serif;
   font-weight: 400;
@@ -1394,6 +1435,10 @@ iframe {
 .card-4:hover {
   filter: grayscale(0);
   // transform: scale(1.01);
+}
+
+.card-3:hover {
+  filter: grayscale(0) sepia(20%)!important;
 }
 
 .card-2 .card-body,

@@ -130,6 +130,7 @@
                 .btn {
                     // flex-grow: 0;
                     background-color: white;
+                    color: #000!important;
                     border-radius: 0px;
                     padding: .0rem .4rem;
                     // margin-top: 0px;
@@ -149,11 +150,11 @@
                 .btn-articles.active {
                     background-color: pink;
                 }
-                .btn-yesTheory.active {
-                    background-color: #76c8d5;
+                .btn-info.active {
+                    background-color: #17a2b8!important;
                 }
                 .btn-red.active {
-                    background-color: #e25765;
+                    background-color: #dc3545;
                 }
                 .btn-blue.active {
                     background-color: #3295ff;
