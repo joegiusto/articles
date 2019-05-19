@@ -13,6 +13,11 @@ export const currentUser = (user) => ({
   user
 });
 
+export const currentUserInfo = (userInfo) => ({
+  type: 'CURRENT_USER_INFO',
+  userInfo
+});
+
 export const pinToggle = () => ({
   type: 'PIN_TOGGLE',
 });

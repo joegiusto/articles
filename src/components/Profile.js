@@ -1,7 +1,10 @@
 import React from 'react';
 import ProfileForm from './ProfileForm';
+import { connect } from 'react-redux';
+// import database from '../firebase/firebase';
+// import { currentUser, currentUserInfo } from '../actions/site';
 
-const LoginPage = () => (
+const LoginPage = (props) => (
   <div className='container'>
     <div className="row justify-content-center">
 
@@ -13,17 +16,23 @@ const LoginPage = () => (
 
         <div className="row">
 
+          <div className="col-12">{props.site.currentUser.uid}</div>
+
+          {/* {props.expenses.map((expense) => {
+            return <CheckoutPageItem key={expense.id} {...expense} />;
+          })} */}
+
           <div className="col-6">
             <div className="profile-stat bg-white p-2 shadow-sm">
               <h5>Joined Date</h5>
-              <div className="subheading-font">May 5th, 2019</div>
+              <div className="subheading-font">{props.site.currentUser.createdAt}</div>
             </div>
           </div>
   
           <div className="col-6">
             <div className="profile-stat bg-white p-2 shadow-sm">
               <h5>Last Login</h5>
-              <div className="subheading-font">May 5th, 2019</div>
+              <div className="subheading-font">{props.site.currentUser.lastLoginAt}</div>
             </div>
           </div>
   
@@ -56,4 +65,10 @@ const LoginPage = () => (
   </div>
 );
 
-export default LoginPage;
+const mapStateToProps = (state) => {
+  return {
+    site: state.site
+  };
+};
+
+export default connect(mapStateToProps)(LoginPage);

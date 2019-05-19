@@ -1,23 +1,26 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import database from '../firebase/firebase';
+import { currentUserInfo } from '../actions/site';
 
 let str = "";
 
-export default class ProfileForm extends React.Component {
+class ProfileForm extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      firstName: 'Test',
-      lastName: '',
-      email: "example@provider.com",
-      party: "None",
-      newsletter: false
+      firstName: props.site.currentUserInfo.nameFirst,
+      lastName: props.site.currentUserInfo.nameLast,
+      email: props.site.currentUser.email,
+      party: props.site.currentUserInfo.party,
+      newsletter: props.site.currentUserInfo.newsletter
     }
 
     this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
     this.handleLastNameChange = this.handleLastNameChange.bind(this);
     this.handlePartyChange = this.handlePartyChange.bind(this);
-
+    // this.whoAgain = this.whoAgain.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -30,8 +33,25 @@ export default class ProfileForm extends React.Component {
   }
 
   handlePartyChange(party) {
-    // alert('Party change detected ' + party);
+
     this.setState({party: party});
+
+    // This is grabbing previous State?
+    database.ref('citizens/' + this.props.site.currentUser.uid).update({
+      party: this.state.party
+    }).then(() => {
+
+      console.log('Data is saved!');
+
+      // So I have to set again after it updates the first time
+      database.ref('citizens/' + this.props.site.currentUser.uid).update({
+        party: this.state.party
+      });
+
+    }).catch((e) => {
+      console.log('This failed.', e);
+    });
+
   }
 
   handleSubmit(event) {
@@ -40,15 +60,114 @@ export default class ProfileForm extends React.Component {
     str = JSON.stringify(this.state, null, 4); // (Optional) beautiful indented output.
     alert(str); // Displays output using window.alert()
 
+    this.props.dispatch(currentUserInfo({
+      nameFirst: this.state.firstName,
+      nameLast: this.state.lastName,
+      party: this.state.party,
+      newsletter: this.state.newsletter,
+      email: this.state.email
+    }));
+
+    // This is grabbing previous State?
+    database.ref('citizens/' + this.props.site.currentUser.uid).update({
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      party: this.state.party,
+      newsletter: this.state.newsletter,
+      email: this.state.email
+    }).then(() => {
+
+      console.log('Data is saved!');
+
+      // So I have to set again after it updates the first time
+      database.ref('citizens/' + this.props.site.currentUser.uid).update({
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        party: this.state.party,
+        newsletter: this.state.newsletter,
+        email: this.state.email
+      });
+
+    }).catch((e) => {
+      console.log('This failed.', e);
+    });
+
     event.preventDefault();
   }
 
+  handleWrite() {
+    database.ref('citizens/' + this.props.site.currentUser.uid).set({
+      
+      firstName: this.props.site.currentUser.displayName.split(' ')[0],
+      lastName: this.props.site.currentUser.displayName.split(' ')[1],
+      email: this.props.site.currentUser.email,
+      party: "None",
+    
+    }).then(() => {
+      console.log('Data is saved!');
+    }).catch((e) => {
+      console.log('This failed.', e);
+    });
+  }
+
+  componentDidMount() {
+    database.ref('citizens/' + this.props.site.currentUser.uid).on('value', (snapshot) => {
+      const val = snapshot.val();
+
+      // this.props.dispatch(currentUserInfo({
+      //   email: 
+      //   'val.email',
+      //   firstName: 
+      //   'val.firstName',
+      //   lastName: 
+      //   'val.lastName',
+      //   newsletter: 
+      //   'val.newsletter',
+      //   party: 
+      //   'val.party'
+      // }));
+
+      console.log('Val Value');
+      console.log(val);
+
+      if (typeof val === 'undefined') {
+        this.props.dispatch(currentUserInfo({
+          email: 
+          this.props.site.currentUser.email,
+          firstName: 
+          val.firstName,
+          lastName: 
+          val.lastName,
+          newsletter: 
+          val.newsletter,
+          party: 
+          val.party
+        }));
+  
+        this.setState({
+          firstName: val.firstName,
+          lastName: val.lastName,
+          newsletter: 'false',
+          party: val.party
+        });
+      } else {
+        console.log('User first time')
+      }
+
+      
+
+    });
+
+    
+
+  }
 
   render() {
     return (
       <form onSubmit={this.handleSubmit} className="profile-page shadow-sm bg-white p-2">
 
         <div className="row">
+        {this.whoAgain}
           
           <div className="col-4">
             <div src="..." alt="..." className="rounded-circle profile-photo shadow-sm d-block mx-auto"></div>
@@ -72,12 +191,12 @@ export default class ProfileForm extends React.Component {
 
         <div className="form-group">
           <label for="exampleInputEmail1">Email address</label>
-          <input type="email" disabled className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
+          <input type="email" disabled className="form-control" id="exampleInputEmail1" value={this.state.email} aria-describedby="emailHelp" placeholder="Enter email"/>
           <small id="emailHelp" className="form-text text-muted">We can't change emails at this time.</small>
         </div>
 
         <div className="form-group">
-          <div className="dual-header">
+          <div onClick={() => this.handlePartyChange("None")} className="dual-header">
             <label for="exampleInputPassword1">Password</label>
             <small id="passwordHelpInline" class="text-muted">
               Must be 8-20 characters long.
@@ -144,3 +263,17 @@ export default class ProfileForm extends React.Component {
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    site: state.site
+  };
+};
+
+// const mapDispatchToProps = (state) => {
+//   return {
+//     site: state.site
+//   };
+// };
+
+export default connect(mapStateToProps)(ProfileForm);

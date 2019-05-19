@@ -33,7 +33,7 @@ export default function ShowcaseCard(props) {
 //   });
 
   return (
-      <div className="col-12 col-lg-3">
+      <div className="col">
           <div className={"card card-showcase " + props.cardClass}>
 
               <div className="card-title-new">{props.title}</div>

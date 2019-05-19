@@ -19,12 +19,258 @@
 }
 
 .menu-spacer{
-  height: 50px;
+  height: 20px;
 }
 
 body {
   overflow-x: hidden;
   background-image: url(../images/crossword.png);
+}
+
+.page-title {
+  font-weight: bold;
+  font-size: 60px;
+  color: #111111 !important;
+}
+
+.page-subtitle {
+  margin-top: 10px;
+  margin-bottom: 40px;
+  font-style: italic;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+}
+
+.mission-page {
+  font-size: 1.1rem;
+  // font-size:30px;
+  .text-indent {
+    // margin-top: 1rem;
+    margin-left: 4rem;
+    padding-left: 1rem;
+    border-left: 1px solid #000;
+    background-color: rgba(0, 0, 0, .05);
+    &-title {
+      margin-top: .4rem;
+      margin-left: 4rem;
+      // padding-left: 1rem;
+      // border-left: 1px solid #000;
+      // background-color: rgba(0, 0, 0, .05);
+    }
+  }
+}
+
+.scroll-spy-item {
+  font-family: 'Forte';
+  position: relative;
+  font-size: 2rem;
+  list-style: none;
+  transition-duration: .5s;
+  a {
+    color: #111111 ;
+  }
+  &.is-current {
+    background-color: $accent-color;
+  }
+  &.is-past {
+    text-decoration: line-through;
+    a {
+      color: rgba(0, 0, 0, .5)!important;
+      text-decoration: line-through;
+    }
+  }
+}
+
+.employee-header {
+  width: 100%;
+  border: 2px solid #131313;
+  box-shadow: 5px 6px 0px #131313;
+  padding: 25px 0px 11px;
+  background: #fff;
+  margin: 30px auto 20px;
+  border-radius: 5px;
+  &-traits {
+    font-size: 1.2rem;
+    height: 100%;
+    &-title {
+      text-transform: lowercase;
+      color: #666666;
+      font-size: 0.7em;
+      font-weight: 800;
+      margin-bottom: 2px;
+    }
+    &-details {
+      color: #0a0a0a;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    }
+  }
+}
+
+.employee {
+  &-a {
+    color: black;
+    &:hover {
+      color: black;
+      text-decoration: none;
+    }
+  }
+  &-directory {
+    // height: 35px;
+    font-family: 'Forte';
+    position: relative;
+    font-size: 1.3rem;
+    & .active {
+      background-color: $accent-color;
+    }
+    span {
+      vertical-align: text-bottom;
+      line-height: 0px;
+      padding-right: 5px;
+      padding-left: 5px;
+      margin-right: 0px;
+      // vertical-align: text-bottom;
+      cursor: pointer;
+      transition-duration: .5s;
+      &:hover {
+        font-size: 2.5rem;
+      }
+    }
+    i {
+      // vertical-align: none;
+      vertical-align: unset;
+      transition-duration: .0s;
+      margin-right: 0px;
+    }
+  }
+  &-social {
+    visibility: hidden;
+    display: none;
+  }
+  &-image {
+    background-color: $accent-color;
+    border: 2px solid #131313;
+    height: 70px;
+    width: 70px;
+    // margin: 0px auto;
+    position: relative;
+    &-zoom {
+      position: absolute;
+      // bottom: 0px;
+      // right: 0px;
+      width: 100%;
+      height: 100%;
+      transition-duration: .1s;
+      &:hover {
+        background-color: rgba(107, 107, 107, 0.5);
+        cursor: pointer;
+        .employee-image-zoom-icon {
+          //Transform translateX and translateY do not work here
+          bottom: calc(50% - 15px);
+          right: calc(50% - 30px);
+          transform: scale(3);
+        }
+      }
+      &:active {
+        background-color: rgba(107, 107, 107, 0.8);
+        .employee-image-zoom-icon {
+          //Transform translateX and translateY do not work here
+          // bottom: calc(50% - 15px);
+          // right: calc(50% - 25px);
+          // transform: scale(2);
+          color: white;
+        }
+      }
+      &-icon {
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+        transform: translateX(50%), translateY(50%);
+        transition-duration: .5s;
+      }
+    }
+  }
+  &-name {
+    font-weight: bold;
+    font-size: 60px;
+    color: #111111 !important;
+  }
+  &-action-button {
+    cursor: pointer;
+    background-color: $accent-color;
+    box-shadow: 3px 4px 0px darken($accent-color, 100%);
+    font-size: 22px;
+    padding: 4px 8px;
+    vertical-align: 12px;
+    border-radius: 5px;
+    font-stretch: condensed;
+    font-weight: bold;
+    margin-top: 15px;
+  }
+  &-bio {
+    margin-top: 10px;
+    font-style: italic;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  }
+  &-social {
+    margin-top: 10px;
+    font-size: 1.7rem;
+    // text-align: center;
+    .fa-instagram, .fa-facebook, .mesh, .fa-github-square {
+      cursor: pointer;
+      color: #000!important;
+      // border-bottom: 2px solid #000;
+      padding-bottom: 2px;
+      position: relative;
+      &:after {
+        content: "";
+        position: absolute;
+        left: 0px;
+        bottom: -7px;
+        background-color: $accent-color;
+        border-top: 1px solid #000;
+        width: 25px;
+        height: 5px;
+
+        // -webkit-clip-path: polygon(50% 100%, 0 0, 100% 0);
+        // clip-path: polygon(50% 100%, 0 0, 100% 0);
+      }
+    }
+    .fa-instagram {
+      color: purple;
+    }
+    .fa-facebook {
+      color: #007bff;
+    }
+    .mesh {
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      color: orangered;
+      // font-size: 1.9rem;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .employee {
+    &-social {
+      visibility: visible;
+      display: block;
+      width: 170px;
+      margin: 0px auto;
+      
+    }
+    &-image {
+      height: 170px;
+      width: 170px;
+      margin: 0px auto;
+    }
+    &-header {
+      &-traits {
+        border-left: 1px solid #998a8a;
+        padding-left: 10px;
+        height: 100%;
+      }
+    }
+  }
 }
 
 .side-menu-bottom-spacer {
@@ -124,16 +370,41 @@ hr {
 }
 
 #shopping-card {
+  position: relative;
   margin-left: auto;
   padding: 2px 0.4rem;
   // padding-top: 1px;
   border-radius: 1px;
   height: 30px;
   border: 1px solid rgba(255, 255, 255, 0);
+  transition-duration: .5s;
+  &:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #000;
+    visibility: hidden;
+    -webkit-transform: scaleX(0);
+    transform: scaleX(0);
+    -webkit-transition: all 0.3s ease-in-out 0s;
+    transition: all 0.3s ease-in-out 0s;
+  }
   &:hover {
-    border: 1px solid #000;
-    cursor: pointer;
-    box-shadow: 0px 0px 5px -1px #000;
+    background-color: $accent-color;
+    color: black;
+    border-radius: 30px;
+    #menu-pill {
+      background-color: white;
+      color: #000000;
+    }
+    &:before {
+      // visibility: visible;
+      // -webkit-transform: scaleX(1);
+      // transform: scaleX(1);
+    }
   }
 }
 
@@ -168,7 +439,7 @@ hr {
 }
 
 .store-panel {
-  height: 400px;
+  height: 460px;
   &-1 {
     background: rgb(0,0,0);
   }
@@ -177,7 +448,7 @@ hr {
     background-image: url(http://historygarage.com/wp-content/uploads/2016/04/Jeep-driving-up-stairs.jpg);
     background-position: -11% 0%;
     background-size: contain;
-    filter: blur(5px);
+    // filter: blur(5px);
   }
   &-3 {
     background: rgb(204,204,204);
@@ -193,10 +464,43 @@ hr {
     background-size: contain;
   }
   &-image-3 {
-    background-image: url(http://www4.images.coolspotters.com/wallpapers/119931/steve-o-mobile-wallpaper.jpg);
+    background-image: url(https://media.licdn.com/dms/image/C511BAQEP_DE_g0A6kw/company-background_10000/0?e=2159024400&v=beta&t=nd7c8WoN6Ilj6ps-bxQ__Bb0iRd2G_GP9qN2kyyPQzM);
     background-position: 0%;
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
+    .logo-banner {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 1rem 0rem;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0px 0px 5px 2px #000;
+      z-index: 2;
+    }
+    .product-select {
+      position: absolute;
+      top: 20px;
+      left: 120px;
+      // height: 190px;
+      // width: 200px;
+      // border-radius: 10px;
+      box-shadow: 0px 0px 5px 2px #000;
+      z-index: 1;
+      text-align: left;
+      .btn-group-vertical {
+        // margin-left: 2rem;
+        height: 152px;
+        .btn {
+          padding-left: 2rem;
+          text-align: left;
+        }
+      }
+      .list-group-item {
+        padding: 0.40rem 5.25rem;
+        
+      }
+    }
   }
 }
 
@@ -685,6 +989,10 @@ hr {
   transform: translate3d(calc(100vw - 300px), 0, 0);
 }
 
+.slick-list {
+  overflow: visible;
+}
+
 .side-menu {
   // padding-top: 50px;
   margin-top: 50px;
@@ -700,7 +1008,7 @@ hr {
   // New
   width: 300px;
   max-width: 300px;
-  overflow-x: hidden;
+  // overflow-x: hidden;
   background-color: $menu-color;
   transition-duration: 200ms;
   transform: translate3d(-100%, 0, 0);
@@ -718,8 +1026,25 @@ hr {
   a {
     color: #000;
     p {
+      &:after {
+        content: "";
+        opacity: 0;
+        background-color: #000;
+        transition-duration: 0s;
+      }
       &:hover {
         background-color: $accent-color;
+        // transition-duration: 1s;
+        &:after {
+          transition-duration: .5s;
+          opacity: 1;
+          position: absolute;
+          right: 5px;
+          background-color: white;
+          border: 1px solid #000;
+          content: "...";
+          padding: 0px 1rem;
+        }
       }
     }
   }
@@ -1707,7 +2032,7 @@ footer {
 
 @media (min-width: 768px) {
   .menu-spacer{
-    height: 100px;
+    height: 70px;
   }
 }
 

@@ -7,7 +7,14 @@ const siteReducerDefaultState = {
   tos: 0,
   menuOpen: false,
   pinOpen: false,
-  currentUser: {}
+  currentUser: {},
+  currentUserInfo: {
+    nameFirst: '',
+    nameLast: '',
+    party: '',
+    newsletter: false,
+    email: ''
+  }
 };
 
 export default (state = siteReducerDefaultState, action) => {
@@ -27,6 +34,11 @@ export default (state = siteReducerDefaultState, action) => {
         ...state,
         currentUser: action.user
       };
+      case 'CURRENT_USER_INFO':
+        return {
+          ...state,
+          currentUserInfo: action.userInfo
+        };
     case 'PIN_TOGGLE':
       return {
         ...state,

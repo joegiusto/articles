@@ -31,6 +31,15 @@ const StoreItem = (props) => {
     const [slide, changeSlide] = useState(1);
     const [flipped, changeFlipped] = useState(false);
     const [size, changeSize] = useState('S');
+    const [added, changeAdded] = useState(false);
+    const [addedButtonDisabled, changeAddedButtonDisabled] = useState(false);
+
+    if (added === true) {
+      setTimeout(() => {
+        changeAdded(false)
+        changeAddedButtonDisabled(false)
+      }, 2500);
+  }
 
     return (
         <div className={"slick-slide d-inline-block " + (flipped ? 'flip' : '')} style={{width: '200px'}}>
@@ -76,28 +85,43 @@ const StoreItem = (props) => {
                   style={{flexGrow: '1'}} 
                   className={"m-0 mt-1 ml-1 btn btn-outline-" + (props.color === "articles" ? 'dark' : props.color)}
                   onClick={(expense) => {
+                    changeAdded(true)
+                    changeAddedButtonDisabled(true)
                     props.dispatch(addExpense({
                     description: props.title,
                     note: props.catalogId,
-                    amount: 3000,
+                    amount: props.price,
+                    // amount: 3000,
                     size: size,
                     createdAt: moment().unix()
                     }));
                     // props.history.push('/');
                   }}
+                  disabled={addedButtonDisabled}
                 >
                   Add
                 </button>
 
+                <div className={"added-notification mt-1" + (added === false ? ' not-added btn-outline-' : ' added btn-outline-') + (props.color === "articles" ? 'dark ' : props.color)}>
+                  <div className={"added-notification-background " + (added === false ? 'not-added' : ' added')}></div>
+                  Added
+                </div>
+
               </div>
-              <p className="text-muted text-center subheading-font mb-0 pt-1 details-select" onClick={() => changeFlipped(!flipped)}>More details</p>
+              <div className="spacer"></div>
+              <div className="footer"><p className="text-muted text-center subheading-font mb-0 pt-1" onClick={() => changeFlipped(!flipped)}>More details</p></div>
           </div>
-          <div className="menu-catalog-item-back pt-5">
+          <div className="menu-catalog-item-back pt-3">
               <div className="hide-banner"></div>
-              <p>Material: Cotton</p>
-              <p>Cost of Manufacture: $21</p>
-              <p>Sale Amount: $30</p>
-              <p className="text-muted text-center subheading-font mb-0 pt-1 details-select" onClick={() => changeFlipped(!flipped)}>Hide details</p>
+              <div>
+                <p>Material: Cotton</p>
+                <p>Manufacture Cost: $21</p>
+                <p className="mb-0">Sale Amount: $30</p>
+              </div>
+              <div className="spacer"></div>
+              <div className="footer">
+                <p className="text-muted text-center subheading-font mb-0 pt-1" onClick={() => changeFlipped(!flipped)}>Hide details</p>
+              </div>
           </div>
         </div>
     )

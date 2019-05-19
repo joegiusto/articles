@@ -45,7 +45,7 @@ const MenuRebuild = (props) => (
                 <div className={'d-none d-lg-flex'}>
                     
                     <h3 data-toggle="modal" data-target="#muellerReports" className="top-headline mx-1 ml-5 d-inline"><span className="badge badge-black badge-shape-poly ">Mueller Report Highlights<span className="badge badge-danger badge-sub-red ml-2">!</span></span></h3>
-                    <h3 data-toggle="modal" data-target="#sale" className="top-headline mx-1 d-inline"><span className="badge badge-black badge-shape-poly ">20% Sale<span className="badge badge-danger badge-sub-red ml-2">!</span></span></h3>
+                    <h3 data-toggle="modal" data-target="#sale" className="top-headline mx-1 d-inline"><span className="badge badge-black badge-shape-poly ">15% Sale<span className="badge badge-danger badge-sub-red ml-2">!</span></span></h3>
                     {/* <h3 data-toggle="modal" data-target="#cookie" className="top-headline top-headline-cookie d-inline"><span className="badge badge-danger badge-shape-poly ">Agree to Cookies?<span className="badge badge-success badge-sub-red ml-2"><i class="far fa-check-square mx-1"></i></span><span className="badge badge-warning badge-sub-red ml-1"><i class="far fa-times-circle mx-1"></i></span></span></h3> */}
                 </div>
                 <div className={'d-none d-lg-flex'}>
@@ -59,7 +59,7 @@ const MenuRebuild = (props) => (
         <section className={"side-pin " + (props.pinOpen ? "show" : "")}>
             <h3 className="subheading-font ml-3 mt-2">Site News</h3>
             <h3 className="top-headline"><span className="badge badge-black badge-shape-poly shadow-sm ml-3">Mueller Report Highlights<span className="badge badge-danger badge-sub-red ml-2">!</span><div className="d-inline"></div></span></h3>
-            <h3 className="top-headline"><span className="badge badge-black badge-shape-poly shadow-sm ml-3">20% Sale<span className="badge badge-danger badge-sub-red ml-2">!</span></span></h3>
+            <h3 className="top-headline"><span className="badge badge-black badge-shape-poly shadow-sm ml-3">15% Sale<span className="badge badge-danger badge-sub-red ml-2">!</span></span></h3>
             <hr/>
             <h3 className="subheading-font ml-3 mt-2">Your Pins</h3>
             <h3 className="top-headline w-100"><span className="badge badge-light mx-3 shadow-sm"><i className="fas fa-map-pin"></i>Flint Water Cleanup<span className="badge badge-danger ml-2">1</span></span></h3>

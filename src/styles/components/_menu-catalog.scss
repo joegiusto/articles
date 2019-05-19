@@ -33,45 +33,112 @@
     width: 100%;
     padding: 20px 30px;
     .slick-slide {
-      margin-right: 5px;
-      margin-left: 5px;
-      padding: 20px;
-      padding-bottom: 5px;
-      background-color: white;
-      box-shadow: 0px 0px 5px 5px #eeeeee;
-      perspective: 1000px;
-      border-radius: 10px;
-      margin-top: 10px;
-  
-      transition: transform 0.8s;
-      transform-style: preserve-3d;
+        height: unset;
+        margin-right: 5px;
+        margin-left: 5px;
+        padding: 20px;
+        padding-bottom: 5px;
+        background-color: white;
+        box-shadow: 0px 0px 5px 5px #eeeeee;
+        box-shadow: 0px 0px 5px 2px #00000075;
+        perspective: 1000px;
+        border-radius: 10px;
+        margin-top: 10px;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+        .added-notification {
+            position: absolute;
+            left: 0px;
+            display: inline-block;
+            font-weight: 400;
+            color: #343a40;
+            padding: 0.375rem 0rem;
+            text-align: center;
+            vertical-align: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+            background-color: transparent;
+            border-width: 1px;
+            border-style: solid;
+            backface-visibility: hidden;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: 0.25rem;
+            width: 100%;
+            // height: auto;
+            background-color: #ffffff;
+            overflow: hidden;
+            visibility: hidden;
+            opacity: 0;
+            transition: all .5s;
+            &-background {
+                position: absolute;
+                left: 0px;
+                top: 0px;
+                background-color: rgba($accent-color, .25);
+                width: 00%;
+                height: 38px;
+                transition-duration: 0s;
+                &.added {
+                    width: 100%;
+                    transition-duration: 2.5s;
+                }
+        }
+        &.added {
+            opacity: 1;
+            visibility: visible;
+            width: 100%;
+            padding: 0.375rem 0.75rem;
+            border-width: 1px;
+            border-style: solid;
+            // transition: all .5s, border 0s;
+        }
+        }
       &.flip {
         transform: rotateY(180deg);
       }
     }
 }
 
-.menu-catalog {
-    position: rlative;
-    .details-select {
-        &:hover {
-            text-decoration: underline;
+.menu-catalog-item, .menu-catalog-item-back {
+    display: flex;
+    flex-direction: column;
+    .spacer {
+        flex-grow: 1;
+    }
+    .footer {
+        padding-bottom: 0.3rem;
+        p.text-muted {
+            cursor: pointer;
+            &:hover {
+               color: rgb(63, 63, 63) !important;
+               text-shadow: 0 0 5px #fff, 0 1px black, 0px 0 #c7c7c7, 0 0px black;
+            }
         }
     }
+}
+
+.menu-catalog {
+    position: rlative;
     &-item {
         display: flex;
         flex-direction: column;
         position: relative;
         backface-visibility: hidden;
         &-back {
-           position: absolute;
-           top: 0px;
-           left: 0px;
-           width: 100%;
-           transform: rotateY(180deg);
-           // padding: 0px 1rem;
-           text-align: center;
-           backface-visibility: hidden;
+            position: absolute;
+            height: 100%;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            transform: rotateY(180deg);
+            padding: 0px 1rem;
+            text-align: left;
+            backface-visibility: hidden;
+            .footer {
+                margin-bottom: 0.35rem;
+            }
             .hide-banner {
                 position: absolute;
                 border-radius: 10px;

@@ -1,10 +1,34 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import scrollLogo from '../images/logo.png';
 import CheckoutPageItem from './CheckoutPageItem';
 
+ 
+const traveler = [
+  {  description: 'Senior', Amount: 50},
+  {  description: 'Senior', Amount: 50},
+  {  description: 'Adult', Amount: 75},
+  {  description: 'Child', Amount: 35},
+  {  description: 'Infant', Amount: 25 },
+];
+
+let discount = 0;
+  
+Array.prototype.sum = function (prop) {
+  var total = 0
+  for ( var i = 0, _len = this.length; i < _len; i++ ) {
+      total += this[i][prop]
+  }
+  return total
+}
+  
+
 const CheckoutPage = (props) => (
+
   <div className='container'>
+
+    {/* {(props.expenses.length === 0 ? props.history.push('/store') : '')} */}
 
     <div className="pb-5 text-center">
       <img className="d-block mx-auto mb-4" src={scrollLogo} alt="" height="72"/>
@@ -12,7 +36,7 @@ const CheckoutPage = (props) => (
       <p className="lead">Below is an example form built entirely with Bootstrap’s form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
     </div>
 
-    <div className="row mb-5">
+    <div className="row mb-5 justify-content-center">
       <div className="col-md-4 order-md-2 mb-4">
         <h4 className="d-flex justify-content-between align-items-center mb-3">
           <span className="text-muted">Your cart</span>
@@ -24,21 +48,29 @@ const CheckoutPage = (props) => (
             return <CheckoutPageItem key={expense.id} {...expense} />;
           })}
 
-          <li className="list-group-item d-flex justify-content-between bg-light">
+          <li className={"list-group-item justify-content-between lh-condensed " + (props.expenses.length === 0 ? 'd-flex' : 'd-none')}>
+            <div>
+              <h6 className="my-0">Cart Empty</h6>
+            </div>
+            <span className="text-muted"><Link to='store' ><button className="btn btn-black">Shop</button></Link></span>
+          </li>
+
+          <li className={"list-group-item justify-content-between bg-light " + (props.expenses.length === 0 ? 'd-none' : 'd-flex')}>
             <div className="text-success">
               <h6 className="my-0">Promo code</h6>
-              <small>20PERCENTSALE</small>
+              <small>15PERCENTSALE</small>
             </div>
-            <span className="text-success">-$...</span>
+            <span className="text-success">${discount = (props.expenses.sum("amount") * .15 / 100)}</span>
           </li>
 
           <li className="list-group-item d-flex justify-content-between">
             <span>Total (USD)</span>
-            <strong>$...</strong>
+
+            <strong>${(props.expenses.sum("amount") / 100 - discount)}</strong>
           </li>
         </ul>
 
-        <form className="card p-2">
+        <form className={"card p-2 " + (props.expenses.length === 0 ? 'd-none' : '')}>
           <div className="input-group">
             <input type="text" className="form-control" placeholder="Promo code"/>
             <div className="input-group-append">
@@ -46,8 +78,9 @@ const CheckoutPage = (props) => (
             </div>
           </div>
         </form>
+
       </div>
-      <div className="col-md-8 order-md-1">
+      <div className={"col-md-8 order-md-1 " + (props.expenses.length === 0 ? 'd-none' : '')}>
         <h4 className="mb-3">Billing address</h4>
         <form className="needs-validation" novalidate="">
           <div className="row">

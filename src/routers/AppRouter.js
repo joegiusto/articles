@@ -90,7 +90,9 @@ const AppRouter = (props) => (
         <Route path="/cart" component={ExpenseDashboardPage} />
         <Route path="/press" component={ArticlesPress} />
         <Route path="/login" component={LoginPage} />
+
         <Route path="/profile" component={Profile} />
+
         <Route path="/town-hall" component={TownHall} />
         <Route path="/profile" component={Profile} />
         <Route path="/mesh" component={Mesh} />
