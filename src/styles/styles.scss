@@ -18,8 +18,188 @@
   src: url('../font/FORTE.TTF') format('truetype');
 }
 
+body {
+  font-size: 16px;
+}
+
+.container {
+//  margin: 0px 1rem;
+}
+
+.table-head {
+  padding: 0.75rem;
+  background-color: #000000;
+  color: white;
+  font-weight: bold;
+}
+
+#div1 {
+  position: relative;
+  height: 300px;
+  width: calc(100% + 12px);
+  margin-left: -5px;
+  // border: 1px solid blue;
+  -webkit-perspective: 100px; /* Safari 4-8  */
+  perspective: 900px;
+  margin-top: -25px;
+  margin-bottom: -230px;
+  margin-left: 5px;
+  z-index: -1;
+}
+
+#div2, #div4 {
+  color: white;
+  box-shadow: 0px 0px 4px 1px #000000;
+  background-color: #000;
+  padding: 10px;
+  padding-top: 20px;
+  width: 300px;
+  position: absolute;
+  // right: 20px;
+  border: 4px solid $accent-color;
+  // border-style: inset;
+  // background-color: red;
+  // background: rgba(100,100,100,0.5); 
+  // -webkit-transform-style: preserve-3d; /* Safari 3-8  */  
+  // -webkit-transform: rotateX(45deg); /* Safari 3-8  */
+  // transform-style: preserve-3d;
+  // transform: rotateX(30deg);
+}
+
+#div1-top {
+  position: relative;
+  height: 300px;
+  width: 300px;
+  margin-left: 5px;
+  // border: 1px solid blue;
+  // -webkit-perspective: 100px; /* Safari 4-8  */
+  // perspective: 900px;
+  margin-bottom: -250px;
+  z-index: -1;
+}
+
+#div2-top {
+  color: white;
+  box-shadow: 0px 0px 4px 1px #000000;
+  background-color: #000;
+  padding: 10px;
+  width: 100%;
+
+  position: absolute;
+  border: 4px solid $accent-color;
+}
+
+.table-description {
+  background-color: #000;
+  padding: 10px;
+  width: 100%;
+  color: white;
+  box-shadow: 0px 0px 4px 1px #000000;
+  // position: absolute;
+  border: 4px solid $accent-color;
+  margin-top: 15px;
+}
+
+.articles-table {
+  table-layout: auto;
+  box-shadow: 5px 5px 4px -4.5px $accent-color, -5px -5px 7px -7.5px #000000, 0 0 .15rem 2px rgba(0, 0, 0, 0.075);
+  a {
+    color: $accent-color;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.7);
+  }
+}
+
+.table-articles-head {
+  background-color: #000;
+  color: white;
+}
+
+@media (min-width: 1200px) {
+  .container {
+      max-width: 1400px;
+  }
+}
+
 .menu-spacer{
   height: 20px;
+}
+
+.shadow-extension {
+  background-color: #131313;
+  color: white;
+  padding: 0.3rem 1rem 2.8rem;
+  margin-left: 10px;
+  margin-right: -10px;
+  border-radius: 5px;
+  margin-bottom: 1.5rem;
+}
+
+.btn-custom-white{
+  background-color: white;
+  border-radius: 0rem;
+  padding: .08rem 1.2rem;
+  width: 120px;
+  position: relative;
+  cursor: pointer;
+  // float: right;
+  border: 1px solid $accent-color;
+  font-weight: 100;
+  &:hover {
+    border: 1px solid #ffeeba;
+    font-weight: 400;
+    &:after {
+      background-color: #ffeeba;
+      border: 1px solid #ffeeba;
+    }
+  }
+  &:after {
+    transition-duration: 500ms;
+    content: '';
+    width: calc(100% + 2px);
+    background-color: $accent-color;
+    border: 1px solid $accent-color;
+    height: 5px;
+    position: absolute;
+    bottom: -7px;
+    left: -1px;
+    margin-right: 10px;
+  }
+}
+
+.page-title-wrapper {
+  background-color: #ffffff;
+  padding: 1rem;
+  border: 2px solid #131313;
+  box-shadow: 10px 10px 0px #131313;
+  // margin-bottom: 100px;
+  border-radius: 5px;
+}
+
+#see-through {
+  color: white;  /* Fallback: assume this color ON TOP of image */
+  background: url(https://drncvpyikhjv3.cloudfront.net/sites/109/2016/08/31100833/scenic-drives-featured.jpg) no-repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-position: 0% 60%;
+  margin: 6px 0px 10px 0px;
+  text-transform: uppercase;
+  position: relative;
+  &:before, &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    background-color: #00ffbd;
+    height: 20px;
+    background: url(https://drncvpyikhjv3.cloudfront.net/sites/109/2016/08/31100833/scenic-drives-featured.jpg) no-repeat;
+  }
+  &:before {
+    background-position: 0% 54%;
+  }
+  &:after {
+    bottom: -5px;
+    background-position: 0% 70%;
+  }
 }
 
 body {
@@ -1035,16 +1215,16 @@ hr {
       &:hover {
         background-color: $accent-color;
         // transition-duration: 1s;
-        &:after {
-          transition-duration: .5s;
-          opacity: 1;
-          position: absolute;
-          right: 5px;
-          background-color: white;
-          border: 1px solid #000;
-          content: "...";
-          padding: 0px 1rem;
-        }
+        // &:after {
+        //   transition-duration: .5s;
+        //   opacity: 1;
+        //   position: absolute;
+        //   right: 5px;
+        //   background-color: white;
+        //   border: 1px solid #000;
+        //   content: "...";
+        //   padding: 0px 1rem;
+        // }
       }
     }
   }
