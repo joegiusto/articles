@@ -1,22 +1,16 @@
 import React from 'react';
-import Scrollspy from 'react-scrollspy'
+import Scrollspy from 'react-scrollspy';
+import $ from 'jquery';
+import 'bootstrap';
 
-const ArticlesMission = () => (
+const Mission = () => (
   <div className='container-fluid'>
-    <div className='row'>
-      <div className='col-12' style={{paddingLeft: '50px'}}>
-        <div className='alert alert-warning'>
-          <h1>Mission Statement</h1>
-          <p>This will serve as an overview of our goals, visions and overall mission with what we are doing.</p>
-        </div>
-      </div>
-    </div>
     <Content/>
 
   </div>
 );
 
-export default ArticlesMission;
+export default Mission;
 
 const Content = () => (
   <div className='mission-page'>

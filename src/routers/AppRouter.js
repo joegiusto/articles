@@ -19,7 +19,7 @@ import Submissions from '../components/Submissions';
 import Issues from '../components/Issues';
 import Myths from '../components/Myths';
 import Mesh from '../components/Mesh';
-import ArticlesMission from '../components/ArticlesMission';
+import Mission from '../components/Mission';
 import NewsHomepage from '../components/NewsHomepage';
 
 import CheckoutPage from '../components/CheckoutPage';
@@ -97,7 +97,7 @@ const AppRouter = (props) => (
         <Route path="/profile" component={Profile} />
         <Route path="/mesh" component={Mesh} />
         <Route path="/issues" component={Issues} />
-        <Route path="/mission" component={ArticlesMission} />
+        <Route path="/mission" component={Mission} />
         <Route path="/news" component={NewsHomepage} />
         <Route path="/submissions" component={Submissions} />
         <Route path="/myths" component={Myths} />

@@ -18,6 +18,175 @@
   src: url('../font/FORTE.TTF') format('truetype');
 }
 
+.news-container {
+  max-width: none!important;
+}
+
+.the-recap {
+  width: 100%;
+  height: 250px;
+  background-color: #000;
+}
+
+.focused-news-panel, .side-news-panel {
+  background-color: white;
+  // height: 500px;
+  padding: 1rem 1rem 1rem 0rem; 
+}
+
+.subscribe-controls {
+  position: absolute;
+  font-size: 1.75rem;
+  // height: 25px;
+  right: 0px;
+  top: -10px;
+  // background-color: $accent-color;
+  color: $accent-color;
+  // -webkit-background-clip: text;
+  // -webkit-text-fill-color: transparent;
+  // transform: translateX(50%);
+  text-shadow: 2px 2px 2px rgba(255, 183, 183, 0.5);
+  &:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+  &:active {
+    color: transparent;
+    transform: scale(1.0);
+    -webkit-text-stroke: 3px $accent-color;
+    text-shadow: 0px 0px 2px rgb(255, 255, 255);
+  }
+}
+
+.state-icons {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  width: 100%;
+  height: 30px;
+  padding: 0rem 0rem 2.5rem 10px;
+  .state-icon {
+    margin-right: 5px;
+    height: 30px;
+    width: 30px;
+    background-color: white;
+    border-radius: 100%;
+    display: inline-block;
+    position: relative;
+    &::after {
+      content: ' ';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      height: 26.5px;
+      width: 26.5px;
+      transform: translateX(-50%) translateY(-50%);
+      background-color: white;
+      border: 1.5px solid black;
+      border-radius: 100%;
+    }
+  }
+}
+
+.counter {
+  border-top: 1px solid #fff;
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  .fas {
+    cursor: pointer;
+  }
+}
+
+.subscriped-story-card {
+  position: relative;
+  background-color: #000;
+  height: 100px;
+  color: white;
+  padding: .5rem;
+  box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.5);
+  &.empty {
+    padding-top: 1rem;
+    background-color: white;
+    color: black;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    font-size: 1.5rem;
+    text-align: center;
+    div {
+      font-size: 1rem;
+      font-weight: 100;
+      font-style: italic;
+    }
+  }
+  &-title {
+
+  }
+  &-subtitle {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.76)
+  }
+}
+
+.large-story-card {
+  height: 450px;
+  background-image: url('http://www.msnbc.com/sites/msnbc/files/styles/ratio--1_91-1--1200x630/public/mueller-3_0.jpg?itok=fRKOGJVz');
+  background-size: cover;
+  background-position: 0% 30%;
+  position: relative;
+  transition-duration: 1s;
+  background-size: 100%;
+  .title {
+    color: white;
+    -webkit-text-stroke: 3px black;
+    font-size: 5rem;
+    text-shadow: 0px 4px 1px #FFF;
+    font-weight: 700;
+    text-transform: uppercase;
+    position: absolute;
+    bottom: 0px;
+  }
+  &:hover {
+    filter: brightness(30%);
+    cursor: pointer;
+    background-size: 105%;
+    background-position: 0% 20%;
+  }
+}
+
+#manage-subscriptions {
+  cursor: pointer;
+  color: #6c757d;
+}
+
+.reports-left-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+.report-active-explanation {
+  color: white;
+  box-shadow: 0px 0px 4px 1px #000000;
+  background-color: #000;
+  border: 4px solid #ffb7b7;
+  padding: 1rem;
+}
+
+.reports-right-panel {
+  max-height: 90vh;
+  overflow: hidden scroll;
+  padding: 0rem .5rem;
+}
+
+.reports-right-panel div.full-table:last-child {
+  margin-top: -000px;
+}
+
 body {
   font-size: 16px;
 }
@@ -121,7 +290,7 @@ body {
 }
 
 .menu-spacer{
-  height: 20px;
+  height: 50px;
 }
 
 .shadow-extension {
@@ -175,19 +344,25 @@ body {
   border-radius: 5px;
 }
 
-#see-through {
+#transparency  {
   color: white;  /* Fallback: assume this color ON TOP of image */
   background: url(https://drncvpyikhjv3.cloudfront.net/sites/109/2016/08/31100833/scenic-drives-featured.jpg) no-repeat;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-position: 0% 60%;
-  margin: 6px 0px 10px 0px;
+  margin: 0px 0px 0px 0px;
   text-transform: uppercase;
   position: relative;
-  &:before, &:after {
+  line-height: 60px;
+  font-size: 58px;
+  // padding: 1.5rem;
+  &:before {
     content: "";
+    // padding-bottom: 30px;
+    top: -10px;
     display: block;
     position: absolute;
+    
     width: 100%;
     background-color: #00ffbd;
     height: 20px;
@@ -196,8 +371,28 @@ body {
   &:before {
     background-position: 0% 54%;
   }
+}
+
+#reports {
+  color: white;  /* Fallback: assume this color ON TOP of image */
+  background: url(https://drncvpyikhjv3.cloudfront.net/sites/109/2016/08/31100833/scenic-drives-featured.jpg) no-repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-position: 0% 68%;
+  margin: 0px 0px 0px 0px;
+  text-transform: uppercase;
+  position: relative;
+  line-height: 60px;
+  margin-top: -10px;
   &:after {
-    bottom: -5px;
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    background-color: #00ffbd;
+    height: 20px;
+    background: url(https://drncvpyikhjv3.cloudfront.net/sites/109/2016/08/31100833/scenic-drives-featured.jpg) no-repeat;
+    bottom: -20px;
     background-position: 0% 70%;
   }
 }
@@ -1914,7 +2109,7 @@ iframe {
     margin-bottom: 1.5rem;
   }
 
-  #flex-grow {
+  #flex-grow, .flex-grow {
     flex-grow: 1;
   }
 
@@ -2212,7 +2407,7 @@ footer {
 
 @media (min-width: 768px) {
   .menu-spacer{
-    height: 70px;
+    // height: 70px;
   }
 }
 
@@ -2225,6 +2420,12 @@ footer {
     padding: 5rem;
     padding-top: 0rem;
     padding-bottom: 0rem;
+    height: calc(95vh - 0px);
+    display: flex;
+    // justify-content: center;
+    width: 100vw;
+    align-items: center;
+    margin-top: 0px;
   }
 }
 

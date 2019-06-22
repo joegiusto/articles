@@ -9,7 +9,7 @@ import ArticlesHomePageSlick from './ArticlesHomePageSlick';
 const ArticlesHomePage = () => (
 <header>
     <section className="section-showcase">
-        <div className="row text-center">
+        <div style={{width: '100%'}} className="row text-center">
 
             <div className="col-lg-3">
                 <div className="card-showcase card-1">

@@ -190,7 +190,7 @@ export default function StorePage(props) {
 				</div>
 			</div>
 
-			{storeContent.map((item, index) => (
+			{/* {storeContent.map((item, index) => (
 				<div className="col-3 my-5">
 
   					<div className="inner h-100 d-flex">
@@ -210,7 +210,7 @@ export default function StorePage(props) {
               </div>
   					</div>
 				</div>
-      ))}
+      ))} */}
 
     </div>
 	
