@@ -2,14 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import moment from 'moment';
 import Clock from 'react-live-clock';
-import Modals from './Modals';
-// import $ from "jquery";
-// import '../js/slick.js';
-// import '../js/slick-config.js';
+// import Modals from './Modals';
 
 const MenuRebuild = (props) => (
     <div>
-        <Modals/>
+        {/* <Modals/> */}
         <section className={'side-menu-overlay' + (props.menuOpen || props.pinOpen ? " show" : "")} onClick={props.menuToggle}></section>
 
         <section className="menu-spacer"></section>
@@ -76,7 +73,7 @@ const MenuRebuild = (props) => (
                 </div> 
             
                 <div className="profile-welcome">
-                    <p id="nav-welcome" className="subheading-font m-0 py-0"><span id="">Hello, <Link id='nav-sign-in' to={props.currentUser.displayName ? '/profile' : '/login'}>{props.currentUser.displayName ? props.currentUser.displayName : 'Log In / Sign Up'}</Link></span></p>
+                    <p id="nav-welcome" className="subheading-font m-0 py-0"><span id="">Hello, <Link onClick={props.menuToggle} id='nav-sign-in' to={props.currentUser.displayName ? '/profile' : '/login'}>{props.currentUser.displayName ? props.currentUser.displayName : 'Log In / Sign Up'}</Link></span></p>
                     <p id="nav-member-message" className={'subheading-font m-0 py-0' + (props.currentUser.displayName ? '' : ' d-none')}><span>Member Since 2019</span></p>
                 </div>
             </div>
@@ -90,52 +87,52 @@ const MenuRebuild = (props) => (
             <hr/>
 
             {/* Main Links Section */}
-            <Link to="/"><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Home</p></Link>
-            <Link to="/mission"><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Mission</p></Link>
-            <Link to="/reports"><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Transparency Reports</p></Link>
+            <Link onClick={props.menuToggle} to="/"><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Home</p></Link>
+            <Link onClick={props.menuToggle} to="/mission"><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Mission</p></Link>
+            <Link onClick={props.menuToggle} to="/reports"><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Transparency Reports</p></Link>
 
             <hr/>
 
             {/* Clothing Section */}
-            <p className="heading-font no-link d-flex justify-content-between"><b>Articles Clothing</b><Link to="cart"><span className="ml-auto" id="shopping-card"><i className="fas fa-shopping-basket mr-0"></i><span id="menu-pill" className="badge badge-pill badge-dark">{props.cartTotal}</span></span></Link></p>
-            <Link to="store"><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Store</p></Link>
-            <Link to="submissions"><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Design Submissions</p></Link>
+            <p className="heading-font no-link d-flex justify-content-between"><b>Articles Clothing</b><Link onClick={props.menuToggle} to="cart"><span className="ml-auto" id="shopping-card"><i className="fas fa-shopping-basket mr-0"></i><span id="menu-pill" className="badge badge-pill badge-dark">{props.cartTotal}</span></span></Link></p>
+            <Link onClick={props.menuToggle} to="store"><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Store</p></Link>
+            <Link onClick={props.menuToggle} to="submissions"><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Design Submissions</p></Link>
 
             <hr/> 
 
             {/* New Section */}
             <p className="heading-font no-link"><b>Articles News</b></p>
-            <Link to='news'><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>News</p></Link>
-            <Link to='town-hall'><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Town Hall</p></Link>
+            <Link onClick={props.menuToggle} to='news'><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>News</p></Link>
+            <Link onClick={props.menuToggle} to='town-hall'><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Town Hall</p></Link>
 
             <hr/>
 
             {/* Party Section */}
             <p className="heading-font no-link"><b>Articles Party</b></p>
-            <Link to='issues'><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Issues</p></Link>
-            <Link to='myths'><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Myths</p></Link>
+            <Link onClick={props.menuToggle} to='issues'><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Issues</p></Link>
+            <Link onClick={props.menuToggle} to='myths'><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Myths</p></Link>
 
             <hr/>
 
             {/* Mesh Section */}
             <p className="heading-font no-link"><b>Mesh</b></p>
-            <Link to='mesh'><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>About</p></Link>
+            <Link onClick={props.menuToggle} to='mesh'><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>About</p></Link>
             <img src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-example-alternate_2x.png" height="45px" alt=""/>
             <img className="p-0" src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" height="40px" alt=""/>
 
             <div className={ props.currentUser.displayName ? 'side-menu-footer' : 'side-menu-footer d-none'}>
                 <hr/>
                 <p className="heading-font no-link"><b>Account</b></p>
-                <Link to='/settings'><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Settings</p></Link>
-                <Link id="nav-sign-out" to='/login'><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Sign Out</p></Link>
+                <Link onClick={props.menuToggle} to='/settings'><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Settings</p></Link>
+                <Link onClick={props.menuToggle} id="nav-sign-out" to='/login'><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Sign Out</p></Link>
             </div>
 
             <hr/>
             
             {/* Support Section */}
             <p className="heading-font no-link"><b>Support</b></p>
-            <Link to='help'><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Help Us</p></Link>
-            <Link to='press'><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Press</p></Link>
+            <Link onClick={props.menuToggle} to='help'><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Help Us</p></Link>
+            <Link onClick={props.menuToggle} to='press'><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Press</p></Link>
 
             {props.uiMode === 'day' ? <a id="night-mode" onClick={props.uiNight} href="JavaScript:void(0);"><p className="subheading-font"><i id="night-mode-icon" className="fas fa-toggle-off"></i>Night Mode</p></a> : <a id="night-mode" onClick={props.uiDay} href="JavaScript:void(0);"><p className="subheading-font"><i id="night-mode-icon" className="fas fa-toggle-on"></i>Night Mode</p></a>}
 

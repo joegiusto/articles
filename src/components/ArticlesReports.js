@@ -38,6 +38,8 @@ const Reports = (props) => (
 
           <div className="page-subtitle mt-5 mb-5">At Articles everthing that can be transparent will be from day one. Payrole, so our employees know they are getting paid similir to what other people in thier department and experecne level are being paid. Sales, sales help suport and drive our platform so it is only fair for those who but to not only see they are helping but to also see where thier money is going to. Donations, in and out we want complete transparency so our supporters know who we take in money from as well where it goes. Lastly expenses, elected representative spending $2,500 in a single day? That doesn't sound fair at all. Obviously we have operating cost but we are mindful to the etc...</div>
 
+          Account Balance: $50.00
+
           <div className="flex-grow report-active-explanation mb-5 d-none d-lg-block">Current table the user is looking at will be explained here. For example if the user is scrolled down to donations then some examples of donations will be given. This box is hidden on mobile phones.</div>
 
           <div className='text-muted'>*All content for demo purposes.</div>

@@ -71,18 +71,6 @@ const AppRouter = (props) => (
       />
       <Switch>
 
-        {/* {history.listen( ()=>  {
-        console.log('New Page' + history.length);
-        props.dispatch(menuToggle());
-        })} */}
-
-        {/* {history.listen((location, action) => {
-          console.log(
-            `The current URL is ${location.pathname}${location.search}${location.hash}`
-          );
-          console.log(`The last navigation action was ${action}`);
-        })} */}
-
         <Route path="/" component={ArticlesHomePage} exact={true} />
         <Route path="/reports" component={ArticlesReports}/>
         <Route path="/store" component={StorePage} />
