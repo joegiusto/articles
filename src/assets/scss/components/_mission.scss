@@ -1,0 +1,39 @@
+.mission-page {
+  font-size: 1.1rem;
+  // font-size:30px;
+  .text-indent {
+    // margin-top: 1rem;
+    margin-left: 4rem;
+    padding-left: 1rem;
+    border-left: 1px solid #000;
+    background-color: rgba(0, 0, 0, .05);
+    &-title {
+      margin-top: .4rem;
+      margin-left: 4rem;
+      // padding-left: 1rem;
+      // border-left: 1px solid #000;
+      // background-color: rgba(0, 0, 0, .05);
+    }
+  }
+}
+
+.scroll-spy-item {
+  font-family: 'Forte';
+  position: relative;
+  font-size: 2rem;
+  list-style: none;
+  transition-duration: .5s;
+  a {
+    color: #111111 ;
+  }
+  &.is-current {
+    background-color: $accent-color;
+  }
+  &.is-past {
+    text-decoration: line-through;
+    a {
+      color: rgba(0, 0, 0, .5)!important;
+      text-decoration: line-through;
+    }
+  }
+}

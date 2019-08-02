@@ -11,6 +11,17 @@
 # production
 /build
 
+# firebase functions for now
+/functions
+
+# Old Site
+/old
+
+# credentials
+.env
+.env.production
+.env.development
+
 # misc
 .DS_Store
 .env.local

@@ -1,0 +1,140 @@
+.news-container {
+  max-width: none!important;
+}
+
+.the-recap {
+  width: 100%;
+  height: 250px;
+  background-color: #000;
+}
+
+.focused-news-panel, .side-news-panel {
+  background-color: white;
+  // height: 500px;
+  padding: 1rem 1rem 1rem 0rem; 
+}
+
+.subscriped-story-card {
+  position: relative;
+  background-color: #000;
+  height: 100px;
+  color: white;
+  padding: .5rem;
+  box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.5);
+  &.empty {
+    padding-top: 1rem;
+    background-color: white;
+    color: black;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    font-size: 1.5rem;
+    text-align: center;
+    div {
+      font-size: 1rem;
+      font-weight: 100;
+      font-style: italic;
+    }
+  }
+  &-title {
+
+  }
+  &-subtitle {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.76)
+  }
+}
+
+.large-story-card {
+  height: 450px;
+  background-image: url('http://www.msnbc.com/sites/msnbc/files/styles/ratio--1_91-1--1200x630/public/mueller-3_0.jpg?itok=fRKOGJVz');
+  background-size: cover;
+  background-position: 0% 30%;
+  position: relative;
+  transition-duration: 1s;
+  background-size: 100%;
+  .title {
+    color: white;
+    -webkit-text-stroke: 3px black;
+    font-size: 5rem;
+    text-shadow: 0px 4px 1px #FFF;
+    font-weight: 700;
+    text-transform: uppercase;
+    position: absolute;
+    bottom: 0px;
+  }
+  &:hover {
+    filter: brightness(30%);
+    cursor: pointer;
+    background-size: 105%;
+    background-position: 0% 20%;
+  }
+}
+
+#manage-subscriptions {
+  cursor: pointer;
+  color: #6c757d;
+}
+
+.state-icons {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  width: 100%;
+  height: 30px;
+  padding: 0rem 0rem 2.5rem 10px;
+  .state-icon {
+    margin-right: 5px;
+    height: 30px;
+    width: 30px;
+    background-color: white;
+    border-radius: 100%;
+    display: inline-block;
+    position: relative;
+    &::after {
+      content: ' ';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      height: 26.5px;
+      width: 26.5px;
+      transform: translateX(-50%) translateY(-50%);
+      background-color: white;
+      border: 1.5px solid black;
+      border-radius: 100%;
+    }
+  }
+}
+
+.counter {
+  border-top: 1px solid #fff;
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  .fas {
+    cursor: pointer;
+  }
+}
+
+.subscribe-controls {
+  position: absolute;
+  font-size: 1.75rem;
+  // height: 25px;
+  right: 0px;
+  top: -10px;
+  // background-color: $accent-color;
+  color: $accent-color;
+  // -webkit-background-clip: text;
+  // -webkit-text-fill-color: transparent;
+  // transform: translateX(50%);
+  text-shadow: 2px 2px 2px rgba(255, 183, 183, 0.5);
+  &:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+  &:active {
+    color: transparent;
+    transform: scale(1.0);
+    -webkit-text-stroke: 3px $accent-color;
+    text-shadow: 0px 0px 2px rgb(255, 255, 255);
+  }
+}

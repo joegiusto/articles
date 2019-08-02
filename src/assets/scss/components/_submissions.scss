@@ -1,0 +1,165 @@
+.submission-item {
+  background-color: #000;
+  height: 325px;
+  position: relative;
+  .submission-user {
+    position: absolute;
+    top: -10px;
+    left: 0px;
+    background-color: #ffffff;
+    border: 2px solid rgb(0, 0, 0);
+    // border-radius: 10px;
+    border-top-left-radius: 10px;
+    padding: 0px .3rem;
+    // &-bar {
+    //   position: absolute;
+    //   top: 0px;
+    //   background-color: #000;
+    //   width: 100%;
+    //   height: 35px;
+    //   border: 5px solid #000;
+    // }
+  }
+  .submission-state {
+    color: #000;
+    border: 2px solid #000;
+    padding: 0px .4rem;
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    border-top-right-radius: 10px;
+    // border-top-left-radius: 10px;
+    top: -10px;
+    right: 0px;
+  }
+  .submission-photo {
+    // background-color: #ffffff;
+    position: absolute;
+    bottom: 25px;
+    border: 2px solid rgb(114, 114, 114);
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    // border-radius: 10px;
+    width: 100%;
+    height: 270px;
+    &.one {
+      background-image: url(../img/Store/founder-jacket.jpg);
+      background-size: 100%;
+    }
+    &.two {
+      background-image: url(../img/Store/cause-shirt.jpg);
+      background-size: 100%;
+    }
+    &.three {
+      background-image: url(../img/Store/sweater.jpg);
+      background-size: 100%;
+    }
+    &.four {
+      background-image: url(../img/Store/filler.jpg);
+      background-size: 100%;
+    }
+    &.five {
+      background-image: url(../img/Store/filler.jpg);
+      background-size: 100%;
+    }
+    &.six {
+      background-image: url(../img/Store/filler.jpg);
+      background-size: 100%;
+    }
+  }
+  & .vote {
+    color: $accent-color;
+    background-color: white;
+    border: 3px solid $accent-color;
+    border-radius: 100%;
+    position: absolute;
+    bottom: -15px;
+    text-align: center;
+    &.active {
+      background-color: $accent-color;
+      i {
+        color: white;
+      }
+    }
+    .far {
+      width: 25px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    &-up {
+      right: 35px;
+    }
+    &-down {
+      right: 0px;
+    }
+    &.count {
+      left: 0px;
+      width: 60px;
+      border-radius: 0px;
+    }
+  }
+}
+
+.submission-item-override {
+  height: 325px;
+
+  .submission-photo {
+    bottom: 42px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+  }
+  .vote {
+    bottom: 5px;
+    &.count {
+      left: 5px;
+      bottom: 7px;
+    }
+  }
+  .vote-up {
+    right: 45px;
+  }
+  .vote-down {
+    right: 5px;
+  }
+}
+
+.submission-side-panel {
+  height: 90vh;
+  border: solid 3px #000;
+  background-color: $accent-color
+}
+
+.steps{
+  position: relative;
+  padding-right: 3rem;
+  padding-left: 3rem;
+  .step {
+    margin-top: 1.5rem;
+    border: solid 5px #000;
+    padding: .5rem;
+    background-color: $base-color;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    p {
+      margin-bottom: 5px;
+    }
+    i {
+      font-size: 2.5rem;
+      margin: 1rem;
+    }
+    h5 {
+      text-decoration: underline;
+      font-weight: bold;
+    }
+    &.one {
+      // margin-top: 5rem;
+      transform: translateX(0%);
+    }
+    &.two {
+      transform: translateX(0%);
+    }
+    &.three {
+      transform: translateX(0%);
+    }
+  }
+}

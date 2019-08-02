@@ -1,0 +1,14 @@
+::selection {
+  background: $accent-color;
+  /* WebKit/Blink Browsers */
+}
+
+::-moz-selection {
+  background: $accent-color;
+  /* Gecko Browsers */
+}
+
+.btn:focus,.btn:active,button:focus,button:focus {
+  outline: none !important;
+  box-shadow: none;
+}

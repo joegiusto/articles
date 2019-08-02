@@ -1,0 +1,14 @@
+.badge-articles {
+  color: #000000;
+  border: solid 2px #fff;
+  background-color: #ffb7b7;
+}
+
+.badge-articles-light {
+  color: #212529;
+  background-color: #f9e4b7;
+  border-radius: 12.25rem;
+  .badge-danger {
+    border-radius: 1rem;
+  }
+}

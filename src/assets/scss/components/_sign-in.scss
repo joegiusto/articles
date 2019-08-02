@@ -1,0 +1,231 @@
+$distance: -10px;
+$decal-color: #b06565;
+
+.SignInPage {
+  // background-color: $base-color;
+  background-image: linear-gradient(0deg, rgba(255, 183, 183, 0.4) 0%, rgba(224, 212, 174, 0.2) 65%);
+  position: relative;
+  height: 100vh;
+  margin-top: -50px;
+  .spacer {
+    background-color: antiquewhite;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 275px;
+    height: 550px;
+    box-shadow: inset 0px 0px 2px 2px #000;
+    &::after {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      width: 110px;
+      height: 110px;
+      background-color: black;
+      clip-path: polygon(0 0, 0 100%, 5% 100%, 5% 5%, 100% 5%, 100% 0);
+      content: " ";
+    }
+    &::before {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      width: 110px;
+      height: 110px;
+      background-color: white;
+      clip-path: polygon(95% 95%, 0 95%, 0 100%, 100% 100%, 100% 0, 95% 0);
+      content: " ";
+    }
+    &-1 {
+      left: 5%;
+      top: 47.5%;
+      background-image: url('https://skn-wp-assets.s3-us-west-2.amazonaws.com/news/wp-content/uploads/2014/03/North-Bridge-Concord-Bridge-1775-RGB-1000.jpg');
+      background-position: 10% 10%;
+      width: 275px;
+      height: 500px;
+    }
+    &-2 {
+      left: 20%;
+      top: 47.5%;
+      background-image: url('https://skn-wp-assets.s3-us-west-2.amazonaws.com/news/wp-content/uploads/2014/03/North-Bridge-Concord-Bridge-1775-RGB-1000.jpg');
+      background-position: 50% 10%; 
+      width: 275px;
+      height: 500px;
+    }
+    &-3 {
+      left: 35%;
+      background-image: url('https://skn-wp-assets.s3-us-west-2.amazonaws.com/news/wp-content/uploads/2014/03/North-Bridge-Concord-Bridge-1775-RGB-1000.jpg');
+      background-position: 90% 10%; 
+      width: 275px;
+      height: 550px;
+    }
+  }
+  .spacer-credit {
+    position: absolute;
+    top: 74%;
+    left: 5%;
+    background-color: $base-color;
+    box-shadow: inset 0px 0px 2px 2px #000;
+    width: 565px;
+    height: 40px;
+    font-family: 'Courier New', Courier, monospace;
+    line-height: 40px;
+    padding-left: 10px;
+  }
+
+  .SignInContainer {
+    position: absolute;
+    top: 50%;
+    left: 70%;
+    transform: translateX(-50%) translateY(-50%);
+    background-color: white;
+    border: solid 2px #000;
+    width: 600px;
+    border-radius: 0px;
+    box-shadow: 5px 5px #000;
+    h1 {
+      // text-align: center;
+      margin-bottom: 2rem;
+      margin-top: 1rem;
+      font-weight: bold;
+      color: #000000;
+    }
+    form {
+      padding: 0px 1rem;
+    }
+    a {
+      color: $base-color;
+      text-shadow: 1px 1px #000000;
+    }
+    .btn-light {
+      border-bottom: 3px solid #ffc8c8;
+    }
+    input {
+      border-bottom: 3px solid #ffc8c8;
+      &:focus {
+        border-color: $base-color;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px $base-color;
+        outline: 0 none;
+      }
+    }
+    .border-decal {
+        height: 40px;
+        width: 180px;
+        background-color: #fce1e0;
+      &_top {
+        background-color: #000;
+        position: absolute;
+        top: -25px;
+        left: 0px;
+        height: 5px;
+        width: 400px;
+        span {
+          background-color: #000;
+          position: absolute;
+          top: 0px;
+          height: 3px;
+          width: 30px;
+          transform: rotate(45deg);
+          &.one {
+            left: 0px;
+          }
+          &.two {
+            left: 20px;
+          }
+          &.three {
+            left: 40px;
+          }
+        }
+      }
+      &_side {
+        background-color: #000;
+        position: absolute;
+        top: -20px;
+        left: -25px;
+        height: 100px;
+        width: 5px;
+        span {
+          background-color: #000;
+          position: absolute;
+          left: -8px;
+          height: 3px;
+          width: 20px;
+          // transform: rotate(45deg);
+          &.one {
+            bottom: 0px;
+          }
+          &.two {
+            bottom: 20px;
+          }
+          &.three {
+            bottom: 40px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.errorMessage {
+  background-color: $base-color;
+  padding: 1rem;
+  margin: 0.5rem 0rem;
+}
+
+.form-label-group {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.form-label-group > input,
+.form-label-group > label {
+  height: 3.125rem;
+  padding: .75rem;
+}
+
+.form-label-group > label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 0; /* Override default `<label>` margin */
+  line-height: 1.5;
+  color: #495057;
+  pointer-events: none;
+  cursor: text; /* Match the input under the label */
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  transition: all .1s ease-in-out;
+}
+
+.form-label-group input::-webkit-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input:-ms-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::-ms-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::-moz-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::placeholder {
+  color: transparent;
+}
+
+.form-label-group input:not(:placeholder-shown) {
+  padding-top: 1.25rem;
+  padding-bottom: .25rem;
+}
+
+.form-label-group input:not(:placeholder-shown) ~ label {
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+  font-size: 12px;
+  color: #777;
+}

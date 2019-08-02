@@ -1,0 +1,248 @@
+.reports-left-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+.report-active-explanation {
+  color: white;
+  box-shadow: 0px 0px 4px 1px #000000;
+  background-color: #000;
+  border: 4px solid #ffb7b7;
+  padding: 1rem;
+}
+
+.reports-right-panel {
+  max-height: 90vh;
+  overflow: hidden scroll;
+  padding: 0rem .5rem;
+}
+
+.reports-right-panel div.full-table:last-child {
+  margin-top: -000px;
+}
+
+#div1 {
+  position: relative;
+  height: 300px;
+  width: calc(100% + 12px);
+  margin-left: -5px;
+  // border: 1px solid blue;
+  -webkit-perspective: 100px; /* Safari 4-8  */
+  perspective: 900px;
+  margin-top: -25px;
+  margin-bottom: -230px;
+  margin-left: 5px;
+  z-index: -1;
+}
+
+#div2, #div4 {
+  color: white;
+  box-shadow: 0px 0px 4px 1px #000000;
+  background-color: #000;
+  padding: 10px;
+  padding-top: 20px;
+  width: 300px;
+  position: absolute;
+  // right: 20px;
+  border: 4px solid $accent-color;
+  // border-style: inset;
+  // background-color: red;
+  // background: rgba(100,100,100,0.5); 
+  // -webkit-transform-style: preserve-3d; /* Safari 3-8  */  
+  // -webkit-transform: rotateX(45deg); /* Safari 3-8  */
+  // transform-style: preserve-3d;
+  // transform: rotateX(30deg);
+}
+
+#div1-top {
+  position: relative;
+  height: 300px;
+  width: 300px;
+  margin-left: 5px;
+  // border: 1px solid blue;
+  // -webkit-perspective: 100px; /* Safari 4-8  */
+  // perspective: 900px;
+  margin-bottom: -250px;
+  z-index: -1;
+}
+
+#div2-top {
+  color: white;
+  box-shadow: 0px 0px 4px 1px #000000;
+  background-color: #000;
+  padding: 10px;
+  width: 100%;
+
+  position: absolute;
+  border: 4px solid $accent-color;
+}
+
+.table-description {
+  background-color: #000;
+  padding: 10px;
+  width: 100%;
+  color: white;
+  box-shadow: 0px 0px 4px 1px #000000;
+  // position: absolute;
+  border: 4px solid $accent-color;
+  margin-top: 15px;
+}
+
+.articles-table {
+  table-layout: auto;
+  box-shadow: 5px 5px 4px -4.5px $accent-color, -5px -5px 7px -7.5px #000000, 0 0 .15rem 2px rgba(0, 0, 0, 0.075);
+  a {
+    color: $accent-color;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.7);
+  }
+}
+
+.table-articles-head {
+  background-color: #000;
+  color: white;
+}
+
+#transparency  {
+  color: white;  /* Fallback: assume this color ON TOP of image */
+  background: url(https://drncvpyikhjv3.cloudfront.net/sites/109/2016/08/31100833/scenic-drives-featured.jpg) no-repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-position: 0% 60%;
+  margin: 0px 0px 0px 0px;
+  text-transform: uppercase;
+  position: relative;
+  line-height: 60px;
+  font-size: 58px;
+  // padding: 1.5rem;
+  &:before {
+    content: "";
+    // padding-bottom: 30px;
+    top: -10px;
+    display: block;
+    position: absolute;
+    
+    width: 100%;
+    background-color: #00ffbd;
+    height: 20px;
+    background: url(https://drncvpyikhjv3.cloudfront.net/sites/109/2016/08/31100833/scenic-drives-featured.jpg) no-repeat;
+  }
+  &:before {
+    background-position: 0% 54%;
+  }
+}
+
+.container-custom {
+  max-width: 90rem;
+}
+
+.report-details {
+  background-color: #fff;
+  border: 1px solid #E0E0E2;
+  position: relative;
+
+  .live-tag {
+    position: absolute;
+    background-color: red;
+    border: solid 2px #000;
+    color: white;
+    padding: 0.025rem 0.6rem;
+    top: -15px;
+    right: 15px;
+    .recording-dot {
+      $size: 0.75rem;
+      margin-right: 0.3rem;
+      background-color: white;
+      border-radius: 100%;
+      width: $size;
+      height: $size;
+      opacity: 1;
+      animation-name: dot-blink;
+      animation-direction: alternate-reverse;
+      animation-duration: 1s;
+      animation-timing-function: ease-in;
+      animation-iteration-count: infinite;
+    }
+    @keyframes dot-blink {
+      from {opacity: 1;}
+      to {opacity: 0;}
+    }
+  }
+
+  .account-activity-summary{
+    padding: 14px 20px 8px 22px;
+    .recent-summary {
+    font-size: 1em;
+    line-height: 1.47;
+    padding-bottom: 8px;
+    }
+  }
+
+  .table-wrap {
+    padding: 14px 20px 8px 22px;
+    background-color: #f6fcfc;
+    border-bottom: 1px solid #dbdbdb;
+    table {
+      width: 100%;
+      td {
+        text-align: right;
+      }
+      .last-month-balance{
+        vertical-align: top;
+        border-bottom: 1px solid #dbdbdb;
+      }
+      .this-month-net {
+        border-top: 1px solid #dbdbdb;
+      }
+      .statement-summary {
+        &.expense {
+          background-color: lighten($accent-color, 10%);
+        }
+      }
+    }
+  }
+}
+
+.account-balance {
+  margin-top: .5rem;
+  padding: 14px 20px 8px 22px;
+  background-color: #f6fcfc;
+  border: 1px solid #dbdbdb;
+  h4 {
+    border-bottom: 1px solid #dbdbdb;
+  }
+}
+
+#reports {
+  color: white;  /* Fallback: assume this color ON TOP of image */
+  background: url(https://drncvpyikhjv3.cloudfront.net/sites/109/2016/08/31100833/scenic-drives-featured.jpg) no-repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-position: 0% 68%;
+  margin: 0px 0px 0px 0px;
+  text-transform: uppercase;
+  position: relative;
+  line-height: 60px;
+  margin-top: -10px;
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    background-color: #00ffbd;
+    height: 20px;
+    background: url(https://drncvpyikhjv3.cloudfront.net/sites/109/2016/08/31100833/scenic-drives-featured.jpg) no-repeat;
+    bottom: -20px;
+    background-position: 0% 70%;
+  }
+}
+
+// @media (min-width: 1200px) {
+//   .container {
+//       max-width: 1400px;
+//   }
+// }

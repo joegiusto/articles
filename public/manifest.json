@@ -1,6 +1,6 @@
 {
   "short_name": "Articles",
-  "name": "Articles | Something to Stand For",
+  "name": "Articles (Beta)",
   "icons": [
     {
       "src": "favicon.ico",
@@ -11,5 +11,5 @@
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffb7b7"
+  "background_color": "#ffffff"
 }

@@ -1,0 +1,206 @@
+.employee-directory-card {
+  border: solid 2px #000;
+  box-shadow: 5px 6px 0px #131313;
+  border-radius: 3px;
+}
+
+.employee-header {
+  width: 100%;
+  border: 2px solid #131313;
+  box-shadow: 5px 6px 0px #131313;
+  padding: 25px 0px 11px;
+  background: #fff;
+  margin: 30px auto 20px;
+  border-radius: 5px;
+  &-traits {
+    font-size: 1.2rem;
+    height: 100%;
+    &-title {
+      text-transform: lowercase;
+      color: #666666;
+      font-size: 0.7em;
+      font-weight: 800;
+      margin-bottom: 2px;
+    }
+    &-details {
+      color: #0a0a0a;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    }
+  }
+}
+
+.popper {
+  background-color: white;
+  border: solid 2px #000;
+  padding: 1rem;
+}
+
+.employee {
+  &-letter {
+    text-transform: uppercase;
+  }
+  &-a {
+    color: black;
+    &:hover {
+      color: black;
+      text-decoration: none;
+    }
+  }
+  &-directory {
+    // height: 35px;
+    font-family: 'Forte';
+    position: relative;
+    font-size: 1.3rem;
+    & .active {
+      background-color: $accent-color;
+    }
+    span {
+      vertical-align: text-bottom;
+      line-height: 0px;
+      padding-right: 5px;
+      padding-left: 5px;
+      margin-right: 0px;
+      // vertical-align: text-bottom;
+      cursor: pointer;
+      transition-duration: .5s;
+      &:hover {
+        font-size: 2.5rem;
+      }
+    }
+    i {
+      // vertical-align: none;
+      vertical-align: unset;
+      transition-duration: .0s;
+      margin-right: 0px;
+    }
+  }
+  &-social {
+    visibility: hidden;
+    display: none;
+  }
+  &-image {
+    background-color: $accent-color;
+    border: 2px solid #131313;
+    height: 70px;
+    width: 70px;
+    // margin: 0px auto;
+    position: relative;
+    &-zoom {
+      position: absolute;
+      // bottom: 0px;
+      // right: 0px;
+      width: 100%;
+      height: 100%;
+      transition-duration: .1s;
+      &:hover {
+        background-color: rgba(107, 107, 107, 0.5);
+        cursor: pointer;
+        .employee-image-zoom-icon {
+          //Transform translateX and translateY do not work here
+          bottom: calc(50% - 15px);
+          right: calc(50% - 30px);
+          transform: scale(3);
+        }
+      }
+      &:active {
+        background-color: rgba(107, 107, 107, 0.8);
+        .employee-image-zoom-icon {
+          //Transform translateX and translateY do not work here
+          // bottom: calc(50% - 15px);
+          // right: calc(50% - 25px);
+          // transform: scale(2);
+          color: white;
+        }
+      }
+      &-icon {
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+        transform: translateX(50%), translateY(50%);
+        transition-duration: .5s;
+      }
+    }
+  }
+  &-name {
+    font-weight: bold;
+    font-size: 60px;
+    color: #111111 !important;
+  }
+  &-action-button {
+    cursor: pointer;
+    background-color: $accent-color;
+    box-shadow: 3px 4px 0px darken($accent-color, 100%);
+    font-size: 22px;
+    padding: 4px 8px;
+    vertical-align: 12px;
+    border-radius: 5px;
+    font-stretch: condensed;
+    font-weight: bold;
+    margin-top: 15px;
+  }
+  &-bio {
+    margin-top: 10px;
+    font-style: italic;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  }
+  &-social {
+    margin-top: 10px;
+    font-size: 1.7rem;
+    // text-align: center;
+    .fa-instagram, .fa-facebook, .mesh, .fa-github-square {
+      cursor: pointer;
+      color: #000!important;
+      // border-bottom: 2px solid #000;
+      padding-bottom: 2px;
+      position: relative;
+      &:after {
+        content: "";
+        position: absolute;
+        left: 0px;
+        bottom: -7px;
+        background-color: $accent-color;
+        border-top: 1px solid #000;
+        width: 25px;
+        height: 5px;
+
+        // -webkit-clip-path: polygon(50% 100%, 0 0, 100% 0);
+        // clip-path: polygon(50% 100%, 0 0, 100% 0);
+      }
+    }
+    .fa-instagram {
+      color: purple;
+    }
+    .fa-facebook {
+      color: #007bff;
+    }
+    .mesh {
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      color: orangered;
+      // font-size: 1.9rem;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .employee {
+    &-social {
+      visibility: visible;
+      display: block;
+      width: 170px;
+      margin: 0px auto;
+      
+    }
+    &-image {
+      height: 170px;
+      width: 170px;
+      margin: 0px auto;
+    }
+    &-header {
+      &-traits {
+        border-left: 1px solid #998a8a;
+        padding-left: 10px;
+        height: 100%;
+      }
+    }
+  }
+}

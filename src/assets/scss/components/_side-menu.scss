@@ -1,0 +1,384 @@
+.side-menu-overlay {
+  transition-duration: .5s;
+  &.show {
+  position: fixed;
+	top: 0;
+	left: 0;
+  width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	// -moz-opacity: 0.3;
+  // opacity: 0.5;
+  z-index: 100;
+  }
+}
+
+.side-menu {
+  // padding-top: 50px;
+  margin-top: 50px;
+  // padding: 0px .0rem 0rem .0rem;
+  z-index: 100;
+  top: 0px;
+  // color: white;
+  position: fixed;
+  // height: 89.6%;
+  height: calc(100% - 50px);
+  // Old
+  // width: 240px;
+  // New
+  width: 300px;
+  max-width: 300px;
+  // overflow-x: hidden;
+  background-color: $menu-color;
+  transition-duration: 200ms;
+  transform: translate3d(-100%, 0, 0);
+  overflow-y: scroll;
+  &:before {
+    content: "";
+    left: 0px;
+    width: 295px;
+    background-color: #000;
+    z-index: 1002;
+    position: absolute;
+    top: 0px;
+    // height: 50px;
+  }
+  a {
+    color: #000;
+    p {
+      &:after {
+        content: "";
+        opacity: 0;
+        background-color: #000;
+        transition-duration: 0s;
+      }
+      &:hover {
+        background-color: $accent-color;
+        // transition-duration: 1s;
+        // &:after {
+        //   transition-duration: .5s;
+        //   opacity: 1;
+        //   position: absolute;
+        //   right: 5px;
+        //   background-color: white;
+        //   border: 1px solid #000;
+        //   content: "...";
+        //   padding: 0px 1rem;
+        // }
+      }
+    }
+  }
+
+  .profile {
+    display: flex;
+    padding-top: 17px;
+    .profile-photo {
+      position: relative;
+      margin-left: 1.5rem;
+      height: 50px;
+      width: 50px;
+      background-color: #000;
+      border-radius: 100px;
+      display: inline-block;
+      i {
+        color: white;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        // transform: translateX(-50%);
+        transform: translateX(-50%) translateY(-50%);
+      }
+    }
+    .profile-welcome {
+      margin-top: auto;
+    }
+  }
+
+  p {
+    margin: 0px;
+    // Old
+    // padding: .5rem .5rem;
+    padding: .5rem 1.5rem;
+  }
+
+  .no-link {
+    margin-top: -10px;
+    &:hover {
+      background-color: rgba(255, 255, 255, 0)!important;
+    }
+  }
+
+  img {
+    // position: absolute;
+    // top: 55px;
+    // right: 50px;
+    padding: .5rem 0rem .5rem 1.5rem;
+  }
+
+  &-nav {
+    &-tab {
+      margin-top: 1rem;
+      background-color: white;
+      padding: .1rem .5rem;
+      border-radius: .2rem; 
+      -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+      -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+      box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    }
+  }
+}
+
+#nav-sign-in {
+  color: white;
+  background-color: black;
+  padding: .1rem .3rem;
+  text-transform: capitalize;
+}
+
+.side-menu.show {
+  transform: translate3d(0%, 0, 0);
+}
+
+.nav-tab {
+  position: fixed;
+  top: 0px;
+  z-index: 202;
+}
+
+.tab-content {
+  max-height: 150px;
+  overflow: hidden;
+  transition-duration: 200ms;
+  &.hide {
+    max-height: 0px;
+  }
+}
+
+.section-collapse {
+  cursor: pointer;
+  margin-top: -5px;
+  // background-color: #ffb7b7;
+  height: 16px;
+  width: 16px;
+  position: relative;
+  transition-duration: 200ms;
+  transform: translateX(-50%) translateY(50%) rotate(180deg);
+  i {
+    position: absolute;
+    margin: 0px;
+  }
+  &.hide {
+    transform: translateX(-50%) translateY(50%) rotate(0deg);
+  }
+}
+
+.side-pin-notch-top {
+  z-index: 201;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  width: 300px;
+  border-bottom: solid 2px #000;
+  height: 50px;
+  background-color: #fff;
+  transform: translate3d(80%, 0, 0);
+  transition-duration: 200ms;
+  &-end {
+    z-index: 201;
+    position: absolute;
+    width: 20px;
+    height: 50px;
+    background-color: rgb(184, 184, 184);
+    top: 0px;
+    right: 300px;
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 100%);
+  }
+}
+
+.side-pin-notch-top.show {
+  transform: translate3d(0%, 0, 0);
+}
+
+.side-menu-notch-top {
+  z-index: 201;
+  position: fixed;
+  top: 0px;
+  width: 300px;
+  height: 50px;
+  background-color: #fff;
+  transform: translate3d(-80%, 0, 0);
+  transition-duration: 200ms;
+  border-bottom: solid 2px #000;
+
+  &-end {
+    position: absolute;
+    border-bottom: solid 2px #000;
+    width: 20px;
+    height: 50px;
+    background-color: #fff;
+    top: 0px;
+    left: 300px;
+    -webkit-clip-path: polygon(0 0, 100% 0, 50% 100%, 0% 100%);
+    clip-path: polygon(0 0, 100% 0, 50% 100%, 0% 100%);
+    &-custom {
+      position: fixed;
+      height: 50px;
+      top: 0px;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 1);
+      -webkit-clip-path: none;
+      clip-path: none;
+      padding-left: 50px;
+      z-index: 200;
+      display: flex;
+      justify-content: space-between;
+      padding-top: .3rem;
+      transition-duration: 200ms;
+      &.show {
+        margin-left: 300px;
+        padding-left: 0px;
+        width: calc(100% - 300px);
+      }
+    }
+  
+  }
+}
+
+.side-menu-notch-bottom {
+  // Taken out but leaving code if I feel like we need more styleing, the top notch is good for now but this mirrors it on the bottom (or at least it did).
+  position: absolute;
+  width: 300px;
+  height: 50px;
+  background-color: #000;
+  transform: translate3d(-150%, 0, 0);
+  transition-duration: 200ms;
+  bottom: 0px;
+  z-index: 1000;
+
+  &-end {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-color: #000;
+    bottom: 0px;
+    left: 300px;
+    -webkit-clip-path: polygon(0 0, 50% 0, 100% 100%, 0% 100%);
+    clip-path: polygon(0 0, 50% 0, 100% 100%, 0% 100%);
+    box-shadow: 0px 0px 5px 5px #fff;
+  }
+}
+
+.side-menu-notch-top.show, .side-menu-notch-bottom[active] {
+  transform: translate3d(0%, 0, 0);
+}
+
+i {
+  // width: 25px;
+  margin-right: 10px;
+}
+
+#shopping-card {
+  position: relative;
+  margin-left: auto;
+  cursor: pointer;
+  padding: 2px 0.4rem;
+  // padding-top: 1px;
+  border-radius: 1px;
+  height: 30px;
+  border: 1px solid rgba(255, 255, 255, 0);
+  transition-duration: .5s;
+  &:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #000;
+    visibility: hidden;
+    -webkit-transform: scaleX(0);
+    transform: scaleX(0);
+    -webkit-transition: all 0.3s ease-in-out 0s;
+    transition: all 0.3s ease-in-out 0s;
+  }
+  &:hover {
+    background-color: $accent-color;
+    color: black;
+    border-radius: 30px;
+    #menu-pill {
+      background-color: white;
+      color: #000000;
+    }
+    &:before {
+      // visibility: visible;
+      // -webkit-transform: scaleX(1);
+      // transform: scaleX(1);
+    }
+  }
+}
+
+#menu-pill {
+  font-size: .7rem;
+  vertical-align: text-top;
+  margin-left: 2px;
+}
+
+.menu-spacer{
+  height: 50px;
+}
+
+.pin-tab {
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  z-index: 202;
+  font-size: 1.5rem;
+}
+
+.pin {
+  padding: 10px 15px;
+  display: inline-block;
+  cursor: pointer;
+  transition-property: opacity, filter;
+  transition-duration: 0.15s;
+  transition-timing-function: linear;
+  font: inherit;
+  color: inherit;
+  text-transform: none;
+  background-color: transparent;
+  border: 0;
+  margin: 0;
+  overflow: visible;
+  transform: rotateZ(45deg);
+}
+
+.badge-shape-poly {
+  clip-path: polygon(7px 0%, 100% 0%, calc(100% - 7px) 100%, 0% 100%);
+  padding-left: 10px;
+  border-radius: 0rem;
+}
+
+.badge-black {
+  color: #000;
+  background-color: #ffb7b7;
+  &:hover {
+    border-bottom: 1px solid #fff;
+    cursor: pointer;
+  }
+}
+
+.badge-sub-red {
+  // clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%);
+  clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%);
+  border-radius: 0rem;
+}
+
+#nav-member-message {
+  color: #998a8a;
+}
+
+hr {
+  margin-top: .5rem;
+  margin-bottom: .5rem;
+}

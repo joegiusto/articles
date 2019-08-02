@@ -1,0 +1,89 @@
+.myth-item {
+  background-color: rgb(255, 255, 255);
+  height: 175px;
+  margin-bottom: 30px;
+  // border-bottom-right-radius: 90px;
+  // clip-path: polygon(0 0, 100% 0, 100% 90%, 0% 100%);
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.35);
+  position: relative;
+  text-align: left;
+  &:hover {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.70);
+  }
+  &-banner {
+    background-color: white;
+    position: absolute;
+    left: 10px;
+    top: -15px;
+    font-size: 1.2rem;
+    font-family: forte;
+    // color: rgb(0, 0, 0);
+    z-index: 99;
+    // border: solid 1px;
+    border-style: solid;
+    padding: 0rem .3rem;
+  }
+  .item-head {
+    width: 100%;
+    height: 20px;
+    background-color: #000000;
+  }
+  .item-foot {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: 20px;
+    background-color: #000000;
+  }
+  .item-photo {
+    position: absolute;
+    left: 0px;
+    top: 20px;
+    height: 175px;
+    width: 200px;
+    z-index: 1;
+    -webkit-clip-path: polygon(0 0, 80% 0, 100% 100%, 0% 100%);
+    clip-path: polygon(0 0, 80% 0, 100% 100%, 0% 100%);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url(https://www.snopes.com/tachyon/2018/05/windmill.jpg);
+  }
+  .item-background {
+    position: absolute;
+    left: 0px;
+    height: 175px;
+    width: 100%;
+    z-index: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    // background-image: url(https://www.snopes.com/tachyon/2018/05/windmill.jpg);
+    filter: blur(3px) saturate(30%);
+  }
+  &-title {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 30%;
+    left: 65%;
+    transform: translateX(-50%) translateY(-50%);
+    // color: white;
+    // text-shadow: $accent-color 3px 0 10px;
+    font-size: 1.7rem;
+    // font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    z-index: 1;
+  }
+
+  &::after {
+    content: " ";
+    position: absolute;
+    bottom: 0px;
+    right: -0px;
+    background-color: $accent-color;
+    height: 40px;
+    width: 40px;
+    z-index: 1;
+    -webkit-clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+    clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+  }
+}
