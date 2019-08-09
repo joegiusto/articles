@@ -10,7 +10,7 @@ const Submissions = () => (
   <div className='mt-4 container-fluid'>
 
     <div className="row justify-content-between align-items-center">
-      <div className="col-4">
+      <div className="col-12 order-2 col-md-4">
 
         <div className="submission-side-panel">
 
@@ -48,19 +48,12 @@ const Submissions = () => (
         </div>
 
       </div>
-      <div className="col-8">
+      <div className="col-12 order-1 col-md-8">
         <h1>Popular {moment().format('MMMM')} Submissions<span className="badge badge-secondary ml-2"></span></h1>
-        <h5>Next Pick At End of Month <span className="badge badge-secondary"><Countdown date={'1 Aug 2019'} /></span></h5>
+        <h5>Next Pick At End of Month <span className="badge badge-secondary"><Countdown date={'1 Sep 2019'} /></span></h5>
         <p>Log in to vote.</p>
         
         <FirebaseVoteList/>
-
-        {/* <SubmissionItem user={'Joey Giusto'} type={'one'} voteCount={10}/>
-        <SubmissionItem user={'Joey Giusto'} type={'two'} voteCount={0}/>
-        <SubmissionItem user={'Joey Giusto'} type={'three'} voteCount={0}/>
-        <SubmissionItem user={'...'} type={'four'} voteCount={117}/>
-        <SubmissionItem user={'...'} type={'five'} voteCount={42}/>
-        <SubmissionItem user={'...'} type={'six'} voteCount={42}/> */}
 
         <button className="mt-1  btn btn-dark">Submit Designs</button>
       </div>
@@ -251,7 +244,7 @@ class FirebaseVoteItemBase extends Component {
   render() {
 
     return (
-      <div  className="col-2 mb-4">
+      <div  className="col-6 col-md-2 mb-4">
           
         <div className="submission-item submission-item-override">
           

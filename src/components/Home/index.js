@@ -7,7 +7,7 @@ import { withFirebase } from '../Firebase';
 const HomePage = () => (
   <div className='container'>
     <div className='row'>
-      <div className='col-6'>
+      <div className='col-12 col-md-6'>
         <h1>Home Page</h1>
         <p>The Home Page is accessible by every signed in user.</p>
         <h1>Current Orders</h1>
@@ -17,7 +17,8 @@ const HomePage = () => (
         <h1>Story Updates</h1>
         <p>The Home Page is accessible by every signed in user.</p>
       </div>
-      <div className='col-6'>
+      <div className='col-12 col-md-6'>
+        <hr/>
         <Messages />
       </div>
     </div>
