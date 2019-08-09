@@ -74,13 +74,13 @@ class SignInFormBase extends Component {
 
         <h1>Sign In</h1>
 
-        <div class="form-label-group">
+        <div className="form-label-group">
           <input 
             name="email"
             type="email" 
             value={email}
             onChange={this.onChange}
-            class="form-control" 
+            className="form-control" 
             // id="exampleInputEmail1" 
             aria-describedby="emailHelp" 
             placeholder="you@email.com"
@@ -92,13 +92,13 @@ class SignInFormBase extends Component {
           <label className="heading-font" for="inputEmail">Email address:</label>
         </div>
 
-        <div class="form-label-group">
+        <div className="form-label-group">
           <input 
             name="password"
             type="password" 
             value={password}
             onChange={this.onChange}
-            class="form-control" 
+            className="form-control" 
             // id="exampleInputEmail" 
             aria-describedby="passwordHelp" 
             placeholder="Password"

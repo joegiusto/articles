@@ -221,7 +221,7 @@ function NavigationAuthRework(props) {
                     {!props.authUser ? (
                     <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SIGN_IN} id='nav-sign-in'>Log In / Sign Up</Link>
                     ) : (
-                    <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ACCOUNT} id='nav-sign-in'>{props.authUser.username}</Link>
+                    <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ACCOUNT} id='nav-sign-in'>{props.authUser.nameFirst} {props.authUser.nameLast}</Link>
                     )}
                     </span>
                   </p>
@@ -230,7 +230,7 @@ function NavigationAuthRework(props) {
                     {!props.authUser ? (
                       <span></span>
                     ) : (
-                      <span>Member Since {moment(props.authUser.meta.creationTime).format("MMMM Y")}</span>
+                      <span>Member Since {/* moment().unix(props.authUserdateCreation).format("MMMM Y") */} {moment.unix(props.authUser.dateCreation).format("MMMM Y")}</span>
                     )
                     }
                     

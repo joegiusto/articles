@@ -2,14 +2,21 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 
+// import { SignUpLink } from '../SignUp';
+import { PasswordForgetLink } from '../PasswordForget';
+
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import * as ROLES from '../../constants/roles';
+import moment from 'moment';
 
 const SignUpPage = () => (
-  <div>
-    <h1>SignUp</h1>
-    <SignUpForm />
+  <div className="SignUpPage">
+    
+    <div class="SignUpContainer">
+      <div class="border-decal"></div>
+      <SignUpForm />
+    </div>
   </div>
 );
 
@@ -38,7 +45,7 @@ class SignUpFormBase extends Component {
   };
 
   onSubmit = event => {
-    const { username, email, passwordOne, isAdmin } = this.state;
+    const { username, nameFirst , nameLast, email, passwordOne, isAdmin } = this.state;
 
     const roles = {};
 
@@ -53,9 +60,12 @@ class SignUpFormBase extends Component {
         return this.props.firebase
           .user(authUser.user.uid)
           .set({
-            username,
+            // username,
+            nameFirst,
+            nameLast,
             email,
             roles,
+            dateCreation: moment().unix()
           });
       })
       .then(() => {
@@ -76,6 +86,8 @@ class SignUpFormBase extends Component {
   render() {
     const {
       username,
+      nameFirst,
+      nameLast,
       email,
       passwordOne,
       passwordTwo,
@@ -87,28 +99,138 @@ class SignUpFormBase extends Component {
       passwordOne !== passwordTwo ||
       passwordOne === '' ||
       email === '' ||
-      username === '';
+      // username === '';
+      nameFirst === '' ||
+      nameLast === '';
 
     return (
       <form onSubmit={this.onSubmit}>
-        <input
+      
+        <h1>Sign Up</h1>
+
+        {/* <input
           name="username"
           value={username}
           onChange={this.onChange}
+          className="form-control" 
           type="text"
           placeholder="Full Name"
-        />
-        <input
+        /> */}
+
+        <div className="form-label-group">
+          <input 
+            name="email"
+            type="email" 
+            value={email}
+            onChange={this.onChange}
+            className="form-control" 
+            aria-describedby="emailHelp" 
+            placeholder="you@email.com"
+            autocorrect="off"
+            spellcheck="false"
+            // TODO - autofocus is not working, gonna guess side menu is causing this
+            // autofocus
+          />
+          <label className="heading-font" for="inputEmail">Email address:</label>
+        </div>
+
+        <div class="row">
+
+          <div class="col">
+            <div className="form-label-group">
+              <input 
+                name="nameFirst"
+                type="text" 
+                value={nameFirst}
+                onChange={this.onChange}
+                className="form-control" 
+                aria-describedby="usernameHelp" 
+                placeholder="First and Last"
+                autocorrect="off"
+                spellcheck="false"
+                // TODO - autofocus is not working, gonna guess side menu is causing this
+                // autofocus
+              />
+              <label className="heading-font" for="inputEmail">First Name:</label>
+            </div>
+          </div>
+  
+          <div class="col">
+            <div className="form-label-group">
+              <input 
+                name="nameLast"
+                type="text" 
+                value={nameLast}
+                onChange={this.onChange}
+                className="form-control" 
+                aria-describedby="usernameHelp" 
+                placeholder="First and Last"
+                autocorrect="off"
+                spellcheck="false"
+                // TODO - autofocus is not working, gonna guess side menu is causing this
+                // autofocus
+              />
+              <label className="heading-font" for="inputEmail">Last Name:</label>
+            </div>
+          </div>
+        </div>
+
+        <div className="row">
+
+          <div className="col">
+            <div className="form-label-group">
+              <input 
+                name="passwordOne"
+                type="password" 
+                value={passwordOne}
+                onChange={this.onChange}
+                className="form-control" 
+                aria-describedby="passwordHelp" 
+                placeholder="Password"
+                autocorrect="off"
+                spellcheck="false"
+                // TODO - autofocus is not working, gonna guess side menu is causing this
+                // autofocus
+              />
+              <label className="heading-font" for="inputEmail">Password:</label>
+            </div>
+          </div>
+  
+          <div className="col">
+            <div className="form-label-group">
+              <input 
+                name="passwordTwo"
+                type="password" 
+                value={passwordTwo}
+                onChange={this.onChange}
+                className="form-control" 
+                aria-describedby="passwordHelp" 
+                placeholder="Password"
+                // autocorrect="off"
+                // spellcheck="false"
+                // TODO - autofocus is not working, gonna guess side menu is causing this
+                // autofocus
+              />
+              <label className="heading-font" for="inputEmail">Confirm Password:</label>
+            </div>
+          </div>
+
+        </div>
+
+        {/* <input
           name="email"
           value={email}
           onChange={this.onChange}
+          className="form-control" 
           type="text"
           placeholder="Email Address"
         />
+
         <input
           name="passwordOne"
           value={passwordOne}
           onChange={this.onChange}
+          className="form-control" 
           type="password"
           placeholder="Password"
         />
@@ -116,9 +238,11 @@ class SignUpFormBase extends Component {
           name="passwordTwo"
           value={passwordTwo}
           onChange={this.onChange}
+          className="form-control" 
           type="password"
           placeholder="Confirm Password"
-        />
+        /> */}
+
         {/* <label>
         Admin:
         <input
@@ -128,9 +252,19 @@ class SignUpFormBase extends Component {
           onChange={this.onChangeCheckbox}
         />
         </label> */}
-        <button disabled={isInvalid} type="submit">Sign Up</button>
+
+        <button disabled={isInvalid} type="submit" className="btn btn-articles-light">
+          Sign Up
+        </button>
 
         {error && <p>{error.message}</p>}
+
+        <div className="dual-header mt-5">
+          <PasswordForgetLink />
+          {/* <SignUpLink /> */}
+          <span>Meant to sign in? <Link to={ROUTES.SIGN_IN}>Sign In</Link></span>
+        </div>
+
       </form>
     );
   }

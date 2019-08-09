@@ -20,7 +20,7 @@ const StoreItem = (props) => {
   }
 
     return (
-        <div className={"slick-slide d-inline-block " + (flipped ? 'flip' : '')} style={{width: '200px'}}>
+        <div className={"slick-slide d-inline-block " + (flipped ? 'flip' : '')}>
           <div className="menu-catalog-item">
               <div className={"menu-catalog-item-banner btn-outline-" + (props.color)}>
                   <span>{props.banner}</span>

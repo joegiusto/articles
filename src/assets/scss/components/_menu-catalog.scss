@@ -32,72 +32,83 @@
     // background-color: #000000;
     width: 100%;
     padding: 20px 30px;
-    .slick-slide {
-        height: unset;
-        margin-right: 5px;
-        margin-left: 5px;
-        padding: 20px;
-        padding-bottom: 5px;
-        background-color: white;
-        box-shadow: 0px 0px 5px 5px #eeeeee;
-        box-shadow: 0px 0px 5px 2px #00000075;
-        perspective: 1000px;
-        border-radius: 10px;
-        margin-top: 10px;
-        transition: transform 0.8s;
-        transform-style: preserve-3d;
-        .added-notification {
+}
+
+.slick-slide {
+    white-space: nowrap;
+    margin-bottom: 25px;
+    height: unset;
+    margin-right: 5px;
+    margin-left: 5px;
+    padding: 20px 10px;
+    width: 170px;
+    padding-bottom: 5px;
+    background-color: white;
+    box-shadow: 0px 0px 5px 5px #eeeeee;
+    box-shadow: 0px 0px 5px 2px #00000075;
+    perspective: 1000px;
+    border-radius: 10px;
+    margin-top: 10px;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    .added-notification {
+        position: absolute;
+        left: 0px;
+        display: inline-block;
+        font-weight: 400;
+        color: #343a40;
+        padding: 0.375rem 0rem;
+        text-align: center;
+        vertical-align: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+        background-color: transparent;
+        border-width: 1px;
+        border-style: solid;
+        backface-visibility: hidden;
+        font-size: 1rem;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+        width: 100%;
+        // height: auto;
+        background-color: #ffffff;
+        overflow: hidden;
+        visibility: hidden;
+        opacity: 0;
+        transition: all .5s;
+        &-background {
             position: absolute;
             left: 0px;
-            display: inline-block;
-            font-weight: 400;
-            color: #343a40;
-            padding: 0.375rem 0rem;
-            text-align: center;
-            vertical-align: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
-            background-color: transparent;
-            border-width: 1px;
-            border-style: solid;
-            backface-visibility: hidden;
-            font-size: 1rem;
-            line-height: 1.5;
-            border-radius: 0.25rem;
-            width: 100%;
-            // height: auto;
-            background-color: #ffffff;
-            overflow: hidden;
-            visibility: hidden;
-            opacity: 0;
-            transition: all .5s;
-            &-background {
-                position: absolute;
-                left: 0px;
-                top: 0px;
-                background-color: rgba($accent-color, .25);
-                width: 00%;
-                height: 38px;
-                transition-duration: 0s;
-                &.added {
-                    width: 100%;
-                    transition-duration: 2.5s;
-                }
-        }
-        &.added {
-            opacity: 1;
-            visibility: visible;
-            width: 100%;
-            padding: 0.375rem 0.75rem;
-            border-width: 1px;
-            border-style: solid;
-            // transition: all .5s, border 0s;
-        }
-        }
-      &.flip {
-        transform: rotateY(180deg);
-      }
+            top: 0px;
+            background-color: rgba($accent-color, .25);
+            width: 00%;
+            height: 38px;
+            transition-duration: 0s;
+            &.added {
+                width: 100%;
+                transition-duration: 2.5s;
+            }
+    }
+    &.added {
+        opacity: 1;
+        visibility: visible;
+        width: 100%;
+        padding: 0.375rem 0.75rem;
+        border-width: 1px;
+        border-style: solid;
+        // transition: all .5s, border 0s;
+    }
+    }
+  &.flip {
+    transform: rotateY(180deg);
+  }
+}
+
+@media (min-width: 768px) {
+    .slick-slide {
+        padding: 20px;
+        width: 200px;
     }
 }
 

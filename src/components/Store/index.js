@@ -54,15 +54,15 @@ export default function StorePage(props) {
 	return (
   <div className='container'>
 
-		<h1 className="mt-5 store-heading text-center">Featured</h1>
+		<h1 className="mt-2 mt-md-5 store-heading text-center">Featured</h1>
 
-    <div className='row'>
+    <div className='row justify-content-center'>
 
-			<div className="slick-container">
+			{/* <div className="slick-container"> */}
 
-				<StoreItem catalogId='1' price={3000} title="Wolf Sweatshirt" sale="%15" banner="Original" color="articles" />
+				<StoreItem catalogId='1' price={3000} title="Wolf Hoodie" sale="%15" banner="Original" color="articles" />
 
-				<StoreItem catalogId='2' price={3000} title="Sheep Sweatshirt" sale="%15" banner="Original" color="articles"/>
+				<StoreItem catalogId='2' price={3000} title="Sheep Hoodie" sale="%15" banner="Original" color="articles"/>
 
 				<StoreItem catalogId='3' price={2500} title="Partner Item" sale="%15" banner="Partner" color="info"/>
 
@@ -70,9 +70,9 @@ export default function StorePage(props) {
 
 				<StoreItem catalogId='5' price={2000} title="Sponsered Item" sale="%15" banner="Sponsered" color="primary"/>
 
-			</div>
+			{/* </div> */}
 			
-			<div className="col-12">
+			<div className="col-12 overflow-hidden">
 				<div className="row">
 
 					<h1 className="store-heading w-100">First Launch</h1>
@@ -163,7 +163,7 @@ export default function StorePage(props) {
 				</div>
 			</div>
 			<h3 className="text-center mt-5 mb-4 w-100">Top Right Badge Key</h3>
-			<div className="col-4">
+			<div className="col-12 col-md-4">
 				
 				<div className="shadow-sm mx-4 mb-4 px-4 py-2 rounded bg-white">
 					<h5>Original Item</h5>
@@ -172,7 +172,7 @@ export default function StorePage(props) {
 				</div>
 			</div>
 
-			<div className="col-4">
+			<div className="col-12 col-md-4">
 				<div className="shadow-sm mx-4 mb-4 px-4 py-2 rounded bg-white">
 					<h5>Partner Item</h5>
 					<p>Items that we partnered up to sell and split a part of the profit with the company/creators</p>
@@ -180,7 +180,7 @@ export default function StorePage(props) {
 				</div>
 			</div>
 
-			<div className="col-4">
+			<div className="col-12 col-md-4">
 				<div className="shadow-sm mx-4 mb-4 px-4 py-2 rounded bg-white">
 					<h5>Sponsered Item</h5>
 					<p>Items that we promote for a company/creator that we feel have a reasonable means to be on the platform. A small referral fee will be charged for the item.</p>

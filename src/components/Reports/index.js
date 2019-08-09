@@ -31,7 +31,7 @@ const Reports = (props) => (
 
     <div className='row justify-content-between pt-4'>
 
-      <div className="col-12 col-lg-3 mt-3">
+      <div className="col-12 col-lg-3 mt-3 overflow-hidden">
 
         <div className='reports-left-panel'>
 
@@ -73,7 +73,7 @@ const Reports = (props) => (
 
       </div>
 
-      <div className="col-3">
+      <div className="col-12 col-lg-3 mb-3">
         <div className="report-details">
 
           <div className="live-tag">
@@ -168,7 +168,7 @@ const Reports = (props) => (
               </div>
             </div>
 
-            <table className='table articles-table mb-2 table-bordered'>
+            <table className='table table-responsive articles-table mb-2 table-bordered'>
               <thead>
                 <tr className="table-articles-head">
                   {/* <th scope="col">Order #</th> */}
@@ -212,7 +212,7 @@ const Reports = (props) => (
                 <div className='dual-header'><h5>Donations</h5></div>
               </div>
             </div>
-            <table className='table articles-table mb-2 table-bordered'>
+            <table className='table table-responsive articles-table mb-2 table-bordered'>
         <thead>
           <tr className="table-articles-head">
             {/* <th scope="col">Donation #</th> */}
@@ -258,7 +258,7 @@ const Reports = (props) => (
               </div>
             </div>
 
-            <table className='table articles-table mb-2 table-bordered'>
+            <table className='table table-responsive articles-table mb-2 table-bordered'>
               <thead>
                 <tr className="table-articles-head">
                   {/* <th scope="col">Employee ID</th> */}
@@ -344,7 +344,7 @@ const Reports = (props) => (
               </div>
             </div>
 
-            <table className='table articles-table mb-2 table-bordered'>
+            <table className='table table-responsive articles-table mb-2 table-bordered'>
               <thead>
                 <tr className="table-articles-head">
                   <th scope="col">Receipt</th>
