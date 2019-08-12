@@ -42,10 +42,12 @@ const modalContent = [
 const Component = () => (
   <div>
     <div>Modal testing grounds for now.</div>
-    <App message="15% Sale" getContent="1"/>
-    <App message="Mueller Report Highlights" getContent="2"/>
-    <App message="Flint Water Cleanup" getContent="3"/>
-    <App message="Gun Laws" getContent="4"/>
+    <ReactModal message="15% Sale" getContent="1"/>
+    <ReactModal message="Mueller Report Highlights" getContent="2"/>
+    <ReactModal message="Flint Water Cleanup" getContent="3"/>
+    <ReactModal message="Gun Laws" getContent="4"/>
+    <div>Email testing grounds for now</div>
+    <iframe style={{width: '580px', height: '570px'}} src="https://cdn.forms-content.sg-form.com/1352c270-bc52-11e9-a069-f615fa7b887e"/>
   </div>
 )
 
@@ -68,7 +70,7 @@ const customStyles = {
 // Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
 // Modal.setAppElement('#yourAppElement')
 
-class App extends React.Component {
+class ReactModal extends React.Component {
   constructor() {
     super();
 
@@ -115,44 +117,7 @@ class App extends React.Component {
 
           <h2 ref={subtitle => this.subtitle = subtitle}>{this.props.message}</h2>
           
-
-          {/* <div className="close-reminder d-none" onClick={this.closeModal}>
-            Click anywhere to close! &bull; Click anywhere to close! &bull; Click anywhere to close! <br/>
-            Click anywhere to close! &bull; Click anywhere to close! &bull; Click anywhere to close! <br/>
-            Click anywhere to close! &bull; Click anywhere to close! &bull; Click anywhere to close! <br/>
-            Click anywhere to close! &bull; Click anywhere to close! &bull; Click anywhere to close! <br/>
-            Click anywhere to close! &bull; Click anywhere to close! &bull; Click anywhere to close! <br/>
-            Click anywhere to close! &bull; Click anywhere to close! &bull; Click anywhere to close! <br/>
-            Click anywhere to close! &bull; Click anywhere to close! &bull; Click anywhere to close! <br/>
-            Click anywhere to close! &bull; Click anywhere to close! &bull; Click anywhere to close! <br/>
-            Click anywhere to close! &bull; Click anywhere to close! &bull; Click anywhere to close! <br/>
-            Click anywhere to close! &bull; Click anywhere to close! &bull; Click anywhere to close! <br/>
-            Click anywhere to close! &bull; Click anywhere to close! &bull; Click anywhere to close! <br/>
-            Click anywhere to close! &bull; Click anywhere to close! &bull; Click anywhere to close! <br/>
-            Click anywhere to close! &bull; Click anywhere to close! &bull; Click anywhere to close! <br/>
-            Click anywhere to close! &bull; Click anywhere to close! &bull; Click anywhere to close! <br/>
-            Click anywhere to close! &bull; Click anywhere to close! &bull; Click anywhere to close! <br/>
-            Click anywhere to close! &bull; Click anywhere to close! &bull; Click anywhere to close! <br/>
-            Click anywhere to close! &bull; Click anywhere to close! &bull; Click anywhere to close! <br/>
-            Click anywhere to close! &bull; Click anywhere to close! &bull; Click anywhere to close! <br/>
-            Click anywhere to close! &bull; Click anywhere to close! &bull; Click anywhere to close! <br/>
-            Click anywhere to close! &bull; Click anywhere to close! &bull; Click anywhere to close! <br/>
-            Click anywhere to close! &bull; Click anywhere to close! &bull; Click anywhere to close! <br/>
-            Click anywhere to close! &bull; Click anywhere to close! &bull; Click anywhere to close! <br/>
-            Click anywhere to close! &bull; Click anywhere to close! &bull; Click anywhere to close! <br/>
-            Click anywhere to close! &bull; Click anywhere to close! &bull; Click anywhere to close! <br/>
-          </div> */}
-
-          {/* <div>I am a modal, I am getting content from {this.props.getContent}</div> */}
           <div>{modalContent[this.props.getContent].message}</div>
-
-          {/* <form>
-            <input />
-            <button>tab navigation</button>
-            <button>stays</button>
-            <button>inside</button>
-            <button>the modal</button>
-          </form> */}
 
         </Modal>
       </div>

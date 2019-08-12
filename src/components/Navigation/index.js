@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { AuthUserContext } from '../Session';
 import SignOutButton from '../SignOut';
-import Modals from './Modals';
+import {ReactModal, customStyles, modalContent} from './Modals';
 import * as ROUTES from '../../constants/routes';
 import * as ROLES from '../../constants/roles';
 
@@ -123,7 +123,7 @@ function NavigationAuthRework(props) {
 
   return (
     <div>
-        <Modals/>
+        {/* <Modals/> */}
         
         <section onClick={() => {setMenuOpen(false)}} className={'side-menu-overlay' + (menuOpen || pinOpen ? " show" : "")}></section>
 
@@ -159,16 +159,22 @@ function NavigationAuthRework(props) {
             <div className={'side-menu-notch-top-end-custom ' + (menuOpen ? 'show' : '')}>
                 <div className={'d-none d-lg-flex'}>
                     
-                  {/* <h3 data-toggle="modal" data-target="#cookie" className="top-headline top-headline-cookie d-inline"><span className="badge badge-danger badge-shape-poly ">Agree to Cookies?<span className="badge badge-success badge-sub-red ml-2"><i class="far fa-check-square mx-1"></i></span><span className="badge badge-warning badge-sub-red ml-1"><i class="far fa-times-circle mx-1"></i></span></span></h3> */}
+                  {/* <h3 data-toggle="modal" data-target="#cookie" className="top-headline top-headline-cookie d-inline"><span className="badge badge-danger badge-shape-poly ">Agree to Cookies?<span className="badge badge-success badge-sub-red ml-2"><i className="far fa-check-square mx-1"></i></span><span className="badge badge-warning badge-sub-red ml-1"><i className="far fa-times-circle mx-1"></i></span></span></h3> */}
 
                   {!props.authUser ? (
                     <span>
-                      <h3 data-toggle="modal" data-target="#muellerReports" className="top-headline mx-1 ml-5 d-inline"><span className="badge badge-black badge-shape-poly "><i class="far fa-hand-point-left"></i>Open The Menu!&nbsp;</span></h3>
+                      <h3 data-toggle="modal" data-target="#muellerReports" className="top-headline mx-1 ml-5 d-inline"><span className="badge badge-black badge-shape-poly "><i className="far fa-hand-point-left"></i>Open The Menu!&nbsp;</span></h3>
                     </span>
                   ) : (
                     <span>
                       <h3 data-toggle="modal" data-target="#muellerReports" className="top-headline mx-1 ml-5 d-inline"><span className="badge badge-black badge-shape-poly ">Mueller Report Highlights<span className="badge badge-danger badge-sub-red ml-2">!</span></span></h3>
                       <h3 data-toggle="modal" data-target="#sale" className="top-headline mx-1 d-inline"><span className="badge badge-black badge-shape-poly ">15% Sale<span className="badge badge-danger badge-sub-red ml-2">!</span></span></h3>
+                      <ReactModal thread="site-sale" style="pink-poly" message="15% Sale" getContent="1"/>
+
+                      {/* --- Future format, thread and style. easy peasy --- */}
+                      {/* <ReactModal thread="site-sale" style="pink-poly"/> */}
+                      {/* <ReactModal thread="gun-laws" style="beige-pill"/> */}
+
                     </span>
                   )}
 
@@ -293,13 +299,13 @@ function NavigationAuthRework(props) {
               <p className="heading-font no-link">
                 <b>Articles Party</b>
               </p>
-              <div onClick={() => {setPartySectionOpen(!partySectionOpen)}} className={"section-collapse " + (partySectionOpen ? "" : "hide")}><i class="fas fa-chevron-circle-down"></i></div>
+              <div onClick={() => {setPartySectionOpen(!partySectionOpen)}} className={"section-collapse " + (partySectionOpen ? "" : "hide")}><i className="fas fa-chevron-circle-down"></i></div>
             </div>
 
             <div className={"tab-content " + (partySectionOpen ? "" : "hide")}>
               <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PARTY}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Info</p></Link>
-              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ISSUES}><p className="subheading-font"><i class="fas fa-person-booth "></i>Issues</p></Link>
-              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MYTHS}><p className="subheading-font"><i class="fas fa-ghost fa-pulse"></i>Myths</p></Link>
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ISSUES}><p className="subheading-font"><i className="fas fa-person-booth "></i>Issues</p></Link>
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MYTHS}><p className="subheading-font"><i className="fas fa-ghost fa-pulse"></i>Myths</p></Link>
             </div>
             <hr/>
 

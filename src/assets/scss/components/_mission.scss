@@ -1,6 +1,12 @@
 .mission-page {
   font-size: 1.1rem;
   // font-size:30px;
+  ul {
+    padding-left: 0px;
+  }
+  .responsive-header {
+    font-size: 50px;
+  }
   .text-indent {
     // margin-top: 1rem;
     margin-left: 4rem;
@@ -13,6 +19,14 @@
       // padding-left: 1rem;
       // border-left: 1px solid #000;
       // background-color: rgba(0, 0, 0, .05);
+    }
+  }
+}
+
+@media (min-width: 768px){
+  .mission-page {
+    .responsive-header {
+      font-size: 60px;
     }
   }
 }

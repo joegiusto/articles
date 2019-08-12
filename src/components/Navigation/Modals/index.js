@@ -1,92 +1,104 @@
 import React from 'react';
+import Modal from 'react-modal';
 
-const Modals = () => (
-  <div>
-    {/* <!-- Mueller Modal --> */}
-    <div className="modal fade" id="muellerReports" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div className="modal-dialog modal-dialog-centered" role="document">
-            <div className="modal-content">
-            <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">Mueller Report Highlights</h5>
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div className="modal-body">
-                Example content of what would show up when a big story is developing. This component still needs to be styled and worked on. Putting this here for presentation/functionality purposes though.
-            </div>
-            <div className="modal-footer">
-                <button type="button" className="btn btn-black" data-dismiss="modal">Close</button>
-                {/* <button type="button" className="btn btn-primary">Save changes</button> */}
-            </div>
-            </div>
+const modalContent = [
+  {
+    // 0
+    message: "Hello!"
+  },
+  {
+    // 1
+    message: "All Originals in our store now 15% Off!"
+  },
+  {
+    // 2
+    message: "Example content of what would show up when a big story is developing. This component still needs to be styled and worked on. Putting this here for presentation/functionality purposes though."
+  },
+  {
+    // 3
+    message: "Hello!"
+  },
+  {
+    // 4
+    message: "Hello!"
+  }
+]
+
+const customStyles = {
+    content : {
+      top          : '50%',
+      left         : '50%',
+      right        : 'auto',
+      bottom       : 'auto',
+      marginRight  : '-50%',
+      transform    : 'translate(-50%, -50%)',
+      border       : 'initial',
+      borderRadius : 'initial',
+      maxWidth     : '600px',
+      minWidth     : '600px',
+      overflow     : 'initial'
+    }
+  };
+  
+  // Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
+  // Modal.setAppElement('#yourAppElement')
+  
+  class ReactModal extends React.Component {
+    constructor() {
+      super();
+  
+      this.state = {
+        modalIsOpen: false
+      };
+  
+      this.openModal = this.openModal.bind(this);
+      this.afterOpenModal = this.afterOpenModal.bind(this);
+      this.closeModal = this.closeModal.bind(this);
+    }
+  
+    openModal() {
+      this.setState({modalIsOpen: true});
+    }
+  
+    afterOpenModal() {
+      // references are now sync'd and can be accessed.
+      // this.subtitle.style.color = '#f00';
+    }
+  
+    closeModal() {
+      this.setState({modalIsOpen: false});
+    }
+  
+    render() {
+      return (
+        <div className="top-headline mx-1 d-inline">
+  
+            <button className="badge badge-black badge-shape-poly" onClick={this.openModal}>{this.props.message}<span className="badge badge-danger badge-sub-red ml-2">!</span></button>
+            {/* <h3 className="top-headline mx-1 d-inline"><span className="badge badge-black badge-shape-poly ">15% Sale<span className="badge badge-danger badge-sub-red ml-2">!</span></span></h3> */}
+            {/* <button style={{fontSize: "1.5rem"}} className="badge badge-black badge-shape-poly top-headline" onClick={this.openModal}>{this.props.message}</button> */}
+  
+            <Modal
+                isOpen={this.state.modalIsOpen}
+                onAfterOpen={this.afterOpenModal}
+                onRequestClose={this.closeModal}
+                // TODO Remove this and figure out screenreader error 
+                ariaHideApp={false}
+                // ENDTODO
+                style={customStyles}
+                // className="ReactModal__Content_Override"
+                contentLabel="Example Modal"
+            >
+                <button className="close-modal" onClick={this.closeModal}>X</button>
+    
+                <h2 ref={subtitle => this.subtitle = subtitle}>{this.props.message}</h2>
+                
+                <div>{modalContent[this.props.getContent].message}</div>
+    
+            </Modal>
+
         </div>
-    </div>
+      );
+    }
+  }
 
-    {/* <!-- Sale Modal --> */}
-    <div className="modal fade" id="sale" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div className="modal-dialog modal-dialog-centered" role="document">
-            <div className="modal-content">
-            <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">15% Sale</h5>
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div className="modal-body">
-                This one speaks for itself, maybe add an image and more text but basiclly a site wide message of letting people know a sale is going on and with what.
-            </div>
-            <div className="modal-footer">
-                <button type="button" className="btn btn-black" data-dismiss="modal">Close</button>
-                {/* <button type="button" className="btn btn-primary">Save changes</button> */}
-            </div>
-            </div>
-        </div>
-    </div>
-
-    {/* <!-- Pin Modal --> */}
-    <div className="modal fade" id="pin" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div className="modal-dialog modal-dialog-centered" role="document">
-            <div className="modal-content">
-                <div className="modal-header">
-                    <h5 className="modal-title" id="exampleModalLabel">Pinned Story</h5>
-                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div className="modal-body">
-                    This is a pinned story, once the site is complete this will redirect to the story in reference. If we know a story is developing or will evolve we will let users subscribe to it and be notified so they can stay up to date with the news they care about all within our site. 
-                </div>
-                <div className="modal-footer">
-                    <button type="button" className="btn btn-black" data-dismiss="modal">Close</button>
-                    {/* <button type="button" className="btn btn-primary">Save changes</button> */}
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {/* <!-- Employee Photo Modal --> */}
-    <div className="modal fade" id="employeePhoto" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div style={{maxWidth: '700px'}} className="modal-dialog modal-dialog-centered" role="document" data-dismiss="modal">
-            <div style={{width: '700px'}} className="modal-content">
-                {/* <div style={{width: '700px'}} className="modal-header">
-                    <h5 className="modal-title" id="exampleModalLabel">Photo</h5>
-                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div> */}
-
-                <div style={{height: '700px', width: '100%'}} className="employee-image mx-auto d-block">
-                    <div className="employee-image-zoom">
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-  </div>
-);
-
-export default Modals;
+  export {ReactModal, customStyles, modalContent }

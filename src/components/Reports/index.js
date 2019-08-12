@@ -359,7 +359,7 @@ const Reports = (props) => (
                 {expenses.map((object, i) =>
 
                   <tr key={i} className="bg-light">
-                    <td><Link to={'sales/' + pad(object.id, 3)}><i class="fas fa-file-invoice-dollar"></i></Link></td>
+                    <td><a href={object.file}><i class="fas fa-file-invoice-dollar"></i></a></td>
                     <td>{object.date || 'test'}</td>
                     <td>{object.name}</td>
                     <td>{object.department}</td>

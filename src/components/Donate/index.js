@@ -10,11 +10,11 @@ const DonatePage = (props) => (
   <div>
     <div className="mt-5 container-fluid container-custom">
       <div className="row justify-content-center">
-        <div className="col-4">
+        <div className="col-12 col-md-4">
           {/* <DonateForm history={props.history}/> */}
           <NotUnlessAdmin/>
         </div>
-        <div className="col-8">
+        <div className="col-12 col-md-8">
           <DonateActivity history={props.history}/>
         </div>
       </div>
@@ -107,7 +107,7 @@ class DonateActivityBase extends Component {
 }
 
 const StyledDonationList = ({donations}) => (
-  <table className="table">
+  <table className="table table-responsive">
   <thead className="thead-dark">
     <tr>
       <th scope="col">DONATION ID</th>
