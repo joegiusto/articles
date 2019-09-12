@@ -5,9 +5,11 @@ import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
 const PasswordForgetPage = () => (
-  <div>
-    <h1>PasswordForget</h1>
-    <PasswordForgetForm />
+  <div className="ForgotPasswordPage">
+    <div className="ForgotPasswordContainer">
+      <div class="border-decal"></div>
+      <PasswordForgetForm />
+    </div>
   </div>
 );
 
@@ -52,6 +54,9 @@ class PasswordForgetFormBase extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
+
+        <h1>Forgot Password?</h1>
+
         <input
           name="email"
           className="form-control"
@@ -60,11 +65,17 @@ class PasswordForgetFormBase extends Component {
           type="text"
           placeholder="Email Address"
         />
-        <button className="btn btn-dark mt-1" disabled={isInvalid} type="submit">
+        <button className="btn btn-dark my-3" disabled={isInvalid} type="submit">
           Reset My Password
         </button>
 
         {error && <p>{error.message}</p>}
+
+        <div className="dual-header mt-5">
+          <p>Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link></p>
+          <p>Meant to sign in? <Link to={ROUTES.SIGN_IN}>Sign In</Link></p>
+        </div>
+
       </form>
     );
   }

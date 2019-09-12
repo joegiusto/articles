@@ -1,0 +1,139 @@
+
+
+.issues-page {
+  max-width: 1368px;
+
+  .g-card {
+    $border: 15px;
+    background-color: rgb(255, 255, 255);
+    width: 377px;
+    height: 600px;
+    position: relative;
+    &-background {
+      background-image: url('http://4.bp.blogspot.com/-Wjz6L4LYzGQ/T2TnAoHfbtI/AAAAAAAAgIo/x8zDn6SzBwI/s1600/north%2BSt%2BP.jpg');
+      height: 100%;
+      width: calc(100% - #{$border} * 2);
+      position: absolute;
+      top: calc(0px + #{$border});
+      left: calc(0px + #{$border});
+
+      padding-bottom: calc(#{$border} * 2);
+      padding-right: calc(#{$border} * 2);
+      
+      background-size: cover;
+      background-origin: content-box;
+      background-repeat: no-repeat;
+      background-position: 46% 0%;
+      filter: contrast(90%) sepia(80%) saturate(20%);
+    }
+    &-text-card {
+      position: absolute;
+      bottom: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: white;
+      width: 80%;
+      height: auto;
+      text-transform: uppercase;
+      font-family: 'Oswald', sans-serif;
+      .top-text {
+        color: gray;
+        padding-top: 1rem;
+      }
+      .mid-text {
+        color: black;
+        font-family: 'Oswald', sans-serif;
+        font-size: 2rem;
+        line-height: 2rem;
+        letter-spacing: 3px;
+      }
+      .bottom-text {
+        color: gray;
+        font-weight: bold;
+        font-size: 0.7rem;
+        padding-bottom: 1rem;
+        letter-spacing: 3px;
+      }
+    }
+  }
+
+  /*==================================================
+ * Effect 1
+ * ===============================================*/
+.effect1{
+  -webkit-box-shadow: 0 10px 6px -6px #777;
+     -moz-box-shadow: 0 10px 6px -6px #777;
+          box-shadow: 0 10px 6px -6px #777;
+}
+
+  /*==================================================
+  * Effect 2
+  * ===============================================*/
+  .effect2
+  {
+  position: relative;
+  }
+  .effect2:before, .effect2:after
+  {
+  z-index: -1;
+  position: absolute;
+  content: "";
+  bottom: 15px;
+  left: 10px;
+  width: 50%;
+  top: 80%;
+  max-width:300px;
+  background: #777;
+  -webkit-box-shadow: 0 15px 10px #777;
+  -moz-box-shadow: 0 15px 10px #777;
+  box-shadow: 0 15px 10px #777;
+  -webkit-transform: rotate(-3deg);
+  -moz-transform: rotate(-3deg);
+  -o-transform: rotate(-3deg);
+  -ms-transform: rotate(-3deg);
+  transform: rotate(-3deg);
+  }
+  .effect2:after
+  {
+  -webkit-transform: rotate(3deg);
+  -moz-transform: rotate(3deg);
+  -o-transform: rotate(3deg);
+  -ms-transform: rotate(3deg);
+  transform: rotate(3deg);
+  right: 10px;
+  left: auto;
+  }
+
+  .effect8
+  {
+      position:relative;
+      -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+        -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+              box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  }
+  .effect8:before, .effect8:after
+  {
+      content:"";
+      position:absolute;
+      z-index:-1;
+      -webkit-box-shadow:0 0 20px rgba(0,0,0,0.8);
+      -moz-box-shadow:0 0 20px rgba(0,0,0,0.8);
+      box-shadow:0 0 20px rgba(0,0,0,0.8);
+      top:10px;
+      bottom:10px;
+      left:0;
+      right:0;
+      -moz-border-radius:100px / 10px;
+      border-radius:100px / 10px;
+  }
+  .effect8:after
+  {
+      right:10px;
+      left:auto;
+      -webkit-transform:skew(8deg) rotate(3deg);
+        -moz-transform:skew(8deg) rotate(3deg);
+          -ms-transform:skew(8deg) rotate(3deg);
+          -o-transform:skew(8deg) rotate(3deg);
+              transform:skew(8deg) rotate(3deg);
+  }
+}

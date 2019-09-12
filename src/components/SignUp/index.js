@@ -17,6 +17,7 @@ const SignUpPage = () => (
       <div class="border-decal"></div>
       <SignUpForm />
     </div>
+    
   </div>
 );
 
@@ -177,7 +178,7 @@ class SignUpFormBase extends Component {
 
         <div className="row">
 
-          <div className="col">
+          <div className="col-12 col-md-6">
             <div className="form-label-group">
               <input 
                 name="passwordOne"
@@ -196,7 +197,7 @@ class SignUpFormBase extends Component {
             </div>
           </div>
   
-          <div className="col">
+          <div className="col-12 col-md-6">
             <div className="form-label-group">
               <input 
                 name="passwordTwo"
@@ -262,7 +263,7 @@ class SignUpFormBase extends Component {
         <div className="dual-header mt-5">
           <PasswordForgetLink />
           {/* <SignUpLink /> */}
-          <span>Meant to sign in? <Link to={ROUTES.SIGN_IN}>Sign In</Link></span>
+          <p>Meant to sign in? <Link to={ROUTES.SIGN_IN}>Sign In</Link></p>
         </div>
 
       </form>

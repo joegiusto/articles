@@ -1,0 +1,131 @@
+.new-home {
+  position: relative;
+  height: 200px;
+  &-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position-y: 50%;
+    background-repeat: no-repeat;
+    background-image: url('https://www.capitolhillhotel-dc.com/wp-content/uploads/2018/10/GettyImages-918038524-1.jpg');
+  }
+  &-text {
+    font-family: 'Open Sans Condensed', sans-serif;
+    position: absolute;
+    height: 100%;
+    width: 60%;
+    padding-left: 2rem;
+    padding-top: 2.5rem;
+    color: white;
+    h1 {
+      font-family: carlmarx, sans-serif;
+      font-weight: 700;
+      font-style: normal;
+    }
+    p {
+      font-family: carlmarx, sans-serif;
+      font-weight: 400;
+      font-style: normal;
+    }
+  }
+
+  &-bar {
+    position: absolute;
+    bottom: -20px;
+    background-color: $accent-color;
+    left: 2.5%;
+    // transform: translateX(-50%);
+    width: 95%;
+    height: 50px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.15);
+    // &:after {
+    //   border-radius: 10px;
+    //   box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.15);
+    //   z-index: -1;
+    //   position: absolute;
+    //   bottom: -30px;
+    //   content: "";
+    //   width: 100%;
+    //   height: 40px;
+    //   background-color: lighten($accent-color, 5%);
+    // }
+  }
+}
+
+.home-container {
+  @media (min-width: 1200px) {
+        max-width: 1366px;
+  }
+
+  .story-updates {
+    .slick-list {
+      
+    }
+    .slick-slide {
+      
+    }
+    .slick-card:not(.header) {
+      background-color: aquamarine;
+    }
+  }
+
+  
+
+}
+
+.home {
+
+  .design-section {
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 5px 0px #000;
+    border-radius: 3px;
+    padding: 1rem 2rem;
+    &-items{
+      .item {
+        border-radius: 5px;
+        border: solid 2px #000;
+        .photo {
+          width: 90px;
+          height: 100px;
+        }
+      }
+    }
+  }
+
+  .orders-section {
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 5px 0px #000;
+    border-radius: 3px;
+    padding: 1rem 2rem;
+    &-items{
+      .item {
+        border-radius: 5px;
+        border: solid 2px #000;
+        .photo {
+          width: 90px;
+          height: 100px;
+        }
+      }
+    }
+  }
+
+  .updates-section {
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 5px 0px #000;
+    border-radius: 3px;
+    padding: 1rem 2rem;
+    &-items{
+      .item {
+        border-radius: 5px;
+        border: solid 2px #000;
+        .photo {
+          width: 90px;
+          height: 100px;
+        }
+      }
+    }
+  }
+
+}

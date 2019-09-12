@@ -245,6 +245,13 @@ export const sales = [
   {
     id: 0,
     date: moment("2019-07-28T12:00").format('LLL'),
+    name: 'Joey G.',
+    note: 'Pre Order',
+    total: 30.00
+  },
+  {
+    id: 0,
+    date: moment("2019-07-28T12:00").format('LLL'),
     name: 'Tyler W.',
     note: 'Pre Order',
     total: 30.00
@@ -264,9 +271,16 @@ export const sales = [
     total: 30.00
   },
   {
-    id: 2,
+    id: 3,
     date: moment("2019-07-31T12:00").format('LLL'),
     name: 'Elvis H.',
+    note: 'Pre Order',
+    total: 30.00
+  },
+  {
+    id: 3,
+    date: moment("2019-09-04T12:00").format('LLL'),
+    name: 'Miles.',
     note: 'Pre Order',
     total: 30.00
   }

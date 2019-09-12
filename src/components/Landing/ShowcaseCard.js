@@ -84,7 +84,11 @@ export default function ShowcaseCard(props) {
                     </div>
               </div>
 
+              <div className="btn btn-articles-light w-75">Head to Store</div>
+
           </div>
+
+          
 
           {/* <p>Card Open? {open ? 'Yes' : 'No'}</p>
           <button onClick={() => openCard(!open)}>Toggle</button>

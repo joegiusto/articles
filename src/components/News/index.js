@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import playButtonLight from '../../assets/img/News/yt_logo_mono_light.png'
+import playButtonDark from '../../assets/img/News/yt_logo_mono_dark.png'
+import moment from 'moment';
 
 function FlintCounter() {
   // Declare a new state variable, which we'll call "count"
@@ -18,10 +21,11 @@ const Page = () => (
     {/* <h1>News Homepage</h1>
     <p>Here is where recent news articles will go.</p> */}
 
-    <div className="row">
-      <div className="col-9">
-        <div className="focused-news-panel shadow">
-          <div className="row pl-4">
+    <div className="row justify-content-between"> 
+      <div className="col-8">
+        <div className="p-4">
+
+          <div className="row pl-4 focused-news-panel shadow">
 
             <div className='col-12'>
               <div className="dual-header">
@@ -82,9 +86,7 @@ const Page = () => (
 
           </div>
 
-          {/* <hr className='col-12'/> */}
-
-          <div className="row mt-4 pl-4">
+          <div className="row mt-4 pl-4 focused-news-panel shadow">
 
             <div className='col-12'>
               <div className="large-story-card">
@@ -114,19 +116,124 @@ const Page = () => (
             </div>
 
           </div>
+
         </div>
       </div>
 
-      <div className="col-3">
-        <div className="side-news-panel shadow affix">
+      <div className="col-4">
+        
+        <div className="side-news-panel side-news-panel-shadow affix">
           <div className="row">
             <div className="col-12">
               <div className="the-recap">
-
+                {/* <h1>The Recap <i class="fas fa-share fa-rotate-90"></i></h1> */}
+                <div className="the-recap-embed"></div>
+                <div className="the-recap-embed-overlay">
+                  <div className="background"></div>
+                  <img src={playButtonDark} alt=""/>
+                  <span className="text">Coming Soon</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        <div className="side-news-panel side-news-panel-shadow affix text-center">
+
+          <div className="weather-header"></div>
+
+          <div className="dual-header">
+
+            <div className="weather-title ml-3 mt-2">Weekly Weather <span className="highlight ml-1 py-1 px-2">Fishkill, NY</span></div>
+
+            <div className="weather-toggle-switch mr-3 mt-2">
+              <i className="fas active fa-home mr-0"></i>
+              <span className="divide">/</span>
+              <i className="fas fa-search-location mr-0"></i>
+            </div>
+
+          </div>
+
+          <div className="weather-content mt-4">
+            <div className="row justify-content-center">
+              <div className="col-auto">
+                <div className={'day-tile ' + (moment().format('d') == 0 ? 'active' : '')}>
+                  <div className="day">Sun.</div>
+                  <div className="date">{moment().add(-2, 'day').format('MM/DD')}</div>
+                  <div className="icon">
+                    <i class="fas fa-sun"></i>
+                  </div>
+                </div>
+              </div>
+              <div className="col-auto">
+                <div className={'day-tile ' + (moment().format('d') == 1 ? 'active' : '')}>
+                  <div className="day">Mon.{moment().format('d')}</div>
+                  <div className="date">{moment().add(-1, 'day').format('MM/DD')}</div>
+                  <div className="icon">
+                    <i class="fas fa-cloud-sun"></i>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-auto">
+                <div className={'day-tile ' + (moment().format('d') == 2 ? 'active' : '')}>
+                  
+                  <div className="day">Tues.{moment().format('d')}</div>
+
+                  <div className="date">{moment().add(0, 'day').format('MM/DD')}</div>
+
+                  <div className="icon">
+                    <i class="fas fa-cloud-sun"></i>
+                  </div>
+
+                </div>
+              </div>
+
+              <div className="col-auto">
+                <div className={'day-tile ' + (moment().format('d') == 3 ? 'active' : '')}>
+                  <div className="day">Wed.</div>
+                  <div className="date">{moment().add(1, 'day').format('MM/DD')}</div>
+                  <div className="icon">
+                    <i class="fas fa-cloud-showers-heavy"></i>
+                  </div>
+                </div>
+              </div>
+              <div className="col-auto">
+                <div className={'day-tile ' + (moment().format('d') == 4 ? 'active' : '')}>
+                  <div className="day">Thur.</div>
+                  <div className="date">{moment().add(2, 'day').format('MM/DD')}</div>
+                  <div className="icon">
+                    <i class="fas fa-cloud-showers-heavy"></i>
+                  </div>
+                </div>
+              </div>
+              <div className="col-auto">
+                <div className={'day-tile ' + (moment().format('d') == 5 ? 'active' : '')}>
+                  <div className="day">Fri.</div>
+                  <div className="date">{moment().add(3, 'day').format('MM/DD')}</div>
+                  <div className="icon">
+                    <i class="fas fa-cloud-sun"></i>
+                  </div>
+                </div>
+              </div>
+              <div className="col-auto">
+                <div className={'day-tile ' + (moment().format('d') == 6 ? 'active' : '')}>
+                  <div className="day">Sat.</div>
+                  <div className="date">{moment().add(4, 'day').format('MM/DD')}</div>
+                  <div className="icon">
+                    <i class="fas fa-sun"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="weather-footer mt-3">
+
+          </div>
+
+        </div>
+
       </div>
 
     </div>

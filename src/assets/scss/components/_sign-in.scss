@@ -1,7 +1,7 @@
 $distance: -10px;
 $decal-color: #b06565;
 
-.SignInPage, .SignUpPage {
+.SignInPage, .SignUpPage, .ForgotPasswordPage {
   // background-color: $base-color;
   background-image: linear-gradient(0deg, rgba(255, 183, 183, 0.4) 0%, rgba(224, 212, 174, 0.2) 65%);
   position: relative;
@@ -72,11 +72,11 @@ $decal-color: #b06565;
     padding-left: 10px;
   }
 
-  .SignUpContainer {
+  .SignUpContainer, .ForgotPasswordContainer {
     left: 50%!important;
   }
 
-  .SignInContainer, .SignUpContainer {
+  .SignInContainer, .SignUpContainer, .ForgotPasswordContainer {
     position: absolute;
     top: 50%;
     left: 70%;
@@ -165,6 +165,41 @@ $decal-color: #b06565;
           }
         }
       }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .SignInPage, .SignUpPage, .ForgotPasswordPage {
+    overflow: hidden;
+    .spacer-1 {
+      top: 41.5%;
+      left: 5%;
+    }
+    .spacer-2 {
+      left: 14%;
+      top: 46.5%;
+    }
+    .spacer-3 {
+      top: 54.5%;
+      left: 29%;
+    }
+    .spacer-credit {
+      bottom: 2.5%;
+      top: unset;
+      left: 23%;
+    }
+    .SignInContainer, .SignUpContainer, .ForgotPasswordContainer {
+      width: 95%;
+    }
+    .SignInContainer {
+      left: 50%;
+      .border-decal_top, .border-decal_side {
+        display: none;
+      }
+    }
+    .dual-header {
+      flex-direction: column;
     }
   }
 }

@@ -10,7 +10,7 @@ const Submissions = () => (
   <div className='mt-4 container-fluid'>
 
     <div className="row justify-content-between align-items-center">
-      <div className="col-12 order-2 col-md-4">
+      <div className="col-12 order-2 order-md-1 col-md-4">
 
         <div className="submission-side-panel">
 
@@ -48,7 +48,7 @@ const Submissions = () => (
         </div>
 
       </div>
-      <div className="col-12 order-1 col-md-8">
+      <div className="col-12 order-1 order-md-2 col-md-8">
         <h1>Popular {moment().format('MMMM')} Submissions<span className="badge badge-secondary ml-2"></span></h1>
         <h5>Next Pick At End of Month <span className="badge badge-secondary"><Countdown date={'1 Sep 2019'} /></span></h5>
         <p>Log in to vote.</p>

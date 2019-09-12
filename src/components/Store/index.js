@@ -52,7 +52,7 @@ export default function StorePage(props) {
 	const [productSelect, changeProductSelect] = useState('Symbolic Adoptions');
 
 	return (
-  <div className='container'>
+  <div className='container store-page'>
 
 		<h1 className="mt-2 mt-md-5 store-heading text-center">Featured</h1>
 

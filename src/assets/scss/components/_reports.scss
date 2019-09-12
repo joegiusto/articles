@@ -1,3 +1,252 @@
+.fixed-componsation-50 {
+  height: 50px;
+}
+
+.reports-page {
+  // height: 500vh;
+
+  .table {
+    font-size: 0.7rem;
+    background-color: white;
+  }
+
+  .results-dual-header {
+    .page {
+      i {
+        cursor: pointer;
+      }
+    }
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    @media (min-width: 768px) {
+      flex-direction: row;
+    }
+  }
+
+  .chart {
+    margin-top: 1rem;
+    border: 1px solid rgb(0, 0, 0);
+    @media (min-width: 768px) {
+      // height: 150px!important;
+    }
+  }
+
+  .results {
+    .result {
+      color: rgb(172, 172, 172);
+      margin-left: 5px;
+      cursor: pointer;
+      &-active {
+        background-color: white;
+        border-radius: 10px;
+        color: #000;
+        padding: 0rem 0.3rem;
+      }
+    }
+  }
+
+  .fixed-total {
+    z-index: 2;
+    background-color: $base-color;
+    width: 100%;
+    padding: 0.35rem 0.5rem;
+    border-bottom: solid 1px black;
+    position: fixed;
+    height: 50px;
+    color: $accent-color;
+    text-shadow: 1px 1px 1px #000;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    .total {
+      color: black;
+      text-shadow: 0px 0px 0px #000;
+    }
+  }
+  .live {
+    position: absolute;
+    top: 5px;
+    left: 30px;
+    background-color: red;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 0.1rem 0.5rem;
+    z-index: 1;
+    .recording-dot {
+      $size: 0.75rem;
+      margin-right: 0.3rem;
+      background-color: white;
+      border-radius: 100%;
+      width: $size;
+      height: $size;
+      opacity: 1;
+      animation-name: dot-blink;
+      animation-direction: alternate-reverse;
+      animation-duration: 1s;
+      animation-timing-function: ease-in;
+      animation-iteration-count: infinite;
+    }
+    @keyframes dot-blink {
+      from {opacity: 1;}
+      to {opacity: 0;}
+    }
+  }
+  .info {
+    height: 200px;
+    background-color: $accent-color;
+    border: solid 3px #000;
+    border-radius: 5px;
+    box-shadow: 3px 3px 3px -2px #000;
+    margin-top: 1rem;
+    position: relative;
+    transition-duration: 1s;
+    overflow-y: hidden;
+    &.expanded {
+      height: calc(100vh - 125px);
+    }
+    .extra {
+      position: absolute;
+      left: 0px;
+      top: calc(200px - 35px);
+      width: 100%;
+      height: 550px;
+      background-color: lighten($accent-color, 10%);
+      border-top: solid 1px #000;
+      border-bottom: solid 1px #000;
+      padding: 1rem;
+    }
+    .report {
+      position: absolute;
+      bottom: 10px;
+    }
+    .footer {
+      position: absolute;
+      bottom: 0px;
+      text-align: center;
+      padding: 0.25rem;
+      // transform: translateX(50%);
+      border-top: solid 3px rgba(0, 0, 0, 0.5);
+      background-color: darken($accent-color, 5%);
+      width: 100%; 
+      font-weight: bold;
+      i {
+        transition-duration: 1s;
+        &.expanded {
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
+
+  .table-selector {
+
+    .main, .sub:not(:empty) {
+      margin-top: 1rem;
+    }
+
+    .main {
+      cursor: pointer;
+      overflow-x: scroll;
+      padding: .6rem .6rem;
+      border: solid 1px #000;
+      background-color: $base-color;
+      border-radius: 10px;
+      .selection:last-child {
+        margin-right: 0rem;
+      }
+      .selection {
+        text-transform: uppercase;
+        border: solid 2px black;
+        border-radius: 5px;
+        padding: .0rem .3rem;
+        margin-right: .3rem;
+        font-size: 1.2rem;
+        &-active {
+          background-color: $accent-color;
+        }
+      }
+    }
+
+    .sub {
+      cursor: pointer;
+      overflow-x: scroll;
+      padding: .6rem .6rem;
+      border: solid 1px #000;
+      background-color: $base-color;
+      border-radius: 10px;
+      &:empty {
+        padding: .0rem;
+        border: solid 0px #000;
+      }
+      .selection {
+        text-transform: uppercase;
+        border: solid 2px black;
+        border-radius: 5px;
+        padding: .0rem .3rem;
+        margin-right: .3rem;
+        font-size: 1.2rem;
+        &-active {
+          background-color: $accent-color;
+        }
+      }
+    }
+
+  }
+
+  .donation-snippet {
+    background-color: white;
+    border: solid 3px #000;
+    padding: 1rem;
+    max-height: 188px;
+    
+    position: relative;
+    header {
+      position: absolute;
+      font-family: forte;
+      width: 100%;
+      top: 0px;
+      left: 0px;
+      background-color: #000;
+      color: white;
+      padding-top: 0.5rem;
+      padding-left: 0.5rem;
+    }
+    p {
+      font-family: 'Courier New', Courier, monospace;
+    }
+    span {
+      color: white;
+      background-color: #000;
+      padding: 0.2rem;
+      margin-left: 0.1rem;
+      margin-right: 0.1rem;
+    }
+    button {
+      font-family: forte;
+    }
+    .raised {
+      // line-height: 20px;
+      align-self: flex-end;
+    }
+  }
+
+}
+
+@media (min-width: 768px) {
+  .reports-page {
+    .table-selector {
+      .main, .sub {
+        overflow: hidden;
+      }
+    }
+    .table {
+      font-size: 1rem;
+    }
+  }
+}
+
 .reports-left-panel {
   display: flex;
   flex-direction: column;

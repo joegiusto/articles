@@ -3,20 +3,28 @@ import { compose } from 'recompose';
 import { withAuthorizationHide } from '../Session';
 import { withFirebase } from '../Firebase';
 import * as ROLES from '../../constants/roles';
-
-import moment from 'moment'
+import moment from 'moment';
 
 const DonatePage = (props) => (
   <div>
     <div className="mt-5 container-fluid container-custom">
       <div className="row justify-content-center">
+
         <div className="col-12 col-md-4">
           {/* <DonateForm history={props.history}/> */}
           <NotUnlessAdmin/>
         </div>
+
         <div className="col-12 col-md-8">
           <DonateActivity history={props.history}/>
         </div>
+
+        <div className="col-12">
+          <div id="card-element">
+              {/* <!-- Stripe card inputs get injected here --> */}
+          </div>
+        </div>
+
       </div>
     </div>
   </div>

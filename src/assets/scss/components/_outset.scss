@@ -1,0 +1,119 @@
+.outset-wrapper {
+  
+  .outset-map {
+    position: absolute;
+    bottom: 2.5%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.2rem;
+    padding: 0.2rem 0.4rem;
+    font-weight: bold;
+
+    .map {
+      font-family: 'Caveat', cursive;
+      font-size: 1.6rem;
+    }
+
+    .debug {
+
+      background-color: white;
+      border: solid 3px #000;
+      padding: 0.2rem 0.4rem;
+    }
+  }
+
+  .row-fullpage {
+    height: 100%;
+    // align-content: center;
+    align-items: center;
+  }
+  width: 100%;
+  height: calc(100vh - 50px);
+  // background-color: $accent-color;
+  background: #FFEFBA;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #FFFFFF, #FFEFBA);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #FFFFFF, #FFEFBA); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  .welcome-col {
+    // background-color: white;
+    background-color: $accent-color;
+    padding: 1.5rem;
+    border: solid 5px #000;
+    h1 {
+      // font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+      // font-family: 'Gayathri', sans-serif;
+      font-family: 'Fugaz One', cursive;
+      // text-transform: uppercase;
+      // font-weight: bold;
+      font-size: 6rem;
+      color: #000;
+    }
+    h5 {
+      color: gray;
+    }
+    .focus-explanation {
+      background-color: white;
+      margin-top: 2rem;
+      padding: 1rem;
+      height: 150px;
+      overflow-y: scroll;
+    }
+  }
+
+  .outset-form-group {
+    margin-bottom: 30px;
+    .name {
+      text-transform: uppercase;
+      font-weight: bold;
+      // margin-left: 15px;
+      font-size: 2rem;
+    }
+    input {
+      font-size: 2rem;
+      border-radius: 5px;
+      border: none;
+      // padding: 0.5rem 1.0rem;
+      width: 100%;
+      padding-left: 1rem;
+    }
+    .input-guess {
+      position: relative;
+      width: 100%;
+      .input-guess-input {
+        width: 100%;
+      }
+
+      .input-guess-explanation {
+        position: absolute;
+        top: 50%;
+        right: 0%;
+        transform: translateX(-50%) translateY(-50%);
+        border: solid 3px #000;
+        padding: 0.2rem 1rem;
+        background-color: $base-color;
+        box-shadow: 1px 1px 0px #000;
+        font-size: 1rem;
+        font-weight: 700;
+        z-index: 1;
+        &:hover {
+          cursor: pointer;
+          .input-guess-explanation-content {
+            opacity: 1;
+            display: inline;
+          }
+        }
+      }
+
+      .input-guess-explanation-content {
+        opacity: 0;
+        position: absolute;
+        background-color: white;
+        border: solid 2px #000;
+        top: -20px;
+        width: 200px;
+        z-index: -1;
+      }
+
+    }
+  }
+}
