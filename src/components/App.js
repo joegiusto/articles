@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import Navigation from './Navigation';
 
@@ -50,13 +50,36 @@ import NotFoundPage from './Navigation/NotFoundPage';
 import * as ROUTES from '../constants/routes';
 import { withAuthentication } from './Session';
 
+import { AuthUserContext } from './Session';
+
 const App = () => (
   <Router>
     <div>
 
       <Navigation />
 
+      <AuthUserContext.Consumer>
+        {authUser =>
+          <div style={{position: 'absolute', top: '0px', zIndex: '1000', color: 'red'}}>
+
+          {!authUser ? (
+            <div>Assume Completion of Outset while authUser loads</div>
+          ) : (
+            <>
+              {authUser.outset.completed ? 'Completed, site can be used' : "Not completed, plesae complete Outset"}
+            </>
+          )
+          }
+
+        </div>
+        }
+      </AuthUserContext.Consumer>
+
       <Switch>
+        {/* Something like this? */}
+        {/* <Route path="*" component={OutsetPage}/> */}
+        {/* <Redirect from="*" to="/outset"/> */}
+
         <Route exact path={ROUTES.LANDING} component={LandingPage} />
   
         <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
@@ -100,6 +123,8 @@ const App = () => (
   
         <Route component={NotFoundPage} />
       </Switch>
+
+      {/* <Redirect from="*" to="/outset"/> */}
 
     </div>
   </Router>

@@ -1,0 +1,198 @@
+.background-images {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 0;
+  width: 100vw;
+  height: 100vh;
+  transition-duration: 1s;
+  &.step-1{
+    transform: translateY(calc(-100vh + 50px));
+  }
+  &.step-2{
+    transform: translateY(calc(-200vh + 50px));
+  }
+  &.step-3{
+    transform: translateY(calc(-300vh + 50px));
+  }
+  &.step-4{
+    transform: translateY(calc(-400vh + 50px));
+  }
+  &.step-5{
+    transform: translateY(calc(-500vh + 50px));
+  }
+
+  .join, .liberty, .voice, .sam, .power, .tread, .occupy, .george, .martin, .fingers, .mistletoe, .saw, .yinyang, .peace, .technocrat, .eagle, .think, .wallStreet, .flappers, .styleMain, .styleHat, .styleShoe, .fatCats, .jerkAndCreeps, .shitParty, .slowingDown {
+    position: absolute;
+  }
+
+  .join {
+    top: 200px;
+    left: 50px;
+    width: 300px;
+    // transform: rotate(5deg);
+    transform: rotate(-5deg);
+    z-index: 1;
+  }
+  .liberty {
+    top: 100px;
+    left: 200px;
+    width: 500px;
+    transform: rotate(-5deg);
+  }
+  .voice {
+    left: 55%;
+    top: 500px;
+    width: 500px;
+    transform: rotate(5deg);
+  }
+  .sam {
+    left: 70%;
+    top: 10%;
+    width: 00px;
+  }
+  .power {
+    left: 25%;
+    top: 550px;
+    transform: rotate(-5deg);
+    width: 200px;
+    box-shadow: 1px 1px 5px #000;
+    filter: sepia(100%);
+  }
+  .tread {
+    left: 13.5%;
+    z-index: 5;
+    top: 650px;
+    width: 200px;
+    transform: rotate(-5deg);
+  }
+  .occupy {
+    left: 3%;
+    top: 450px;
+    width: 200px;
+    transform: rotate(-5deg);
+  }
+  .george {
+    left: 57.5%;
+    top: 30px;
+    width: 350px;
+    transform: rotate(5deg);
+  }
+  .martin {
+    left: 78.75%;
+    top: -220px;
+    width: 550px;
+    transform: rotate(5deg);
+  }
+  // End Step Zero Intro
+
+  // Step One General
+  .fingers {
+    width: 230px;
+    left: 15%;
+    top: calc(100vh - 50px + 600px);
+    transform: rotate(-5deg);
+  }
+  .mistletoe {
+    width: 500px;
+    left: 75%;
+    top: calc(100vh - 50px + 150px);
+    transform: rotate(5deg);
+  }
+  .saw {
+    left: 75%;
+    width: 500px;
+    top: calc(100vh - 50px + 600px);
+    transform: rotate(5deg);
+  }
+  .yinyang {
+    width: 200px;
+    left: 1%;
+    top: calc(100vh - 50px + 620px);
+    transform: rotate(-5deg);
+  }
+  .peace {
+    width: 200px;
+    left: 4%;
+    top: calc(100vh - 50px + 50px);
+    transform: rotate(-5deg);
+  }
+  .technocrat {
+    width: 500px;
+    right: 375px;
+    transform: rotate(90deg);
+    top: calc(100vh - 50px + 350px);
+  }
+  .think {
+    width: 200px;
+    left: 22%;
+    transform: rotate(-5deg);
+    top: calc(100vh - 50px + 790px);
+    filter: drop-shadow(-2px -2px 5px rgba(black, 0.5))
+  }
+  .wallStreet {
+    width: 500px;
+    left: -25px;
+    transform: rotate(-5deg);
+    top: calc(100vh - 50px + 10px);
+  }
+  .eagle {
+    width: 400px;
+    left: 0%;
+    transform: rotate(-5deg);
+    top: calc(100vh - 50px + 850px);
+  }
+  // End Step One General
+  
+  // Step Two Clothing
+  .flappers {
+    top: calc(200vh - 50px + 500px);
+    left: 70%;
+    width: 400px;
+    transform: rotate(5deg);
+  }
+  .styleMain {
+    top: calc(200vh - 50px + 150px);
+    left: 2%;
+    width: 400px;
+    transform: rotate(-5deg);
+  }
+  .styleHat {
+    top: calc(200vh - 50px + 50px);
+    left: 1%;
+    width: 200px;
+  }
+  .styleShoe {
+    top: calc(200vh - 50px + 450px);
+    left: 19%;
+    width: 200px;
+    transform: rotate(-5deg);
+  }
+  // End Step Two Clothing
+
+  // Step Four Party
+  .fatCats {
+    top: calc(400vh - 50px + 150px);
+    left: 6.5%;
+    width: 500px;
+    transform: rotate(-5deg);
+  }
+  .jerkAndCreeps {
+    top: calc(400vh - 50px + 540px);
+    left: 5.5%;
+    width: 500px;
+    transform: rotate(-5deg);
+  }
+  .shitParty {
+    top: calc(400vh - 50px + 150px);
+    right: 6.5%;
+    width: 500px;
+    transform: rotate(5deg);
+  }
+  .slowingDown {
+    top: calc(400vh - 50px + 550px);
+    right: 6.5%;
+    width: 500px;
+    transform: rotate(5deg);
+  }
+}

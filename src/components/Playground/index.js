@@ -39,20 +39,6 @@ const modalContent = [
   }
 ]
 
-const Component = () => (
-  <div>
-
-    {<Outset/>}
-
-    {/* <div>Modal testing grounds for now.</div>
-    <ReactModal message="15% Sale" getContent="1"/>
-    <ReactModal message="Mueller Report Highlights" getContent="2"/>
-    <ReactModal message="Flint Water Cleanup" getContent="3"/>
-    <ReactModal message="Gun Laws" getContent="4"/>
-    <div>Email testing grounds for now</div> */}
-  </div>
-)
-
 class Outset extends React.Component {
   constructor(props) {
     super(props);
@@ -396,29 +382,6 @@ const StepFour = (props) => (
   </div>
 )
 
-// const StepFive = () => (
-//   <div>
-//     <h2>Hello, Step 5</h2>
-//     <button>Finish</button> 
-//   </div> 
-// )
-
-// const StepSix = () => (
-//   <h2>Hello, Step 6</h2>
-// )
-// const StepSeven = () => (
-//   <h2>Hello, Step 7</h2>
-// )
-// const StepEight = () => (
-//   <h2>Hello, Step 8</h2>
-// )
-// const StepNine = () => (
-//   <h2>Hello, Step 9</h2>
-// )
-// const StepTen = () => (
-//   <h2>Hello, Step 10</h2>
-// )
-
 const customStyles = {
   content : {
     top          : '50%',
@@ -493,4 +456,4 @@ class ReactModal extends React.Component {
   }
 }
 
-export default Component
+export default Outset

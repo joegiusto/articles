@@ -2,8 +2,21 @@ import React, { Component } from 'react';
 import { compose } from 'recompose';
 import { withAuthorizationHide } from '../Session';
 import { withFirebase } from '../Firebase';
+
+import {Elements, StripeProvider} from 'react-stripe-elements';
+import CheckoutForm from './CheckoutForm';
+
 import * as ROLES from '../../constants/roles';
 import moment from 'moment';
+
+const STRIPE_PUBLIC_KEY = 'pk_live_VE6HtyhcU3HCa6bin4uKgFgL00jeOY6SEW'; // TODO: PUT YOUR STRIPE PUBLISHABLE KEY HERE
+const FIREBASE_FUNCTION = 'https://us-central1-articles-1776.cloudfunctions.net/charge/'; // TODO: PUT YOUR FIREBASE FUNCTIONS URL HERE
+
+const stripe = window.Stripe(STRIPE_PUBLIC_KEY);
+const elements = stripe.elements();
+
+const charge_amount = 1000;
+const charge_currency = 'usd';
 
 const DonatePage = (props) => (
   <div>
@@ -20,15 +33,353 @@ const DonatePage = (props) => (
         </div>
 
         <div className="col-12">
-          <div id="card-element">
-              {/* <!-- Stripe card inputs get injected here --> */}
-          </div>
+          <h1>Stripe Testing Here</h1>
+          <App/>
         </div>
 
       </div>
     </div>
   </div>
 );
+
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+class App extends Component {
+  constructor (props) {
+    super(props);
+
+    this.state = {
+      amount: 1000,
+      submit: false
+    };
+
+  }
+
+  componentWillUnmount() {
+    // TODO App crash on component remount.
+    console.log("Something has to happen here because of crash")
+  }
+
+  onChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  componentDidMount() {
+    const elForm = document.getElementById('form');
+    const elPaymentButton = document.getElementById('payment-request-button');
+    const elCard = document.getElementById('card-element');
+    const elError = document.getElementById('error');
+    const elProcessing = document.getElementById('processing');
+    const elThanks = document.getElementById('thanks');
+
+    // Custom styling can be passed to options when creating an Element.
+    // (Note that this demo uses a wider set of styles than the guide below.)
+    var style = {
+      base: {
+        color: '#32325d',
+        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        fontSmoothing: 'antialiased',
+        fontSize: '16px',
+        '::placeholder': {
+          color: '#aab7c4'
+        }
+      },
+      invalid: {
+        color: '#fa755a',
+        iconColor: '#fa755a'
+      }
+    };
+
+    var card = elements.create('card', {style: style});
+    card.mount('#card-element');
+
+    // Handle real-time validation errors from the card Element.
+    card.addEventListener('change', function(event) {
+      var displayError = elError;
+      if (event.error) {
+        displayError.textContent = event.error.message;
+      } else {
+        displayError.textContent = '';
+      }
+    });
+
+    console.log(this.state.amount);
+
+    // Handle form submission.
+    var form = elForm;
+
+    // TODO Clean up this sad excuss of a file, relearn super(props), and this. bindings so I don't quit programming and drive myself crazy again...
+    var self = this;
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      console.log('Submit!')
+
+      submitCard(self.state.amount);
+
+      // stripe.createToken(card).then(function(result) {
+      //   if (result.error) {
+      //     // Inform the user if there was an error.
+      //     var errorElement = elError;
+      //     errorElement.textContent = result.error.message;
+      //   } else {
+      //     // Send the token to your server.
+      //     // stripeTokenHandler(result.token);
+      //     reBuiltCharge(result.token, 400);
+      //   }
+      // });
+
+    });
+
+    function submitCard(amount) {
+      stripe.createToken(card).then(function(result) {
+        if (result.error) {
+          // Inform the user if there was an error.
+          var errorElement = elError;
+          errorElement.textContent = result.error.message;
+        } else {
+          // Send the token to your server.
+          // stripeTokenHandler(result.token);
+          reBuiltCharge(result.token, amount);
+        }
+      });
+    }
+
+    let isSubmitting, isSuccess;
+    async function reBuiltCharge(token, newCharge) {
+
+      // Pass the received token to our Firebase function
+      let res = await charge(token, newCharge, charge_currency);
+      if (res.body.error) return elError.textContent = res.body.error;
+      console.log("Promise done");
+
+      // Card successfully charged
+      card.clear();
+      isSuccess = true;
+
+      isSubmitting = false;
+      elProcessing.style.display = 'none';
+
+      // Either display thanks or re-display form if there was an error
+      if (isSuccess === true) {
+          elThanks.style.display = 'block';
+          console.log('Form hidden, thank you!');
+      } else {
+          elForm.style.display = 'block';
+          console.log('Form should be visbile again!');
+      }
+    }
+
+    // Submit the form with the token ID.
+    function stripeTokenHandler(token) {
+      // Insert the token ID into the form so it gets submitted to the server
+      var form = elForm;
+      var hiddenInput = document.createElement('input');
+      hiddenInput.setAttribute('type', 'hidden');
+      hiddenInput.setAttribute('name', 'stripeToken');
+      hiddenInput.setAttribute('value', token.id);
+      form.appendChild(hiddenInput);
+
+      // Submit the form
+      elForm.submit();
+    }
+
+    // addPaymentRequestMethod();
+    // addCardMethod();
+
+    function addCardMethod() {
+      const card = elements.create('card', {style: style});
+      card.mount(elCard);
+    
+      // Create flags to help prevent duplicate submissions
+      let isSubmitting, isSuccess;
+    
+      // Handle validation errors from the card element
+      card.addEventListener('change', e => {
+          if (e.error) {
+              elError.textContent = e.error.message;
+          } else {
+              elError.textContent = '';
+          }
+      });
+    
+      elForm.addEventListener('submit', async e => {
+          e.preventDefault();
+          console.log('Submit pushed');
+          if (isSubmitting) return;
+          isSubmitting = true;
+    
+          elForm.style.display = 'none';
+          elProcessing.style.display = 'block';
+    
+          console.log('Stripe token push');
+          let result = await stripe.createToken(card);
+          console.log('Stripe token got');
+
+          // Error in receiving token
+          console.log('token error');
+          if (result.error) return (
+            elError.textContent = result.error.message,
+            elForm.style.display = 'block',
+            elProcessing.style.display = 'none'
+          );
+          console.log('token passed');
+
+          // Pass the received token to our Firebase function
+          let res = await charge(result.token, charge_amount, charge_currency);
+          if (res.body.error) return elError.textContent = res.body.error;
+
+          console.log("Promise done");
+
+          // Card successfully charged
+          card.clear();
+          isSuccess = true;
+    
+          isSubmitting = false;
+          elProcessing.style.display = 'none';
+    
+          // Either display thanks or re-display form if there was an error
+          if (isSuccess === true) {
+              elThanks.style.display = 'block';
+              console.log('Form hidden, thank you!');
+          } else {
+              elForm.style.display = 'block';
+              console.log('Form should be visbile again!');
+          }
+      });
+    }
+
+    function addPaymentRequestMethod() {
+      const paymentRequest = stripe.paymentRequest({
+          country: 'US',
+          currency: charge_currency,
+          total: {
+              label: 'Total',
+              amount: charge_amount,
+          }
+      });
+    
+      const paymentRequestButton = elements.create('paymentRequestButton', {
+          paymentRequest,
+          style: {
+              paymentRequestButton: {
+                  type: 'donate'
+              }
+          }
+      });
+    
+      // Only mount button if browser supports payment requests
+      (async () => {
+          const result = await paymentRequest.canMakePayment();
+          if (result) paymentRequestButton.mount(elPaymentButton);
+          else elPaymentButton.style.display = 'none';
+      })();
+    
+      paymentRequest.on('token', async result => {
+    
+          // Pass the received token to our Firebase function
+          let res = await charge(result.token, charge_amount, charge_currency);
+          if (res.body.error) {
+              result.complete('fail');
+              console.log('Failed');
+          } else {
+              // Card successfully charged
+              console.log('Success');
+              result.complete('success');
+              elForm.style.display = 'none';
+              elThanks.style.display = 'block';
+          }
+      });
+    }
+
+    // Function used by all three methods to send the charge data to your Firebase function
+    async function charge(token, amount, currency) {
+      const res = await fetch(FIREBASE_FUNCTION, {
+          method: 'POST',
+          redirect: 'manual',
+          body: JSON.stringify({
+              token,
+              charge: {
+                  amount,
+                  currency,
+              },
+          }),
+      });
+      const data = await res.json();
+      data.body = JSON.parse(data.body);
+      return data;
+    }
+
+  }
+  
+  render() {
+    return (
+      <div style={{maxWidth: '500px', padding: '20px'}}>
+
+        <div className="button-group">
+          <button onClick={() => this.setState({amount: 100})} type="button" class={"btn btn-outline-primary " + (this.state.amount === 100 ? 'active' : '')}>$1</button>
+          <button onClick={() => this.setState({amount: 500})} type="button" class={"btn btn-outline-primary " + (this.state.amount === 500 ? 'active' : '')}>$5</button>
+          <button onClick={() => this.setState({amount: 1000})} type="button" class={"btn btn-outline-primary " + (this.state.amount === 1000 ? 'active' : '')}>$10</button>
+          <button onClick={() => this.setState({amount: 2500})} type="button" class={"btn btn-outline-primary " + (this.state.amount === 2500 ? 'active' : '')}>$25</button>
+          <button onClick={() => this.setState({amount: 5000})} type="button" class={"btn btn-outline-primary " + (this.state.amount === 5000 ? 'active' : '')}>$50</button>
+
+          <input 
+            name="amount"
+            onChange={this.onChange}
+            type="number"
+            value={this.state.amount}
+          />
+        </div>
+
+        {/* <form id="form">
+            <button type="button" id="checkout">Use Checkout</button> */}
+            <div id="payment-request-button">
+            {/* <!-- Payment button gets injected here --> */}
+            </div>
+            {/* <div>Pay with card</div>
+            <button type="button">1</button>
+            <button type="button">5</button>
+            <button type="button">10</button>
+            <button type="button">20</button>
+            <button type="button">50</button>
+            <input type="number" placeholde="Custom Amount"/>
+
+            <div id="card-element"> */}
+            {/* <!-- Stripe card inputs get injected here --> */}
+            {/* </div>
+
+            
+            
+            <button type="submit">Donate $5 USD</button>
+            <div id="error" style={{color: '#e25950'}}></div>
+        </form> */}
+
+        <form className="dual-header-pay" id="form" action="/charge" method="post">
+          <div class="form-row">
+            <label for="card-element">
+              Credit or debit card
+            </label>
+            <div className="w-100" id="card-element">
+              {/* <!-- A Stripe Element will be inserted here. --> */}
+            </div>
+
+            {/* <!-- Used to display form errors. --> */}
+            <div id="error" role="alert"></div>
+          </div>
+
+          <button className="pay" type="submit">Submit Payment</button>
+        </form>
+        <div className="text-muted text-left">You will be charged ${numberWithCommas((this.state.amount / 100).toFixed(2))}</div>
+
+        <div id="processing" style={{display: 'none'}}>processing...</div>
+        <div id="thanks" style={{display: 'none'}}>Thanks for your donation!</div>
+    </div>
+    );
+  }
+}
 
 class DonateActivityBase extends Component {
   constructor(props) {
@@ -354,10 +705,10 @@ class DonateFormBase extends Component {
             <button type="button" onClick={() => this.buttonAmount(5000)} className="btn btn-light btn-match-input">$50</button>
           </div>
 
-          <div class="form-group">
+          <div className="form-group">
             <label for="exampleFormControlTextarea1">Note:</label>
             <textarea 
-              class="form-control" 
+              className="form-control" 
               id="exampleFormControlTextarea1" 
               rows="3"
               name="note"
@@ -403,53 +754,17 @@ class DonateFormBase extends Component {
 
           </div>
   
-          {/* <input
-            name="email"
-            value={this.state.email}
-            onChange={this.onChange}
-            type="text"
-            placeholder="Email Address"
-          />
-          <br/>
-  
-          <input
-            name="email"
-            value={this.state.email}
-            onChange={this.onChange}
-            type="text"
-            placeholder="State"
-          />
-          <br/>
-  
-          <input
-            name="email"
-            value={this.state.email}
-            onChange={this.onChange}
-            type="text"
-            placeholder="Town"
-          />
-          <br/>
-  
-          <input
-            name="email"
-            value={this.state.email}
-            onChange={this.onChange}
-            type="text"
-            placeholder="User Id"
-          />
-          <br/> */}
-  
           <div className="row mt-3">
 
             <div className="col-6">
               <button type="submit" onClick={() => this.setState({type: 'Cash'})} className="btn btn-dark w-100">
-                <i class="far fa-money-bill-alt"></i>Cash Payment
+                <i className="far fa-money-bill-alt"></i>Cash Payment
               </button>
             </div>
     
             <div className="col-6">
               <button type="submit" onClick={() => this.setState({type: 'Card'})} className="btn btn-dark w-100">
-                <i class="far fa-credit-card"></i>Card Payment
+                <i className="far fa-credit-card"></i>Card Payment
               </button>
             </div>
 

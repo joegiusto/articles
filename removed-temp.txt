@@ -1,0 +1,2 @@
+UNDER PREDEPLOY FIREBASE.JSON
+"npm --prefix \"$RESOURCE_DIR\" run lint"

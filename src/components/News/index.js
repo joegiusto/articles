@@ -18,9 +18,6 @@ function FlintCounter() {
 const Page = () => (
   <div className='container-fluid news-container pt-4'>
 
-    {/* <h1>News Homepage</h1>
-    <p>Here is where recent news articles will go.</p> */}
-
     <div className="row justify-content-between"> 
       <div className="col-8">
         <div className="p-4">

@@ -84,7 +84,7 @@ export default function ShowcaseCard(props) {
                     </div>
               </div>
 
-              <div className="btn btn-articles-light w-75">Head to Store</div>
+              <div className="btn btn-articles-light roadmap-action">{props.buttonText}</div>
 
           </div>
 

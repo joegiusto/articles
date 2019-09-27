@@ -1,81 +1,139 @@
+@import 'outset_images';
+
+.larger-container {
+  overflow-y: hidden;
+  max-height: calc(100vh - 50px);
+}
+
+.background-images::-webkit-scrollbar { 
+  width: 0 !important 
+}
+
 .outset-wrapper {
-  
-  .outset-map {
-    position: absolute;
-    bottom: 2.5%;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 1.2rem;
-    padding: 0.2rem 0.4rem;
-    font-weight: bold;
-
-    .map {
-      font-family: 'Caveat', cursive;
-      font-size: 1.6rem;
-    }
-
-    .debug {
-
-      background-color: white;
-      border: solid 3px #000;
-      padding: 0.2rem 0.4rem;
-    }
-  }
-
-  .row-fullpage {
-    height: 100%;
-    // align-content: center;
-    align-items: center;
-  }
   width: 100%;
-  height: calc(100vh - 50px);
-  // background-color: $accent-color;
+  overflow-y: hidden;
+  min-height: calc(100vh - 50px);
+  max-height: calc(100vh - 50px);
   background: #FFEFBA;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #FFFFFF, #FFEFBA);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #FFFFFF, #FFEFBA); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(90deg, rgba($accent-color, 0.4), rgba(#FFEFBA, 0.2)); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
-  .welcome-col {
-    // background-color: white;
+  .walkthrough-box, .steps-box, .bottom-walthrough {
+    padding: 1rem;
+    border: solid 2.5px #000;
+    box-shadow: 5px 5px rgb(99, 99, 99);
+    border-radius: 5px;
+    max-width: 500px;
+  }
+
+  .walkthrough-box-clip-path-hides-box-shadow-work-around {
+    transition-duration: 1s;
+    position: fixed;
+    width: 100%;
+    top: 50%;
+    left: 0px;
+    &.to-top {
+      position: fixed;
+      z-index: 100;
+      width: 100%;
+      top: 0px;
+      left: 0px;
+      filter: drop-shadow(5px -5px rgb(99, 99, 99)) drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.5));
+    }
+  }
+
+  .walkthrough-box {
+    margin-top: 1rem;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 100% 100%, 0% 100%, 0 80%);
+    position: fixed;
+    left: 50%;
+    width: calc(100% - 30px);
+    transform: translateX(-50%) translateY(-50%);
+    top: 50%;
+    z-index: 1;
     background-color: $accent-color;
-    padding: 1.5rem;
-    border: solid 5px #000;
+    transition-duration: 1s;
+    &.to-top {
+      transform: translateX(-50%) translateY(0%);
+      top: calc(50px + 0%);
+      clip-path: polygon(0 0, 100% 0, 100% 90%, 80% 100%, 20% 100%, 0 90%);
+      border-bottom: none;
+      padding-bottom: 1.5rem;
+    }
     h1 {
-      // font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-      // font-family: 'Gayathri', sans-serif;
-      font-family: 'Fugaz One', cursive;
-      // text-transform: uppercase;
-      // font-weight: bold;
-      font-size: 6rem;
-      color: #000;
+      color: black;
+      font-family: 'Oswald', sans-serif;
+      font-size: 2rem;
+      transition-duration: 1s;
+      letter-spacing: 1px;
+      &.shrink {
+        font-size: 0rem;
+      }
     }
     h5 {
       color: gray;
     }
     .focus-explanation {
       background-color: white;
-      margin-top: 2rem;
       padding: 1rem;
-      height: 150px;
+      height: 100px;
       overflow-y: scroll;
+      font-size: 0.8rem;
+    }
+    .debug-id {
+      display: none;
+      text-align: center;
+      color: gray;
+      padding: 0.25rem 0rem;
+      position: absolute;
+      background-color: white;
+      bottom: -30px;
+      left: 0px;
+      height: 40px;
+      width: calc(100% + 10px);
+      margin-left: -5px;
+      border: solid 5px #000;
+      box-shadow: 0 4px 5px 0px gray;
+      // line-height: 20px;
+    }
+  }
+
+  .steps-box {
+    border-top: none;
+    background-color: #FFFFFF;
+    position: relative;
+    margin-top: 25rem;
+    opacity: 0;
+    transition-duration: 1s;
+    height: 0px;
+    &.show {
+      height: 65vh;
+      overflow-y: scroll;
+      min-height: 400px;
+      opacity: 1;
+      margin-top: 9rem;
+      padding-top: 2.5rem;
+      padding-bottom: 10rem;
     }
   }
 
   .outset-form-group {
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     .name {
       text-transform: uppercase;
       font-weight: bold;
-      // margin-left: 15px;
-      font-size: 2rem;
+      margin-top: 15px;
+      font-size: 1rem;
     }
     input {
+      background-color: $base-color;
       font-size: 2rem;
       border-radius: 5px;
       border: none;
-      // padding: 0.5rem 1.0rem;
       width: 100%;
       padding-left: 1rem;
     }
+
     .input-guess {
       position: relative;
       width: 100%;
@@ -113,7 +171,251 @@
         width: 200px;
         z-index: -1;
       }
+    }
+  }
 
+  // Step Two
+  .shirt-section{
+    .small-tag-wrap {
+      position: relative;
+      filter: drop-shadow(0px 0px 2px rgba(50, 50, 0, 0.5));
+      .tag {
+        cursor: pointer;
+        margin-bottom: 1rem;
+        display: inline-block;
+        // min-height: 64px;
+        width: 80px;
+        position: relative;
+        background: $base-color;
+        color: #222;
+        padding: 1rem 3rem 1rem 3rem;
+        font: bold 16px system-ui;
+        clip-path: polygon(30px 0%, 100% 0%, 100% 100%, 30px 100%, 0 50%);
+        &.active {
+          background: $accent-color;
+        }
+      }
+      .hole {
+        position: absolute;
+        filter: drop-shadow(0px 0px 1px black);
+        width: 10px;
+        height: 10px;
+        top: 6px;
+        left: 12px;
+        background-color: #FFFFFF;
+        border: inset solid 2px #000;
+        border-radius: 100%;
+        &.active {
+          background: #000;
+        }
+      }
+    }
+  
+    .tag-wrap {
+      position: relative;
+      filter: drop-shadow(0px 0px 2px rgba(50, 50, 0, 0.5));
+      .tag {
+        cursor: pointer;
+        margin-bottom: 1rem;
+        display: inline-block;
+        // min-height: 64px;
+        width: 140px;
+        position: relative;
+        background: $base-color;
+        color: #222;
+        padding: 1rem 2rem 1rem 4rem;
+        font: bold 16px system-ui;
+        clip-path: polygon(30px 0%, 100% 0%, 100% 100%, 30px 100%, 0 50%);
+  
+        // Have them all eventually rotated at diffrent rates 
+        // transform: rotate(10deg);
+        &.active {
+          background: $accent-color;
+        }
+      }
+      .hole {
+        position: absolute;
+        filter: drop-shadow(0px 0px 1px black);
+        width: 10px;
+        height: 10px;
+        top: 6px;
+        left: 12px;
+        background-color: #FFFFFF;
+        border: inset solid 2px #000;
+        border-radius: 100%;
+        &.active {
+          background: #000;
+        }
+      }
+    }
+  
+    .extraShirt {
+      display: flex;
+      justify-content: space-evenly;
+      button {
+        background-color: $base-color;
+      }
+    }
+  }
+
+  .shoe-size-container {
+    display: flex;
+    justify-content: center;
+    .shoe-size-item {
+      cursor: pointer;
+      flex-direction: column;
+      align-items: center;
+      display: flex;
+      background: $base-color;
+      height: 110px;
+      margin-right: 10px;
+      width: 85px;
+      border: solid 1px #000;
+      box-shadow: inset 0 0 0px 5px #ffffff;
+      text-align: center;
+      &.active {
+        box-shadow: inset 0 0 0px 5px $accent-color;
+      }
+      &:last-child {
+        margin-right: 0px;
+      }
+      .image {
+        flex-grow: 1;
+        position: relative;
+        display: flex;
+        img {
+          position: absolute;
+          bottom: 50%;
+          transform: translateY(50%)
+        }
+      }
+      .size {
+        font-weight: bold;
+        font-family: Forte;
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+  // End Step Two
+
+  // Step Three
+  .selectioon-container {
+    position: relative;
+    background-color: $base-color;
+    border-radius: 5px;
+    padding: 1rem;
+    padding-top: 50px;
+    border: solid 1px #000;
+    .selection-toolbar {
+      position: absolute;
+      left: 1px;
+      top: 1px;
+      width: calc(100% - 1px);
+      height: 40px;
+      background-color: lighten($base-color, 6%);
+      .toolbar-items {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: center;
+        height: 40px;
+        .toolbar-item {
+          position: relative;
+          flex-grow: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-right: solid 1px #000;
+          border-bottom: solid 1px #000;
+          // border-radius: 5px;
+          &:first-child {
+            border-left: none;
+          }
+          &:last-child {
+            border-right: none;
+          }
+          .view-track {
+            position: absolute;
+            top: 2.5px;
+            left: 2.5px;
+            line-height: 0px;
+            // background-color: white;
+            // border: solid 2px #000;
+            // border-radius: 100px;
+            .fa-times {
+              color: red;
+            }
+            .fa-check {
+              color: green;
+            }
+          }
+          &.active {
+            background-color: $base-color;
+            border-bottom: none;
+          }
+        }
+
+      }
+    }
+    .selection-content {
+      
+    }
+  }
+
+  .issue-recommendation {
+    background-color: white;
+    padding: 1rem;
+    margin-bottom: 5px;
+    position: relative;
+
+    .title {
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .description {
+      font-size: 0.9rem;
+      color: #222;
+    }
+
+    .subscribe {
+      position: absolute;
+      top: 0px;
+      right: 10px;
+      font-size: 2rem;
+    }
+
+    .tags {
+      color: white;
+      background-color: #000;
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
+      width: 100%;
+      padding: 0rem 1rem;
+      font-size: 0.8rem;
+    }
+
+  }
+  // End Step Three
+
+  .bottom-walthrough-container {
+    filter: drop-shadow(0px -3px 3px rgba(0, 0, 0, 0.5));
+
+    .bottom-walthrough {
+      width: 100%;
+      border-top: none;
+      margin-top: -0.8rem;
+      clip-path: polygon(0 10%, 20% 0, 80% 0, 100% 10%, 100% 100%, 0 100%);
+      padding-top: 1.5rem;
+      width: calc(100% - 30px);
+      z-index: 1;
+      background-color: $accent-color;
+      transition-duration: 1s;
+      opacity: 0;
+      &.show {
+        opacity: 1;
+      }
     }
   }
 }

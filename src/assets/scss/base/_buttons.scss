@@ -35,6 +35,7 @@
   padding: .08rem 1.2rem;
   width: 120px;
   position: relative;
+  transition: width 0.25s;
   cursor: pointer;
   // float: right;
   border: 1px solid $accent-color;
@@ -58,5 +59,8 @@
     bottom: -7px;
     left: -1px;
     margin-right: 10px;
+  }
+  &.shorten {
+    width: 50px;
   }
 }

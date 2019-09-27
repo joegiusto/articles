@@ -36,22 +36,22 @@ function getWidth() {
   );
 }
 
-window.onresize = function(event) {
-  console.log(getWidth());
+// window.onresize = function(event) {
+//   console.log(getWidth());
 
-  if (getWidth() > 1000) {
-    var info = document.getElementById("info");
-    info.className += " expanded";
-    var info = document.getElementById("footer");
-    info.className += " d-none";
-  } else {
-    var info = document.getElementById("info");
-    info.classList.remove("expanded");
-    var info = document.getElementById("footer");
-    info.classList.remove('d-none');
-  }
+//   if (getWidth() > 1000) {
+//     var info = document.getElementById("info");
+//     info.className += " expanded";
+//     var info = document.getElementById("footer");
+//     info.className += " d-none";
+//   } else {
+//     var info = document.getElementById("info");
+//     info.classList.remove("expanded");
+//     var info = document.getElementById("footer");
+//     info.classList.remove('d-none');
+//   }
 
-} 
+// } 
 
 class ExampleChart extends Component {
   constructor(props) {
@@ -255,7 +255,7 @@ class ImprovedReports extends Component {
 
       <div className="container-fluid">
 
-        <div className="row">
+        <div className="row justify-content-center">
 
           <div className="col-12 col-md-4">
 

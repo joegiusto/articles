@@ -15,7 +15,38 @@ const LandingPage = () => (
                     <div>
                         <img src={slideHead} width="275px" alt="" />
                         <h5 className="card-text">Something To Stand For.</h5>
-                        
+
+                        <div className="row">
+                            <div className="col-6">
+                                <div className="info-snip flex">
+                                    <div className="title">Users:</div>
+                                    <div className="info">3</div>
+                                </div>
+                            </div>
+    
+                            <div className="col-6">
+                                <div className="info-snip flex">
+                                    <span className="title">Rasied:</span>
+                                    <span className="info">$114.00</span>
+                                </div>
+                            </div>
+    
+                            <div className="col-6">
+                                <div className="info-snip flex">
+                                    <span className="title">Views:</span>
+                                    <span className="info">251</span>
+                                </div>
+                            </div>
+    
+                            <div className="col-6">
+                                <div className="info-snip flex">
+                                    <span className="title">Stories:</span>
+                                    <span className="info">12</span>
+                                </div>
+                            </div>
+
+                        </div>
+
                     </div>
 
                     <div className="d-none d-lg-block" id="flex-grow"></div>
@@ -60,6 +91,8 @@ const LandingPage = () => (
                         stageThree="Partnerships and Sponsers"
                         stageFour="Design Submissions"
                         stageFive="Intergration and funding of News"
+                        buttonLink=""
+                        buttonText="View the Store"
                     />
         
                     <ShowcaseCard 
@@ -73,6 +106,8 @@ const LandingPage = () => (
                         stageThree="Scheduled Videos and Articles"
                         stageFour="Interactive Pages and Tools"
                         stageFive=""
+                        buttonLink=""
+                        buttonText="Visit News"
                     />
                     <ShowcaseCard 
                         cardClass={'card-4'} 
@@ -85,6 +120,8 @@ const LandingPage = () => (
                         stageThree=""
                         stageFour="End Bipartisan Politics"
                         stageFive="Serve People over Party"
+                        buttonLink=""
+                        buttonText="View Political Issues"
                     />
                 </div>
             </div>

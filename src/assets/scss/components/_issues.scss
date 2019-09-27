@@ -7,10 +7,21 @@
     $border: 15px;
     background-color: rgb(255, 255, 255);
     width: 377px;
-    height: 600px;
+    height: 377px;
     position: relative;
+    &-badge {
+      z-index: 1;
+      position: absolute;
+      background-color: black;
+      color: white;
+      border: solid 1px #000;
+      bottom: 0px;
+      right: 0px;
+      padding: 0.2rem 0.8rem;
+      border-top-left-radius: 15px;
+    }
     &-background {
-      background-image: url('http://4.bp.blogspot.com/-Wjz6L4LYzGQ/T2TnAoHfbtI/AAAAAAAAgIo/x8zDn6SzBwI/s1600/north%2BSt%2BP.jpg');
+      // background-image: url('http://4.bp.blogspot.com/-Wjz6L4LYzGQ/T2TnAoHfbtI/AAAAAAAAgIo/x8zDn6SzBwI/s1600/north%2BSt%2BP.jpg');
       height: 100%;
       width: calc(100% - #{$border} * 2);
       position: absolute;

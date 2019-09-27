@@ -3,119 +3,25 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { AuthUserContext } from '../Session';
-import SignOutButton from '../SignOut';
 import {ReactModal, customStyles, modalContent} from './Modals';
 import * as ROUTES from '../../constants/routes';
 import * as ROLES from '../../constants/roles';
 
-import gunIcon from '../../assets/img/icons/gun.svg'
-
 import moment from 'moment';
 import Clock from 'react-live-clock';
+
+import gunIcon from '../../assets/img/icons/gun.svg'
 
 const Navigation = (props) => (
   <AuthUserContext.Consumer>
     {authUser =>
-      authUser ? (
-        <span>
-          <NavigationAuthRework expensesTotal={props.expenses.length} authUser={authUser}/>
-          {/* <NavigationAuth authUser={authUser} /> */}
-          {/* <Test authUser={authUser}/> */}
-        </span>
-      ) : (
-        <span>
-          <NavigationAuthRework expensesTotal={props.expenses.length} authUser={authUser}/>
-          {/* <NavigationNonAuth /> */}
-          {/* <NavigationAuthRework authUser={authUser}/> */}
-        </span>
-      )
+
+      <Menu expensesTotal={props.expenses.length} authUser={authUser}/>
     }
   </AuthUserContext.Consumer>
 );
 
-// const Navigation = ({ authUser }) => (
-//   <AuthUserContext.Consumer>
-//       {authUser =>
-//         authUser ? <NavigationAuth /> : <NavigationNonAuth />
-//       }
-//     </AuthUserContext.Consumer>
-// );
-
-// TODO - Figure out a way to take the <Link/> component and add onClick={() => {setMenuState('closed')}} to it so all that needs to be written is somthing like <MenuLink to={ROUTES.LANDING}>Landing</MenuLink>.
-
-function NavigationAuth({ authUser }) {
-  return (
-    <div>
-      <ul>
-        <li>
-          <Link to={ROUTES.LANDING}>Landing</Link>
-        </li>
-        <li>
-          <Link to={ROUTES.OUTSET}>Outset</Link>
-        </li>
-        <li>
-          <Link to={ROUTES.HOME}>Home</Link>
-        </li>
-        <li>
-          <Link to={ROUTES.ACCOUNT}>Account</Link>
-        </li>
-        <li>
-          <Link to={ROUTES.CHECKOUT}>Checkout</Link>
-        </li>
-        {!!authUser.roles[ROLES.ADMIN] && (
-          <div>
-            <li>
-              <Link to={ROUTES.ADMIN}>Admin</Link>
-            </li>
-            <li>
-              <Link to={ROUTES.DONATE}>Donate</Link>
-            </li>
-          </div>
-        )}
-        <li>
-          <SignOutButton />
-        </li>
-      </ul>
-
-    </div>
-  );
-}
-
-const NavigationNonAuth = () => (
-  <ul>
-    <li>
-      <Link to={ROUTES.LANDING}>Landing</Link>
-    </li>
-    <li>
-      <Link to={ROUTES.SIGN_IN}>Sign In</Link>
-    </li>
-  </ul>
-);
-
-function Test({ authUser }) {
-  const [menuOpen, setMenuOpen] = useState(false);
-  // const [cartPreview, setCartPreview] = useState(false);
-  // const [pinOpen, setPinOpen] = useState(false);
-
-  return (
-    <div>
-      {!!authUser.roles[ROLES.ADMIN] && (
-        <div>
-          <li>
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.LANDING}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Landing {menuOpen}</p></Link>
-            <Link to={ROUTES.ADMIN}>Admin {authUser.email}</Link>
-          </li>
-          <li>
-            <Link to={ROUTES.DONATE}>Donate</Link>
-          </li>
-        </div>
-      )}
-    </div>
-  )
-}
-
-function NavigationAuthRework(props) {
-  // Declare a new state variable, which we'll call "count"
+function Menu(props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [cartPreview, setCartPreview] = useState(false);
   const [pinOpen, setPinOpen] = useState(false);
@@ -123,8 +29,6 @@ function NavigationAuthRework(props) {
 
   return (
     <div>
-        {/* <Modals/> */}
-        
         <section onClick={() => {setMenuOpen(false)}} className={'side-menu-overlay' + (menuOpen || pinOpen ? " show" : "")}></section>
 
         <section className="menu-spacer"></section>
@@ -151,30 +55,19 @@ function NavigationAuthRework(props) {
             <div className="side-menu-notch-top-end"></div>
         </section>
 
-        {/* <section className={"side-pin-notch-top d-lg-none " + (pinOpen ? "show" : "")}>
-            <div className="side-pin-notch-top-end"></div>
-        </section> */}
-
         <section>
             <div className={'side-menu-notch-top-end-custom ' + (menuOpen ? 'show' : '')}>
                 <div className={'d-none d-lg-flex'}>
-                    
-                  {/* <h3 data-toggle="modal" data-target="#cookie" className="top-headline top-headline-cookie d-inline"><span className="badge badge-danger badge-shape-poly ">Agree to Cookies?<span className="badge badge-success badge-sub-red ml-2"><i className="far fa-check-square mx-1"></i></span><span className="badge badge-warning badge-sub-red ml-1"><i className="far fa-times-circle mx-1"></i></span></span></h3> */}
 
                   {!props.authUser ? (
                     <span>
-                      <h3 data-toggle="modal" data-target="#muellerReports" className="top-headline mx-1 ml-5 d-inline"><span className="badge badge-black badge-shape-poly "><i className="far fa-hand-point-left"></i>Open The Menu!&nbsp;</span></h3>
+                      {/* <h3 data-toggle="modal" data-target="#muellerReports" className="top-headline mx-1 ml-5 d-inline"><span className="badge badge-black badge-shape-poly "><i className="far fa-hand-point-left"></i>Open The Menu!&nbsp;</span></h3> */}
                     </span>
                   ) : (
-                    <span>
-                      <h3 data-toggle="modal" data-target="#muellerReports" className="top-headline mx-1 ml-5 d-inline"><span className="badge badge-black badge-shape-poly ">Mueller Report Highlights<span className="badge badge-danger badge-sub-red ml-2">!</span></span></h3>
-                      <h3 data-toggle="modal" data-target="#sale" className="top-headline mx-1 d-inline"><span className="badge badge-black badge-shape-poly ">15% Sale<span className="badge badge-danger badge-sub-red ml-2">!</span></span></h3>
-                      <ReactModal thread="site-sale" style="pink-poly" message="15% Sale" getContent="1"/>
-
-                      {/* --- Future format, thread and style. easy peasy --- */}
-                      {/* <ReactModal thread="site-sale" style="pink-poly"/> */}
-                      {/* <ReactModal thread="gun-laws" style="beige-pill"/> */}
-
+                    <span className="ml-5 mt-1">
+                      {/* <h3 data-toggle="modal" data-target="#muellerReports" className="top-headline mx-1 ml-5 d-inline"><span className="badge badge-black badge-shape-poly ">Mueller Report Highlights<span className="badge badge-danger badge-sub-red ml-2">!</span></span></h3> */}
+                      {/* <h3 data-toggle="modal" data-target="#sale" className="top-headline mx-1 d-inline"><span className="badge badge-black badge-shape-poly ">15% Sale<span className="badge badge-danger badge-sub-red ml-2">!</span></span></h3> */}
+                      <ReactModal badgeStyle="badge-poly-pink" thread="sale"/>
                     </span>
                   )}
 
@@ -183,17 +76,17 @@ function NavigationAuthRework(props) {
 
                   {!props.authUser ? (
                     <span>
+
                       <h3 style ={{cursor: 'pointer'}} data-toggle="modal" data-target="#pin" className="top-headline mx-1 d-inline"><span className="badge badge-articles"><i className="fas fa-file-signature"/>Terms and Privacy<span className="badge badge-danger ml-2">!</span></span></h3>
                       <h3 style ={{cursor: 'pointer'}} data-toggle="modal" data-target="#pin" className="top-headline mx-1 d-inline"><span className="badge badge-articles"><i className="fas fa-id-badge"/>Sign Up Benefits<span className="badge badge-danger ml-2">!</span></span></h3>
                     </span>
                   ) : (
                     <span>
                       <h3 style ={{cursor: 'pointer'}} data-toggle="modal" data-target="#pin" className="top-headline mx-1 d-inline"><span className="badge badge-articles-light"><i className="fas fa-tint" style={{color: '#9494ff', fontSize: '1rem', marginLeft: '10px'}}></i>Flint Water Cleanup<span className="badge badge-danger ml-2">7</span></span></h3>
-                      <h3 style ={{cursor: 'pointer'}} data-toggle="modal" data-target="#pin" className="top-headline mx-1 d-inline"><span className="badge badge-articles-light"><img className="gun-icon-img" src={gunIcon} alt=""/>Gun Laws<span className="badge badge-danger ml-2">4</span></span></h3>
+                      <h3 style ={{cursor: 'pointer'}} data-toggle="modal" data-target="#pin" className="top-headline mx-1 d-inline"><span className="badge badge-articles-light"><img className="gun-icon-img" src={gunIcon} alt=""/>Gun Laws<span className="badge badge-danger ml-1">4</span></span></h3>
+                      <h3 style ={{cursor: 'pointer'}} data-toggle="modal" data-target="#pin" className="top-headline mx-1 d-inline"><span className="badge badge-articles-light">+ <span className="badge badge-danger">23</span></span></h3>
                     </span>
                   )}
-                  
-                  {/* <h3 className="top-headline mx-1 d-inline"><span className="badge badge-light"><i className="fas fa-map-pin"></i>Pinned Stories<span className="badge badge-danger ml-2">7</span></span></h3> */}
 
                 </div>
             </div>
@@ -255,10 +148,19 @@ function NavigationAuthRework(props) {
         
             <hr/>
 
+            {/* User is logged in at this point but has the Outset been completed? */}
+            {props.authUser ? props.authUser.outset.completed ? 
+            '' 
+            : 
+            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.OUTSET}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Outset</p></Link>
+             : 
+             'Not logged in yet'
+            }
+
             {/* Main Links Section */}
             <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.HOME}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Home</p></Link>
             <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MISSION}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Mission</p></Link>
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.REPORTS}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Transparency Reports</p></Link>
+            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.REPORTS}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Reports</p></Link>
 
             <hr/>
 
@@ -274,7 +176,7 @@ function NavigationAuthRework(props) {
             {/* <p className="heading-font no-link d-flex justify-content-between"><b>Articles Clothing</b><span onClick={() => {setCartPreview(!cartPreview)}} to="cart"><span className="ml-auto" id="shopping-card"><i className="fas fa-shopping-basket mr-0"></i><span id="menu-pill" className="badge badge-pill badge-dark">{props.expensesTotal}</span></span></span></p> */}
 
             <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Store</p></Link>
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE_SUBMISSIONS}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Design Submissions</p></Link>
+            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE_SUBMISSIONS}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Submissions</p></Link>
             {cartPreview ? 
               (
               <div className="subheading-font text-center mx-4 border border-dark">
@@ -302,28 +204,12 @@ function NavigationAuthRework(props) {
               <div onClick={() => {setPartySectionOpen(!partySectionOpen)}} className={"section-collapse " + (partySectionOpen ? "" : "hide")}><i className="fas fa-chevron-circle-down"></i></div>
             </div>
 
-            <div className={"tab-content " + (partySectionOpen ? "" : "hide")}>
+            <div className={"tab-content " + (partySectionOpen ? "" : "")}>
               <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PARTY}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Info</p></Link>
               <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ISSUES}><p className="subheading-font"><i className="fas fa-person-booth "></i>Issues</p></Link>
               <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MYTHS}><p className="subheading-font"><i className="fas fa-ghost fa-pulse"></i>Myths</p></Link>
             </div>
             <hr/>
-
-            {!props.authUser ? (
-              <span></span>
-            ) : (
-            <div>
-
-              {/* Account */}
-              {/* <div className="{ props.currentUser.displayName ? 'side-menu-footer' : 'side-menu-footer d-none'}">
-                  <p className="heading-font no-link"><b>Account</b></p>
-                  <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ACCOUNT}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Profile</p></Link>
-              </div>
-              <hr/> */}
-
-            </div>
-            )}
-            
             
             {/* Support Section */}
             <p className="heading-font no-link"><b>Support</b></p>
@@ -348,13 +234,15 @@ function NavigationAuthRework(props) {
                 <hr/>
 
                 {/* Playground */}
-                <p className="heading-font no-link"><b>Playground</b></p>
+
+                {/* <p className="heading-font no-link"><b>Playground</b></p>
                 <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PLAYGROUND}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Playground</p></Link>
                 <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MESH}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Mesh</p></Link>
                 <img src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-example-alternate_2x.png" height="45px" alt=""/>
-                <img className="p-0" src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" height="40px" alt=""/>
+                <img className="p-0" src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" height="40px" alt=""/> */}
+
                 {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Donation</p></Link> */}
-                <hr/>
+                {/* <hr/> */}
 
               </div>
             )}
@@ -372,10 +260,7 @@ const mapStateToProps = (state) => {
   return {
     expenses: state.expenses,
     site: state.site,
-    // startLogout: () => dispatch(startLogout()) 
   };
 };
 
 export default connect(mapStateToProps)(Navigation);
-
-// export default Navigation;
