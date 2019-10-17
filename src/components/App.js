@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Navigation from './Navigation';
 
@@ -43,7 +43,7 @@ import PasswordForgetPage from './PasswordForget';
 import AdminPage from './Admin';
 import DonatePage from './Donate';
 
-import PlaygroundPage from './Playground';
+// import PlaygroundPage from './Playground';
 
 import NotFoundPage from './Navigation/NotFoundPage';
 
@@ -58,9 +58,9 @@ const App = () => (
 
       <Navigation />
 
-      <AuthUserContext.Consumer>
+      {/* <AuthUserContext.Consumer>
         {authUser =>
-          <div style={{position: 'absolute', top: '0px', zIndex: '1000', color: 'red'}}>
+          <div style={{position: 'absolute', top: '0px', zIndex: '1000', color: 'red', pointerEvents: 'none'}}>
 
           {!authUser ? (
             <div>Assume Completion of Outset while authUser loads</div>
@@ -73,7 +73,7 @@ const App = () => (
 
         </div>
         }
-      </AuthUserContext.Consumer>
+      </AuthUserContext.Consumer> */}
 
       <Switch>
         {/* Something like this? */}
@@ -119,7 +119,7 @@ const App = () => (
         <Route path={ROUTES.ADMIN} component={AdminPage} />
         <Route path={ROUTES.DONATE} component={DonatePage} />
 
-        <Route path={ROUTES.PLAYGROUND} component={PlaygroundPage} />
+        {/* <Route path={ROUTES.PLAYGROUND} component={PlaygroundPage} /> */}
   
         <Route component={NotFoundPage} />
       </Switch>

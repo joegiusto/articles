@@ -19,29 +19,29 @@ const NoError = (props) => (
   <h1>Test</h1>
 )
 
-const DonatePage = (props) => (
-  <div>
-    <div className="mt-5 container-fluid container-custom">
-      <div className="row justify-content-center">
+// const DonatePage = (props) => (
+//   <div>
+//     <div className="mt-5 container-fluid container-custom">
+//       <div className="row justify-content-center">
 
-        <div className="col-12 col-md-4">
-          {/* <DonateForm history={props.history}/> */}
-          <NotUnlessAdmin/>
-        </div>
+//         <div className="col-12 col-md-4">
+//           {/* <DonateForm history={props.history}/> */}
+//           <NotUnlessAdmin/>
+//         </div>
 
-        <div className="col-12 col-md-8">
-          <DonateActivity history={props.history}/>
-        </div>
+//         <div className="col-12 col-md-8">
+//           <DonateActivity history={props.history}/>
+//         </div>
 
-        <div className="col-12">
-          <h1>Stripe Testing Here</h1>
-          <App/>
-        </div>
+//         <div className="col-12">
+//           <h1>Stripe Testing Here</h1>
+//           <App/>
+//         </div>
 
-      </div>
-    </div>
-  </div>
-);
+//       </div>
+//     </div>
+//   </div>
+// );
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -627,7 +627,7 @@ class DonateFormBase extends Component {
 const DonateForm = withFirebase(DonateFormBase);
 const DonateActivity = withFirebase(DonateActivityBase);
 
-export default DonatePage
+export default NoError
 
 const condition = authUser =>
 authUser && !!authUser.roles[ROLES.ADMIN];

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { DateRangePicker } from 'react-dates';
+// import { DateRangePicker } from 'react-dates';
 import { Link } from "react-router-dom";
 import { withFirebase } from '../Firebase';
 import { employeeList, sales, donations, expenses } from "../../sample_data/sampleData";
@@ -247,7 +247,7 @@ class ImprovedReports extends Component {
     <div className="reports-page">
 
       <div className="fixed-total dual-header">
-        <span>Help <i class="far fa-question-circle"></i></span>
+        <span>Help <i className="far fa-question-circle"></i></span>
         <span className="total">+$39.34</span>
       </div>
 
@@ -260,7 +260,7 @@ class ImprovedReports extends Component {
           <div className="col-12 col-md-4">
 
             <div className="live">
-              <span class="recording-dot d-inline-block"></span>
+              <span className="recording-dot d-inline-block"></span>
               <span>Live</span>
             </div>
 
@@ -271,7 +271,7 @@ class ImprovedReports extends Component {
               <div className="extra">
                 <h5>Breakdown</h5>
 
-                <table class="table table-hover table-sm">
+                <table className="table table-hover table-sm">
 
                   {/* <thead>
                     <tr>
@@ -311,7 +311,7 @@ class ImprovedReports extends Component {
 
               <div id='footer' onClick={() => this.setState({menuExpanded: !this.state.menuExpanded})} className={"footer"}>
                 <span className="mr-2">CLICK FOR {(this.state.menuExpanded === false ? 'MORE' : 'LESS')}</span>
-                <i class={"fas fa-caret-down " + (this.state.menuExpanded ? 'expanded' : '')}></i>
+                <i className={"fas fa-caret-down " + (this.state.menuExpanded ? 'expanded' : '')}></i>
               </div>
 
             </div>
@@ -556,14 +556,14 @@ function PreorderTable () {
         )}
 
         <tr>
-          <td colspan="2" className="border-right-0 table-articles-head">
+          <td colSpan="2" className="border-right-0 table-articles-head">
 
               <div className="results-dual-header">
 
                 <div className="page noselect">
-                  <i class="fas fa-chevron-circle-left"></i>
+                  <i className="fas fa-chevron-circle-left"></i>
                   Page 0/0
-                  <i style={{marginLeft: '10px'}} class="fas fa-chevron-circle-right"></i>
+                  <i style={{marginLeft: '10px'}} className="fas fa-chevron-circle-right"></i>
                 </div>
               
                 <span className="results noselect">
@@ -578,8 +578,8 @@ function PreorderTable () {
 
           </td>
 
-          <td colspan="1" className="border-right-0 text-right table-articles-head">Total:</td>
-          <td colspan="1" className="border-left-0 table-articles-head">$180.00</td>
+          <td colSpan="1" className="border-right-0 text-right table-articles-head">Total:</td>
+          <td colSpan="1" className="border-left-0 table-articles-head">$180.00</td>
         </tr>
 
       </tbody>
@@ -679,70 +679,70 @@ function Reports () {
               <span>Live</span>
             </div>
 
-            <div class="account-activity-summary">
+            <div className="account-activity-summary">
 
-              <h2 class="recent-summary">
-                <span class="summary-title d-block">Activity Summary</span>
-                <span id="statement-dates" class="statement-summary text-muted">Current Statement ({moment().startOf('month').format('MMM D')} - {moment().endOf('month').format('MMM D')})</span>
+              <h2 className="recent-summary">
+                <span className="summary-title d-block">Activity Summary</span>
+                <span id="statement-dates" className="statement-summary text-muted">Current Statement ({moment().startOf('month').format('MMM D')} - {moment().endOf('month').format('MMM D')})</span>
               </h2>
 
               <button className="btn btn-articles-light mr-1">Print</button>
               <button className="btn btn-articles-light">Download</button>
 
-              {/* <a href="#" class="summary-links preventDefaultBehaviour print-link"><i class="ra-icons icon-print"></i>Print<span class="sr-only">opens a popup window</span></a> */}
+              {/* <a href="#" className="summary-links preventDefaultBehaviour print-link"><i className="ra-icons icon-print"></i>Print<span className="sr-only">opens a popup window</span></a> */}
                 
-              {/* <a href="#" class="summary-links download-link preventDefaultBehaviour" data-toggle="modal" data-target=".download-modal"><i class="ra-icons icon-download"></i>Download<span class="sr-only">Opens modal dialog</span></a> */}
+              {/* <a href="#" className="summary-links download-link preventDefaultBehaviour" data-toggle="modal" data-target=".download-modal"><i className="ra-icons icon-download"></i>Download<span className="sr-only">Opens modal dialog</span></a> */}
               
-              {/* <a href="/cardmembersvcs/statements/app/stmtPDF?view=true&amp;date=20190723" class="btn-primary btn-view-statement preventDefaultBehaviour" role="button">View Billing Statement PDF</a> */}
+              {/* <a href="/cardmembersvcs/statements/app/stmtPDF?view=true&amp;date=20190723" className="btn-primary btn-view-statement preventDefaultBehaviour" role="button">View Billing Statement PDF</a> */}
             </div>
 
             <div className="table-wrap">
               <table>
-                <caption class="sr-only">Summary Details</caption>
+                <caption className="sr-only">Summary Details</caption>
                 <tbody>
-                  <tr class="last-month-balance">
+                  <tr className="last-month-balance">
                     <th scope="row">Last Month Balance</th>
-                    <td id="last-statement-balance" class="text-bold"> $0.00</td>
+                    <td id="last-statement-balance" className="text-bold"> $0.00</td>
                   </tr>
 
-                  <tr class="statement-summary">
+                  <tr className="statement-summary">
                     <th scope="row">Donations</th>
-                    <td id="posted-transactions" class="text-bold">{donationsTotal >= 0 ? '+':'-'} ${donationsTotal}</td>
+                    <td id="posted-transactions" className="text-bold">{donationsTotal >= 0 ? '+':'-'} ${donationsTotal}</td>
                   </tr>
-                  <tr class="statement-summary">
+                  <tr className="statement-summary">
                     <th scope="row">Clothing Sales</th>
-                    <td id="previous-balance" class="text-bold">{salesTotal >= 0 ? '+':'-'} ${salesTotal}</td>
+                    <td id="previous-balance" className="text-bold">{salesTotal >= 0 ? '+':'-'} ${salesTotal}</td>
                   </tr>
                   <tr>
                     <th scope="row">Ad Revenue</th>
-                    <td id="payments-credits" class="text-bold">{adRevenueTotal >= 0 ? '+':'-'} ${adRevenueTotal}</td>
+                    <td id="payments-credits" className="text-bold">{adRevenueTotal >= 0 ? '+':'-'} ${adRevenueTotal}</td>
                   </tr>
 
-                  <tr class="statement-summary expense">
+                  <tr className="statement-summary expense">
                     <th scope="row">Purchases</th>
-                    <td id="purchases-statement" class="text-bold">{expensesTotal >= 0 ? '+':'-'} ${expensesTotal}</td>
+                    <td id="purchases-statement" className="text-bold">{expensesTotal >= 0 ? '+':'-'} ${expensesTotal}</td>
                   </tr>
-                  <tr class="statement-summary expense">
+                  <tr className="statement-summary expense">
                     <th scope="row">Payrole</th>
-                    <td id="balance-transfers" class="text-bold">- $0.00</td>
+                    <td id="balance-transfers" className="text-bold">- $0.00</td>
                   </tr>
 
-                  <tr class="this-month-net">
+                  <tr className="this-month-net">
                     <th scope="row">This Month Net</th>
-                    <td id="balance-transfers" class="text-bold">+ $39.34</td>
+                    <td id="balance-transfers" className="text-bold">+ $39.34</td>
                   </tr>
 
-                  {/* <tr class="statement-summary">
+                  {/* <tr className="statement-summary">
                     <th scope="row">Cash Advances</th>
-                    <td id="cash-advances" class="text-bold">+ $0.00</td>
+                    <td id="cash-advances" className="text-bold">+ $0.00</td>
                   </tr> */}
-                  {/* <tr class="statement-summary">
+                  {/* <tr className="statement-summary">
                     <th scope="row">Fees Charged</th>
-                    <td id="fees-charged" class="text-bold">+ $28.00</td>
+                    <td id="fees-charged" className="text-bold">+ $28.00</td>
                   </tr> */}
-                  {/* <tr class="statement-summary">
+                  {/* <tr className="statement-summary">
                     <th scope="row">Interest Charged</th>
-                    <td id="interest-charged" class="text-bold">+ $71.22</td>
+                    <td id="interest-charged" className="text-bold">+ $71.22</td>
                   </tr> */}
                 </tbody>
               </table>
@@ -956,7 +956,7 @@ function Reports () {
                   {expenses.map((object, i) =>
 
                     <tr key={i} className="bg-light">
-                      <td><a href={object.file}><i class="fas fa-file-invoice-dollar"></i></a></td>
+                      <td><a href={object.file}><i className="fas fa-file-invoice-dollar"></i></a></td>
                       <td>{object.date || 'test'}</td>
                       <td>{object.name}</td>
                       <td>{object.department}</td>
@@ -1097,14 +1097,14 @@ const StyledDonationList = (props) => (
           />
         ))}
         <tr>
-          <td colspan="2" className="border-right-0 table-articles-head">
+          <td colSpan="2" className="border-right-0 table-articles-head">
 
               <div className="results-dual-header">
 
                 <div className="page noselect">
-                  <i onClick={() => props.changePage(props.page - 1)} class="fas fa-chevron-circle-left"></i>
+                  <i onClick={() => props.changePage(props.page - 1)} className="fas fa-chevron-circle-left"></i>
                   Page {props.page}/3
-                  <i onClick={() => props.changePage(props.page + 1)} style={{marginLeft: '10px'}} class="fas fa-chevron-circle-right"></i>
+                  <i onClick={() => props.changePage(props.page + 1)} style={{marginLeft: '10px'}} className="fas fa-chevron-circle-right"></i>
                 </div>
               
                 <span className="results noselect">
@@ -1119,8 +1119,8 @@ const StyledDonationList = (props) => (
 
           </td>
 
-          <td colspan="1" className="border-right-0 text-right table-articles-head">Total:</td>
-          <td colspan="1" className="border-left-0 table-articles-head">${(props.donationsFirebase.reduce((a, b) => a + (b['amount'] || 0), 0) / 100).toFixed(2)}</td>
+          <td colSpan="1" className="border-right-0 text-right table-articles-head">Total:</td>
+          <td colSpan="1" className="border-left-0 table-articles-head">${(props.donationsFirebase.reduce((a, b) => a + (b['amount'] || 0), 0) / 100).toFixed(2)}</td>
         </tr>
       </tbody>
     </table>
@@ -1140,8 +1140,8 @@ const StyledDonationList = (props) => (
 const StyledDonationItem = ({donation}) => (
   <tr>
     {/* <th scope="row">{donation.uid}</th> */}
-    <td>{moment(donation.createdAt).format('LLL') }</td>
-    <td>{donation.name}</td>
+    <td>{moment(donation.createdAt).format('LL') }</td>
+    <td>{donation.name.split(" ")[0] + " " + (donation.name.split(' ')[0]).charAt(0)}</td>
     <td>{donation.note === "match" ? (<div><span role="img" aria-label="emoji">⭐</span>Matched</div>) : (<div>{donation.note}</div>) }</td>
     <td>${(donation.amount / 100).toFixed(2)}</td>
   </tr>

@@ -1,10 +1,10 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 // import { compose } from 'recompose';
 // import { withAuthorizationHide } from '../Session';
 import { withFirebase } from '../../Firebase';
 import Countdown from 'react-countdown-now';
 import moment from 'moment';
-import SubmissionItem from './SubmissionItem';
+// import SubmissionItem from './SubmissionItem';
 
 const Submissions = () => (
   <div className='mt-4 container-fluid'>

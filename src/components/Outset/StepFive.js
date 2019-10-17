@@ -3,29 +3,36 @@ import React from 'react';
 class StepFive extends React.Component {
   render(props) {
       return (
-          <>
-            <div className="dual-header">
-              <h2>Privacy Info</h2>
-              <h5>Step 5/{this.props.totalSteps}</h5>
-            </div>
-            <hr/>
-            {/* The button will execute the handler function set by the parent component */}
-            <input 
-              name="size"
-              type="text" 
-              value={this.props.size}
-              onChange={this.props.action}
-              className="form-control" 
-              aria-describedby="emailHelp" 
-              // placeholder="String"
-              autocorrect="off"
-              spellcheck="false"
-            />
-            <button className="d-block" onClick={() => (this.props.log("Whatever I want"))}>Privacy Policy</button>
-            <button className="d-block" onClick={() => (this.props.log("Whatever I want"))}>Cookie Usage</button>
-            <button className="d-block" onClick={() => (this.props.log("Whatever I want"))}>Call Log</button>
+        <div>
 
-          </>
+          <div>
+            <h5>Privacy Policy</h5>
+
+            <div className="read">Read</div>
+
+            <label for="privacy">I accept</label>
+            <input type="checkbox" id="privacy" name="privacy"/>
+          </div>
+
+          <div>
+            <h5>Cookie Usage</h5>
+
+            <div className="read">Read</div>
+
+            <label for="cookie">I accept</label>
+            <input type="checkbox" id="cookie" name="cookie"/>
+          </div>
+
+          <div>
+            <h5>Terms Of Use</h5>
+
+            <div className="read">Read</div>
+            
+            <label for="cookie">I accept</label>
+            <input type="checkbox" id="cookie" name="cookie"/>
+          </div>
+
+        </div>
       )
   }
 }

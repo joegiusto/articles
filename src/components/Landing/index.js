@@ -2,6 +2,7 @@ import React from 'react';
 import slideHead from '../../assets/img/slide-head.png';
 
 import ShowcaseCard from './ShowcaseCard';
+import placeholder from '../../assets/img/placeholder.png'
 // import ArticlesHomePageSlick from './ArticlesHomePageSlick';
 
 const LandingPage = () => (
@@ -63,6 +64,9 @@ const LandingPage = () => (
                         </div> */}
     
                         <div className="col-12">
+                            <div className="card-quote-background">
+                                <img src={placeholder} height="220px" alt=""/>
+                            </div>
                             <div className="card-quote">
                                 <h5>Quote of the day:</h5>
                                 <h6 style={{color: 'gray'}}>My dream is of a place and a time where America will once
@@ -84,7 +88,7 @@ const LandingPage = () => (
                         cardClass={'card-2'} 
                         title={'Clothing'} 
                         stage={'One'} 
-                        description={'The beginning of our journey. Help us build and become a part of the movement.'} 
+                        description={'Politacally charged clothing for a great cause. All sales help fund the continued development of the site and our movement.'} 
                         percent={20}
                         stageOne="Online Store"
                         stageTwo="Introductory Videos"
@@ -99,7 +103,7 @@ const LandingPage = () => (
                         cardClass={'card-3'} 
                         title={'News'} 
                         stage={'Zero'} 
-                        description={'A modern innovative news platform that serves the peoples needs while maintinaing a fact based agenda.'} 
+                        description={'A modern subscription/feed based news platform that serves the peoples needs while maintinaing a fact based agenda.'} 
                         percent={12}
                         stageOne="Online Platform"
                         stageTwo="Writers and Content Creators"
@@ -113,7 +117,7 @@ const LandingPage = () => (
                         cardClass={'card-4'} 
                         title={'Party'} 
                         stage={'Zero'} 
-                        description={'Our final step, encourage politicians to once again serve the people of the United States not thier political parties.'} 
+                        description={'Putting power back into the hands of the people. Help us expose the corruption of democracy and get our country back on track.'} 
                         percent={4}
                         stageOne=""
                         stageTwo=""

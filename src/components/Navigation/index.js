@@ -57,7 +57,7 @@ function Menu(props) {
 
         <section>
             <div className={'side-menu-notch-top-end-custom ' + (menuOpen ? 'show' : '')}>
-                <div className={'d-none d-lg-flex'}>
+                <div className={'d-none'}>
 
                   {!props.authUser ? (
                     <span>
@@ -72,7 +72,7 @@ function Menu(props) {
                   )}
 
                 </div>
-                <div className={'d-none d-lg-flex'}>
+                <div className={'d-none'}>
 
                   {!props.authUser ? (
                     <span>
@@ -150,14 +150,8 @@ function Menu(props) {
 
             {/* User is logged in at this point but has the Outset been completed? */}
             {props.authUser ? props.authUser.outset.completed ? 
-            '' 
-            : 
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.OUTSET}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Outset</p></Link>
-             : 
-             'Not logged in yet'
-            }
-
-            {/* Main Links Section */}
+            <div>
+              {/* Main Links Section */}
             <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.HOME}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Home</p></Link>
             <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MISSION}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Mission</p></Link>
             <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.REPORTS}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Reports</p></Link>
@@ -246,10 +240,17 @@ function Menu(props) {
 
               </div>
             )}
-
-            {/* {props.uiMode === 'day' ? <a id="night-mode" onClick={props.uiNight} href="JavaScript:void(0);"><p className="subheading-font"><i id="night-mode-icon" className="fas fa-toggle-off"></i>Night Mode</p></a> : <a id="night-mode" onClick={props.uiDay} href="JavaScript:void(0);"><p className="subheading-font"><i id="night-mode-icon" className="fas fa-toggle-on"></i>Night Mode</p></a>} */}
+            </div>
+            : 
+            <div>
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.OUTSET}><p className="subheading-font"><i className="fas fa-spinner fa-pulse d-none"></i><img className="mr-1 p-0" src="https://static.thenounproject.com/png/969593-200.png" height="30px" alt="menu-icon"></img>Outset</p></Link>
+            </div>
+            : 
+            <div>Not even logged in</div>
+            }
 
             <div className='side-menu-bottom-spacer'></div>
+
         </section>
 
     </div>

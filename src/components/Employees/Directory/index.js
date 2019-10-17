@@ -106,7 +106,7 @@ const IsLetterSearch = ({match}) => (
         // return <span>Test {employee.id}</span>
         return <div className="col-6">
           <Link className="employee-a" to={employee.id}> <Tilt options={{ max: "20", scale: '1.025' }} className="Tilt employee-directory-card"> <div className="bg-white p-5">
-            <div>{employee.nameLast + (employee.nameFirst != 'Anonymous' ? ', ' + employee.nameFirst : ' Anonymous')}</div>
+            <div>{employee.nameLast + (employee.nameFirst !== 'Anonymous' ? ', ' + employee.nameFirst : ' Anonymous')}</div>
           </div> </Tilt> </Link>
         </div>
       })}

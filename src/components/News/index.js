@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import playButtonLight from '../../assets/img/News/yt_logo_mono_light.png'
+// import playButtonLight from '../../assets/img/News/yt_logo_mono_light.png'
 import playButtonDark from '../../assets/img/News/yt_logo_mono_dark.png'
 import moment from 'moment';
 
@@ -154,7 +154,7 @@ const Page = () => (
           <div className="weather-content mt-4">
             <div className="row justify-content-center">
               <div className="col-auto">
-                <div className={'day-tile ' + (moment().format('d') == 0 ? 'active' : '')}>
+                <div className={'day-tile ' + (moment().format('d') === 0 ? 'active' : '')}>
                   <div className="day">Sun.</div>
                   <div className="date">{moment().add(-2, 'day').format('MM/DD')}</div>
                   <div className="icon">
@@ -163,7 +163,7 @@ const Page = () => (
                 </div>
               </div>
               <div className="col-auto">
-                <div className={'day-tile ' + (moment().format('d') == 1 ? 'active' : '')}>
+                <div className={'day-tile ' + (moment().format('d') === 1 ? 'active' : '')}>
                   <div className="day">Mon.{moment().format('d')}</div>
                   <div className="date">{moment().add(-1, 'day').format('MM/DD')}</div>
                   <div className="icon">
@@ -173,7 +173,7 @@ const Page = () => (
               </div>
 
               <div className="col-auto">
-                <div className={'day-tile ' + (moment().format('d') == 2 ? 'active' : '')}>
+                <div className={'day-tile ' + (moment().format('d') === 2 ? 'active' : '')}>
                   
                   <div className="day">Tues.{moment().format('d')}</div>
 
@@ -187,7 +187,7 @@ const Page = () => (
               </div>
 
               <div className="col-auto">
-                <div className={'day-tile ' + (moment().format('d') == 3 ? 'active' : '')}>
+                <div className={'day-tile ' + (moment().format('d') === 3 ? 'active' : '')}>
                   <div className="day">Wed.</div>
                   <div className="date">{moment().add(1, 'day').format('MM/DD')}</div>
                   <div className="icon">
@@ -196,7 +196,7 @@ const Page = () => (
                 </div>
               </div>
               <div className="col-auto">
-                <div className={'day-tile ' + (moment().format('d') == 4 ? 'active' : '')}>
+                <div className={'day-tile ' + (moment().format('d') === 4 ? 'active' : '')}>
                   <div className="day">Thur.</div>
                   <div className="date">{moment().add(2, 'day').format('MM/DD')}</div>
                   <div className="icon">
@@ -205,7 +205,7 @@ const Page = () => (
                 </div>
               </div>
               <div className="col-auto">
-                <div className={'day-tile ' + (moment().format('d') == 5 ? 'active' : '')}>
+                <div className={'day-tile ' + (moment().format('d') === 5 ? 'active' : '')}>
                   <div className="day">Fri.</div>
                   <div className="date">{moment().add(3, 'day').format('MM/DD')}</div>
                   <div className="icon">
@@ -214,7 +214,7 @@ const Page = () => (
                 </div>
               </div>
               <div className="col-auto">
-                <div className={'day-tile ' + (moment().format('d') == 6 ? 'active' : '')}>
+                <div className={'day-tile ' + (moment().format('d') === 6 ? 'active' : '')}>
                   <div className="day">Sat.</div>
                   <div className="date">{moment().add(4, 'day').format('MM/DD')}</div>
                   <div className="icon">

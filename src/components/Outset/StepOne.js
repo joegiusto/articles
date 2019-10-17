@@ -2,55 +2,96 @@ import React from 'react';
 
 const StepOne = (props) => (
   <>
-    <div className="dual-header">
-      <h2>General Info</h2>
-      <h5>Step 1/{props.totalSteps}</h5>
-    </div>
-    <hr/>
 
-    <div className="outset-form-group">
-      <div className="name">First Name:</div>
-      <input type="text" onFocus={() => (props.changeFocus("firstName"))} value={props.authUser.nameFirst}/>
-    </div>
+  <div className="dual-header d-none">
+    <h2>General Info</h2>
+    <h5>Step 1/{props.totalSteps}</h5>
+  </div>
 
-    <div className="outset-form-group">
-      <div className="name">Last Name:</div>
-      <input type="text" onFocus={() => (props.changeFocus("lastName"))} value={props.authUser.nameLast}/>
-    </div>
-
-    <div className="row">
-
-      <div className="col-3">
-        <div className="outset-form-group">
-          <div className="name">Age:</div>
-          <input type="number" onFocus={() => (props.changeFocus("age"))} placeholder=""/>
-        </div>
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label for="validationTooltip01">First name</label>
+      <input onFocus={() => (props.changeFocus('firstName'))} type="text" class="form-control" id="validationTooltip01" placeholder="George" required/>
+      <div class="valid-tooltip">
+        Looks good!
       </div>
-
-      <div className="col-5">
-        <div className="outset-form-group">
-          <div className="name">Zip Code:</div>
-          <input type="number" onFocus={() => (props.changeFocus("zip"))} placeholder=""/>
-        </div>
-      </div>
-
-      <div className="col-4">
-        <div className="outset-form-group">
-          <div className="input-guess-explanation"></div>
-          <div className="name">State:</div>
-          
-          <div className="input-guess">
-            <input className="input-guess-input" type="number" onFocus={() => (props.changeFocus("state"))} placeholder="NY"></input>
-            <span className="input-guess-explanation d-none">
-              ?
-              <div className="input-guess-explanation-content">We can explain: <p>We got this info from your IP.</p></div>
-            </span>
-          </div>
-
-        </div>
-      </div>
-
     </div>
+
+    <div class="col-md-4 mb-3">
+      <label for="validationTooltip02">Last name</label>
+      <input onFocus={() => (props.changeFocus('lastName'))} type="text" class="form-control" id="validationTooltip02" placeholder="Washington" required/>
+      <div class="valid-tooltip">
+        Looks good!
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <label for="validationTooltip02">Email</label>
+      <input onFocus={() => (props.changeFocus('email'))} disabled type="text" class="form-control" id="validationTooltip03" placeholder="you@service.com"/>
+      <div class="valid-tooltip">
+        Looks good!
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="col-md-6 mb-3">
+      <label for="validationTooltip03">City</label>
+      <input onFocus={() => (props.changeFocus('city'))} type="text" class="form-control" id="validationTooltip03" placeholder="Mount Vernon" required/>
+      <div class="invalid-tooltip">
+        Please provide a valid city.
+      </div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <label for="validationTooltip04">State</label>
+      <input onFocus={() => (props.changeFocus('state'))} type="text" class="form-control" id="validationTooltip04" placeholder="VA" required/>
+      <div class="invalid-tooltip">
+        Please provide a valid state.
+      </div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <label for="validationTooltip05">Zip</label>
+      <input onFocus={() => (props.changeFocus('zip'))} type="text" class="form-control" id="validationTooltip05" placeholder="22309" required/>
+      <div class="invalid-tooltip">
+        Please provide a valid zip.
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row mt-5 pt-5">
+    <div class="col-md-6 mb-3">
+      <label for="validationTooltip03">Cell</label>
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/1280px-Flag_of_the_United_States.svg.png" style={{marginRight: '2px'}} height="10px"/>+1</div>
+        </div>
+        <input onFocus={() => (props.changeFocus('cell'))} type="tel" name="phone" class="form-control" id="inlineFormInputGroup" placeholder="000-000-0000"/>
+      </div>
+      <div class="invalid-tooltip">
+        Please provide a valid city.
+      </div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <label for="validationTooltip04">Age</label>
+      <input onFocus={() => (props.changeFocus('age'))} type="text" class="form-control" id="validationTooltip04" placeholder="42" required/>
+      <div class="invalid-tooltip">
+        Please provide a valid state.
+      </div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <label for="validationTooltip04">Gender</label>
+      <select onFocus={() => (props.changeFocus('gender'))} className="form-control" name="gender" id="">
+        <option value=""></option>
+        <option value="Male"></option>
+        <option value="Female"></option>
+        <option value="Other"></option>
+      </select>
+      <div class="invalid-tooltip">
+        Please provide a valid state.
+      </div>
+    </div>
+  </div>
+
   </>
 )
 

@@ -47,7 +47,7 @@ function StepThree(props) {
       case 5:
         return (
           <>
-            <h3>Issues that have lost interest that still need addressing.</h3>
+            <h3>Forgotten Issues that still need attention.</h3>
 
             <div className="issue-recommendation">
               <div className="title">Flint Michigan</div>
@@ -80,16 +80,6 @@ function StepThree(props) {
   }
 
   return (
-    <div>
-    
-    <div className="dual-header">
-      <h2>News Info</h2>
-      <h5>Step 3/{props.totalSteps}</h5>
-    </div>
-    <hr/>
-
-    <p>Click through the diffrent tabs to see stories you might like to subscribe too.</p>
-
     <div className="selectioon-container">
 
       <div className="selection-toolbar">
@@ -132,8 +122,6 @@ function StepThree(props) {
       </div>
 
     </div>
-
-  </div>
   );
 }
 

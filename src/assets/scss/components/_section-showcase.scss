@@ -62,7 +62,7 @@
   font-size: 2.5rem;
   text-align: left;
   position: absolute;
-  width: 100%;
+  width: calc(100% + 1px);
   top: -5px;
   left: 0px;
   background-color: #000;
@@ -135,8 +135,17 @@
       }
     }
   }
-
+  .card-quote-background {
+    position: absolute;
+    top: -155px;
+    left: 24px;
+    cursor: pointer;
+    // z-index: -1;
+  }
   .card-quote {
+    h5 {
+      margin-left: 110px;
+    }
     background-color: whitesmoke;
     border: 1px solid #000;
     padding: 1rem;
@@ -167,7 +176,7 @@
 .card-showcase {
   position: relative;
   height: 600px;
-  border-radius: 20px;
+  // border-radius: 20px;
   width: 100%;
   padding: 0rem 0rem;
   // overflow: hidden;

@@ -143,10 +143,13 @@ const HomePage = () => (
 
         </div>
         <div className='col-12 col-md-4'>
-          <hr/>
-          <Messages />
-          {/* <iframe title="newsletter" className="mt-3" style={{width: '580px', height: '570px', border: 'none'}} src="https://cdn.forms-content.sg-form.com/1352c270-bc52-11e9-a069-f615fa7b887e"/> */}
-          <Newsletter/>
+
+          <div className="chat-wrapper">
+            <Messages />
+          </div>
+
+          {/* <Newsletter/> */}
+
         </div>
       </div>
     </div>
@@ -173,73 +176,83 @@ class SimpleSlider extends React.Component {
       centerMode: false,
       infinite: false,
       centerPadding: "100px",
-      slidesToShow: 2,
+      slidesToShow: 3,
       arrows: false,
       beforeChange: (current, next) => this.setState({ activeSlide: next }),
       speed: 250,
     };
     return (
       <div className="story-updates my-5">
-        <div className="">
-          <h3>Item {this.state.activeSlide + 1} out of {this.state.slides}</h3>
+        <div className="dual-header slide-row-title">
+          <span className="right">News Updates</span>
+          <span className="left">Item {this.state.activeSlide + 1} out of {this.state.slides}</span>
         </div>
 
         <Slider {...settings}>
-          <div className="slick-card header">
-            <h3>Story Updates</h3>
-            <h5>4 Unread</h5>
+
+          <div className="slick-card">
+            <h3>1</h3>
+            <h5>Flint Michigan</h5>
+            <h5>2 Updates</h5>
+            <h5>Mild</h5>
           </div>
+
           <div className="slick-card">
             <h3>2</h3>
-            <h5>Joey Giusto</h5>
-            <h5>NY</h5>
-            <h5>Votes: +138</h5>
+            <h5>Panama Papers</h5>
+            <h5>1 Update</h5>
+            <h5>Critical</h5>
           </div>
+
           <div className="slick-card">
             <h3>3</h3>
-            <h5>Joey Giusto</h5>
-            <h5>NY</h5>
-            <h5>Votes: +138</h5>
+            <h5>MTA</h5>
+            <h5>1 Update</h5>
+            <h5>Fair Increse</h5>
           </div>
+
           <div className="slick-card">
             <h3>4</h3>
-            <h5>Joey Giusto</h5>
-            <h5>NY</h5>
-            <h5>Votes: +138</h5>
+            <h5>Edward Snowden</h5>
+            <h5>3 Updates</h5>
+            <h5>Interesting</h5>
           </div>
+
           <div className="slick-card">
             <h3>5</h3>
-            <h5>Joey Giusto</h5>
+            <h5>Gun Laws</h5>
+            <h5>New Law</h5>
             <h5>NY</h5>
-            <h5>Votes: +138</h5>
           </div>
+
           <div className="slick-card">
             <h3>6</h3>
             <h5>Joey Giusto</h5>
             <h5>NY</h5>
             <h5>Votes: +138</h5>
           </div>
+
         </Slider>
       </div>
     );
   }
 }
 
-class Newsletter extends Component {
-  constructor(props) {
-    super(props);
+// class Newsletter extends Component {
+//   constructor(props) {
+//     super(props);
 
-    this.state = {
+//     this.state = {
 
-    }
-  }
+//     }
+//   }
 
-  render() {
-    return (
-      <h1>Newsletter</h1>
-    )
-  }
-}
+//   render() {
+//     return (
+//       <h1>Newsletter</h1>
+//     )
+//   }
+// }
 
 class MessagesBase extends Component {
   constructor(props) {
@@ -249,7 +262,7 @@ class MessagesBase extends Component {
       text: '',
       loading: false,
       messages: [],
-      limit: 5,
+      limit: 10,
     };
   }
 
@@ -331,6 +344,8 @@ class MessagesBase extends Component {
     })
   }
 
+  
+
   render() {
     const { text, messages, loading } = this.state;
 
@@ -340,12 +355,16 @@ class MessagesBase extends Component {
         {authUser => (
           <div>
             {!loading && messages && (
-              <div>
+              <div className="dual-header">
                 <div>Showing last {this.state.limit} messages.</div>
-                {/* <div>Name:{this.getUsername('1kgzHcDlDJbBVppJlVXqpsgvhAa2')}</div> */}
-                <button type="button" onClick={this.onNextPage}>
+                
+
+                <button className="btn show-more" type="button" onClick={this.onNextPage}>
                   More
                 </button>
+
+                {/* <div>Name:{this.getUsername('1kgzHcDlDJbBVppJlVXqpsgvhAa2')}</div> */}
+
               </div>
             )}
             {loading && <div>Loading ...</div>}
@@ -362,12 +381,15 @@ class MessagesBase extends Component {
             )}
 
             <form onSubmit={event => this.onCreateMessage(event, authUser)}>
+
               <input
                 type="text"
                 value={text}
                 onChange={this.onChangeText}
+                className="message-input"
               />
-              <button type="submit">Send</button>
+              <button className="btn submit-input" type="submit">Send</button>
+
             </form>
           </div>
         )}
@@ -378,7 +400,7 @@ class MessagesBase extends Component {
 }
 
 const MessageList = ({ authUser, messages, onEditMessage, onRemoveMessage }) => (
-  <ul>
+  <ul className="message-list">
     {messages.map(message => (
       <MessageItem
         authUser={authUser}
@@ -417,6 +439,14 @@ class MessageItem extends Component {
     this.setState({ editMode: false });
   };
 
+  getUsername = uid => {
+    this.props.firebase.user(uid).once('value').then(snapshot => {
+      var name = snapshot.val().username
+      console.log(name)
+      return "Hello"
+    })
+  }
+
   render() {
     const { name, authUser, message, onRemoveMessage } = this.props;
     const { editMode, editText } = this.state;
@@ -425,46 +455,53 @@ class MessageItem extends Component {
         {editMode ? (
         <input
           type="text"
-          value={editText}
+          value={editText}         
           onChange={this.onChangeEditText}
         />
         ) : (
         <span>
           {/* <strong>Name: {name}</strong> */}
-          <strong>{message.userId}</strong> {message.text}
-          {message.editedAt && <span>(Edited)</span>}
+          <strong onClick={() => (this.getUsername('EWHLHSvY4OROIHdzsZWKPqwpI322'))} className="user-message">{message.userId}</strong>
         </span>
         )}
-
-        {/* {!editMode && (
-          <button
-            type="button"
-            onClick={() => onRemoveMessage(message.uid)}
-          >
-            Delete
-          </button>
-        )} */}
 
         {authUser.uid === message.userId && (
         <span>
         {editMode ? (
         <span>
-        <button onClick={this.onSaveEditText}>Save</button>
-        <button onClick={this.onToggleEditMode}>Reset</button>
+        <button className="btn save-message" onClick={this.onSaveEditText}>Save</button>
+        <button className="btn reset-message" onClick={this.onToggleEditMode}>Reset</button>
         </span>
         ) : (
-          <button onClick={this.onToggleEditMode}>Edit</button>
+          <button className="btn edit-message" onClick={this.onToggleEditMode}>Edit</button>
           )}
           {!editMode && (
+
           <button
-          type="button"
-          onClick={() => onRemoveMessage(message.uid)}
-          >
-          Delete
+            type="button"
+            className="btn delete-message"
+            onClick={() => onRemoveMessage(message.uid)}
+            >
+            Delete
           </button>
+
           )}
           </span>
           )}
+
+        {editMode ? (
+        <input
+          type="text"
+          value={editText}         
+          onChange={this.onChangeEditText}
+        />
+        ) : (
+        <span>
+          <span className="content-message">{message.text}</span>
+          {message.editedAt && <span>(Edited)</span>}
+        </span>
+        )}
+
       </li>
     );
   }
