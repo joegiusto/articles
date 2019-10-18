@@ -15,7 +15,6 @@ import gunIcon from '../../assets/img/icons/gun.svg'
 const Navigation = (props) => (
   <AuthUserContext.Consumer>
     {authUser =>
-
       <Menu expensesTotal={props.expenses.length} authUser={authUser}/>
     }
   </AuthUserContext.Consumer>
@@ -246,7 +245,7 @@ function Menu(props) {
               <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.OUTSET}><p className="subheading-font"><i className="fas fa-spinner fa-pulse d-none"></i><img className="mr-1 p-0" src="https://static.thenounproject.com/png/969593-200.png" height="30px" alt="menu-icon"></img>Outset</p></Link>
             </div>
             : 
-            <div>Not even logged in</div>
+            <div>Fix try and catch</div>
             }
 
             <div className='side-menu-bottom-spacer'></div>

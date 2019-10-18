@@ -171,7 +171,7 @@ class SignUpFormBase extends Component {
                 // TODO - autofocus is not working, gonna guess side menu is causing this
                 // autofocus
               />
-              <label className="heading-font" for="inputEmail">Last Name:</label>
+              <label className="heading-font" for="inputEmail">Last Name: (Optional)</label>
             </div>
           </div>
         </div>

@@ -11,7 +11,7 @@ const StepOne = (props) => (
   <div class="form-row">
     <div class="col-md-4 mb-3">
       <label for="validationTooltip01">First name</label>
-      <input onFocus={() => (props.changeFocus('firstName'))} type="text" class="form-control" id="validationTooltip01" placeholder="George" required/>
+      <input onFocus={() => (props.changeFocus('firstName'))} type="text" class="form-control" id="validationTooltip01" onChange={(e) => props.handleChange(e)} name="nameFirst" value={props.nameFirst} placeholder={"George"} required/>
       <div class="valid-tooltip">
         Looks good!
       </div>
@@ -19,7 +19,7 @@ const StepOne = (props) => (
 
     <div class="col-md-4 mb-3">
       <label for="validationTooltip02">Last name</label>
-      <input onFocus={() => (props.changeFocus('lastName'))} type="text" class="form-control" id="validationTooltip02" placeholder="Washington" required/>
+      <input onFocus={() => (props.changeFocus('lastName'))} type="text" class="form-control" id="validationTooltip02" onChange={(e) => props.handleChange(e)} name="nameLast" value={props.nameLast} placeholder={"Washington"}/>
       <div class="valid-tooltip">
         Looks good!
       </div>
@@ -27,7 +27,7 @@ const StepOne = (props) => (
 
     <div class="col-md-4 mb-3">
       <label for="validationTooltip02">Email</label>
-      <input onFocus={() => (props.changeFocus('email'))} disabled type="text" class="form-control" id="validationTooltip03" placeholder="you@service.com"/>
+      <input onFocus={() => (props.changeFocus('email'))} disabled type="text" class="form-control" id="validationTooltip03" placeholder={props.authUser.email}/>
       <div class="valid-tooltip">
         Looks good!
       </div>
@@ -37,21 +37,21 @@ const StepOne = (props) => (
   <div class="form-row">
     <div class="col-md-6 mb-3">
       <label for="validationTooltip03">City</label>
-      <input onFocus={() => (props.changeFocus('city'))} type="text" class="form-control" id="validationTooltip03" placeholder="Mount Vernon" required/>
+      <input onFocus={() => (props.changeFocus('city'))} type="text" class="form-control" id="validationTooltip03" onChange={(e) => props.handleChange(e)} name="city" value={props.city} placeholder="Mount Vernon"/>
       <div class="invalid-tooltip">
         Please provide a valid city.
       </div>
     </div>
     <div class="col-md-3 mb-3">
       <label for="validationTooltip04">State</label>
-      <input onFocus={() => (props.changeFocus('state'))} type="text" class="form-control" id="validationTooltip04" placeholder="VA" required/>
+      <input onFocus={() => (props.changeFocus('state'))} type="text" class="form-control" id="validationTooltip04" onChange={(e) => props.handleChange(e)} name="state" value={props.state} placeholder="VA"/>
       <div class="invalid-tooltip">
         Please provide a valid state.
       </div>
     </div>
     <div class="col-md-3 mb-3">
       <label for="validationTooltip05">Zip</label>
-      <input onFocus={() => (props.changeFocus('zip'))} type="text" class="form-control" id="validationTooltip05" placeholder="22309" required/>
+      <input onFocus={() => (props.changeFocus('zip'))} type="zip" class="form-control" id="validationTooltip05" placeholder="22309"/>
       <div class="invalid-tooltip">
         Please provide a valid zip.
       </div>
@@ -73,7 +73,7 @@ const StepOne = (props) => (
     </div>
     <div class="col-md-3 mb-3">
       <label for="validationTooltip04">Age</label>
-      <input onFocus={() => (props.changeFocus('age'))} type="text" class="form-control" id="validationTooltip04" placeholder="42" required/>
+      <input onFocus={() => (props.changeFocus('age'))} type="number" class="form-control" id="validationTooltip04" placeholder=""/>
       <div class="invalid-tooltip">
         Please provide a valid state.
       </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 
 class StepFive extends React.Component {
-  render(props) {
+  render() {
       return (
         <div>
 
@@ -11,7 +11,7 @@ class StepFive extends React.Component {
             <div className="read">Read</div>
 
             <label for="privacy">I accept</label>
-            <input type="checkbox" id="privacy" name="privacy"/>
+            <input type="checkbox" id="privacy" name="privacyAccept" checked={this.props.privacyChecked} onChange={this.props.handleChange}/>
           </div>
 
           <div>
@@ -20,7 +20,7 @@ class StepFive extends React.Component {
             <div className="read">Read</div>
 
             <label for="cookie">I accept</label>
-            <input type="checkbox" id="cookie" name="cookie"/>
+            <input type="checkbox" id="cookie" name="cookieAccept" checked={this.props.cookieChecked} onChange={this.props.handleChange}/>
           </div>
 
           <div>
@@ -29,7 +29,7 @@ class StepFive extends React.Component {
             <div className="read">Read</div>
             
             <label for="cookie">I accept</label>
-            <input type="checkbox" id="cookie" name="cookie"/>
+            <input type="checkbox" id="cookie" name="termsAccept" checked={this.props.termsChecked} onChange={this.props.handleChange}/>
           </div>
 
         </div>

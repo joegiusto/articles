@@ -84,7 +84,7 @@ const App = () => (
   
         <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
         <Route path={ROUTES.SIGN_IN} component={SignInPage} />
-  
+
         <Route path={ROUTES.OUTSET} component={OutsetPage} />
         
         <Route path={ROUTES.HOME} component={HomePage} />

@@ -104,7 +104,7 @@
       margin-right: 0.25rem;
     }
     .dots {
-      margin-top: 3px;
+      margin-top: 10px;
       display: flex;
       flex-direction: row;
       justify-content: center;
@@ -129,6 +129,86 @@
     button.step-controls-done {
       padding: 0.5rem 2.8rem;
     }
+  }
+
+  .cut-section {
+
+    .male-sign, .female-sign, .other-sign, .skip-sign {
+      background-color: #000;
+      color: white;
+      height: 70px;
+      width: 180px;
+      display: inline-block;
+      position: relative;
+      margin-right: 15px;
+      border-radius: 5px;
+      cursor: pointer;
+
+  // I like the collapsed look better for now so just gonna throw these in there
+      font-size: 0.75rem;
+      height: 60px;
+      width: 170px;
+      
+
+      &.active {
+        border-top: solid 5px #ffb7b7;
+        box-shadow: 0 1px 3px 1px #000000;
+      }
+      &.collapsed {
+        font-size: 0.75rem;
+        height: 60px;
+        width: 170px;
+        .shape {
+          width: 40px;
+          .icon {
+            font-size: 1.5rem;
+          }
+        }
+      }
+      .shape {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 80%;
+        width: 50px;
+        border: solid 2px #fff;
+        border-radius: inherit;
+        .icon {
+          // font-size: 2rem;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translateY(-50%) translateX(-50%);
+          i {
+            margin-right: 0px;
+          }
+        }
+      }
+      .shape {
+        width: 40px;
+        .icon {
+          font-size: 1.5rem;
+        }
+      }
+      .text {
+        padding: 0rem 0rem 0.5rem 0.5rem;
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+      }
+    }
+
+    .male-sign {
+
+    }
+    .female-sign {
+
+    }
+    .skip-sign {
+
+    }
+
   }
 
     // Step Two
@@ -217,7 +297,7 @@
   
     .shoe-size-container {
       display: flex;
-      justify-content: center;
+      // justify-content: center;
       .shoe-size-item {
         cursor: pointer;
         flex-direction: column;
@@ -255,6 +335,271 @@
     }
     // End Step Two
 
+    // Step Three
+  .selection-container {
+    position: relative;
+    background-color: $base-color;
+    border-radius: 5px;
+    padding: 1rem;
+    padding-top: 50px;
+    border: solid 1px #000;
+    .selection-toolbar {
+      position: absolute;
+      left: 1px;
+      top: 1px;
+      width: calc(100% - 1px);
+      height: 40px;
+      background-color: lighten($base-color, 6%);
+      .toolbar-items {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: center;
+        height: 40px;
+        .toolbar-item {
+          position: relative;
+          flex-grow: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-right: solid 1px #000;
+          border-bottom: solid 1px #000;
+          // border-radius: 5px;
+          &:first-child {
+            border-left: none;
+          }
+          &:last-child {
+            border-right: none;
+          }
+          .view-track {
+            position: absolute;
+            top: 2.5px;
+            left: 2.5px;
+            line-height: 0px;
+            // background-color: white;
+            // border: solid 2px #000;
+            // border-radius: 100px;
+            .fa-times {
+              color: red;
+            }
+            .fa-check {
+              color: green;
+            }
+          }
+          &.active {
+            background-color: $base-color;
+            border-bottom: none;
+          }
+        }
+
+      }
+    }
+    .selection-content {
+      min-height: 280px;
+    }
+  }
+
+  .issue-recommendation {
+    background-color: white;
+    padding: 1rem;
+    margin-bottom: 5px;
+    position: relative;
+
+    .title {
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .description {
+      font-size: 0.9rem;
+      color: #222;
+    }
+
+    .subscribe {
+      position: absolute;
+      top: 0px;
+      right: 10px;
+      font-size: 2rem;
+    }
+
+    .tags {
+      color: white;
+      background-color: #000;
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
+      width: 100%;
+      padding: 0rem 1rem;
+      font-size: 0.8rem;
+    }
+
+  }
+  // End Step Three
+
+  .politcal-party-card {
+    border: solid 1px rgb(70, 70, 70);
+    // border-radius: 5px;
+    margin: 0.2rem;
+    height: 200px;
+    width: 150px;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    position: relative;
+    $color: rgb(0, 0, 0);
+    box-shadow: 5px 5px rgba($color, 0.4),
+              10px 10px rgba($color, 0.3),
+              15px 15px rgba($color, 0.2),
+              20px 20px rgba($color, 0.1),
+              25px 25px rgba($color, 0.05);
+    &.active {
+      box-shadow: 5px 5px rgba($color, 0.4),
+              10px 10px rgba(#fff, 0.3),
+              15px 15px rgba($color, 0.2),
+              20px 20px rgba(#fff, 0.1),
+              25px 25px rgba($color, 0.05);
+    }
+    .name {
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
+      padding: 0.5rem;
+      font-family: brandon-grotesque, Helvetica, sans-serif;
+      font-size: 1.0rem;
+      font-style: normal;
+      font-weight: 900;
+      letter-spacing: 2.75px;
+      line-height: 1.0rem;
+      text-transform: uppercase;
+    }
+    .full-background {
+      z-index: -1;
+      position: absolute;
+      top: 0%;
+      left: 0px;
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+    .image {
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+    &.democratic {
+      background-color: rgba(0, 0, 255, 0.25);
+      color: white;
+      .image {
+        background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/US_Democratic_Party_Logo.svg/2000px-US_Democratic_Party_Logo.svg.png');
+        height: 50px;
+      }
+    }
+    &.republican {
+      background-color: rgba(255, 0, 0, 0.25);
+      color: white;
+      .image {
+        background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Republican_Disc.svg/1200px-Republican_Disc.svg.png');
+        height: 50px;
+      }
+    }
+    &.independent {
+      color: white;
+      text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+      &:after {
+        content: "";
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        bottom: 0px;
+        right: 0px;
+        background-image: url('https://images-na.ssl-images-amazon.com/images/I/61pHBj6y6HL._SY606_.jpg');
+        opacity: 0.15;
+        color: white;
+        background-size: cover;
+        z-index: -1;
+      }
+      .image {
+        background-image: url('https://seeklogo.com/images/U/usa-eagle-logo-253B446A11-seeklogo.com.png');
+        height: 50px;
+      }
+    }
+    &.green {
+      background-color: rgba(0, 128, 0, 0.25);
+      color: white;
+      .image {
+        filter: drop-shadow(0px 0px 2px #fff);
+        background-image: url('https://d3n8a8pro7vhmx.cloudfront.net/gpus/sites/3/meta_images/original/logo.png?1431058230');
+        height: 50px;
+        background-size: 125px;
+      }
+    }
+    &.libertarian {
+      background-color: rgba(255, 255, 0, 0.55);
+      color: black;
+      overflow: hidden;
+      .image {
+        filter: drop-shadow(0px 0px 2px rgb(0, 0, 0));
+        background-image: url('https://lpedia.org/w/images/4/4c/LPLogoC2015.png');
+        height: 60px;
+      }
+    }
+    &.constitution {
+      background-color: rgba(255, 166, 0, 0.2);
+      color: black;
+      .name {
+        font-size: 1rem;
+        letter-spacing: 1.50px;
+      }
+      .image {
+        filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.3));
+        background-image: url('https://upload.wikimedia.org/wikipedia/en/thumb/d/db/Constitution_Party_%28USA%29_logo.svg/180px-Constitution_Party_%28USA%29_logo.svg.png');
+        height: 50px;
+      }
+    }
+    &.reform {
+      background-color: rgba(255, 174, 0, 0.25);
+      color: white;
+      .image {
+        background-image: url('https://upload.wikimedia.org/wikipedia/en/thumb/5/5e/Reform_Party_of_the_United_States_of_America_logo.png/180px-Reform_Party_of_the_United_States_of_America_logo.png');
+        height: 50px;
+      }
+    }
+    &.legal-weed {
+      background-color: rgba(0, 128, 0, 0.25);
+      color: white;
+      .image {
+        filter: drop-shadow(0px 0px 5px rgb(255, 255, 255));
+        background-image: url('https://clipartimage.net/img/1503426321black-cannabis-leaf-png-potleaf-2.png');
+        height: 50px;
+      }
+    }
+    &.socialist-equality {
+      background-color: rgba(0, 0, 0, 0.35);
+      color: white;
+      .image {
+        background-image: url('https://upload.wikimedia.org/wikipedia/en/f/fe/US_Socialist_Equality_Party_logo.png');
+        height: 50px;
+      }
+    }
+    &.justice {
+      background-color: rgba(0, 0, 0, 0.05);
+      color: white;
+      .image {
+        background-image: url('https://upload.wikimedia.org/wikipedia/en/3/37/Official_logo_of_the_Justice_Party_%28United_States%29.png');
+        width: 50px;
+      }
+    }
+    &.articles {
+      background-color: black;
+      color: white;
+      .image {
+        img {
+          height: 50px;
+        }
+      }
+    }
+  }
+
+  
+
   .done-image-container {
     display: flex;
     flex-direction: column;
@@ -288,6 +633,8 @@
   }
   
 }
+
+// ``````````````````````````OLD````````````````````````````````````````````
 
 .outset-wrapper {
   width: 100%;
@@ -588,7 +935,7 @@
   // End Step Two
 
   // Step Three
-  .selectioon-container {
+  .selection-container {
     position: relative;
     background-color: $base-color;
     border-radius: 5px;
