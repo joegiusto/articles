@@ -54,4 +54,5 @@ export const DONATE = '/donate';
 export const DONATE_DETAILS = '/donate/:id';
 
 // Playground
-export const PLAYGROUND = '/playground'
+export const PLAYGROUND = '/playground';
+export const CHAT = '/chat';

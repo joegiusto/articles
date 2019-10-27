@@ -292,6 +292,7 @@ class MessagesBase extends Component {
       } else {
         this.setState({ messages: null, loading: false });
       }
+      
     });
   }
 
@@ -461,7 +462,8 @@ class MessageItem extends Component {
         ) : (
         <span>
           {/* <strong>Name: {name}</strong> */}
-          <strong onClick={() => (this.getUsername('EWHLHSvY4OROIHdzsZWKPqwpI322'))} className="user-message">{message.userId}</strong>
+          <strong className="user-message">{message.userId}</strong>
+          {/* onClick={() => (this.getUsername('EWHLHSvY4OROIHdzsZWKPqwpI322'))} */}
         </span>
         )}
 

@@ -90,6 +90,9 @@ class Firebase {
   donation = uid => this.database.ref(`donations/${uid}`);
   donations = () => this.database.ref('donations');
 
+  onlineList = () => this.database.ref(`online/`);
+  online = uid => this.database.ref(`users/${uid}/online`);
+
   resetUserOutset = uid => this.database.ref(`users/${uid}`).update({
     outset: 0
   });

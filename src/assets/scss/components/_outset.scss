@@ -19,6 +19,58 @@
   transition-duration: 5s;
 }
 
+.popper-help-wrap {
+  z-index: 2;
+  filter: drop-shadow(0px 0px 1px #000);
+  animation: blink 0.5s infinite;
+  // animation-name: blink;
+  // animation-duration: 1s;
+  animation-direction: alternate;
+
+  @keyframes blink {
+    from {
+      filter: drop-shadow(0px 0px 2px #000);
+      // padding: 0.5rem;
+    }
+    to {
+      filter: drop-shadow(0px 0px 2px $accent-color);
+      // padding: 0.7rem;
+    }
+  }
+
+  .popper-help {
+    clip-path: polygon(8% 0, 100% 0%, 100% 100%, 8% 100%, 8% 70%, 0 74%, 8% 58%);
+
+    background-color: $base-color;
+    // box-shadow: 0px 0px 3px black;
+    font-size: 1rem;
+    padding: 0.5rem;
+    padding-left: 25px;
+    padding-right: 10px;
+    margin-left: 5px;
+  
+    font-family: OpenSansRegular, Helvetica, sans-serif;
+    // font-size: 18px;
+    font-style: normal;
+    font-weight: normal;
+    letter-spacing: normal;
+    line-height: 1rem;
+    text-transform: none;
+    color: #44555F;
+  }
+
+  .left {
+
+  }
+
+  .right {
+    
+  }
+
+}
+
+
+
 .outset-form {
   background-color: #FFFFFF;
   width: 70%;
@@ -35,6 +87,10 @@
   >.row>.col-md-6:first-child {
     border-right: solid 1px #44555F;
     height: 360px;
+  }
+
+  .outset-highlight {
+    box-shadow: 0px 0px 5px #ffb7b7;
   }
 
   .intro {
@@ -133,6 +189,12 @@
 
   .cut-section {
 
+    .cut-container {
+      display: flex;
+      justify-content: space-between;
+      margin-right: -15px;
+    }
+
     .male-sign, .female-sign, .other-sign, .skip-sign {
       background-color: #000;
       color: white;
@@ -143,13 +205,14 @@
       margin-right: 15px;
       border-radius: 5px;
       cursor: pointer;
+      border-top: solid 5px #ffffff;
+      box-shadow: 0 1px 3px 1px #000000;
 
-  // I like the collapsed look better for now so just gonna throw these in there
+      // I like the collapsed look better for now so just gonna throw these in there
       font-size: 0.75rem;
       height: 60px;
-      width: 170px;
+      width: 185px;
       
-
       &.active {
         border-top: solid 5px #ffb7b7;
         box-shadow: 0 1px 3px 1px #000000;
@@ -157,7 +220,7 @@
       &.collapsed {
         font-size: 0.75rem;
         height: 60px;
-        width: 170px;
+        width: 185px;
         .shape {
           width: 40px;
           .icon {
@@ -211,131 +274,209 @@
 
   }
 
-    // Step Two
-    .shirt-section{
-      .small-tag-wrap {
+  // Step Two
+  .shirt-section{
+    .small-tag-wrap {
+      position: relative;
+      filter: drop-shadow(0px 0px 2px rgba(50, 50, 0, 0.5));
+      
+      .tag {
+        cursor: pointer;
+        margin-bottom: 1rem;
+        display: inline-block;
+        // min-height: 64px;
+        width: 80px;
         position: relative;
-        filter: drop-shadow(0px 0px 2px rgba(50, 50, 0, 0.5));
-        .tag {
-          cursor: pointer;
-          margin-bottom: 1rem;
-          display: inline-block;
-          // min-height: 64px;
-          width: 80px;
-          position: relative;
-          background: $base-color;
-          color: #222;
-          padding: 1rem 3rem 1rem 3rem;
-          font: bold 16px system-ui;
-          clip-path: polygon(30px 0%, 100% 0%, 100% 100%, 30px 100%, 0 50%);
-          &.active {
-            background: $accent-color;
-          }
-        }
-        .hole {
-          position: absolute;
-          filter: drop-shadow(0px 0px 1px black);
-          width: 10px;
-          height: 10px;
-          top: 6px;
-          left: 12px;
-          background-color: #FFFFFF;
-          border: inset solid 2px #000;
-          border-radius: 100%;
-          &.active {
-            background: #000;
-          }
+        background: $base-color;
+        color: #222;
+        padding: 1rem 3rem 1rem 3rem;
+        font: bold 16px system-ui;
+        clip-path: polygon(30px 0%, 100% 0%, 100% 100%, 30px 100%, 0 50%);
+        &.active {
+          background: $accent-color;
         }
       }
-    
-      .tag-wrap {
-        position: relative;
-        filter: drop-shadow(0px 0px 2px rgba(50, 50, 0, 0.5));
-        .tag {
-          cursor: pointer;
-          margin-bottom: 1rem;
-          display: inline-block;
-          // min-height: 64px;
-          width: 140px;
-          position: relative;
-          background: $base-color;
-          color: #222;
-          padding: 1rem 2rem 1rem 4rem;
-          font: bold 16px system-ui;
-          clip-path: polygon(30px 0%, 100% 0%, 100% 100%, 30px 100%, 0 50%);
-    
-          // Have them all eventually rotated at diffrent rates 
-          // transform: rotate(10deg);
-          &.active {
-            background: $accent-color;
-          }
-        }
-        .hole {
-          position: absolute;
-          filter: drop-shadow(0px 0px 1px black);
-          width: 10px;
-          height: 10px;
-          top: 6px;
-          left: 12px;
-          background-color: #FFFFFF;
-          border: inset solid 2px #000;
-          border-radius: 100%;
-          &.active {
-            background: #000;
-          }
-        }
-      }
-    
-      .extraShirt {
-        display: flex;
-        justify-content: space-evenly;
-        button {
-          background-color: $base-color;
+      .hole {
+        position: absolute;
+        filter: drop-shadow(0px 0px 1px black);
+        width: 10px;
+        height: 10px;
+        top: 6px;
+        left: 12px;
+        background-color: #FFFFFF;
+        border: inset solid 2px #000;
+        border-radius: 100%;
+        &.active {
+          background: #000;
         }
       }
     }
   
-    .shoe-size-container {
-      display: flex;
-      // justify-content: center;
-      .shoe-size-item {
+    .tag-wrap {
+      position: relative;
+      filter: drop-shadow(0px 0px 2px rgba(50, 50, 0, 0.5));
+      .tag {
+        transform: rotate(45deg);
         cursor: pointer;
-        flex-direction: column;
-        align-items: center;
-        display: flex;
+        margin-bottom: 1rem;
+        display: inline-block;
+        // min-height: 64px;
+        width: 140px;
+        position: relative;
         background: $base-color;
-        height: 110px;
-        margin-right: 10px;
-        width: 85px;
-        border: solid 1px #000;
-        box-shadow: inset 0 0 0px 5px #ffffff;
-        text-align: center;
+        color: #222;
+        padding: 1rem 2rem 1rem 4rem;
+        font: bold 16px system-ui;
+        clip-path: polygon(30px 0%, 100% 0%, 100% 100%, 30px 100%, 0 50%);
+  
+        // Have them all eventually rotated at diffrent rates 
+        // transform: rotate(10deg);
         &.active {
-          box-shadow: inset 0 0 0px 5px $accent-color;
+          background: $accent-color;
         }
-        &:last-child {
-          margin-right: 0px;
-        }
-        .image {
-          flex-grow: 1;
-          position: relative;
-          display: flex;
-          img {
-            position: absolute;
-            bottom: 50%;
-            transform: translateY(50%)
-          }
-        }
-        .size {
-          font-weight: bold;
-          font-family: Forte;
-          margin-bottom: 0.5rem;
+      }
+      .size {
+        transform: rotate(45deg);
+      }
+      .hole {
+        position: absolute;
+        filter: drop-shadow(0px 0px 1px black);
+        width: 10px;
+        height: 10px;
+        top: 6px;
+        left: 12px;
+        background-color: #FFFFFF;
+        border: inset solid 2px #000;
+        border-radius: 100%;
+        &.active {
+          background: #000;
         }
       }
     }
-    // End Step Two
+  
+    .extraShirt {
+      display: flex;
+      justify-content: space-evenly;
+      button {
+        background-color: $base-color;
+      }
+    }
 
-    // Step Three
+    .clothing-tag-container {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-between;
+      margin-right: -1rem;
+      // height: 200px;
+      // width: 100%;
+    }
+
+    .clothing-tag-wrap {
+      filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.5));
+      margin-bottom: 0.5rem;
+      margin-right: 1rem;
+      flex-basis: calc(25% - 1rem);
+      height: 45px;
+      // transform: rotate(15deg);
+
+      .clothing-tag {
+        cursor: pointer;
+        position: relative;
+        clip-path: polygon(30px 0%, 100% 0%, 100% 100%, 30px 100%, 0 50%);
+        // width: 100px;
+        height: 100%;
+        background-color: #ffb7b7;
+
+        .size {
+          position: absolute;
+          top: 50%;
+          left: 55%;
+          transform: translateX(-50%) translateY(-50%);
+          font: bold 16px system-ui;
+        }
+
+        .hole {
+          position: absolute;
+          top: 50%;
+          left: 15%;
+          transform: translateX(-50%) translateY(-50%);
+          background-color: white;
+          border-radius: 50px;
+          border: solid 1px rgba(0, 0, 0, 0.25);
+          width: 10px;
+          height: 10px;
+          &.active {
+            background-color: black;
+          }
+        }
+
+      }
+
+      &.input-tag {
+        flex-basis: calc(50% - 1rem);
+        .clothing-tag {
+          .size {
+            position: absolute;
+            top: 50%;
+            left: 22.5%;
+            transform: translateY(-50%);
+          }
+          input {
+            width: 50%;
+            position: absolute;
+            top: 50%;
+            right: 5%;
+            transform: translateY(-50%);
+          }
+        }
+      }
+
+    }
+
+    
+  }
+
+  .shoe-size-container {
+    display: flex;
+    justify-content: space-between;
+    .shoe-size-item {
+      cursor: pointer;
+      flex-direction: column;
+      align-items: center;
+      display: flex;
+      background: $base-color;
+      height: 110px;
+      margin-right: 10px;
+      width: 85px;
+      border: solid 1px #000;
+      box-shadow: inset 0 0 0px 5px #ffffff;
+      text-align: center;
+      &.active {
+        box-shadow: inset 0 0 0px 5px $accent-color;
+      }
+      &:last-child {
+        margin-right: 0px;
+      }
+      .image {
+        flex-grow: 1;
+        position: relative;
+        display: flex;
+        img {
+          position: absolute;
+          bottom: 50%;
+          transform: translateY(50%)
+        }
+      }
+      .size {
+        font-weight: bold;
+        font-family: Forte;
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+  // End Step Two
+
+  // Step Three
   .selection-container {
     position: relative;
     background-color: $base-color;
@@ -357,6 +498,7 @@
         text-align: center;
         height: 40px;
         .toolbar-item {
+          cursor: pointer;
           position: relative;
           flex-grow: 1;
           display: flex;
@@ -389,6 +531,9 @@
           &.active {
             background-color: $base-color;
             border-bottom: none;
+            .tab-icon {
+              font-size: 1.5em;
+            }
           }
         }
 
@@ -396,10 +541,22 @@
     }
     .selection-content {
       min-height: 280px;
+      >.title{
+        letter-spacing: 4.75px;
+        margin-top: 1.25rem;
+        font-size: 1rem;
+        line-height: 1rem;
+        text-transform: uppercase;
+        font-style: normal;
+        font-weight: 900;
+        font-family: brandon-grotesque, Helvetica, sans-serif;
+      }
     }
   }
 
   .issue-recommendation {
+    user-select: none;
+    cursor: pointer;
     background-color: white;
     padding: 1rem;
     margin-bottom: 5px;
@@ -420,6 +577,18 @@
       top: 0px;
       right: 10px;
       font-size: 2rem;
+      i {
+        color: white;
+        -webkit-text-stroke-width: 3px;
+        -webkit-text-stroke-color: black;
+      }
+      &.active {
+        i {
+          color: $accent-color;
+          -webkit-text-stroke-width: 3px;
+          -webkit-text-stroke-color: black;
+        }
+      }
     }
 
     .tags {
@@ -436,6 +605,7 @@
   }
   // End Step Three
 
+  // Step Four
   .politcal-party-card {
     border: solid 1px rgb(70, 70, 70);
     // border-radius: 5px;
@@ -446,16 +616,17 @@
     margin-bottom: 0.5rem;
     position: relative;
     $color: rgb(0, 0, 0);
+    z-index: 1;
     box-shadow: 5px 5px rgba($color, 0.4),
               10px 10px rgba($color, 0.3),
               15px 15px rgba($color, 0.2),
               20px 20px rgba($color, 0.1),
               25px 25px rgba($color, 0.05);
     &.active {
-      box-shadow: 5px 5px rgba($color, 0.4),
-              10px 10px rgba(#fff, 0.3),
+      box-shadow: 5px 5px rgba($accent-color, 0.4),
+              10px 10px rgba($accent-color, 0.3),
               15px 15px rgba($color, 0.2),
-              20px 20px rgba(#fff, 0.1),
+              20px 20px rgba($accent-color, 0.1),
               25px 25px rgba($color, 0.05);
     }
     .name {
@@ -597,6 +768,20 @@
       }
     }
   }
+  // End Step Four
+
+  .accept-tile-container {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+
+    .accept-tile {
+      border: 5px solid rgba(0, 0, 0, 0.5);
+      background-color: rgba($base-color, 0.5);
+      padding: 0.25rem 1rem;
+      margin-bottom: 10px;
+    }
+  }
 
   
 
@@ -632,6 +817,19 @@
     }
   }
   
+}
+
+// Mobile first am I right?...
+@media only screen and (max-width: 1400px) {
+  .outset-form {
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: 1050px) {
+  .outset-form {
+    width: 95%;
+  }
 }
 
 // ``````````````````````````OLD````````````````````````````````````````````

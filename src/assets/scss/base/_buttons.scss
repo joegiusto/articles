@@ -12,6 +12,16 @@
   &:active {
     border-bottom: 3px solid #000;
   }
+  &:disabled {
+    filter: grayscale(1);
+    color: darkgray!important;
+    opacity: 1;
+    &:hover {
+      cursor: not-allowed;
+      filter: grayscale(1);
+      color: darkgray;
+    }
+  }
 }
 
 .btn-articles-light:disabled {
@@ -62,5 +72,18 @@
   }
   &.shorten {
     width: 50px;
+  }
+}
+
+.articles-inline-link {
+  background-color: #000;
+  color: white;
+  text-decoration: underline;
+  padding: 0rem 0.15rem;
+  border-radius: 5px;
+  border: solid 1px transparent;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: solid 1px #000;
   }
 }

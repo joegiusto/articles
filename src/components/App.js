@@ -44,6 +44,7 @@ import AdminPage from './Admin';
 import DonatePage from './Donate';
 
 // import PlaygroundPage from './Playground';
+import Chat from './Chat';
 
 import NotFoundPage from './Navigation/NotFoundPage';
 
@@ -120,7 +121,8 @@ const App = () => (
         <Route path={ROUTES.DONATE} component={DonatePage} />
 
         {/* <Route path={ROUTES.PLAYGROUND} component={PlaygroundPage} /> */}
-  
+        <Route path={ROUTES.CHAT} component={Chat} />
+
         <Route component={NotFoundPage} />
       </Switch>
 

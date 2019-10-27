@@ -3,6 +3,8 @@ import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import { AuthUserContext, withAuthorization, withEmailVerification } from '../Session';
 
+import { isValidPhoneNumber } from 'react-phone-number-input'
+
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import { auth } from 'firebase';
@@ -29,6 +31,15 @@ class OutsetBase extends React.Component {
 
     this.state = {
       step: 0,
+      highlightElement: '',
+
+      // Suggestions API
+      storySuggestionAge: [],
+      storySuggestionLocation: {
+        city: [],
+        state: [],
+        zip: [],
+      },
 
       // If more steps are added change this
       totalSteps: 5,
@@ -37,10 +48,13 @@ class OutsetBase extends React.Component {
       // Step One States
       nameFirst: props.authUser.nameFirst,
       nameLast: props.authUser.nameLast,
-      age: '',
-      zip: '',
+      
       city: '',
       state: '',
+      zip: '',
+      cell: '',
+      age: '',
+      gender: '',
 
       // Step Two States
       clothingCut: '', 
@@ -49,6 +63,17 @@ class OutsetBase extends React.Component {
 
       // Step Three States
       subscriptions: [],
+      // UI Only, not to be passed to firebase object
+      uiStuff: {
+        activeTab: 1, 
+        viewedTabs: {
+          one: true,
+          two: false,
+          three: false,
+          four: false,
+          five: false
+        }
+      },
 
       // Step Four States
       partyAffiliation: '',
@@ -57,15 +82,103 @@ class OutsetBase extends React.Component {
       privacyAccept: false,
       termsAccept: false,
       cookieAccept: false,
+
+      error: ''
     };
 
     this.changeFocus = this.changeFocus.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleCellTwo = this.handleCellTwo.bind(this);
+    this.setActiveTab = this.setActiveTab.bind(this);
+
+    this.setCell = this.setCell.bind(this);
+
+    this.getStorySuggestionLocation = this.getStorySuggestionLocation.bind(this);
+
+    this.changeStep = this.changeStep.bind(this);
+    this.highlightElement = this.highlightElement.bind(this);
+    
+  }
+
+  async getStorySuggestionLocation(locationObject) {
+    console.log(locationObject)
+    console.log("Sending data off!");
+    console.log("Recieved data!");
+    console.log("Updated storySuggestionLocation state!");
+
+    let response = await fetch("/storySuggestionLocation", {
+      method: "POST",
+      headers: {"Content-Type": "text/plain"},
+      body: locationObject
+    })
+    .then(function(recieved) {
+      return recieved.json();
+    }).then(function(data) {
+      console.log(data);
+    });
+
+    console.log(response);
+
+    this.setState({
+      storySuggestionLocation: {
+        city: [],
+        state: ['NY-State-Elections'],
+        zip: ['mta-fair-pricing'],
+      },
+    });
+
   }
 
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
+
+  submitData() {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+
+    today = mm + '/' + dd + '/' + yyyy;
+
+    this.props.firebase.user(this.props.authUser.uid).update({
+
+      completed: true,
+
+      // Step One (Not in Outset)
+      nameFirst: this.state.nameFirst,
+      nameLast: this.state.nameLast,
+
+      // NOTE - Should all this be wrapped in outset? Yes, but I want it to be known this info is not user information, its is a way to enrich the users experience. Do not mistake the two.
+      outset: {
+        // Step One
+        city: this.state.city,
+        state: this.state.state,
+        zip: this.state.zip,
+        age: this.state.age,
+        cell: this.state.cell,
+
+        // Step Two
+        clothingCut: this.state.clothingCut, 
+        shirtSize: this.state.shirtSize,
+        shoeSize: this.state.shoeSize,
+
+        // Step Three
+        subscriptions: this.state.subscriptions,
+        
+        // Step Four
+        partyAffiliation: this.state.partyAffiliation,
+      },
+
+      // Step Five
+      legal: {
+        privacyAccept: today,
+        termsAccept: today,
+        cookieAccept: today
+      }
+
+    })
+  }
 
   handleChange(event) {
     const target = event.target;
@@ -83,8 +196,11 @@ class OutsetBase extends React.Component {
     this.setState({ shirtSize: size });
   };
 
-  toggleSubscriptions = id => {
+  // componentDidMount() {
+  //   this.setState({ step: 3 });
+  // }
 
+  toggleSubscriptions = id => {
     if (this.state.subscriptions.indexOf(id) === -1) {
       this.setState({
         subscriptions: [...this.state.subscriptions, id]
@@ -95,7 +211,6 @@ class OutsetBase extends React.Component {
       array.splice(index, 1);
       this.setState({subscriptions: array})
     }
-    
   }
 
   changeShoeSize = size => {
@@ -107,7 +222,46 @@ class OutsetBase extends React.Component {
   };
 
   changeStep(step) {
-    this.setState({step: step })
+    this.setState({step: step });
+  }
+
+  highlightElement(element) {
+    this.setState({highlightElement: element});
+  }
+
+  // NOTE - Moved into setActiveTab
+  // setViewedTabs(lastState, tab) {
+  //   this.setState({
+  //     uiStuff: {
+  //       ...lastState,
+  //       viewedTabs: {
+  //         tab
+  //       }
+  //     }
+  //   })
+  // }
+
+  setActiveTab(tab, viewedTab) {
+    this.setState({
+      uiStuff: {
+        activeTab: tab,
+        viewedTabs: {
+          ...this.state.uiStuff.viewedTabs,
+          [viewedTab]: true
+        }
+      }
+    })
+  }
+
+  setCell(value) {
+    this.setState({cell: value})
+
+    // Needed for checking cell phone validation
+    // TODO - Understand why typing cell phone then backspacing results in undefined state for cell rather then empty string so this can be deleted.
+    if (value === undefined) {
+      this.setState({cell: ''})
+    }
+
   }
 
   increment() {
@@ -124,6 +278,19 @@ class OutsetBase extends React.Component {
     });
   }
 
+  handleCellTwo(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+ 
+    this.setState({ [name]: this.state.cell.replace(/\D[^\.]/g, "") });
+  }
+
+  // changeCell(f) {
+  //   f_val = f.value.replace(/\D[^\.]/g, "");
+  //   f.value = f_val.slice(0,3)+"-"+f_val.slice(3,6)+"-"+f_val.slice(6);
+  // }
+
   log(string) {
     console.log(string);
   }
@@ -131,6 +298,7 @@ class OutsetBase extends React.Component {
   changeFocus(focus) {
     this.setState({
       focus: focus,
+      highlightElement: ""
     });
   }
 
@@ -147,28 +315,56 @@ class OutsetBase extends React.Component {
       case 'zip':
         return "We use this info to recommend popular stories in your area and get an idea of where our users live."
       case 'cell':
-        return (<span>By entering your cell phone number we can send you minimal updates about whats going on with Articles.<hr/><span style={{fontSize: '0.85rem'}} className="text-muted">If you don't have unlimited texting - Msg rates may apply</span></span>)
+        return (<span>By entering your cell phone number we can send you minimal updates about whats going on with Articles.<hr/><span style={{fontSize: '0.85rem'}} className="text-muted">Text messaging rates may apply - If you have unlimited text messaging then you are good 👍</span></span>)
       case 'age':
         return "Using your age we can recommend popular stories that others in your age range are subscribed to."
+      case 'gender':
+        return "We use your gender to get insights on our user base."
       
 
       case 'stories-age':
-        return ( <div className="intro-message">Using the age you provided in step one we can look up stories that are popular with users in your age group.<hr/>Pick three to start | {this.state.subscriptions.length}/3</div> )
+        return ( <div className="intro-message">Using the age you provided in step one we can look up stories that are popular with users in your age group.{this.renderReasonForInformationStoriesExtra()}</div> )
       case 'stories-location':
-        return ( <div className="intro-message">Using the loaction you provided in step one we can look up stories that are popular in your area.<hr/>Pick three to start | {this.state.subscriptions.length}/3</div> )
+        return ( <div className="intro-message">Using the loaction you provided in step one we can look up stories that are popular in your area.{this.renderReasonForInformationStoriesExtra()}</div> )
       case 'stories-popular':
-        return ( <div className="intro-message">These are stories that are popular amongst users on the site.<hr/>Pick three to start | {this.state.subscriptions.length}/3</div> )
+        return ( <div className="intro-message">These are stories that are popular amongst users on the site.{this.renderReasonForInformationStoriesExtra()}</div> )
       case 'stories-relevant':
-        return ( <div className="intro-message">To get you started we picked a few stories that we find interesting.<hr/>Pick three to start | {this.state.subscriptions.length}/3</div> )
+        return ( <div className="intro-message">To get you started we picked a few stories that we find interesting.{this.renderReasonForInformationStoriesExtra()}</div> )
       case 'stories-forgotten':
-        return ( <div className="intro-message">With so much happening these days it is easy for people to forget major issues and even easier for corporations to silence news. Here we have issues that the news has gotten quiet on.<hr/>Pick three to start | {this.state.subscriptions.length}/3</div> )
+        return ( <div className="intro-message">With so much happening these days it is easy for people to forget major issues and even easier for corporations to silence news. Here we have issues that the news has gotten quiet on.{this.renderReasonForInformationStoriesExtra()}</div> )
+      default:
+        return ""
+    }
+  }
+
+  renderReasonForInformationStoriesExtra() {
+    // So... when you change the focus of Step Three (NEWS PREFRENCES) we let users know how many stories they have selected, only once they change the focus once on the step so we can explain the step they are on first.
+    return (
+      <span className={this.state.focus === "" ? ' d-none' : ''}><hr/>Pick three to start | {this.state.subscriptions.length}/3</span>
+    )
+  }
+
+  tabToFocus(tab) {
+    // So... when you change the focus to Step Three (NEWS PREFRENCES) we show users the point of the step and the explanation of the focused tab. We only know the active tab when we switch back and not the focus so here we get that info.
+    switch(tab) {
+      case 1:
+        return 'stories-age'
+      case 2:
+        return 'stories-location'
+      case 3:
+        return 'stories-popular'
+      case 4:
+        return 'stories-relevant'
+      case 5:
+        return 'stories-forgotten'
       default:
         return ""
     }
   }
 
   canShow(size) {
-    if (size.match( /^(OTHER|2XL|3XL|4XL|SKIP)$/ ) )  {
+    // For showing more shirt sizes when a certain size is selected
+    if (size.match( /^(OTHER|4XL|MORE|SKIP)$/ ) )  {
       return true
     }
     else {
@@ -212,7 +408,7 @@ class OutsetBase extends React.Component {
     }
   }
 
-  renderMessage(step, authUser) {
+  renderMessage(step) {
     switch(step) {
       case 0: 
         return (
@@ -229,7 +425,7 @@ class OutsetBase extends React.Component {
       case 3: 
         return (
           // This one is a little tricky because one of the tabs are visbile at start so we have to show the explanation with the step message.
-          <div className="intro-message">We think it's a problem when the news decides what the people see. Pick some stories to subscribe to from the categories provided.<hr/>Using the age you provided in step one we can look up stories that are popular with users in your age group.</div>
+          <div className="intro-message">We think it's a problem when the news decides what the people see. Pick at least three stories to subscribe to from the categories provided.<hr/>{this.renderReasonForInformation(this.tabToFocus(this.state.uiStuff.activeTab))}</div>
         )
       case 4: 
         return (
@@ -253,7 +449,7 @@ class OutsetBase extends React.Component {
       case 1: 
         // General Information
         return (
-          <StepOne {...this.state} handleChange={this.handleChange} onChange={this.onChange} changeFocus={this.changeFocus} authUser={authUser}/>
+          <StepOne {...this.state} handleCellTwo={this.handleCellTwo} setCell={this.setCell} handleChange={this.handleChange} onChange={this.onChange} changeFocus={this.changeFocus} authUser={authUser}/>
         )
       case 2:
         // Clothing Information
@@ -263,7 +459,7 @@ class OutsetBase extends React.Component {
       case 3:
         // News Information
         return (
-          <StepThree totalSteps={this.state.totalSteps} age={this.state.age} toggleSubscriptions={this.toggleSubscriptions} changeFocus={this.changeFocus}/>
+          <StepThree {...this.state} setViewedTabs={this.setViewedTabs} setActiveTab={this.setActiveTab} toggleSubscriptions={this.toggleSubscriptions} changeFocus={this.changeFocus} changeStep={this.changeStep} highlightElement={this.highlightElement} getStorySuggestionLocation={this.getStorySuggestionLocation}/>
         )
       case 4:
         // Party Information
@@ -276,7 +472,12 @@ class OutsetBase extends React.Component {
           <StepFive log={this.log} privacyChecked={this.state.privacyAccept} cookieChecked={this.state.cookieAccept} termsChecked={this.state.termsAccept} handleChange={this.handleChange} totalSteps={this.state.totalSteps}/>
         )
       default:
-        return (<div className="intro-message text-center">0%<br/>Submitting</div>)
+        return (
+        <div className="intro-message text-center">
+          0%<br/>Submitting
+          <button onClick={() => (this.submitData())} className="btn btn-articles-light">Test</button>
+        </div>
+        )
     }
   }
 
@@ -284,6 +485,7 @@ class OutsetBase extends React.Component {
 
     const {
       nameFirst,
+      cell,
       clothingCut,
       shirtSize,
       shoeSize,
@@ -294,8 +496,9 @@ class OutsetBase extends React.Component {
       privacyAccept,
     } = this.state;
 
-    const stepOneIsInvalid = nameFirst === '';
-    const stepTwoIsInvalid = clothingCut === '';
+    const stepOneIsInvalid = (nameFirst === '') || (cell !== '' && !isValidPhoneNumber(cell));
+    // const phoneInvalid = ;
+    const stepTwoIsInvalid = (clothingCut === '') || (clothingCut === 'male' && shirtSize === '') ||  (clothingCut === 'female' && shirtSize === '');
     const stepThreeIsInvalid = subscriptions.length < 3;
     const stepFourIsInvalid = partyAffiliation === '';
     const stepFiveIsInvalid = (cookieAccept && termsAccept && privacyAccept) === false;
@@ -357,8 +560,8 @@ class OutsetBase extends React.Component {
               <div className="col-12 col-md-6">
                 {this.renderTitle(this.state.step)}
 
-                {/* NOTE Was for debug purposes, just gonna leave for now */}
-                {/* <div><span>Step One:</span> {stepOneIsInvalid ? ' No' : ' Yes'}</div>
+                {/* NOTE Was for debug purposes, just gonna leave for now
+                <div><span>Step One:</span> {stepOneIsInvalid ? ' No' : ' Yes'}</div>
                 <div><span>Step Two:</span> {stepTwoIsInvalid ? ' No' : ' Yes'}</div>
                 <div><span>Step Three:</span> {stepThreeIsInvalid ? ' No' : ' Yes'}</div>
                 <div><span>Step Four:</span> {stepFourIsInvalid ? ' No' : ' Yes'}</div>
@@ -477,9 +680,9 @@ function CanGoToNextStep(props) {
    // New way
 
    if ((step === 1 && !stepOneIsInvalid) || (step === 2 && !stepTwoIsInvalid) || (step === 3 && !stepThreeIsInvalid) || (step === 4 && !stepFourIsInvalid) || (step === 5 && !stepFiveIsInvalid)) {
-    return <button className={"btn btn-lg btn-articles-light step-controls-next" + (step === 0 ? ' d-none' : step >= 5 ? ' d-nonee' : ' d-inline-block')} onClick={() => (increment() + changeFocus(''))}>{step === 5 ? 'Finish' : 'Next'}</button>
+    return <button className={"btn btn-lg btn-articles-light step-controls-next" + (step === 0 ? ' d-none' : step >= 5 ? ' ' : ' d-inline-block')} onClick={() => (increment() + changeFocus(''))}>{step === 5 ? 'Finish' : 'Next'}</button>
   } else {
-    return <button disabled className={"btn btn-lg btn-articles-light step-controls-next" + (step === 0 ? ' d-none' : step >= 5 ? ' d-nonee' : ' d-inline-block')} onClick={() => (increment() + changeFocus(''))}>{step === 5 ? 'Finish' : 'Next'}</button>
+    return <button disabled className={"btn btn-lg btn-articles-light step-controls-next" + (step === 0 ? ' d-none' : step >= 5 ? ' ' : ' d-inline-block')} onClick={() => (increment() + changeFocus(''))}>{step === 5 ? 'Finish' : 'Next'}</button>
   }
 
   // Old way
