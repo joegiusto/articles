@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { compose } from 'recompose';
 
 import { AuthUserContext, withAuthorization, withEmailVerification } from '../Session';
@@ -7,154 +7,182 @@ import { withFirebase } from '../Firebase';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { expression } from '@babel/template';
 
-const HomePage = () => (
-  <>
-    <div className="new-home">
-      <div className="new-home-background"></div>
+function HomePageTwo() {
+  const [activeTab, setActiveTab] = useState('stories');
 
-      <div className="new-home-text">
-        <h1>Welcome Joey,</h1>
-        <p>Heres a glance at what's going on.</p>
-      </div>
+  function renderActiveTab(tab) {
+    switch(tab) {
+      case 'stories':
+        return(
+          <div>1</div>
+        )
+      case 'issues':
+        return(
+          <div>2</div>
+        )
+      case 'myths':
+        return(
+          <div>3</div>
+        )
+      case 'orders':
+        return(
+          <div>4</div>
+        )
+      case 'submissions':
+        return(
+          <div>5</div>
+        )
+      case 'outset':
+        return(
+          <div>6</div>
+        )
+      default:
+        return('');
+    }
+  }
+  
+ 
 
-      <div className="new-home-bar">
-        {/* <input type="text"/> */}
-      </div>
+  return (
+    <>
+      <div className="new-home">
+        <div className="new-home-background"></div>
 
-    </div>
-
-    <div className='container home-container'>
-      <div className='row'>
-        <div className='col-12 col-md-8'>
-
-          <div className="home">
-            {/* <h1>Home</h1>
-            <p>Quick glance at everything going on,</p> */}
-
-            <SimpleSlider/>
-
-            <div className="design-section mb-2">
-              <h1>Story Updates</h1>
-              <p>The Home Page is accessible by every signed in user.</p>
+        <div className="container home-container position-relative">
           
-              <div className="design-section-items">
-                <div className="row">
-    
-                  <div className="col mb-3">
-                    <div className="item">
-                      <div className="photo"></div>
-                    </div>
-                  </div>
-    
-                  <div className="col mb-3">
-                    <div className="item">
-                      <div className="photo"></div>
-                    </div>
-                  </div>
-    
-                  <div className="col">
-                    <div className="item">
-                      <div className="photo"></div>
-                    </div>
-                  </div>
-    
-                  <div className="col">
-                    <div className="item">
-                      <div className="photo"></div>
-                    </div>
-                  </div>
-    
-                </div>
-              </div>
-            </div>
+          <div className="new-home-text">
+            <h1>Goodafternoon {'{authUser.nameFirst}'},</h1>
+            <p>Heres a glance at what's happening.</p>
+          </div>
 
-            <div className="orders-section mb-3">
-              <h1>Current Orders</h1>
-              <p>Orders that are ongoing display here</p>
-          
-              <div className="orders-section-items">
-                <div className="row">
-    
-                  <div className="col mb-3">
-                    <div className="item">
-                      <div className="photo"></div>
-                    </div>
-                  </div>
-    
-                  <div className="col mb-3">
-                    <div className="item">
-                      <div className="photo"></div>
-                    </div>
-                  </div>
-    
-                  <div className="col">
-                    <div className="item">
-                      <div className="photo"></div>
-                    </div>
-                  </div>
-    
-                  <div className="col">
-                    <div className="item">
-                      <div className="photo"></div>
-                    </div>
-                  </div>
-    
-                </div>
-              </div>
+          <div className="new-home-bar">
+            {/* <input type="text"/> */}
+            <div className="icons dual-header">
+              <span className="left-group">
+                <i onClick={() => setActiveTab('stories')} className={"fas fa-newspaper" + (activeTab === 'stories' ? ' active' : '')}></i>
+                <i onClick={() => setActiveTab('issues')} className={"fas fa-person-booth" + (activeTab === 'issues' ? ' active' : '')}></i>
+                <i onClick={() => setActiveTab('myths')} className={"fas fa-ghost" + (activeTab === 'myths' ? ' active' : '')}></i>
+                <i onClick={() => setActiveTab('orders')} className={"fas fa-shopping-cart" + (activeTab === 'orders' ? ' active' : '')}></i>
+                <i onClick={() => setActiveTab('submissions')} className={"fas fa-lightbulb" + (activeTab === 'submissions' ? ' active' : '')}></i>
+                <i onClick={() => setActiveTab('outset')} className={"fas fa-horse" + (activeTab === 'outset' ? ' active' : '')}></i>
+              </span>
+              <span className="right-group">
+                <i class="fas fa-envelope"></i>
+                <span class="badge badge-light">0</span>            
+              </span>
             </div>
-
-            <div className="design-section mb-2">
-              <h1>Design Submissions</h1>
-              <p>If a user has submitted designs to the store those details will be here</p>
-          
-              <div className="design-section-items">
-                <div className="row">
-    
-                  <div className="col mb-3">
-                    <div className="item">
-                      <div className="photo"></div>
-                    </div>
-                  </div>
-    
-                  <div className="col mb-3">
-                    <div className="item">
-                      <div className="photo"></div>
-                    </div>
-                  </div>
-    
-                  <div className="col">
-                    <div className="item">
-                      <div className="photo"></div>
-                    </div>
-                  </div>
-    
-                  <div className="col">
-                    <div className="item">
-                      <div className="photo"></div>
-                    </div>
-                  </div>
-    
-                </div>
-              </div>
-            </div>
-
           </div>
 
         </div>
-        <div className='col-12 col-md-4'>
 
-          <div className="chat-wrapper">
-            <Messages />
+      </div>
+
+      <div className='container home-container'>
+        <div className='row'>
+          <div className='col-12 col-md-8 mt-5'>
+
+            <div className="home">
+              {/* <h1>Home</h1>
+              <p>Quick glance at everything going on,</p> */}
+
+              <SimpleSlider/>
+
+              {renderActiveTab(activeTab)}
+
+              <div className="design-section mb-2">
+                <h1>Story Updates</h1>
+                <p>The Home Page is accessible by every signed in user.</p>
+            
+                <div className="design-section-items">
+                  <div className="row">
+      
+                    <div className="col mb-3">
+                      <div className="item">
+                        <div className="photo"></div>
+                      </div>
+                    </div>
+      
+                    <div className="col mb-3">
+                      <div className="item">
+                        <div className="photo"></div>
+                      </div>
+                    </div>
+      
+                    <div className="col">
+                      <div className="item">
+                        <div className="photo"></div>
+                      </div>
+                    </div>
+      
+                    <div className="col">
+                      <div className="item">
+                        <div className="photo"></div>
+                      </div>
+                    </div>
+      
+                  </div>
+                </div>
+              </div>
+
+              <div className="design-section mb-2">
+                <h1>Design Submissions</h1>
+                <p>You have no current submissions to the store</p>
+            
+                <div className="design-section-items">
+                  <div className="row">
+      
+                    <div className="col mb-3">
+                      <div className="item">
+                        <div className="photo"></div>
+                      </div>
+                    </div>
+      
+                    <div className="col mb-3">
+                      <div className="item">
+                        <div className="photo"></div>
+                      </div>
+                    </div>
+      
+                    <div className="col">
+                      <div className="item">
+                        <div className="photo"></div>
+                      </div>
+                    </div>
+      
+                    <div className="col">
+                      <div className="item">
+                        <div className="photo"></div>
+                      </div>
+                    </div>
+      
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
           </div>
+          <div className='col-12 col-md-4'>
 
-          {/* <Newsletter/> */}
+            <div className="chat-wrapper">
+              <div className="text-muted">Will be removed in release</div>
+              <Messages />
+            </div>
 
+            <Newsletter/>
+
+          </div>
         </div>
       </div>
-    </div>
-  </>
-);
+    </>
+  )
+}
+
+// const HomePage = () => (
+
+// );
 
 class SimpleSlider extends React.Component {
   constructor(props) {
@@ -182,7 +210,7 @@ class SimpleSlider extends React.Component {
       speed: 250,
     };
     return (
-      <div className="story-updates my-5">
+      <div className="story-updates mb-5">
         <div className="dual-header slide-row-title">
           <span className="right">News Updates</span>
           <span className="left">Item {this.state.activeSlide + 1} out of {this.state.slides}</span>
@@ -238,21 +266,73 @@ class SimpleSlider extends React.Component {
   }
 }
 
-// class Newsletter extends Component {
-//   constructor(props) {
-//     super(props);
+class Newsletter extends Component {
+  constructor(props) {
+    super(props);
 
-//     this.state = {
+    this.state = {
+      platform: 'none',
+      clothing: 'none',
+      news: 'none'
+    }
 
-//     }
-//   }
+    
 
-//   render() {
-//     return (
-//       <h1>Newsletter</h1>
-//     )
-//   }
-// }
+
+
+  }
+
+  render() {
+    return (
+      <div className="chat-wrapper mt-3">
+        <h1>Newsletter</h1>
+
+        <div className="newsletter-choice">
+          <div>Platform Updates</div>
+          <div class="switch-field">
+            <input type="radio" id="platform-no" name="platform" value="no" checked/>
+            <label for="platform-no">None</label>
+            <input type="radio" id="platform-yes" name="platform" value="yes" />
+            <label for="platform-yes">Biweekly</label>
+            <input type="radio" id="platform-three" name="platform" value="three" />
+            <label for="platform-three">Monthly</label>
+          </div>
+        </div>
+
+        <div className="newsletter-choice">
+          <div>Clothing Updates</div>
+          <div class="switch-field">
+            <input type="radio" id="clothing-no" name="clothing" value="no" checked/>
+            <label for="clothing-no">None</label>
+            <input type="radio" id="clothing-yes" name="clothing" value="yes" />
+            <label for="clothing-yes">Biweekly</label>
+          </div>
+        </div>
+
+        <div className="newsletter-choice">
+          <div>News Recommendations</div>
+          <div class="switch-field">
+            <input type="radio" id="radio-one" name="news" value="no" checked/>
+            <label for="radio-one">None</label>
+            <input type="radio" id="radio-two" name="news" value="yes" />
+            <label for="radio-two">Biweekly</label>
+          </div>
+        </div>
+
+        <form className="mt-3">
+          <input
+            type="text"
+            value="authUser.email"
+            onChange={this.onChangeText}
+            className="message-input"
+          />
+          <button className="btn submit-input" type="submit">Update</button>
+        </form>
+
+      </div>
+    )
+  }
+}
 
 class MessagesBase extends Component {
   constructor(props) {
@@ -475,13 +555,13 @@ class MessageItem extends Component {
         <button className="btn reset-message" onClick={this.onToggleEditMode}>Reset</button>
         </span>
         ) : (
-          <button className="btn edit-message" onClick={this.onToggleEditMode}>Edit</button>
+          <button className="btn btn-sm edit-message" onClick={this.onToggleEditMode}>Edit</button>
           )}
           {!editMode && (
 
           <button
             type="button"
-            className="btn delete-message"
+            className="btn btn-sm delete-message"
             onClick={() => onRemoveMessage(message.uid)}
             >
             Delete
@@ -517,4 +597,4 @@ const Messages = withFirebase(MessagesBase);
 export default compose(
 withEmailVerification,
 withAuthorization(condition),
-)(HomePage);
+)(HomePageTwo);

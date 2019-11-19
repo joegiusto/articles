@@ -6,11 +6,11 @@ const Issues = () => (
     <div className="mt-3">
       <h1>Issues</h1>
       <p>Overview of the most pressing issues and status updates on them. </p>
-      <p>We will be discussing these issues this week</p>
-      <p>Monday - blank</p>
+      <p>Unlike normal stories </p>
+      {/* <p>Monday - blank - Tuesday - blank - Wednesday - blank</p> */}
     </div>
 
-    <div className="row">
+    <div className="row mb-5">
 
       <GzyCard
         podcast={true}
@@ -20,7 +20,7 @@ const Issues = () => (
         topText="Rising Cost"
         midText="COLLEGE DEBT"
         bottomText="The Unspoken Issues"
-        backgroundImage="https://www.holycross.edu/sites/default/files/campus_rs97125_0k2a2816-lpr.jpg"
+        backgroundImage="https://www.hood.edu/sites/default/files/styles/width_720/public/content/home/hero-image/D8A_2404%20copy.jpg?itok=ZZUFQMvz"
       />
 
       <GzyCard
@@ -56,9 +56,9 @@ const Issues = () => (
       />
 
       <GzyCard 
-        topText="G-Eazy  FT. KYLE"
-        midText="LAST NIGHT"
-        bottomText="PRODUCED BY G-EAZY"
+        topText="G-Eazy FT. Skizzy Mars & KYLE"
+        midText="MONICA LEWINSKY"
+        bottomText="PROD. BY TY FIFE & CHRISTOPH ANDERSON"
         backgroundImage="http://4.bp.blogspot.com/-Wjz6L4LYzGQ/T2TnAoHfbtI/AAAAAAAAgIo/x8zDn6SzBwI/s1600/north%2BSt%2BP.jpg"
       />
 

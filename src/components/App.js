@@ -20,12 +20,14 @@ import StoreCheckoutPage from './Store/Checkout'
 import StoreSubmissionsPage from './Store/Submissions'
 
 import NewsPage from './News'
-import TownHallPage from './News/TownHall'
+// Stroies placeholder
+import IssuesPage from './News/Issues'
+import MythsPage from './News/Myths'
+import NewsManagePage from './News/Manage'
 
 import PartyPage from './Party'
 import PartyProposalsPage from './Party/Proposals'
-import IssuesPage from './Party/Issues'
-import MythsPage from './Party/Myths'
+import TownHallPage from './Party/TownHall'
 
 import MeshPage from './Mesh'
 
@@ -97,12 +99,15 @@ const App = () => (
         <Route path={ROUTES.STORE_SUBMISSIONS} component={StoreSubmissionsPage} />
   
         <Route exact path={ROUTES.NEWS} component={NewsPage} />
+        <Route path={ROUTES.MYTHS} component={MythsPage} />
+        <Route path={ROUTES.ISSUES} component={IssuesPage} />
+        <Route path={ROUTES.MANAGE} component={NewsManagePage} />
+
         <Route path={ROUTES.TOWN_HALL} component={TownHallPage} />
   
         <Route exact path={ROUTES.PARTY} component={PartyPage} />
         <Route path={ROUTES.PROPOSALS} component={PartyProposalsPage} />
-        <Route path={ROUTES.MYTHS} component={MythsPage} />
-        <Route path={ROUTES.ISSUES} component={IssuesPage} />
+        
   
         <Route path={ROUTES.MESH} component={MeshPage} />
   

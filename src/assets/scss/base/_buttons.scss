@@ -87,3 +87,25 @@
     border: solid 1px #000;
   }
 }
+
+.youtube-inline-link {
+  cursor: not-allowed;
+  background-color: #000;
+  color: white;
+  padding: 0.3rem 0.2rem;
+  position: absolute;
+  top: 0px;
+  z-index: 1;
+  width: 100%;
+  font-size: 0.9rem;
+
+  &.special {
+    margin-left: -2.75rem;
+  }
+
+  @media only screen and (max-width: 767px) {
+    &.special {
+      margin-left: -.5rem;
+    }
+  }
+}

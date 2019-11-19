@@ -20,6 +20,7 @@ class Firebase {
 
     this.auth = firebase.auth();
     this.database = firebase.database();
+    this.functions = firebase.functions();
 
     /* Helper */
     this.serverValue = firebase.database.ServerValue;
@@ -82,6 +83,9 @@ class Firebase {
   user = uid => this.database.ref(`users/${uid}`);
   users = () => this.database.ref('users');
 
+  issue = uid => this.database.ref(`issues/${uid}`);
+  issues = () => this.database.ref('issues');
+
   // *** Message API ***
   message = uid => this.database.ref(`messages/${uid}`);
   messages = () => this.database.ref('messages');
@@ -92,6 +96,8 @@ class Firebase {
 
   onlineList = () => this.database.ref(`online/`);
   online = uid => this.database.ref(`users/${uid}/online`);
+
+  // functions = this.functions;
 
   resetUserOutset = uid => this.database.ref(`users/${uid}`).update({
     outset: 0

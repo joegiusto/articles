@@ -122,34 +122,87 @@
   }
 }
 
+.container-center {
+  height: calc(100vh - 50px)!important;
+}
+
 .submission-side-panel {
-  height: 90vh;
-  border: solid 3px #000;
-  background-color: $accent-color
+  border: solid 2px rgb(70, 70, 70);
+  border-radius: 5px;
+  box-shadow: 0 8px 6px -6px black;
+  background-color: white;
+  background: 
+    linear-gradient(45deg, $accent-color 0% 20%, rgba(255, 255, 255, 0) 20% 80%, $base-color 80%),
+    linear-gradient(135deg, darken($base-color, 5%) 0% 25%, rgba(0, 0, 0, 0.959) 10% 80%, darken($accent-color, 5%) 80% 100%);
+  color: #000;
+  text-shadow: 0px 1px #6b6b6b;
+
+  position: sticky;
+  right: 0;
+  top: 100px;
+
+  .top {
+    border: solid 2.5px #000;
+    // padding: 4rem;
+    background-color: rgba($base-color, 0.75);
+  }
+
+  &_title {
+    font-family: OpenSansRegular, Helvetica, sans-serif;
+    font-size: 3rem;
+    font-style: normal;
+    font-weight: normal;
+    letter-spacing: normal;
+  }
+
+  &_slogan {
+    font-family: montserrat, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    font-style: normal;
+  }
+
+  &_submit {
+    background: repeating-linear-gradient(to top , $accent-color,  $base-color );
+    color: #000;
+    border: solid 2px rgb(70, 70, 70);
+    border-radius: 5px;
+    box-shadow: 0 8px 6px -6px black;
+    font-weight: bold;
+
+    // position: absolute;
+    position: sticky;
+    // right: 0;
+    top: 860px;
+  }
+
 }
 
 .steps{
   position: relative;
-  padding-right: 3rem;
-  padding-left: 3rem;
+  // padding-right: 1rem;
+  // padding-left: 1rem;
   .step {
-    margin-top: 1.5rem;
-    border: solid 5px #000;
-    padding: .5rem;
-    background-color: $base-color;
+    margin-top: .5rem;
+    border: solid 2.5px #000;
+    padding: .25rem;
+    background-color: rgba($base-color, 0.75);
     display: flex;
     flex-direction: row;
-    align-items: center;
+    // align-items: center;
     p {
       margin-bottom: 5px;
     }
     i {
-      font-size: 2.5rem;
+      font-size: 1.5rem;
       margin: 1rem;
     }
     h5 {
       text-decoration: underline;
       font-weight: bold;
+    }
+    div {
+      padding-left: .5rem;
     }
     &.one {
       // margin-top: 5rem;

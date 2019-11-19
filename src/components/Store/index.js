@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import StoreItem from './StoreItemAlpha';
 import {One, Two, Three, Four} from './SponseredItems';
+import * as ROUTES from '../../constants/routes';
+import { Link } from 'react-router-dom';
 
 // const storeContent = [
 // 	{
@@ -47,6 +49,38 @@ import {One, Two, Three, Four} from './SponseredItems';
 // 	}
 // ];
 
+function TypeSelect(props) {
+
+	// const [productSelect, changeProductSelect] = useState('Symbolic Adoptions');
+
+	return (
+	<div className={"type-select-container w-100 " + (isNaN(props.modificationType) ? ' mt-3 pt-3': ' ')}>
+
+		{(props.modificationType === 1 ? <h4>Continue To...</h4> : null )}
+
+		<div className="dual-header">
+
+			<div className="selections">
+				<span className="selection home">
+					<i class="fas fa-home mr-0"></i>
+				</span>
+				<span className="selection all">All</span>
+				<span className="selection originals">Originals</span>
+				<span className="selection partnerships">Partnerships</span>
+				<span className="selection submissions">Submissions</span>
+				<span className="selection sponsered">Sponsered</span>
+			</div>
+
+			<div className="cart-container">
+				
+				<Link to={ROUTES.CHECKOUT}><div className="cart">0 Items In Cart</div></Link>
+			</div>
+
+		</div>
+
+	</div> )
+}
+
 export default function StorePage(props) {
 
 	const [productSelect, changeProductSelect] = useState('Symbolic Adoptions');
@@ -54,23 +88,31 @@ export default function StorePage(props) {
 	return (
   <div className='container store-page'>
 
-		<h1 className="mt-2 mt-md-5 store-heading text-center">Featured</h1>
+		<div className="row">
+			<TypeSelect />
+		</div>
 
     <div className='row justify-content-center'>
 
-			{/* <div className="slick-container"> */}
+			<div className="featured-items">
+
+				<h1 className="mt-2 mt-md-4 store-heading">Featured</h1>
 
 				<StoreItem catalogId='1' price={3000} title="Wolf Hoodie" sale="%15" banner="Original" color="articles" />
-
+	
 				<StoreItem catalogId='2' price={3000} title="Sheep Hoodie" sale="%15" banner="Original" color="articles"/>
-
+	
 				<StoreItem catalogId='3' price={2500} title="Partner Item" sale="%15" banner="Partner" color="info"/>
-
+	
 				<StoreItem catalogId='4' price={2000} title="Sponsered Item" sale="%15" banner="Sponsered" color="danger"/>
-
+	
 				<StoreItem catalogId='5' price={2000} title="Sponsered Item" sale="%15" banner="Sponsered" color="primary"/>
 
-			{/* </div> */}
+			</div>
+
+			<div className="grid">
+
+			</div>
 			
 			<div className="col-12 overflow-hidden">
 				<div className="row">

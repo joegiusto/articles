@@ -66,7 +66,8 @@ class SignUpFormBase extends Component {
             nameLast,
             email,
             roles,
-            dateCreation: moment().unix()
+            dateCreation: moment().unix(),
+            outset: {completed: false}
           });
       })
       .then(() => {

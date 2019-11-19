@@ -16,9 +16,11 @@ This section is still being worked on.
 
 ### Tech Stack
 
-Node.js
-React
-Firebase
+Node.js,
+React,
+Firebase,
+Bootstrap,
+Redux
 
 ### Special Thanks, Notable Contributions and Open Source Libraries
 

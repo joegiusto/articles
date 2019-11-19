@@ -1,0 +1,73 @@
+.header-container {
+  display: flex;
+  align-items: flex-end;
+  // justify-content: center;
+
+  padding-bottom: 9.5px;
+  margin-bottom: 9.5px;
+
+  border-bottom: solid 3px #000;
+  .logo {
+    margin-right: 15px;
+  }
+}
+
+.quick-links {
+  background-color: black;
+  color: white;
+  margin-bottom: 5px;
+  width: 100%;
+  display: flex;
+  padding: 0.5rem 0.5rem;
+}
+
+.landing-blocks {
+  .landing-block {
+    position: relative;
+    height: 150px;
+    width: 100%;
+    color: white;
+    // background-color: black;
+    margin-bottom: 0.5rem;
+    position: relative;
+    .title {
+      position: absolute;
+      bottom: 5%;
+      left: 5%;
+      padding: 0.5rem 1rem;
+      background-color: black;
+    }
+    .more-info {
+      padding: 0.15rem;
+      padding-left: 0.5rem;
+      position: absolute;
+      background-color: rgba(white, 0.35);
+      border: solid 2px #000;
+      top: 50%;
+      transform: translateY(-50%);
+      right: -10px;
+      width: 250px;
+      color: black;
+      font-size: 0.9rem;
+      .dual-header {
+        margin-top: 10px;
+        background-color: black;
+        color: white;
+      }
+    }
+  }
+  .block-1 :not(.more-info), .block-2 :not(.more-info), .block-3 :not(.more-info) {
+    background-size: cover;
+    background-position: center;
+    filter: grayscale(100%);
+  }
+  .block-1 {
+    background-image: url(../img/card-1.png);
+  }
+  .block-2 {
+    background-image: url(https://www.joedantone.com/blog/wp-content/uploads/2011/11/IMG_6905-683x800.jpg);
+  }
+  .block-3 {
+    background-image: url(https://www.aggman.com/wp-content/uploads/sites/3/2017/09/Capitol-4.jpg);
+  }
+}

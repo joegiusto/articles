@@ -7,19 +7,22 @@ import moment from 'moment';
 // import SubmissionItem from './SubmissionItem';
 
 const Submissions = () => (
-  <div className='mt-4 container-fluid'>
+  <div className='container mt-5 d-flex-void container-center-void'>
 
-    <div className="row justify-content-between align-items-center">
-      <div className="col-12 order-2 order-md-1 col-md-4">
+    <div className="row my-auto justify-content-between">
+
+      {/* <div className="col-12 col-md-4"></div> */}
+
+      <div className="col-12 col-md-4">
 
         <div className="submission-side-panel">
 
-          <div className="px-5 pt-5">
-            <h1>Submission Area</h1>
-            <p>Here artist and individuals can submit clothing ideas of thier own to have a chance to be voted on and picked to go in our shop. Artist recieves (50% subject to change) of net profit.</p>
+          <div className="px-3 pt-2 mt-3 top mx-3">
+            <h1 className="submission-side-panel_title">Submission Area</h1>
+            <p className="submission-side-panel_slogan">Here artist and individuals can submit clothing ideas of thier own to have a chance to be voted on and picked to go in our shop. Artist will recieve 50% of net profit for the sales of their design.</p>
           </div>
   
-          <div className="steps pb-4">
+          <div className="steps px-3 pb-3">
             <div className="step one">
               <i class="fas fa-pencil-ruler"></i>
               <div>
@@ -33,6 +36,7 @@ const Submissions = () => (
               <div>
                 <h5>Step Two</h5>
                 <p>Submit design and wait for our approval</p>
+                <a href="">Terms</a>
               </div>
             </div>
     
@@ -47,15 +51,18 @@ const Submissions = () => (
           
         </div>
 
+        <button className="submission-side-panel_submit btn btn-dark w-100 mt-3">Submit a Design <i className="fas fa-mouse-pointer ml-2"></i></button>
+
       </div>
-      <div className="col-12 order-1 order-md-2 col-md-8">
+      <div className="col-12 col-md-8">
         <h1>Popular {moment().format('MMMM')} Submissions<span className="badge badge-secondary ml-2"></span></h1>
-        <h5>Next Pick At End of Month <span className="badge badge-secondary"><Countdown date={'1 Sep 2019'} /></span></h5>
+        <h5>Next Pick At End of Month <span className="badge badge-secondary"><Countdown date={moment().startOf('month').add(1, 'months').format('YYYY-MM-DD')} /></span></h5>
+        {console.log( moment().startOf('month').add(1, 'months').format('YYYY-MM-DD') )}
         <p>Log in to vote.</p>
+        <p>Sort by <a href="">Top</a> <a href="">New</a> <a href="">Controversial</a> </p>
         
         <FirebaseVoteList/>
 
-        <button className="mt-1  btn btn-dark">Submit Designs</button>
       </div>
     </div>
 
@@ -244,7 +251,7 @@ class FirebaseVoteItemBase extends Component {
   render() {
 
     return (
-      <div  className="col-6 col-md-2 mb-4">
+      <div  className="col-6 col-md-3 mt-4">
           
         <div className="submission-item submission-item-override">
           

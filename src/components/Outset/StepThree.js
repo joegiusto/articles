@@ -30,7 +30,9 @@ function StepThree(props) {
           <>
             <h5 className="title">Location Related Stories</h5>
 
-            <button onClick={() => (props.getStorySuggestionLocation( {city: props.city, state: props.state, zip: props.zip} ) )}>Test Mock Submit</button>
+            {/* <button onClick={() => (props.getStorySuggestionLocation( {city: props.city, state: props.state, zip: props.zip} ) )}>Test Mock Submit</button>
+            <button onClick={() => (props.getStorySuggestionLocationOther( {city: props.city, state: props.state, zip: props.zip} ) )}>Test Mock Submit</button>
+            <button onClick={() => ( props.test() )}>Test</button> */}
 
             {
               ((props.state === '' && props.city === '' && props.zip === '') ? 

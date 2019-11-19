@@ -1,6 +1,27 @@
 import React, { useState } from 'react';
 import { Manager, Reference, Popper } from 'react-popper';
 import PhoneInput from 'react-phone-number-input/input'
+import Cleave from 'cleave.js/react';
+
+class MyComponent extends React.Component {
+  onChange(event) {
+
+      // formatted pretty value
+      console.log(event.target.value);
+
+      // raw value
+      console.log(event.target.rawValue);
+  }
+
+  render() {
+      return (
+          <Cleave placeholder="Enter your credit card number"
+              options={{date: true, delimiter: '-', datePattern: ['m','d','Y']}}
+              onChange={this.onChange.bind(this)}
+              className="form-control" />
+      );
+  }
+}
 
 function Example(props) {
   const [shouldShowElement, setShouldShowElement] = useState(false);
@@ -87,7 +108,7 @@ const StepOne = (props) => (
     </div>
     <div class="col-md-3 mb-3">
       <label for="validationTooltip05">Zip</label>
-      <input onFocus={() => (props.changeFocus('zip'))} type="zip" class={"form-control" + (props.highlightElement === 'location' ? ' outset-highlight' : '')} id="validationTooltip05" onChange={(e) => props.handleChange(e)} name="zip" value={props.zip} placeholder="22309"/>
+      <input onBlur={() => props.onZipBlur(props.zip)} onFocus={() => (props.changeFocus('zip'))} type="zip" class={"form-control" + (props.highlightElement === 'location' ? ' outset-highlight' : '')} id="validationTooltip05" onChange={(e) => props.handleChange(e)} name="zip" value={props.zip} placeholder="22309"/>
       <div class="invalid-tooltip">
         Please provide a valid zip.
       </div>
@@ -121,13 +142,27 @@ const StepOne = (props) => (
       </div>
     </div>
 
-    <div class="col-md-3 mb-3">
-      <label for="validationTooltip04">Age</label>
+    <div className="col-md-3 mb-3">
+      <label htmlFor="Birthday">Birthday</label>
+      {/* <MyComponent></MyComponent> */}
+      <Cleave placeholder=""
+              options={{date: true, delimiter: '-', datePattern: ['m','d','Y']}}
+              // onChange={this.onChange.bind(this)}
+              className={"form-control" + (props.highlightElement === 'age' ? ' outset-highlight' : '')}
+              onFocus={() => (props.changeFocus('age'))}
+              onChange={(e) => props.handleChange(e)}
+              value={props.age}
+              name="age"
+              />
+    </div>
+
+    {/* <div class="col-md-3 mb-3">
+      <label htmlFor="validationTooltip04">Age</label>
       <input onFocus={() => (props.changeFocus('age'))} type="number" class={"form-control" + (props.highlightElement === 'age' ? ' outset-highlight' : '')} id="validationTooltip04" onChange={(e) => props.handleChange(e)} name="age" value={props.age} placeholder=""/>
       <div class="invalid-tooltip">
         Please provide a valid state.
       </div>
-    </div>
+    </div> */}
 
     <div class="col-md-3 mb-3">
       <label for="validationTooltip04">Gender</label>

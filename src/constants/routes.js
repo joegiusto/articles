@@ -20,13 +20,17 @@ export const STORE_SUBMISSIONS = '/store/submissions';
 
 // News
 export const NEWS ='/news'
-export const TOWN_HALL ='/town-hall'
+export const STORIES ='/news/stories'
+export const ISSUES ='/news/issues'
+export const MYTHS ='/news/myths'
+
+export const MANAGE ='/news/manage'
+export const MANAGE_DETAILS = '/news/manage/:id';
 
 // Party
 export const PARTY ='/party'
+export const TOWN_HALL ='/party/town-hall'
 export const PROPOSALS ='/party/proposals'
-export const ISSUES ='/party/issues'
-export const MYTHS ='/party/myths'
 
 // Mesh
 export const MESH ='/mesh'

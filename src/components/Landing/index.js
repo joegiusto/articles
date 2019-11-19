@@ -4,20 +4,27 @@ import slideHead from '../../assets/img/slide-head.png';
 import ShowcaseCard from './ShowcaseCard';
 import placeholder from '../../assets/img/placeholder.png'
 // import ArticlesHomePageSlick from './ArticlesHomePageSlick';
+import logo from '../../assets/img/logo.png'
 
 const LandingPage = () => (
 <header>
-    <section className="section-showcase">
-        <div style={{width: '100%'}} className="row text-center">
+    <section className="section-showcase container-fluid">
+        <div className="row text-center">
 
             <div className="col-lg-3">
                 <div className="card-showcase card-1">
 
                     <div>
-                        <img src={slideHead} width="275px" alt="" />
-                        <h5 className="card-text">Something To Stand For.</h5>
 
-                        <div className="row">
+                        <div className="header-container">
+                            <img className="logo" src={logo} height="85px" alt=""/>
+                            <div className="d-inline-block">
+                                <img src={slideHead} width="275px" alt="" />
+                                <h5 className="card-text">Something To Stand For.</h5>
+                            </div>
+                        </div>
+
+                        <div className="row d-none">
                             <div className="col-6">
                                 <div className="info-snip flex">
                                     <div className="title">Users:</div>
@@ -46,8 +53,41 @@ const LandingPage = () => (
                                 </div>
                             </div>
 
+                            <div className="col-6">
+                                <span className="quick-links">Learn More</span>
+                            </div>
+
+                            <div className="col-6">
+                                <span className="quick-links">Sign In / Sign Up</span>
+                            </div>
+
                         </div>
 
+                    </div>
+
+                    <div className="landing-blocks">
+                        <div className="landing-block block-1">
+                            <div className="title">Clothing</div>
+                            <div className="more-info">
+                                <div>Politacally charged clothing for a great cause. All sales help fund the continued development of the site and our movement.</div>
+                                <div className="dual-header">
+                                    <div>Visit Store</div>
+                                    <div>Learn More</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="landing-block block-2">
+                           <div className="title">News</div>
+                           <div className="more-info">
+
+                           </div>
+                        </div>
+                        <div className="landing-block block-3">
+                            <div className="title">Party</div>
+                            <div className="more-info">
+
+                            </div>
+                        </div>
                     </div>
 
                     <div className="d-none d-lg-block" id="flex-grow"></div>
@@ -65,7 +105,7 @@ const LandingPage = () => (
     
                         <div className="col-12">
                             <div className="card-quote-background">
-                                <img src={placeholder} height="220px" alt=""/>
+                                {/* <img src={placeholder} height="220px" alt=""/> */}
                             </div>
                             <div className="card-quote">
                                 <h5>Quote of the day:</h5>

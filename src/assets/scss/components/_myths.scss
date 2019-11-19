@@ -1,3 +1,48 @@
+.myths-head {
+  background-color: white;
+  border: solid 5px #000;
+  border-radius: 5px;
+  text-align: left;
+  padding: 1rem;
+
+  box-shadow: 2px 2px 2px $accent-color, -4px -4px 2px $base-color;
+  // box-shadow: 2px 2px 2px $accent-color, -4px -4px 2px $base-color;
+  // animation-direction: alternate;
+  // animation-duration: 2s;
+  // animation-name: alter;
+  
+  .title {
+
+  }
+  .body {
+
+  }
+  @keyframes alter {
+    from {
+      box-shadow: 2px 2px 2px $accent-color, -4px -4px 2px $base-color;
+    }
+    to {
+      box-shadow: -4px -4px 2px $accent-color, 2px 2px 2px $base-color;
+    }
+  }
+}
+
+.myths-footer {
+  color: white;
+  background: linear-gradient( 147deg, rgba(29,82,166,0.6), #3A78FC );
+  padding: 1rem;
+  text-align: left;
+  a { 
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .text-muted {
+    margin-top: 20px;
+    color: $accent-color!important;
+  }
+}
+
 .myth-item {
   background-color: rgb(255, 255, 255);
   height: 175px;

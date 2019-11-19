@@ -8,132 +8,6 @@ import moment from 'moment';
 import Chart from 'chart.js';
 import Component from 'react-live-clock/lib/Component';
 
-function weeksAgoStart(weeks) {
-  return (
-    moment().subtract(weeks, 'weeks').startOf('isoWeek').format('LL')
-  )
-};
-
-function weeksAgoEnd(weeks) {
-  return (
-    moment().subtract(weeks, 'weeks').endOf('isoWeek').format('LL')
-  )
-};
-
-function pad(n, width, z) {
-  z = z || '0';
-  n = n + '';
-  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
-}
-
-function getWidth() {
-  return Math.max(
-    document.body.scrollWidth,
-    document.documentElement.scrollWidth,
-    document.body.offsetWidth,
-    document.documentElement.offsetWidth,
-    document.documentElement.clientWidth
-  );
-}
-
-// window.onresize = function(event) {
-//   console.log(getWidth());
-
-//   if (getWidth() > 1000) {
-//     var info = document.getElementById("info");
-//     info.className += " expanded";
-//     var info = document.getElementById("footer");
-//     info.className += " d-none";
-//   } else {
-//     var info = document.getElementById("info");
-//     info.classList.remove("expanded");
-//     var info = document.getElementById("footer");
-//     info.classList.remove('d-none');
-//   }
-
-// } 
-
-class ExampleChart extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      chartTitle: this.props.chartTitle,
-      type: this.props.type
-    };
-  }
-
-  componentDidMount() {
-    var ctx = document.getElementById(this.state.chartTitle);
-    var myChart = new Chart(ctx, {
-        type: this.state.type,
-        data: {
-            labels: ['April', 'May', 'June', 'July', 'August', 'September'],
-            datasets: [{
-                label: '$ in Donations',
-                data: [0, 0, 0, 50, 20, 50],
-                backgroundColor: [
-                    'rgba(63, 191, 127, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(63, 191, 127, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1,
-                lineTension: 0.1,
-            },
-            {
-              label: '$ in Expenses',
-              data: [0, 0, 0, 20, 2, 10],
-              backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(255, 206, 86, 0.2)',
-                  'rgba(75, 192, 192, 0.2)',
-                  'rgba(153, 102, 255, 0.2)',
-                  'rgba(255, 159, 64, 0.2)'
-              ],
-              borderColor: [
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
-                  'rgba(75, 192, 192, 1)',
-                  'rgba(153, 102, 255, 1)',
-                  'rgba(255, 159, 64, 1)'
-              ],
-              borderWidth: 2,
-              lineTension: 0.1,
-          }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-    });
-  }
-
-  render() {
-    return (
-      <canvas className='chart' id={this.state.chartTitle} width="100%" height="45px"></canvas>
-    )
-  }
-
-}
-
 class ImprovedReports extends Component {
   constructor(props) {
     super(props);
@@ -149,19 +23,15 @@ class ImprovedReports extends Component {
      };
   }
 
-  
+  componentDidMount() {
+    window.dispatchEvent(new Event('resize'));
+  }
 
- componentDidMount() {
-  window.dispatchEvent(new Event('resize'));
- }
-
- setTableSelector(newSelector) {
+  setTableSelector(newSelector) {
   this.setState({
     tableSelector: newSelector,
     subtableSelector: ''
   });
-
-  
 
   switch(newSelector) {
     case 'clothing':
@@ -185,57 +55,48 @@ class ImprovedReports extends Component {
 
  }
 
- getTableComponent(tableSelector, subtableSelector) {
-  switch(tableSelector) {
-    case 'donations':
-      return(<DonationTable/>)
-    case 'clothing':
-      switch (subtableSelector) {
-        case 'clothing-all':
-          return(<h1>Overall Clothing Sales Report</h1>)
-        case 'clothing-preorders':
-          return(<PreorderTable/>)
-        default:
-          return(<h1>Specific Clothing Sales Report</h1>)
-      }
-    case 'expenses':
-      return(<ExpenseTable/>)
-    case 'payrole':
-      return(<PayroleTable/>)
-    case 'revenue':
-      return(<RevenueTable/>)
-    default:
-      // Useless because tableSelector state always starts at something
-  };
- }
+  getTableComponent(tableSelector, subtableSelector) {
+    switch(tableSelector) {
+      case 'donations':
+        return(<DonationTable/>)
+      case 'clothing':
+        switch (subtableSelector) {
+          case 'clothing-all':
+            return(<ClothingTable/>)
+          case 'clothing-preorders':
+            return(<PreorderTable/>)
+          default:
+            return(<ClothingTable/>)
+        }
+      case 'expenses':
+        return(<ExpenseTable/>)
+      case 'payrole':
+        return(<PayroleTable/>)
+      case 'revenue':
+        return(<RevenueTable/>)
+      default:
+        // Useless because tableSelector state always starts at something
+    };
+  }
 
- setSubTableSelector(newSelector, redirect, location) {
-   if ( redirect === true ) {
-     console.log("Is a redirect");
-     this.setTableSelector(location.tableSelector);
-   } else {
-    console.log("Is not a redirect");
-    this.setState({
-      subtableSelector:  newSelector
-    });
-   }
- }
+  setSubTableSelector(newSelector, redirect, location) {
+    if ( redirect === true ) {
+      console.log("Is a redirect");
+      this.setTableSelector(location.tableSelector);
+    } else {
+      console.log("Is not a redirect");
+      this.setState({
+        subtableSelector:  newSelector
+      });
+    }
+  }
 
- tableSelectorChoice(dataValue) {
-   return(
-     <span onClick={() => this.setTableSelector(dataValue)} className={"selection " + (this.state.tableSelector === dataValue ? 'selection-active' : '')}>{dataValue}</span>
-   )
- }
+  tableSelectorChoice(dataValue) {
+    return(
+      <div onClick={() => this.setTableSelector(dataValue)} className={"selection d-inline-block " + (this.state.tableSelector === dataValue ? 'selection-active' : '')}>{dataValue}</div>
+    )
+  }
 
-  /**
-  * subTableSelectorChoice - Creates a selector under a table selector
-  * @param {number} dataValue description
-  * @param {string} printValue description
-  * @param {boolean} redirect boolean default:false, if true then 4th arg needed
-  * @param {Object} location description
-  * 
-  * @return {[type]}      [description]
-  */
   subTableSelectorChoice(dataValue, printValue, redirect, location) {
     return(
       <span onClick={() => this.setSubTableSelector(dataValue, redirect, location)} className={"selection " + (this.state.subtableSelector === dataValue ? 'selection-active' : '')}>{redirect ? <i style={{marginRight: '2.5px'}} className="fas fa-link"></i> : ''}{printValue}</span>
@@ -248,16 +109,16 @@ class ImprovedReports extends Component {
 
       <div className="fixed-total dual-header">
         <span>Help <i className="far fa-question-circle"></i></span>
-        <span className="total">+$39.34</span>
+        <span className="total">+$76.37</span>
       </div>
 
       <div className="fixed-componsation-50"></div>
 
-      <div className="container-fluid">
+      <div className="container home-container">
 
         <div className="row justify-content-center">
 
-          <div className="col-12 col-md-4">
+          <div className="col-12 col-md-4 col-lg-4">
 
             <div className="live">
               <span className="recording-dot d-inline-block"></span>
@@ -266,118 +127,122 @@ class ImprovedReports extends Component {
 
             <div id='info' className={"info " + (this.state.menuExpanded ? 'expanded' : '')}>
 
-              <div className="normal"></div>
+              <div className="normal">
+                <div className="px-2 pt-4">
 
-              <div className="extra">
-                <h5>Breakdown</h5>
+                  <div>Current Balance:</div>
+                  <h2>$76.37</h2>
 
-                <table className="table table-hover table-sm">
+                  <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" style={{width: "90%"}} aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar bg-danger" role="progressbar" style={{width: "10%"}} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
 
-                  {/* <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">First</th>
-                      <th scope="col">Last</th>
-                      <th scope="col">Handle</th>
-                    </tr>
-                  </thead> */}
+                  <div className="text-muted">Revenue compared to Expenses spending</div>
 
-                  <tbody>
-                    <tr>
-                      <th scope="row">Last Month Balance</th>
-                      <td className="text-right">$0.00</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Donations</th>
-                      <td className="text-right">$0.00</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Clothing Sales</th>
-                      <td className="text-right">$0.00</td>
-                    </tr>
-                  </tbody>
-                </table>
+                  <div className="mt-4">
 
-                <p>Donations</p>
-                <p>Clothing Sales</p>
-                <p>Ad Revenue</p>
-                <p>Purchases</p>
-                <p>Payroles</p>
-              </div>
+                    <div className="row">
+                      <div className="col-6">
+                        <div className="stat-card">
+                        Donations: $50.00
+                        </div>
+                        </div>
+                      <div className="col-6">
+                        <div className="stat-card">
+                        Expenses: -$23.63
+                        </div>
+                        </div>
+                      <div className="col-6">
+                        <div className="stat-card">
+                        Payrole: $00.00
+                        </div>
+                        </div>
+                      <div className="col-6">
+                        <div className="stat-card">
+                        Yearly Expenses: ~$24
+                        </div>
+                        </div>
+                    </div>
 
-              <div className="report">
-                {/* Question about one of purchases and think we should provide more details? By all means <a href=''>let us know</a> */}
-              </div>
+                    <div>Donations: $50.00</div>
+                    <div>Expenses: $23.63</div>
+                    <div>Payrole: $00.00</div>
+                    <div>Yearly Expenses: ~$24</div>
+                    <div>Payrole: 0</div>
+                    <div>Yearly Expenses: ~$24</div>
+                    <div>Payrole: 0</div>
+                  </div>
 
-              <div id='footer' onClick={() => this.setState({menuExpanded: !this.state.menuExpanded})} className={"footer"}>
-                <span className="mr-2">CLICK FOR {(this.state.menuExpanded === false ? 'MORE' : 'LESS')}</span>
-                <i className={"fas fa-caret-down " + (this.state.menuExpanded ? 'expanded' : '')}></i>
+                </div>
               </div>
 
             </div>
+
           </div>
   
-          <div className="col-12 col-md-8 col-lg-6">
-            <div className="table-selector">
-    
-              <div className="main">
-                {this.tableSelectorChoice('donations')}
-                {this.tableSelectorChoice('clothing')}
-                {this.tableSelectorChoice('payrole')}
-                {this.tableSelectorChoice('revenue')}
-                {this.tableSelectorChoice('expenses')}
-              </div>
+          <div className="col-12 col-md-8 col-lg-8">
 
-              <div className={"sub sub-donations " + (this.state.tableSelector === 'donations' ? '' : 'd-none')}>
-                {/* For the future */}
-              </div>
-
-              <div className={"sub sub-clothing dual-header " + (this.state.tableSelector === 'clothing' ? '' : 'd-none')}>
-                <div>
-                  {this.subTableSelectorChoice('clothing-all', 'all')}
-                  {this.subTableSelectorChoice('clothing-originals', 'originals')}
-                  {this.subTableSelectorChoice('clothing-partnerships', 'partnerships')}
-                  {this.subTableSelectorChoice('clothing-sponsored', 'sponsored')}
-                </div>
-                <div>
-                  {this.subTableSelectorChoice('clothing-preorders', 'preorders')}
-                </div>
-              </div>
-    
-              <div className={"sub sub-expenses " + (this.state.tableSelector === 'expenses' ? '' : 'd-none')}>
-                {this.subTableSelectorChoice('expenses-all', 'all')}
-                {this.subTableSelectorChoice('expenses-payrole', 'payrole', true, {tableSelector: 'payrole'})}
-                {this.subTableSelectorChoice('expenses-production-inventory', 'inventory')}
-                {this.subTableSelectorChoice('expenses-reoccuring', 'reoccuring')}
-                {this.subTableSelectorChoice('expenses-utilities', 'utilities')}
-              </div>
-    
-              <div className={"sub sub-payrole " + (this.state.tableSelector === 'payrole' ? '' : 'd-none')}>
-                {/* For the future */}
-              </div>
-    
-              <div className={"sub sub-revenue " + (this.state.tableSelector === 'revenue' ? '' : 'd-none')}>
-                {this.subTableSelectorChoice('revenue-all', 'all')}
-                {this.subTableSelectorChoice('revenue-donations', 'donations', true, {tableSelector: 'donations'})}
-                {this.subTableSelectorChoice('revenue-clothing', 'clothing', true, {tableSelector: 'clothing'})}
-                {this.subTableSelectorChoice('revenue-grants', 'grants')}
-                {this.subTableSelectorChoice('revenue-ads', 'ads')}
-                {this.subTableSelectorChoice('revenue-sponsorships', 'sponsorships')}
-              </div>
-    
+            <div className="search">
+              <input className="mt-3 search-input" type="text"/>
+              <div className="mt-3 date-input"><i className="fas fa-calendar-alt"></i>2019</div>
             </div>
-    
-            {this.getTableComponent(this.state.tableSelector, this.state.subtableSelector)}
 
-          </div>
-
-          <div className="d-none col-12 col-md-3">
-            <div className="row">
-              <div className="col-12 col-md-12"><ExampleChart type='line' chartTitle={'chartOne'}/></div>
-              <div className="col-12 col-md-12"><ExampleChart type='bar' chartTitle={'chartTwo'}/></div>
-              {/* <div className="col-6 col-md-12"><ExampleChart type='radar' chartTitle={'chartThree'}/></div> */}
-              {/* <div className="col-6 col-md-12"><ExampleChart type='bubble' chartTitle={'chartFour'}/></div> */}
+            <div className="reports-side">
+              <div className="table-selector">
+      
+                <div className="main">
+                  {this.tableSelectorChoice('donations')}
+                  {this.tableSelectorChoice('clothing')}
+                  {this.tableSelectorChoice('payrole')}
+                  <div className="d-inline-block main-seperation"><div className="wall"></div></div>
+                  {this.tableSelectorChoice('revenue')}
+                  {this.tableSelectorChoice('expenses')}
+                </div>
+  
+                <div className={"sub sub-donations " + (this.state.tableSelector === 'donations' ? '' : 'd-none')}>
+                  {/* For the future */}
+                </div>
+  
+                <div className={"sub sub-clothing dual-header " + (this.state.tableSelector === 'clothing' ? '' : 'd-none')}>
+                  <div>
+                    {this.subTableSelectorChoice('clothing-all', 'all')}
+                    {this.subTableSelectorChoice('clothing-originals', 'originals')}
+                    {this.subTableSelectorChoice('clothing-partnerships', 'partnerships')}
+                    {this.subTableSelectorChoice('clothing-submissions', 'submissions')}
+                    {this.subTableSelectorChoice('clothing-sponsored', 'sponsored')}
+                  </div>
+                  <div>
+                    {this.subTableSelectorChoice('clothing-preorders', 'preorders')}
+                  </div>
+                </div>
+      
+                <div className={"sub sub-expenses " + (this.state.tableSelector === 'expenses' ? '' : 'd-none')}>
+                  {this.subTableSelectorChoice('expenses-all', 'all')}
+                  {this.subTableSelectorChoice('expenses-payrole', 'payrole', true, {tableSelector: 'payrole'})}
+                  {this.subTableSelectorChoice('expenses-production-inventory', 'inventory')}
+                  {this.subTableSelectorChoice('expenses-reoccuring', 'reoccuring')}
+                  {this.subTableSelectorChoice('expenses-utilities', 'utilities')}
+                </div>
+      
+                <div className={"sub sub-payrole " + (this.state.tableSelector === 'payrole' ? '' : 'd-none')}>
+                  {/* For the future */}
+                </div>
+      
+                <div className={"sub sub-revenue " + (this.state.tableSelector === 'revenue' ? '' : 'd-none')}>
+                  {this.subTableSelectorChoice('revenue-all', 'all')}
+                  {this.subTableSelectorChoice('revenue-donations', 'donations', true, {tableSelector: 'donations'})}
+                  {this.subTableSelectorChoice('revenue-clothing', 'clothing', true, {tableSelector: 'clothing'})}
+                  {this.subTableSelectorChoice('revenue-grants', 'grants')}
+                  {this.subTableSelectorChoice('revenue-ads', 'ads')}
+                  {this.subTableSelectorChoice('revenue-sponsorships', 'sponsorships')}
+                </div>
+      
+              </div>
+      
+              {this.getTableComponent(this.state.tableSelector, this.state.subtableSelector)}
             </div>
+
           </div>
 
         </div>
@@ -390,54 +255,37 @@ class ImprovedReports extends Component {
 
 function ExpenseTable () {
   return (
-    <table className="table table-sm table-hover mt-2">
-      <thead className="thead-dark">
+    <div className="px-1">
+      <table class="table table-bordered">
+      <thead>
         <tr>
-          <th scope='col'>Type</th>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Handle</th>
+          <th scope="col">Receipt</th>
+          <th scope="col">Date</th>
+          <th scope="col">For</th>
+          <th scope="col">Total</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <th scope="row">Payrole</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
+          <th scope="row"><a target="_blank" href="https://cdn.articles.media/2019/documents/domain-order.pdf"><i class="fas fa-file-invoice"></i></a></th>
+          <td>06/26/2019</td>
+          <td>Domain Registration</td>
+          <td>$10.66</td>
         </tr>
         <tr>
-          <th scope="row">Payrole</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
+          <th scope="row"><a target="_blank" href="https://cdn.articles.media/2019/documents/email-order.pdf"><i class="fas fa-file-invoice"></i></a></th>
+          <td>08/09/2019</td>
+          <td>Email Account</td>
+          <td>$12.97</td>
         </tr>
         <tr>
-          <th scope="row">Payrole</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr>
-        <tr>
-          <th scope="row">Reoccuring</th>
-          <td>Email</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr>
-        <tr>
-          <th scope="row">Reoccuring</th>
-          <td>Domain</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr>
-        <tr>
-          <th scope="row">Utilities</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
+          {/* <th scope="row">3</th> */}
+          <td colspan="3">Total</td>
+          <td>$23.63</td>
         </tr>
       </tbody>
     </table>
+    </div>
   )
 }
 
@@ -532,60 +380,129 @@ function SampleTable () {
 function PreorderTable () {
   return (
     <>
-    <table className='table articles-table mt-2 table-bordered'>
-      <thead>
-        <tr className="table-articles-head">
-          {/* <th scope="col">Order #</th> */}
-          <th scope="col">Date</th>
-          <th scope="col">Name</th>
-          <th scope="col">Order Summary</th>
-          <th className='text-right' scope="col">Total</th>
-        </tr>
-      </thead>
-      <tbody>
+    <div className="full-table">
+      <table className='table articles-table table-bordered'>
+        <thead>
+          <tr className="table-articles-head">
+            {/* <th scope="col">Order #</th> */}
+            <th scope="col">Date</th>
+            <th scope="col">Name</th>
+            <th scope="col">Order Summary</th>
+            <th className='text-right' scope="col">Total</th>
+          </tr>
+        </thead>
+        <tbody>
 
-        {sales.map((object, i) =>
+          {sales.map((object, i) =>
 
-          <tr key={i} className="bg-light">
-            <td>{object.date || 'test'}</td>
-            <td>{object.name}</td>
-            <td>{object.note}</td>
-            <td className='text-right'>${object.total.toFixed(2)}</td>
+            <tr key={i} className="bg-light">
+              <td>{object.date || 'test'}</td>
+              <td>{object.name}</td>
+              <td>{object.note}</td>
+              <td className='text-right'>${object.total.toFixed(2)}</td>
+            </tr>
+
+          )}
+
+          <tr>
+            <td colSpan="2" className="border-right-0 table-articles-head">
+
+                <div className="results-dual-header">
+
+                  <div className="page noselect">
+                    <i className="fas fa-chevron-circle-left"></i>
+                    Page 0/0
+                    <i style={{marginLeft: '10px'}} className="fas fa-chevron-circle-right"></i>
+                  </div>
+                
+                  <span className="results noselect">
+                    <span>Results:</span>
+                    <span className={"result result-active"}>10</span>
+                    <span className={"result"}>50</span>
+                    <span className={"result"}>100</span>
+                    <span className={"result"}>250</span>
+                  </span>
+
+                </div>
+
+            </td>
+
+            <td colSpan="1" className="border-right-0 text-right table-articles-head">Total:</td>
+            <td colSpan="1" className="border-left-0 table-articles-head">$180.00</td>
           </tr>
 
-        )}
+        </tbody>
 
-        <tr>
-          <td colSpan="2" className="border-right-0 table-articles-head">
+      </table>
+    </div>
+    <div className="pl-2 pb-2">Preorder and unfinalized sales are not included in any reports.</div>
+    </>
+  )
+}
 
-              <div className="results-dual-header">
+function ClothingTable () {
+  return (
+    <>
+    <div className="full-table">
+      <table className='table articles-table table-bordered'>
+        <thead>
+          <tr className="table-articles-head">
+            {/* <th scope="col">Order #</th> */}
+            <th scope="col">Date</th>
+            <th scope="col">Name</th>
+            <th scope="col">Order Summary</th>
+            <th className='text-right' scope="col">Total</th>
+          </tr>
+        </thead>
+        <tbody>
 
-                <div className="page noselect">
-                  <i className="fas fa-chevron-circle-left"></i>
-                  Page 0/0
-                  <i style={{marginLeft: '10px'}} className="fas fa-chevron-circle-right"></i>
+          <tr>
+            <td colspan="4">No clothing sales yet to report for this category</td>
+          </tr>
+
+          {/* {sales.map((object, i) =>
+
+            <tr key={i} className="bg-light">
+              <td>{object.date || 'test'}</td>
+              <td>{object.name}</td>
+              <td>{object.note}</td>
+              <td className='text-right'>${object.total.toFixed(2)}</td>
+            </tr>
+
+          )} */}
+
+          <tr>
+            <td colSpan="2" className="border-right-0 table-articles-head">
+
+                <div className="results-dual-header">
+
+                  <div className="page noselect">
+                    <i className="fas fa-chevron-circle-left"></i>
+                    Page 0/0
+                    <i style={{marginLeft: '10px'}} className="fas fa-chevron-circle-right"></i>
+                  </div>
+                
+                  <span className="results noselect">
+                    <span>Results:</span>
+                    <span className={"result result-active"}>10</span>
+                    <span className={"result"}>50</span>
+                    <span className={"result"}>100</span>
+                    <span className={"result"}>250</span>
+                  </span>
+
                 </div>
-              
-                <span className="results noselect">
-                  <span>Results:</span>
-                  <span className={"result result-active"}>10</span>
-                  <span className={"result"}>50</span>
-                  <span className={"result"}>100</span>
-                  <span className={"result"}>250</span>
-                </span>
 
-              </div>
+            </td>
 
-          </td>
+            <td colSpan="1" className="border-right-0 text-right table-articles-head">Total:</td>
+            <td colSpan="1" className="border-left-0 table-articles-head">$00.00</td>
+          </tr>
 
-          <td colSpan="1" className="border-right-0 text-right table-articles-head">Total:</td>
-          <td colSpan="1" className="border-left-0 table-articles-head">$180.00</td>
-        </tr>
+        </tbody>
 
-      </tbody>
-
-    </table>
-    <div>*Preorder and unfinalized sales are not included in any reports.</div>
+      </table>
+    </div>
+    <div className="pl-2 pb-2 d-none">Preorder and unfinalized sales are not included in any reports.</div>
     </>
   )
 }
@@ -617,379 +534,6 @@ function PayroleTable () {
 
   )
 }
-
-function Reports () {
-
-  const [donationsTotal, setDonationsTotal] = useState(0);
-  const [salesTotal, setSalesTotal] = useState(0);
-  const [adRevenueTotal, setAdRevenueTotal] = useState(0);
-  const [expensesTotal, setExpensesTotal] = useState(0);
-  const [payroleTotal, setPayroleTotal] = useState(0);
-
-  return (
-    <div className='container-fluid'>
-
-      <div className='row justify-content-between pt-4'>
-
-        <div className="col-12 col-lg-3 mt-3 overflow-hidden">
-
-          <div className='reports-left-panel'>
-
-            <div className="page-title-wrapper">
-              <div className="page-title" id="transparency">Transparency</div>
-              <div className="page-title" id='reports'>Reports</div>
-            </div>
-
-            <div className="page-subtitle mt-5 mb-5">At Articles everthing that can be transparent will be from day one. Payrole, so our employees know they are getting paid similir to what other people in thier department and experecne level are being paid. Sales, sales help suport and drive our platform so it is only fair for those who but to not only see they are helping but to also see where thier money is going to. Donations, in and out we want complete transparency so our supporters know who we take in money from as well where it goes. Lastly expenses, elected representative spending $2,500 in a single day? That doesn't sound fair at all. Obviously we have operating cost but we are mindful to the etc...</div>
-
-            Account Balance: $50.00
-
-            <div className="flex-grow report-active-explanation mb-5 d-none d-lg-block">Current table the user is looking at will be explained here. For example if the user is scrolled down to donations then some examples of donations will be given. This box is hidden on mobile phones.</div>
-
-            <div className="input-group mb-3">
-              <div className="input-group-prepend">
-                <button className="btn btn-outline-secondary" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Date Range</button>
-                {/* <DateRangePicker
-                date={this.state.createdAt}
-                onDateChange={this.onDateChange}
-                focused={this.state.calendarFocused}
-                onFocusChange={this.onFocusChange}
-                numberOfMonths={1}
-                isOutsideRange={() => false}
-                /> */}
-                {/* <div className="dropdown-menu">
-                  <a className="dropdown-item" href="#">Yesterday</a>
-                  <a className="dropdown-item" href="#">Last Week</a>
-                  <a className="dropdown-item" href="#">Last Month</a>
-                  <div role="separator" className="dropdown-divider"></div>
-                  <a className="dropdown-item" href="#">YTD</a>
-                </div> */}
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-
-        <div className="col-12 col-lg-3 mb-3">
-          <div className="report-details">
-
-            <div className="live-tag">
-              <span className="recording-dot d-inline-block"></span>
-              <span>Live</span>
-            </div>
-
-            <div className="account-activity-summary">
-
-              <h2 className="recent-summary">
-                <span className="summary-title d-block">Activity Summary</span>
-                <span id="statement-dates" className="statement-summary text-muted">Current Statement ({moment().startOf('month').format('MMM D')} - {moment().endOf('month').format('MMM D')})</span>
-              </h2>
-
-              <button className="btn btn-articles-light mr-1">Print</button>
-              <button className="btn btn-articles-light">Download</button>
-
-              {/* <a href="#" className="summary-links preventDefaultBehaviour print-link"><i className="ra-icons icon-print"></i>Print<span className="sr-only">opens a popup window</span></a> */}
-                
-              {/* <a href="#" className="summary-links download-link preventDefaultBehaviour" data-toggle="modal" data-target=".download-modal"><i className="ra-icons icon-download"></i>Download<span className="sr-only">Opens modal dialog</span></a> */}
-              
-              {/* <a href="/cardmembersvcs/statements/app/stmtPDF?view=true&amp;date=20190723" className="btn-primary btn-view-statement preventDefaultBehaviour" role="button">View Billing Statement PDF</a> */}
-            </div>
-
-            <div className="table-wrap">
-              <table>
-                <caption className="sr-only">Summary Details</caption>
-                <tbody>
-                  <tr className="last-month-balance">
-                    <th scope="row">Last Month Balance</th>
-                    <td id="last-statement-balance" className="text-bold"> $0.00</td>
-                  </tr>
-
-                  <tr className="statement-summary">
-                    <th scope="row">Donations</th>
-                    <td id="posted-transactions" className="text-bold">{donationsTotal >= 0 ? '+':'-'} ${donationsTotal}</td>
-                  </tr>
-                  <tr className="statement-summary">
-                    <th scope="row">Clothing Sales</th>
-                    <td id="previous-balance" className="text-bold">{salesTotal >= 0 ? '+':'-'} ${salesTotal}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Ad Revenue</th>
-                    <td id="payments-credits" className="text-bold">{adRevenueTotal >= 0 ? '+':'-'} ${adRevenueTotal}</td>
-                  </tr>
-
-                  <tr className="statement-summary expense">
-                    <th scope="row">Purchases</th>
-                    <td id="purchases-statement" className="text-bold">{expensesTotal >= 0 ? '+':'-'} ${expensesTotal}</td>
-                  </tr>
-                  <tr className="statement-summary expense">
-                    <th scope="row">Payrole</th>
-                    <td id="balance-transfers" className="text-bold">- $0.00</td>
-                  </tr>
-
-                  <tr className="this-month-net">
-                    <th scope="row">This Month Net</th>
-                    <td id="balance-transfers" className="text-bold">+ $39.34</td>
-                  </tr>
-
-                  {/* <tr className="statement-summary">
-                    <th scope="row">Cash Advances</th>
-                    <td id="cash-advances" className="text-bold">+ $0.00</td>
-                  </tr> */}
-                  {/* <tr className="statement-summary">
-                    <th scope="row">Fees Charged</th>
-                    <td id="fees-charged" className="text-bold">+ $28.00</td>
-                  </tr> */}
-                  {/* <tr className="statement-summary">
-                    <th scope="row">Interest Charged</th>
-                    <td id="interest-charged" className="text-bold">+ $71.22</td>
-                  </tr> */}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <div className="account-balance">
-            <h4>Articles Balance: </h4>
-            <h2 className="text-muted"><span style={{color: 'limegreen'}}>+$</span>{100 - 23.57}</h2>
-          </div>
-
-        </div>
-
-        <div className="col-12 col-lg-6">
-          <div className='reports-right-panel'>
-
-            <div className="full-table">
-              <div id="div1-top">
-                <div id="div2-top">
-                  <div className='dual-header'><h5>Sales</h5></div>
-                </div>
-              </div>
-
-              <table className='table table-responsive articles-table mb-2 table-bordered'>
-                <thead>
-                  <tr className="table-articles-head">
-                    {/* <th scope="col">Order #</th> */}
-                    <th scope="col">Date</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Order Summary</th>
-                    <th className='text-right' scope="col">Total</th>
-                  </tr>
-                </thead>
-                <tbody>
-
-                  {sales.map((object, i) =>
-
-                    <tr key={i} className="bg-light">
-                      <td>{object.date || 'test'}</td>
-                      <td>{object.name}</td>
-                      <td>{object.note}</td>
-                      <td className='text-right'>${object.total.toFixed(2)}</td>
-                    </tr>
-
-                  )}
-
-                </tbody>
-
-              </table>
-
-              <div id="div1">
-                <div id="div2">
-                  <div className="dual-header">
-                    <h5>{sales.length} Sales</h5>
-                    <h5>${sales.reduce((a, b) => +a + +b.total, 0).toFixed(2)}</h5>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="full-table pt-4">
-              <div id="div1-top">
-                <div id="div2-top">
-                  <div className='dual-header'><h5>Donations</h5></div>
-                </div>
-              </div>
-              <table className='table table-responsive articles-table mb-2 table-bordered'>
-          <thead>
-            <tr className="table-articles-head">
-              {/* <th scope="col">Donation #</th> */}
-              <th scope="col">Date</th>
-              <th scope="col">Name</th>
-              <th scope="col">Message</th>
-              <th className='text-right' scope="col">Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-
-            {donations.map((object, i) =>
-
-              <tr key={i} className="bg-light">
-                {/* <td><Link to={'donation/' + object.id}>#{pad(object.id, 3)}</Link></td> */}
-                <td>{object.date || 'test'}</td>
-                <td>{object.name}</td>
-                <td>{object.message}</td>
-                <td className='text-right'>${object.amount.toFixed(2)}</td>
-              </tr>
-
-            )}
-
-          </tbody>
-
-        </table>
-              <div id="div1">
-                <div id="div2">
-                  <div className="dual-header">
-                    <h5>{donations.length} Donations</h5>
-                    <h5>${donations.reduce((a, b) => +a + +b.amount, 0).toFixed(2)}</h5>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-3 mt-5"><DonationTable/></div>
-
-            <div className="full-table pt-4">
-              <div id="div1-top">
-                <div id="div2-top">
-                  <div className='dual-header'><h5>{moment().format('MMMM')}'s Payrole</h5></div>
-                </div>
-              </div>
-
-              <table className='table table-responsive articles-table mb-2 table-bordered'>
-                <thead>
-                  <tr className="table-articles-head">
-                    {/* <th scope="col">Employee ID</th> */}
-                    <th scope="col">Name</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Hours</th>
-                    <th scope="col">Department</th>
-                    <th className='text-right' scope="col">Amount</th>
-                  </tr>
-                </thead>
-                <tbody>
-
-                  <tr key={0} className="bg-light">
-                    <td><Link to={'employees/42'}>Joey Giusto</Link></td>
-                    <td>{moment().week(27).format('LL') + ' - ' + moment().week(27).endOf('week').format('LL')}</td>
-                    <td>...</td>
-                    <td>{'Admin'}</td>
-                    <td className='text-right'>$0.00</td>
-                  </tr>
-
-                  <tr key={1} className="bg-light">
-                    <td><Link to={'employees/42'}>Joey Giusto</Link></td>
-                    <td>{moment().week(28).format('LL') + ' - ' + moment().week(28).endOf('week').format('LL')}</td>
-                    <td>...</td>
-                    <td>{'Admin'}</td>
-                    <td className='text-right'>$0.00</td>
-                  </tr>
-
-                  <tr key={2} className="bg-light">
-                    <td><Link to={'employees/42'}>Joey Giusto</Link></td>
-                    <td>{moment().week(29).format('LL') + ' - ' + moment().week(29).endOf('week').format('LL')}</td>
-                    <td>...</td>
-                    <td>{'Admin'}</td>
-                    <td className='text-right'>$0.00</td>
-                  </tr>
-
-                  <tr key={3} className="bg-light">
-                    <td><Link to={'employees/42'}>Joey Giusto</Link></td>
-                    <td>{moment().week(30).format('LL') + ' - ' + moment().week(30).endOf('week').format('LL')}</td>
-                    <td>...</td>
-                    <td>{'Admin'}</td>
-                    <td className='text-right'>$0.00</td>
-                  </tr>
-
-                  <tr key={4} className="bg-light">
-                    <td><Link to={'employees/3'} style={{ color: 'red' }}>Redacted Example</Link></td>
-                    <td>{moment().week(30).format('LL') + ' - ' + moment().week(30).endOf('week').format('LL')}</td>
-                    <td style={{ color: 'red' }}>Redacted</td>
-                    <td>{'Consulting'}</td>
-                    <td className='text-right'>$0.00</td>
-                  </tr>
-
-                  {/* {donations.map((object, i) => 
-    
-                    <tr key={i} className="bg-light">
-                      <td><Link to={'employees/' + pad(object.id, 3)}>#{pad(object.id, 3)}</Link></td>
-                      <td>{object.date || 'test'}</td>
-                      <td>{object.name}</td>
-                      <td>{object.message}</td>
-                      <td className='text-right'>${object.amount.toFixed(2)}</td>
-                    </tr>
-    
-                    )} */}
-
-                </tbody>
-
-              </table>
-
-              <div id="div1">
-                <div id="div2">
-                  <div className="dual-header">
-                    <h5>Payed:</h5>
-                    <h5>$0.00</h5>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="full-table pt-4">
-              <div id="div1-top">
-                <div id="div2-top">
-                  <div className='dual-header'><h5>Expenses</h5></div>
-                </div>
-              </div>
-
-              <table className='table table-responsive articles-table mb-2 table-bordered'>
-                <thead>
-                  <tr className="table-articles-head">
-                    <th scope="col">Receipt</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">For</th>
-                    <th scope="col">Department</th>
-                    <th className='text-right' scope="col">Amount</th>
-                  </tr>
-                </thead>
-                <tbody>
-
-                  {expenses.map((object, i) =>
-
-                    <tr key={i} className="bg-light">
-                      <td><a href={object.file}><i className="fas fa-file-invoice-dollar"></i></a></td>
-                      <td>{object.date || 'test'}</td>
-                      <td>{object.name}</td>
-                      <td>{object.department}</td>
-                      <td className='text-right'>${object.total.toFixed(2)}</td>
-                    </tr>
-
-                  )}
-
-                </tbody>
-
-              </table>
-
-              <div id="div1">
-                <div id="div2">
-                  <div className="dual-header">
-                    <h5>Spent:</h5>
-                    <h5>${expenses.reduce((a, b) => +a + +b.total, 0).toFixed(2)}</h5>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  );
-
-  
-
-};
 
 class DonationTableBase extends Component {
    constructor(props) {
@@ -1056,8 +600,8 @@ class DonationTableBase extends Component {
     const { donationsFirebase, loading, limit, page } = this.state;
 
     return (
-      <div className="mt-2">
-        {loading && <div>Loading ...</div>}
+      <div>
+        {loading && <div className="p-2">Loading data...</div>}
         {donationsFirebase ? (
         <div>
           <StyledDonationList
@@ -1125,7 +669,7 @@ const StyledDonationList = (props) => (
       </tbody>
     </table>
 
-    <div className="donation-snippet">
+    <div className="donation-snippet d-none">
       {/* <header><h1>Consider Donating!</h1></header> */}
       <p>All donations go towards supporting the platform and encouraging more transparency and voice in American Politics.<br/><span>The next revoulution needs you!</span></p>
       <div className="dual-header">
@@ -1141,7 +685,7 @@ const StyledDonationItem = ({donation}) => (
   <tr>
     {/* <th scope="row">{donation.uid}</th> */}
     <td>{moment(donation.createdAt).format('LL') }</td>
-    <td>{donation.name.split(" ")[0] + " " + (donation.name.split(' ')[0]).charAt(0)}</td>
+    <td>{donation.name.split(" ")[0] + " " + (donation.name.split(' ')[1]).charAt(0)}</td>
     <td>{donation.note === "match" ? (<div><span role="img" aria-label="emoji">⭐</span>Matched</div>) : (<div>{donation.note}</div>) }</td>
     <td>${(donation.amount / 100).toFixed(2)}</td>
   </tr>

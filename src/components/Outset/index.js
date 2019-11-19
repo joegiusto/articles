@@ -17,6 +17,8 @@ import StepFive from './StepFive';
 
 import * as outsetPhotos from './outsetPhotos';
 
+import $ from "jquery";
+
 const OutsetBaseWrap = (props) => (
   <AuthUserContext.Consumer>
     {authUser =>
@@ -91,43 +93,33 @@ class OutsetBase extends React.Component {
     this.handleCellTwo = this.handleCellTwo.bind(this);
     this.setActiveTab = this.setActiveTab.bind(this);
 
+    this.onZipBlur = this.onZipBlur.bind(this);
+
     this.setCell = this.setCell.bind(this);
 
-    this.getStorySuggestionLocation = this.getStorySuggestionLocation.bind(this);
+    // this.getStorySuggestionLocation = this.getStorySuggestionLocation.bind(this);
+    // this.getStorySuggestionLocationOther = this.getStorySuggestionLocationOther.bind(this);
+
+    // this.test = this.test.bind(this);
 
     this.changeStep = this.changeStep.bind(this);
     this.highlightElement = this.highlightElement.bind(this);
     
   }
 
-  async getStorySuggestionLocation(locationObject) {
-    console.log(locationObject)
-    console.log("Sending data off!");
-    console.log("Recieved data!");
-    console.log("Updated storySuggestionLocation state!");
+  // async getStorySuggestionLocationOther(locationObject) {
+  //   console.log(locationObject)
 
-    let response = await fetch("/storySuggestionLocation", {
-      method: "POST",
-      headers: {"Content-Type": "text/plain"},
-      body: locationObject
-    })
-    .then(function(recieved) {
-      return recieved.json();
-    }).then(function(data) {
-      console.log(data);
-    });
+  //   let response = await fetch("/storySuggestionLocationOther", {
+  //     method: "POST",
+  //     headers: {"Content-Type": "text/plain"},
+  //     body: "Hello"
+  //   })
+    
+  //   console.log(response);
+  //   console.log(response.body.json);
 
-    console.log(response);
-
-    this.setState({
-      storySuggestionLocation: {
-        city: [],
-        state: ['NY-State-Elections'],
-        zip: ['mta-fair-pricing'],
-      },
-    });
-
-  }
+  // }
 
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
@@ -196,9 +188,108 @@ class OutsetBase extends React.Component {
     this.setState({ shirtSize: size });
   };
 
-  // componentDidMount() {
-  //   this.setState({ step: 3 });
-  // }
+  onZipBlur = zip => {
+    var clientKey = "js-cz2jSZISmtnobh2q8zKT6nIjTV0JPlVjUdk4HdcGiGicCsh9O1IuE1nPemjphKID";
+
+    console.log("Looking up " + zip)
+
+    const zipcode = zip;
+
+    var cache = {};
+    var errorDiv = "";
+
+    let currentComponent = this;
+
+    /** Handle successful response */
+		function handleResp(data)
+		{
+			// Check for error
+			if (data.error_msg)
+				errorDiv = data.error_msg;
+			else if ("city" in data)
+			{
+        // Set city and state
+        
+				// container.find("input[name='city']").val(data.city);
+        // container.find("input[name='state']").val(data.state);
+
+        currentComponent.setState({city: data.city, state: data.state})
+			}
+		}
+	
+
+    if (zipcode.length == 5 && /^[0-9]+$/.test(zipcode))
+			{
+				// Clear error
+        // errorDiv.empty();
+        errorDiv = ""
+				
+				// Check cache
+				if (zipcode in cache)
+				{
+					handleResp(cache[zipcode]);
+				}
+				else
+				{
+					// Build url
+					var url = "https://www.zipcodeapi.com/rest/"+clientKey+"/info.json/" + zipcode + "/radians";
+					
+					// Make AJAX request
+					$.ajax({
+						"url": url,
+						"dataType": "json"
+					}).done(function(data) {
+						handleResp(data);
+						
+						// Store in cache
+						cache[zipcode] = data;
+					}).fail(function(data) {
+						if (data.responseText && (JSON = $.parseJSON(data.responseText)))
+						{
+							// Store in cache
+							cache[zipcode] = JSON;
+							
+							// Check for error
+							if (JSON.error_msg)
+                // errorDiv.text(JSON.error_msg);
+                errorDiv = JSON.error_msg
+						}
+						else
+							errorDiv = 'Request failed.';
+					});
+				}
+      }
+      
+      console.log(cache);
+      console.log(errorDiv);
+  }
+
+  theAPI() {
+    const newCall = this.props.firebase.functions.httpsCallable("storyAPINew");
+
+    newCall({ location: {
+      city: this.state.city,
+      state: this.state.state,
+      zip: this.state.zip
+    } }).then(function(result) {
+      // Read result of the Cloud Function.
+      var sanitizedMessage = result.data.text;
+      console.log(sanitizedMessage);
+      // ...
+    });
+  }
+  
+
+  componentDidMount() {
+
+    // var maybe = this.props.firebase.functions.httpsCallable("storyAPI");
+    // maybe({text: 'testing'}).then(function(result) {
+    //   // Read result of the Cloud Function.
+    //   var sanitizedMessage = result.data.text;
+    //   console.log(sanitizedMessage);
+    // });
+
+  }
 
   toggleSubscriptions = id => {
     if (this.state.subscriptions.indexOf(id) === -1) {
@@ -384,7 +475,10 @@ class OutsetBase extends React.Component {
         )
       case 2: 
         return (
+          <>
           <div className="intro-title">Clothing Details</div>
+          {this.theAPI()}
+          </>
         )
       case 3: 
         return (
@@ -449,7 +543,7 @@ class OutsetBase extends React.Component {
       case 1: 
         // General Information
         return (
-          <StepOne {...this.state} handleCellTwo={this.handleCellTwo} setCell={this.setCell} handleChange={this.handleChange} onChange={this.onChange} changeFocus={this.changeFocus} authUser={authUser}/>
+          <StepOne {...this.state} onZipBlur={this.onZipBlur} handleCellTwo={this.handleCellTwo} setCell={this.setCell} handleChange={this.handleChange} onChange={this.onChange} changeFocus={this.changeFocus} authUser={authUser}/>
         )
       case 2:
         // Clothing Information
@@ -459,7 +553,7 @@ class OutsetBase extends React.Component {
       case 3:
         // News Information
         return (
-          <StepThree {...this.state} setViewedTabs={this.setViewedTabs} setActiveTab={this.setActiveTab} toggleSubscriptions={this.toggleSubscriptions} changeFocus={this.changeFocus} changeStep={this.changeStep} highlightElement={this.highlightElement} getStorySuggestionLocation={this.getStorySuggestionLocation}/>
+          <StepThree {...this.state} setViewedTabs={this.setViewedTabs} setActiveTab={this.setActiveTab} toggleSubscriptions={this.toggleSubscriptions} changeFocus={this.changeFocus} changeStep={this.changeStep} highlightElement={this.highlightElement} getStorySuggestionLocation={this.getStorySuggestionLocation} getStorySuggestionLocationOther={this.getStorySuggestionLocationOther} test={this.test}/>
         )
       case 4:
         // Party Information
@@ -502,6 +596,12 @@ class OutsetBase extends React.Component {
     const stepThreeIsInvalid = subscriptions.length < 3;
     const stepFourIsInvalid = partyAffiliation === '';
     const stepFiveIsInvalid = (cookieAccept && termsAccept && privacyAccept) === false;
+
+    // const clientKey = 'js-9qZHzu2Flc59Eq5rx10JdKERovBlJp3TQ3ApyC4TOa3tA8U7aVRnFwf41RpLgtE7';
+    // const cache = {};
+    // const container = this.state.zip;
+    // const errorDiv = container.find("div.text-error");
+
 
 
     return (
