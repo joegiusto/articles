@@ -14,6 +14,7 @@ import OutsetPage from './Outset';
 import HomePage from './Home';
 import MissionPage from './Mission';
 import ReportsPage from './Reports';
+import ReportsManagePage from './Reports/Manage';
 
 import StorePage from './Store'
 import StoreCheckoutPage from './Store/Checkout'
@@ -92,7 +93,9 @@ const App = () => (
         
         <Route path={ROUTES.HOME} component={HomePage} />
         <Route path={ROUTES.MISSION} component={MissionPage} />
-        <Route path={ROUTES.REPORTS} component={ReportsPage} />
+
+        <Route path={ROUTES.REPORTS} component={ReportsPage} exact={true}/>
+        <Route path={ROUTES.REPORTS_MANAGE} component={ReportsManagePage} />
   
         <Route exact path={ROUTES.STORE} component={StorePage} />
         <Route path={ROUTES.CHECKOUT} component={StoreCheckoutPage} />
@@ -108,7 +111,6 @@ const App = () => (
         <Route exact path={ROUTES.PARTY} component={PartyPage} />
         <Route path={ROUTES.PROPOSALS} component={PartyProposalsPage} />
         
-  
         <Route path={ROUTES.MESH} component={MeshPage} />
   
         <Route exact path={ROUTES.SUPPORT} component={SupportPage} />

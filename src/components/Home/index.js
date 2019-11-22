@@ -4,10 +4,11 @@ import { compose } from 'recompose';
 import { AuthUserContext, withAuthorization, withEmailVerification } from '../Session';
 import { withFirebase } from '../Firebase';
 
+import UsersIssues from './UserIssues'
+
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { expression } from '@babel/template';
 
 function HomePageTwo() {
   const [activeTab, setActiveTab] = useState('stories');
@@ -82,6 +83,10 @@ function HomePageTwo() {
       <div className='container home-container'>
         <div className='row'>
           <div className='col-12 col-md-8 mt-5'>
+
+            <h1>Your Subscribed Issues</h1>
+            <UsersIssues></UsersIssues>
+
 
             <div className="home">
               {/* <h1>Home</h1>
@@ -424,8 +429,6 @@ class MessagesBase extends Component {
       return "Hello"
     })
   }
-
-  
 
   render() {
     const { text, messages, loading } = this.state;

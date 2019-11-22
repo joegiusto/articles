@@ -12,6 +12,7 @@ export const OUTSET = '/outset';
 export const HOME = '/home';
 export const MISSION = '/mission';
 export const REPORTS = '/reports';
+export const REPORTS_MANAGE = '/reports/manage';
 
 // Store
 export const STORE ='/store'

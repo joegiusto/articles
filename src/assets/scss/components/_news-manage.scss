@@ -1,0 +1,67 @@
+.news-manage-card {
+  background-color: $base-color;
+  border: solid 3px #000;
+  padding: .25rem;
+  margin-bottom: .50rem;
+  .header {
+    background-color: black;
+    color: white;
+    padding: .5rem;
+    margin: -.25rem;
+    margin-bottom: .25rem;
+    .sort-control {
+      background-color: white;
+      color: black;
+      border-radius: 5px;
+      padding: 0.25rem;
+      div {
+        margin-left: 5px;
+      }
+      .sort-selection{
+
+        color: grey;
+        cursor: pointer;
+        margin-left: 5px;
+        &:first-child {
+          margin-left: 0px;
+        }
+
+        &.active {
+          text-decoration: underline;
+          color: black;
+        }
+      }
+    }
+  }
+  .footer {
+    background-color: black;
+    color: white;
+    padding: .5rem;
+    margin: -.25rem;
+    margin-top: .25rem;
+  }
+  .issue-container {
+    .issue {
+      margin-bottom: 0.5rem;
+      border: solid 2px #000;
+      padding: 0.25rem;
+      margin-right: 0.5rem;
+      background-color: white;
+      .id {
+        font-size: 0.7rem;
+      }
+      .title {
+        font-size: 1.5rem;
+      }
+    }
+  }
+  @media only screen and (min-width: 768px) {
+    .issue-container {
+      // background-color: lightblue;
+      max-height: 48vh;
+      min-height: 48vh;
+      overflow-y: scroll;
+    }
+  }
+  
+}

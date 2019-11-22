@@ -9,12 +9,12 @@ import * as ROUTES from '../../../constants/routes';
 
 const AdminPage = () => (
 
-  <div className="row">
+ 
 
-    <div className="col-4">
+    <div className="container">
       <div>
-        <h1>Admin</h1>
-        <p>The Admin Page is accessible by every signed in admin user.</p>
+        <h1>News Management</h1>
+        <p>Portal for admin and writer roles to manage news details.</p>
         <Switch>
           <Route exact path={ROUTES.MANAGE_DETAILS} component={UserItem} />
           <Route exact path={ROUTES.MANAGE} component={IssuesList} />
@@ -22,7 +22,7 @@ const AdminPage = () => (
       </div>
     </div>
 
-  </div>
+
 
 );
 
@@ -31,15 +31,19 @@ class IssuesListBase extends Component {
   super(props);
 
     this.state = {
-      loading: false,
-      users: [],
+      loadingStories: false,
+      loadingIssues: false,
+      loadingMyths: false,
+
+      firebaseStories: [],
+      firebaseIssues: [],
+      firebaseMyths: [],
 
       id: "",
       title: "",
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
-    // this.addIssue = this.addIssue.bind(this);
   }
 
   convert(fakeArray) {
@@ -57,7 +61,11 @@ class IssuesListBase extends Component {
   }
 
   componentDidMount() {
-    this.setState({ loading: true });
+    // this.onListenForNews();
+
+    this.setState({ loadingStories: true });
+    this.setState({ loadingIssues: true });
+    this.setState({ loadingMyths: true });
 
     this.props.firebase.issues().on('value', snapshot => {
       const usersObject = snapshot.val();
@@ -71,15 +79,52 @@ class IssuesListBase extends Component {
       ));
 
       this.setState({
-        users: usersList,
-        loading: false,
+        firebaseIssues: usersList,
+        loadingIssues: false,
       });
 
     });
+
+    this.props.firebase.stories().on('value', snapshot => {
+      const usersObject = snapshot.val();
+
+      const usersList = Object.keys(usersObject).map(key => (
+        {
+          ...usersObject[key],
+          // statesArray: this.convert(usersObject[key].interest.states),
+          uid: key,
+        }
+      ));
+
+      this.setState({
+        firebaseStories: usersList,
+        loadingStories: false,
+      });
+
+    });
+
+    this.props.firebase.myths().on('value', snapshot => {
+      const usersObject = snapshot.val();
+
+      const usersList = Object.keys(usersObject).map(key => (
+        {
+          ...usersObject[key],
+          // statesArray: this.convert(usersObject[key].interest.states),
+          uid: key,
+        }
+      ));
+
+      this.setState({
+        firebaseMyths: usersList,
+        loadingMyths: false,
+      });
+
+    });
+    
   }
 
   componentWillUnmount() {
-    this.props.firebase.users().off();
+    this.props.firebase.issues().off();
   }
 
   handleInputChange(event) {
@@ -119,78 +164,276 @@ class IssuesListBase extends Component {
   }
 
   render() {
-    const { users, loading } = this.state;
+    const { firebaseIssues, firebaseStories, firebaseMyths, loading } = this.state;
 
     return (
-      <div>
-        <h2>Issues</h2>
+      <div className="row">
 
-        {loading && <div>Loading ...</div>}
-
-        <ul>
-          {users.map(user => (
-            <div key={user.uid}>
-              <span>
-                <strong>ID:</strong> {user.uid}
-              </span>
-
-              <span>
-                <strong> Title:</strong> {user.title}
-              </span>
-
+        <div className="col-12 col-md-4">
+          <div className="news-manage-card stories">
+            <div className="header">
+              <h4>Stories</h4>
+  
               <div>
-
-                <span>
-
-                  {console.log(user.statesArray)}
-
-                  <strong>States: {user.statesArray === undefined ? 'None' : user.statesArray.map(state => (<div className="badge badge-success">{state}</div>) ) }</strong>
-
-                  {/* {user.statesArray.map(state => (
-                    <div className="badge badge-success">{state}</div>
-                  ))} */}
-                  
-                </span>
-
-                <span>
-                  <strong> Cities:</strong>
-                </span>
-
+                <div className="search">Search</div>
+                <input className="w-100 form-control" type="text"/>
               </div>
 
-              <div>
-                <Link to={`${ROUTES.MANAGE}/issues/${user.uid}`}>
-                  Details
-                </Link>
-                <span onClick={() => (this.removeIssue(user.uid))} className="ml-3" style={{color: 'red', textDecoration: 'underline', cursor: 'pointer'}}>
-                  Delete
-                </span>
+              <div className="sort-control mt-1">
+                  <span>Showing:</span>
+                
+                  <span className="sort-selection active">All Stories</span>
+                  <span className="sort-selection">Search Stories</span>
+                
               </div>
 
             </div>
-          ))}
-        </ul>
+    
+            {loading && <div>Loading ...</div>}
+    
+            <div className="issue-container">
+              {firebaseStories.map(user => (
+                <div className="issue" key={user.uid}>
 
-        <div>
-          <h2>Add Issue</h2>
+                  <div className="id">
+                    <strong>ID:</strong> {user.uid}
+                  </div>
+    
+                  <div className="title">
+                    <strong> Title:</strong> {user.title}
+                  </div>
+    
+                  <div>   
+                    {/* {console.log(user.statesArray)} */}
+                    {/* <strong>States:</strong>  */}
+                    {/* {user.statesArray === undefined ? 'None' : user.statesArray.map(state => (<div className="badge badge-success ml-1">{state}</div>) ) } */}
+                    {/* {user.statesArray.map(state => (
+                      <div className="badge badge-success">{state}</div>
+                    ))} */}       
 
-          <input 
-            name='id' 
-            type="text" 
-            placeholder="ID"
-            value={this.state.id}
-            onChange={this.handleInputChange}
-          />
+                    {/* <span>
+                      <strong> Cities:</strong>
+                    </span> */}  
+                  </div>
+    
+                  <div className="dual-header">
 
-          <input 
-            name='title'
-            type="text" 
-            placeholder="TITLE"
-            value={this.state.title}
-            onChange={this.handleInputChange}
-          />
+                    <Link to={`${ROUTES.MANAGE}/stories/${user.uid}`}>
+                      Edit
+                    </Link>
 
-          <button type="submit" onClick={() => (this.addIssue()) }>Add</button>
+                    {/* <span onClick={() => (this.removeIssue(user.uid))} className="ml-3" style={{color: 'red', textDecoration: 'underline', cursor: 'pointer'}}>
+                      Delete
+                    </span> */}
+
+                  </div>
+    
+                </div>
+              ))}
+            </div>
+    
+            <div className="footer">
+              <h4>Add Story</h4>
+    
+              <input 
+                name='id' 
+                type="text" 
+                placeholder="Story ID"
+                value={this.state.id}
+                onChange={this.handleInputChange}
+                className="form-control"
+              />
+    
+              <input 
+                name='title'
+                type="text" 
+                placeholder="Story Title"
+                value={this.state.title}
+                onChange={this.handleInputChange}
+                className="form-control mt-1"
+              />
+    
+              <button className="btn btn-articles-light mt-1 w-100" type="submit" onClick={() => (this.addIssue()) }>Add</button>
+            </div>
+          </div>
+        </div>
+  
+        <div className="col-12 col-md-4">
+          <div className="news-manage-card issues">
+            <div className="header">
+              <h4>Issues</h4>
+  
+              <div>
+                <div className="search">Search</div>
+                <input className="w-100 form-control" type="text"/>
+              </div>
+
+              <div className="sort-control mt-1">
+                  <span>Showing:</span>
+                
+                  <span className="sort-selection active">All Issues</span>
+                  <span className="sort-selection">Search Issues</span>
+                
+              </div>
+
+            </div>
+    
+            {loading && <div>Loading ...</div>}
+    
+            <div className="issue-container">
+              {firebaseIssues.map(user => (
+                <div className="issue" key={user.uid}>
+
+                  <div className="id">
+                    <strong>ID:</strong> {user.uid}
+                  </div>
+    
+                  <div className="title">
+                    <strong> Title:</strong> {user.title}
+                  </div>
+    
+                  <div>   
+                    {/* {console.log(user.statesArray)} */}
+                    <strong>States:</strong> 
+                    {user.statesArray === undefined ? 'None' : user.statesArray.map(state => (<div className="badge badge-success ml-1">{state}</div>) ) }
+                    {/* {user.statesArray.map(state => (
+                      <div className="badge badge-success">{state}</div>
+                    ))} */}       
+
+                    {/* <span>
+                      <strong> Cities:</strong>
+                    </span> */}  
+                  </div>
+    
+                  <div className="dual-header">
+
+                    <Link to={`${ROUTES.MANAGE}/issues/${user.uid}`}>
+                      Edit
+                    </Link>
+
+                    <span onClick={() => (this.removeIssue(user.uid))} className="ml-3" style={{color: 'red', textDecoration: 'underline', cursor: 'pointer'}}>
+                      Delete
+                    </span>
+
+                  </div>
+    
+                </div>
+              ))}
+            </div>
+    
+            <div className="footer">
+              <h4>Add Issue</h4>
+    
+              <input 
+                name='id' 
+                type="text" 
+                placeholder="Issue ID"
+                value={this.state.id}
+                onChange={this.handleInputChange}
+                className="form-control"
+              />
+    
+              <input 
+                name='title'
+                type="text" 
+                placeholder="Issue Title"
+                value={this.state.title}
+                onChange={this.handleInputChange}
+                className="form-control mt-1"
+              />
+    
+              <button className="btn btn-articles-light mt-1 w-100" type="submit" onClick={() => (this.addIssue()) }>Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div className="col-12 col-md-4">
+          <div className="news-manage-card myths">
+            <div className="header">
+              <h4>Myths</h4>
+  
+              <div>
+                <div className="search">Search</div>
+                <input className="w-100 form-control" type="text"/>
+              </div>
+
+              <div className="sort-control mt-1">
+                  <span>Showing:</span>
+                
+                  <span className="sort-selection active">All Myths</span>
+                  <span className="sort-selection">Search Myths</span>
+                
+              </div>
+
+            </div>
+    
+            {loading && <div>Loading ...</div>}
+    
+            <div className="issue-container">
+              {firebaseMyths.map(user => (
+                <div className="issue" key={user.uid}>
+
+                  <div className="id">
+                    <strong>ID:</strong> {user.uid}
+                  </div>
+    
+                  <div className="title">
+                    <strong> Title:</strong> {user.title}
+                  </div>
+    
+                  <div>   
+                    {/* {console.log(user.statesArray)} */}
+                    {/* <strong>States:</strong>  */}
+                    {/* {user.statesArray === undefined ? 'None' : user.statesArray.map(state => (<div className="badge badge-success ml-1">{state}</div>) ) } */}
+                    {/* {user.statesArray.map(state => (
+                      <div className="badge badge-success">{state}</div>
+                    ))} */}       
+
+                    {/* <span>
+                      <strong> Cities:</strong>
+                    </span> */}  
+                  </div>
+    
+                  <div className="dual-header">
+
+                    <Link to={`${ROUTES.MANAGE}/myths/${user.uid}`}>
+                      Edit
+                    </Link>
+
+                    {/* <span onClick={() => (this.removeIssue(user.uid))} className="ml-3" style={{color: 'red', textDecoration: 'underline', cursor: 'pointer'}}>
+                      Delete
+                    </span> */}
+
+                  </div>
+    
+                </div>
+              ))}
+            </div>
+    
+            <div className="footer">
+              <h4>Add Myths</h4>
+    
+              <input 
+                name='id' 
+                type="text" 
+                placeholder="Myth ID"
+                value={this.state.id}
+                onChange={this.handleInputChange}
+                className="form-control"
+              />
+    
+              <input 
+                name='title'
+                type="text" 
+                placeholder="Myth Title"
+                value={this.state.title}
+                onChange={this.handleInputChange}
+                className="form-control mt-1"
+              />
+    
+              <button className="btn btn-articles-light mt-1 w-100" type="submit" onClick={() => (this.addIssue()) }>Add</button>
+            </div>
+          </div>
         </div>
 
       </div>

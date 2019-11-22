@@ -244,6 +244,7 @@ export const employeeList = [
 export const sales = [
   {
     id: 0,
+    type: 'preorder',
     date: moment("2019-07-28T12:00").format('LLL'),
     name: 'Joey G.',
     note: 'Pre Order',
@@ -251,6 +252,7 @@ export const sales = [
   },
   {
     id: 0,
+    type: 'preorder',
     date: moment("2019-07-28T12:00").format('LLL'),
     name: 'Tyler W.',
     note: 'Pre Order',
@@ -258,6 +260,7 @@ export const sales = [
   },
   {
     id: 1,
+    type: 'preorder',
     date: moment("2019-07-28T12:00").format('LLL'),
     name: 'Danny R.',
     note: 'Pre Order',
@@ -265,6 +268,7 @@ export const sales = [
   },
   {
     id: 2,
+    type: 'preorder',
     date: moment("2019-07-28T12:00").format('LLL'),
     name: 'Jon P.',
     note: 'Pre Order',
@@ -272,6 +276,7 @@ export const sales = [
   },
   {
     id: 3,
+    type: 'preorder',
     date: moment("2019-07-31T12:00").format('LLL'),
     name: 'Elvis H.',
     note: 'Pre Order',
@@ -279,6 +284,7 @@ export const sales = [
   },
   {
     id: 3,
+    type: 'preorder',
     date: moment("2019-09-04T12:00").format('LLL'),
     name: 'Miles.',
     note: 'Pre Order',

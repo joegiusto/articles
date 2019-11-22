@@ -6,8 +6,6 @@ import Scrollspy from 'react-scrollspy';
 import * as ROUTES from '../../constants/routes';
 import { Link } from 'react-router-dom';
 
-import flag from '../../assets/img/flag.png'
-
 class Wrapper extends React.Component {
   constructor(props) {
     super(props);
@@ -302,7 +300,7 @@ const Mission = (props) => {
                     <div className="sub-title" id="title-mission">Mission</div>
 
                     <div className="sub-text">
-                      <p className="d-none">Our mission is simple one, yet very complex. Like every other group that tries to help the USA in the name of profit we also say that we want to make this country a better place 🤮 but we heard that one before, so let us explain.</p>
+                      <p className="d-none">Our mission is simple one, yet very complex. Like every other group that tries to help the USA in the name of profit we also say that we want to make this country a better place <span role="img" aria-label="puke-emoji">🤮</span> but we heard that one before, so let us explain.</p>
 
                       {/* <hr/> */}
 
@@ -489,7 +487,7 @@ const Mission = (props) => {
                       <div className="dream-quote">
                         <p>TODO/REMOVE B4 LAUNCH: This is by far my least favorite section to read and neads to be the most powerful section to read by launch, more info on whats wrong with the current news system and sources to go along with it.</p>
                         
-                        <ul className="ml-4">
+                        <ul className="ml-4 d-none">
                           <li>Lack of Edward Snowden Information and the disrespect shown by media towards him</li>
                           <li>Lack of Hong Kong coverage and how China threatens our way of life</li>
                           <li>Examples of the press running to the goverment and all of a sudden not running stories</li>
@@ -498,14 +496,11 @@ const Mission = (props) => {
                           <li>Lack of partnerships with growing creators way more talented then shmucks held up in a fancy NYC office writting dumb fucking news stories</li>
                           <li>Lack of pressure on goverment yet you pay the goverment for your interest?</li>
                         </ul>
+
                       </div>
 
                     </div>
                   </div>
-    
-                  
-
-
     
                   <div className="sub-wrap pt-2">
                     <div className="sub-title" id="title-stories">Stories</div>

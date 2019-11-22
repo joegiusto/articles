@@ -29,11 +29,11 @@ const DonatePage = (props) => (
           <NotUnlessAdmin/>
         </div>
 
-        <div className="col-12 col-md-8">
+        <div className="col-12 col-md-4">
           <DonateActivity history={props.history}/>
         </div>
 
-        <div className="col-12">
+        <div className="col-12 col-md-4">
           <h1>Stripe Testing Here</h1>
           <App/>
         </div>
@@ -375,16 +375,16 @@ class DonationData extends Component {
 
 }
 
-const DonationList  = ({ donations }) => (
-  <ul className="DonationList">
-    {donations.map(donation => (
-      <DonationItem
-        key={donation.uid}
-        donation={donation}
-        />
-    ))}
-  </ul>
-);
+// const DonationList  = ({ donations }) => (
+//   <ul className="DonationList">
+//     {donations.map(donation => (
+//       <DonationItem
+//         key={donation.uid}
+//         donation={donation}
+//         />
+//     ))}
+//   </ul>
+// );
 
 const DonationItem  = ({ donation }) => (
   <li className="DonationItem">

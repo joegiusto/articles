@@ -48,6 +48,7 @@
   }
   &-directory {
     // height: 35px;
+    margin-top: 2rem;
     font-family: 'Forte';
     position: relative;
     font-size: 1.3rem;
@@ -55,7 +56,7 @@
       background-color: $accent-color;
     }
     span {
-      vertical-align: text-bottom;
+      // vertical-align: text-bottom;
       line-height: 0px;
       padding-right: 5px;
       padding-left: 5px;
@@ -72,6 +73,7 @@
       vertical-align: unset;
       transition-duration: .0s;
       margin-right: 0px;
+      line-height: 0px;
     }
   }
   &-social {

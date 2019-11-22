@@ -4,27 +4,152 @@ import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
 import { withFirebase } from '../Firebase';
 import { employeeList, sales, donations, expenses } from "../../sample_data/sampleData";
+
+import * as ROUTES from '../../constants/routes';
+
+import {ClothingTable} from "./table.js"
 import moment from 'moment';
 import Chart from 'chart.js';
 import Component from 'react-live-clock/lib/Component';
 
-class ImprovedReports extends Component {
+class Reports extends Component {
   constructor(props) {
     super(props);
 
      this.state = {
        text: '',
        loading: false,
-       donationsFirebase: [],
        limit: 5,
        menuExpanded: false,
        tableSelector: 'donations',
-       subtableSelector: ''
+       subtableSelector: '',
+
+       firebaseData: {
+        expenses: {
+          other: [],
+          payroll: [],
+        },
+        revenue: {
+          clothing: [],
+          donations: [],
+        },
+       },
+
+       totals: {
+         expenses: 0,
+         clothing: 0,
+         donations: 0,
+       }
+
      };
   }
 
   componentDidMount() {
-    window.dispatchEvent(new Event('resize'));
+    this.onListenForDonations();
+  }
+
+  componentWillUnmount() {
+    this.props.firebase.donations().off();
+    this.props.firebase.expenses().off();
+  }
+
+  onListenForDonations() {
+    this.setState({ loading: true });
+
+    this.props.firebase.donations().orderByChild('createdAt').on('value', snapshot => {
+      const donationObject = snapshot.val();
+
+      if (donationObject) {
+
+        const donationList = Object.keys(donationObject).map(key => ({
+          ...donationObject[key],
+          uid: key,
+        }
+        ));
+
+        this.setState({
+
+          firebaseData: {
+            revenue: {
+              ...this.state.firebaseData.revenue,
+              donations: donationList,
+            },
+          },
+          
+          loading: false,
+
+        });
+
+        var total = 0;
+
+        for (var i=0; i<this.state.firebaseData.revenue.donations.length; i++) {
+          total += this.state.firebaseData.revenue.donations[i].amount;
+        }
+
+        console.log(total)
+
+        this.setState({totals: {
+          ...this.state.totals,
+          donations: total
+        }})
+
+
+      } else {
+        this.setState({ donationsFirebase: null, loading: false });
+      }
+    }); 
+
+    this.props.firebase.expenses().orderByChild('createdAt').on('value', snapshot => {
+      const expenseObject = snapshot.val();
+
+      if (expenseObject) {
+        const expenseList = Object.keys(expenseObject).map(key => ({
+          ...expenseObject[key],
+          uid: key,
+        }
+        ));
+
+        expenseList.sort(function(a, b){
+          var keyA = new Date(a.date),
+              keyB = new Date(b.date);
+          // Compare the 2 dates
+          if(keyA < keyB) return -1;
+          if(keyA > keyB) return 1;
+          return 0;
+        });
+
+        this.setState({
+          // expensesFirebase: expenseList,
+
+          firebaseData: {
+            ...this.state.firebaseData,
+            expenses: {
+              ...this.state.firebaseData.expenses,
+              other: expenseList,
+            },
+          },
+
+          loading: false,
+        });
+
+        var total = 0;
+
+        for (var i=0; i<this.state.firebaseData.expenses.other.length; i++) {
+          total += this.state.firebaseData.expenses.other[i].amount;
+        }
+
+        console.log(total)
+
+        this.setState({totals: {
+          ...this.state.totals,
+          expenses: total
+        }})
+
+      } else {
+        this.setState({ donationsFirebase: null, loading: false });
+      }
+    }); 
+
   }
 
   setTableSelector(newSelector) {
@@ -56,9 +181,10 @@ class ImprovedReports extends Component {
  }
 
   getTableComponent(tableSelector, subtableSelector) {
+    console.log('Switch');
     switch(tableSelector) {
       case 'donations':
-        return(<DonationTable/>)
+        return(<DonationTable firebaseData={this.state.firebaseData} fetch="donations"/>)
       case 'clothing':
         switch (subtableSelector) {
           case 'clothing-all':
@@ -69,9 +195,9 @@ class ImprovedReports extends Component {
             return(<ClothingTable/>)
         }
       case 'expenses':
-        return(<ExpenseTable/>)
-      case 'payrole':
-        return(<PayroleTable/>)
+        return(<DonationTable firebaseData={this.state.firebaseData} fetch="expenses"/>)
+      case 'payroll':
+        return(<payrollTable/>)
       case 'revenue':
         return(<RevenueTable/>)
       default:
@@ -108,8 +234,8 @@ class ImprovedReports extends Component {
     <div className="reports-page">
 
       <div className="fixed-total dual-header">
-        <span>Help <i className="far fa-question-circle"></i></span>
-        <span className="total">+$76.37</span>
+        <span className="help">Help <i className="far fa-question-circle"></i></span>
+        <span className="total">+${((this.state.totals.donations - this.state.totals.expenses) / 100 ).toFixed(2)}</span>
       </div>
 
       <div className="fixed-componsation-50"></div>
@@ -120,63 +246,82 @@ class ImprovedReports extends Component {
 
           <div className="col-12 col-md-4 col-lg-4">
 
-            <div className="live">
-              <span className="recording-dot d-inline-block"></span>
-              <span>Live</span>
+            <div className="static-wrapper">
+              <div className="live">
+                <span className="recording-dot d-inline-block"></span>
+                <span>Live</span>
+              </div>
+  
+              <div id='info' className={"info " + (this.state.menuExpanded ? 'expanded' : '')}>
+  
+                <div className="normal">
+                  <div className="px-2 pt-4">
+  
+                    <div>Current Balance:</div>
+                    <h2>${((this.state.totals.donations - this.state.totals.expenses) / 100 ).toFixed(2)}</h2>
+  
+                    <div className="time-container">
+                      <div className="progress">
+                        <div className="progress-bar bg-rev" role="progressbar" style={{width: (this.state.totals.donations / ((this.state.totals.donations + this.state.totals.expenses) / 100) ).toFixed(0) +"%"}} aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">{( this.state.totals.donations / ((this.state.totals.donations + this.state.totals.expenses) / 100) ).toFixed(0)}%</div>
+                        <div className="progress-bar bg-danger" role="progressbar" style={{width: (this.state.totals.expenses / ((this.state.totals.donations + this.state.totals.expenses) / 100) ).toFixed(0) + "%"}} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">{( this.state.totals.expenses / ((this.state.totals.donations + this.state.totals.expenses) / 100) ).toFixed(0)}%</div>
+                      </div>
+    
+                      <div className="text-muted">Revenue | Expenses</div>
+    
+                      <div className="mt-4">
+    
+                        <div className="row">
+    
+                          <div className="col-12 col-xl-6">
+                            <div className="snippet positive">
+                            Revenue: ${this.state.totals.donations / 100}
+                            </div>
+                          </div>
+    
+                          <div className="col-12 col-xl-6">
+                            <div className="snippet negative">
+                            Expenses: -${this.state.totals.expenses / 100}
+                            </div>
+                          </div>
+    
+                        </div>
+    
+                      </div>
+                    </div>
+  
+                  </div>
+                </div>
+  
+              </div>
             </div>
 
-            <div id='info' className={"info " + (this.state.menuExpanded ? 'expanded' : '')}>
-
-              <div className="normal">
-                <div className="px-2 pt-4">
-
-                  <div>Current Balance:</div>
-                  <h2>$76.37</h2>
-
-                  <div class="progress">
-                    <div class="progress-bar bg-success" role="progressbar" style={{width: "90%"}} aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                    <div class="progress-bar bg-danger" role="progressbar" style={{width: "10%"}} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-
-                  <div className="text-muted">Revenue compared to Expenses spending</div>
-
-                  <div className="mt-4">
-
-                    <div className="row">
-                      <div className="col-6">
-                        <div className="stat-card">
-                        Donations: $50.00
-                        </div>
-                        </div>
-                      <div className="col-6">
-                        <div className="stat-card">
-                        Expenses: -$23.63
-                        </div>
-                        </div>
-                      <div className="col-6">
-                        <div className="stat-card">
-                        Payrole: $00.00
-                        </div>
-                        </div>
-                      <div className="col-6">
-                        <div className="stat-card">
-                        Yearly Expenses: ~$24
-                        </div>
-                        </div>
-                    </div>
-
-                    <div>Donations: $50.00</div>
-                    <div>Expenses: $23.63</div>
-                    <div>Payrole: $00.00</div>
-                    <div>Yearly Expenses: ~$24</div>
-                    <div>Payrole: 0</div>
-                    <div>Yearly Expenses: ~$24</div>
-                    <div>Payrole: 0</div>
-                  </div>
-
+            <div className="mt-3">
+              <button className="btn btn-articles-light btn-lg w-100 report-quick-links">
+                <div>
+                  <i class="fas fa-chart-line"></i>
+                  <span>Data Charts <span style={{fontSize: '0.8rem'}}>(Coming soon!)</span></span>
                 </div>
-              </div>
+              </button>
+            </div>
 
+            <div className="mt-3">
+              <button className="btn btn-articles-light btn-lg w-100 report-quick-links">
+                <div>
+                  <i class="fas fa-flag"></i>
+                  <span>Report Expense <span style={{fontSize: '0.8rem'}}>(Coming soon!)</span></span>
+                </div>
+              </button>
+            </div>
+
+            <div className="mt-3">
+              <Link to={ROUTES.DONATE}>
+                <button className="btn btn-articles-light btn-lg w-100 report-quick-links">
+                  <div>
+                    <i class="fas fa-money-bill"></i>
+                    <span>Donate</span>
+                  </div>
+                </button>
+              </Link>
             </div>
 
           </div>
@@ -184,17 +329,29 @@ class ImprovedReports extends Component {
           <div className="col-12 col-md-8 col-lg-8">
 
             <div className="search">
-              <input className="mt-3 search-input" type="text"/>
-              <div className="mt-3 date-input"><i className="fas fa-calendar-alt"></i>2019</div>
+              
+              <div className="input-wrap reports-shadow mt-3 dual-header">
+                <div className=""><i class="fas fa-search-dollar mx-2"></i></div>
+                <input className="search-input pl-2" type="text" placeholder="Search service is currently offline"/>
+              </div>
+
+              <div className="mt-3 reports-shadow date-input">
+
+                <div className="pt-1">
+                  <i className="fas fa-calendar-alt"></i>
+                  <span>2019</span>
+                </div>
+
+              </div>
             </div>
 
-            <div className="reports-side">
+            <div className="reports-side reports-shadow">
               <div className="table-selector">
       
                 <div className="main">
                   {this.tableSelectorChoice('donations')}
                   {this.tableSelectorChoice('clothing')}
-                  {this.tableSelectorChoice('payrole')}
+                  {this.tableSelectorChoice('payroll')}
                   <div className="d-inline-block main-seperation"><div className="wall"></div></div>
                   {this.tableSelectorChoice('revenue')}
                   {this.tableSelectorChoice('expenses')}
@@ -219,13 +376,14 @@ class ImprovedReports extends Component {
       
                 <div className={"sub sub-expenses " + (this.state.tableSelector === 'expenses' ? '' : 'd-none')}>
                   {this.subTableSelectorChoice('expenses-all', 'all')}
-                  {this.subTableSelectorChoice('expenses-payrole', 'payrole', true, {tableSelector: 'payrole'})}
+                  {this.subTableSelectorChoice('expenses-payroll', 'payroll', true, {tableSelector: 'payroll'})}
                   {this.subTableSelectorChoice('expenses-production-inventory', 'inventory')}
                   {this.subTableSelectorChoice('expenses-reoccuring', 'reoccuring')}
                   {this.subTableSelectorChoice('expenses-utilities', 'utilities')}
+                  {this.subTableSelectorChoice('expenses-other', 'other')}
                 </div>
       
-                <div className={"sub sub-payrole " + (this.state.tableSelector === 'payrole' ? '' : 'd-none')}>
+                <div className={"sub sub-payroll " + (this.state.tableSelector === 'payroll' ? '' : 'd-none')}>
                   {/* For the future */}
                 </div>
       
@@ -241,6 +399,12 @@ class ImprovedReports extends Component {
               </div>
       
               {this.getTableComponent(this.state.tableSelector, this.state.subtableSelector)}
+
+            </div>
+
+            <div className="donation-snippet mt-3">
+              <p>All donations go towards supporting the platform and encouraging more transparency and voice in American Politics.</p>
+              <p><span>The next revoulution needs you!</span></p>
             </div>
 
           </div>
@@ -256,7 +420,7 @@ class ImprovedReports extends Component {
 function ExpenseTable () {
   return (
     <div className="px-1">
-      <table class="table table-bordered">
+      <table className="table table-bordered">
       <thead>
         <tr>
           <th scope="col">Receipt</th>
@@ -267,13 +431,13 @@ function ExpenseTable () {
       </thead>
       <tbody>
         <tr>
-          <th scope="row"><a target="_blank" href="https://cdn.articles.media/2019/documents/domain-order.pdf"><i class="fas fa-file-invoice"></i></a></th>
+          <th scope="row"><a target="_blank" href="https://cdn.articles.media/2019/documents/domain-order.pdf"><i className="fas fa-file-invoice"></i></a></th>
           <td>06/26/2019</td>
           <td>Domain Registration</td>
           <td>$10.66</td>
         </tr>
         <tr>
-          <th scope="row"><a target="_blank" href="https://cdn.articles.media/2019/documents/email-order.pdf"><i class="fas fa-file-invoice"></i></a></th>
+          <th scope="row"><a target="_blank" href="https://cdn.articles.media/2019/documents/email-order.pdf"><i className="fas fa-file-invoice"></i></a></th>
           <td>08/09/2019</td>
           <td>Email Account</td>
           <td>$12.97</td>
@@ -440,77 +604,10 @@ function PreorderTable () {
   )
 }
 
-function ClothingTable () {
-  return (
-    <>
-    <div className="full-table">
-      <table className='table articles-table table-bordered'>
-        <thead>
-          <tr className="table-articles-head">
-            {/* <th scope="col">Order #</th> */}
-            <th scope="col">Date</th>
-            <th scope="col">Name</th>
-            <th scope="col">Order Summary</th>
-            <th className='text-right' scope="col">Total</th>
-          </tr>
-        </thead>
-        <tbody>
-
-          <tr>
-            <td colspan="4">No clothing sales yet to report for this category</td>
-          </tr>
-
-          {/* {sales.map((object, i) =>
-
-            <tr key={i} className="bg-light">
-              <td>{object.date || 'test'}</td>
-              <td>{object.name}</td>
-              <td>{object.note}</td>
-              <td className='text-right'>${object.total.toFixed(2)}</td>
-            </tr>
-
-          )} */}
-
-          <tr>
-            <td colSpan="2" className="border-right-0 table-articles-head">
-
-                <div className="results-dual-header">
-
-                  <div className="page noselect">
-                    <i className="fas fa-chevron-circle-left"></i>
-                    Page 0/0
-                    <i style={{marginLeft: '10px'}} className="fas fa-chevron-circle-right"></i>
-                  </div>
-                
-                  <span className="results noselect">
-                    <span>Results:</span>
-                    <span className={"result result-active"}>10</span>
-                    <span className={"result"}>50</span>
-                    <span className={"result"}>100</span>
-                    <span className={"result"}>250</span>
-                  </span>
-
-                </div>
-
-            </td>
-
-            <td colSpan="1" className="border-right-0 text-right table-articles-head">Total:</td>
-            <td colSpan="1" className="border-left-0 table-articles-head">$00.00</td>
-          </tr>
-
-        </tbody>
-
-      </table>
-    </div>
-    <div className="pl-2 pb-2 d-none">Preorder and unfinalized sales are not included in any reports.</div>
-    </>
-  )
-}
-
-function PayroleTable () {
+function payrollTable () {
   return (
     <div>
-      <p className="mt-2">We currently do not have any employee under payrole but this is a sample of what an entry may look like.</p>
+      <p className="mt-2">We currently do not have any employee under payroll but this is a sample of what an entry may look like.</p>
       <table className="table table-sm table-hover mt-2">
         <thead className="thead-dark">
           <tr>
@@ -543,6 +640,7 @@ class DonationTableBase extends Component {
         text: '',
         loading: false,
         donationsFirebase: [],
+        expensesFirebase: [],
         limit: 10,
         page: 1,
       };
@@ -557,10 +655,7 @@ class DonationTableBase extends Component {
   onListenForDonations() {
     this.setState({ loading: true });
 
-    this.props.firebase
-    .donations()
-    .orderByChild('createdAt')
-    .on('value', snapshot => {
+    this.props.firebase.donations().orderByChild('createdAt').on('value', snapshot => {
       const donationObject = snapshot.val();
 
       if (donationObject) {
@@ -576,7 +671,26 @@ class DonationTableBase extends Component {
       } else {
         this.setState({ donationsFirebase: null, loading: false });
       }
-    });
+    }); 
+
+    this.props.firebase.expenses().orderByChild('date').startAt(0).on('value', snapshot => {
+      const expenseObject = snapshot.val();
+
+      if (expenseObject) {
+
+        const expenseList = Object.keys(expenseObject).map(key => ({
+          ...expenseObject[key],
+          uid: key,
+        }
+        ));
+        this.setState({
+          expensesFirebase: expenseList,
+          loading: false,
+        });
+      } else {
+        this.setState({ donationsFirebase: null, loading: false });
+      }
+    }); 
 
   }
 
@@ -599,21 +713,30 @@ class DonationTableBase extends Component {
   render () {
     const { donationsFirebase, loading, limit, page } = this.state;
 
+    var render = undefined
+
+    if (this.props.fetch === 'donations') {
+      render = this.props.firebaseData.revenue.donations
+    } else if (this.props.fetch === 'expenses') {
+      render = this.props.firebaseData.expenses.other
+    }
+
     return (
       <div>
         {loading && <div className="p-2">Loading data...</div>}
         {donationsFirebase ? (
         <div>
           <StyledDonationList
-            donationsFirebase={donationsFirebase}
+            donationsFirebase={render}
             changeLimit={this.changeLimit}
             changePage={this.changePage}
             limit={limit}
             page={page}
+            fetch={this.props.fetch}
           />
         </div>
         ) : (
-        <div>There are no donations yet ...</div>
+        <div>There are no {this.props.fetch} yet ...</div>
         )}
 
       </div>
@@ -627,6 +750,7 @@ const StyledDonationList = (props) => (
       <thead>
         <tr className="table-articles-head">
           {/* <th scope="col">DONATION ID</th> */}
+          {props.fetch === 'expenses' ? <th scope="col">File</th> : undefined}
           <th scope="col">DATE</th>
           <th scope="col">NAME</th>
           <th scope="col">NOTE</th>
@@ -638,16 +762,17 @@ const StyledDonationList = (props) => (
           <StyledDonationItem
             key={donation.uid}
             donation={donation}
+            fetch={props.fetch}
           />
         ))}
         <tr>
-          <td colSpan="2" className="border-right-0 table-articles-head">
+          <td colSpan={props.fetch === 'expenses' ? '3' : '2'} className="border-right-0 table-articles-head">
 
               <div className="results-dual-header">
 
                 <div className="page noselect">
                   <i onClick={() => props.changePage(props.page - 1)} className="fas fa-chevron-circle-left"></i>
-                  Page {props.page}/3
+                  Page {props.page}/1
                   <i onClick={() => props.changePage(props.page + 1)} style={{marginLeft: '10px'}} className="fas fa-chevron-circle-right"></i>
                 </div>
               
@@ -669,23 +794,22 @@ const StyledDonationList = (props) => (
       </tbody>
     </table>
 
-    <div className="donation-snippet d-none">
-      {/* <header><h1>Consider Donating!</h1></header> */}
-      <p>All donations go towards supporting the platform and encouraging more transparency and voice in American Politics.<br/><span>The next revoulution needs you!</span></p>
-      <div className="dual-header">
-        <button className="mt-2 btn btn-lg btn-articles-light">Donate</button>
-        {/* <div className='raised'>So far <span>$100.00</span> was raised by the people.</div> */}
-      </div>
-    </div>
-
   </div>
 )
 
-const StyledDonationItem = ({donation}) => (
+const StyledDonationItem = ({fetch, donation}) => (
   <tr>
     {/* <th scope="row">{donation.uid}</th> */}
-    <td>{moment(donation.createdAt).format('LL') }</td>
-    <td>{donation.name.split(" ")[0] + " " + (donation.name.split(' ')[1]).charAt(0)}</td>
+
+    {fetch === 'expenses' ? <td><a rel="noopener noreferrer" target="_blank" href={donation.file}><i className="fas fa-file-invoice"></i></a></td> : undefined}
+
+    <td>{fetch === 'donations' ? moment(donation.createdAt).format('LL') : moment.unix(donation.date).format('LL')}</td>
+
+    {/* <td>{moment(donation.createdAt).format('LL') }</td> */}
+
+    <td>{fetch === 'donations' ? donation.name.split(" ")[0] + " " + (donation.name.split(' ')[1]).charAt(0) : donation.name}</td>
+
+    {/* <td>{donation.name.split(" ")[0] + " " + (donation.name.split(' ')[1]).charAt(0)}</td> */}
     <td>{donation.note === "match" ? (<div><span role="img" aria-label="emoji">⭐</span>Matched</div>) : (<div>{donation.note}</div>) }</td>
     <td>${(donation.amount / 100).toFixed(2)}</td>
   </tr>
@@ -699,5 +823,7 @@ const mapStateToProps = (state) => {
 };
 
 const DonationTable = withFirebase(DonationTableBase);
+
+const ImprovedReports = withFirebase(Reports)
 
 export default connect(mapStateToProps)(ImprovedReports);

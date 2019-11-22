@@ -83,8 +83,16 @@ class Firebase {
   user = uid => this.database.ref(`users/${uid}`);
   users = () => this.database.ref('users');
 
-  issue = uid => this.database.ref(`issues/${uid}`);
-  issues = () => this.database.ref('issues');
+  user_issues = uid => this.database.ref(`users/${uid}/news/subscriptions/issues`);
+
+  // issue = uid => this.database.ref(`issues/${uid}`);
+  stories = () => this.database.ref('news/stories');
+
+  issue = uid => this.database.ref(`news/issues/${uid}`);
+  issues = () => this.database.ref('news/issues');
+
+  // issue = uid => this.database.ref(`issues/${uid}`);
+  myths = () => this.database.ref('news/myths');
 
   // *** Message API ***
   message = uid => this.database.ref(`messages/${uid}`);
@@ -93,6 +101,8 @@ class Firebase {
   // *** Donation API ***
   donation = uid => this.database.ref(`donations/${uid}`);
   donations = () => this.database.ref('donations');
+
+  expenses = () => this.database.ref('expenses');
 
   onlineList = () => this.database.ref(`online/`);
   online = uid => this.database.ref(`users/${uid}/online`);
