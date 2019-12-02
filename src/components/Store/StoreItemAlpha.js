@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { addExpense } from '../../actions/expenses';
 import moment from 'moment';
 
+import * as ROUTES from '../../constants/routes';
+import { Link } from 'react-router-dom';
+
 const StoreItem = (props) => {
 
   const [slide, changeSlide] = useState(1);
@@ -41,6 +44,8 @@ const StoreItem = (props) => {
                   <button className={"btn btn-" + (props.color) + ' ' + (slide === 5 ? 'active' : '')} onClick={() => changeSlide(5)}>5</button>
                   <button className={"btn btn-" + (props.color) + ' ' + (slide === 6 ? 'active' : '')} onClick={() => changeSlide(6)}>6</button>
               </div>
+
+              <Link to={`${ROUTES.STORE}/view/${props.color}`} onClick={() => props.setPopOutVisible(true, props.product)}><button  className={"mt-1 w-100 btn btn-outline-" + (props.color === "articles" ? 'dark' : props.color)}>View</button></Link>
 
               <div className="dual-header">
                 <select 

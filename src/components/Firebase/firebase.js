@@ -75,9 +75,13 @@ class Firebase {
       }
     });
 
+  // Catalog API 
+  store_item = id => this.database.ref(`clothing/store/${id}`)
+  store = () => this.database.ref('clothing/store')
+
   // Submisison API
-  submission = number => this.database.ref(`submissions/${number}`)
-  submissions = () => this.database.ref('submissions')
+  submission = number => this.database.ref(`clothing/submissions/${number}`)
+  submissions = () => this.database.ref('clothing/submissions')
 
   // User API
   user = uid => this.database.ref(`users/${uid}`);

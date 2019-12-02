@@ -43,7 +43,7 @@ class UserIssuesBase extends Component {
 
       const issuesList = Object.keys(issuesObject).map(key => (
         {
-          ...issuesObject[key],
+          // ...issuesObject,
           uid: key,
         }
       ));
@@ -57,12 +57,16 @@ class UserIssuesBase extends Component {
         this.props.firebase.issue(issue.uid).once('value').then(snapshot => {
           const issueSnapshot = snapshot.val();
 
-          console.log(issueSnapshot);
+          // console.log(snapshot.val())
+
+          console.log(snapshot);
+
+          issueSnapshot.uid = snapshot.key;
 
           this.setState({
             matchedIssues: [
               ...this.state.matchedIssues,
-              issueSnapshot
+              issueSnapshot,
             ]
           })
 
@@ -95,7 +99,7 @@ class UserIssuesBase extends Component {
   }
  
  render() {
-  const { bulkIssues, usersIssues, loading } = this.state;
+  const { bulkIssues, usersIssues, matchedIssues, loading } = this.state;
 
    return (
     <div>
@@ -103,24 +107,28 @@ class UserIssuesBase extends Component {
 
       {loading && <div>Loading ...</div>}
 
-      <h5>All</h5>
-  
-      {bulkIssues.map(object => (
-  
+      <h5>All Issues</h5>
+      {bulkIssues.map(object => ( 
         <div key={object.id} className="">
           <span>{object.title}</span>
         </div>
-  
       ))}
 
-      <h5>Users</h5>
+      <h5>Users Subscribed Issues</h5>
+      {usersIssues.map(object => (
+        <div key={object.uid} className="">
+          <span>{object.uid}</span>
+        </div>
+      ))}
 
-      {bulkIssues.map(object => (
-        
+      <h5>Return of Complete User Issues</h5>
+      {matchedIssues.map(object => (
         <div key={object.id} className="">
           <span>{object.title}</span>
+          <span>{object.uid}</span>
+          <span>{object.interest.states}</span>
+          <span>{object.interest.city}</span>
         </div>
-
       ))}
 
     </div>

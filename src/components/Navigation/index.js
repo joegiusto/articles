@@ -151,9 +151,9 @@ function Menu(props) {
             {props.authUser ? props.authUser.outset.completed ? 
             <div>
               {/* Main Links Section */}
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.HOME}><p className="subheading-font"><i class="fas fa-home"></i>Home</p></Link>
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MISSION}><p className="subheading-font"><i class="fas fa-flag-usa"></i>Mission</p></Link>
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.REPORTS}><p className="subheading-font"><i class="fas fa-paste"></i>Reports</p></Link>
+            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.HOME}><p className="subheading-font"><i className="fas fa-home"></i>Home</p></Link>
+            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MISSION}><p className="subheading-font"><i className="fas fa-flag-usa"></i>Mission</p></Link>
+            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.REPORTS}><p className="subheading-font"><i className="fas fa-paste"></i>Reports</p></Link>
 
             <hr/>
 
@@ -168,8 +168,8 @@ function Menu(props) {
 
             {/* <p className="heading-font no-link d-flex justify-content-between"><b>Articles Clothing</b><span onClick={() => {setCartPreview(!cartPreview)}} to="cart"><span className="ml-auto" id="shopping-card"><i className="fas fa-shopping-basket mr-0"></i><span id="menu-pill" className="badge badge-pill badge-dark">{props.expensesTotal}</span></span></span></p> */}
 
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE}><p className="subheading-font"><i class="fas fa-shopping-cart"></i>Store</p></Link>
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE_SUBMISSIONS}><p className="subheading-font"><i class="fas fa-lightbulb"></i>Submissions</p></Link>
+            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE}><p className="subheading-font"><i className="fas fa-shopping-cart"></i>Store</p></Link>
+            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE_SUBMISSIONS}><p className="subheading-font"><i className="fas fa-lightbulb"></i>Submissions</p></Link>
             {cartPreview ? 
               (
               <div className="subheading-font text-center mx-4 border border-dark">
@@ -183,10 +183,10 @@ function Menu(props) {
 
             {/* New Section */}
             <p className="heading-font no-link"><b>Articles News</b></p>
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.NEWS}><p className="subheading-font"><i class="fas fa-newspaper"></i>News</p></Link>
+            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.NEWS}><p className="subheading-font"><i className="fas fa-newspaper"></i>News</p></Link>
             <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ISSUES}><p className="subheading-font"><i className="fas fa-person-booth "></i>Issues</p></Link>
               <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MYTHS}><p className="subheading-font"><i className="fas fa-ghost fa-pulse"></i>Myths</p></Link>
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.TOWN_HALL}><p className="subheading-font"><i class="fas fa-bell"></i>Town Hall</p></Link>
+            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.TOWN_HALL}><p className="subheading-font"><i className="fas fa-bell"></i>Town Hall</p></Link>
 
             <hr/>
 
@@ -200,7 +200,7 @@ function Menu(props) {
             </div>
 
             <div className={"tab-content " + (partySectionOpen ? "" : "")}>
-              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PARTY}><p className="subheading-font"><i class="fas fa-question-circle"></i>Info</p></Link>
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PARTY}><p className="subheading-font"><i className="fas fa-question-circle"></i>Info</p></Link>
             </div>
             <hr/>
             
@@ -208,12 +208,12 @@ function Menu(props) {
             <p className="heading-font no-link"><b>Support</b></p>
             {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SUPPORT}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Help Us</p></Link> */}
             {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.JOBS}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Jobs</p></Link> */}
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PRESS}><p className="subheading-font"><i class="fas fa-address-card"></i>Press</p></Link>
+            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PRESS}><p className="subheading-font"><i className="fas fa-address-card"></i>Press</p></Link>
 
             {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.TRANSLATIONS}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Translations</p></Link> */}
 
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.LANDING}><p className="subheading-font"><i class="fas fa-map-pin"></i>Landing</p></Link>
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.OUTSET}><p className="subheading-font"><i class="fas fa-horse"></i>Outset</p></Link>
+            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.LANDING}><p className="subheading-font"><i className="fas fa-map-pin"></i>Landing</p></Link>
+            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.OUTSET}><p className="subheading-font"><i className="fas fa-horse"></i>Outset</p></Link>
             
             {!props.authUser ? (
               <span></span>  
@@ -224,9 +224,11 @@ function Menu(props) {
 
                 {/* Admin */}
                 <p className="heading-font no-link"><b>Admin</b></p>
-                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ADMIN}><p className="subheading-font"><i class="fas fa-bible"></i>Admin</p></Link>
-                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MANAGE}><p className="subheading-font"><i class="fas fa-wallet"></i>News Manage</p></Link>
-                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.DONATE}><p className="subheading-font"><i class="fas fa-wallet"></i>Donation</p></Link>
+                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ADMIN}><p className="subheading-font"><i className="fas fa-bible"></i>Admin</p></Link>
+                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.REPORTS_MANAGE}><p className="subheading-font"><i className="fas fa-wallet"></i>Reports Manage</p></Link>
+                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE_MANAGE}><p className="subheading-font"><i className="fas fa-wallet"></i>Clothing Manage</p></Link>
+                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MANAGE}><p className="subheading-font"><i className="fas fa-wallet"></i>News Manage</p></Link>
+                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.DONATE}><p className="subheading-font"><i className="fas fa-wallet"></i>Donation</p></Link>
                 <hr/>
 
                 {/* Playground */}

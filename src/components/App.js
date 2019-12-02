@@ -19,6 +19,7 @@ import ReportsManagePage from './Reports/Manage';
 import StorePage from './Store'
 import StoreCheckoutPage from './Store/Checkout'
 import StoreSubmissionsPage from './Store/Submissions'
+import StoreManage from './Store/Manage'
 
 import NewsPage from './News'
 // Stroies placeholder
@@ -98,8 +99,10 @@ const App = () => (
         <Route path={ROUTES.REPORTS_MANAGE} component={ReportsManagePage} />
   
         <Route exact path={ROUTES.STORE} component={StorePage} />
+        <Route exact path={ROUTES.STORE_VIEW} component={StorePage} />
         <Route path={ROUTES.CHECKOUT} component={StoreCheckoutPage} />
         <Route path={ROUTES.STORE_SUBMISSIONS} component={StoreSubmissionsPage} />
+        <Route path={ROUTES.STORE_MANAGE} component={StoreManage} />
   
         <Route exact path={ROUTES.NEWS} component={NewsPage} />
         <Route path={ROUTES.MYTHS} component={MythsPage} />
