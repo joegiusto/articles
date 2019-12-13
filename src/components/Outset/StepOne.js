@@ -115,7 +115,7 @@ const StepOne = (props) => (
     </div>
   </div>
 
-  <div class="form-row mt-5 pt-5">
+  <div class="form-row">
     
     <div class="col-md-6 mb-3">
       <label for="validationTooltip03">Cell</label>

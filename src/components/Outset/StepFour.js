@@ -14,7 +14,7 @@ function PolitcalPartyCard(props) {
 
 const StepFour = (props) => (
 
-  <div style={{overflowY: 'scroll', height: '360px', paddingRight: '1rem'}} className="party-group mb-3">
+  <div className="party-group outset-details-scroll mb-3">
 
     <PolitcalPartyCard 
       {...props} 

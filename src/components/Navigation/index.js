@@ -16,6 +16,7 @@ const Navigation = (props) => (
   <AuthUserContext.Consumer>
     {authUser =>
       <Menu expensesTotal={props.expenses.length} authUser={authUser}/>
+      // <Menu authUser={authUser}/>
     }
   </AuthUserContext.Consumer>
 );

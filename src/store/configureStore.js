@@ -1,4 +1,9 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+
+import { autoRehydrate, persistStore, persistReducer } from 'redux-persist'
+// import immutableTransform from 'redux-persist-transform-immutable'
+import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
+
 import thunk from 'redux-thunk';
 
 // import { persistStore, persistReducer } from 'redux-persist'
@@ -9,18 +14,51 @@ import expensesReducer from '../reducers/expenses';
 // import siteReducer from '../reducers/site';
 // import employeesReducer from '../reducers/employees';
 
+
+
+const persistConfig = {
+  // transforms: [immutableTransform()],
+  key: 'root',
+  storage,
+}
+
+const persistedReducer = persistReducer(
+  persistConfig, 
+  // expensesReducer,
+  combineReducers({
+    expenses: expensesReducer,
+    // filters: filtersReducer,
+    // site: siteReducer,
+    // employees: employeesReducer
+  })
+);
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export default () => {
-  const store = createStore(
-    combineReducers({
-      expenses: expensesReducer,
-      // filters: filtersReducer,
-      // site: siteReducer,
-      // employees: employeesReducer
-    }),
-    composeEnhancers(applyMiddleware(thunk))
-  );
 
-  return store;
+  // const storeOld = createStore(
+  //   combineReducers({
+  //     expenses: expensesReducer,
+  //     // filters: filtersReducer,
+  //     // site: siteReducer,
+  //     // employees: employeesReducer
+  //   }),
+  //   composeEnhancers(applyMiddleware(thunk))
+  // );
+
+  // let store = createStore(persistedReducer, composeEnhancers(applyMiddleware(thunk)))
+
+  let store = createStore(
+    persistedReducer,
+    {},
+    composeEnhancers(
+      applyMiddleware(thunk)
+    )
+  )
+
+  let persistor = persistStore(store)
+
+  return { store, persistor };
+  
 };

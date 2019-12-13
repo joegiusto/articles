@@ -69,8 +69,6 @@
 
 }
 
-
-
 .outset-form {
   background-color: #FFFFFF;
   width: 70%;
@@ -151,7 +149,7 @@
     bottom: -25px;
     left: 50%;
     transform: translateX(-50%);
-    height: 50px;
+    // height: 50px;
     button {
       padding: 0.5rem 3rem;
       vertical-align: top;
@@ -275,6 +273,11 @@
   }
 
   // Step Two
+  .outset-details-scroll {
+      overflow-y: scroll;
+      height: 360px;
+      padding-right: 1rem;
+  }
   .shirt-section{
     .small-tag-wrap {
       position: relative;
@@ -439,6 +442,7 @@
   .shoe-size-container {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     .shoe-size-item {
       cursor: pointer;
       flex-direction: column;
@@ -446,7 +450,7 @@
       display: flex;
       background: $base-color;
       height: 110px;
-      margin-right: 10px;
+      margin-top: 10px;
       width: 85px;
       border: solid 1px #000;
       box-shadow: inset 0 0 0px 5px #ffffff;
@@ -616,7 +620,7 @@
     margin-bottom: 0.5rem;
     position: relative;
     $color: rgb(0, 0, 0);
-    z-index: 1;
+    z-index: 0;
     box-shadow: 5px 5px rgba($color, 0.4),
               10px 10px rgba($color, 0.3),
               15px 15px rgba($color, 0.2),
@@ -817,6 +821,79 @@
     }
   }
   
+}
+
+@media only screen and (max-width: 576px) {
+  .outset-form {
+    top: 0%;
+    // margin-top: 4rem;
+    transform: none;
+    margin-top: 1rem;
+    // height: calc(100vh - 4rem - 50px);
+    height: auto;
+    padding-bottom: 5rem;
+    margin-bottom: 7rem;
+    position: unset;
+    margin-left: auto;
+    margin-right: auto;
+    .intro-title {
+      font-size: 2rem;
+      letter-spacing: 0.5rem;
+      line-height: 2rem;
+    }
+    .intro-message {
+      font-size: 1rem;
+    }
+    .outset-details-scroll {
+      overflow-y: visible;
+      height: auto;
+      padding-right: 1rem;
+    }
+    .oddball-explanation {
+      font-size: 0.8rem;
+    }
+    .row > .col-md-6:first-child {
+      border-right: none;
+      border-bottom: solid 1px rgb(204, 204, 204);
+      margin-bottom: 20px;
+      height: auto;
+    }
+    .cut-container {
+      flex-direction: column;
+      justify-content: center;
+      .female-sign, .skip-sign {
+        margin-top: 0.75rem;
+      }
+    }
+    .shirt-section {
+      .clothing-tag-wrap {
+        flex-basis: calc(45%);
+        &.input-tag {
+          flex-basis: calc(100%);
+        }
+      }
+    }
+    .step-controls {
+      align-content: center;
+      // width: 100%;
+
+      position: fixed;
+      background-color: white;
+      bottom: 15px;
+      padding: 0.5rem;
+      border-radius: 5px;
+      border-top: solid 2px #000;
+      box-shadow: 0px 0px 1px 0px #000;
+  
+      .buttons {
+        display: flex;
+        justify-content: center;
+      }
+      .step-controls-next, .step-controls-back {
+
+      }
+    }
+  }
 }
 
 // Mobile first am I right?...
@@ -1095,6 +1172,7 @@
   .shoe-size-container {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     .shoe-size-item {
       cursor: pointer;
       flex-direction: column;
@@ -1102,7 +1180,7 @@
       display: flex;
       background: $base-color;
       height: 110px;
-      margin-right: 10px;
+      margin-top: 10px;
       width: 85px;
       border: solid 1px #000;
       box-shadow: inset 0 0 0px 5px #ffffff;

@@ -43,8 +43,8 @@ const ClothingTag = (props) => (
 const ShoeTag = (props) => (
   <div onClick={() => (props.changeShoeSize(props.size))} className={"shoe-size-item" + (props.propsSize === props.size ? ' active' : '') + (props.show ? '' : ' d-none')}>
 
-    <div className="image" style={{width: props.shoeSize}}>
-      <img width="100%" src={outsetPhotos.miniShoe} alt=""/>
+    <div className="image" style={{width: '100%'}}>
+      <img width="100%" style={{width: props.shoeSize}} src={outsetPhotos.miniShoe} alt=""/>
     </div>
 
     <div className="size">{ props.size === 'OTHER' ? props.size : props.size.replace(/[M-|F-]/g,'') }</div>
@@ -54,7 +54,7 @@ const ShoeTag = (props) => (
 
 const StepTwo = (props) => (
   
-  <div style={{overflowY: 'scroll', height: '360px', paddingRight: '1rem'}}>
+  <div className="outset-details-scroll">
 
     <div className="cut-section">
       <h5 className="intro-title" style={{fontSize: '1rem', lineHeight: '1rem'}}>Clothing Cut</h5>

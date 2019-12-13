@@ -108,7 +108,8 @@
     
     @media (min-width: 768px) {
         .slick-slide {
-            padding: 20px;
+            padding: 0rem 1rem;
+            padding-top: 1rem;
             width: 200px;
         }
     }
@@ -150,7 +151,7 @@
             text-align: left;
             backface-visibility: hidden;
             .footer {
-                margin-bottom: 0.35rem;
+                // margin-bottom: 0.35rem;
             }
             .hide-banner {
                 position: absolute;
