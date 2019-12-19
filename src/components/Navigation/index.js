@@ -152,106 +152,201 @@ function Menu(props) {
             {props.authUser ? props.authUser.outset.completed ? 
             <div>
               {/* Main Links Section */}
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.HOME}><p className="subheading-font"><i className="fas fa-home"></i>Home</p></Link>
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MISSION}><p className="subheading-font"><i className="fas fa-flag-usa"></i>Mission</p></Link>
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.REPORTS}><p className="subheading-font"><i className="fas fa-paste"></i>Reports</p></Link>
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.HOME}><p className="subheading-font"><i className="fas fa-home"></i>Home</p></Link>
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MISSION}><p className="subheading-font"><i className="fas fa-flag-usa"></i>Mission</p></Link>
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.REPORTS}><p className="subheading-font"><i className="fas fa-paste"></i>Reports</p></Link>
 
-            <hr/>
+              <hr/>
 
-            {/* Clothing Section */}
+              {/* Clothing Section */}
 
-            <div className="dual-header">
-              <p className="heading-font no-link">
-                <b>Articles Clothing</b>
-              </p>
-              <span onClick={() => {setCartPreview(!cartPreview)}} to="cart"><span className="ml-auto" id="shopping-card"><i className="fas fa-shopping-basket mr-0"></i><span id="menu-pill" className="badge badge-pill badge-dark">{props.expensesTotal}</span></span></span>
-            </div>
-
-            {/* <p className="heading-font no-link d-flex justify-content-between"><b>Articles Clothing</b><span onClick={() => {setCartPreview(!cartPreview)}} to="cart"><span className="ml-auto" id="shopping-card"><i className="fas fa-shopping-basket mr-0"></i><span id="menu-pill" className="badge badge-pill badge-dark">{props.expensesTotal}</span></span></span></p> */}
-
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE}><p className="subheading-font"><i className="fas fa-shopping-cart"></i>Store</p></Link>
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE_SUBMISSIONS}><p className="subheading-font"><i className="fas fa-lightbulb"></i>Submissions</p></Link>
-            {cartPreview ? 
-              (
-              <div className="subheading-font text-center mx-4 border border-dark">
-                <p className="d-inline-block">1</p><p className="d-inline-block">2</p><p className="d-inline-block">3</p>
-                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.CHECKOUT}><p className="btn btn-dark subheading-font mb-2">Checkout</p></Link>
+              <div className="dual-header">
+                <p className="heading-font no-link">
+                  <b>Articles Clothing</b>
+                </p>
+                <span onClick={() => {setCartPreview(!cartPreview)}} to="cart"><span className="ml-auto" id="shopping-card"><i className="fas fa-shopping-basket mr-0"></i><span id="menu-pill" className="badge badge-pill badge-dark">{props.expensesTotal}</span></span></span>
               </div>
+
+              {/* <p className="heading-font no-link d-flex justify-content-between"><b>Articles Clothing</b><span onClick={() => {setCartPreview(!cartPreview)}} to="cart"><span className="ml-auto" id="shopping-card"><i className="fas fa-shopping-basket mr-0"></i><span id="menu-pill" className="badge badge-pill badge-dark">{props.expensesTotal}</span></span></span></p> */}
+
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE}><p className="subheading-font"><i className="fas fa-shopping-cart"></i>Store</p></Link>
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE_SUBMISSIONS}><p className="subheading-font"><i className="fas fa-lightbulb"></i>Submissions</p></Link>
+              {cartPreview ? 
+                (
+                <div className="subheading-font text-center mx-4 border border-dark">
+                  <p className="d-inline-block">1</p><p className="d-inline-block">2</p><p className="d-inline-block">3</p>
+                  <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.CHECKOUT}><p className="btn btn-dark subheading-font mb-2">Checkout</p></Link>
+                </div>
+                ) : (
+                  <span></span>
+                )}
+              <hr/> 
+
+              {/* New Section */}
+              <p className="heading-font no-link"><b>Articles News</b></p>
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.NEWS}><p className="subheading-font"><i className="fas fa-newspaper"></i>News</p></Link>
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ISSUES}><p className="subheading-font"><i className="fas fa-person-booth "></i>Issues</p></Link>
+                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MYTHS}><p className="subheading-font"><i className="fas fa-ghost fa-pulse"></i>Myths</p></Link>
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.TOWN_HALL}><p className="subheading-font"><i className="fas fa-bell"></i>Town Hall</p></Link>
+
+              <hr/>
+
+              {/* Party Section */}
+
+              <div className="dual-header">
+                <p className="heading-font no-link">
+                  <b>Articles Party</b>
+                </p>
+                {/* <div onClick={() => {setPartySectionOpen(!partySectionOpen)}} className={"section-collapse " + (partySectionOpen ? "" : "hide")}><i className="fas fa-chevron-circle-down"></i></div> */}
+              </div>
+
+              <div className={"tab-content " + (partySectionOpen ? "" : "")}>
+                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PARTY}><p className="subheading-font"><i className="fas fa-question-circle"></i>Info</p></Link>
+              </div>
+              <hr/>
+              
+              {/* Support Section */}
+              <p className="heading-font no-link"><b>Support</b></p>
+              {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SUPPORT}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Help Us</p></Link> */}
+              {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.JOBS}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Jobs</p></Link> */}
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PRESS}><p className="subheading-font"><i className="fas fa-address-card"></i>Press</p></Link>
+
+              {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.TRANSLATIONS}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Translations</p></Link> */}
+
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.LANDING}><p className="subheading-font"><i className="fas fa-map-pin"></i>Landing</p></Link>
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.OUTSET}><p className="subheading-font"><i className="fas fa-horse"></i>Outset</p></Link>
+              
+              {!props.authUser ? (
+                <span></span>  
               ) : (
-                <span></span>
+                <div>
+                  {/* <hr/> here because Support is last thing for everyone else. */}
+                  <hr/>
+
+                  {/* Admin */}
+                  <p className="heading-font no-link"><b>Admin</b></p>
+                  <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ADMIN}><p className="subheading-font"><i className="fas fa-bible"></i>Admin</p></Link>
+                  <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.REPORTS_MANAGE}><p className="subheading-font"><i className="fas fa-wallet"></i>Reports Manage</p></Link>
+                  <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE_MANAGE}><p className="subheading-font"><i className="fas fa-wallet"></i>Clothing Manage</p></Link>
+                  <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MANAGE}><p className="subheading-font"><i className="fas fa-wallet"></i>News Manage</p></Link>
+                  <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.DONATE}><p className="subheading-font"><i className="fas fa-wallet"></i>Donation</p></Link>
+                  <hr/>
+
+                  {/* Playground */}
+
+                  {/* <p className="heading-font no-link"><b>Playground</b></p>
+                  <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PLAYGROUND}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Playground</p></Link>
+                  <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MESH}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Mesh</p></Link>
+                  <img src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-example-alternate_2x.png" height="45px" alt=""/>
+                  <img className="p-0" src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" height="40px" alt=""/> */}
+
+                  {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Donation</p></Link> */}
+                  {/* <hr/> */}
+
+                </div>
               )}
-            <hr/> 
-
-            {/* New Section */}
-            <p className="heading-font no-link"><b>Articles News</b></p>
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.NEWS}><p className="subheading-font"><i className="fas fa-newspaper"></i>News</p></Link>
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ISSUES}><p className="subheading-font"><i className="fas fa-person-booth "></i>Issues</p></Link>
-              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MYTHS}><p className="subheading-font"><i className="fas fa-ghost fa-pulse"></i>Myths</p></Link>
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.TOWN_HALL}><p className="subheading-font"><i className="fas fa-bell"></i>Town Hall</p></Link>
-
-            <hr/>
-
-            {/* Party Section */}
-
-            <div className="dual-header">
-              <p className="heading-font no-link">
-                <b>Articles Party</b>
-              </p>
-              {/* <div onClick={() => {setPartySectionOpen(!partySectionOpen)}} className={"section-collapse " + (partySectionOpen ? "" : "hide")}><i className="fas fa-chevron-circle-down"></i></div> */}
-            </div>
-
-            <div className={"tab-content " + (partySectionOpen ? "" : "")}>
-              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PARTY}><p className="subheading-font"><i className="fas fa-question-circle"></i>Info</p></Link>
-            </div>
-            <hr/>
-            
-            {/* Support Section */}
-            <p className="heading-font no-link"><b>Support</b></p>
-            {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SUPPORT}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Help Us</p></Link> */}
-            {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.JOBS}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Jobs</p></Link> */}
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PRESS}><p className="subheading-font"><i className="fas fa-address-card"></i>Press</p></Link>
-
-            {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.TRANSLATIONS}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Translations</p></Link> */}
-
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.LANDING}><p className="subheading-font"><i className="fas fa-map-pin"></i>Landing</p></Link>
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.OUTSET}><p className="subheading-font"><i className="fas fa-horse"></i>Outset</p></Link>
-            
-            {!props.authUser ? (
-              <span></span>  
-            ) : (
-              <div>
-                {/* <hr/> here because Support is last thing for everyone else. */}
-                <hr/>
-
-                {/* Admin */}
-                <p className="heading-font no-link"><b>Admin</b></p>
-                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ADMIN}><p className="subheading-font"><i className="fas fa-bible"></i>Admin</p></Link>
-                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.REPORTS_MANAGE}><p className="subheading-font"><i className="fas fa-wallet"></i>Reports Manage</p></Link>
-                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE_MANAGE}><p className="subheading-font"><i className="fas fa-wallet"></i>Clothing Manage</p></Link>
-                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MANAGE}><p className="subheading-font"><i className="fas fa-wallet"></i>News Manage</p></Link>
-                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.DONATE}><p className="subheading-font"><i className="fas fa-wallet"></i>Donation</p></Link>
-                <hr/>
-
-                {/* Playground */}
-
-                {/* <p className="heading-font no-link"><b>Playground</b></p>
-                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PLAYGROUND}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Playground</p></Link>
-                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MESH}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Mesh</p></Link>
-                <img src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-example-alternate_2x.png" height="45px" alt=""/>
-                <img className="p-0" src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" height="40px" alt=""/> */}
-
-                {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Donation</p></Link> */}
-                {/* <hr/> */}
-
-              </div>
-            )}
             </div>
             : 
             <div>
               <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.OUTSET}><p className="subheading-font"><i className="fas fa-spinner fa-pulse d-none"></i><img className="mr-1 p-0" src="https://static.thenounproject.com/png/969593-200.png" height="30px" alt="menu-icon"></img>Outset</p></Link>
             </div>
             : 
-            <div>Fix try and catch</div>
+            <div>
+              {/* Main Links Section */}
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.HOME}><p className="subheading-font"><i className="fas fa-home"></i>Home</p></Link>
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MISSION}><p className="subheading-font"><i className="fas fa-flag-usa"></i>Mission</p></Link>
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.REPORTS}><p className="subheading-font"><i className="fas fa-paste"></i>Reports</p></Link>
+
+              <hr/>
+
+              {/* Clothing Section */}
+
+              <div className="dual-header">
+                <p className="heading-font no-link">
+                  <b>Articles Clothing</b>
+                </p>
+                <span onClick={() => {setCartPreview(!cartPreview)}} to="cart"><span className="ml-auto" id="shopping-card"><i className="fas fa-shopping-basket mr-0"></i><span id="menu-pill" className="badge badge-pill badge-dark">{props.expensesTotal}</span></span></span>
+              </div>
+
+              {/* <p className="heading-font no-link d-flex justify-content-between"><b>Articles Clothing</b><span onClick={() => {setCartPreview(!cartPreview)}} to="cart"><span className="ml-auto" id="shopping-card"><i className="fas fa-shopping-basket mr-0"></i><span id="menu-pill" className="badge badge-pill badge-dark">{props.expensesTotal}</span></span></span></p> */}
+
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE}><p className="subheading-font"><i className="fas fa-shopping-cart"></i>Store</p></Link>
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE_SUBMISSIONS}><p className="subheading-font"><i className="fas fa-lightbulb"></i>Submissions</p></Link>
+              {cartPreview ? 
+                (
+                <div className="subheading-font text-center mx-4 border border-dark">
+                  <p className="d-inline-block">1</p><p className="d-inline-block">2</p><p className="d-inline-block">3</p>
+                  <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.CHECKOUT}><p className="btn btn-dark subheading-font mb-2">Checkout</p></Link>
+                </div>
+                ) : (
+                  <span></span>
+                )}
+              <hr/> 
+
+              {/* New Section */}
+              <p className="heading-font no-link"><b>Articles News</b></p>
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.NEWS}><p className="subheading-font"><i className="fas fa-newspaper"></i>News</p></Link>
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ISSUES}><p className="subheading-font"><i className="fas fa-person-booth "></i>Issues</p></Link>
+                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MYTHS}><p className="subheading-font"><i className="fas fa-ghost fa-pulse"></i>Myths</p></Link>
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.TOWN_HALL}><p className="subheading-font"><i className="fas fa-bell"></i>Town Hall</p></Link>
+
+              <hr/>
+
+              {/* Party Section */}
+
+              <div className="dual-header">
+                <p className="heading-font no-link">
+                  <b>Articles Party</b>
+                </p>
+                {/* <div onClick={() => {setPartySectionOpen(!partySectionOpen)}} className={"section-collapse " + (partySectionOpen ? "" : "hide")}><i className="fas fa-chevron-circle-down"></i></div> */}
+              </div>
+
+              <div className={"tab-content " + (partySectionOpen ? "" : "")}>
+                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PARTY}><p className="subheading-font"><i className="fas fa-question-circle"></i>Info</p></Link>
+              </div>
+              <hr/>
+              
+              {/* Support Section */}
+              <p className="heading-font no-link"><b>Support</b></p>
+              {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SUPPORT}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Help Us</p></Link> */}
+              {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.JOBS}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Jobs</p></Link> */}
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PRESS}><p className="subheading-font"><i className="fas fa-address-card"></i>Press</p></Link>
+
+              {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.TRANSLATIONS}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Translations</p></Link> */}
+
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.LANDING}><p className="subheading-font"><i className="fas fa-map-pin"></i>Landing</p></Link>
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.OUTSET}><p className="subheading-font"><i className="fas fa-horse"></i>Outset</p></Link>
+              
+              {!props.authUser ? (
+                <span></span>  
+              ) : (
+                <div>
+                  {/* <hr/> here because Support is last thing for everyone else. */}
+                  <hr/>
+
+                  {/* Admin */}
+                  <p className="heading-font no-link"><b>Admin</b></p>
+                  <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ADMIN}><p className="subheading-font"><i className="fas fa-bible"></i>Admin</p></Link>
+                  <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.REPORTS_MANAGE}><p className="subheading-font"><i className="fas fa-wallet"></i>Reports Manage</p></Link>
+                  <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE_MANAGE}><p className="subheading-font"><i className="fas fa-wallet"></i>Clothing Manage</p></Link>
+                  <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MANAGE}><p className="subheading-font"><i className="fas fa-wallet"></i>News Manage</p></Link>
+                  <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.DONATE}><p className="subheading-font"><i className="fas fa-wallet"></i>Donation</p></Link>
+                  <hr/>
+
+                  {/* Playground */}
+
+                  {/* <p className="heading-font no-link"><b>Playground</b></p>
+                  <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PLAYGROUND}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Playground</p></Link>
+                  <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MESH}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Mesh</p></Link>
+                  <img src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-example-alternate_2x.png" height="45px" alt=""/>
+                  <img className="p-0" src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" height="40px" alt=""/> */}
+
+                  {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Donation</p></Link> */}
+                  {/* <hr/> */}
+
+                </div>
+              )}
+            </div>
             }
 
             <div className='side-menu-bottom-spacer'></div>

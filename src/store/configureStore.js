@@ -24,7 +24,6 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(
   persistConfig, 
-  // expensesReducer,
   combineReducers({
     expenses: expensesReducer,
     // filters: filtersReducer,
@@ -36,18 +35,6 @@ const persistedReducer = persistReducer(
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export default () => {
-
-  // const storeOld = createStore(
-  //   combineReducers({
-  //     expenses: expensesReducer,
-  //     // filters: filtersReducer,
-  //     // site: siteReducer,
-  //     // employees: employeesReducer
-  //   }),
-  //   composeEnhancers(applyMiddleware(thunk))
-  // );
-
-  // let store = createStore(persistedReducer, composeEnhancers(applyMiddleware(thunk)))
 
   let store = createStore(
     persistedReducer,

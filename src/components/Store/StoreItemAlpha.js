@@ -15,6 +15,8 @@ const StoreItem = (props) => {
   const [added, changeAdded] = useState(false);
   const [addedButtonDisabled, changeAddedButtonDisabled] = useState(false);
 
+  const {color, sale} = props;
+
   if (added === true) {
     setTimeout(() => {
       changeAdded(false)
@@ -25,14 +27,14 @@ const StoreItem = (props) => {
     return (
         <div className={"slick-slide d-inline-block " + (flipped ? 'flip' : '')}>
           <div className="menu-catalog-item">
-              <div className={"menu-catalog-item-banner btn-outline-" + (props.color)}>
+              <div className={"menu-catalog-item-banner btn-outline-" + (color)}>
                   <span>{props.banner}</span>
               </div>
               {props.sale ? (<div className={"menu-catalog-item-sale px-4"}><span>${(props.price / 100).toFixed(2)}</span></div>) : (<span></span>)}
               <h5 className="mb-0 pb-1" >{props.title}</h5>
               {/* <!-- <div className="menu-catalog-item-photo"></div> --> */}
-              <div className={"menu-catalog-item-photo-experimental-background backdrop-" + (props.color)}></div>
-              <div className={"menu-catalog-item-photo-experimental floor-" + (props.color)}></div>
+              <div className={"menu-catalog-item-photo-experimental-background backdrop-" + (color)}></div>
+              <div className={"menu-catalog-item-photo-experimental floor-" + (color)}></div>
 
               <div className="menu-catalog-item-number">{slide}</div>
 
@@ -72,12 +74,12 @@ const StoreItem = (props) => {
                     changeAdded(true)
                     changeAddedButtonDisabled(true)
                     props.dispatch(addExpense({
-                    description: props.title,
-                    note: props.catalogId,
-                    amount: props.price,
-                    // amount: 3000,
-                    size: size,
-                    createdAt: moment().unix()
+                      description: props.title,
+                      note: props.catalogId,
+                      amount: props.price,
+                      // amount: 3000,
+                      size: size,
+                      createdAt: moment().unix()
                     }));
                     // props.history.push('/');
                   }}
