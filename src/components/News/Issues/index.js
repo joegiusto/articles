@@ -55,12 +55,12 @@ const Issues = () => (
         backgroundImage="https://www.swissinfo.ch/image/8422586/3x2/640/426/abf96c3bf391199fae817dc21f66133a/qh/71938066-8422592.jpg"
       />
 
-      <GzyCard 
+      {/* <GzyCard 
         topText="G-Eazy FT. Skizzy Mars & KYLE"
         midText="MONICA LEWINSKY"
         bottomText="PROD. BY TY FIFE & CHRISTOPH ANDERSON"
         backgroundImage="http://4.bp.blogspot.com/-Wjz6L4LYzGQ/T2TnAoHfbtI/AAAAAAAAgIo/x8zDn6SzBwI/s1600/north%2BSt%2BP.jpg"
-      />
+      /> */}
 
       <div className="col-12 col-md-6 mt-5 d-none">
         <div className="issue-item shadow-sm">

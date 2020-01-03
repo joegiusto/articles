@@ -1,9 +1,253 @@
 .landing-new {
-  // Trying to keep things clean for once...
   @import 'landing_background';
-  // height: 100vh;
 
-  
+  .header-section {
+    .hero-side-by-side {
+      display: flex;
+      flex-direction: column;
+      // margin-top: -150px;
+      .left {
+        // display: flex;
+        // flex-direction: column;
+        img.logo {
+          height: 150px;
+          margin-left: 2rem;
+        }
+        // margin-left: 1rem;
+      }
+      .right {
+        margin-left: 2rem;
+        // max-width: 700px;
+      }
+      
+    }
+    .content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      // height: 80vh;
+      padding: 2rem 0rem;
+    }
+  }
+
+  .intro-section {
+    background-color: $base-color;
+    .custom-panel {
+      margin-top: 3rem;
+      background-color: white;
+      box-shadow: 0px 8px 7px 0px #000;
+      margin-bottom: 2rem;
+      .top {
+        box-shadow: 0px 2px 7px 0px #000;
+        .left {
+          padding: 2.5rem;
+        }
+        .right {
+          background-color: black;
+          height: 100%;
+          padding: 0rem 1rem;
+          .img-fluid {
+            padding: 2rem 1.1rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+          }
+        }
+      }
+      .middle {
+        // box-shadow: inset 0px 2px 3px 0px #000, inset 0px -2px 3px 0px #000;
+        // border-right: solid 1px #000;
+        // border-left: solid 0.1px #000;
+        // margin-top: 10px;
+        z-index: -1;
+        // background-color: lighten($base-color, 7.5%);
+        
+        padding: 1.5rem 2.5rem;
+        padding-top: 4rem;
+      }
+      .bottom {
+        padding: 2rem;
+        .card {
+          background-color: $accent-color;
+          border-radius: 0px;
+          font-size: 2rem;
+          padding: 0.5rem;
+          margin: 0.5rem;
+          height: 200px;
+        }
+      }
+    }
+    .opacity-panel {
+      background-color: white;
+      padding: 2.5rem;
+      // border-right: solid 5px #000;
+      box-shadow: 5px 0px 5px 5px #000;
+      .right {
+        background-color: black;
+      }
+    }
+  }
+
+  .tour-section {
+    .custom-panel {
+      // background-color: white;
+      margin-top: -0.75rem;
+      &:first-child {
+        margin-top: 2rem;
+      }
+      .top {
+        // box-shadow: 0px 2px 7px 0px #000;
+        .left {
+          border-top: solid 2px black;
+          border-top-left-radius: 10px;
+          padding: 1rem 2.5rem;
+          padding-top: 3rem;
+          background-color: white;
+          border-bottom: solid 2px black;
+          border-right: solid 5px rgba(231, 231, 231, 0.781);
+          box-shadow: 0px 0px 5px;
+        }
+        .right {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+
+          .fake-sales {
+            .sale {
+              background-color: white;
+              display: flex;
+              border: solid 1px gray;
+              // border-radius: 10px;
+              overflow: hidden;
+              margin-top: 0.25rem;
+              &:first-child {
+                margin-top: -0.75rem; 
+              }
+              .amount, .person {
+                padding: 0.10rem 0.5rem;
+                // border-right: solid 1px black;
+              }
+              .amount {
+                border-right: solid 2px;
+                &.revenue {
+                  background-color: rgb(107, 255, 107);
+                  border-color: darken(rgb(107, 255, 107), 30%);
+                }
+                &.expense {
+                  background-color: rgb(255, 107, 107);
+                  border-color: darken(rgb(255, 107, 107), 30%);
+                  // border-color: ;
+                }
+
+              }
+              .person {
+
+              }
+            }
+          }
+
+          .news-paper {
+            background-color: darken($base-color, 10%);
+            width: 50%;
+            height: 100px;
+          }
+
+          .circles {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            .blue, .red {
+              width: 100px;
+              height: 100px;
+            }
+            .blue {
+              background-color: blue;
+            }
+            .red {
+              background-color: red;
+            }
+          }
+
+        }
+      }
+    }
+  }
+
+  .more-section {
+    position: relative;
+    .background {
+      position: absolute;
+      top: 0%;
+      left: 0%;
+      width: 100%;
+      height: 100%;
+      background-color: $accent-color;
+      z-index: -1;
+    }
+    .content {
+      margin-top: 3rem;
+      z-index: 1;
+      color: #000;
+
+      display: flex;
+      justify-content: center;
+      flex-direction: row;
+      .info:first-child {
+        border-right: solid 2px #000;
+      }
+      .info {
+        padding: 3rem;
+      }
+    }
+  }
+
+  footer {
+    padding: 2rem 0rem;
+    background-color: black;
+    .inside {
+      display: flex;
+      justify-content: space-evenly;
+      .logo {
+        // position: absolute;
+        // height: 100%;
+        // width: 100%;
+        transform: translateX(11px);
+      }
+      .app-list {
+        .app {
+          background-color: rgba(255, 255, 255, 0.5);
+          // padding: 0.5rem 0.5rem 0.2rem 0.2rem;
+          text-align: left;
+          margin-top: 0.5rem;
+          width: 100%;
+          display: block;
+          padding: 0.5rem;
+          display: flex;
+          .platform-logo {
+
+          }
+          .platform-date {
+            padding-left: 0.5rem;
+          }
+        }
+      }
+    }
+    .tag {
+      margin-top: 10px;
+      background-color: white;
+      padding: 0.05rem 0.25rem;
+      // border-radius: 5px;
+      box-shadow: 0px 0px 5px 0px white;
+      border: solid 2px #000;
+      color: black;
+      font-family: brandon-grotesque, sans-serif;
+      font-style: normal;
+      font-weight: 900;
+    // font-size: 2.5rem;
+    }
+  }
 
   .content {
     overflow: hidden;
@@ -40,7 +284,7 @@
     }
 
     .content-badge {
-      display: inline-block;
+      // display: inline-block;
       background-color: white;
       padding: 0.05rem 0.25rem;
       border-radius: 10px;
@@ -238,12 +482,49 @@
       }
     }
 
+    .full-screen {
+      height: calc(70vh - 30px);
+      .background {
+        position: absolute;
+        width: 100%;
+        // z-index: 50;
+        
+        background-size: cover;
+        filter: blur(2px);
+        height: calc(100vh - 30px);
+        &.one {
+          background-image: linear-gradient(to bottom, rgba(245, 246, 252, 0.52), rgba(59, 59, 59, 0.73)), url("https://cdn2.outdoorphotographer.com/contests/532693/the-american-landscape-dodsonmd-1-1494636639.jpg");
+        }
+        &.two {
+          background-image: linear-gradient(to bottom, rgba(245, 246, 252, 0.52), rgba(59, 59, 59, 0.73)), url("https://cdn.vox-cdn.com/thumbor/yFztuI4o3pk8IuYVgLmhHGn2YYo=/0x0:2000x1333/1200x800/filters:focal(840x507:1160x827)/cdn.vox-cdn.com/uploads/chorus_image/image/65901389/190522_18_32_57_5DSR5734.0.jpg");
+        }
+      }
+      &-mod {
+        // height: 1000px;
+        background-color: white;
+      }
+    }
+
+    .details-card {
+      background-color: white;
+      height: 250px;
+      box-shadow: 0px 0px 5px 2px #000;
+      margin-top: 1rem;
+    }
+
+    .opacity-panel {
+      // background-color: rgba( $base-color, 0.50 );
+      
+    }
+
+    
+
     .slide {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
+      height: 80vh;
 
       .panel {
         // width: 700px;
@@ -339,12 +620,12 @@
         font-size: 1.5rem;
       }
 
-      .slide {
+ 
         .hero-side-by-side {
           flex-direction: row;
           .left {
-            img {
-              height: 400px;
+            img.logo {
+              height: 250px;
               margin-left: 2rem;
             }
           }
@@ -361,7 +642,7 @@
         }
       }
       
-    }
+    
   }
 }
 

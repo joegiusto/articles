@@ -13,6 +13,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 function HomePageTwo() {
   const [activeTab, setActiveTab] = useState('stories');
+  const [get, setGet] = useState('user');
 
   function renderActiveTab(tab) {
     switch(tab) {
@@ -29,7 +30,7 @@ function HomePageTwo() {
           "Issues", 
           "Issues are updated threads on the topics you care about",
           "https://149366112.v2.pressablecdn.com/wp-content/uploads/2014/03/How-Big-Oil-Harms-Animals.jpg",
-          <Issues/>
+          <Issues get={get}/>
         ]
       case 'myths':
         return [
@@ -110,12 +111,12 @@ function HomePageTwo() {
                 {/* <input type="text"/> */}
                 <div className="icons dual-header">
                   <span className="left-group">
-                    <span onClick={() => setActiveTab('stories')} className={"tab-selection " + (activeTab === 'stories' ? ' active' : '')}><i className={"fas fa-newspaper"}></i>Stories</span>
-                    <span onClick={() => setActiveTab('issues')} className={"tab-selection " + (activeTab === 'issues' ? ' active' : '')}><i className={"fas fa-person-booth"}></i>Issues</span>
-                    <span onClick={() => setActiveTab('myths')} className={"tab-selection " + (activeTab === 'myths' ? ' active' : '')}><i className={"fas fa-ghost"}></i>Myths</span>
-                    <span onClick={() => setActiveTab('orders')} className={"tab-selection " + (activeTab === 'orders' ? ' active' : '')}><i className={"fas fa-shopping-cart"}></i>Orders</span>
-                    <span onClick={() => setActiveTab('submissions')} className={"tab-selection " + (activeTab === 'submissions' ? ' active' : '')}><i className={"fas fa-lightbulb"}></i>Submissions</span>
-                    <span onClick={() => setActiveTab('outset')} className={"tab-selection " + (activeTab === 'outset' ? ' active' : '')}><i className={"fas fa-horse"}></i>Outset</span>
+                    <span onClick={() => setActiveTab('stories')} className={"tab-selection " + (activeTab === 'stories' ? ' active' : '')}><i className={"fas fa-newspaper"}></i><div className="tab-name d-none d-md-block">Stories</div></span>
+                    <span onClick={() => setActiveTab('issues')} className={"tab-selection " + (activeTab === 'issues' ? ' active' : '')}><i className={"fas fa-person-booth"}></i><div className="tab-name d-none d-md-block">Issues</div></span>
+                    <span onClick={() => setActiveTab('myths')} className={"tab-selection " + (activeTab === 'myths' ? ' active' : '')}><i className={"fas fa-ghost"}></i><div className="tab-name d-none d-md-block">Myths</div></span>
+                    <span onClick={() => setActiveTab('orders')} className={"tab-selection " + (activeTab === 'orders' ? ' active' : '')}><i className={"fas fa-shopping-cart"}></i><div className="tab-name d-none d-md-block">Orders</div></span>
+                    <span onClick={() => setActiveTab('submissions')} className={"tab-selection " + (activeTab === 'submissions' ? ' active' : '')}><i className={"fas fa-lightbulb"}></i><div className="tab-name d-none d-md-block">Submissions</div></span>
+                    <span onClick={() => setActiveTab('outset')} className={"tab-selection " + (activeTab === 'outset' ? ' active' : '')}><i className={"fas fa-horse"}></i><div className="tab-name d-none d-md-block">Outset</div></span>
                   </span>
                   <span className="right-group d-flex">
                     {/* <i class="fas fa-envelope"></i>
@@ -127,7 +128,7 @@ function HomePageTwo() {
               <div className="new-home-content">
                 <div className="row">
   
-                  <div className="col-6 col-lg-8 col-xl-6">
+                  <div className="col-12 col-lg-8 col-xl-6">
 
                     <div className="left">
                       <h1>
@@ -141,13 +142,16 @@ function HomePageTwo() {
   
                       <div>
                         <button className="btn btn-articles-light">Manage</button>
-                        <button className="btn btn-articles-light ml-1">View All</button>
+
+                        <button className="btn btn-articles-light ml-1" onClick={() => setGet('all')}>View All</button>
+                        <button className="btn btn-articles-light ml-1" onClick={() => setGet('user')}>View User</button>
+
                       </div>
                     </div>
 
                   </div>
   
-                  <div className="col-6 col-lg-4 col-xl-6">
+                  <div className="col-12 col-lg-4 col-xl-6">
 
                     <div className="right"><img src={renderActiveTab(activeTab)[3]} alt=""/></div>
 
@@ -155,7 +159,7 @@ function HomePageTwo() {
 
                   <div className="col-12">
                     <div className="subscriptions-container">
-                      <div className="section-title">Subscriptions</div>
+                      <div className="section-title mb-4">{renderActiveTab(activeTab)[1]}</div>
 
                       {renderActiveTab(activeTab)[4]}
 

@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { withFirebase } from '../Firebase';
 import { AuthUserContext, withAuthorization, withEmailVerification } from '../Session';
 import { compose } from 'recompose';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
+
+import SubscriptionCard from './SubscriptionCard';
 
 class UserIssuesBase extends Component {
   constructor(props) {
@@ -11,6 +15,7 @@ class UserIssuesBase extends Component {
       bulkIssues: [],
       usersIssues: [],
       matchedIssues: [],
+      render: props.get,
       loading: false
      };
   }
@@ -23,7 +28,7 @@ class UserIssuesBase extends Component {
 
       const issuesObject = snapshot.val();
 
-      console.log(snapshot.val());
+      // console.log(snapshot.val());
 
       const issuesList = Object.keys(issuesObject).map(key => (
         {
@@ -43,7 +48,7 @@ class UserIssuesBase extends Component {
 
       const issuesObject = snapshot.val();
 
-      console.log(snapshot.val());
+      // console.log(snapshot.val());
 
       const issuesList = Object.keys(issuesObject).map(key => (
         {
@@ -61,7 +66,7 @@ class UserIssuesBase extends Component {
         this.props.firebase.issue(issue.uid).once('value').then(snapshot => {
           const issueSnapshot = snapshot.val();
 
-          console.log(snapshot.val());
+          // console.log(snapshot.val());
 
           // console.log(snapshot);
 
@@ -73,17 +78,6 @@ class UserIssuesBase extends Component {
               issueSnapshot,
             ]
           })
-
-          // const issueDetails1 = Object.keys(issueDetails).map(key => (
-          //   {
-          //     ...issueDetails,
-          //   }
-          // ));
-
-          // this.setState({
-          //   matchedIssues: issueDetails1,
-          //   loading: false
-          // });
 
         })
 
@@ -110,32 +104,30 @@ class UserIssuesBase extends Component {
 
       {loading && <div>Loading ...</div>}
 
-      {matchedIssues.map(object => (
-        <div key={object.id} className="subscription" style={ (object.photoExtra ? {background: object.photoExtra + ", url(" + object.photo + ")"} : {background: "url(" + object.photo + ")"} ) }>
-          <div className="uid">{object.uid}</div>
-          <div className="title">{object.title}</div>
-          <div className="slogan">{object.slogan}</div>
-          {/* <span>{object.uid}</span> */}
-          <div className="dual-header"> 
-            <div>
-              <span className="states badge badge-dark">{object.interest.states}</span>
-              <span className="city badge badge-dark ml-1">{object.interest.city}</span>
-            </div>
-            <div><span className="settings badge badge-light"><i class="fas fa-cog m-0"></i></span></div>
-          </div>
-        </div>
-      ))}
+      {this.props.get === 'all' ?
+      bulkIssues.map(object => (
+        <SubscriptionCard object={object}/>
+      ))
+      :
+      matchedIssues.map(object => (
+        <SubscriptionCard object={object}/>
+      ))
+      }
+
+      
+
+      
 
       <div className="subscription">
-        <div className="title">Want more?</div>
+        <div className="uid">10 Issues and Growing</div>
+        <div className="title" style={{textDecoration: 'underline'}}>Want more?</div>
         <div className="slogan">
           <div className="search-animation">
             <i class="fas fa-search"></i>
           </div>
         </div>
-        <button className="btn btn-articles-light">Explore</button>
+        <button className="btn btn-articles-light" style={{backgroundColor: 'black', color: 'white'}}>Explore</button>
       </div>
-
     </div>
    )
   }
@@ -149,5 +141,3 @@ export default compose(
   withEmailVerification,
   withAuthorization(condition),
 )(UserIssues);
-
-// export default UserIssues;

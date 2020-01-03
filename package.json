@@ -12,6 +12,7 @@
     "moment": "^2.24.0",
     "node-sass": "^4.12.0",
     "react": "^16.8.6",
+    "react-bootstrap": "^1.0.0-beta.16",
     "react-bootstrap-typeahead": "^3.4.6",
     "react-canvas-draw": "^1.0.2",
     "react-countdown-now": "^2.1.1",
