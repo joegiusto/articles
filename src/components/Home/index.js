@@ -106,81 +106,108 @@ function HomePageTwo() {
 
           <div className="entire-panel">
 
-            <div className="new-home-main">
-              <div className="new-home-bar">
-                {/* <input type="text"/> */}
-                <div className="icons dual-header">
-                  <span className="left-group">
-                    <span onClick={() => setActiveTab('stories')} className={"tab-selection " + (activeTab === 'stories' ? ' active' : '')}><i className={"fas fa-newspaper"}></i><div className="tab-name d-none d-md-block">Stories</div></span>
-                    <span onClick={() => setActiveTab('issues')} className={"tab-selection " + (activeTab === 'issues' ? ' active' : '')}><i className={"fas fa-person-booth"}></i><div className="tab-name d-none d-md-block">Issues</div></span>
-                    <span onClick={() => setActiveTab('myths')} className={"tab-selection " + (activeTab === 'myths' ? ' active' : '')}><i className={"fas fa-ghost"}></i><div className="tab-name d-none d-md-block">Myths</div></span>
-                    <span onClick={() => setActiveTab('orders')} className={"tab-selection " + (activeTab === 'orders' ? ' active' : '')}><i className={"fas fa-shopping-cart"}></i><div className="tab-name d-none d-md-block">Orders</div></span>
-                    <span onClick={() => setActiveTab('submissions')} className={"tab-selection " + (activeTab === 'submissions' ? ' active' : '')}><i className={"fas fa-lightbulb"}></i><div className="tab-name d-none d-md-block">Submissions</div></span>
-                    <span onClick={() => setActiveTab('outset')} className={"tab-selection " + (activeTab === 'outset' ? ' active' : '')}><i className={"fas fa-horse"}></i><div className="tab-name d-none d-md-block">Outset</div></span>
-                  </span>
-                  <span className="right-group d-flex">
-                    {/* <i class="fas fa-envelope"></i>
-                    <span class="badge badge-light">0</span>*/}
-                    <span className="tab-button noselect my-auto"><i class="fas fa-play"></i>Sequence <span className="badge badge-dark">Beta</span></span>
-                  </span>
-                </div>
-              </div>
-              <div className="new-home-content">
-                <div className="row">
-  
-                  <div className="col-12 col-lg-8 col-xl-6">
+            <div className="row">
+              <div className="col-12 col-md-9 pr-md-2">
+                <div className="new-home-main">
+                  <div className="new-home-bar">
+                    {/* <input type="text"/> */}
+                    <div className="icons dual-header">
+                      <span className="left-group">
+                        <span onClick={() => setActiveTab('stories')} className={"tab-selection " + (activeTab === 'stories' ? ' active' : '')}><i className={"fas fa-newspaper"}></i><div className="tab-name d-none d-md-block">Stories</div></span>
+                        <span onClick={() => setActiveTab('issues')} className={"tab-selection " + (activeTab === 'issues' ? ' active' : '')}><i className={"fas fa-person-booth"}></i><div className="tab-name d-none d-md-block">Issues</div></span>
+                        <span onClick={() => setActiveTab('myths')} className={"tab-selection " + (activeTab === 'myths' ? ' active' : '')}><i className={"fas fa-ghost"}></i><div className="tab-name d-none d-md-block">Myths</div></span>
+                        <span onClick={() => setActiveTab('orders')} className={"tab-selection " + (activeTab === 'orders' ? ' active' : '')}><i className={"fas fa-shopping-cart"}></i><div className="tab-name d-none d-md-block">Orders</div></span>
+                        <span onClick={() => setActiveTab('submissions')} className={"tab-selection " + (activeTab === 'submissions' ? ' active' : '')}><i className={"fas fa-lightbulb"}></i><div className="tab-name d-none d-md-block">Submissions</div></span>
+                        <span onClick={() => setActiveTab('outset')} className={"tab-selection " + (activeTab === 'outset' ? ' active' : '')}><i className={"fas fa-horse"}></i><div className="tab-name d-none d-md-block">Outset</div></span>
+                      </span>
+                      <span className="right-group d-flex">
+                        {/* <i class="fas fa-envelope"></i>
+                        <span class="badge badge-light">0</span>*/}
+                        <span className="tab-button noselect my-auto"><i class="fas fa-play"></i>Sequence <span className="badge badge-dark">Beta</span></span>
+                      </span>
+                    </div>
+                  </div>
 
-                    <div className="left">
-                      <h1>
-                        {/* <i className={"fas fa-newspaper"}></i> */}
-                        {renderActiveTab(activeTab)[0]}
-                        {/* Stories */}
-                        {renderActiveTab(activeTab)[1]}
-                      </h1>
+                  <div className="new-home-content">
+                    <div className="top row">
+                        <div className="col-12 col-lg-8 col-xl-6">
+      
+                          <div className="left">
+                            <h1>
+                              {/* <i className={"fas fa-newspaper"}></i> */}
+                              {renderActiveTab(activeTab)[0]}
+                              {/* Stories */}
+                              {renderActiveTab(activeTab)[1]}
+                            </h1>
+        
+                            <div className="description">{renderActiveTab(activeTab)[2]}</div>
+        
+                            <div className="d-none">
+                              <button className="btn btn-articles-light">Manage</button>
+                              <button className="btn btn-articles-light ml-1" onClick={() => setGet('all')}>View All</button>
+                              <button className="btn btn-articles-light ml-1" onClick={() => setGet('user')}>View User</button>
+                            </div>
   
-                      <div className="description">{renderActiveTab(activeTab)[2]}</div>
-  
-                      <div>
-                        <button className="btn btn-articles-light">Manage</button>
-
-                        <button className="btn btn-articles-light ml-1" onClick={() => setGet('all')}>View All</button>
-                        <button className="btn btn-articles-light ml-1" onClick={() => setGet('user')}>View User</button>
-
-                      </div>
+                          </div>
+      
+                        </div>
+        
+                        <div className="col-12 col-lg-4 col-xl-6">
+                          <div className="right"><img src={renderActiveTab(activeTab)[3]} alt=""/></div>
+                        </div>
                     </div>
 
-                  </div>
-  
-                  <div className="col-12 col-lg-4 col-xl-6">
-
-                    <div className="right"><img src={renderActiveTab(activeTab)[3]} alt=""/></div>
-
-                  </div>
-
-                  <div className="col-12">
+                     
                     <div className="subscriptions-container">
-                      <div className="section-title mb-4">{renderActiveTab(activeTab)[1]}</div>
+                      <div className="section-title mb-4 d-none">{renderActiveTab(activeTab)[1]}</div>
 
                       {renderActiveTab(activeTab)[4]}
 
-                      {/* <div className="subscriptions">
-                        <div className="subscription">1</div>
-                        <div className="subscription">2</div>
-                        <div className="subscription">3</div>
-                      </div> */}
-
                     </div>
+                    
                   </div>
-  
+                 
                 </div>
               </div>
-            </div>
+  
+              <div className="col-12 col-md-3 pl-md-2">
+                <div className="new-home-side">
 
-            <div className="new-home-side">
-              Member Since June 2019
-              <h6>Quick Links</h6>
-              <p>Chat</p>
-              <p>Newsletter</p>
+                  <div className="section">
+                    <div className="profile">
+                      <div className="photo"></div>
+                      <div className="name">Joey Giusto</div>
+                    </div>
+                    <div className="member-status">Member Since June 2019</div>
+                  </div>
+
+                  <div className="section">
+                    <div className="expand">
+                      <div>Chat</div>
+                      <div><i class="far fa-arrow-alt-circle-down"></i></div>
+                    </div>
+                    <div className="chat-wrapper">
+                      <div className="text-muted">Will be removed in release</div>
+                      <Messages />
+                    </div>
+                  </div>
+
+                  <div className="section">
+                    <div className="expand">
+                      <div>Newsletter</div>
+                      <div><i class="far fa-arrow-alt-circle-down"></i></div>
+                    </div>
+                  </div>
+
+                  <div className="section">
+                    <div>Quick Links</div>
+                    <a className="d-block" href="">One</a>
+                    <a className="d-block" href="">Two</a>
+                    <a className="d-block" href="">Three</a>
+                  </div>
+
+                </div>
+              </div>
             </div>
 
           </div>
@@ -191,103 +218,21 @@ function HomePageTwo() {
 
       <div className='container home-container'>
         <div className='row'>
+
           <div className='col-12 col-md-8 mt-5'>
 
             <h1>Your Subscribed Issues</h1>
             <UsersIssues></UsersIssues>
 
-
-            <div className="home">
-              {/* <h1>Home</h1>
-              <p>Quick glance at everything going on,</p> */}
-
-              <SimpleSlider/>
-
-              {renderActiveTab(activeTab)}
-
-              <div className="design-section mb-2">
-                <h1>Story Updates</h1>
-                <p>The Home Page is accessible by every signed in user.</p>
-            
-                <div className="design-section-items">
-                  <div className="row">
-      
-                    <div className="col mb-3">
-                      <div className="item">
-                        <div className="photo"></div>
-                      </div>
-                    </div>
-      
-                    <div className="col mb-3">
-                      <div className="item">
-                        <div className="photo"></div>
-                      </div>
-                    </div>
-      
-                    <div className="col">
-                      <div className="item">
-                        <div className="photo"></div>
-                      </div>
-                    </div>
-      
-                    <div className="col">
-                      <div className="item">
-                        <div className="photo"></div>
-                      </div>
-                    </div>
-      
-                  </div>
-                </div>
-              </div>
-
-              <div className="design-section mb-2">
-                <h1>Design Submissions</h1>
-                <p>You have no current submissions to the store</p>
-            
-                <div className="design-section-items">
-                  <div className="row">
-      
-                    <div className="col mb-3">
-                      <div className="item">
-                        <div className="photo"></div>
-                      </div>
-                    </div>
-      
-                    <div className="col mb-3">
-                      <div className="item">
-                        <div className="photo"></div>
-                      </div>
-                    </div>
-      
-                    <div className="col">
-                      <div className="item">
-                        <div className="photo"></div>
-                      </div>
-                    </div>
-      
-                    <div className="col">
-                      <div className="item">
-                        <div className="photo"></div>
-                      </div>
-                    </div>
-      
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
           </div>
+
           <div className='col-12 col-md-4'>
 
-            <div className="chat-wrapper">
-              <div className="text-muted">Will be removed in release</div>
-              <Messages />
-            </div>
-
+            
             <Newsletter/>
 
           </div>
+
         </div>
       </div>
     </>
