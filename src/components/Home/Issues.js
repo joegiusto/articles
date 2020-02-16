@@ -20,11 +20,19 @@ class UserIssuesBase extends Component {
      };
   }
 
+  
+
   componentDidMount() {
+
+    // var cat = 'news/issues';
+    // var cat = 'stories';
+    // var cat = 'orders';
 
     this.setState({ loading: true });
 
-    this.props.firebase.issues().once('value').then(snapshot => {
+    this.props.firebase.catagory('news/issues').once('value').then(snapshot => {
+
+    // this.props.firebase.issues().once('value').then(snapshot => {
 
       const issuesObject = snapshot.val();
 
@@ -44,11 +52,11 @@ class UserIssuesBase extends Component {
 
     });
 
-    this.props.firebase.user_issues(this.props.firebase.auth.currentUser.uid).once('value').then(snapshot => {
+    this.props.firebase.user_issues('news/issues', 'issues', this.props.firebase.auth.currentUser.uid).once('value').then(snapshot => {
 
       const issuesObject = snapshot.val();
 
-      // console.log(snapshot.val());
+      console.log(snapshot.val());
 
       const issuesList = Object.keys(issuesObject).map(key => (
         {
@@ -63,7 +71,7 @@ class UserIssuesBase extends Component {
         // console.log(issue)
 
         // Pass in the uid to find the issue
-        this.props.firebase.issue(issue.uid).once('value').then(snapshot => {
+        this.props.firebase.catagory('news/issues').once('value').then(snapshot => {
           const issueSnapshot = snapshot.val();
 
           // console.log(snapshot.val());
@@ -102,21 +110,24 @@ class UserIssuesBase extends Component {
    return (
     <div className="subscriptions">
 
+      <div className="subscriptions-button filter w-100">
+        <div className="badge badge-dark ml-5">List View</div>
+        <div className="badge badge-dark ml-1">Card View</div>
+      </div>
+
       {loading && <div>Loading ...</div>}
 
       {this.props.get === 'all' ?
       bulkIssues.map(object => (
         <SubscriptionCard object={object}/>
+        // <h1>obj</h1>
       ))
       :
-      matchedIssues.map(object => (
-        <SubscriptionCard object={object}/>
+      bulkIssues.map(object => (
+        <SubscriptionCard get={this.props.get} sub={this.props.sub} object={object}/> 
+        // <h1>{object.title}</h1>
       ))
       }
-
-      
-
-      
 
       <div className="subscription">
         <div className="uid">10 Issues and Growing</div>

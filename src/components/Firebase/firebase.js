@@ -83,11 +83,21 @@ class Firebase {
   submission = number => this.database.ref(`clothing/submissions/${number}`)
   submissions = () => this.database.ref('clothing/submissions')
 
+  // Target Catagory
+  catagory = target => this.database.ref(`${target}`);
+
   // User API
   user = uid => this.database.ref(`users/${uid}`);
   users = () => this.database.ref('users');
 
-  user_issues = uid => this.database.ref(`users/${uid}/news/subscriptions/issues`);
+  // ${type}
+  user_issues = (type, sub, uid) => this.database.ref(`users/${uid}/news/subscriptions/${sub}`);
+
+  // ${type}
+  user_data = (path, uid) => this.database.ref(`users/${uid}/${path}`);
+
+  // ${type}
+  news_data = (path, id) => this.database.ref(`${path}/${id}`);
 
   // issue = uid => this.database.ref(`issues/${uid}`);
   stories = () => this.database.ref('news/stories');

@@ -11,7 +11,7 @@ import thunk from 'redux-thunk';
 
 import expensesReducer from '../reducers/expenses';
 // import filtersReducer from '../reducers/filters';
-// import siteReducer from '../reducers/site';
+import siteReducer from '../reducers/site';
 // import employeesReducer from '../reducers/employees';
 
 

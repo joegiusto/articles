@@ -27,6 +27,7 @@ export const STORE_MANAGE_DETAILS ='/store/manage/:id'
 export const NEWS ='/news'
 export const STORIES ='/news/stories'
 export const ISSUES ='/news/issues'
+export const ISSUE = '/news/issues/:id'
 export const MYTHS ='/news/myths'
 
 export const MANAGE ='/news/manage'
@@ -61,6 +62,9 @@ export const ADMIN_DETAILS = '/admin/:id';
 // Donate
 export const DONATE = '/donate';
 export const DONATE_DETAILS = '/donate/:id';
+
+// Mail Proto
+export const MAIL = '/mail';
 
 // Playground
 export const PLAYGROUND = '/playground';

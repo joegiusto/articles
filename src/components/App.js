@@ -24,6 +24,7 @@ import StoreManage from './Store/Manage'
 import NewsPage from './News'
 // Stroies placeholder
 import IssuesPage from './News/Issues'
+import IssuePage from './News/Issues/single.js'
 import MythsPage from './News/Myths'
 import NewsManagePage from './News/Manage'
 
@@ -43,6 +44,8 @@ import EmployeePageDetails from './Employees/Directory'
 
 import AccountPage from './Account';
 import PasswordForgetPage from './PasswordForget';
+
+import MailPage from './Mail';
 
 import AdminPage from './Admin';
 import DonatePage from './Donate';
@@ -106,7 +109,9 @@ const App = () => (
   
         <Route exact path={ROUTES.NEWS} component={NewsPage} />
         <Route path={ROUTES.MYTHS} component={MythsPage} />
-        <Route path={ROUTES.ISSUES} component={IssuesPage} />
+        <Route path={ROUTES.ISSUES} component={IssuesPage} exact={true}/>
+        <Route path={ROUTES.ISSUE} component={IssuePage}/>
+        
         <Route path={ROUTES.MANAGE} component={NewsManagePage} />
 
         <Route path={ROUTES.TOWN_HALL} component={TownHallPage} />
@@ -129,6 +134,8 @@ const App = () => (
         
         <Route path={ROUTES.ADMIN} component={AdminPage} />
         <Route path={ROUTES.DONATE} component={DonatePage} />
+
+        <Route path={ROUTES.MAIL} component={MailPage} />
 
         {/* <Route path={ROUTES.PLAYGROUND} component={PlaygroundPage} /> */}
         <Route path={ROUTES.CHAT} component={Chat} />

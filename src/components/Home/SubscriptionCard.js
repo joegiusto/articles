@@ -37,6 +37,7 @@ class SubscriptionCard extends Component {
               <Dropdown.Menu alignRight className="dropdown-custom pull-right noselect">
                 <Dropdown.Item eventKey="1">Clear Updates</Dropdown.Item>
                 <Dropdown.Item eventKey="2">Unsubscribe</Dropdown.Item>
+                <Dropdown.Item eventKey="3">{object.title}</Dropdown.Item>
                 {/* <Dropdown.Item eventKey="3">
                   Active Item
                 </Dropdown.Item>
