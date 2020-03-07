@@ -8,22 +8,20 @@ import * as ROLES from '../../../constants/roles';
 import * as ROUTES from '../../../constants/routes';
 
 const AdminPage = () => (
-
- 
-
     <div className="container">
       <div>
-        <h1>News Management</h1>
-        <p>Portal for admin and writer roles to manage news details.</p>
+
+        <div className="news-manage-plate">
+          <h1>News Management</h1>
+          <p>Portal for admin and writer roles to manage news details.</p>
+        </div>
+
         <Switch>
           <Route exact path={ROUTES.MANAGE_DETAILS} component={UserItem} />
           <Route exact path={ROUTES.MANAGE} component={IssuesList} />
         </Switch>
       </div>
     </div>
-
-
-
 );
 
 class IssuesListBase extends Component {
@@ -67,59 +65,59 @@ class IssuesListBase extends Component {
     this.setState({ loadingIssues: true });
     this.setState({ loadingMyths: true });
 
-    this.props.firebase.issues().on('value', snapshot => {
-      const usersObject = snapshot.val();
+    // this.props.firebase.issues().on('value', snapshot => {
+    //   const usersObject = snapshot.val();
 
-      const usersList = Object.keys(usersObject).map(key => (
-        {
-          ...usersObject[key],
-          statesArray: this.convert(usersObject[key].interest.states),
-          uid: key,
-        }
-      ));
+    //   const usersList = Object.keys(usersObject).map(key => (
+    //     {
+    //       ...usersObject[key],
+    //       statesArray: this.convert(usersObject[key].interest.states),
+    //       uid: key,
+    //     }
+    //   ));
 
-      this.setState({
-        firebaseIssues: usersList,
-        loadingIssues: false,
-      });
+    //   this.setState({
+    //     firebaseIssues: usersList,
+    //     loadingIssues: false,
+    //   });
 
-    });
+    // });
 
-    this.props.firebase.stories().on('value', snapshot => {
-      const usersObject = snapshot.val();
+    // this.props.firebase.stories().on('value', snapshot => {
+    //   const usersObject = snapshot.val();
 
-      const usersList = Object.keys(usersObject).map(key => (
-        {
-          ...usersObject[key],
-          // statesArray: this.convert(usersObject[key].interest.states),
-          uid: key,
-        }
-      ));
+    //   const usersList = Object.keys(usersObject).map(key => (
+    //     {
+    //       ...usersObject[key],
+    //       // statesArray: this.convert(usersObject[key].interest.states),
+    //       uid: key,
+    //     }
+    //   ));
 
-      this.setState({
-        firebaseStories: usersList,
-        loadingStories: false,
-      });
+    //   this.setState({
+    //     firebaseStories: usersList,
+    //     loadingStories: false,
+    //   });
 
-    });
+    // });
 
-    this.props.firebase.myths().on('value', snapshot => {
-      const usersObject = snapshot.val();
+    // this.props.firebase.myths().on('value', snapshot => {
+    //   const usersObject = snapshot.val();
 
-      const usersList = Object.keys(usersObject).map(key => (
-        {
-          ...usersObject[key],
-          // statesArray: this.convert(usersObject[key].interest.states),
-          uid: key,
-        }
-      ));
+    //   const usersList = Object.keys(usersObject).map(key => (
+    //     {
+    //       ...usersObject[key],
+    //       // statesArray: this.convert(usersObject[key].interest.states),
+    //       uid: key,
+    //     }
+    //   ));
 
-      this.setState({
-        firebaseMyths: usersList,
-        loadingMyths: false,
-      });
+    //   this.setState({
+    //     firebaseMyths: usersList,
+    //     loadingMyths: false,
+    //   });
 
-    });
+    // });
     
   }
 
@@ -167,9 +165,9 @@ class IssuesListBase extends Component {
     const { firebaseIssues, firebaseStories, firebaseMyths, loading } = this.state;
 
     return (
-      <div className="row">
+      <div className="row justify-content-center">
 
-        <div className="col-12 col-md-4">
+        <div className="col-12 col-md-4 d-none">
           <div className="news-manage-card stories">
             <div className="header">
               <h4>Stories</h4>
@@ -271,8 +269,9 @@ class IssuesListBase extends Component {
               <div className="sort-control mt-1">
                   <span>Showing:</span>
                 
-                  <span className="sort-selection active">All Issues</span>
-                  <span className="sort-selection">Search Issues</span>
+                  <span className="sort-selection active">All</span>
+                  <span className="sort-selection">Search</span>
+                  <span className="sort-selection">Tags</span>
                 
               </div>
 
@@ -347,7 +346,7 @@ class IssuesListBase extends Component {
           </div>
         </div>
 
-        <div className="col-12 col-md-4">
+        <div className="col-12 col-md-4 d-none">
           <div className="news-manage-card myths">
             <div className="header">
               <h4>Myths</h4>

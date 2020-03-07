@@ -4,51 +4,7 @@ import {One, Two, Three, Four} from './SponseredItems';
 import * as ROUTES from '../../constants/routes';
 import { Link } from 'react-router-dom';
 import { withFirebase } from '../Firebase';
-
-// const storeContent = [
-// 	{
-//     title: 'Wolf Sweatshirt',
-//     orgin: 'Original',
-// 		description:
-// 		'One part of the two part first realese. ',
-// 		button: 'Add to Cart',
-// 		image: 'https://i.imgur.com/ZXBtVw7.jpg',
-// 		user: 'Luan Gjokaj',
-//     userProfile: 'https://i.imgur.com/JSW6mEk.png',
-//     cost: '$21.00',
-//     profit: '$30.00'
-// 	},
-// 	{
-//     title: 'Sheep Sweatshirt',
-//     orgin: 'Original',
-// 		description:
-//     'One part of the two part first realese.',
-// 		button: 'Add to Cart',
-// 		image: 'https://i.imgur.com/DCdBXcq.jpg',
-// 		user: 'Erich Behrens',
-// 		userProfile: 'https://i.imgur.com/0Clfnu7.png'
-// 	},
-// 	{
-//     title: 'Partner Item',
-//     orgin: 'Partner',
-// 		description:
-// 		'Short Description',
-// 		button: 'Pre Order',
-// 		image: 'https://i.imgur.com/DvmN8Hx.jpg',
-// 		user: 'Bruno Vizovskyy',
-// 		userProfile: 'https://i.imgur.com/4KeKvtH.png'
-//   },
-//   {
-//     title: 'Partner Item',
-//     orgin: 'Partner',
-// 		description:
-// 		'Short Description',
-//     button: 'Pre Order',
-// 		image: 'https://i.imgur.com/DvmN8Hx.jpg',
-// 		user: 'Bruno Vizovskyy',
-// 		userProfile: 'https://i.imgur.com/4KeKvtH.png'
-// 	}
-// ];
+import hero from 'assets/img/bg_home_banner.png';
 
 function TypeSelect(props) {
 
@@ -151,7 +107,7 @@ class StorePageBase extends Component {
 	render() {
 		
 		return(
-			<>
+			<section class="store-page">
 				<div className={"pop-out-viewer-container " + (this.props.match.params.id ? ' active' : '')}>
 					<Link to={ROUTES.STORE} onClick={() => this.setPopOut(false)}>
 						<div className="background"></div>
@@ -216,7 +172,41 @@ class StorePageBase extends Component {
 					<Link to={ROUTES.STORE_MANAGE}><button className="btn btn-articles-light">Admin: Manage</button></Link>
 				</div>
 
-				<div className='container store-page'>
+				<div className="container-fluid d-none">
+					<div className="row feature-top mt-5">
+
+						<div className="col-6">
+							<div className="card">
+								<div className="card-header">Originals</div>
+								<div className="card-body"></div>
+							</div>
+						</div>
+
+						<div className="col-3 d-none d-lg-block">
+							<div className="card">
+								<div className="card-header">Partnerships</div>
+								<div className="card-body"></div>
+							</div>
+						</div>
+
+						<div className="col-3 d-none d-lg-block">
+							<div className="card">
+								<div className="card-header">Submissions</div>
+								<div className="card-body">Submit a design today!</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+				<div className="hero">
+					<img src={hero} alt=""/>
+					<div className="hero-content d-none">
+						<div className="bottom">Testing</div>
+					</div>
+				</div>
+
+				<div className='container'>
 
 					<div className="row d-none">
 
@@ -242,25 +232,25 @@ class StorePageBase extends Component {
 
 					<div className='row justify-content-center'>
 
-					<div className="featured-items">
+					    <div className="featured-items d-none">
 
-						<h1 className="mt-2 mt-md-4 store-heading">Featured</h1>
+                            <h1 className="mt-2 mt-md-4 store-heading">Featured</h1>
 
-						<div className="dual-header">
+                            <div className="dual-header">
 
-							{this.state.loadingCloting && <div>Loading ...</div>}
-							<div>
-								{this.state.firebaseClothing.map((product, index) => (
-		
-									<StoreItem setPopOutVisible={this.setPopOut} product={product} catalogId={product.uid} price={product.price} title={product.title} sale="%15" banner="Original" color="articles" />
-		
-								))}
-								
-							</div>
+                                {this.state.loadingCloting && <div>Loading ...</div>}
+                                <div>
+                                    {this.state.firebaseClothing.map((product, index) => (
+            
+                                        <StoreItem setPopOutVisible={this.setPopOut} product={product} catalogId={product.uid} price={product.price} title={product.title} sale="%15" banner="Original" color="articles" />
+            
+                                    ))}
+                                    
+                                </div>
 
-							<div>{this.getIndexByUid("really-a-wolf") > -1 ? this.state.firebaseClothing[this.getIndexByUid("really-a-wolf")].title : <div>Loading...</div>} </div>
+                                <div>{this.getIndexByUid("really-a-wolf") > -1 ? this.state.firebaseClothing[this.getIndexByUid("really-a-wolf")].title : <div>Loading...</div>} </div>
 
-						</div>
+                            </div>
 
 						</div>
 
@@ -268,15 +258,17 @@ class StorePageBase extends Component {
 
 							<h1 className="mt-2 mt-md-4 store-heading">Featured</h1>
 
-							<StoreItem setPopOutVisible={this.setPopOut} catalogId='1' price={3000} title="Wolf Hoodie" sale="%15" banner="Original" color="articles" />
-				
-							<StoreItem setPopOutVisible={this.setPopOut} catalogId='2' price={3000} title="Sheep Hoodie" sale="%15" banner="Original" color="articles"/>
-				
-							<StoreItem setPopOutVisible={this.setPopOut} catalogId='3' price={2500} title="Partner Item" sale="%15" banner="Partner" color="info"/>
-				
-							<StoreItem setPopOutVisible={this.setPopOut} catalogId='4' price={2000} title="Sponsered Item" sale="%15" banner="Sponsered" color="danger"/>
-				
-							<StoreItem setPopOutVisible={this.setPopOut} catalogId='5' price={2000} title="Sponsered Item" sale="%15" banner="Sponsered" color="primary"/>
+							<div className="products-wrap">
+							    <StoreItem setPopOutVisible={this.setPopOut} catalogId='1' price={3000} title="Wolf Hoodie" sale="%15" banner="Original" color="articles" />
+    				
+    							<StoreItem setPopOutVisible={this.setPopOut} catalogId='2' price={3000} title="Sheep Hoodie" sale="%15" banner="Original" color="articles"/>
+    				
+    							<StoreItem setPopOutVisible={this.setPopOut} catalogId='3' price={2500} title="Partner Item" sale="%15" banner="Partner" color="info"/>
+    				
+    							<StoreItem setPopOutVisible={this.setPopOut} catalogId='4' price={2000} title="Sponsered Item" sale="%15" banner="Sponsered" color="danger"/>
+    				
+    							<StoreItem setPopOutVisible={this.setPopOut} catalogId='5' price={2000} title="Sponsered Item" sale="%15" banner="Sponsered" color="primary"/>
+							</div>
 
 						</div>
 
@@ -413,7 +405,7 @@ class StorePageBase extends Component {
 					</div>
 				
 				</div>
-			</>
+			</section>
 		)
 	}
 }

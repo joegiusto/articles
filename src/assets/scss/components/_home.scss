@@ -430,6 +430,10 @@
       // border-radius: 10px;
       padding: 0.75rem;
       margin: 1rem;
+      
+      @include media-breakpoint-down(md) {
+        margin: 0.5rem;
+      }
 
       &.Stories {
         background-color: $accent-color;
@@ -510,6 +514,9 @@
       // margin-top: 1rem;
       position: relative;
       margin: 1rem;
+      @include media-breakpoint-down(md) {
+        margin: 0.5rem;
+      }
 
       .no-matches {
         @import 'landing_background';
@@ -781,16 +788,19 @@
   @media (min-width: 1200px) {
         max-width: 1366px;
   }
-  padding-right: 10px;
-  padding-left: 10px;
+  // padding-right: 10px;
+  // padding-left: 10px;
 
   .story-updates {
+
     .slick-list {
       
     }
+
     .slick-slide {
       
     }
+
     .slick-card:not(.header) {
       background-color: black;
       color: white;
@@ -801,9 +811,12 @@
 
   .slide-row-title {
     font-size: 1.0rem;
+
     .right {
       font-size: 2.0rem;
-    }.left {
+    }
+    
+    .left {
       font-size: 1.2rem;
     }
   }
@@ -817,10 +830,13 @@
     box-shadow: 0px 0px 5px 0px #000;
     border-radius: 3px;
     padding: 1rem 2rem;
+
     &-items{
+
       .item {
         border-radius: 5px;
         border: solid 2px #000;
+
         .photo {
           width: 90px;
           height: 100px;
@@ -834,10 +850,13 @@
     box-shadow: 0px 0px 5px 0px #000;
     border-radius: 3px;
     padding: 1rem 2rem;
+
     &-items{
+
       .item {
         border-radius: 5px;
         border: solid 2px #000;
+
         .photo {
           width: 90px;
           height: 100px;
@@ -851,10 +870,13 @@
     box-shadow: 0px 0px 5px 0px #000;
     border-radius: 3px;
     padding: 1rem 2rem;
+
     &-items{
+
       .item {
         border-radius: 5px;
         border: solid 2px #000;
+
         .photo {
           width: 90px;
           height: 100px;

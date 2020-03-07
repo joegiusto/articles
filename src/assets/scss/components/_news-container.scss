@@ -149,7 +149,7 @@
     left: 0px;
     width: 100%;
     height: inherit;
-    background-image: url(../img/News/scape-1.jpg);
+    background-image: url('../../img/News/scape-1.jpg');
     border-radius: 10px;
     border: solid 2px #000;
     background-size: cover;
@@ -239,6 +239,7 @@
   position: relative;
   transition-duration: 1s;
   background-size: 100%;
+
   .title {
     color: white;
     -webkit-text-stroke: 3px black;
@@ -248,7 +249,11 @@
     text-transform: uppercase;
     position: absolute;
     bottom: 0px;
+    @include media-breakpoint-down(md) {
+      font-size: 3rem;
+    }
   }
+
   &:hover {
     filter: brightness(30%);
     cursor: pointer;

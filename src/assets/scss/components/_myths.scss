@@ -106,10 +106,10 @@
   }
   &-title {
     position: absolute;
-    width: 100%;
+    width: fit-content;
     text-align: center;
     top: 30%;
-    left: 65%;
+    left: 55%;
     transform: translateX(-50%) translateY(-50%);
     // color: white;
     // text-shadow: $accent-color 3px 0 10px;

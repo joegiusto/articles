@@ -896,6 +896,28 @@
   }
 }
 
+@media (max-height: 500px) {
+  .outset-form {
+
+    .step-controls {
+      bottom: 0;
+      width: 100%;
+      padding: 0.3rem;
+
+      button {
+        padding: 0.3rem 3rem;
+      }
+
+      .dots {
+
+        .dot {
+          height: 2px;
+        }
+      }
+    }
+  }
+}
+
 // Mobile first am I right?...
 @media only screen and (max-width: 1400px) {
   .outset-form {

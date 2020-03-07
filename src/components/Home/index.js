@@ -6,6 +6,8 @@ import { withFirebase } from '../Firebase';
 
 import Modal from 'react-modal';
 
+import axios from 'axios';
+
 import UsersIssues from './UserIssues';
 import Issues from './Issues';
 
@@ -25,8 +27,8 @@ const customStyles = {
     transform    : 'translate(-50%, -50%)',
     border       : 'initial',
     borderRadius : 'initial',
-    maxWidth     : '600px',
-    minWidth     : '600px',
+    width        : '95vw',
+    minHeight    : '70vh',
     overflow     : 'initial'
   }
 };
@@ -71,6 +73,26 @@ class HomePageThreeBase extends React.Component {
   }
 
 	componentDidMount() {
+
+    axios.get('/ping')
+    .then(function (response) {
+      // handle success
+      console.log(response);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    });
+
+    axios.post('/tag', {
+      content: "Hello there!"
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 
 		window.addEventListener('scroll', this.listenToScroll);
 
@@ -168,7 +190,7 @@ class HomePageThreeBase extends React.Component {
 			 return [
 				<i className='fas fa-newspaper'></i>,
 				"Stories", 
-				"Stories are your everyday updates on whats happening across the country",
+				"",
 				"http://newsimg.bbc.co.uk/media/images/44712000/jpg/_44712249_paperboy466getty.jpg",
 				// <Issues type="news/stories/" sub={'issues'} get={get}/>
 				<div className="subscriptions">
@@ -196,7 +218,7 @@ class HomePageThreeBase extends React.Component {
 			 return [
 				<i className='fas fa-person-booth'></i>,
 				"Issues", 
-				"Issues are updated threads on the topics you care about",
+				"",
 				"https://149366112.v2.pressablecdn.com/wp-content/uploads/2014/03/How-Big-Oil-Harms-Animals.jpg",
 				// <Issues type="news/issues/" sub={'stories'} get={get}/>
 				<div className="subscriptions">
