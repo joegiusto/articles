@@ -7,22 +7,320 @@ import { withAuthorization, withEmailVerification } from '../../Session';
 import * as ROLES from '../../../constants/roles';
 import * as ROUTES from '../../../constants/routes';
 
-const AdminPage = () => (
-    <div className="container">
+import axios from 'axios';
+
+class AdminPage extends Component {
+  constructor(props) {
+  super(props);
+
+    this.state = {
+      catagory: 'All',
+      
+      searchFilter: 'Content',
+      searchText: '',
+
+      searchHistory: [],
+      searchLoading: false,
+      searchLoadingError: '',
+
+      tags: [],
+      tagsLoading: false,
+      tagsLoadingError: '',
+
+      results: [],
+      resultsLoading: false,
+      resultsLoadingError: '',
+
+      stories: [],
+      issues: [],
+      myths: [],
+    };
+
+    // this.getNewsByTag = this.getNewsByTag.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    let self = this;
+    self.setState({ tagsLoading: true });
+    self.setState({ searchLoading: true });
+    self.setState({ resultsLoading: true });
+
+    axios.get('/issue-tags')
+    .then(function (response) {
+
+      // handle success
+      console.log(response.data);
+
+      self.setState({
+        tags: response.data
+      });
+
+      self.setState({ tagsLoading: false });
+
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+
+      self.setState({ tagsLoading: true });
+      self.setState({ tagsLoadingError: error });
+    });
+
+    axios.get('/search-history')
+    .then(function (response) {
+
+      // handle success
+      console.log(response.data);
+
+      self.setState({
+        searchHistory: response.data
+      });
+
+      self.setState({ searchLoading: false });
+
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+
+      self.setState({ searchLoading: true });
+      self.setState({ searchLoadingError: error });
+    });
+
+    axios.get('/getNews')
+    .then(function (response) {
+
+      // handle success
+      console.log(response.data);
+
+      self.setState({
+        results: response.data
+      });
+
+      self.setState({ resultsLoading: false });
+
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+
+      self.setState({ resultsLoading: true });
+      self.setState({ resultsLoadingError: error });
+    });
+
+  }
+
+  componentWillUnmount() {
+    // this.props.firebase.issues().off();
+  }
+
+  getNewsByTag(tag) {
+    let self = this;
+
+    console.log(tag);
+
+    axios.post('/getNewsByTag', {
+      tag: tag
+    })
+    .then(function (response) {
+      console.log(response);
+      self.setState({ results: response.data });
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  }
+
+  getNewsByContent(content) {
+    let self = this;
+
+    self.setState({ searchText: content });
+  }
+
+  handleChange(event) {
+    const name = event.target.name;
+    this.setState({[name]: event.target.value});
+  }
+
+  searchText() {
+    let self = this;
+
+    axios.post('/recordSearch', {
+      text: this.state.searchText
+    })
+    .then(function (response) {
+      console.log(response);
+
+      // self.setState({ 
+      //   searchHistory: [...self.state.searchHistory, self.state.searchText],
+      //   searchText: ''
+      // })
+
+      self.setState(prevState => ({
+        searchHistory: [{text: self.state.searchText}, ...prevState.searchHistory],
+        // searchText: ''
+      }))
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  changeCatagory(catagory) {
+    this.setState({
+      catagory: catagory,
+      searchFilter: 'Content'
+    })
+  }
+
+  changeSearchFilter(filter) {
+    this.setState({
+      searchFilter: filter
+    })
+  }
+
+  render() {
+    const { 
+      tags, 
+      tagsLoading, 
+      tagsLoadingError,
+
+      searchText,
+
+      searchLoading,
+      searchHistory,
+      searchLoadingError,
+
+      results,
+      resultsLoading,
+      resultsLoadingError,
+
+      catagory, 
+      searchFilter 
+    } = this.state;
+
+    return (
+      <div className="container">
       <div>
 
         <div className="news-manage-plate">
           <h1>News Management</h1>
-          <p>Portal for admin and writer roles to manage news details.</p>
+          <p>Page for admin and writers to manage news details.</p>
+
+          <div className="catagories">
+            <div onClick={() => this.changeCatagory("All")} className={"catagory " + (catagory === "All" ? 'active' : '')}>All</div>
+            <div onClick={() => this.changeCatagory("Stories")} className={"catagory " + (catagory === "Stories" ? 'active' : '')}>Stoires</div>
+            <div onClick={() => this.changeCatagory("Issues")} className={"catagory " + (catagory === "Issues" ? 'active' : '')}>Issues</div>
+            <div onClick={() => this.changeCatagory("Myths")} className={"catagory " + (catagory === "Myths" ? 'active' : '')}>Myths</div>
+          </div>
+
+          <div className="search-controls">
+            <div className="controls">
+              <span onClick={() => this.changeSearchFilter('Content')} className={"badge " + (searchFilter === "Content" ? 'badge-primary' : 'badge-secondary')}>Content</span>
+              {/* <span onClick={() => this.changeSearchFilter(catagory)} className={"badge " + (searchFilter === catagory ? 'badge-primary' : 'badge-secondary')}>{catagory} Title</span> */}
+              <span onClick={() => this.changeSearchFilter('Tags')} className={"badge " + (searchFilter === "Tags" ? 'badge-primary' : 'badge-secondary')}>Tags</span>
+              
+              <input className="" name="searchText" type="text" value={searchText} onChange={this.handleChange}/>
+              <div onClick={() => this.searchText()} className="btn btn-articles-light">Go</div>
+
+            </div>
+            <div className="assist">
+
+            {searchFilter === "Content" ? 
+              (searchLoading ? 
+                (searchLoadingError === '' ? <span className="badge badge-success">Loading...</span> : <span className="badge badge-danger">Error Loading Search</span>)
+              : 
+              <div className="tag-container">
+                <div className="assist-header">Latest Searced Terms:</div>
+                <div className="tags">
+
+                  {searchHistory.map((search) =>
+                    <span key={search.id} onClick={() => this.getNewsByContent(search.text)} className="badge badge-primary">{search.text}</span>
+                  )}
+
+                  {/* <span className="badge badge-primary">Still working on this</span>
+                  <span className="badge badge-primary">Still working on this</span>
+                  <span className="badge badge-primary">Still working on this</span> */}
+
+                </div>
+              </div>
+              )
+              : 
+              ''
+              }
+              
+              {searchFilter === "Tags" ? 
+              (tagsLoading ? 
+                (tagsLoadingError === '' ? <span className="badge badge-success">Loading...</span> : <span className="badge badge-danger">Error Loading Tags</span>)
+              : 
+              <div className="tag-container">
+                <div className="assist-header">Popular Tags:</div>
+                <div className="tags">
+                  {tags.map((tag) =>
+                    <span key={tag.description} onClick={() => this.getNewsByTag(tag.description)} className="badge badge-primary">{tag.description}</span>
+                  )}
+                </div>
+              </div>
+              )
+              : 
+              ''
+              }
+
+            </div>
+          </div>
+
+          <div className="results">
+            <div className="results-header">Results:</div>
+            {resultsLoading ? 
+             (resultsLoadingError === '' ? <span className="badge badge-success">Loading...</span> : <div><div className="badge badge-danger">Error Loading Results</div><div><small>Most likely the content server is off.</small></div></div>)
+            :
+            ''
+            }
+            {results.map((result) => {
+              const d = new Date(result.date);
+
+              return (
+              <div className="result" key={result.issue_id}>
+                <Link to={"/news/manage/" + result.issue_id}><button className="btn btn-articles-light">Edit</button></Link>
+                {/* <button className="btn btn-articles-light">Edit</button> */}
+                <span className="badge badge-light ml-2">{d.toLocaleString().split(',')[0]} </span>
+                <span className="ml-2">{result.title}</span>
+
+                <div className={"tags " + (catagory === "All" ? '' : 'd-none')}>
+                  <span className="badge badge-dark">join</span>
+                  <span className="badge badge-dark">needed</span>
+                  <span className="badge badge-dark">for</span>
+                  <span className="badge badge-dark">tags</span>
+                </div>
+
+              </div>
+              )
+
+              })}
+          </div>
+
+          <div className="add">
+            {catagory === 'All' ? 
+            null
+            :
+            <button className="btn btn-articles-light">Add {catagory}</button>
+            }
+          </div>
+
         </div>
 
         <Switch>
           <Route exact path={ROUTES.MANAGE_DETAILS} component={UserItem} />
-          <Route exact path={ROUTES.MANAGE} component={IssuesList} />
+          {/* <Route exact path={ROUTES.MANAGE} component={IssuesList} /> */}
         </Switch>
       </div>
     </div>
-);
+    );
+  }
+}
 
 class IssuesListBase extends Component {
   constructor(props) {
@@ -65,59 +363,23 @@ class IssuesListBase extends Component {
     this.setState({ loadingIssues: true });
     this.setState({ loadingMyths: true });
 
-    // this.props.firebase.issues().on('value', snapshot => {
-    //   const usersObject = snapshot.val();
+    axios.get('/issue-tags')
+    .then(function (response) {
 
-    //   const usersList = Object.keys(usersObject).map(key => (
-    //     {
-    //       ...usersObject[key],
-    //       statesArray: this.convert(usersObject[key].interest.states),
-    //       uid: key,
-    //     }
-    //   ));
+      // handle success
+      console.log(response);
 
-    //   this.setState({
-    //     firebaseIssues: usersList,
-    //     loadingIssues: false,
-    //   });
+      this.setState({
+        firebaseIssues: response
+      });
 
-    // });
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    });
 
-    // this.props.firebase.stories().on('value', snapshot => {
-    //   const usersObject = snapshot.val();
-
-    //   const usersList = Object.keys(usersObject).map(key => (
-    //     {
-    //       ...usersObject[key],
-    //       // statesArray: this.convert(usersObject[key].interest.states),
-    //       uid: key,
-    //     }
-    //   ));
-
-    //   this.setState({
-    //     firebaseStories: usersList,
-    //     loadingStories: false,
-    //   });
-
-    // });
-
-    // this.props.firebase.myths().on('value', snapshot => {
-    //   const usersObject = snapshot.val();
-
-    //   const usersList = Object.keys(usersObject).map(key => (
-    //     {
-    //       ...usersObject[key],
-    //       // statesArray: this.convert(usersObject[key].interest.states),
-    //       uid: key,
-    //     }
-    //   ));
-
-    //   this.setState({
-    //     firebaseMyths: usersList,
-    //     loadingMyths: false,
-    //   });
-
-    // });
+    
     
   }
 
@@ -442,7 +704,40 @@ class IssuesListBase extends Component {
 
 const UserItem = ({ match }) => (
   <div>
-  <h2>Editing Issue ({match.params.id})</h2>
+    <h2>Editing Issue ({match.params.id})</h2>
+
+    <div class="form-group">
+      <label for="exampleFormControlInput1">Email address</label>
+      <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com"/>
+    </div>
+
+    <div class="form-group">
+      <label for="exampleFormControlSelect1">Example select</label>
+      <select class="form-control" id="exampleFormControlSelect1">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="exampleFormControlSelect2">Example multiple select</label>
+      <select multiple class="form-control" id="exampleFormControlSelect2">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="exampleFormControlTextarea1">Example textarea</label>
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    </div>
+
   </div>
 );
 
