@@ -63,7 +63,7 @@ app.get('/issue-tags', function (req, res) {
 
   let data = 'original before query'
 
-  con.query('SELECT * FROM tag', function (err, result, fields) {
+  con.query('SELECT * FROM tags', function (err, result, fields) {
 
     if (err) throw err;
 
@@ -97,7 +97,10 @@ app.get('/getNews', (req, res) => {
 
   let data = 'original before query'
 
-  let sql = "SELECT * FROM issues";
+  // let sql = "SELECT * FROM news";
+  // let sql = "SELECT n.* , GROUP_CONCAT(tm.tag_id) AS tags FROM news n LEFT JOIN news_tag_map tm ON tm.issue_id = n.issue_id GROUP BY n.issue_id";
+  let sql = "SELECT n.* , GROUP_CONCAT(tm.tag_id) AS tags, GROUP_CONCAT(t.description) AS tags_names FROM news n LEFT JOIN news_tag_map tm ON tm.issue_id = n.issue_id LEFT JOIN tags t ON t.tag_id = tm.tag_id GROUP BY n.issue_id"
+  // let sql = "SELECT n.*, GROUP_CONCAT(t.description) AS tags_names FROM news n LEFT JOIN news_tag_map tm ON tm.issue_id = n.issue_id LEFT JOIN tags t ON t.tag_id = tm.tag_id GROUP BY n.issue_id"
 
   // con.query("SELECT * FROM issues o JOIN issues_tag_map ot ON ot.issue_id = o.issue_id JOIN tag t ON t.tag_id = ot.tag_id WHERE t.description IN ('tesla') GROUP BY o.issue_id HAVING COUNT(DISTINCT t.description) = 1", function (err, result, fields) {
     con.query(sql, function (err, result, fields) {
@@ -116,7 +119,8 @@ app.post('/getNewsByTag', (req, res) => {
 
   let data = 'original before query'
 
-  let sql = "SELECT * FROM issues o JOIN issues_tag_map ot ON ot.issue_id = o.issue_id JOIN tag t ON t.tag_id = ot.tag_id WHERE t.description IN (?) GROUP BY o.issue_id HAVING COUNT(DISTINCT t.description) = 1";
+  // let sql = "SELECT o.* , GROUP_CONCAT(t.description) AS tags_names FROM news o JOIN news_tag_map ot ON ot.issue_id = o.issue_id JOIN tags t ON t.tag_id = ot.tag_id WHERE t.description IN (?) GROUP BY o.issue_id HAVING COUNT(DISTINCT t.description) = 1";
+  let sql = "SELECT o.* , GROUP_CONCAT(t.description) AS tags_names FROM news o JOIN news_tag_map ot ON ot.issue_id = o.issue_id JOIN tags t ON t.tag_id = ot.tag_id GROUP BY o.issue_id HAVING FIND_IN_SET(?, tags_names)"
 
   // con.query("SELECT * FROM issues o JOIN issues_tag_map ot ON ot.issue_id = o.issue_id JOIN tag t ON t.tag_id = ot.tag_id WHERE t.description IN ('tesla') GROUP BY o.issue_id HAVING COUNT(DISTINCT t.description) = 1", function (err, result, fields) {
     con.query(sql, req.body.tag, function (err, result, fields) {

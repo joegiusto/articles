@@ -16,6 +16,7 @@ class AdminPage extends Component {
     this.state = {
       catagory: 'All',
       
+      searchAlert: false,
       searchFilter: 'Content',
       searchText: '',
 
@@ -27,6 +28,7 @@ class AdminPage extends Component {
       tagsLoading: false,
       tagsLoadingError: '',
 
+      resultsAll: [],
       results: [],
       resultsLoading: false,
       resultsLoadingError: '',
@@ -95,7 +97,8 @@ class AdminPage extends Component {
       console.log(response.data);
 
       self.setState({
-        results: response.data
+        results: response.data,
+        resultsAll: response.data
       });
 
       self.setState({ resultsLoading: false });
@@ -125,7 +128,11 @@ class AdminPage extends Component {
     })
     .then(function (response) {
       console.log(response);
-      self.setState({ results: response.data });
+      self.setState({ 
+        results: response.data,
+        catagory: 'All',
+        searchAlert: true,
+       });
     })
     .catch(function (error) {
       console.log(error);
@@ -170,9 +177,27 @@ class AdminPage extends Component {
   }
 
   changeCatagory(catagory) {
+
+    let catagoryNumber = 0;
+
+    switch(catagory) {
+      case 'Stories':
+        catagoryNumber = 1;
+        break;
+      case 'Issues':
+        catagoryNumber = 2;
+        break;
+      case 'Myths':
+        catagoryNumber = 3;
+        break;
+      default:
+        catagoryNumber = 0;
+    }
+
     this.setState({
       catagory: catagory,
-      searchFilter: 'Content'
+      searchFilter: 'Content',
+      results: catagoryNumber !== 0 ? this.state.resultsAll.filter(result => result.catagory === catagoryNumber) : this.state.resultsAll,
     })
   }
 
@@ -227,6 +252,11 @@ class AdminPage extends Component {
               <div onClick={() => this.searchText()} className="btn btn-articles-light">Go</div>
 
             </div>
+
+            <div className={"search-alert " + (this.state.searchAlert === true ? 'active' : '')}>
+              <div className="search-alert-text">Tag searching can only be preformed on 'All' results currently.</div>
+            </div>
+
             <div className="assist">
 
             {searchFilter === "Content" ? 
@@ -281,6 +311,7 @@ class AdminPage extends Component {
             }
             {results.map((result) => {
               const d = new Date(result.date);
+              let splits = [];
 
               return (
               <div className="result" key={result.issue_id}>
@@ -290,10 +321,18 @@ class AdminPage extends Component {
                 <span className="ml-2">{result.title}</span>
 
                 <div className={"tags " + (catagory === "All" ? '' : 'd-none')}>
-                  <span className="badge badge-dark">join</span>
-                  <span className="badge badge-dark">needed</span>
-                  <span className="badge badge-dark">for</span>
-                  <span className="badge badge-dark">tags</span>
+                  {result.tags_names !== null ?
+
+                    (
+                      splits = result.tags_names.split(','),
+                      splits.map((tag) => {
+                        return <span className="badge badge-dark">{tag}</span>
+                      })
+                    )
+
+                  :
+                   'No Tags'
+                  }
                 </div>
 
               </div>

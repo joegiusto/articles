@@ -75,6 +75,17 @@
 
   }
 
+  .search-alert {
+    display: none;
+    background-color: rgb(255, 8, 0);
+    padding: 0.5rem 1rem;
+    // color: black;
+
+    &.active {
+      display: block;
+    }
+  }
+
   .results {
     background-color: white;
     color: black;
