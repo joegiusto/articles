@@ -25,6 +25,7 @@ class AdminPage extends Component {
       searchLoadingError: '',
 
       tags: [],
+      searchedTag: '',
       tagsLoading: false,
       tagsLoadingError: '',
 
@@ -120,6 +121,7 @@ class AdminPage extends Component {
 
   getNewsByTag(tag) {
     let self = this;
+    let catagoryWas = this.state.catagory;
 
     console.log(tag);
 
@@ -127,16 +129,35 @@ class AdminPage extends Component {
       tag: tag
     })
     .then(function (response) {
+
       console.log(response);
+
       self.setState({ 
         results: response.data,
         catagory: 'All',
-        searchAlert: true,
+        searchedTag: tag
        });
+
     })
     .catch(function (error) {
       console.log(error);
     });
+
+    console.log(catagoryWas);
+
+    if (catagoryWas === 'All') {
+
+    } else {
+      this.setState({
+        searchAlert: true
+      })
+      setTimeout( function() { 
+        self.setState({
+          searchAlert: false
+        })
+      }, 3000);
+    }
+   
 
   }
 
@@ -198,6 +219,7 @@ class AdminPage extends Component {
       catagory: catagory,
       searchFilter: 'Content',
       results: catagoryNumber !== 0 ? this.state.resultsAll.filter(result => result.catagory === catagoryNumber) : this.state.resultsAll,
+      searchedTag: ''
     })
   }
 
@@ -290,7 +312,7 @@ class AdminPage extends Component {
                 <div className="assist-header">Popular Tags:</div>
                 <div className="tags">
                   {tags.map((tag) =>
-                    <span key={tag.description} onClick={() => this.getNewsByTag(tag.description)} className="badge badge-primary">{tag.description}</span>
+                    <span key={tag.description} onClick={() => this.getNewsByTag(tag.description)} className={"badge " + (tag.description === this.state.searchedTag ? 'badge-dark' : 'badge-light')}>{tag.description}</span>
                   )}
                 </div>
               </div>
@@ -315,7 +337,7 @@ class AdminPage extends Component {
 
               return (
               <div className="result" key={result.issue_id}>
-                <Link to={"/news/manage/" + result.issue_id}><button className="btn btn-articles-light">Edit</button></Link>
+                <Link to={"/news/manage/" + result.issue_id}><button className="btn btn-articles-light"><i class="fas fa-edit mr-0"></i></button></Link>
                 {/* <button className="btn btn-articles-light">Edit</button> */}
                 <span className="badge badge-light ml-2">{d.toLocaleString().split(',')[0]} </span>
                 <span className="ml-2">{result.title}</span>
@@ -326,7 +348,7 @@ class AdminPage extends Component {
                     (
                       splits = result.tags_names.split(','),
                       splits.map((tag) => {
-                        return <span className="badge badge-dark">{tag}</span>
+                        return <span onClick={() => this.getNewsByTag(tag)} className={"badge " + (tag === this.state.searchedTag ? 'badge-dark' : 'badge-light')}>{tag}</span>
                       })
                     )
 

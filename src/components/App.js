@@ -48,7 +48,7 @@ import PasswordForgetPage from './PasswordForget';
 import MailPage from './Mail';
 
 import AdminPage from './Admin';
-import DonatePage from './Donate';
+// import DonatePage from './Donate';
 
 // import PlaygroundPage from './Playground';
 import Chat from './Chat';
@@ -157,7 +157,7 @@ const App = () => (
         <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
         
         <Route path={ROUTES.ADMIN} component={AdminPage} />
-        <Route path={ROUTES.DONATE} component={DonatePage} />
+        {/* <Route path={ROUTES.DONATE} component={DonatePage} /> */}
 
         <Route path={ROUTES.MAIL} component={MailPage} />
 
