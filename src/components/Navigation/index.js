@@ -27,6 +27,20 @@ function Menu(props) {
   const [pinOpen, setPinOpen] = useState(false);
   const [partySectionOpen, setPartySectionOpen] = useState(false);
 
+  const documentWidth = document.documentElement.clientWidth;
+  const windowWidth = window.innerWidth;
+  const scrollBarWidth = windowWidth - documentWidth;
+
+  console.log(documentWidth, windowWidth, scrollBarWidth)
+
+  if ( menuOpen === false ) {
+    document.body.style.overflow = 'auto';
+    document.body.style.paddingRight = '0px';
+  } else {
+    document.body.style.overflow = 'hidden';
+    document.body.style.paddingRight = scrollBarWidth + 'px';
+  }
+
   return (
     <div>
         <section onClick={() => {setMenuOpen(false)}} className={'side-menu-overlay' + (menuOpen || pinOpen ? " show" : "")}></section>

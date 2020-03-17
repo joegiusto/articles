@@ -2,27 +2,27 @@ import React, { Component } from 'react';
 // import { compose } from 'recompose';
 // import { withAuthorizationHide } from '../Session';
 import { withFirebase } from '../../Firebase';
+import * as ROUTES from '../../../constants/routes';
+import { Switch, Route, Link } from 'react-router-dom';
 import Countdown from 'react-countdown-now';
 import moment from 'moment';
 // import SubmissionItem from './SubmissionItem';
 
 const Submissions = () => (
-  <div className='container mt-5 d-flex-void container-center-void'>
+  <div className='container-fluid'>
 
     <div className="row my-auto justify-content-between">
 
-      {/* <div className="col-12 col-md-4"></div> */}
-
-      <div className="col-12 col-md-4">
+      <div className="col-12 col-md-3 pl-md-0">
 
         <div className="submission-side-panel">
 
-          <div className="px-3 pt-2 mt-3 top mx-3">
+          <div className="top">
             <h1 className="submission-side-panel_title">Submission Area</h1>
             <p className="submission-side-panel_slogan">Here artist and individuals can submit clothing ideas of thier own to have a chance to be voted on and picked to go in our shop. Artist will recieve 50% of net profit for the sales of their design.</p>
           </div>
   
-          <div className="steps px-3 pb-3">
+          <div className="steps">
             <div className="step one">
               <i class="fas fa-pencil-ruler"></i>
               <div>
@@ -48,21 +48,51 @@ const Submissions = () => (
               </div>
             </div>
           </div>
+
+          <Link to={ROUTES.STORE_SUBMISSIONS_SUBMIT}><button className="submission-side-panel_submit btn btn-dark w-100 mt-3">Submit a Design <i className="fas fa-mouse-pointer ml-2"></i></button></Link>
+          <Link to={ROUTES.STORE_SUBMISSIONS}><button className="submission-side-panel_submit btn btn-dark w-100 mt-3">View Designs <i className="fas fa-mouse-pointer ml-2"></i></button></Link>
+          
           
         </div>
 
-        <button className="submission-side-panel_submit btn btn-dark w-100 mt-3">Submit a Design <i className="fas fa-mouse-pointer ml-2"></i></button>
-
       </div>
-      <div className="col-12 col-md-8">
-        <h1>Popular {moment().format('MMMM')} Submissions<span className="badge badge-secondary ml-2"></span></h1>
-        <h5>Next Pick At End of Month <span className="badge badge-secondary"><Countdown date={moment().startOf('month').add(1, 'months').format('YYYY-MM-DD')} /></span></h5>
-        {console.log( moment().startOf('month').add(1, 'months').format('YYYY-MM-DD') )}
-        <p>Log in to vote.</p>
-        <p>Sort by <a href="">Top</a> <a href="">New</a> <a href="">Controversial</a> </p>
-        
-        <FirebaseVoteList/>
 
+      <div className="col-12 col-md-9">
+
+        <div>
+          
+          <Switch>
+          <Route exact path={ROUTES.STORE_SUBMISSIONS} render={() =>
+            <div className="listings">
+              <h1>
+                {moment().format('MMMM')} Submissions
+              </h1>
+
+              <h5>Next Pick At End of Month <span className="badge badge-danger"><Countdown date={moment().startOf('month').add(1, 'months').format('YYYY-MM-DD')} /></span></h5>
+  
+              <p>Sort by <a href="#">Top</a> <a href="#">New</a> <a href="#">Controversial</a></p>
+              <div className="filters">
+                <div className="badge badge-dark">Top</div>
+                <div className="badge badge-light">New</div>
+                <div className="badge badge-light">Controversial</div>
+              </div>
+
+
+              <div className="login-alert alert alert-danger w-100">
+                <div className="d-flex align-items-center justify-content-between">
+                  <span>You must be logged into vote and filter</span>
+                  <button className="btn btn-articles-light">Log In</button>
+                </div>
+              </div>
+
+              <FirebaseVoteList/>
+            </div>
+          } />
+          <Route path={ROUTES.STORE_SUBMISSIONS_SUBMIT} component={SubmitBase} />
+          </Switch>
+
+        </div>
+        
       </div>
     </div>
 
@@ -140,6 +170,21 @@ class FirebaseVoteListBase extends Component {
         {submissions.map(submission => (
           <FirebaseVoteItem function={this.add} name={submission.name} state={submission.state} photo={submission.photo} submission={submission} key={'extra-' + submission.uid}/> 
         ))}
+
+        {submissions.map(submission => (
+          <FirebaseVoteItem function={this.add} name={submission.name} state={submission.state} photo={submission.photo} submission={submission} key={'extra-' + submission.uid}/> 
+        ))}
+
+        {submissions.map(submission => (
+          <FirebaseVoteItem function={this.add} name={submission.name} state={submission.state} photo={submission.photo} submission={submission} key={'extra-' + submission.uid}/> 
+        ))}
+
+        <div className="col-12 ">
+          <div className="think-you-can-do-better">
+            <h1>Think you can do better?</h1>
+            <p>Submissions are open to everyone that follows the rules of submissions and is signed up with the site. Remember, winner gets thier design printed and sent to them as well as 50% of all the net-profit that it takes in on the store.</p>
+          </div>
+        </div>
 
       {/* {submissions.map(submission => (
           <div key={submission.uid} className="col-2">
@@ -251,7 +296,7 @@ class FirebaseVoteItemBase extends Component {
   render() {
 
     return (
-      <div  className="col-6 col-md-3 mt-4">
+      <div  className="col-12 col-sm-4 col-md-3 col-xl-3 col-dt-1 mt-4">
           
         <div className="submission-item submission-item-override">
           
@@ -281,6 +326,28 @@ class FirebaseVoteItemBase extends Component {
     )
   }
 
+}
+
+class SubmitBase extends Component {
+  constructor(props) {
+  super(props);
+
+    this.state = {
+      loading: false,
+      submissions: [],
+    };
+
+  }
+
+  render() {
+    return(
+      <div>
+        
+        <input type="text" placeholder="Title of work"/>
+      </div>
+    )
+  }
+  
 }
 
 const FirebaseVoteList = withFirebase(FirebaseVoteListBase);

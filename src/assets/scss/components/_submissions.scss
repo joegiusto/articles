@@ -1,150 +1,25 @@
-.submission-item {
-  background-color: #000;
-  height: 325px;
-  position: relative;
-  .submission-user {
-    position: absolute;
-    top: -10px;
-    left: 0px;
-    background-color: #ffffff;
-    border: 2px solid rgb(0, 0, 0);
-    // border-radius: 10px;
-    border-top-left-radius: 10px;
-    padding: 0px .3rem;
-    // &-bar {
-    //   position: absolute;
-    //   top: 0px;
-    //   background-color: #000;
-    //   width: 100%;
-    //   height: 35px;
-    //   border: 5px solid #000;
-    // }
-  }
-  .submission-state {
-    color: #000;
-    border: 2px solid #000;
-    padding: 0px .4rem;
-    position: absolute;
-    background-color: rgb(255, 255, 255);
-    border-top-right-radius: 10px;
-    // border-top-left-radius: 10px;
-    top: -10px;
-    right: 0px;
-  }
-  .submission-photo {
-    // background-color: #ffffff;
-    position: absolute;
-    bottom: 25px;
-    border: 2px solid rgb(114, 114, 114);
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-    // border-radius: 10px;
-    width: 100%;
-    height: 270px;
-    &.one {
-      background-image: url(../../img/Store/founder-jacket.jpg);
-      background-size: 100%;
-    }
-    &.two {
-      background-image: url(../../img/Store/cause-shirt.jpg);
-      background-size: 100%;
-    }
-    &.three {
-      background-image: url(../../img/Store/sweater.jpg);
-      background-size: 100%;
-    }
-    &.four {
-      background-image: url(../../img/Store/filler.jpg);
-      background-size: 100%;
-    }
-    &.five {
-      background-image: url(../../img/Store/filler.jpg);
-      background-size: 100%;
-    }
-    &.six {
-      background-image: url(../../img/Store/filler.jpg);
-      background-size: 100%;
-    }
-  }
-  & .vote {
-    color: $accent-color;
-    background-color: white;
-    border: 3px solid $accent-color;
-    border-radius: 100%;
-    position: absolute;
-    bottom: -15px;
-    text-align: center;
-    &.active {
-      background-color: $accent-color;
-      i {
-        color: white;
-      }
-    }
-    .far {
-      width: 25px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    &-up {
-      right: 35px;
-    }
-    &-down {
-      right: 0px;
-    }
-    &.count {
-      left: 0px;
-      width: 60px;
-      border-radius: 0px;
-    }
-  }
-}
-
-.submission-item-override {
-  height: 325px;
-
-  .submission-photo {
-    bottom: 42px;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-  }
-  .vote {
-    bottom: 5px;
-    &.count {
-      left: 5px;
-      bottom: 7px;
-    }
-  }
-  .vote-up {
-    right: 45px;
-  }
-  .vote-down {
-    right: 5px;
-  }
-}
-
-.container-center {
-  height: calc(100vh - 50px)!important;
-}
-
 .submission-side-panel {
-  border: solid 2px rgb(70, 70, 70);
-  border-radius: 5px;
+  border-right: solid 5px #000;
   box-shadow: 0 8px 6px -6px black;
   background-color: white;
   background: 
     linear-gradient(45deg, $accent-color 0% 20%, rgba(255, 255, 255, 0) 20% 80%, $base-color 80%),
-    linear-gradient(135deg, darken($base-color, 5%) 0% 25%, rgba(0, 0, 0, 0.959) 10% 80%, darken($accent-color, 5%) 80% 100%);
+    linear-gradient(135deg, darken($base-color, 5%) 0% 25%, rgba(0, 0, 0, 0.75)% 80%, darken($accent-color, 5%) 80% 100%);
   color: #000;
+  padding: 1rem;
   text-shadow: 0px 1px #6b6b6b;
-
+  height: calc(100vh - 50px);
   position: sticky;
   right: 0;
-  top: 100px;
+  top: 50px;
+
+  $sharedBorder: solid 2px #000;
+  $sharedBackground: rgba(255, 255, 255, 0.75);
 
   .top {
-    border: solid 2.5px #000;
-    // padding: 4rem;
-    background-color: rgba($base-color, 0.75);
+    border: $sharedBorder;
+    padding: 1rem;
+    background-color: $sharedBackground;
   }
 
   &_title {
@@ -163,56 +38,243 @@
   }
 
   &_submit {
-    background: repeating-linear-gradient(to top , $accent-color,  $base-color );
+    // background: repeating-linear-gradient(to top , $accent-color,  $base-color );
+    background-color: white;
     color: #000;
     border: solid 2px rgb(70, 70, 70);
     border-radius: 5px;
     box-shadow: 0 8px 6px -6px black;
     font-weight: bold;
+  }
 
-    // position: absolute;
+  .steps{
+    position: relative;
+    // padding-right: 1rem;
+    // padding-left: 1rem;
+    .step {
+      margin-top: .5rem;
+      border: $sharedBorder;
+      padding: .25rem;
+      background-color: $sharedBackground;
+      display: flex;
+      flex-direction: row;
+      // align-items: center;
+      p {
+        margin-bottom: 5px;
+      }
+      i {
+        font-size: 1.5rem;
+        margin: 1rem;
+      }
+      h5 {
+        text-decoration: underline;
+        font-weight: bold;
+      }
+      div {
+        padding-left: .5rem;
+      }
+      &.one {
+        // margin-top: 5rem;
+        transform: translateX(0%);
+      }
+      &.two {
+        transform: translateX(0%);
+      }
+      &.three {
+        transform: translateX(0%);
+      }
+    }
+  }
+
+}
+
+.listings {
+  
+  @include media-breakpoint-up(sm) {
+    padding: 2rem 0;
+  }
+
+  @include media-breakpoint-up(md) {
+    padding: 2rem 1rem;
+  }
+
+  @include media-breakpoint-up(lg) {
+    padding: 2rem 5rem;
+  }
+
+  @include media-breakpoint-up(xl) {
+    padding: 2rem 8rem;
+  }
+
+  @include media-breakpoint-up(dt) {
+    padding: 2rem 15rem;
+  }
+
+  .filters {
+    font-size: 20px;
+
+    .badge {
+      cursor: pointer;
+    }
+
+    .badge-light {
+      border: solid 1px #000;
+    }
+
+    .badge:not(:last-child) {
+      margin-right: 0.25rem;
+    }
+  }
+
+  .login-alert {
     position: sticky;
-    // right: 0;
-    top: 860px;
+    z-index: 1;
+    top: 50px;
   }
 
-}
+  .submission-item {
+    background-color: #000;
+    height: 325px;
+    position: relative;
+    .submission-user {
+      position: absolute;
+      top: -10px;
+      left: 0px;
+      background-color: #ffffff;
+      border: 2px solid rgb(0, 0, 0);
+      // border-radius: 10px;
+      border-top-left-radius: 10px;
+      padding: 0px .3rem;
+      // &-bar {
+      //   position: absolute;
+      //   top: 0px;
+      //   background-color: #000;
+      //   width: 100%;
+      //   height: 35px;
+      //   border: 5px solid #000;
+      // }
+    }
+    .submission-state {
+      color: #000;
+      border: 2px solid #000;
+      padding: 0px .4rem;
+      position: absolute;
+      background-color: rgb(255, 255, 255);
+      border-top-right-radius: 10px;
+      // border-top-left-radius: 10px;
+      top: -10px;
+      right: 0px;
+    }
+    .submission-photo {
+      // background-color: #ffffff;
+      position: absolute;
+      bottom: 25px;
+      border: 2px solid rgb(114, 114, 114);
+      border-top-right-radius: 10px;
+      border-top-left-radius: 10px;
+      // border-radius: 10px;
+      width: 100%;
+      height: 270px;
+      &.one {
+        background-image: url(../../img/Store/founder-jacket.jpg);
+        background-size: 100%;
+      }
+      &.two {
+        background-image: url(../../img/Store/cause-shirt.jpg);
+        background-size: 100%;
+      }
+      &.three {
+        background-image: url(../../img/Store/sweater.jpg);
+        background-size: 100%;
+      }
+      &.four {
+        background-image: url(../../img/Store/filler.jpg);
+        background-size: 100%;
+      }
+      &.five {
+        background-image: url(../../img/Store/filler.jpg);
+        background-size: 100%;
+      }
+      &.six {
+        background-image: url(../../img/Store/filler.jpg);
+        background-size: 100%;
+      }
+    }
+    & .vote {
+      color: $accent-color;
+      background-color: white;
+      border: 3px solid $accent-color;
+      border-radius: 100%;
+      position: absolute;
+      bottom: -15px;
+      text-align: center;
+      &.active {
+        background-color: $accent-color;
+        i {
+          color: white;
+        }
+      }
+      .far {
+        width: 25px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      &-up {
+        right: 35px;
+      }
+      &-down {
+        right: 0px;
+      }
+      &.count {
+        left: 0px;
+        width: 60px;
+        border-radius: 0px;
+      }
+    }
+  }
+  
+  .submission-item-override {
+    height: 325px;
+  
+    .submission-photo {
+      bottom: 42px;
+      border-top-right-radius: 10px;
+      border-top-left-radius: 10px;
+    }
+    .vote {
+      bottom: 5px;
+      &.count {
+        left: 5px;
+        bottom: 7px;
+      }
+    }
+    .vote-up {
+      right: 45px;
+    }
+    .vote-down {
+      right: 5px;
+    }
+  }
 
-.steps{
-  position: relative;
-  // padding-right: 1rem;
-  // padding-left: 1rem;
-  .step {
-    margin-top: .5rem;
-    border: solid 2.5px #000;
-    padding: .25rem;
-    background-color: rgba($base-color, 0.75);
+  .think-you-can-do-better {
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: black;
+    color: white;
+
     display: flex;
-    flex-direction: row;
-    // align-items: center;
+    // flex-direction: row;
+    
+    h1 {
+      flex: 1;
+      // flex-grow: 1.5;
+    }
+
     p {
-      margin-bottom: 5px;
+      flex: 1;
+      // flex-grow: 1;
     }
-    i {
-      font-size: 1.5rem;
-      margin: 1rem;
-    }
-    h5 {
-      text-decoration: underline;
-      font-weight: bold;
-    }
-    div {
-      padding-left: .5rem;
-    }
-    &.one {
-      // margin-top: 5rem;
-      transform: translateX(0%);
-    }
-    &.two {
-      transform: translateX(0%);
-    }
-    &.three {
-      transform: translateX(0%);
-    }
+
   }
 }
+

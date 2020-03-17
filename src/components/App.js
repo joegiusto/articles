@@ -19,6 +19,7 @@ import ReportsManagePage from './Reports/Manage';
 import StorePage from './Store'
 import StoreCheckoutPage from './Store/Checkout'
 import StoreSubmissionsPage from './Store/Submissions'
+import StoreSubmissionsSubmitPage from './Store/Submissions'
 import StoreManage from './Store/Manage'
 
 import NewsPage from './News'
@@ -129,6 +130,8 @@ const App = () => (
         <Route exact path={ROUTES.STORE_VIEW} component={StorePage} />
         <Route path={ROUTES.CHECKOUT} component={StoreCheckoutPage} />
         <Route path={ROUTES.STORE_SUBMISSIONS} component={StoreSubmissionsPage} />
+        <Route path={ROUTES.STORE_SUBMISSIONS_SUBMIT} component={StoreSubmissionsSubmitPage}/>
+
         <Route path={ROUTES.STORE_MANAGE} component={StoreManage} />
   
         <Route exact path={ROUTES.NEWS} component={NewsPage} />

@@ -19,6 +19,7 @@ export const STORE ='/store'
 export const STORE_VIEW ='/store/view/:id'
 export const CHECKOUT = '/store/checkout';
 export const STORE_SUBMISSIONS = '/store/submissions';
+export const STORE_SUBMISSIONS_SUBMIT = '/store/submissions/submit/';
 
 export const STORE_MANAGE ='/store/manage'
 export const STORE_MANAGE_DETAILS ='/store/manage/:id'
