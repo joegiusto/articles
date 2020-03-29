@@ -10,6 +10,7 @@ import StoreItem from '../Store/StoreItemAlpha';
 import placeholder from '../../assets/img/placeholder.png'
 // import ArticlesHomePageSlick from './ArticlesHomePageSlick';
 import logo from '../../assets/img/logo.png'
+import flag from '../../assets/img/flag.png'
 
 class SimpleSlider extends React.Component {
   render() {
@@ -48,6 +49,7 @@ class SimpleSlider extends React.Component {
 const LandingPage = () => (
 <div className="landing-page landing-new">
 
+	{/* Think about it */}
 	<section className="header-section">
 
 		<div className="background">
@@ -92,10 +94,16 @@ const LandingPage = () => (
 
 	</section>
 
-	<section className="intro-section">
+	{/* articles.media */}
+	<section className="section-break brand-name">
+		articles.media
+	</section>
+
+	{/* We Have a Plan! */}
+	<section className="intro-section base">
 		<div className="background"></div>
 		<div className="content">
-			<div className="container h-100">
+			<div className="container">
 
 				<div className="custom-panel">
 
@@ -105,7 +113,7 @@ const LandingPage = () => (
 							<div className="col-12 col-md-6">
 								<div className="left">
 
-									<div className="content-title mb-4" style={{lineHeight: "45px"}}>Dear America, We Have A Plan!</div>
+									<div className="content-title mb-4" style={{lineHeight: "45px"}}>Dear America, We Have a Plan!</div>
 									<h6 className="content-highlight content-text">It's a bit to explain though...</h6>
 									<div className="content-text">
 										Articles is a for-profit political organization and platform, working to make America a better place for the people through avenues of transparency, clothing, news and politics.
@@ -123,43 +131,49 @@ const LandingPage = () => (
 						</div>
 					</div>
 
-					{/* <div className="middle">
-						<div>This is where a intro message will go before we get into the snippets of each thing.</div>
-						<div>This is where a intro message will go before we get into the snippets of each thing.</div>
-						<div>This is where a intro message will go before we get into the snippets of each thing.</div>
-						<div>This is where a intro message will go before we get into the snippets of each thing.</div>
-						<div>This is where a intro message will go before we get into the snippets of each thing.</div>
-						<div>This is where a intro message will go before we get into the snippets of each thing.</div>
-						<div>This is where a intro message will go before we get into the snippets of each thing.</div>
-						<div>This is where a intro message will go before we get into the snippets of each thing.</div>
-					</div> */}
-
-					{/* <div className="bottom">
-						<div className="row pb-3">
-
-							<div className="col-12 col-md-6 mt-3">
-								<div className="card shadow">Transparency</div>
-							</div>
-
-							<div className="col-12 col-md-6 mt-3">
-								<div className="card shadow">Clothing</div>
-							</div>
-
-							<div className="col-12 col-md-6 mt-3">
-								<div className="card shadow">News</div>
-							</div>
-
-							<div className="col-12 col-md-6 mt-3">
-								<div className="card shadow">Politics</div>
-							</div>
-
-						</div>
-					</div> */}
-
 				</div>
 
 			</div>
 		</div>
+	</section>
+
+	{/* Motto */}
+	<section className="section-break motto">
+		<div className="text-center motto-block">Something To Stand For</div>
+	</section>
+
+	<section className="avenues-section">
+
+		<div className="container controls">
+
+			<div className="avenue-selector">
+				<div className="avenue avenue-control prev"> { '<' } </div>
+
+				<div className="avenue active transparency">Transparency</div>
+				<div className="avenue clothing">Clothing</div>
+				<div className="avenue news">News</div>
+				<div className="avenue politics">Politics</div>
+
+				<div className="avenue avenue-control next"> > </div>
+			</div>
+
+			<div className="timer">
+				<div className="time">15</div>
+				<div className="pause-play"><i class="far fa-pause-circle"></i></div>
+
+				<div className="progress">
+					<div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style={{width: "75%"}}></div>
+				</div>
+
+				{/* <div className="timer-bar">
+					<div className="progress"></div>
+				</div> */}
+
+			</div>
+
+		</div>
+
+
 	</section>
 
 	<section className="tour-section">
@@ -324,7 +338,7 @@ const LandingPage = () => (
 
 	</section>
 
-	<section className="more-section">
+	<section className="more-section d-none">
 		<div className="background"></div>
 		<div className="content">
 
@@ -343,38 +357,188 @@ const LandingPage = () => (
 
 	</section>
 
-	<section className="footer-section">
+	
 
-	</section>
+	<section className="intro-section accent">
+		<div className="background"></div>
+		<div className="content">
+			<div className="container">
 
-	<footer>
-		<div className="container inside">
-			<div>
-				<img className="logo" height="200px" style={{filter: 'drop-shadow(0px 0px 2px #edd)'}} src={logo} alt="" />
-				<div className="text-center tag">Something To Stand For</div>
-			</div>
-			<div>Quick Links</div>
-			<div>Socials</div>
-			<div>
-				<div className="title">Apps</div>
+				<div className="custom-panel">
 
-				<div className="app-list">
+					<div className="top">
+						<div className="row">
 
-					<div className="app">
-						<div className="platform-logo">@</div>
-						<div className="platform-date">Late 2020</div>
-					</div>
+							<div className="col-12 col-md-6">
+								<div className="left">
 
-					<div className="app">
-						<div className="platform-logo">@</div>
-						<div className="platform-date">Late 2020</div>
+									<div className="content-title mb-4" style={{lineHeight: "45px"}}>Transparency</div>
+									<h6 className="content-highlight content-text">It's a bit to explain though...</h6>
+									<div className="content-text">
+										Articles is a for-profit political organization and platform, working to make America a better place for the people through avenues of transparency, clothing, news and politics.
+									</div>
+
+								</div>
+							</div>
+
+							<div className="col-12 col-md-6">
+								<div className="right">
+									<img className="img-fluid" height="376px" src="https://www.economist.com/sites/default/files/images/print-edition/20130921_USD000_0.jpg" alt=""/>
+								</div>
+							</div>
+
+						</div>
 					</div>
 
 				</div>
 
 			</div>
 		</div>
+	</section>
+
+	<footer>
+
+		<img className="text-center d-block ml-auto mr-auto" src={logo} height="35px" alt=""/>
+
 	</footer>
+
+	<section className="intro-section base">
+		<div className="background"></div>
+		<div className="content">
+			<div className="container">
+
+				<div className="custom-panel">
+
+					<div className="top">
+						<div className="row">
+
+							<div className="col-12 col-md-6">
+								<div className="left">
+
+									<div className="content-title mb-4" style={{lineHeight: "45px"}}>Clothing</div>
+									<h6 className="content-highlight content-text">It's a bit to explain though...</h6>
+									<div className="content-text">
+										Articles is a for-profit political organization and platform, working to make America a better place for the people through avenues of transparency, clothing, news and politics.
+									</div>
+
+								</div>
+							</div>
+
+							<div className="col-12 col-md-6">
+								<div className="right">
+									<img className="img-fluid" height="376px" src="https://www.economist.com/sites/default/files/images/print-edition/20130921_USD000_0.jpg" alt=""/>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</section>
+
+	<footer>
+
+		<img className="text-center d-block ml-auto mr-auto" src={flag} height="35px" alt=""/>
+
+	</footer>
+
+	<section className="intro-section accent">
+		<div className="background"></div>
+		<div className="content">
+			<div className="container">
+
+				<div className="custom-panel">
+
+					<div className="top">
+						<div className="row">
+
+							<div className="col-12 col-md-6">
+								<div className="left">
+
+									<div className="content-title mb-4" style={{lineHeight: "45px"}}>News</div>
+									<h6 className="content-highlight content-text">It's a bit to explain though...</h6>
+									<div className="content-text">
+										Articles is a for-profit political organization and platform, working to make America a better place for the people through avenues of transparency, clothing, news and politics.
+									</div>
+
+								</div>
+							</div>
+
+							<div className="col-12 col-md-6">
+								<div className="right">
+									<img className="img-fluid" height="376px" src="https://www.economist.com/sites/default/files/images/print-edition/20130921_USD000_0.jpg" alt=""/>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</section>
+
+	<footer>
+
+		<img className="text-center d-block ml-auto mr-auto" src={logo} height="35px" alt=""/>
+
+	</footer>
+
+	<section className="intro-section base">
+		<div className="background"></div>
+		<div className="content">
+			<div className="container">
+
+				<div className="custom-panel">
+
+					<div className="top">
+						<div className="row">
+
+							<div className="col-12 col-md-6">
+								<div className="left">
+
+									<div className="content-title mb-4" style={{lineHeight: "45px"}}>Politics</div>
+									<h6 className="content-highlight content-text">It's a bit to explain though...</h6>
+									<div className="content-text">
+										Articles is a for-profit political organization and platform, working to make America a better place for the people through avenues of transparency, clothing, news and politics.
+									</div>
+
+								</div>
+							</div>
+
+							<div className="col-12 col-md-6">
+								<div className="right">
+									<img className="img-fluid" height="376px" src="https://www.economist.com/sites/default/files/images/print-edition/20130921_USD000_0.jpg" alt=""/>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</section>
+
+	<footer>
+
+		<img className="text-center d-block ml-auto mr-auto" src={logo} height="35px" alt=""/>
+
+	</footer>
+
+	<section>
+		<div className="container">
+			<div className="row">
+				<div className="col-12 col-md-6">Learn</div>
+				<div className="col-12 col-md-6">Don't</div>
+			</div>
+		</div>
+	</section>
 
 </div>
 );

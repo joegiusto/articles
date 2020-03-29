@@ -97,11 +97,28 @@
     }
 
     .result {
-      background-color: $base-color;
+      background-color: darken(#fff, 10%);
       padding: .5rem;
+      border-radius: 10px;
+      // overflow: hidden;
+      position: relative;
+
+      margin-top: 1.2rem;
       
       &:not(:last-child) {
         margin-bottom: .5rem;
+      }
+
+      .date {
+        position: absolute;
+        top: -12px;
+        // left: -10px;
+      }
+
+      .title {
+        font-size: 1rem;
+        font-weight:600;
+        margin-top: 5px;
       }
 
       .tags {
@@ -109,6 +126,7 @@
         margin: -.5rem;
         margin-top: .5rem;
         padding: 0.25rem 0.5rem;
+        border-radius: 10px;
 
         .badge {
           cursor: pointer;

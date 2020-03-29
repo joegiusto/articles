@@ -68,6 +68,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+i {
+  &.far,&.fas,&.fal,&.fad {
+    margin-right: 0;
+  }
+}
+
 .gun-icon-img {
   margin-right: 2px;
   margin-left: 7px;

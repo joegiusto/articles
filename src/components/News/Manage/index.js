@@ -337,10 +337,10 @@ class AdminPage extends Component {
 
               return (
               <div className="result" key={result.issue_id}>
-                <Link to={"/news/manage/" + result.issue_id}><button className="btn btn-articles-light"><i class="fas fa-edit mr-0"></i></button></Link>
+                {/* <Link to={"/news/manage/" + result.issue_id}><button className="btn btn-articles-light"><i class="fas fa-edit mr-0"></i></button></Link> */}
                 {/* <button className="btn btn-articles-light">Edit</button> */}
-                <span className="badge badge-light ml-2">{d.toLocaleString().split(',')[0]} </span>
-                <span className="ml-2">{result.title}</span>
+                <span className="date badge badge-dark border ml-2">{d.toLocaleString().split(',')[0]} </span>
+                <span className="title ml-2">{result.title}</span>
 
                 <div className={"tags " + (catagory === "All" ? '' : 'd-none')}>
                   {result.tags_names !== null ?

@@ -8,96 +8,160 @@ import Countdown from 'react-countdown-now';
 import moment from 'moment';
 // import SubmissionItem from './SubmissionItem';
 
-const Submissions = () => (
-  <div className='container-fluid'>
-
-    <div className="row my-auto justify-content-between">
-
-      <div className="col-12 col-md-3 pl-md-0">
-
-        <div className="submission-side-panel">
-
-          <div className="top">
-            <h1 className="submission-side-panel_title">Submission Area</h1>
-            <p className="submission-side-panel_slogan">Here artist and individuals can submit clothing ideas of thier own to have a chance to be voted on and picked to go in our shop. Artist will recieve 50% of net profit for the sales of their design.</p>
-          </div>
+class Submissions extends Component {
+  constructor(props) {
+    super(props);
   
-          <div className="steps">
-            <div className="step one">
-              <i class="fas fa-pencil-ruler"></i>
-              <div>
-                <h5>Step One</h5>
-                <p>Create a design</p>
-              </div>
-            </div>
-    
-            <div className="step two">
-              <i className="far fa-thumbs-up"></i>
-              <div>
-                <h5>Step Two</h5>
-                <p>Submit design and wait for our approval</p>
-                <a href="">Terms</a>
-              </div>
-            </div>
-    
-            <div className="step three">
-              <i class="fas fa-trophy"></i>
-              <div>
-                <h5>Step Three</h5>
-                <p>Users will vote on designs, top design gets thier item added to the store for a month, thier submission mailed to them, and recieve a percent of the profit from thier items sales.</p>
-              </div>
-            </div>
-          </div>
+    this.state = {
+      filter: 'top',
+      scrollHeightPERCENT: 0,
+      scrollHeightPX: 0,
+      filterBarLocation: 0
+    };
+  }
 
-          <Link to={ROUTES.STORE_SUBMISSIONS_SUBMIT}><button className="submission-side-panel_submit btn btn-dark w-100 mt-3">Submit a Design <i className="fas fa-mouse-pointer ml-2"></i></button></Link>
-          <Link to={ROUTES.STORE_SUBMISSIONS}><button className="submission-side-panel_submit btn btn-dark w-100 mt-3">View Designs <i className="fas fa-mouse-pointer ml-2"></i></button></Link>
-          
-          
-        </div>
+  componentDidMount() {
+    // window.addEventListener('scroll', this.listenToScroll);
+  }
 
-      </div>
+  componentWillUnmount() {
+    // window.removeEventListener('scroll', this.listenToScroll);
+  }
 
-      <div className="col-12 col-md-9">
-
-        <div>
-          
-          <Switch>
-          <Route exact path={ROUTES.STORE_SUBMISSIONS} render={() =>
-            <div className="listings">
-              <h1>
-                {moment().format('MMMM')} Submissions
-              </h1>
-
-              <h5>Next Pick At End of Month <span className="badge badge-danger"><Countdown date={moment().startOf('month').add(1, 'months').format('YYYY-MM-DD')} /></span></h5>
+  listenToScroll = () => {
+    const winScroll =
+      document.body.scrollTop || document.documentElement.scrollTop
   
-              <p>Sort by <a href="#">Top</a> <a href="#">New</a> <a href="#">Controversial</a></p>
-              <div className="filters">
-                <div className="badge badge-dark">Top</div>
-                <div className="badge badge-light">New</div>
-                <div className="badge badge-light">Controversial</div>
+    const height =
+      document.documentElement.scrollHeight -
+      document.documentElement.clientHeight
+  
+    const scrolled = winScroll / height
+  
+    this.setState({
+      scrollHeightPERCENT: scrolled,
+      scrollHeightPX: winScroll,
+      filterBarLocation: document.getElementById("filters").offsetTop || 0
+    })
+
+  }
+
+  render() {
+    return (
+      <div className='container-fluid'>
+
+        <div className="row my-auto justify-content-between">
+
+          <div className="col-12 col-md-3 pl-md-0 col-side-panel">
+
+            <div className="submission-side-panel">
+
+              <div className="top">
+                <h1 className="submission-side-panel_title">Submission Area</h1>
+                <p className="submission-side-panel_slogan">Here artist and individuals can submit clothing ideas of thier own to have a chance to be voted on and picked to go in our shop. Artist will recieve 50% of net profit for the sales of their design.</p>
               </div>
-
-
-              <div className="login-alert alert alert-danger w-100">
-                <div className="d-flex align-items-center justify-content-between">
-                  <span>You must be logged into vote and filter</span>
-                  <button className="btn btn-articles-light">Log In</button>
+      
+              <div className="steps">
+                <div className="step one">
+                  <i class="fas fa-pencil-ruler"></i>
+                  <div>
+                    <h5>Step One</h5>
+                    <p>Create a design</p>
+                  </div>
+                </div>
+        
+                <div className="step two">
+                  <i className="far fa-thumbs-up"></i>
+                  <div>
+                    <h5>Step Two</h5>
+                    <p>Submit design and wait for our approval</p>
+                    <a href="">Terms</a>
+                  </div>
+                </div>
+        
+                <div className="step three">
+                  <i class="fas fa-trophy"></i>
+                  <div>
+                    <h5>Step Three</h5>
+                    <p>Users will vote on designs, top design gets thier item added to the store for a month, thier submission mailed to them, and recieve a percent of the profit from thier items sales.</p>
+                  </div>
                 </div>
               </div>
 
-              <FirebaseVoteList/>
+              <div className="fill"></div>
+              
+              <Switch>
+                <Route exact path={ROUTES.STORE_SUBMISSIONS} render={() =>
+                  <Link to={ROUTES.STORE_SUBMISSIONS_SUBMIT}><button className="submission-side-panel_submit btn btn-dark w-100 mt-3">Submit a Design <i className="fas fa-mouse-pointer ml-2"></i></button></Link>
+                } />
+                <Route exact path={ROUTES.STORE_SUBMISSIONS_SUBMIT} render={() =>
+                  <Link to={ROUTES.STORE_SUBMISSIONS}><button className="submission-side-panel_submit btn btn-dark w-100 mt-3">View Designs <i className="fas fa-mouse-pointer ml-2"></i></button></Link>
+                } />
+              </Switch>
+              
             </div>
-          } />
-          <Route path={ROUTES.STORE_SUBMISSIONS_SUBMIT} component={SubmitBase} />
-          </Switch>
+
+          </div>
+
+          <div className="col-12 col-md-9">
+
+            <div>
+              
+              <Switch>
+              <Route exact path={ROUTES.STORE_SUBMISSIONS} render={() =>
+                <div className="listings">
+                  <h1>
+                    {moment().format('MMMM')} Submissions
+                  </h1>
+
+                  <h5>Next Pick At End of Month <span className="badge badge-danger"><Countdown date={moment().startOf('month').add(1, 'months').format('YYYY-MM-DD')} /></span></h5>
+      
+                  {/* <p>Sort by <a href="#">Top</a> <a href="#">New</a> <a href="#">Controversial</a></p> */}
+
+                  <div className={this.state.filterBarLocation > 117 ? 'filter-blur' : ''}></div>
+
+                  <div id="filters" className="filters d-flex justify-content-between">
+
+                    <div className="badges">
+
+                      <div className="top">
+                        <div className={"badge " + (this.state.filter === 'new' ? 'badge-dark' : 'badge-light')}>New</div>
+                        {/* TODO Hold off on this one for now! */}
+                        {/* <div className="badge badge-light">Controversial</div> */}
+                        <div className={"badge " + (this.state.filter === 'top' ? 'badge-dark' : 'badge-light')}>Top (Month)</div>
+                      </div>
+
+                    </div>
+
+                    <div>
+                      <div className="badge badge-danger login-warning">Please login or sign up to vote</div>
+                    </div>
+
+                  </div>
+
+                  {/* <div className="login-alert alert alert-danger w-100">
+                    <div className="d-flex align-items-center justify-content-between">
+                      <span>Please login or create an account with us to vote.</span>
+                      <button className="btn btn-articles-light">Log In</button>
+                    </div>
+                  </div> */}
+
+                  <FirebaseVoteList/>
+                </div>
+              } />
+              <Route path={ROUTES.STORE_SUBMISSIONS_SUBMIT} component={SubmitBase} />
+              </Switch>
+
+            </div>
+            
+          </div>
 
         </div>
-        
-      </div>
-    </div>
 
-  </div>
-);
+      </div>
+    )
+  }
+}
 
 class FirebaseVoteListBase extends Component {
   constructor(props) {
@@ -296,7 +360,7 @@ class FirebaseVoteItemBase extends Component {
   render() {
 
     return (
-      <div  className="col-12 col-sm-4 col-md-3 col-xl-3 col-dt-1 mt-4">
+      <div  className="col-12 col-sm-4 col-md-3 col-xl-2 mt-4">
           
         <div className="submission-item submission-item-override">
           
@@ -342,8 +406,80 @@ class SubmitBase extends Component {
   render() {
     return(
       <div>
+        <div className="submit">
+          <h1>Submit a Design</h1>
+          
+          <div className="card">
+
+            <div className="">Design Resources availbe to assist you with creating your mock ups</div>
+
+            <div>
+              <div className="btn btn-articles-light">
+                Download
+              </div>
+            </div>
+
+          </div>
+
+          <div className="builder">
+
+            <div className="preview">
+              <div className="box"></div>
+              <div className="thumbnails">
+                <div className="thumbnail">
+                  <div className="main badge badge-light border">Main</div>
+                </div>
+                <div className="thumbnail">
+
+                </div>
+                <div className="thumbnail">
+
+                </div>
+                <div className="thumbnail">
+
+                </div>
+                <div className="thumbnail">
+
+                </div>
+                <div className="thumbnail">
+
+                </div>
+              </div>
+            </div>
+
+            <div className="form">
+
+              <div className="form-group">
+                <input className="mb-1" type="text" placeholder="Title of Work"/>
+              </div>
+              
+              <textarea name="" id="" cols="30" rows="10" placeholder="Inspiration or description of design..."></textarea>
+              
+
+              <h5 className="mt-2">Card Style</h5>
+              <div className="style">
+                <div className="badge badge-dark">Style One</div>
+                <div className="badge badge-light border ml-1">Style Two</div>
+                <div className="badge badge-light border ml-1">Style Three</div>
+                <div className="badge badge-light border">Style Four</div>
+              </div>
+
+              <h5 className="mt-2">Card Color</h5>
+              <div className="style">
+                <div className="badge badge-light border">Color One</div>
+                <div className="badge badge-light border ml-1">Color Two</div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
         
-        <input type="text" placeholder="Title of work"/>
+
+        
+
       </div>
     )
   }
