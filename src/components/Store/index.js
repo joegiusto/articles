@@ -19,7 +19,7 @@ function TypeSelect(props) {
 
 			<div className="selections">
 				<span className="selection home">
-					<i class="fas fa-home mr-0"></i>
+					<i className="fas fa-home mr-0"></i>
 				</span>
 				<span className="selection all">All</span>
 				<span className="selection originals">Originals</span>
@@ -107,7 +107,7 @@ class StorePageBase extends Component {
 	render() {
 		
 		return(
-			<section class="store-page">
+			<section className="store-page">
 				<div className={"pop-out-viewer-container " + (this.props.match.params.id ? ' active' : '')}>
 					<Link to={ROUTES.STORE} onClick={() => this.setPopOut(false)}>
 						<div className="background"></div>
@@ -332,17 +332,17 @@ class StorePageBase extends Component {
 											</div>
 	
 											<div className="product-select">
-												{/* <div class="btn-group-vertical">
+												{/* <div className="btn-group-vertical">
 													<button onClick={() => changeProductSelect("Symbolic Adoptions")} className={"btn " + (productSelect === "Symbolic Adoptions" ? ' btn-black' : ' btn-light')}>Symbolic Adoptions</button>
 													<button onClick={() => changeProductSelect("Apparel")} className={"btn " + (productSelect === "Apparel" ? ' btn-black' : ' btn-light')}>Apparel</button>
 													<button onClick={() => changeProductSelect("Memberships")} className={"btn " + (productSelect === "Memberships" ? ' btn-black' : ' btn-light')}>Memberships</button>
 													<button onClick={() => changeProductSelect("More Gifts")} className={"btn " + (productSelect === "More Gifts" ? ' btn-black' : ' btn-light')}>More Gifts</button>
 												</div> */}
-												{/* <ul class="list-group">
-													<li class="list-group-item list-group-item-dark">Symbolic Adoptions</li>
-													<li class="list-group-item list-group-item-light">Apparel</li>
-													<li class="list-group-item list-group-item-light">Memberships</li>
-													<li class="list-group-item list-group-item-light">More Gifts</li>
+												{/* <ul className="list-group">
+													<li className="list-group-item list-group-item-dark">Symbolic Adoptions</li>
+													<li className="list-group-item list-group-item-light">Apparel</li>
+													<li className="list-group-item list-group-item-light">Memberships</li>
+													<li className="list-group-item list-group-item-light">More Gifts</li>
 												</ul> */}
 											</div>
 											

@@ -105,13 +105,13 @@ class DonateFormBase extends Component {
 
           
 
-          <div class="input-group mb-3">
+          <div className="input-group mb-3">
 
-            <div class="input-group-prepend">
-              <label class="input-group-text" for="inputGroupSelect01">Type</label>
+            <div className="input-group-prepend">
+              <label className="input-group-text" for="inputGroupSelect01">Type</label>
             </div>
 
-            <select name="department" value={this.state.department} onChange={this.handleInputChange} class="custom-select" id="blank">
+            <select name="department" value={this.state.department} onChange={this.handleInputChange} className="custom-select" id="blank">
               <option value="other">Other</option>
               <option value="payrole">Payrole</option>
               <option value="inventory">Inventory</option>

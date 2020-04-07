@@ -7,6 +7,7 @@ export const SIGN_IN = '/signin';
 
 // Account Creation
 export const OUTSET = '/outset';
+export const SUBSCRIBE = '/subscribe';
 
 // Home
 export const HOME = '/home';
@@ -64,7 +65,7 @@ export const ADMIN_DETAILS = '/admin/:id';
 export const DONATE = '/donate';
 export const DONATE_DETAILS = '/donate/:id';
 
-// Mail Proto
+// Mail PROTOTYPE
 export const MAIL = '/mail';
 
 // Playground

@@ -10,6 +10,7 @@ import SignUpPage from './SignUp';
 import SignInPage from './SignIn';
 
 import OutsetPage from './Outset';
+import SubscribePage from './Subscribe';
 
 import HomePage from './Home';
 import MissionPage from './Mission';
@@ -119,6 +120,7 @@ const App = () => (
         <Route path={ROUTES.SIGN_IN} component={SignInPage} />
 
         <Route path={ROUTES.OUTSET} component={OutsetPage} />
+        <Route path={ROUTES.SUBSCRIBE} component={SubscribePage} />
         
         <Route path={ROUTES.HOME} component={HomePage} />
         <Route path={ROUTES.MISSION} component={MissionPage} />

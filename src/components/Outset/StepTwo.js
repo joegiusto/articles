@@ -63,21 +63,21 @@ const StepTwo = (props) => (
         <div onClick={() => (props.changeCut('male'))} className={"male-sign" + (props.clothingCut === 'male' ? ' active' : '') + (props.clothingCut === '' ? '' : props.clothingCut === 'other' ? '' : props.clothingCut === 'skip' ? '' : ' collapsed')}>
           <div className="text">Male</div>
           <div className="shape">
-            <div className="icon"><i class="fas fa-male"></i></div>
+            <div className="icon"><i className="fas fa-male"></i></div>
           </div>
         </div>
   
         <div onClick={() => (props.changeCut('female'))} className={"female-sign" + (props.clothingCut === 'female' ? ' active' : '') + (props.clothingCut === '' ? '' : props.clothingCut === 'other' ? '' : props.clothingCut === 'skip' ? '' : ' collapsed')}>
           <div className="text">Female</div>
           <div className="shape">
-            <div className="icon"><i class="fas fa-female"></i></div>
+            <div className="icon"><i className="fas fa-female"></i></div>
           </div>
         </div>
   
         <div onClick={() => (props.changeCut('skip'))} className={"skip-sign" + (props.clothingCut === 'skip' ? ' active' : '') + (props.clothingCut === '' ? '' : props.clothingCut === 'other' ? '' : props.clothingCut === 'skip' ? '' : ' collapsed')}>
           <div className="text">Skip</div>
           <div className="shape">
-            <div className="icon"><i class="far fa-arrow-alt-circle-right"></i></div>
+            <div className="icon"><i className="far fa-arrow-alt-circle-right"></i></div>
           </div>
         </div>
       </div>

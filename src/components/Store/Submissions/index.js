@@ -63,7 +63,7 @@ class Submissions extends Component {
       
               <div className="steps">
                 <div className="step one">
-                  <i class="fas fa-pencil-ruler"></i>
+                  <i className="fas fa-pencil-ruler"></i>
                   <div>
                     <h5>Step One</h5>
                     <p>Create a design</p>
@@ -80,7 +80,7 @@ class Submissions extends Component {
                 </div>
         
                 <div className="step three">
-                  <i class="fas fa-trophy"></i>
+                  <i className="fas fa-trophy"></i>
                   <div>
                     <h5>Step Three</h5>
                     <p>Users will vote on designs, top design gets thier item added to the store for a month, thier submission mailed to them, and recieve a percent of the profit from thier items sales.</p>

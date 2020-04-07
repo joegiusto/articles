@@ -91,7 +91,10 @@ app.get('/search-history', function (req, res) {
 
 app.get('/getNews', (req, res) => {
   // console.log(req.body.tag);
+  var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   console.log( new Date() );
+
+  console.log(ip)
 
   console.log("news loaded by someone");
 

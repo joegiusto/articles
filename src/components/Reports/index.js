@@ -298,7 +298,7 @@ class Reports extends Component {
             <div className="mt-3">
               <button className="btn btn-articles-light btn-lg w-100 report-quick-links">
                 <div>
-                  <i class="fas fa-chart-line"></i>
+                  <i className="fas fa-chart-line"></i>
                   <span>Data Charts <span style={{fontSize: '0.8rem'}}>(Coming soon!)</span></span>
                 </div>
               </button>
@@ -307,7 +307,7 @@ class Reports extends Component {
             <div className="mt-3">
               <button className="btn btn-articles-light btn-lg w-100 report-quick-links">
                 <div>
-                  <i class="fas fa-flag"></i>
+                  <i className="fas fa-flag"></i>
                   <span>Report Expense <span style={{fontSize: '0.8rem'}}>(Coming soon!)</span></span>
                 </div>
               </button>
@@ -317,7 +317,7 @@ class Reports extends Component {
               <Link to={ROUTES.DONATE}>
                 <button className="btn btn-articles-light btn-lg w-100 report-quick-links">
                   <div>
-                    <i class="fas fa-money-bill"></i>
+                    <i className="fas fa-money-bill"></i>
                     <span>Donate</span>
                   </div>
                 </button>
@@ -331,7 +331,7 @@ class Reports extends Component {
             <div className="search">
               
               <div className="input-wrap reports-shadow mt-3 dual-header">
-                <div className=""><i class="fas fa-search-dollar mx-2"></i></div>
+                <div className=""><i className="fas fa-search-dollar mx-2"></i></div>
                 <input className="search-input pl-2" type="text" placeholder="Search service is currently offline"/>
               </div>
 

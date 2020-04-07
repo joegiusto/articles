@@ -1,0 +1,22 @@
+.subscriptions-page {
+  padding: 3rem 0;
+  
+  .list {
+
+    .list-item {
+
+      .btn-articles-light {
+        border: solid 1px $accent-color;
+        margin: 0.5rem;
+
+        &.un {
+          background-color: $base-color;
+        }
+      }
+
+      &:not(:first-child) {
+        margin-top: 0.5rem;
+      }
+    }
+  }
+}

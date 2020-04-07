@@ -173,12 +173,12 @@ const Mission = (props) => {
 
             <div className="version-container">
 
-              {/* <div><i class="fas fa-info-circle"></i>Release 1.0</div> */}
+              {/* <div><i className="fas fa-info-circle"></i>Release 1.0</div> */}
               <Manager>
                 <Reference>
                   {({ ref }) => (
                     <>
-                      <div className="noselect cursor-pointer" ref={ref} onClick={() => (setShouldShowVersionInfo(!shouldShowVersionInfo))}><i class="fas fa-info-circle m-0"></i><span className="version-highlight d-none">Release 1</span></div>
+                      <div className="noselect cursor-pointer" ref={ref} onClick={() => (setShouldShowVersionInfo(!shouldShowVersionInfo))}><i className="fas fa-info-circle m-0"></i><span className="version-highlight d-none">Release 1</span></div>
                       <div className={"popper-bridge" + (shouldShowVersionInfo ? ' ' : ' d-none')}></div>
                     </>
                   )}
@@ -377,7 +377,7 @@ const Mission = (props) => {
 
                           <div className="click-text">More</div>
                           <span className="click-icon">
-                            <i class="fas fa-hand-point-up"></i>
+                            <i className="fas fa-hand-point-up"></i>
                           </span>
                           <div className="click-text">Info</div>
                         
@@ -402,7 +402,7 @@ const Mission = (props) => {
                           {/* Profit Breakdown */}
                           <div className="click-text">More</div>
                           <span className="click-icon">
-                            <i class="fas fa-hand-point-up"></i>
+                            <i className="fas fa-hand-point-up"></i>
                           </span>
                           <div className="click-text">Info</div>
 
@@ -427,7 +427,7 @@ const Mission = (props) => {
 
                           <div className="click-text">More</div>
                           <span className="click-icon">
-                            <i class="fas fa-hand-point-up"></i>
+                            <i className="fas fa-hand-point-up"></i>
                           </span>
                           <div className="click-text">Info</div>
                           
@@ -452,7 +452,7 @@ const Mission = (props) => {
 
                           <div className="click-text">More</div>
                           <span className="click-icon">
-                            <i class="fas fa-hand-point-up"></i>
+                            <i className="fas fa-hand-point-up"></i>
                           </span>
                           <div className="click-text">Info</div>
                           

@@ -19,9 +19,6 @@ import { PersistGate } from 'redux-persist/integration/react'
 
 const {store, persistor} = configureStore();
 
-
-
-
 // const store = store;
 
 // const initialState = {};

@@ -87,7 +87,7 @@ function GzyCard (props) {
 
         {(podcast ? 
           <div className="g-card-badge">
-            <i class="fab fa-youtube"></i>Covered {props.podcastDay}
+            <i className="fab fa-youtube"></i>Covered {props.podcastDay}
           </div>
         : '')}
 

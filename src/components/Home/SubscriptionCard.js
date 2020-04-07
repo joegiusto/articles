@@ -28,11 +28,11 @@ class SubscriptionCard extends Component {
             </div>
 
             {/* Replaced with Dropdown */}
-            {/* <div><span className="settings badge badge-light"><i class="fas fa-cog m-0"></i></span></div> */}
+            {/* <div><span className="settings badge badge-light"><i className="fas fa-cog m-0"></i></span></div> */}
 
             <Dropdown drop={"up"}>
 
-              <Dropdown.Toggle className="settings badge badge-light" id="dropdown-custom-1"><i class="fas fa-cog m-0"></i></Dropdown.Toggle>
+              <Dropdown.Toggle className="settings badge badge-light" id="dropdown-custom-1"><i className="fas fa-cog m-0"></i></Dropdown.Toggle>
 
               <Dropdown.Menu alignRight className="dropdown-custom pull-right noselect">
                 <Dropdown.Item eventKey="1">Clear Updates</Dropdown.Item>

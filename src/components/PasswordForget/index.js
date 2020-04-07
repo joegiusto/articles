@@ -7,7 +7,7 @@ import * as ROUTES from '../../constants/routes';
 const PasswordForgetPage = () => (
   <div className="ForgotPasswordPage">
     <div className="ForgotPasswordContainer">
-      <div class="border-decal"></div>
+      <div className="border-decal"></div>
       <PasswordForgetForm />
     </div>
   </div>

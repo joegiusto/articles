@@ -19,7 +19,7 @@ import SubscriptionCard from './SubscriptionCard';
 
 const customStyles = {
   content : {
-    top          : '50%',
+    top          : null,
     left         : '50%',
     right        : 'auto',
     bottom       : 'auto',
@@ -404,7 +404,7 @@ class HomePageThreeBase extends React.Component {
 							
 							<div className="dual-header">
 								<div className="play">
-								<i class="fas fa-play"></i>
+								<i className="fas fa-play"></i>
 								{/* <div className="text"></div> */}
 								</div>
 			
@@ -451,11 +451,11 @@ class HomePageThreeBase extends React.Component {
 
 														<Dropdown className="d-inline-block" drop={"down"}>
 
-															<Dropdown.Toggle style={{textTransform: 'capitalize'}} className="btn btn-articles-light" id="dropdown-custom-1">{this.state.filter === 'user' ? <span><i class="fas fa-user"></i>{this.state.filter}</span> : <span><i class="fas fa-flag-usa"></i>{this.state.filter}</span>} {this.renderActiveTab(activeTab)[1]}</Dropdown.Toggle>
+															<Dropdown.Toggle style={{textTransform: 'capitalize'}} className="btn btn-articles-light" id="dropdown-custom-1">{this.state.filter === 'user' ? <span><i className="fas fa-user"></i>{this.state.filter}</span> : <span><i className="fas fa-flag-usa"></i>{this.state.filter}</span>} {this.renderActiveTab(activeTab)[1]}</Dropdown.Toggle>
 
 															<Dropdown.Menu alignRight className="dropdown-custom pull-right noselect">
-																<Dropdown.Item onClick={() => this.setFilter('user')} eventKey="1"><i class="fas fa-user"></i>User {this.renderActiveTab(activeTab)[1]}</Dropdown.Item>
-																<Dropdown.Item onClick={() => this.setFilter('all')} eventKey="2"><i class="fas fa-flag-usa"></i>All {this.renderActiveTab(activeTab)[1]}</Dropdown.Item>
+																<Dropdown.Item onClick={() => this.setFilter('user')} eventKey="1"><i className="fas fa-user"></i>User {this.renderActiveTab(activeTab)[1]}</Dropdown.Item>
+																<Dropdown.Item onClick={() => this.setFilter('all')} eventKey="2"><i className="fas fa-flag-usa"></i>All {this.renderActiveTab(activeTab)[1]}</Dropdown.Item>
 																{/* <Dropdown.Item eventKey="3">{}</Dropdown.Item> */}
 																{/* <Dropdown.Item eventKey="3">
 																Active Item
@@ -471,7 +471,7 @@ class HomePageThreeBase extends React.Component {
 															<Dropdown.Toggle style={{textTransform: 'capitalize'}} className="btn btn-articles-light" id="dropdown-custom-1">{this.state.view === 'card' ? <span><i className="fas fa-th-large"></i>Card View</span> : <span><i className="fas fa-list"></i>List View</span>}</Dropdown.Toggle>
 
 															<Dropdown.Menu alignRight className="dropdown-custom pull-right noselect">
-																<Dropdown.Item onClick={() => this.setView('card')} eventKey="1"><i class="fas fa-th-large"></i>Card View</Dropdown.Item>
+																<Dropdown.Item onClick={() => this.setView('card')} eventKey="1"><i className="fas fa-th-large"></i>Card View</Dropdown.Item>
 																<Dropdown.Item onClick={() => this.setView('list')} eventKey="2"><i className="fas fa-list"></i>List View</Dropdown.Item>
 																{/* <Dropdown.Item eventKey="3">{}</Dropdown.Item> */}
 																{/* <Dropdown.Item eventKey="3">
@@ -740,7 +740,7 @@ function HomePageTwo(props) {
                 
                 <div className="dual-header">
                   <div className="play">
-                    <i class="fas fa-play"></i>
+                    <i className="fas fa-play"></i>
                     {/* <div className="text"></div> */}
                   </div>
     
@@ -948,7 +948,7 @@ class Newsletter extends Component {
 
         <div className="newsletter-choice">
           <div>Platform Updates</div>
-          <div class="switch-field">
+          <div className="switch-field">
             <input type="radio" id="platform-no" name="platform" value="no" checked/>
             <label for="platform-no">None</label>
             <input type="radio" id="platform-yes" name="platform" value="yes" />
@@ -960,7 +960,7 @@ class Newsletter extends Component {
 
         <div className="newsletter-choice">
           <div>Clothing Updates</div>
-          <div class="switch-field">
+          <div className="switch-field">
             <input type="radio" id="clothing-no" name="clothing" value="no" checked/>
             <label for="clothing-no">None</label>
             <input type="radio" id="clothing-yes" name="clothing" value="yes" />
@@ -970,7 +970,7 @@ class Newsletter extends Component {
 
         <div className="newsletter-choice">
           <div>News Recommendations</div>
-          <div class="switch-field">
+          <div className="switch-field">
             <input type="radio" id="radio-one" name="news" value="no" checked/>
             <label for="radio-one">None</label>
             <input type="radio" id="radio-two" name="news" value="yes" />

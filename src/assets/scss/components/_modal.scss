@@ -13,9 +13,12 @@
   animation-name: modalFade;
   animation-duration: .3s;
   transition: all;
+  top: calc(50% + 50px);
+
   h2 {
     color: black;
   }
+
   .close-reminder {
     z-index: -100;
     position: absolute;
@@ -28,6 +31,7 @@
     color: rgba(255, 255, 255, 0.7);
     transform: translateX(-50%) rotate(-15deg);
   }
+
   .close-modal {
     position: absolute;
     top: -15px;
@@ -36,6 +40,7 @@
     background-color: red;
     border: solid 2px #000;
     color: white;
+
     &:hover {
       background-color: white;
       

@@ -90,11 +90,13 @@ class Firebase {
   user = uid => this.database.ref(`users/${uid}`);
   users = () => this.database.ref('users');
 
-  // ${type}
+  // Why this was even here? Remove this someday and see if shit still works...
   user_issues = (type, sub, uid) => this.database.ref(`users/${uid}/news/subscriptions/${sub}`);
 
   // ${type}
   user_data = (path, uid) => this.database.ref(`users/${uid}/${path}`);
+  user_subscriptions = (uid) => this.database.ref(`users/${uid}/subscriptions/`);
+  user_subscription = (uid, id) => this.database.ref(`users/${uid}/subscriptions/${id}`);
 
   // ${type}
   news_data = (path, id) => this.database.ref(`${path}/${id}`);

@@ -134,7 +134,7 @@ class UserIssuesBase extends Component {
         <div className="title" style={{textDecoration: 'underline'}}>Want more?</div>
         <div className="slogan">
           <div className="search-animation">
-            <i class="fas fa-search"></i>
+            <i className="fas fa-search"></i>
           </div>
         </div>
         <button className="btn btn-articles-light" style={{backgroundColor: 'black', color: 'white'}}>Explore</button>

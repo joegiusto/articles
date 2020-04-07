@@ -181,16 +181,9 @@ class AdminPage extends Component {
     .then(function (response) {
       console.log(response);
 
-      // self.setState({ 
-      //   searchHistory: [...self.state.searchHistory, self.state.searchText],
-      //   searchText: ''
-      // })
-
       self.setState(prevState => ({
         searchHistory: [{text: self.state.searchText}, ...prevState.searchHistory],
-        // searchText: ''
       }))
-
     })
     .catch(function (error) {
       console.log(error);
@@ -255,7 +248,16 @@ class AdminPage extends Component {
 
         <div className="news-manage-plate">
           <h1>News Management</h1>
-          <p>Page for admin and writers to manage news details.</p>
+          <div className="row justify-content-between">
+            <div className="col-12 col-md-7">
+              <p>Page for only Admins and Writers to manage news details. Here you can update and create content for Article's News Pages.</p>
+            </div>
+            <div className="col-12 col-md-4">
+            <p>Looking for <Link to={ROUTES.SUBSCRIBE}>Your News Managemnet?</Link> </p>
+            </div>
+          </div>
+          
+          
 
           <div className="catagories">
             <div onClick={() => this.changeCatagory("All")} className={"catagory " + (catagory === "All" ? 'active' : '')}>All</div>
@@ -337,10 +339,10 @@ class AdminPage extends Component {
 
               return (
               <div className="result" key={result.issue_id}>
-                {/* <Link to={"/news/manage/" + result.issue_id}><button className="btn btn-articles-light"><i class="fas fa-edit mr-0"></i></button></Link> */}
+                {/* <Link to={"/news/manage/" + result.issue_id}><button className="btn btn-articles-light"><i className="fas fa-edit mr-0"></i></button></Link> */}
                 {/* <button className="btn btn-articles-light">Edit</button> */}
                 <span className="date badge badge-dark border ml-2">{d.toLocaleString().split(',')[0]} </span>
-                <span className="title ml-2">{result.title}</span>
+                <Link to={"/news/manage/" + result.issue_id}><span className="title ml-2">{result.title}</span></Link>
 
                 <div className={"tags " + (catagory === "All" ? '' : 'd-none')}>
                   {result.tags_names !== null ?
@@ -764,39 +766,67 @@ class IssuesListBase extends Component {
 }
 
 const UserItem = ({ match }) => (
-  <div>
-    <h2>Editing Issue ({match.params.id})</h2>
+  <div className="news-edit-plate">
 
-    <div class="form-group">
-      <label for="exampleFormControlInput1">Email address</label>
-      <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com"/>
-    </div>
+    <Link to={ROUTES.MANAGE}>
+      <div className="close-plate">
+        X
+      </div>
+    </Link>
 
-    <div class="form-group">
-      <label for="exampleFormControlSelect1">Example select</label>
-      <select class="form-control" id="exampleFormControlSelect1">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-      </select>
-    </div>
+    <div className="container">
+      <h2>Editing Issue ({match.params.id})</h2>
 
-    <div class="form-group">
-      <label for="exampleFormControlSelect2">Example multiple select</label>
-      <select multiple class="form-control" id="exampleFormControlSelect2">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-      </select>
-    </div>
+      <div className="row">
+
+        <div className="col-12 col-md-6">
+          <div className="form-group">
+            <label for="exampleFormControlInput1">Title</label>
+            <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="SpaceX Lands on Mars!"/>
+          </div>
+        </div>
+
+        <div className="col-12 col-md-6">
+          <div className="form-group">
+            <label for="exampleFormControlSelect1">News Category</label>
+            <select className="form-control" id="exampleFormControlSelect1">
+              <option>Stories</option>
+              <option>Issues</option>
+              <option>Myths</option>
+            </select>
+          </div>
+        </div>
+  
+        <div className="col-12 col-md-6">
+          <div className="form-group">
+            <label for="exampleFormControlSelect2">Tags</label>
+            <select multiple className="form-control" id="exampleFormControlSelect2">
+              <option>Tesla</option>
+              <option>Elon Musk</option>
+              <option>SpaceX</option>
+              <option>United Nations</option>
+              <option>Bernie Sanders</option>
+            </select>
+          </div>
+        </div>
     
-    <div class="form-group">
-      <label for="exampleFormControlTextarea1">Example textarea</label>
-      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        <div className="col-12 col-md-6">
+          <div className="form-group">
+            <label for="exampleFormControlTextarea1">News Description</label>
+            <textarea className="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+          </div>
+        </div>
+
+        <div className="col-12 col-md-6">
+          <div className="btn btn-danger w-100">Delete</div>
+        </div>
+
+        <div className="col-12 col-md-6">
+          <div className="btn btn-articles-light w-100">Update</div>
+        </div>
+    
+      </div>
+      
     </div>
 
   </div>

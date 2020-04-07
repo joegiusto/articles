@@ -13,8 +13,8 @@ import moment from 'moment';
 const SignUpPage = () => (
   <div className="SignUpPage">
     
-    <div class="SignUpContainer">
-      <div class="border-decal"></div>
+    <div className="SignUpContainer">
+      <div className="border-decal"></div>
       <SignUpForm />
     </div>
     
@@ -136,9 +136,9 @@ class SignUpFormBase extends Component {
           <label className="heading-font" for="inputEmail">Email address:</label>
         </div>
 
-        <div class="row">
+        <div className="row">
 
-          <div class="col">
+          <div className="col">
             <div className="form-label-group">
               <input 
                 name="nameFirst"
@@ -157,7 +157,7 @@ class SignUpFormBase extends Component {
             </div>
           </div>
   
-          <div class="col">
+          <div className="col">
             <div className="form-label-group">
               <input 
                 name="nameLast"

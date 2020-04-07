@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import playButtonDark from '../../assets/img/News/yt_logo_mono_dark.png'
 import moment from 'moment';
 
+import * as ROUTES from '../../constants/routes';
+import { Link } from 'react-router-dom';
+
 function FlintCounter() {
   // Declare a new state variable, which we'll call "count"
   const [display, setDisplay] = useState(true);
@@ -27,7 +30,7 @@ const Page = () => (
             <div className='col-12'>
               <div className="dual-header">
                 <div className="heading-font">Subscribed Developments</div>
-                <div id='manage-subscriptions'>Manage Subscriptions</div>
+                <Link to={ROUTES.SUBSCRIBE}><div id='manage-subscriptions'>Manage Subscriptions</div></Link>
               </div>
 
             </div>
@@ -123,7 +126,7 @@ const Page = () => (
           <div className="row">
             <div className="col-12">
               <div className="the-recap">
-                {/* <h1>The Recap <i class="fas fa-share fa-rotate-90"></i></h1> */}
+                {/* <h1>The Recap <i className="fas fa-share fa-rotate-90"></i></h1> */}
                 <div className="the-recap-embed"></div>
                 <div className="the-recap-embed-overlay">
                   <div className="background"></div>
@@ -158,7 +161,7 @@ const Page = () => (
                   <div className="day">Sun.</div>
                   <div className="date">{moment().add(-2, 'day').format('MM/DD')}</div>
                   <div className="icon">
-                    <i class="fas fa-sun"></i>
+                    <i className="fas fa-sun"></i>
                   </div>
                 </div>
               </div>
@@ -167,7 +170,7 @@ const Page = () => (
                   <div className="day">Mon.{moment().format('d')}</div>
                   <div className="date">{moment().add(-1, 'day').format('MM/DD')}</div>
                   <div className="icon">
-                    <i class="fas fa-cloud-sun"></i>
+                    <i className="fas fa-cloud-sun"></i>
                   </div>
                 </div>
               </div>
@@ -180,7 +183,7 @@ const Page = () => (
                   <div className="date">{moment().add(0, 'day').format('MM/DD')}</div>
 
                   <div className="icon">
-                    <i class="fas fa-cloud-sun"></i>
+                    <i className="fas fa-cloud-sun"></i>
                   </div>
 
                 </div>
@@ -191,7 +194,7 @@ const Page = () => (
                   <div className="day">Wed.</div>
                   <div className="date">{moment().add(1, 'day').format('MM/DD')}</div>
                   <div className="icon">
-                    <i class="fas fa-cloud-showers-heavy"></i>
+                    <i className="fas fa-cloud-showers-heavy"></i>
                   </div>
                 </div>
               </div>
@@ -200,7 +203,7 @@ const Page = () => (
                   <div className="day">Thur.</div>
                   <div className="date">{moment().add(2, 'day').format('MM/DD')}</div>
                   <div className="icon">
-                    <i class="fas fa-cloud-showers-heavy"></i>
+                    <i className="fas fa-cloud-showers-heavy"></i>
                   </div>
                 </div>
               </div>
@@ -209,7 +212,7 @@ const Page = () => (
                   <div className="day">Fri.</div>
                   <div className="date">{moment().add(3, 'day').format('MM/DD')}</div>
                   <div className="icon">
-                    <i class="fas fa-cloud-sun"></i>
+                    <i className="fas fa-cloud-sun"></i>
                   </div>
                 </div>
               </div>
@@ -218,7 +221,7 @@ const Page = () => (
                   <div className="day">Sat.</div>
                   <div className="date">{moment().add(4, 'day').format('MM/DD')}</div>
                   <div className="icon">
-                    <i class="fas fa-sun"></i>
+                    <i className="fas fa-sun"></i>
                   </div>
                 </div>
               </div>

@@ -6,10 +6,10 @@ const LandingPage = () => (
 
   <section className="landing-new">
 
-    {/* <div class="background">
-      <div class="bg"></div>
-      <div class="bg bg2"></div>
-      <div class="bg bg3"></div>
+    {/* <div className="background">
+      <div className="bg"></div>
+      <div className="bg bg2"></div>
+      <div className="bg bg3"></div>
     </div> */}
 
     {/* <div className="content">
@@ -125,26 +125,26 @@ const LandingPage = () => (
         <div className="background two"></div>
 
         <div className="container h-100">
-          <div class="row align-items-center h-100">
+          <div className="row align-items-center h-100">
   
-            <div class="col-6 pr-md-0">
+            <div className="col-6 pr-md-0">
               <div className="content-text p-5 pt-3">
                 With a completly transparent buisness model and a diffrent approach on clothing, news and politics, we are making it easier for Americans to get involved and stay up to date on the issues that matter most in this country. Below outlines some of the approachs we are taking to set up Articles for success and more details on what we are doing.
               </div>
             </div>
   
-            <div class="col-6 pl-md-0">
+            <div className="col-6 pl-md-0">
 
-                <div class="jumbotron">
+                <div className="jumbotron">
                   Interested?
                 </div>
-                <div class="jumbotron">
+                <div className="jumbotron">
                   Interested?
                 </div>
-                <div class="jumbotron">
+                <div className="jumbotron">
                   Interested?
                 </div>
-                <div class="jumbotron">
+                <div className="jumbotron">
                   Skeptical?
                 </div>
                 
@@ -213,11 +213,11 @@ const LandingPage = () => (
                     <div className="sub-card">
 
                       <div className="left-button">
-                        <i class="fas fa-chevron-left"></i>
+                        <i className="fas fa-chevron-left"></i>
                       </div>
 
                       <div className="right-button">
-                        <i class="fas fa-chevron-right"></i>
+                        <i className="fas fa-chevron-right"></i>
                       </div>
 
                       <div className="left">
@@ -261,11 +261,11 @@ const LandingPage = () => (
                     <div className="sub-card">
 
                       <div className="left-button">
-                        <i class="fas fa-chevron-left"></i>
+                        <i className="fas fa-chevron-left"></i>
                       </div>
 
                       <div className="right-button">
-                        <i class="fas fa-chevron-right"></i>
+                        <i className="fas fa-chevron-right"></i>
                       </div>
 
                       <div className="left">

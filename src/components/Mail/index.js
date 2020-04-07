@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 
 // const Page = () => (
 //   <div style={{height: '100vh', marginTop: '-50px'}} className="container">
-//     <div class="row h-100 justify-content-center">
-//     <div class="col-sm-6 my-auto">
-//       <div class="card card-block p-5">
+//     <div className="row h-100 justify-content-center">
+//     <div className="col-sm-6 my-auto">
+//       <div className="card card-block p-5">
 //         <h1>Mesh</h1>
 //         <p>Fill out a description.</p>
 //       </div>
@@ -62,11 +62,13 @@ class EmailHome extends Component {
   render() {
     return (
       <div className="email-page background">
+        
         <div className="nav-bar-sticker">
           <div className="bg"></div>
           <div className="bg bg2"></div>
           <div className="bg bg3"></div>
         </div>
+
         <div className="page-note">MyMail - EARLY ALPHA</div>
 
         <div className="dashboard">

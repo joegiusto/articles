@@ -36,6 +36,8 @@ $grid-breakpoints: (
 
 @import 'components/news-container';
 @import 'components/news-manage';
+@import 'components/subscribe';
+
 @import 'components/reports';
 @import 'components/mission';
 @import 'components/myths';
@@ -54,6 +56,15 @@ $grid-breakpoints: (
 @import 'vendor/hamburgers';
 @import 'vendor/hamburgers-overrides';
 
+a {
+  color: black;
+
+  &:hover {
+    text-decoration: underline;
+    color: black;
+  }
+}
+
 body {
   margin: 0;
   
@@ -69,8 +80,9 @@ body {
 }
 
 i {
+
   &.far,&.fas,&.fal,&.fad {
-    margin-right: 0;
+    // margin-right: 0;
   }
 }
 

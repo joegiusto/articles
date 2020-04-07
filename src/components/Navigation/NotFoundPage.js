@@ -4,9 +4,9 @@ import * as ROUTES from '../../constants/routes';
 
 const EmployeePage = ({match}) => (
   <div style={{height: '100vh', marginTop: '-50px'}} className="container">
-    <div class="row h-100 justify-content-center">
-      <div class="col-sm-6 my-auto">
-        <div class="card shadow-sm">
+    <div className="row h-100 justify-content-center">
+      <div className="col-sm-6 my-auto">
+        <div className="card shadow-sm">
           <div className="card-body">
             <h1>Page Not Found</h1>
             <p>Please check the address and try again.</p>

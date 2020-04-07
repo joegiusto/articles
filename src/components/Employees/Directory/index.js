@@ -95,7 +95,7 @@ const IsLetterSearch = ({match}) => (
     <div className="d-none">{letterBreadcrumb = match.params.id}</div>
 
     <div className="employee-directory">
-      <Link className='employee-a' to='⛔'> <span className={letterBreadcrumb === '⛔' ? 'active' : ''}><i class="fas fa-eye-slash"></i></span></Link>
+      <Link className='employee-a' to='⛔'> <span className={letterBreadcrumb === '⛔' ? 'active' : ''}><i className="fas fa-eye-slash"></i></span></Link>
       {alphabet.map((letter) => {
         return <Link className="employee-a employee-letter" to={letter}><span className={letterBreadcrumb === letter ? 'active' : ''}>{letter}</span></Link>;
       })}
@@ -129,7 +129,7 @@ const IsIdSearch = ({match}) => (
     <div className="d-none">{letterBreadcrumb = employeeList[employeeNumber].nameLast.charAt(0)}</div>
 
     <div className="employee-directory">
-      <Link className='employee-a' to='⛔'> <span className={letterBreadcrumb === '⛔' ? 'active' : ''}><i class="fas fa-eye-slash"></i></span></Link>
+      <Link className='employee-a' to='⛔'> <span className={letterBreadcrumb === '⛔' ? 'active' : ''}><i className="fas fa-eye-slash"></i></span></Link>
       {alphabet.map((letter) => {
         return <Link className="employee-a" to={letter}><span className={letterBreadcrumb === letter ? 'active' : ''}>{letter}</span></Link>;
       })}
@@ -252,11 +252,11 @@ const Yes = ({}) => (
         <div className="col-7">
           <div className="row">
             <div className="col-3">
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <label class="input-group-text bg-dark text-white" htmlFor="inputGroupSelect01">Year</label>
+              <div className="input-group">
+                <div className="input-group-prepend">
+                  <label className="input-group-text bg-dark text-white" htmlFor="inputGroupSelect01">Year</label>
                 </div>
-                <select class="custom-select" id="inputGroupSelect01">
+                <select className="custom-select" id="inputGroupSelect01">
                   <option>Choose...</option>
                   <option selected value="2019">2019</option>
                 </select>
@@ -264,11 +264,11 @@ const Yes = ({}) => (
             </div>
         
             <div className="col-4">
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <label class="input-group-text bg-dark text-white" htmlFor="inputGroupSelect02">Month</label>
+              <div className="input-group">
+                <div className="input-group-prepend">
+                  <label className="input-group-text bg-dark text-white" htmlFor="inputGroupSelect02">Month</label>
                 </div>
-                <select class="custom-select" id="inputGroupSelect02">
+                <select className="custom-select" id="inputGroupSelect02">
                   <option>Choose...</option>
                   <option selected value="07">July</option>
                   <option value="08">August</option>
@@ -293,8 +293,8 @@ const Yes = ({}) => (
 
     <div className="bg-white employee-header py-0 shadow-sm border mt-3">
       {/* <h2 className="px-4 py-2 dual-header"><span>Pay Stub</span><span>Test</span></h2> */}
-      <div class="table-responsive">
-    <table class="table table-striped mb-0">
+      <div className="table-responsive">
+    <table className="table table-striped mb-0">
       <thead>
         <tr>
           <th>Date</th>
@@ -315,8 +315,8 @@ const Yes = ({}) => (
 
     <div className="bg-white d-none shadow-sm border">
       <h2 className="px-2 py-2 dual-header"><span>Pay Stub</span><span>Test</span></h2>
-      <div class="table-responsive">
-          <table class="table table-striped mb-0">
+      <div className="table-responsive">
+          <table className="table table-striped mb-0">
             <thead>
               <tr>
                 <th>Date</th>
