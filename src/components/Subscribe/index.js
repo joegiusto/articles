@@ -199,27 +199,72 @@ class SubscribeListBase extends Component {
                 <div style={{height: 'fit-content'}} className="btn btn-articles-light">Update</div>
               </div>
 
-              <div>
-                <span><b>First Name</b> (first_name)</span>
-                <input 
-                  className="form-control"
-                  type="text"
-                  value={mongoDBuser?.first_name || "No First Name"}
-                />
-                {/* <div className="ml-3">{mongoDBuser?.first_name || "No First Name"}</div> */}
+              <div className="name-tag">
+
+                <div className="photo-history">
+                  <div className="photo">
+
+                  </div>
+                  <div className="history">
+                      Member Since: {moment.unix(mongoDBuser?.sign_up_date).format('LL') || "Loading"}
+                  </div>
+                </div>
+
+                <div className="name">
+                  <div className="row">
+
+                    <div className="col-12 col-md-6">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">First Name:</label>
+                        <input 
+                          type="text" 
+                          className="form-control" 
+                          id="" 
+                          aria-describedby=""
+                          value={mongoDBuser?.first_name || ""}
+                          placeholder="Loading..."
+                        />
+                        {/* <small id="emailHelp" class="form-text text-muted">Visible to everyone.</small> */}
+                      </div>
+                    </div>
+
+                    <div className="col-12 col-md-6">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Last Name:</label>
+                        <input 
+                          type="text" 
+                          className="form-control" 
+                          id="" 
+                          aria-describedby=""
+                          value={mongoDBuser?.last_name || ""}
+                          placeholder="Loading..."
+                        />
+                        {/* <small id="emailHelp" class="form-text text-muted">Visible to just you.</small> */}
+                      </div>
+                    </div>
+
+                    <div className="col-12 col-md-6">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Birth Date:</label>
+                        <input 
+                          type="text" 
+                          className="form-control" 
+                          id="" 
+                          aria-describedby=""
+                          value={ mongoDBuser?.birth_date ? moment.unix(mongoDBuser?.birth_date).format('LL') : ""}
+                          placeholder="Loading..."
+                        />
+                        {/* <small id="emailHelp" class="form-text text-muted">Visible to just you.</small> */}
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+
               </div>
 
-              <div>
-                <span><b>Last Name</b> (last_name)</span>
-                <input 
-                  className="form-control"
-                  type="text"
-                  value={mongoDBuser?.last_name || "No First Name"}
-                />
-                {/* <div className="ml-3">{mongoDBuser?.last_name || "No Last Name"}</div> */}
-              </div>
-
-              <div>
+              <div className="mt-5">
                 <div><b>Address</b></div>
 
                 <div className="ml-3">

@@ -209,13 +209,11 @@ app.post('/getUserDetails', (req, res) => {
 
       dbo.collection("articles_orders").find({user_id: req.body.user}).toArray(function(err, result) {
         if (err) throw err;
-        console.log(result);
         data.orders = result
       });
   
       dbo.collection("articles_submissions").find({user_id: req.body.user}).toArray(function(err, result) {
         if (err) throw err;
-        console.log(result);
         data.submissions = result;
         data.subscriptions = [];
 
@@ -225,8 +223,6 @@ app.post('/getUserDetails', (req, res) => {
 
         dbo.collection("articles_news").find({ _id: {$in: justNews} }).toArray(function(err, result) {
           if (err) throw err;
-          console.log("Maybe an error was thrown");
-          console.log(result);
           data.subscriptionsBulk = result;
           return res.send(data);
         });

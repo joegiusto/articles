@@ -1,6 +1,35 @@
 .subscriptions-page {
   padding: 3rem 0;
 
+  .name-tag {
+    display: flex;
+
+    .photo-history {
+      width: 200px;
+
+      .photo {
+        // width: 200px;
+        height: 200px;
+        background-color: black;
+      }
+
+      .history {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 25px;
+        border: solid 1px #000;
+        font-size: 12px;
+      }
+      
+    }
+
+    .name {
+      padding-left: 1rem;
+    }
+
+  }
+
   .subscription-list {
 
     .submission-item {

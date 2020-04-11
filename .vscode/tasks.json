@@ -12,8 +12,8 @@
       },
     },
     {
-      "type": "npm",
-      "script": "nodemon server",
+      "type": "nodemon",
+      "script": "server",
       "problemMatcher": [],
       "runOptions": {
         "runOn": "folderOpen"
