@@ -5,8 +5,15 @@ $decal-color: #b06565;
   // background-color: $base-color;
   background-image: linear-gradient(0deg, rgba(255, 183, 183, 0.4) 0%, rgba(224, 212, 174, 0.2) 65%);
   position: relative;
-  height: 100vh;
-  margin-top: -50px;
+  // height: calc(100vh - 50px);
+  min-height: 100vh;
+  height: 100%;
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   .spacer {
     background-color: antiquewhite;
     position: absolute;
@@ -15,6 +22,7 @@ $decal-color: #b06565;
     width: 275px;
     height: 550px;
     box-shadow: inset 0px 0px 2px 2px #000;
+
     &::after {
       position: absolute;
       top: 5px;
@@ -25,6 +33,7 @@ $decal-color: #b06565;
       clip-path: polygon(0 0, 0 100%, 5% 100%, 5% 5%, 100% 5%, 100% 0);
       content: " ";
     }
+
     &::before {
       position: absolute;
       bottom: 5px;
@@ -35,6 +44,7 @@ $decal-color: #b06565;
       clip-path: polygon(95% 95%, 0 95%, 0 100%, 100% 100%, 100% 0, 95% 0);
       content: " ";
     }
+
     &-1 {
       left: 5%;
       top: 47.5%;
@@ -43,6 +53,7 @@ $decal-color: #b06565;
       width: 275px;
       height: 500px;
     }
+
     &-2 {
       left: 20%;
       top: 47.5%;
@@ -51,6 +62,7 @@ $decal-color: #b06565;
       width: 275px;
       height: 500px;
     }
+
     &-3 {
       left: 35%;
       background-image: url('https://skn-wp-assets.s3-us-west-2.amazonaws.com/news/wp-content/uploads/2014/03/North-Bridge-Concord-Bridge-1775-RGB-1000.jpg');
@@ -59,6 +71,7 @@ $decal-color: #b06565;
       height: 550px;
     }
   }
+
   .spacer-credit {
     position: absolute;
     top: 74%;
@@ -77,15 +90,16 @@ $decal-color: #b06565;
   }
 
   .SignInContainer, .SignUpContainer, .ForgotPasswordContainer {
-    position: absolute;
-    top: 50%;
-    left: 70%;
-    transform: translateX(-50%) translateY(-50%);
+    // position: absolute;
+    // top: 50%;
+    // left: 70%;
+    // transform: translateX(-50%) translateY(-50%);
     background-color: white;
     border: solid 2px #000;
     width: 600px;
     border-radius: 0px;
     box-shadow: 5px 5px #000;
+
     h1 {
       // text-align: center;
       margin-bottom: 2rem;
@@ -93,9 +107,11 @@ $decal-color: #b06565;
       font-weight: bold;
       color: #000000;
     }
+
     form {
       padding: 0px 1rem;
     }
+
     a {
       color: $base-color;
       text-shadow: 1px 1px #000000;
@@ -103,6 +119,7 @@ $decal-color: #b06565;
     .btn-light {
       border-bottom: 3px solid #ffc8c8;
     }
+
     input {
       border-bottom: 3px solid #ffc8c8;
       &:focus {
@@ -111,6 +128,7 @@ $decal-color: #b06565;
         outline: 0 none;
       }
     }
+
     .border-decal {
         height: 40px;
         width: 180px;

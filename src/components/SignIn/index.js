@@ -9,10 +9,10 @@ import * as ROUTES from '../../constants/routes';
 
 const SignInPage = () => (
   <div className="SignInPage">
-    <div className="spacer spacer-1"></div>
-    <div className="spacer spacer-2"></div>
-    <div className="spacer spacer-3"></div>
-    <div className="spacer-credit">"Concord Bridge" by Don Troiani</div>
+    {/* <div className="spacer spacer-1"></div> */}
+    {/* <div className="spacer spacer-2"></div> */}
+    {/* <div className="spacer spacer-3"></div> */}
+    {/* <div className="spacer-credit">"Concord Bridge" by Don Troiani</div> */}
     <div className="SignInContainer">
       {/* <h1>Sign In</h1> */}
       <div className="border-decal"></div>

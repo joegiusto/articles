@@ -18,6 +18,9 @@ export const REPORTS_MANAGE = '/reports/manage';
 // Store
 export const STORE ='/store'
 export const STORE_VIEW ='/store/view/:id'
+
+export const STORE_ORDERS ='/store/orders/'
+
 export const CHECKOUT = '/store/checkout';
 export const STORE_SUBMISSIONS = '/store/submissions';
 export const STORE_SUBMISSIONS_SUBMIT = '/store/submissions/submit/';

@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 
-// import { SignUpLink } from '../SignUp';
+import axios from 'axios';
+
 import { PasswordForgetLink } from '../PasswordForget';
 
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import * as ROLES from '../../constants/roles';
 import moment from 'moment';
+
 
 const SignUpPage = () => (
   <div className="SignUpPage">
@@ -26,8 +28,10 @@ const INITIAL_STATE = {
   email: '',
   passwordOne: '',
   passwordTwo: '',
-  isAdmin: false,
+  isAdmin: true,
+  outsetOverride: true,
   error: null,
+  serverUp: false,
 };
 
 class SignUpFormBase extends Component {
@@ -35,6 +39,21 @@ class SignUpFormBase extends Component {
     super(props);
 
     this.state = { ...INITIAL_STATE };
+  }
+
+  componentDidMount() {
+    const self = this;
+
+    // We need to check if the server is up before allowing users to sign up.
+    axios.get('/ping')
+    .then(function (response) {
+      console.log("The server is up!");
+      self.setState({serverUp: true});
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
   }
 
   onChangeCheckbox = event => {
@@ -46,36 +65,60 @@ class SignUpFormBase extends Component {
   };
 
   onSubmit = event => {
-    const { username, nameFirst , nameLast, email, passwordOne, isAdmin } = this.state;
+    const { username, nameFirst , nameLast, email, passwordOne, isAdmin, outsetOverride } = this.state;
 
     const roles = {};
+    const outset = {};
+    const subscriptions = {};
+    let self = this;
 
     if (isAdmin) {
       roles[ROLES.ADMIN] = ROLES.ADMIN;
     }
 
+    if (outsetOverride) {
+      outset.completed = true;
+    }
+
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
+
         // Create a user in your Firebase realtime database
-        return this.props.firebase
+        this.props.firebase
           .user(authUser.user.uid)
           .set({
-            // username,
             nameFirst,
             nameLast,
             email,
             roles,
+            outset,
             dateCreation: moment().unix(),
             outset: {completed: false}
           });
+
+          axios.post('/userAdded', {
+            ...this.state,
+            firebase_id: authUser.user.uid
+          })
+          .then(function (response) {
+            console.log(response);
+      
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+
+        console.log('something');
       })
       .then(() => {
         return this.props.firebase.doSendEmailVerification();
       })
       .then(() => {
+
         this.setState({ ...INITIAL_STATE });
         this.props.history.push(ROUTES.OUTSET);
+
       })
       .catch(error => {
         this.setState({ error });
@@ -107,6 +150,13 @@ class SignUpFormBase extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
+
+        {this.state.serverUp ? 
+        null
+        :
+        <div className="alert alert-danger mt-3">Server Down! Signing up will not work in mean time.</div>
+        }
+        
       
         <h1>Sign Up</h1>
 
