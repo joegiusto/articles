@@ -1,6 +1,25 @@
 .subscriptions-page {
   padding: 3rem 0;
 
+  .sub-item {
+    margin-top: 0.25rem;
+    cursor: pointer;
+    border: solid 2px transparent;
+    padding: 0.1rem 0.25rem;
+
+    &:hover {
+      border: solid 2px black;
+    }
+
+    &.subscribe {
+      background-color: yellowgreen;
+    }
+
+    &.unsubscribe {
+      background-color: palevioletred;
+    }
+  }
+
   .name-tag {
     display: flex;
 
@@ -15,9 +34,11 @@
 
       .history {
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 25px;
+        // height: 25px;
+        padding: 0.25rem 0;
         border: solid 1px #000;
         font-size: 12px;
       }

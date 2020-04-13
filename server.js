@@ -1,53 +1,19 @@
+// import addNewsDocument from './routes/addNewsDocument';
+// const addNewsDocument = require('./routes/addNewsDocument');
 require('dotenv').config()
 const express = require('express');
 var mysql = require('mysql');
 const bodyParser = require('body-parser');
+const passport = require("passport");
 const path = require('path');
 const app = express();
 
+const users = require("./routes/api/users");
+
+const mongoose = require("mongoose");
 const MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectId; 
-const url = "mongodb+srv://joegiusto:" + process.env.MONGODB_PASSWORD + "@articles-xgwnd.mongodb.net/test?retryWrites=true&w=majority";
-
-// MongoClient.connect(url, function(err, db) {
-//   if (err) throw err;
-//   var dbo = db.db("articles_data");
-//   var myobj = { 
-//     first_name: "Joey",
-//     last_name: "Giusto",
-//     address: {
-//       state: 'New York',
-//       zip: '12524',
-//       city: 'Fishkill'
-//     },
-//     legal: {
-//       terms: false,
-//       cookies: false,
-//       privacy: false
-//     },
-//     sign_up_date: 1586544138,
-//     birth_date: 1586544138,
-//     last_online_date: 1586544138,
-
-//     subscriptions: [
-//       {
-//         news_id: 20,
-//         last_viewed: 1586544138
-//       },
-//       {
-//         news_id: 21,
-//         last_viewed: 1586504138
-//       }
-//     ],
-//     orders: [1, 7, 80],
-//     submissions: [23, 67, 98, 1023]
-//   };
-//   dbo.collection("articles_users").insertOne(myobj, function(err, res) {
-//     if (err) throw err;
-//     console.log("1 document inserted");
-//     db.close();
-//   });
-// });
+const url = "mongodb+srv://joegiusto:" + process.env.MONGODB_PASSWORD + "@articles-xgwnd.mongodb.net/articles_data?retryWrites=true&w=majority";
 
 // const client = new MongoClient(uri, { useNewUrlParser: true });
 // client.connect(err => {
@@ -57,19 +23,36 @@ const url = "mongodb+srv://joegiusto:" + process.env.MONGODB_PASSWORD + "@articl
 //   client.close();
 // });
 
-  var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "articles_news"
-  });
+// Connect to MongoDB
+MongoClient
+  .connect(
+    url,
+    { useNewUrlParser: true, useUnifiedTopology: true}
+  )
+  .then(() => console.log("MongoDB successfully connected"))
+  .catch(err => console.log(err));
 
-  var user_con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "articles_users"
-  });
+mongoose
+  .connect(
+    url,
+    { useNewUrlParser: true, useUnifiedTopology: true }
+  )
+  .then(() => console.log("Mongoose MongoDB successfully connected"))
+  .catch(err => console.log(err));
+
+var con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "articles_news"
+});
+
+var user_con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "articles_users"
+});
 
 var mysqlStuff = [];
 
@@ -79,19 +62,39 @@ con.connect(function(err) {
 });
 
 app.use( express.static(path.join(__dirname, 'build')) );
+
 app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded({ extended: true }) );
+
+// Passport middleware
+app.use(passport.initialize());
+
+// Passport config
+require("./config/passport")(passport);
+
+// Routes
+app.use("/api/users", users);
+
+const secureRoute = require('./routes/secure-routes.js');
+app.use('/', passport.authenticate('jwt', {session: false}), secureRoute);
+// app.use('/', secureRoute);
+
+app.listen(process.env.PORT || 8080);
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-app.listen(process.env.PORT || 8080);
-
 // API
 app.get('/ping', function (req, res) {
   return res.send('pong');
 });
+
+// app.post('/test', passport.authenticate('jwt', { session: false }),
+//     function(req, res) {
+//         res.end;
+//     }
+// );
  
 app.post('/tag', (req, res) => { console.log(req.body); console.log( new Date() ); return res.send('Roger that') });
 
@@ -191,61 +194,22 @@ app.post('/getUserSubscriptions', (req, res) => {
 
 });
 
-app.post('/getUserDetails', (req, res) => {
-  console.log(req.body.user);
-  console.log( new Date() );
+require('./routes/addNewsDocument')(app);
+require('./routes/getUserDetails')(app);
 
-  MongoClient.connect(url, function(err, db) {
 
-    let data = {};
-
-    if (err) throw err;
-    var dbo = db.db("articles_data");
-    var o_id = new ObjectId(req.body.user);
-
-    dbo.collection("articles_users").findOne( o_id, function(err, result) {
-      if (err) throw err;
-      data.user = result
-
-      dbo.collection("articles_orders").find({user_id: req.body.user}).toArray(function(err, result) {
-        if (err) throw err;
-        data.orders = result
-      });
+app.get('/getAllIssues', function (req, res) {
   
-      dbo.collection("articles_submissions").find({user_id: req.body.user}).toArray(function(err, result) {
-        if (err) throw err;
-        data.submissions = result;
-        data.subscriptions = [];
-
-        const justNews = data.user.subscriptions.map(sub => {
-          return ObjectId(sub.news_id);
-        })
-
-        dbo.collection("articles_news").find({ _id: {$in: justNews} }).toArray(function(err, result) {
-          if (err) throw err;
-          data.subscriptionsBulk = result;
-          return res.send(data);
-        });
-        
-      });
-
-    });
-
-  });
-  
-});
-
-app.post('/getUserSubmissions', (req, res) => {
-  console.log(req.body.user);
+  // console.log(req.body.user);
   console.log( new Date() );
 
   MongoClient.connect(url, function(err, db) {
 
     if (err) throw err;
     var dbo = db.db("articles_data");
-    var o_id = new ObjectId(req.body.user);
+    // var o_id = new ObjectId(req.body.user);
 
-    dbo.collection("articles_submissions").find({user_id: req.body.user}).toArray(function(err, result) {
+    dbo.collection("articles_news").find({news_type: 'issue'}).toArray(function(err, result) {
       if (err) throw err;
       console.log(result);
       db.close();

@@ -2,6 +2,8 @@ import React from 'react';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
+import PrivateRoute from "./private-route/PrivateRoute";
+
 import Navigation from './Navigation';
 
 import LandingPage from './Landing';
@@ -120,7 +122,9 @@ const App = () => (
         <Route path={ROUTES.SIGN_IN} component={SignInPage} />
 
         <Route path={ROUTES.OUTSET} component={OutsetPage} />
-        <Route path={ROUTES.SUBSCRIBE} component={SubscribePage} />
+
+        <PrivateRoute exact path={ROUTES.SUBSCRIBE} component={SubscribePage} />
+        {/* <Route path={ROUTES.SUBSCRIBE} component={SubscribePage} /> */}
         
         <Route path={ROUTES.HOME} component={HomePage} />
         <Route path={ROUTES.MISSION} component={MissionPage} />

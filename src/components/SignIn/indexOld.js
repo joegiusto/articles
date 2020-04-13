@@ -2,14 +2,10 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 
-import { connect } from "react-redux";
-
 import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
-
-import { loginUser } from "../../actions/authActions";
 
 const SignInPage = () => (
   <div className="SignInPage">
@@ -30,7 +26,7 @@ const SignInPage = () => (
         <span className="two"></span>
         <span className="three"></span>
       </div>
-      <SignInFormMapped />
+      <SignInForm />
     </div>
   </div>
 );
@@ -48,36 +44,20 @@ class SignInFormBase extends Component {
     this.state = { ...INITIAL_STATE };
   }
 
-  componentDidMount() {
-    if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/subscribe");
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-
-    if (nextProps.auth.isAuthenticated) {
-      this.props.history.push("/subscribe"); // push user to dashboard when they login
-    }
-
-    if (nextProps.errors) {
-      this.setState({
-        errors: nextProps.errors
-      });
-    }
-  }
-
   onSubmit = event => {
-    event.preventDefault();
-
     const { email, password } = this.state;
 
-    const userData = {
-      email: email,
-      password: password
-    };
+    this.props.firebase
+      .doSignInWithEmailAndPassword(email, password)
+      .then(() => {
+        this.setState({ ...INITIAL_STATE });
+        this.props.history.push(ROUTES.HOME);
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
 
-    this.props.loginUser(userData); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
+    event.preventDefault();
   };
 
   onChange = event => {
@@ -147,22 +127,6 @@ const SignInForm = compose(
   withFirebase,
 )(SignInFormBase);
 
-SignInForm.propTypes = {
-  // loginUser: PropTypes.func.isRequired,
-  // auth: PropTypes.object.isRequired,
-  // errors: PropTypes.object.isRequired
-};
-
-const mapStateToProps = state => ({
-  auth: state.auth,
-  errors: state.errors
-});
-
-const SignInFormMapped = connect(
-  mapStateToProps,
-  { loginUser }
-)(SignInForm);
-
 export default SignInPage;
 
-export { SignInForm };
+export { SignInPage };

@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-
-import { connect } from "react-redux";
-
 import { compose } from 'recompose';
 
 import axios from 'axios';
-
-import { registerUser } from "../../actions/authActions";
 
 import { PasswordForgetLink } from '../PasswordForget';
 
@@ -22,7 +17,7 @@ const SignUpPage = () => (
     
     <div className="SignUpContainer">
       <div className="border-decal"></div>
-      <SignUpFormConnect />
+      <SignUpForm />
     </div>
     
   </div>
@@ -70,18 +65,66 @@ class SignUpFormBase extends Component {
   };
 
   onSubmit = event => {
+    const { username, nameFirst , nameLast, email, passwordOne, isAdmin, outsetOverride } = this.state;
+
+    const roles = {};
+    const outset = {};
+    const subscriptions = {};
+    let self = this;
+
+    if (isAdmin) {
+      roles[ROLES.ADMIN] = ROLES.ADMIN;
+    }
+
+    if (outsetOverride) {
+      outset.completed = true;
+    }
+
+    this.props.firebase
+      .doCreateUserWithEmailAndPassword(email, passwordOne)
+      .then(authUser => {
+
+        // Create a user in your Firebase realtime database
+        this.props.firebase
+          .user(authUser.user.uid)
+          .set({
+            nameFirst,
+            nameLast,
+            email,
+            roles,
+            outset,
+            dateCreation: moment().unix(),
+            outset: {completed: false}
+          });
+
+          axios.post('/userAdded', {
+            ...this.state,
+            firebase_id: authUser.user.uid
+          })
+          .then(function (response) {
+            console.log(response);
+      
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+
+        console.log('something');
+      })
+      .then(() => {
+        return this.props.firebase.doSendEmailVerification();
+      })
+      .then(() => {
+
+        this.setState({ ...INITIAL_STATE });
+        this.props.history.push(ROUTES.OUTSET);
+
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+
     event.preventDefault();
-
-    const { username, nameFirst , nameLast, email, passwordOne, passwordTwo, isAdmin, outsetOverride } = this.state;
-    
-    const newUser = {
-      first_name: nameFirst,
-      email: email,
-      password: passwordOne,
-      password2: passwordTwo
-    };
-
-    this.props.registerUser(newUser, this.props.history); 
   };
   
 
@@ -290,29 +333,6 @@ const SignUpForm = compose(
   withFirebase,
 )(SignUpFormBase);
 
-SignUpForm.propTypes = {
-  // registerUser: PropTypes.func.isRequired,
-  // auth: PropTypes.object.isRequired,
-  // errors: PropTypes.object.isRequired
-};
-
-const mapStateToProps = state => ({
-  auth: state.auth,
-  errors: state.errors
-});
-
-const SignUpFormConnect = connect(
-  mapStateToProps,
-  { registerUser }
-)(withRouter(SignUpForm));
-
 export default SignUpPage;
-
-// const SignUpForm = compose(
-//   withRouter,
-//   withFirebase,
-// )(SignUpFormBase);
-
-// export default SignUpPage;
 
 export { SignUpForm, SignUpLink };

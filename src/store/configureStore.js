@@ -1,20 +1,16 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 
 import { autoRehydrate, persistStore, persistReducer } from 'redux-persist'
-// import immutableTransform from 'redux-persist-transform-immutable'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 
 import thunk from 'redux-thunk';
 
-// import { persistStore, persistReducer } from 'redux-persist'
-// import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
-
 import expensesReducer from '../reducers/expenses';
+import authReducer from "../reducers/authReducer";
+import errorReducer from "../reducers/errorReducer";
 // import filtersReducer from '../reducers/filters';
 import siteReducer from '../reducers/site';
 // import employeesReducer from '../reducers/employees';
-
-
 
 const persistConfig = {
   // transforms: [immutableTransform()],
@@ -26,6 +22,8 @@ const persistedReducer = persistReducer(
   persistConfig, 
   combineReducers({
     expenses: expensesReducer,
+    auth: authReducer,
+    errors: errorReducer
     // filters: filtersReducer,
     // site: siteReducer,
     // employees: employeesReducer

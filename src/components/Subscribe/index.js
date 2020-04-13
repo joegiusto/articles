@@ -7,6 +7,9 @@ import moment from 'moment';
 import { compose } from 'recompose';
 import { AuthUserContext, withAuthorization, withEmailVerification } from '../Session';
 
+import { connect } from "react-redux";
+import { logoutUser } from "../../actions/authActions";
+
 function loadingFiller(size) {
   return(
     <div style={{width: size}} className="loading-filler">
@@ -28,6 +31,8 @@ class SubscribeListBase extends Component {
       mongoDBsubmissions: []
     }
   }
+
+  getDer
 
   componentDidMount() {
     let self = this;
@@ -55,89 +60,45 @@ class SubscribeListBase extends Component {
       self.setState({ resultsLoadingError: error });
     });
 
-    axios.post('/getUserSubscriptions', {
-      user: this.props.firebase.auth.currentUser.uid
-    })
-    .then(function (response) {
-      console.log(response);
-
-      self.setState(prevState => ({
-        newsUserMySQL: response.data,
-      }))
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-
     axios.post('/getUserDetails', {
-      user: "5e90cc96579a17440c5d7d52"
+      // user: "5e90cc96579a17440c5d7d52"
+      user: self.props.auth.user.id
     })
     .then(function (response) {
       console.log(response);
 
-      self.setState(prevState => ({
+      self.setState({
         mongoDBuser: response.data.user,
         mongoDBsubmissions: response.data.submissions,
         mongoDBorders: response.data.orders,
-        mongoDBsubscriptions: response.data.subscriptions,
         mongoDBsubscriptionsBulk: response.data.subscriptionsBulk,
-      }))
+      }, () => {
+        // self.mergeStuff()
+      })
+
     })
     .catch(function (error) {
       console.log(error);
     });
 
-    // axios.post('/getUserSubmissions', {
-    //   user: "5e90cc96579a17440c5d7d52"
-    // })
-    // .then(function (response) {
-    //   console.log(response);
-    //   console.log("Here?");
+    axios.get('/getAllIssues')
+    .then(function (response) {
 
-    //   self.setState(prevState => ({
-    //     mongoDBsubmissions: response.data,
-    //   }))
-    // })
-    // .catch(function (error) {
-    //   console.log(error);
-    // });
+      // handle success
+      console.log(response.data);
 
-    this.props.firebase.user_subscriptions(this.props.firebase.auth.currentUser.uid).once('value').then(snapshot => {
-      const issuesObject = snapshot.val();
-				let issuesList = [];
+      self.setState({
+        allIssues: response.data,
+      }, () => {
+        // self.mergeStuff()
+      });
 
-        function isNumber(n) { return !isNaN(parseFloat(n)) && !isNaN(n - 0) };
+      // this.setState({ newsAllLoading: false });
 
-        let filtered = [];
-
-        try {
-          filtered = Object.keys(issuesObject)
-          // .filter(key => parseInt(key) == 1 )
-          .filter(key =>  isNumber(parseInt(key)))
-          .reduce((obj, key) => {
-            obj[key] = issuesObject[key];
-            return obj;
-          }, {});
-        } catch {
-          console.log("User has no subscriptions!")
-        }
-        
-
-        const donationList = Object.keys(filtered).map(key => ({
-          ...issuesObject[key],
-          uid: key,
-        }
-        ));
-
-				this.setState({
-          userSubs: issuesList,
-          donationList,
-          donationListLoaded: true
-					// loading: false
-        });
-        
-        // console.log( this.state.donationList.filter(sub => sub.uid === "2") )
     })
+    .catch(function (error) {
+      console.log(error);
+    });
 
   }
 
@@ -172,6 +133,30 @@ class SubscribeListBase extends Component {
     
   }
 
+  addSubscriptionNew(id) {
+
+    this.setState(prevState => ({
+      mongoDBsubscriptionsBulk: [
+        ...prevState.mongoDBsubscriptionsBulk,
+        id
+      ]
+    }))
+
+  }
+
+  removeSubscriptionNew(id) {
+
+    this.setState({
+      mongoDBsubscriptionsBulk: this.state.mongoDBsubscriptionsBulk.filter(function( obj ) {
+        return obj._id !== id;
+      })
+    })
+
+    // this.setState({
+    //   mongoDBsubscriptionsBulk: this.state.mongoDBsubscriptionsBulk.concat(id)
+    // })
+  }
+
   getKeyByValue(object, value) { 
     console.log(object);
     console.log(value);
@@ -181,21 +166,92 @@ class SubscribeListBase extends Component {
             return prop; 
         } 
     } 
-} 
+  } 
+
+  // Not sure why I made this, leaving it here for a little bit...
+  mergeStuff() {
+
+    if (this.state.mongoDBuser.subscriptions && this.state.allIssues) {
+
+      // console.log( this.state.mongoDBuser.subscriptions.map((item, i) => Object.assign({}, item, this.state.allIssues[i])) );
+
+      // let mergedArray = this.state.mongoDBuser.subscriptions.map( ( item, i ) => {
+
+      //   if( item.news_id === this.state.allIssues[i]._id ) {
+      //     // Merging two objects
+      //     return Object.assign( 
+      //       {}, 
+      //       item,
+      //       this.state.allIssues[i]
+      //     )
+      //   }
+
+      // })
+
+      console.log("This should have a .news_id for every item");
+      console.log(this.state.mongoDBuser.subscriptions)
+
+      let mergedArray = [];
+      // var results = []
+
+      this.state.mongoDBuser.subscriptions.map( ( item, i ) => {
+
+        console.log(i)
+        console.log(item)
+        // console.log(this.state.allIssues[i])
+        var toSearch = item.news_id;
+
+        for(var i=0; i<this.state.allIssues.length; i++) {
+          for(this.state.allIssues._id in this.state.allIssues[i]) {
+            if(this.state.allIssues[i][this.state.allIssues._id].indexOf(toSearch)!=-1) {
+              mergedArray.push(this.state.allIssues[i]);
+            }
+          }
+        }
+
+
+        // console.log( this.state.allIssues.filter(function (entry) { return entry._id === item.news_id; }) )
+        // this.state.allIssues.filter(function (entry) { return entry._id === item.news_id; });
+
+        // if( item.news_id === this.state.allIssues[i]._id ) {
+        //   // Merging two objects
+        //   return Object.assign( 
+        //     {}, 
+        //     item,
+        //     this.state.allIssues[i]
+        //   )
+        // }
+
+      })
+
+      this.setState({
+        merge: mergedArray
+      })
+
+    } else {
+      console.log("Not Ready Yet!")
+    }
+
+  }
 
   render() {
-    const {mongoDBuser, mongoDBsubmissions, mongoDBorders, mongoDBsubscriptions, mongoDBsubscriptionsBulk} = this.state;
+    const {mongoDBuser, mongoDBsubmissions, mongoDBorders, allIssues, mongoDBsubscriptionsBulk, merge} = this.state;
 
     return(
       <div className="subscriptions-page">
+
+        <div onClick={this.props.logoutUser} className="btn btn-articles-light">
+          Sign Out ({this.props.auth.user.id})
+        </div>
+
         <div className="container">
 
           <div className="row">
 
             <div className="col-12 col-md-8">
 
-              <div className="d-flex justify-content-between">
-                <h1>MongoDB User Data</h1>
+              <div className="d-flex justify-content-between border-bottom align-items-center mb-2 pb-1">
+                <h1 className="store-heading mb-0">User Data</h1>
                 <div style={{height: 'fit-content'}} className="btn btn-articles-light">Update</div>
               </div>
 
@@ -206,7 +262,8 @@ class SubscribeListBase extends Component {
 
                   </div>
                   <div className="history">
-                      Member Since: {moment.unix(mongoDBuser?.sign_up_date).format('LL') || "Loading"}
+                      <div>Member Since: {mongoDBuser?.sign_up_date ? moment.unix(mongoDBuser?.sign_up_date).format('LL') : "Loading"}</div>
+                      <div>Last Online: {mongoDBuser?.last_online_date ? moment.unix(mongoDBuser?.last_online_date).format('LL') : "Loading"}</div>
                   </div>
                 </div>
 
@@ -264,34 +321,169 @@ class SubscribeListBase extends Component {
 
               </div>
 
-              <div className="mt-5">
-                <div><b>Address</b></div>
+              <div className="card mt-3">
+                <div className="card-header">Address</div>
 
-                <div className="ml-3">
-                  <span><b>Zip</b> (address.zip)</span>
-                  <input 
-                    className="form-control"
-                    type="text"
-                    value={mongoDBuser?.address?.zip || "No Zip"}
-                  />
-                  {/* <div className="ml-3">{mongoDBuser?.address?.zip || "No Zip"}</div> */}
-                </div>
+                <div className="card-body">
 
-                <div className="ml-3 py-3">Equals</div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Zip:</label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      id=""
+                      aria-describedby=""
+                      value={ mongoDBuser?.address?.zip || "" }
+                      placeholder="Loading..."
+                    />
+                    {/* <small id="emailHelp" class="form-text text-muted">Visible to just you.</small> */}
+                  </div>
 
-                <div className="ml-3">
-                  <span><b>State</b> (address.state)</span>
-                  <div className="ml-3">{mongoDBuser?.address?.state || "No State"}</div>
-                </div>
+                  <div className="row">
 
-                <div className="ml-3">
-                  <span><b>City</b> (address.city)</span>
-                  <div className="ml-3">{mongoDBuser?.address?.city || "No City"}</div>
+                    <div className="col-12 col-md-6">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">City:</label>
+                        <input 
+                          type="text" 
+                          className="form-control" 
+                          id="" 
+                          disabled="true"
+                          aria-describedby=""
+                          value={ mongoDBuser?.address?.city || "" }
+                          placeholder="Loading..."
+                        />
+                        {/* <small id="emailHelp" class="form-text text-muted">Visible to just you.</small> */}
+                      </div>
+                    </div>
+
+                    <div className="col-12 col-md-6">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">State:</label>
+                        <input 
+                          type="text" 
+                          className="form-control" 
+                          id="" 
+                          disabled="true"
+                          aria-describedby=""
+                          value={ mongoDBuser?.address?.state || "" }
+                          placeholder="Loading..."
+                        />
+                        {/* <small id="emailHelp" class="form-text text-muted">Visible to just you.</small> */}
+                      </div>
+                    </div>
+
+                  </div>
+
                 </div>
 
               </div>
 
-              <div>
+              <div className="card mt-3">
+                <div className="card-header">Issue Subscriptions</div>
+                <div className="card-body">
+                  <div className="row">
+                    <div className="col-12 col-md-6">
+
+                      <small>Yours</small>
+                      {mongoDBsubscriptionsBulk ? 
+                      mongoDBsubscriptionsBulk.map((issue) => (
+                        <div className="sub-item unsubscribe" onClick={() => this.removeSubscriptionNew(issue._id)}>{issue.news_title}</div>
+                      ))
+                      :
+                      null
+                      }
+
+                    </div>
+                    <div className="col-12 col-md-6">
+
+                      <small>All</small>
+                      {allIssues && mongoDBsubscriptionsBulk ? 
+
+                      allIssues.map((issue) => {
+                        return (
+                        <div>
+
+                        {(this.state.mongoDBsubscriptionsBulk.filter(sub => sub._id === issue._id.toString() )).length > 0
+                        ? 
+                        // <button onClick={() => this.removeSubscription(issue._id)} className="btn btn-articles-light un">Unsubscribe</button>
+                        <div className={"sub-item unsubscribe"} onClick={() => this.removeSubscriptionNew(issue._id)}>{issue.news_title}</div>
+                        : 
+                        // <button onClick={() => this.addSubscription(issue._id)} className="btn btn-articles-light">Subscribe</button>
+                        <div className={"sub-item subscribe"} onClick={() => this.addSubscriptionNew(issue)}>{issue.news_title}</div>
+                        }
+
+                        </div>
+                        )
+                      })
+
+                      // allIssues.map((issue) => (
+                      //   console.log("Debuug shit") +
+                      //   console.log(issue._id) +
+                      //   <div className={"sub-item " + this.state.mongoDBsubscriptionsBulk?.filter(sub => sub._id === issue._id ).length > 0 ? 'sub-item subscribe' : 'sub-item unsubscribe' } onClick={() => this.addSubscription(issue)}>{issue.news_title}</div>
+                      // ))
+                      :
+                      null
+                      }
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="card mt-3">
+                <div className="card-header">Legal</div>
+
+                <div className="card-body">
+
+                  <div className="row">
+
+                    <div className="col-12 col-md-4">
+                      <div>Terms:</div>
+                      <div className="version">Version: 1.0</div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" checked type="radio" name="terms" id="inlineRadio1" value="option1"/>
+                        <label class="form-check-label" for="inlineRadio1">True</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="terms" id="inlineRadio2" value="option2"/>
+                        <label class="form-check-label" for="inlineRadio2">False</label>
+                      </div>
+                    </div>
+
+                    <div className="col-12 col-md-4">
+                      <div>Cookies:</div>
+                      <div className="version">Version: 1.0</div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" checked type="radio" name="cookies" id="inlineRadio1" value="option1"/>
+                        <label class="form-check-label" for="inlineRadio1">True</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="cookies" id="inlineRadio2" value="option2"/>
+                        <label class="form-check-label" for="inlineRadio2">False</label>
+                      </div>
+                    </div>
+
+                    <div className="col-12 col-md-4">
+                      <div>Privacy:</div>
+                      <div className="version">Version: 1.0</div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" checked type="radio" name="privacy" id="inlineRadio1" value="option1"/>
+                        <label class="form-check-label" for="inlineRadio1">True</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="privacy" id="inlineRadio2" value="option2"/>
+                        <label class="form-check-label" for="inlineRadio2">False</label>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div className="d-none">
                 <div><b>Legal</b></div>
 
                 <div className="ml-3">
@@ -308,23 +500,6 @@ class SubscribeListBase extends Component {
                 </div>
 
               </div>
-
-              <div>
-                <span><b>Sign Up Date</b> (sign_up_date)</span>
-                <div className="ml-3">{moment.unix(mongoDBuser?.sign_up_date).format('LL') || "Loading"}</div>
-              </div>
-
-              <div>
-                <span><b>Birth Date</b> (birth_date)</span>
-                <div className="ml-3">{moment.unix(mongoDBuser?.birth_date).format('LL') || "Loading"}</div>
-              </div>
-
-              <div>
-                <span><b>Last Online Date</b> (last_online_date)</span>
-                <div className="ml-3">{moment.unix(mongoDBuser?.last_online_date).format('LL') || "Loading"}</div>
-              </div>
-
-
 
             </div>
 
@@ -376,7 +551,7 @@ class SubscribeListBase extends Component {
 
                   mongoDBsubscriptionsBulk?.map((subscription) => (
                     <Link className="submission-item" to={ROUTES.NEWS + "/" + subscription._id}>
-                      {subscription.news_category} - {subscription.news_title}
+                      {subscription.news_type} - {subscription.news_title}
                     </Link>
                   ))
                   :
@@ -429,7 +604,7 @@ class SubscribeListBase extends Component {
             </div>
 
             <div className="col-12 col-md-6">
-              <h1>All Subscriptions:</h1>
+              <h1>All News:</h1>
               <div className="list">
                 
               {this.state.donationListLoaded === true ?
@@ -477,9 +652,17 @@ const SubscribeList = withFirebase(SubscribeListBase);
 const condition = authUser => !!authUser;
 // export default SubscribeList;
 
-export default compose(
-  withEmailVerification,
-  withAuthorization(condition),
-)(SubscribeList);
+// export default compose(
+//   withEmailVerification,
+//   withAuthorization(condition),
+// )(SubscribeList);
 
-// export default SubscribeList;
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(SubscribeList);

@@ -9,6 +9,8 @@ import * as ROUTES from '../../../constants/routes';
 
 import axios from 'axios';
 
+import NewsAdd from './add';
+
 class AdminPage extends Component {
   constructor(props) {
   super(props);
@@ -375,10 +377,13 @@ class AdminPage extends Component {
 
         </div>
 
+        <NewsAdd/>
+
         <Switch>
           <Route exact path={ROUTES.MANAGE_DETAILS} component={UserItem} />
           {/* <Route exact path={ROUTES.MANAGE} component={IssuesList} /> */}
         </Switch>
+
       </div>
     </div>
     );
@@ -822,7 +827,7 @@ const UserItem = ({ match }) => (
         </div>
 
         <div className="col-12 col-md-6">
-          <div className="btn btn-articles-light w-100">Update</div>
+          <div className="btn btn-articles-light w-25 mx-auto">Update</div>
         </div>
     
       </div>
