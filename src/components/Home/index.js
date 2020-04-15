@@ -122,49 +122,49 @@ class HomePageThreeBase extends React.Component {
 			// }
 		];
     
-		paths.map(topic => {
-			this.props.firebase.user_data(topic.subPath, this.props.firebase.auth.currentUser.uid).once('value').then(snapshot => {
-				const issuesObject = snapshot.val();
-				let issuesList = [];
+		// paths.map(topic => {
+		// 	this.props.firebase.user_data(topic.subPath, this.props.firebase.auth.currentUser.uid).once('value').then(snapshot => {
+		// 		const issuesObject = snapshot.val();
+		// 		let issuesList = [];
 
-				if ( typeof issuesObject === 'object' && issuesObject !== null ) {
-					issuesList = Object.keys(issuesObject).map(key => (
-					{
-						uid: key,
-					}
-					));
-				} else {
-					issuesList = [];
-				}
+		// 		if ( typeof issuesObject === 'object' && issuesObject !== null ) {
+		// 			issuesList = Object.keys(issuesObject).map(key => (
+		// 			{
+		// 				uid: key,
+		// 			}
+		// 			));
+		// 		} else {
+		// 			issuesList = [];
+		// 		}
 
-				this.setState({
-					[topic.storage]: issuesList,
-					loading: false
-				});
+		// 		this.setState({
+		// 			[topic.storage]: issuesList,
+		// 			loading: false
+		// 		});
 
-				// So maybe this is not the safest way to do this but it works for now! This will be someone elses problem one day :)
-				let matchedStorage = "matched" + topic.storage.charAt(0).toUpperCase() + topic.storage.slice(1);
+		// 		// So maybe this is not the safest way to do this but it works for now! This will be someone elses problem one day :)
+		// 		let matchedStorage = "matched" + topic.storage.charAt(0).toUpperCase() + topic.storage.slice(1);
 
-				issuesList.map((retrived) => (
-					this.props.firebase.news_data(topic.dataPath, retrived.uid).once('value').then(snapshot => {
-          const issueSnapshot = snapshot.val();
+		// 		issuesList.map((retrived) => (
+		// 			this.props.firebase.news_data(topic.dataPath, retrived.uid).once('value').then(snapshot => {
+    //       const issueSnapshot = snapshot.val();
 
-          issueSnapshot.uid = retrived.uid;
+    //       issueSnapshot.uid = retrived.uid;
 
-          console.log(issueSnapshot);
+    //       console.log(issueSnapshot);
 
-					this.setState({
-						[matchedStorage]: this.state[matchedStorage].concat(issueSnapshot)
-					})
+		// 			this.setState({
+		// 				[matchedStorage]: this.state[matchedStorage].concat(issueSnapshot)
+		// 			})
 
-					// console.log(matchedStorage);
+		// 			// console.log(matchedStorage);
 
-					})
+		// 			})
 
-				));
+		// 		));
 
-			});
-		});
+		// 	});
+		// });
   }
   
   componentWillUnmount() {
@@ -1253,8 +1253,8 @@ const Messages = withFirebase(MessagesBase);
 const HomePageThree = withFirebase(HomePageThreeBase);
 
 export default compose(
-withEmailVerification,
-withAuthorization(condition),
+// withEmailVerification,
+// withAuthorization(condition),
 )(HomePageThree);
 
 // export default HomePageThree;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
@@ -64,122 +64,225 @@ import { withAuthentication } from './Session';
 
 import { AuthUserContext } from './Session';
 
-let deferredPrompt;
+import { connect } from "react-redux";
+import { setUserDetails } from "../actions/authActions";
 
-window.addEventListener('beforeinstallprompt', (e) => {
-  // Prevent the mini-infobar from appearing on mobile
-  e.preventDefault();
-  // Stash the event so it can be triggered later.
-  deferredPrompt = e;
-  // Update UI notify the user they can install the PWA
-  // showInstallPromotion();
+class App extends Component {
+  constructor(props) {
+    super(props);
 
-  // Show the install prompt
-  deferredPrompt.prompt();
-
-  // Wait for the user to respond to the prompt
-  deferredPrompt.userChoice.then((choiceResult) => {
-    if (choiceResult.outcome === 'accepted') {
-      console.log('User accepted the install prompt');
-    } else {
-      console.log('User dismissed the install prompt');
+    this.state = {
+      test: 'test'
     }
-  })
+  }
 
-});
+  componentDidMount() {
 
-const App = () => (
-  <Router>
-    <div>
+    if (this.props.auth.isAuthenticated) {
+      this.props.setUserDetails(this.props.auth.user.id);
+    }
+    
+  }
 
-      <Navigation />
+  render(props) {
+    return (
+      <Router>
+        <div>
 
-      {/* <AuthUserContext.Consumer>
-        {authUser =>
-          <div style={{position: 'absolute', top: '0px', zIndex: '1000', color: 'red', pointerEvents: 'none'}}>
+          <Navigation />
 
-          {!authUser ? (
-            <div>Assume Completion of Outset while authUser loads</div>
-          ) : (
-            <>
-              {authUser.outset.completed ? 'Completed, site can be used' : "Not completed, plesae complete Outset"}
-            </>
-          )
-          }
+          {/* <AuthUserContext.Consumer>
+            {authUser =>
+              <div style={{position: 'absolute', top: '0px', zIndex: '1000', color: 'red', pointerEvents: 'none'}}>
+
+              {!authUser ? (
+                <div>Assume Completion of Outset while authUser loads</div>
+              ) : (
+                <>
+                  {authUser.outset.completed ? 'Completed, site can be used' : "Not completed, plesae complete Outset"}
+                </>
+              )
+              }
+
+            </div>
+            }
+          </AuthUserContext.Consumer> */}
+
+          <Switch>
+            {/* Something like this? */}
+            {/* <Route path="*" component={OutsetPage}/> */}
+            {/* <Redirect from="*" to="/outset"/> */}
+
+            <Route exact path={ROUTES.LANDING} component={LandingPage} />
+      
+            <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
+            <Route path={ROUTES.SIGN_IN} component={SignInPage} />
+
+            <Route path={ROUTES.OUTSET} component={OutsetPage} />
+
+            <PrivateRoute path={ROUTES.SUBSCRIBE} component={SubscribePage} />
+            {/* <Route path={ROUTES.SUBSCRIBE} component={SubscribePage} /> */}
+            
+            <Route path={ROUTES.HOME} component={HomePage} />
+            <Route path={ROUTES.MISSION} component={MissionPage} />
+
+            <Route path={ROUTES.REPORTS} component={ReportsPage} exact={true}/>
+            <Route path={ROUTES.REPORTS_MANAGE} component={ReportsManagePage} />
+      
+            <Route exact path={ROUTES.STORE} component={StorePage} />
+            <Route exact path={ROUTES.STORE_VIEW} component={StorePage} />
+            <Route path={ROUTES.CHECKOUT} component={StoreCheckoutPage} />
+            <Route path={ROUTES.STORE_SUBMISSIONS} component={StoreSubmissionsPage} />
+            <Route path={ROUTES.STORE_SUBMISSIONS_SUBMIT} component={StoreSubmissionsSubmitPage}/>
+
+            <Route path={ROUTES.STORE_MANAGE} component={StoreManage} />
+      
+            <Route exact path={ROUTES.NEWS} component={NewsPage} />
+            <Route path={ROUTES.MYTHS} component={MythsPage} />
+            <Route path={ROUTES.ISSUES} component={IssuesPage} exact={true}/>
+            <Route path={ROUTES.ISSUE} component={IssuePage}/>
+            
+            <Route path={ROUTES.MANAGE} component={NewsManagePage} />
+
+            <Route path={ROUTES.TOWN_HALL} component={TownHallPage} />
+      
+            <Route exact path={ROUTES.PARTY} component={PartyPage} />
+            <Route path={ROUTES.PROPOSALS} component={PartyProposalsPage} />
+            
+            <Route path={ROUTES.MESH} component={MeshPage} />
+      
+            <Route exact path={ROUTES.SUPPORT} component={SupportPage} />
+            <Route path={ROUTES.JOBS} component={JobsPage} />
+            <Route path={ROUTES.PRESS} component={PressPage} />
+            <Route path={ROUTES.TRANSLATIONS} component={TranslationsPage} />
+      
+            <Route path={ROUTES.EMPLOYEES} component={EmployeePage} exact={true}/>
+            <Route path={ROUTES.EMPLOYEES_DETAILS} component={EmployeePageDetails} />
+      
+            <Route path={ROUTES.ACCOUNT} component={AccountPage} />
+            <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
+            
+            <Route path={ROUTES.ADMIN} component={AdminPage} />
+            {/* <Route path={ROUTES.DONATE} component={DonatePage} /> */}
+
+            <Route path={ROUTES.MAIL} component={MailPage} />
+
+            {/* <Route path={ROUTES.PLAYGROUND} component={PlaygroundPage} /> */}
+            <Route path={ROUTES.CHAT} component={Chat} />
+
+            <Route component={NotFoundPage} />
+          </Switch>
+
+          {/* <Redirect from="*" to="/outset"/> */}
 
         </div>
-        }
-      </AuthUserContext.Consumer> */}
+      </Router>
+    )
+  }
+}
 
-      <Switch>
-        {/* Something like this? */}
-        {/* <Route path="*" component={OutsetPage}/> */}
-        {/* <Redirect from="*" to="/outset"/> */}
+// const App = () => (
+//   <Router>
+//     <div>
 
-        <Route exact path={ROUTES.LANDING} component={LandingPage} />
+//       <Navigation />
+
+//       {/* <AuthUserContext.Consumer>
+//         {authUser =>
+//           <div style={{position: 'absolute', top: '0px', zIndex: '1000', color: 'red', pointerEvents: 'none'}}>
+
+//           {!authUser ? (
+//             <div>Assume Completion of Outset while authUser loads</div>
+//           ) : (
+//             <>
+//               {authUser.outset.completed ? 'Completed, site can be used' : "Not completed, plesae complete Outset"}
+//             </>
+//           )
+//           }
+
+//         </div>
+//         }
+//       </AuthUserContext.Consumer> */}
+
+//       <Switch>
+//         {/* Something like this? */}
+//         {/* <Route path="*" component={OutsetPage}/> */}
+//         {/* <Redirect from="*" to="/outset"/> */}
+
+//         <Route exact path={ROUTES.LANDING} component={LandingPage} />
   
-        <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
-        <Route path={ROUTES.SIGN_IN} component={SignInPage} />
+//         <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
+//         <Route path={ROUTES.SIGN_IN} component={SignInPage} />
 
-        <Route path={ROUTES.OUTSET} component={OutsetPage} />
+//         <Route path={ROUTES.OUTSET} component={OutsetPage} />
 
-        <PrivateRoute exact path={ROUTES.SUBSCRIBE} component={SubscribePage} />
-        {/* <Route path={ROUTES.SUBSCRIBE} component={SubscribePage} /> */}
+//         <PrivateRoute exact path={ROUTES.SUBSCRIBE} component={SubscribePage} />
+//         {/* <Route path={ROUTES.SUBSCRIBE} component={SubscribePage} /> */}
         
-        <Route path={ROUTES.HOME} component={HomePage} />
-        <Route path={ROUTES.MISSION} component={MissionPage} />
+//         <Route path={ROUTES.HOME} component={HomePage} />
+//         <Route path={ROUTES.MISSION} component={MissionPage} />
 
-        <Route path={ROUTES.REPORTS} component={ReportsPage} exact={true}/>
-        <Route path={ROUTES.REPORTS_MANAGE} component={ReportsManagePage} />
+//         <Route path={ROUTES.REPORTS} component={ReportsPage} exact={true}/>
+//         <Route path={ROUTES.REPORTS_MANAGE} component={ReportsManagePage} />
   
-        <Route exact path={ROUTES.STORE} component={StorePage} />
-        <Route exact path={ROUTES.STORE_VIEW} component={StorePage} />
-        <Route path={ROUTES.CHECKOUT} component={StoreCheckoutPage} />
-        <Route path={ROUTES.STORE_SUBMISSIONS} component={StoreSubmissionsPage} />
-        <Route path={ROUTES.STORE_SUBMISSIONS_SUBMIT} component={StoreSubmissionsSubmitPage}/>
+//         <Route exact path={ROUTES.STORE} component={StorePage} />
+//         <Route exact path={ROUTES.STORE_VIEW} component={StorePage} />
+//         <Route path={ROUTES.CHECKOUT} component={StoreCheckoutPage} />
+//         <Route path={ROUTES.STORE_SUBMISSIONS} component={StoreSubmissionsPage} />
+//         <Route path={ROUTES.STORE_SUBMISSIONS_SUBMIT} component={StoreSubmissionsSubmitPage}/>
 
-        <Route path={ROUTES.STORE_MANAGE} component={StoreManage} />
+//         <Route path={ROUTES.STORE_MANAGE} component={StoreManage} />
   
-        <Route exact path={ROUTES.NEWS} component={NewsPage} />
-        <Route path={ROUTES.MYTHS} component={MythsPage} />
-        <Route path={ROUTES.ISSUES} component={IssuesPage} exact={true}/>
-        <Route path={ROUTES.ISSUE} component={IssuePage}/>
+//         <Route exact path={ROUTES.NEWS} component={NewsPage} />
+//         <Route path={ROUTES.MYTHS} component={MythsPage} />
+//         <Route path={ROUTES.ISSUES} component={IssuesPage} exact={true}/>
+//         <Route path={ROUTES.ISSUE} component={IssuePage}/>
         
-        <Route path={ROUTES.MANAGE} component={NewsManagePage} />
+//         <Route path={ROUTES.MANAGE} component={NewsManagePage} />
 
-        <Route path={ROUTES.TOWN_HALL} component={TownHallPage} />
+//         <Route path={ROUTES.TOWN_HALL} component={TownHallPage} />
   
-        <Route exact path={ROUTES.PARTY} component={PartyPage} />
-        <Route path={ROUTES.PROPOSALS} component={PartyProposalsPage} />
+//         <Route exact path={ROUTES.PARTY} component={PartyPage} />
+//         <Route path={ROUTES.PROPOSALS} component={PartyProposalsPage} />
         
-        <Route path={ROUTES.MESH} component={MeshPage} />
+//         <Route path={ROUTES.MESH} component={MeshPage} />
   
-        <Route exact path={ROUTES.SUPPORT} component={SupportPage} />
-        <Route path={ROUTES.JOBS} component={JobsPage} />
-        <Route path={ROUTES.PRESS} component={PressPage} />
-        <Route path={ROUTES.TRANSLATIONS} component={TranslationsPage} />
+//         <Route exact path={ROUTES.SUPPORT} component={SupportPage} />
+//         <Route path={ROUTES.JOBS} component={JobsPage} />
+//         <Route path={ROUTES.PRESS} component={PressPage} />
+//         <Route path={ROUTES.TRANSLATIONS} component={TranslationsPage} />
   
-        <Route path={ROUTES.EMPLOYEES} component={EmployeePage} exact={true}/>
-        <Route path={ROUTES.EMPLOYEES_DETAILS} component={EmployeePageDetails} />
+//         <Route path={ROUTES.EMPLOYEES} component={EmployeePage} exact={true}/>
+//         <Route path={ROUTES.EMPLOYEES_DETAILS} component={EmployeePageDetails} />
   
-        <Route path={ROUTES.ACCOUNT} component={AccountPage} />
-        <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
+//         <Route path={ROUTES.ACCOUNT} component={AccountPage} />
+//         <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
         
-        <Route path={ROUTES.ADMIN} component={AdminPage} />
-        {/* <Route path={ROUTES.DONATE} component={DonatePage} /> */}
+//         <Route path={ROUTES.ADMIN} component={AdminPage} />
+//         {/* <Route path={ROUTES.DONATE} component={DonatePage} /> */}
 
-        <Route path={ROUTES.MAIL} component={MailPage} />
+//         <Route path={ROUTES.MAIL} component={MailPage} />
 
-        {/* <Route path={ROUTES.PLAYGROUND} component={PlaygroundPage} /> */}
-        <Route path={ROUTES.CHAT} component={Chat} />
+//         {/* <Route path={ROUTES.PLAYGROUND} component={PlaygroundPage} /> */}
+//         <Route path={ROUTES.CHAT} component={Chat} />
 
-        <Route component={NotFoundPage} />
-      </Switch>
+//         <Route component={NotFoundPage} />
+//       </Switch>
 
-      {/* <Redirect from="*" to="/outset"/> */}
+//       {/* <Redirect from="*" to="/outset"/> */}
 
-    </div>
-  </Router>
-);
+//     </div>
+//   </Router>
+// );
 
-export default withAuthentication(App);
+// export default withAuthentication(App);
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { setUserDetails }
+)(App);

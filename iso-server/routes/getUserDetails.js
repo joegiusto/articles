@@ -5,6 +5,7 @@ const url = "mongodb+srv://joegiusto:" + process.env.MONGODB_PASSWORD + "@articl
 module.exports = app => {
   app.post('/getUserDetails', (req, res) => {
     console.log(req.body.user);
+    console.log("Someone calling getUserDetails")
     console.log( new Date() );
 
     MongoClient.connect(url, function(err, db) {
@@ -52,5 +53,5 @@ module.exports = app => {
 
     });
     
-  })
+  });
 }

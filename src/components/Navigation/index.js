@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { AuthUserContext } from '../Session';
+// import { AuthUserContext } from '../Session';
 import {ReactModal, customStyles, modalContent} from './Modals';
 import * as ROUTES from '../../constants/routes';
 import * as ROLES from '../../constants/roles';
@@ -12,14 +12,14 @@ import Clock from 'react-live-clock';
 
 import gunIcon from '../../assets/img/icons/gun.svg'
 
-const Navigation = (props) => (
-  <AuthUserContext.Consumer>
-    {authUser =>
-      <Menu expensesTotal={props.expenses.length} authUser={authUser}/>
-      // <Menu authUser={authUser}/>
-    }
-  </AuthUserContext.Consumer>
-);
+// const Navigation = (props) => (
+//   <AuthUserContext.Consumer>
+//     {authUser =>
+//       <Menu  expensesTotal={props.expenses.length} authUser={authUser}/>
+//       // <Menu authUser={authUser}/>
+//     }
+//   </AuthUserContext.Consumer>
+// );
 
 function Menu(props) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -131,19 +131,20 @@ function Menu(props) {
 
                   <p id="nav-welcome" className="subheading-font m-0 py-0">
                     <span>Hello,&nbsp;
-                    {!props.authUser ? (
+                    {!props.isAuth ? (
                     <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SIGN_IN} id='nav-sign-in'>Log In / Sign Up</Link>
                     ) : (
-                    <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ACCOUNT} id='nav-sign-in'>{props.authUser.nameFirst} {props.authUser.nameLast}</Link>
+                    <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ACCOUNT} id='nav-sign-in'>{props?.user.first_name} {props?.user.last_name}</Link>
                     )}
                     </span>
                   </p>
 
                   <p id="nav-member-message" className='subheading-font m-0 py-0'>
-                    {!props.authUser ? (
+                    {!props.isAuth ? (
                       <span></span>
                     ) : (
-                      <span>Member Since {/* moment().unix(props.authUserdateCreation).format("MMMM Y") */} {moment.unix(props.authUser.dateCreation).format("MMMM Y")}</span>
+                      // <span>Member Since{moment.unix(props.user?.sign_up_date).format("MMMM Y")}</span>
+                      <span>Member Since {moment.unix(props.user?.sign_up_date).format("MMMM Y") || "Loading..."}</span>
                     )
                     }
                     
@@ -178,7 +179,14 @@ function Menu(props) {
                 <p className="heading-font no-link">
                   <b>Articles Clothing</b>
                 </p>
-                <span onClick={() => {setCartPreview(!cartPreview)}} to="cart"><span className="ml-auto" id="shopping-card"><i className="fas fa-shopping-basket mr-0"></i><span id="menu-pill" className="badge badge-pill badge-dark">{props.expensesTotal}</span></span></span>
+                <span onClick={() => {setCartPreview(!cartPreview)}} to="cart">
+                  <span className="ml-auto" id="shopping-card">
+                    <i className="fas fa-shopping-basket mr-0"></i>
+                    <span id="menu-pill" className="badge badge-pill badge-dark">
+                      {props.expensesTotal}
+                    </span>
+                  </span>
+                </span>
               </div>
 
               {/* <p className="heading-font no-link d-flex justify-content-between"><b>Articles Clothing</b><span onClick={() => {setCartPreview(!cartPreview)}} to="cart"><span className="ml-auto" id="shopping-card"><i className="fas fa-shopping-basket mr-0"></i><span id="menu-pill" className="badge badge-pill badge-dark">{props.expensesTotal}</span></span></span></p> */}
@@ -372,10 +380,15 @@ function Menu(props) {
 }
 
 const mapStateToProps = (state) => {
+  console.log(state.auth.user_details?.user?.first_name)
   return {
     expenses: state.expenses,
+    expensesTotal: (state.expenses).length,
     site: state.site,
+    user: state.auth?.user_details?.user,
+    first_name: state.auth.user_details?.user?.first_name,
+    isAuth: state.auth.isAuthenticated
   };
 };
 
-export default connect(mapStateToProps)(Navigation);
+export default connect(mapStateToProps)(Menu);

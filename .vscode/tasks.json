@@ -12,7 +12,7 @@
       },
     },
     {
-      "type": "nodemon",
+      "type": "npm",
       "script": "server",
       "problemMatcher": [],
       "runOptions": {

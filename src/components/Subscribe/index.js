@@ -10,6 +10,8 @@ import { AuthUserContext, withAuthorization, withEmailVerification } from '../Se
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 
+import { setUserDetails } from "../../actions/authActions";
+
 function loadingFiller(size) {
   return(
     <div style={{width: size}} className="loading-filler">
@@ -32,12 +34,15 @@ class SubscribeListBase extends Component {
     }
   }
 
-  getDer
-
   componentDidMount() {
+    console.log("Subscribe Mounted");
+
     let self = this;
     console.log('Making changes to subscriptions');
     this.setState({ newsAllLoading: true });
+
+    // Refresh for the newest info!
+    this.props.setUserDetails(self.props.auth.user.id);
 
     axios.get('/getNews')
     .then(function (response) {
@@ -60,8 +65,8 @@ class SubscribeListBase extends Component {
       self.setState({ resultsLoadingError: error });
     });
 
-    axios.post('/getUserDetails', {
-      // user: "5e90cc96579a17440c5d7d52"
+    // TODO - This needs to get taken out and replaced with the details of the global Redux state that gets set when user loads in.
+    axios.post('/api/secure/getUserDetails', {
       user: self.props.auth.user.id
     })
     .then(function (response) {
@@ -78,6 +83,8 @@ class SubscribeListBase extends Component {
 
     })
     .catch(function (error) {
+      console.log("Get User Details Secure Failed");
+      console.log(axios.defaults.headers.common["Authorization"])
       console.log(error);
     });
 
@@ -240,19 +247,21 @@ class SubscribeListBase extends Component {
     return(
       <div className="subscriptions-page">
 
-        <div onClick={this.props.logoutUser} className="btn btn-articles-light">
-          Sign Out ({this.props.auth.user.id})
-        </div>
-
         <div className="container">
 
           <div className="row">
 
             <div className="col-12 col-md-8">
 
-              <div className="d-flex justify-content-between border-bottom align-items-center mb-2 pb-1">
+              <div className="d-flex justify-content-between border-bottom align-items-center mb-2 pb-1 flex-column flex-md-row">
                 <h1 className="store-heading mb-0">User Data</h1>
-                <div style={{height: 'fit-content'}} className="btn btn-articles-light">Update</div>
+
+                <div>
+                  <div onClick={this.props.logoutUser} className="btn btn-articles-light">
+                    Sign Out ({this.props.auth.user.id})
+                  </div>
+                  <div style={{height: 'fit-content'}} className="btn btn-articles-light mt-2 mt-md-0 ml-md-2">Update</div>
+                </div>
               </div>
 
               <div className="name-tag">
@@ -664,5 +673,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser }
+  { logoutUser, setUserDetails }
 )(SubscribeList);

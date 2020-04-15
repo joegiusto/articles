@@ -25,6 +25,7 @@
 
     .photo-history {
       width: 200px;
+      flex-shrink: 0;
 
       .photo {
         // width: 200px;

@@ -15,6 +15,7 @@ import siteReducer from '../reducers/site';
 const persistConfig = {
   // transforms: [immutableTransform()],
   key: 'root',
+  // blacklist: ['auth'],
   storage,
 }
 

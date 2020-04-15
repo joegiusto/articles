@@ -12,7 +12,7 @@ const users = require("./routes/api/users");
 
 const mongoose = require("mongoose");
 const MongoClient = require('mongodb').MongoClient;
-var ObjectId = require('mongodb').ObjectId; 
+var ObjectId = require('mongodb').ObjectId;
 const url = "mongodb+srv://joegiusto:" + process.env.MONGODB_PASSWORD + "@articles-xgwnd.mongodb.net/articles_data?retryWrites=true&w=majority";
 
 // const client = new MongoClient(uri, { useNewUrlParser: true });
@@ -75,8 +75,8 @@ require("./config/passport")(passport);
 // Routes
 app.use("/api/users", users);
 
-const secureRoute = require('./routes/secure-routes.js');
-app.use('/', passport.authenticate('jwt', {session: false}), secureRoute);
+const secureRoute = require('./routes/secure/secure-routes.js');
+app.use('/api/secure', passport.authenticate('jwt', {session: false}), secureRoute);
 // app.use('/', secureRoute);
 
 app.listen(process.env.PORT || 8080);
