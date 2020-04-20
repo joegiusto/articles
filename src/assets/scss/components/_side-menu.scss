@@ -187,6 +187,7 @@
   background-color: #fff;
   transform: translate3d(80%, 0, 0);
   transition-duration: 200ms;
+
   &-end {
     z-index: 201;
     position: absolute;
@@ -225,6 +226,7 @@
     left: 300px;
     -webkit-clip-path: polygon(0 0, 100% 0, 50% 100%, 0% 100%);
     clip-path: polygon(0 0, 100% 0, 50% 100%, 0% 100%);
+
     &-custom {
       position: fixed;
       height: 50px;
@@ -236,14 +238,21 @@
       padding-left: 50px;
       z-index: 200;
       display: flex;
-      justify-content: space-between;
-      padding-top: .3rem;
+      justify-content: flex-end;
+      align-content: center;
+      // padding-top: .3rem;
       transition-duration: 200ms;
+
+      .menu-bar-link {
+        align-self: center;
+      }
+
       &.show {
         margin-left: 300px;
         padding-left: 0px;
         width: calc(100% - 300px);
       }
+
     }
   
   }

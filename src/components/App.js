@@ -21,6 +21,10 @@ import ReportsManagePage from './Reports/Manage';
 
 import StorePage from './Store'
 import StoreCheckoutPage from './Store/Checkout'
+
+import OrdersPage from './Store/Orders'
+import SingleOrderPage from './Store/Orders/single'
+
 import StoreSubmissionsPage from './Store/Submissions'
 import StoreSubmissionsSubmitPage from './Store/Submissions'
 import StoreManage from './Store/Manage'
@@ -132,6 +136,10 @@ class App extends Component {
             <Route exact path={ROUTES.STORE} component={StorePage} />
             <Route exact path={ROUTES.STORE_VIEW} component={StorePage} />
             <Route path={ROUTES.CHECKOUT} component={StoreCheckoutPage} />
+
+            <Route exact path={ROUTES.STORE_ORDERS} component={OrdersPage}/>
+            <Route path={ROUTES.STORE_ORDERS_DETAILS} component={SingleOrderPage}/>
+
             <Route path={ROUTES.STORE_SUBMISSIONS} component={StoreSubmissionsPage} />
             <Route path={ROUTES.STORE_SUBMISSIONS_SUBMIT} component={StoreSubmissionsSubmitPage}/>
 
@@ -142,7 +150,8 @@ class App extends Component {
             <Route path={ROUTES.ISSUES} component={IssuesPage} exact={true}/>
             <Route path={ROUTES.ISSUE} component={IssuePage}/>
             
-            <Route path={ROUTES.MANAGE} component={NewsManagePage} />
+            <Route exact path={ROUTES.MANAGE} component={NewsManagePage} />
+            <Route path={ROUTES.MANAGE_DETAILS} component={NewsManagePage} />
 
             <Route path={ROUTES.TOWN_HALL} component={TownHallPage} />
       

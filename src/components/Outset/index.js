@@ -9,6 +9,8 @@ import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import { auth } from 'firebase';
 
+import { connect } from 'react-redux';
+
 import StepOne from './StepOne';
 import StepTwo from './StepTwo';
 import StepThree from './StepThree';
@@ -19,13 +21,13 @@ import * as outsetPhotos from './outsetPhotos';
 
 import $ from "jquery";
 
-const OutsetBaseWrap = (props) => (
-  <AuthUserContext.Consumer>
-    {authUser =>
-      <Outset authUser={authUser}/>
-    }
-  </AuthUserContext.Consumer>
-);
+// const OutsetBaseWrap = (props) => (
+//   <AuthUserContext.Consumer>
+//     {authUser =>
+//       <Outset authUser={authUser}/>
+//     }
+//   </AuthUserContext.Consumer>
+// );
 
 class OutsetBase extends React.Component {
   constructor(props) {
@@ -48,8 +50,8 @@ class OutsetBase extends React.Component {
       focus: '',
 
       // Step One States
-      nameFirst: props.authUser.nameFirst,
-      nameLast: props.authUser.nameLast,
+      // nameFirst: props.user.first_name,
+      nameLast: '',
       
       city: '',
       state: '',
@@ -477,7 +479,7 @@ class OutsetBase extends React.Component {
         return (
           <>
           <div className="intro-title">Clothing Details</div>
-          {this.theAPI()}
+          {/* {this.theAPI()} */}
           </>
         )
       case 3: 
@@ -543,7 +545,7 @@ class OutsetBase extends React.Component {
       case 1: 
         // General Information
         return (
-          <StepOne {...this.state} onZipBlur={this.onZipBlur} handleCellTwo={this.handleCellTwo} setCell={this.setCell} handleChange={this.handleChange} onChange={this.onChange} changeFocus={this.changeFocus} authUser={authUser}/>
+          <StepOne {...this.state} onZipBlur={this.onZipBlur} handleCellTwo={this.handleCellTwo} setCell={this.setCell} handleChange={this.handleChange} onChange={this.onChange} changeFocus={this.changeFocus} user={this.props.user} authUser={authUser}/>
         )
       case 2:
         // Clothing Information
@@ -729,13 +731,13 @@ class OutsetBase extends React.Component {
               <div className={"walkthrough-box-clip-path-hides-box-shadow-work-around " + (this.state.step > 0 ? 'to-top' : '')}>
                 <div className={"walkthrough-box " + (this.state.step > 0 ? 'to-top' : '')}>
     
-                  <h1 className={(this.state.step > 0 ? 'shrink' : '')}>{authUser.nameFirst}, that's a nice name.</h1>
+                  <h1 className={(this.state.step > 0 ? 'shrink' : '')}>FILL IN, that's a nice name.</h1>
     
                   <h5 className="focus-explanation">{this.renderReasonForInformation(this.state.focus)}</h5>
     
                   <button id="goFull" className={"btn btn-lg btn-custom-white " + (this.state.step === 0 ? '' : ' d-none')} onClick={() => (this.increment())}>Start</button>
     
-                  <div className="debug-id">ID: {authUser.uid}</div>
+                  <div className="debug-id">ID: FILL IN</div>
                 </div>
               </div>
   
@@ -820,6 +822,19 @@ const Outset = withFirebase(OutsetBase);
 
 const condition = authUser => !!authUser;
 
-export default compose(
-  withAuthorization(condition),
-)(OutsetBaseWrap);
+const mapStateToProps = (state) => {
+  return {
+    // expenses: state.expenses,
+    // expensesTotal: (state.expenses).length,
+    // site: state.site,
+    user: state.auth?.user_details?.user,
+    // first_name: state.auth.user_details?.user?.first_name,
+    // isAuth: state.auth.isAuthenticated
+  };
+};
+
+export default connect(mapStateToProps)(OutsetBase);
+
+// export default compose(
+//   withAuthorization(condition),
+// )(OutsetBaseWrap);

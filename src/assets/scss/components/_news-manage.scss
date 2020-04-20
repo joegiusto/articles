@@ -2,7 +2,6 @@
 .news-manage-plate {
   background-color: black;
   background-color: #fff;
-  
   box-shadow: -3px -2px 6px 0px #000;
   width: 100%;
   color: rgb(0, 0, 0);
@@ -23,7 +22,6 @@
     background-color: #ffb7b7;
     padding: 0rem 1rem;
   }
-
 
   .catagories {
     // width: 100%;
@@ -172,6 +170,62 @@
 
     button {
       margin-top: 1rem;
+    }
+  }
+
+  &.bottom-add {
+    position: relative;
+
+    .clear {
+      cursor: pointer;
+      position: absolute;
+      padding: 0.5rem;
+      right: 10px;
+      top: 0;
+      color: black;
+      font-weight: 500;
+      border: solid 3px #000;
+      transform: translateY(-50%);
+      // width: 50px;
+      // height: 50px;
+      background-color: $accent-color;
+    }
+
+    .tags-group {
+      position: relative;
+
+      .preview {
+        height: auto;
+        min-height: calc(1.5em + 0.75rem + 2px);
+        padding: 0.375rem 0.75rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .tags {
+        
+        } 
+
+        .edit {
+          cursor: pointer;
+        }
+
+        .select {
+          padding: 0.375rem 0.75rem;
+          position: absolute;
+          top: 100%;
+          width: 100%;
+          left: 0;
+          // height: 200px;
+          border: 1px solid #ced4da;
+          background-color: white;
+          z-index: 1;
+
+          .badge {
+            cursor: pointer;
+          }
+        }
+      }    
     }
   }
 }

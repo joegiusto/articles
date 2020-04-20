@@ -131,7 +131,7 @@ app.get('/search-history', function (req, res) {
   });
 });
 
-app.get('/getNews', (req, res) => {
+app.get('/getNewsMySQL', (req, res) => {
   // console.log(req.body.tag);
   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   console.log( new Date() );
@@ -195,7 +195,12 @@ app.post('/getUserSubscriptions', (req, res) => {
 });
 
 require('./routes/addNewsDocument')(app);
+require('./routes/editNewsDocument')(app);
+require('./routes/getNewsDocument')(app);
+
 require('./routes/getUserDetails')(app);
+require('./routes/getNews')(app);
+require('./routes/getTags')(app);
 
 
 app.get('/getAllIssues', function (req, res) {

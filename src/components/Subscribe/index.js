@@ -267,13 +267,16 @@ class SubscribeListBase extends Component {
               <div className="name-tag">
 
                 <div className="photo-history">
-                  <div className="photo">
 
+                  <div className="photo">
+                    <img src={mongoDBuser?.photo_url} alt=""/>
                   </div>
+
                   <div className="history">
                       <div>Member Since: {mongoDBuser?.sign_up_date ? moment.unix(mongoDBuser?.sign_up_date).format('LL') : "Loading"}</div>
                       <div>Last Online: {mongoDBuser?.last_online_date ? moment.unix(mongoDBuser?.last_online_date).format('LL') : "Loading"}</div>
                   </div>
+
                 </div>
 
                 <div className="name">
@@ -319,6 +322,21 @@ class SubscribeListBase extends Component {
                           aria-describedby=""
                           value={ mongoDBuser?.birth_date ? moment.unix(mongoDBuser?.birth_date).format('LL') : ""}
                           placeholder="Loading..."
+                        />
+                        {/* <small id="emailHelp" class="form-text text-muted">Visible to just you.</small> */}
+                      </div>
+                    </div>
+
+                    <div className="col-12 col-md-12">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Photo URL:</label>
+                        <input 
+                          type="text" 
+                          className="form-control" 
+                          id="" 
+                          aria-describedby=""
+                          value={ mongoDBuser?.photo_url ? mongoDBuser?.photo_url : ''}
+                          placeholder="Uploads coming soon!"
                         />
                         {/* <small id="emailHelp" class="form-text text-muted">Visible to just you.</small> */}
                       </div>
@@ -581,7 +599,7 @@ class SubscribeListBase extends Component {
               Manage Subscriptions
             </div> */}
 
-            <div className="col-12 col-md-6">
+            <div className="col-12 col-md-6 d-none">
               <h1>Your Subscriptions:</h1>
               <div className="list">
 
@@ -607,12 +625,12 @@ class SubscribeListBase extends Component {
               })
               : 
               'loading'
-            }
+              }
 
               </div>
             </div>
 
-            <div className="col-12 col-md-6">
+            <div className="col-12 col-md-6 d-none">
               <h1>All News:</h1>
               <div className="list">
                 

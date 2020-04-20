@@ -16,10 +16,13 @@ class AdminPage extends Component {
   super(props);
 
     this.state = {
+      contentServer: 'MongoDB',
+      // contentServer: 'MySQL',
+
       catagory: 'All',
       
       searchAlert: false,
-      searchFilter: 'Content',
+      searchFilter: 'Tags',
       searchText: '',
 
       searchHistory: [],
@@ -39,81 +42,134 @@ class AdminPage extends Component {
       stories: [],
       issues: [],
       myths: [],
+
+      isEdit: false,
     };
 
     // this.getNewsByTag = this.getNewsByTag.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.changeCatagory = this.changeCatagory.bind(this);
+    this.changeIsEdit = this.changeIsEdit.bind(this);
   }
 
   componentDidMount() {
     let self = this;
+
     self.setState({ tagsLoading: true });
     self.setState({ searchLoading: true });
     self.setState({ resultsLoading: true });
 
-    axios.get('/issue-tags')
-    .then(function (response) {
+    if ( this.state.contentServer === "MongoDB" ) {
 
-      // handle success
-      console.log(response.data);
+      axios.get('/getNews')
+      .then(function (response) {
 
-      self.setState({
-        tags: response.data
+        // handle success
+        console.log(response.data.news);
+
+        self.setState({
+          results: response.data.news,
+          resultsAll: response.data.news
+        });
+
+        self.setState({ resultsLoading: false });
+
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+
+        self.setState({ resultsLoading: true });
+        self.setState({ resultsLoadingError: error });
       });
 
-      self.setState({ tagsLoading: false });
+      axios.get('/getTags')
+      .then(function (response) {
 
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
+        // handle success
+        // console.log(response.data.news);
 
-      self.setState({ tagsLoading: true });
-      self.setState({ tagsLoadingError: error });
-    });
+        self.setState({
+          tags: response.data.tags,
+          tagsLoading: false
+        });
 
-    axios.get('/search-history')
-    .then(function (response) {
+      })
+      .catch(function (error) {
+        // handle error
+        // console.log(error);
 
-      // handle success
-      console.log(response.data);
-
-      self.setState({
-        searchHistory: response.data
+        self.setState({ tagsLoading: false });
+        self.setState({ resultsLoadingError: error });
       });
 
-      self.setState({ searchLoading: false });
+    } else if ( this.state.contentServer === "MySQL" ) {
 
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
+      axios.get('/issue-tags')
+      .then(function (response) {
 
-      self.setState({ searchLoading: true });
-      self.setState({ searchLoadingError: error });
-    });
+        // handle success
+        console.log(response.data);
 
-    axios.get('/getNews')
-    .then(function (response) {
+        self.setState({
+          tags: response.data
+        });
 
-      // handle success
-      console.log(response.data);
+        self.setState({ tagsLoading: false });
 
-      self.setState({
-        results: response.data,
-        resultsAll: response.data
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+
+        self.setState({ tagsLoading: true });
+        self.setState({ tagsLoadingError: error });
       });
 
-      self.setState({ resultsLoading: false });
+      axios.get('/search-history')
+      .then(function (response) {
 
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
+        // handle success
+        console.log(response.data);
 
-      self.setState({ resultsLoading: true });
-      self.setState({ resultsLoadingError: error });
-    });
+        self.setState({
+          searchHistory: response.data
+        });
+
+        self.setState({ searchLoading: false });
+
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+
+        self.setState({ searchLoading: true });
+        self.setState({ searchLoadingError: error });
+      });
+
+      axios.get('/getNewsMySQL')
+      .then(function (response) {
+
+        // handle success
+        console.log(response.data);
+
+        self.setState({
+          results: response.data,
+          resultsAll: response.data
+        });
+
+        self.setState({ resultsLoading: false });
+
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+
+        self.setState({ resultsLoading: true });
+        self.setState({ resultsLoadingError: error });
+      });
+
+    }
 
   }
 
@@ -193,27 +249,29 @@ class AdminPage extends Component {
   }
 
   changeCatagory(catagory) {
+    console.log(catagory);
 
-    let catagoryNumber = 0;
+    // let catagoryNumber = 0;
 
-    switch(catagory) {
-      case 'Stories':
-        catagoryNumber = 1;
-        break;
-      case 'Issues':
-        catagoryNumber = 2;
-        break;
-      case 'Myths':
-        catagoryNumber = 3;
-        break;
-      default:
-        catagoryNumber = 0;
-    }
+    // switch(catagory) {
+    //   case 'Stories':
+    //     catagoryNumber = 1;
+    //     break;
+    //   case 'Issues':
+    //     catagoryNumber = 2;
+    //     break;
+    //   case 'Myths':
+    //     catagoryNumber = 3;
+    //     break;
+    //   default:
+    //     catagoryNumber = 0;
+    // }
 
     this.setState({
       catagory: catagory,
       searchFilter: 'Content',
-      results: catagoryNumber !== 0 ? this.state.resultsAll.filter(result => result.catagory === catagoryNumber) : this.state.resultsAll,
+      // results: catagoryNumber !== 0 ? this.state.resultsAll.filter(result => result.catagory === catagoryNumber) : this.state.resultsAll,
+      results: catagory !== 'All' ? this.state.resultsAll.filter(result => result.news_type == catagory) : this.state.resultsAll,
       searchedTag: ''
     })
   }
@@ -221,6 +279,12 @@ class AdminPage extends Component {
   changeSearchFilter(filter) {
     this.setState({
       searchFilter: filter
+    })
+  }
+
+  changeIsEdit(value) {
+    this.setState({
+      isEdit: value
     })
   }
 
@@ -244,6 +308,12 @@ class AdminPage extends Component {
       searchFilter 
     } = this.state;
 
+    function NewsTypeSelector(props) {
+      return (
+      <div className={"catagory " + (props.catagory === props.changeCatagoryTo ? 'active' : '')} onClick={() => props.changeCatagory(props.changeCatagoryTo)}>{props.displayCatagoryAs}</div>
+      )
+    }
+
     return (
       <div className="container">
       <div>
@@ -252,7 +322,7 @@ class AdminPage extends Component {
           <h1>News Management</h1>
           <div className="row justify-content-between">
             <div className="col-12 col-md-7">
-              <p>Page for only Admins and Writers to manage news details. Here you can update and create content for Article's News Pages.</p>
+              <p>Page for only Admins and Writers to manage news details. Here you can update and create content for Article's News Pages. The content server is pulling data from <span className="badge badge-warning">{this.state.contentServer}</span> we can only hope this will never change.</p>
             </div>
             <div className="col-12 col-md-4">
             <p>Looking for <Link to={ROUTES.SUBSCRIBE}>Your News Managemnet?</Link> </p>
@@ -262,10 +332,14 @@ class AdminPage extends Component {
           
 
           <div className="catagories">
-            <div onClick={() => this.changeCatagory("All")} className={"catagory " + (catagory === "All" ? 'active' : '')}>All</div>
-            <div onClick={() => this.changeCatagory("Stories")} className={"catagory " + (catagory === "Stories" ? 'active' : '')}>Stoires</div>
-            <div onClick={() => this.changeCatagory("Issues")} className={"catagory " + (catagory === "Issues" ? 'active' : '')}>Issues</div>
-            <div onClick={() => this.changeCatagory("Myths")} className={"catagory " + (catagory === "Myths" ? 'active' : '')}>Myths</div>
+            <NewsTypeSelector catagory={this.state.catagory} changeCatagory={this.changeCatagory} changeCatagoryTo="All" displayCatagoryAs="All" />
+            <NewsTypeSelector catagory={this.state.catagory} changeCatagory={this.changeCatagory} changeCatagoryTo="story" displayCatagoryAs="Stoires" />
+            <NewsTypeSelector catagory={this.state.catagory} changeCatagory={this.changeCatagory} changeCatagoryTo="issue" displayCatagoryAs="Issues" />
+            <NewsTypeSelector catagory={this.state.catagory} changeCatagory={this.changeCatagory} changeCatagoryTo="myth" displayCatagoryAs="Myths" />
+            {/* <div onClick={() => this.changeCatagory("All")} className={"catagory " + (catagory === "All" ? 'active' : '')}>All</div> */}
+            {/* <div onClick={() => this.changeCatagory("story")} className={"catagory " + (catagory === "story" ? 'active' : '')}>Stoires</div> */}
+            {/* <div onClick={() => this.changeCatagory("issue")} className={"catagory " + (catagory === "issue" ? 'active' : '')}>Issues</div> */}
+            {/* <div onClick={() => this.changeCatagory("myth")} className={"catagory " + (catagory === "myth" ? 'active' : '')}>Myths</div> */}
           </div>
 
           <div className="search-controls">
@@ -313,10 +387,10 @@ class AdminPage extends Component {
                 (tagsLoadingError === '' ? <span className="badge badge-success">Loading...</span> : <span className="badge badge-danger">Error Loading Tags</span>)
               : 
               <div className="tag-container">
-                <div className="assist-header">Popular Tags:</div>
+                {/* <div className="assist-header">Popular Tags:</div> */}
                 <div className="tags">
                   {tags.map((tag) =>
-                    <span key={tag.description} onClick={() => this.getNewsByTag(tag.description)} className={"badge " + (tag.description === this.state.searchedTag ? 'badge-dark' : 'badge-light')}>{tag.description}</span>
+                    <span key={tag.tag_name} onClick={() => this.getNewsByTag(tag.tag_name)} className={"badge " + (tag.tag_name === this.state.searchedTag ? 'badge-dark' : 'badge-light')}>{tag.tag_name}</span>
                   )}
                 </div>
               </div>
@@ -336,18 +410,23 @@ class AdminPage extends Component {
             ''
             }
             {results.map((result) => {
-              const d = new Date(result.date);
+
+              const d = new Date(result.news_date);
+
               let splits = [];
 
               return (
               <div className="result" key={result.issue_id}>
                 {/* <Link to={"/news/manage/" + result.issue_id}><button className="btn btn-articles-light"><i className="fas fa-edit mr-0"></i></button></Link> */}
                 {/* <button className="btn btn-articles-light">Edit</button> */}
+
                 <span className="date badge badge-dark border ml-2">{d.toLocaleString().split(',')[0]} </span>
-                <Link to={"/news/manage/" + result.issue_id}><span className="title ml-2">{result.title}</span></Link>
+                
+              <Link onClick={() => this.setState({isEdit: true})} to={"/news/manage/" + result._id}><span className="title ml-2">{result.news_title} <small>({result.news_type})</small></span></Link>
 
                 <div className={"tags " + (catagory === "All" ? '' : 'd-none')}>
-                  {result.tags_names !== null ?
+
+                  {/* {result.tags_names !== null ?
 
                     (
                       splits = result.tags_names.split(','),
@@ -358,7 +437,8 @@ class AdminPage extends Component {
 
                   :
                    'No Tags'
-                  }
+                  } */}
+
                 </div>
 
               </div>
@@ -367,22 +447,17 @@ class AdminPage extends Component {
               })}
           </div>
 
-          <div className="add">
+          {/* <div className="add">
             {catagory === 'All' ? 
             null
             :
             <button className="btn btn-articles-light">Add {catagory}</button>
             }
-          </div>
+          </div> */}
 
         </div>
 
-        <NewsAdd/>
-
-        <Switch>
-          <Route exact path={ROUTES.MANAGE_DETAILS} component={UserItem} />
-          {/* <Route exact path={ROUTES.MANAGE} component={IssuesList} /> */}
-        </Switch>
+        <NewsAdd tags={this.state.tags} isEdit={this.state.isEdit} news_id={this.props.match.params.id} isExact={this.props.match.isExact} changeIsEdit={this.changeIsEdit}/>
 
       </div>
     </div>
@@ -390,6 +465,7 @@ class AdminPage extends Component {
   }
 }
 
+// TODO - Remove this garbage
 class IssuesListBase extends Component {
   constructor(props) {
   super(props);
@@ -770,6 +846,7 @@ class IssuesListBase extends Component {
   }
 }
 
+// class Edit
 const UserItem = ({ match }) => (
   <div className="news-edit-plate">
 
@@ -780,9 +857,11 @@ const UserItem = ({ match }) => (
     </Link>
 
     <div className="container">
-      <h2>Editing Issue ({match.params.id})</h2>
 
-      <div className="row">
+      <h2>Loading News ({match.params.id})</h2>
+      {/* <NewsAdd/> */}
+
+      <div className="row d-none">
 
         <div className="col-12 col-md-6">
           <div className="form-group">
@@ -837,12 +916,14 @@ const UserItem = ({ match }) => (
   </div>
 );
 
-const condition = authUser =>
-authUser && !!authUser.roles[ROLES.ADMIN];
+// const condition = authUser =>
+// authUser && !!authUser.roles[ROLES.ADMIN];
 
-const IssuesList = withFirebase(IssuesListBase);
+// const IssuesList = withFirebase(IssuesListBase);
 
-export default compose(
+export default AdminPage
+
+// export default compose(
   // withEmailVerification,
-  withAuthorization(condition),
-)(AdminPage);
+  // withAuthorization(condition),
+// )(AdminPage);

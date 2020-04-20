@@ -30,13 +30,14 @@ function Example(props) {
   <Manager>
     <Reference>
       {({ ref }) => (
+        
         // <button className="btn btn-primary" type="button" ref={ref} onMouseEnter={() => {setShouldShowElement(true)}} onMouseLeave={() => {setShouldShowElement(false)}}>
         //   Reference element
         // </button>
 
         <div ref={ref} onMouseEnter={() => {setShouldShowElement(true)}} onMouseLeave={() => {setShouldShowElement(false)}}>
           <label for="validationTooltip02">Email</label>
-          <input disabled onFocus={() => (props.changeFocus('email'))} type="text" className="form-control" id="validationTooltip03" placeholder={props.authUser.email}/>
+          <input disabled onFocus={() => (props.changeFocus('email'))} type="text" className="form-control" id="validationTooltip03" placeholder={props.user.email}/>
           <div className="valid-tooltip">
             Looks good!
           </div>
@@ -69,50 +70,63 @@ const StepOne = (props) => (
   </div>
 
   <div className="form-row">
-    <div className="col-md-4 mb-3">
-      <label for="validationTooltip01">First name</label>
-      <input onFocus={() => (props.changeFocus('firstName'))} type="text" className="form-control" id="validationTooltip01" onChange={(e) => props.handleChange(e)} name="nameFirst" value={props.nameFirst} placeholder={"George"} required/>
-      <div className="valid-tooltip">
-        Looks good!
-      </div>
-    </div>
 
-    <div className="col-md-4 mb-3">
-      <label for="validationTooltip02">Last name</label>
-      <input onFocus={() => (props.changeFocus('lastName'))} type="text" className="form-control" id="validationTooltip02" onChange={(e) => props.handleChange(e)} name="nameLast" value={props.nameLast} placeholder={"Washington"}/>
-      <div className="valid-tooltip">
-        Looks good!
-      </div>
-    </div>
-
-    <div className="col-md-4 mb-3">
+    <div className="col-12 mb-3">
       <Example {...props}></Example>
+    </div>
+
+    <div className="col-md-6 mb-3">
+      <label for="validationTooltip01">First name</label>
+      <input onFocus={() => (props.changeFocus('firstName'))} type="text" className="form-control" id="validationTooltip01" onChange={(e) => props.handleChange(e)} name="first_name" value={props.user?.first_name} placeholder={"George"} required/>
+      <div className="valid-tooltip">
+        Looks good!
+      </div>
+    </div>
+
+    <div className="col-md-6 mb-3">
+      <label for="validationTooltip02">Last name</label>
+      <input onFocus={() => (props.changeFocus('lastName'))} type="text" className="form-control" id="validationTooltip02" onChange={(e) => props.handleChange(e)} name="nameLast" value={props.nameLast} placeholder={""}/>
+      <div className="valid-tooltip">
+        Looks good!
+      </div>
     </div>
 
   </div>
 
   <div className="form-row">
-    <div className="col-md-6 mb-3">
-      <label for="validationTooltip03">City / Town / Village</label>
-      <input onFocus={() => (props.changeFocus('city'))} type="text" class={"form-control" + (props.highlightElement === 'location' ? ' outset-highlight' : '')} id="validationTooltip03" onChange={(e) => props.handleChange(e)} name="city" value={props.city} placeholder="Mount Vernon"/>
-      <div className="invalid-tooltip">
-        Please provide a valid city.
-      </div>
-    </div>
-    <div className="col-md-3 mb-3">
-      <label for="validationTooltip04">State</label>
-      <input onFocus={() => (props.changeFocus('state'))} type="text" class={"form-control" + (props.highlightElement === 'location' ? ' outset-highlight' : '')} id="validationTooltip04" onChange={(e) => props.handleChange(e)} name="state" value={props.state} placeholder="VA"/>
-      <div className="invalid-tooltip">
-        Please provide a valid state.
-      </div>
-    </div>
+
     <div className="col-md-3 mb-3">
       <label for="validationTooltip05">Zip</label>
-      <input onBlur={() => props.onZipBlur(props.zip)} onFocus={() => (props.changeFocus('zip'))} type="zip" class={"form-control" + (props.highlightElement === 'location' ? ' outset-highlight' : '')} id="validationTooltip05" onChange={(e) => props.handleChange(e)} name="zip" value={props.zip} placeholder="22309"/>
+      <input onBlur={() => props.onZipBlur(props.zip)} onFocus={() => (props.changeFocus('zip'))} type="zip" class={"form-control" + (props.highlightElement === 'location' ? ' outset-highlight' : '')} id="validationTooltip05" onChange={(e) => props.handleChange(e)} name="zip" value={props.zip} placeholder=""/>
       <div className="invalid-tooltip">
         Please provide a valid zip.
       </div>
     </div>
+
+    <div className="col-1">
+      <label for="validationTooltip03">&nbsp;</label>
+      <div style={{
+        padding: '0.375rem 0',
+        textAlign: 'center'
+      }}>Or</div>
+    </div>
+
+    <div className="col-md-5 mb-3">
+      <label for="validationTooltip03">City / Town / Village</label>
+      <input onFocus={() => (props.changeFocus('city'))} type="text" class={"form-control" + (props.highlightElement === 'location' ? ' outset-highlight' : '')} id="validationTooltip03" onChange={(e) => props.handleChange(e)} name="city" value={props.city} placeholder=""/>
+      <div className="invalid-tooltip">
+        Please provide a valid city.
+      </div>
+    </div>
+
+    <div className="col-md-3 mb-3">
+      <label for="validationTooltip04">State</label>
+      <input onFocus={() => (props.changeFocus('state'))} type="text" class={"form-control" + (props.highlightElement === 'location' ? ' outset-highlight' : '')} id="validationTooltip04" onChange={(e) => props.handleChange(e)} name="state" value={props.state} placeholder=""/>
+      <div className="invalid-tooltip">
+        Please provide a valid state.
+      </div>
+    </div>
+    
   </div>
 
   <div className="form-row">
@@ -143,7 +157,7 @@ const StepOne = (props) => (
     </div>
 
     <div className="col-md-3 mb-3">
-      <label htmlFor="Birthday">Birthday</label>
+      <label htmlFor="Birthday">Birthday <small>DD-MM-YYYY</small></label>
       {/* <MyComponent></MyComponent> */}
       <Cleave placeholder=""
               options={{date: true, delimiter: '-', datePattern: ['m','d','Y']}}

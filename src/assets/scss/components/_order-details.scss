@@ -1,0 +1,72 @@
+.order-details {
+
+  .card {
+    margin-top: 6rem;
+    // width: 50%;
+
+    .card-header {
+      text-align: center;
+    }
+
+    .card-body {
+
+      .loading {
+        text-align: center;
+
+        .fas {
+          @keyframes flip {
+            from {
+              transform: scaleX(1);
+            }
+            to {
+              transform: scaleX(-1);
+            }
+          }
+          animation: flip 0.25s linear alternate infinite;
+        }
+      }
+
+      .details {
+        width: max-content;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0 4rem;
+
+        .item {
+
+          .left, .right {
+            width: 50%;
+            width: 200px;
+            display: inline-block;
+          }
+
+          .left {
+            text-align: right;
+            font-weight: bold;
+            padding-right: 0.75rem;
+          }
+
+          .right {
+            text-align: left;
+            padding-left: 0.75rem;
+            // margin-left: 0.5rem;
+            border-left: solid 1px rgba(0, 0, 0, 0.25);
+          }
+        }
+
+        .detail-key {
+          font-weight: bold;
+          margin-top: 0.5rem;
+        }
+      }
+
+    }
+  }
+
+  .buttons-below {
+    .btn {
+      width: 100%;
+    }
+  }
+
+}
