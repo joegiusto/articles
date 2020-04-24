@@ -20,6 +20,9 @@ import { PersistGate } from 'redux-persist/integration/react'
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
+import { setStories } from "./actions/stories";
+import { setMyths } from "./actions/mythsActions";
+
 
 const {store, persistor} = configureStore();
 
@@ -37,6 +40,9 @@ if (localStorage.jwtToken) {
   const decoded = jwt_decode(token);
   // Set user and isAuthenticated
   store.dispatch(setCurrentUser(decoded));
+
+  store.dispatch(setStories());
+  store.dispatch(setMyths());
 // Check for expired token
   const currentTime = Date.now() / 1000; // to get in milliseconds
   if (decoded.exp < currentTime) {

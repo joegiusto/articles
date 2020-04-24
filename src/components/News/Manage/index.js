@@ -105,69 +105,70 @@ class AdminPage extends Component {
 
     } else if ( this.state.contentServer === "MySQL" ) {
 
-      axios.get('/issue-tags')
-      .then(function (response) {
+      // Get this SHIT out of my face
+      // axios.get('/issue-tags')
+      // .then(function (response) {
 
-        // handle success
-        console.log(response.data);
+      //   // handle success
+      //   console.log(response.data);
 
-        self.setState({
-          tags: response.data
-        });
+      //   self.setState({
+      //     tags: response.data
+      //   });
 
-        self.setState({ tagsLoading: false });
+      //   self.setState({ tagsLoading: false });
 
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
+      // })
+      // .catch(function (error) {
+      //   // handle error
+      //   console.log(error);
 
-        self.setState({ tagsLoading: true });
-        self.setState({ tagsLoadingError: error });
-      });
+      //   self.setState({ tagsLoading: true });
+      //   self.setState({ tagsLoadingError: error });
+      // });
 
-      axios.get('/search-history')
-      .then(function (response) {
+      // axios.get('/search-history')
+      // .then(function (response) {
 
-        // handle success
-        console.log(response.data);
+      //   // handle success
+      //   console.log(response.data);
 
-        self.setState({
-          searchHistory: response.data
-        });
+      //   self.setState({
+      //     searchHistory: response.data
+      //   });
 
-        self.setState({ searchLoading: false });
+      //   self.setState({ searchLoading: false });
 
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
+      // })
+      // .catch(function (error) {
+      //   // handle error
+      //   console.log(error);
 
-        self.setState({ searchLoading: true });
-        self.setState({ searchLoadingError: error });
-      });
+      //   self.setState({ searchLoading: true });
+      //   self.setState({ searchLoadingError: error });
+      // });
 
-      axios.get('/getNewsMySQL')
-      .then(function (response) {
+      // axios.get('/getNewsMySQL')
+      // .then(function (response) {
 
-        // handle success
-        console.log(response.data);
+      //   // handle success
+      //   console.log(response.data);
 
-        self.setState({
-          results: response.data,
-          resultsAll: response.data
-        });
+      //   self.setState({
+      //     results: response.data,
+      //     resultsAll: response.data
+      //   });
 
-        self.setState({ resultsLoading: false });
+      //   self.setState({ resultsLoading: false });
 
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
+      // })
+      // .catch(function (error) {
+      //   // handle error
+      //   console.log(error);
 
-        self.setState({ resultsLoading: true });
-        self.setState({ resultsLoadingError: error });
-      });
+      //   self.setState({ resultsLoading: true });
+      //   self.setState({ resultsLoadingError: error });
+      // });
 
     }
 
@@ -315,152 +316,157 @@ class AdminPage extends Component {
     }
 
     return (
-      <div className="container">
-      <div>
+      <div className="container-fluid">
+        <div className="row">
 
-        <div className="news-manage-plate">
-          <h1>News Management</h1>
-          <div className="row justify-content-between">
-            <div className="col-12 col-md-7">
-              <p>Page for only Admins and Writers to manage news details. Here you can update and create content for Article's News Pages. The content server is pulling data from <span className="badge badge-warning">{this.state.contentServer}</span> we can only hope this will never change.</p>
-            </div>
-            <div className="col-12 col-md-4">
-            <p>Looking for <Link to={ROUTES.SUBSCRIBE}>Your News Managemnet?</Link> </p>
-            </div>
-          </div>
-          
-          
-
-          <div className="catagories">
-            <NewsTypeSelector catagory={this.state.catagory} changeCatagory={this.changeCatagory} changeCatagoryTo="All" displayCatagoryAs="All" />
-            <NewsTypeSelector catagory={this.state.catagory} changeCatagory={this.changeCatagory} changeCatagoryTo="story" displayCatagoryAs="Stoires" />
-            <NewsTypeSelector catagory={this.state.catagory} changeCatagory={this.changeCatagory} changeCatagoryTo="issue" displayCatagoryAs="Issues" />
-            <NewsTypeSelector catagory={this.state.catagory} changeCatagory={this.changeCatagory} changeCatagoryTo="myth" displayCatagoryAs="Myths" />
-            {/* <div onClick={() => this.changeCatagory("All")} className={"catagory " + (catagory === "All" ? 'active' : '')}>All</div> */}
-            {/* <div onClick={() => this.changeCatagory("story")} className={"catagory " + (catagory === "story" ? 'active' : '')}>Stoires</div> */}
-            {/* <div onClick={() => this.changeCatagory("issue")} className={"catagory " + (catagory === "issue" ? 'active' : '')}>Issues</div> */}
-            {/* <div onClick={() => this.changeCatagory("myth")} className={"catagory " + (catagory === "myth" ? 'active' : '')}>Myths</div> */}
-          </div>
-
-          <div className="search-controls">
-            <div className="controls">
-              <span onClick={() => this.changeSearchFilter('Content')} className={"badge " + (searchFilter === "Content" ? 'badge-primary' : 'badge-secondary')}>Content</span>
-              {/* <span onClick={() => this.changeSearchFilter(catagory)} className={"badge " + (searchFilter === catagory ? 'badge-primary' : 'badge-secondary')}>{catagory} Title</span> */}
-              <span onClick={() => this.changeSearchFilter('Tags')} className={"badge " + (searchFilter === "Tags" ? 'badge-primary' : 'badge-secondary')}>Tags</span>
+          <div className="col-12 col-md-7">
+            <div className="news-manage-plate">
+              <h1>News Management</h1>
+              <div className="row justify-content-between">
+                <div className="col-12 col-md-7">
+                  <p>Page for only Admins and Writers to manage news details. Here you can update and create content for Article's News Pages. The content server is pulling data from <span className="badge badge-warning">{this.state.contentServer}</span> we can only hope this will never change.</p>
+                </div>
+                <div className="col-12 col-md-4">
+                <p>Looking for <Link to={ROUTES.SUBSCRIBE}>personal news managemnet?</Link> </p>
+                </div>
+              </div>
               
-              <input className="" name="searchText" type="text" value={searchText} onChange={this.handleChange}/>
-              <div onClick={() => this.searchText()} className="btn btn-articles-light">Go</div>
-
-            </div>
-
-            <div className={"search-alert " + (this.state.searchAlert === true ? 'active' : '')}>
-              <div className="search-alert-text">Tag searching can only be preformed on 'All' results currently.</div>
-            </div>
-
-            <div className="assist">
-
-            {searchFilter === "Content" ? 
-              (searchLoading ? 
-                (searchLoadingError === '' ? <span className="badge badge-success">Loading...</span> : <span className="badge badge-danger">Error Loading Search</span>)
-              : 
-              <div className="tag-container">
-                <div className="assist-header">Latest Searced Terms:</div>
-                <div className="tags">
-
-                  {searchHistory.map((search) =>
-                    <span key={search.id} onClick={() => this.getNewsByContent(search.text)} className="badge badge-primary">{search.text}</span>
-                  )}
-
-                  {/* <span className="badge badge-primary">Still working on this</span>
-                  <span className="badge badge-primary">Still working on this</span>
-                  <span className="badge badge-primary">Still working on this</span> */}
-
-                </div>
-              </div>
-              )
-              : 
-              ''
-              }
               
-              {searchFilter === "Tags" ? 
-              (tagsLoading ? 
-                (tagsLoadingError === '' ? <span className="badge badge-success">Loading...</span> : <span className="badge badge-danger">Error Loading Tags</span>)
-              : 
-              <div className="tag-container">
-                {/* <div className="assist-header">Popular Tags:</div> */}
-                <div className="tags">
-                  {tags.map((tag) =>
-                    <span key={tag.tag_name} onClick={() => this.getNewsByTag(tag.tag_name)} className={"badge " + (tag.tag_name === this.state.searchedTag ? 'badge-dark' : 'badge-light')}>{tag.tag_name}</span>
-                  )}
+  
+              <div className="catagories">
+                <NewsTypeSelector catagory={this.state.catagory} changeCatagory={this.changeCatagory} changeCatagoryTo="All" displayCatagoryAs="All" />
+                <NewsTypeSelector catagory={this.state.catagory} changeCatagory={this.changeCatagory} changeCatagoryTo="story" displayCatagoryAs="Stoires" />
+                <NewsTypeSelector catagory={this.state.catagory} changeCatagory={this.changeCatagory} changeCatagoryTo="issue" displayCatagoryAs="Issues" />
+                <NewsTypeSelector catagory={this.state.catagory} changeCatagory={this.changeCatagory} changeCatagoryTo="myth" displayCatagoryAs="Myths" />
+                {/* <div onClick={() => this.changeCatagory("All")} className={"catagory " + (catagory === "All" ? 'active' : '')}>All</div> */}
+                {/* <div onClick={() => this.changeCatagory("story")} className={"catagory " + (catagory === "story" ? 'active' : '')}>Stoires</div> */}
+                {/* <div onClick={() => this.changeCatagory("issue")} className={"catagory " + (catagory === "issue" ? 'active' : '')}>Issues</div> */}
+                {/* <div onClick={() => this.changeCatagory("myth")} className={"catagory " + (catagory === "myth" ? 'active' : '')}>Myths</div> */}
+              </div>
+  
+              <div className="search-controls">
+                <div className="controls">
+                  <span onClick={() => this.changeSearchFilter('Content')} className={"badge " + (searchFilter === "Content" ? 'badge-primary' : 'badge-secondary')}>Content</span>
+                  {/* <span onClick={() => this.changeSearchFilter(catagory)} className={"badge " + (searchFilter === catagory ? 'badge-primary' : 'badge-secondary')}>{catagory} Title</span> */}
+                  <span onClick={() => this.changeSearchFilter('Tags')} className={"badge " + (searchFilter === "Tags" ? 'badge-primary' : 'badge-secondary')}>Tags</span>
+                  
+                  <input className="" name="searchText" type="text" value={searchText} onChange={this.handleChange}/>
+                  <div onClick={() => this.searchText()} className="btn btn-articles-light">Go</div>
+  
+                </div>
+  
+                <div className={"search-alert " + (this.state.searchAlert === true ? 'active' : '')}>
+                  <div className="search-alert-text">Tag searching can only be preformed on 'All' results currently.</div>
+                </div>
+  
+                <div className="assist">
+  
+                {searchFilter === "Content" ? 
+                  (searchLoading ? 
+                    (searchLoadingError === '' ? <span className="badge badge-success">Loading...</span> : <span className="badge badge-danger">Error Loading Search</span>)
+                  : 
+                  <div className="tag-container">
+                    <div className="assist-header">Latest Searced Terms:</div>
+                    <div className="tags">
+  
+                      {searchHistory.map((search) =>
+                        <span key={search.id} onClick={() => this.getNewsByContent(search.text)} className="badge badge-primary">{search.text}</span>
+                      )}
+  
+                      {/* <span className="badge badge-primary">Still working on this</span>
+                      <span className="badge badge-primary">Still working on this</span>
+                      <span className="badge badge-primary">Still working on this</span> */}
+  
+                    </div>
+                  </div>
+                  )
+                  : 
+                  ''
+                  }
+                  
+                  {searchFilter === "Tags" ? 
+                  (tagsLoading ? 
+                    (tagsLoadingError === '' ? <span className="badge badge-success">Loading...</span> : <span className="badge badge-danger">Error Loading Tags</span>)
+                  : 
+                  <div className="tag-container">
+                    {/* <div className="assist-header">Popular Tags:</div> */}
+                    <div className="tags">
+                      {tags.map((tag) =>
+                        <span key={tag.tag_name} onClick={() => this.getNewsByTag(tag.tag_name)} className={"badge " + (tag.tag_name === this.state.searchedTag ? 'badge-dark' : 'badge-light')}>{tag.tag_name}</span>
+                      )}
+                    </div>
+                  </div>
+                  )
+                  : 
+                  ''
+                  }
+  
                 </div>
               </div>
-              )
-              : 
-              ''
-              }
-
+  
+              <div className="results">
+                <div className="results-header">Results:</div>
+                {resultsLoading ? 
+                (resultsLoadingError === '' ? <span className="badge badge-success">Loading...</span> : <div><div className="badge badge-danger">Error Loading Results</div><div><small>Most likely the content server is off.</small></div></div>)
+                :
+                ''
+                }
+                {results.map((result) => {
+  
+                  const d = new Date(result.news_date);
+  
+                  let splits = [];
+  
+                  return (
+                  <div className="result" key={result.issue_id}>
+                    {/* <Link to={"/news/manage/" + result.issue_id}><button className="btn btn-articles-light"><i className="fas fa-edit mr-0"></i></button></Link> */}
+                    {/* <button className="btn btn-articles-light">Edit</button> */}
+  
+                    <span className="date badge badge-dark border ml-2">{d.toLocaleString().split(',')[0]} </span>
+                    
+                  <Link onClick={() => this.setState({isEdit: true})} to={"/news/manage/" + result._id}><span className="title ml-2">{result.news_title} <small>({result.news_type})</small></span></Link>
+  
+                    <div className={"tags " + (catagory === "All" ? '' : 'd-none')}>
+  
+                      {result.news_tags !== null ?
+  
+                        null
+                        // (
+                        //   // splits = result.news_tags.split(','),
+                        //   result.news_tags.map((tag) => {
+                        //     return <span onClick={() => this.getNewsByTag(tag)} className={"badge " + (tag === this.state.searchedTag ? 'badge-dark' : 'badge-light')}>{tag}</span>
+                        //   })
+                        // )
+  
+                        :
+                        'No Tags'
+                      }
+  
+                    </div>
+  
+                  </div>
+                  )
+  
+                  })}
+              </div>
+  
+              {/* <div className="add">
+                {catagory === 'All' ? 
+                null
+                :
+                <button className="btn btn-articles-light">Add {catagory}</button>
+                }
+              </div> */}
+  
             </div>
           </div>
 
-          <div className="results">
-            <div className="results-header">Results:</div>
-            {resultsLoading ? 
-             (resultsLoadingError === '' ? <span className="badge badge-success">Loading...</span> : <div><div className="badge badge-danger">Error Loading Results</div><div><small>Most likely the content server is off.</small></div></div>)
-            :
-            ''
-            }
-            {results.map((result) => {
-
-              const d = new Date(result.news_date);
-
-              let splits = [];
-
-              return (
-              <div className="result" key={result.issue_id}>
-                {/* <Link to={"/news/manage/" + result.issue_id}><button className="btn btn-articles-light"><i className="fas fa-edit mr-0"></i></button></Link> */}
-                {/* <button className="btn btn-articles-light">Edit</button> */}
-
-                <span className="date badge badge-dark border ml-2">{d.toLocaleString().split(',')[0]} </span>
-                
-              <Link onClick={() => this.setState({isEdit: true})} to={"/news/manage/" + result._id}><span className="title ml-2">{result.news_title} <small>({result.news_type})</small></span></Link>
-
-                <div className={"tags " + (catagory === "All" ? '' : 'd-none')}>
-
-                  {/* {result.tags_names !== null ?
-
-                    (
-                      splits = result.tags_names.split(','),
-                      splits.map((tag) => {
-                        return <span onClick={() => this.getNewsByTag(tag)} className={"badge " + (tag === this.state.searchedTag ? 'badge-dark' : 'badge-light')}>{tag}</span>
-                      })
-                    )
-
-                  :
-                   'No Tags'
-                  } */}
-
-                </div>
-
-              </div>
-              )
-
-              })}
+          <div className="col-12 col-md-5">
+            <NewsAdd tags={this.state.tags} isEdit={this.state.isEdit} news_id={this.props.match.params.id} isExact={this.props.match.isExact} changeIsEdit={this.changeIsEdit}/>
           </div>
-
-          {/* <div className="add">
-            {catagory === 'All' ? 
-            null
-            :
-            <button className="btn btn-articles-light">Add {catagory}</button>
-            }
-          </div> */}
 
         </div>
-
-        <NewsAdd tags={this.state.tags} isEdit={this.state.isEdit} news_id={this.props.match.params.id} isExact={this.props.match.isExact} changeIsEdit={this.changeIsEdit}/>
-
       </div>
-    </div>
     );
   }
 }

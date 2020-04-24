@@ -7,6 +7,10 @@ import thunk from 'redux-thunk';
 
 import expensesReducer from '../reducers/expenses';
 import authReducer from "../reducers/authReducer";
+
+import storiesReducer from "../reducers/stories";
+import mythsReducer from "../reducers/mythsReducer";
+
 import errorReducer from "../reducers/errorReducer";
 // import filtersReducer from '../reducers/filters';
 import siteReducer from '../reducers/site';
@@ -15,7 +19,7 @@ import siteReducer from '../reducers/site';
 const persistConfig = {
   // transforms: [immutableTransform()],
   key: 'root',
-  // blacklist: ['auth'],
+  blacklist: ['stories', 'user.subscriptionsBulk'],
   storage,
 }
 
@@ -24,7 +28,9 @@ const persistedReducer = persistReducer(
   combineReducers({
     expenses: expensesReducer,
     auth: authReducer,
-    errors: errorReducer
+    errors: errorReducer,
+    stories: storiesReducer,
+    myths: mythsReducer,
     // filters: filtersReducer,
     // site: siteReducer,
     // employees: employeesReducer

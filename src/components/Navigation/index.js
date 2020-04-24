@@ -86,7 +86,7 @@ function Menu(props) {
 
             <div className={'side-menu-notch-top-end-custom ' + (menuOpen ? 'show' : '')}>
 
-                {!props.user.outset ? (
+                {!props.user?.outset ? (
                   <Link className="menu-bar-link mr-3" to={ROUTES.OUTSET}>
                   <span className="badge badge-articles-light">
                     <i className="fas fa-file-signature"/>Please Complete Outset 
@@ -195,7 +195,7 @@ function Menu(props) {
                     {!props.isAuth ? (
                     <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SIGN_IN} id='nav-sign-in'>Log In / Sign Up</Link>
                     ) : (
-                    <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SUBSCRIBE} id='nav-sign-in'>{props?.user.first_name} {props?.user.last_name}</Link>
+                    <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SUBSCRIBE} id='nav-sign-in'>{props?.user?.first_name} {props?.user?.last_name}</Link>
                     )}
                     </span>
                   </p>

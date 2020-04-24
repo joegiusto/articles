@@ -175,6 +175,8 @@
 
   &.bottom-add {
     position: relative;
+    position: sticky;
+    top: 11rem;
 
     .clear {
       cursor: pointer;

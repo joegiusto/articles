@@ -25,6 +25,7 @@ class SubscribeListBase extends Component {
     this.state = {
       newsAll: [],
       newsAllLoading: false,
+      updatingUserDetails: false,
 
       newsUser: [],
       newsUserMySQL: [],
@@ -32,6 +33,12 @@ class SubscribeListBase extends Component {
       mongoDBuser: {},
       mongoDBsubmissions: []
     }
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleUserChange = this.handleUserChange.bind(this);
+    this.handleAddressChange = this.handleAddressChange.bind(this);
+
+    this.updateUser = this.updateUser.bind(this);
   }
 
   componentDidMount() {
@@ -109,59 +116,151 @@ class SubscribeListBase extends Component {
 
   }
 
-  addSubscription(id) {
-    // console.log("I should be adding this ID to the subscriptions:" + id);
-
-    this.setState( prevState => ({
-      donationList: [...prevState.donationList, {
-        uid: id.toString(),
-        subscribedDate: this.props.firebase.serverValue.TIMESTAMP,
-        lastUserView: this.props.firebase.serverValue.TIMESTAMP
-      }]
-    }))
-
-    this.props.firebase.user_subscriptions(this.props.firebase.auth.currentUser.uid).child(id).set({
-      subscribedDate: this.props.firebase.serverValue.TIMESTAMP,
-      lastUserView: this.props.firebase.serverValue.TIMESTAMP
-    })
-    
-  }
-
-  removeSubscription(id) {
-    // console.log("I should be removing this ID to the subscriptions:" + id);
-
-    this.props.firebase.user_subscription(this.props.firebase.auth.currentUser.uid, id).remove();
+  handleChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
 
     this.setState({
-      donationList: this.state.donationList.filter(function( obj ) {
-        return obj.uid !== id.toString();
-      })
-    })
-    
+      [name]: value
+    });
   }
 
-  addSubscriptionNew(id) {
+  handleUserChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
 
     this.setState(prevState => ({
+      mongoDBuser: {
+        ...prevState.mongoDBuser,
+        [name]: value
+      }
+    }));
+  }
+
+  handleAddressChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState(prevState => ({
+      mongoDBuser: {
+        ...prevState.mongoDBuser,
+        address: {
+          ...prevState.mongoDBuser.address,
+          [name]: value
+        }
+      }
+    }));
+  }
+
+  // addSubscription(id) {
+  //   // console.log("I should be adding this ID to the subscriptions:" + id);
+
+  //   this.setState( prevState => ({
+  //     donationList: [...prevState.donationList, {
+  //       uid: id.toString(),
+  //       subscribedDate: this.props.firebase.serverValue.TIMESTAMP,
+  //       lastUserView: this.props.firebase.serverValue.TIMESTAMP
+  //     }]
+  //   }))
+
+  //   this.props.firebase.user_subscriptions(this.props.firebase.auth.currentUser.uid).child(id).set({
+  //     subscribedDate: this.props.firebase.serverValue.TIMESTAMP,
+  //     lastUserView: this.props.firebase.serverValue.TIMESTAMP
+  //   })
+    
+  // }
+
+  // removeSubscription(id) {
+  //   // console.log("I should be removing this ID to the subscriptions:" + id);
+
+  //   this.props.firebase.user_subscription(this.props.firebase.auth.currentUser.uid, id).remove();
+
+  //   this.setState({
+  //     donationList: this.state.donationList.filter(function( obj ) {
+  //       return obj.uid !== id.toString();
+  //     })
+  //   })
+    
+  // }
+
+  addSubscriptionNew(issue) {
+
+    this.setState(prevState => ({
+
       mongoDBsubscriptionsBulk: [
         ...prevState.mongoDBsubscriptionsBulk,
-        id
-      ]
+        issue
+      ],
+      mongoDBuser: {
+        ...prevState.mongoDBuser,
+        subscriptions: [
+          ...prevState.mongoDBuser.subscriptions,
+          {
+            news_id: issue._id
+          }
+        ]
+      }
+
     }))
 
   }
 
   removeSubscriptionNew(id) {
+    console.log(id);
 
-    this.setState({
+    this.setState(prevState => ({
       mongoDBsubscriptionsBulk: this.state.mongoDBsubscriptionsBulk.filter(function( obj ) {
         return obj._id !== id;
-      })
-    })
+      }),
+      mongoDBuser: {
+        ...prevState.mongoDBuser,
+        subscriptions: this.state.mongoDBuser.subscriptions.filter(function( obj ) {
+          return obj.news_id !== id;
+        })
+      }
+    }))
 
     // this.setState({
     //   mongoDBsubscriptionsBulk: this.state.mongoDBsubscriptionsBulk.concat(id)
     // })
+  }
+
+  updateUser() {
+    const self = this;
+    console.log("UPDATE!");
+
+    this.setState({
+      updatingUserDetails: true
+    })
+
+    axios.post('/api/secure/updateUserDetails', {
+      user: self.props.auth.user.id,
+      user_details: {
+        first_name: this.state.mongoDBuser.first_name,
+        last_name: this.state.mongoDBuser.last_name,
+        photo_url: this.state.mongoDBuser.photo_url,
+        address: {
+          zip: this.state.mongoDBuser.address.zip,
+        },
+        subscriptions: this.state.mongoDBuser.subscriptions,
+      }
+    })
+    .then(function (response) {
+      console.log(response);
+
+      self.setState({
+        updatingUserDetails: false,
+      }, () => {
+        // self.mergeStuff()
+      })
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   getKeyByValue(object, value) { 
@@ -253,15 +352,19 @@ class SubscribeListBase extends Component {
 
             <div className="col-12 col-md-8">
 
-              <div className="d-flex justify-content-between border-bottom align-items-center mb-2 pb-1 flex-column flex-md-row">
+              <div className="d-flex justify-content-between border-bottom align-items-md-center mb-2 pb-1 flex-column flex-md-row">
                 <h1 className="store-heading mb-0">User Data</h1>
 
                 <div>
+
                   <div onClick={this.props.logoutUser} className="btn btn-articles-light">
-                    Sign Out ({this.props.auth.user.id})
+                    Sign Out
                   </div>
-                  <div style={{height: 'fit-content'}} className="btn btn-articles-light mt-2 mt-md-0 ml-md-2">Update</div>
+
+                  <div onClick={this.updateUser} style={{height: 'fit-content'}} className="btn btn-articles-light mt-md-0 ml-2">Update</div>
+
                 </div>
+
               </div>
 
               <div className="name-tag">
@@ -288,9 +391,11 @@ class SubscribeListBase extends Component {
                         <input 
                           type="text" 
                           className="form-control" 
-                          id="" 
+                          id="first_name" 
+                          name="first_name" 
                           aria-describedby=""
                           value={mongoDBuser?.first_name || ""}
+                          onChange={this.handleUserChange}
                           placeholder="Loading..."
                         />
                         {/* <small id="emailHelp" class="form-text text-muted">Visible to everyone.</small> */}
@@ -303,9 +408,11 @@ class SubscribeListBase extends Component {
                         <input 
                           type="text" 
                           className="form-control" 
-                          id="" 
+                          id="last_name"
+                          name="last_name" 
                           aria-describedby=""
                           value={mongoDBuser?.last_name || ""}
+                          onChange={this.handleUserChange}
                           placeholder="Loading..."
                         />
                         {/* <small id="emailHelp" class="form-text text-muted">Visible to just you.</small> */}
@@ -318,9 +425,11 @@ class SubscribeListBase extends Component {
                         <input 
                           type="text" 
                           className="form-control" 
-                          id="" 
+                          id="birth_date"
+                          name="birth_date" 
                           aria-describedby=""
                           value={ mongoDBuser?.birth_date ? moment.unix(mongoDBuser?.birth_date).format('LL') : ""}
+                          onChange={this.handleUserChange}
                           placeholder="Loading..."
                         />
                         {/* <small id="emailHelp" class="form-text text-muted">Visible to just you.</small> */}
@@ -333,9 +442,11 @@ class SubscribeListBase extends Component {
                         <input 
                           type="text" 
                           className="form-control" 
-                          id="" 
+                          id="photo_url" 
+                          name="photo_url"
                           aria-describedby=""
                           value={ mongoDBuser?.photo_url ? mongoDBuser?.photo_url : ''}
+                          onChange={this.handleUserChange}
                           placeholder="Uploads coming soon!"
                         />
                         {/* <small id="emailHelp" class="form-text text-muted">Visible to just you.</small> */}
@@ -358,9 +469,11 @@ class SubscribeListBase extends Component {
                     <input 
                       type="text" 
                       className="form-control" 
-                      id=""
+                      id="zip"
+                      name="zip"
                       aria-describedby=""
                       value={ mongoDBuser?.address?.zip || "" }
+                      onChange={this.handleAddressChange}
                       placeholder="Loading..."
                     />
                     {/* <small id="emailHelp" class="form-text text-muted">Visible to just you.</small> */}
@@ -407,7 +520,10 @@ class SubscribeListBase extends Component {
               </div>
 
               <div className="card mt-3">
-                <div className="card-header">Issue Subscriptions</div>
+                <div className="card-header d-flex justify-content-between">
+                  <div>Issue Subscriptions</div>
+                  <div className="badge badge-success d-flex align-self-center">Update</div>
+                </div>
                 <div className="card-body">
                   <div className="row">
                     <div className="col-12 col-md-6">

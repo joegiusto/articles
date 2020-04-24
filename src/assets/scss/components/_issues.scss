@@ -1,7 +1,7 @@
 
 
 .issues-page {
-  max-width: 1368px;
+  // max-width: 1368px;
 
   .g-card {
     $border: 15px;
@@ -64,6 +64,15 @@
         font-size: 0.7rem;
         padding-bottom: 1rem;
         letter-spacing: 3px;
+      }
+    }
+  }
+
+  .single {
+    .link {
+      &:hover {
+        text-decoration: underline;
+        cursor: pointer;
       }
     }
   }

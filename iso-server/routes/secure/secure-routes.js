@@ -20,6 +20,7 @@ app.post('/profile', (req, res, next) => {
 });
 
 require('../getUserDetails')(app);
+require('../updateUserDetails')(app);
 require('../getOrderDetails')(app);
 
 module.exports = app;
