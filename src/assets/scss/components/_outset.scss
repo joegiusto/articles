@@ -82,6 +82,15 @@
   box-shadow: 0 0.5px 0 0 #ffffff inset, 0 1px 2px 0 #B3B3B3;
   // overflow: hidden;
 
+  .row {
+    flex-wrap: nowrap;
+    height: 100%;
+
+    .col-12 {
+      height: 100%;
+    }
+  }
+
   >.row>.col-md-6:first-child {
     border-right: solid 1px #44555F;
     height: 360px;
@@ -278,6 +287,7 @@
       height: 360px;
       padding-right: 1rem;
   }
+
   .shirt-section{
     .small-tag-wrap {
       position: relative;
@@ -486,8 +496,11 @@
     background-color: $base-color;
     border-radius: 5px;
     padding: 1rem;
-    padding-top: 50px;
+    // padding-top: 50px;
     border: solid 1px #000;
+    height: 100%;
+    overflow-y: scroll;
+
     .selection-toolbar {
       position: absolute;
       left: 1px;
@@ -495,6 +508,7 @@
       width: calc(100% - 1px);
       height: 40px;
       background-color: lighten($base-color, 6%);
+
       .toolbar-items {
         display: flex;
         flex-direction: row;

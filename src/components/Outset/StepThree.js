@@ -166,8 +166,9 @@ function StepThree(props) {
 
   return (
     <div className="selection-container">
-
-      <div className="selection-toolbar">
+      
+      {/* Lets get this site running before we get too ambitious! */}
+      {/* <div className="selection-toolbar">
         <div className="toolbar-items">
           <div onClick={() => props.setActiveTab(1, 'one') + props.changeFocus('stories-age')} className={"toolbar-item" + (props.uiStuff.activeTab === 1 ? ' active' : '')}>
             <div className="view-track">
@@ -204,7 +205,28 @@ function StepThree(props) {
 
       <div className="selection-content">
         {renderTab(props.uiStuff.activeTab)}
-      </div>
+      </div> */}
+
+      Pick at least three to continue {props.subscriptions.length || 0}/3
+
+      {props.allIssues?.length > 0 ? 
+
+      props.allIssues.map((issue) => (
+        // <h1>{issue.news_title}</h1>
+        <Issue 
+          {...props}
+          id={issue._id}
+          title={issue.news_title}
+          description={issue.news_notes.substring(0,119)}
+          // tags={[...issue?.news_tags]}
+        />
+      ))
+
+      :
+
+      <div>Loading...</div>
+      
+      }
 
     </div>
   );

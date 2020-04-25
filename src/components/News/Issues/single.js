@@ -3,6 +3,11 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { withFirebase } from '../../Firebase';
 import { withRouter } from 'react-router-dom';
+import { connect } from "react-redux";
+
+const Test = props => (
+  <h1>Test</h1>
+)
 
 class Issue extends React.Component {
   constructor(props) {
@@ -18,28 +23,36 @@ class Issue extends React.Component {
     const self = this;
     this.setState({ loading: true });
 
-    // Try to pull from local storage and if not then do server call
-    // Waiting on this one
-    axios.post('/getNewsDocument', {
-      news_id: this.props.match.params.id
-    })
-    .then(function (response) {
-      console.log(response);
+    const stored = this.props.auth.user_details.subscriptionsBulk.find(x => x._id === this.props.match.params.id)
 
+    if (stored !== undefined) {
+      // Try to pull from local storage and if not there then do server call
       self.setState({
-        ...response.data.document,
+        ...stored,
         loading: false
       });
+    } else {
+      // Was not local, we make a server call!
+      axios.post('/getNewsDocument', {
+        news_id: this.props.match.params.id
+      })
+      .then(function (response) {
+        console.log(response);
 
-    })
-    .catch(function (error) {
-      console.log(error);
+        self.setState({
+          ...response.data.document,
+          loading: false
+        });
 
-      self.setState({
-        editLoading: false
+      })
+      .catch(function (error) {
+        console.log(error);
+
+        self.setState({
+          editLoading: false
+        });
       });
-    });
-    
+    }
   }
 
   render() {
@@ -97,4 +110,17 @@ class Issue extends React.Component {
 
 // const Issue = withFirebase(IssueBase);
 
-export default withRouter(Issue);
+// export default withRouter(Issue);
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  user: state.auth.user_details,
+  stories: state.stories,
+  myths: state.myths,
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  // { logoutUser, setUserDetails }
+)(withRouter(Issue));

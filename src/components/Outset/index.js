@@ -5,9 +5,11 @@ import { AuthUserContext, withAuthorization, withEmailVerification } from '../Se
 
 import { isValidPhoneNumber } from 'react-phone-number-input'
 
+import axios from 'axios';
+
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
-import { auth } from 'firebase';
+// import { auth } from 'firebase';
 
 import { connect } from 'react-redux';
 
@@ -283,6 +285,7 @@ class OutsetBase extends React.Component {
   
 
   componentDidMount() {
+    const self = this;
 
     // var maybe = this.props.firebase.functions.httpsCallable("storyAPI");
     // maybe({text: 'testing'}).then(function(result) {
@@ -290,6 +293,25 @@ class OutsetBase extends React.Component {
     //   var sanitizedMessage = result.data.text;
     //   console.log(sanitizedMessage);
     // });
+
+    axios.get('/getAllIssues')
+    .then(function (response) {
+
+      // handle success
+      console.log(response.data);
+
+      self.setState({
+        allIssues: response.data,
+      }, () => {
+        // self.mergeStuff()
+      });
+
+      // this.setState({ newsAllLoading: false });
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 
   }
 

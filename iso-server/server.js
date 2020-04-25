@@ -96,6 +96,8 @@ require('./routes/addNewsDocument')(app);
 require('./routes/editNewsDocument')(app);
 require('./routes/getNewsDocument')(app);
 
+require('./routes/getNewsByTag')(app);
+
 // require('./routes/getUserDetails')(app);
 require('./routes/getNews')(app);
 require('./routes/getTags')(app);

@@ -17,7 +17,8 @@ const initial_state = {
   submitting_error: false,
   submitting_error_text: '',
 
-  editLoading: false
+  editLoading: false,
+  isInitial: true,
 }
 
 class newsAdd extends Component {
@@ -33,6 +34,8 @@ class newsAdd extends Component {
   }
 
   componentDidMount() {
+
+    
 
     if (this.props.news_id !== undefined) {
       console.log("Grab that shit!");
@@ -104,6 +107,22 @@ class newsAdd extends Component {
   }
 
   addTag(tagObj) {
+
+    if ( !contains(tagObj, this.state.news_tags) ) {
+      this.setState({ 
+        news_tags: [...this.state.news_tags, {...tagObj} ] 
+      })
+    }
+
+    function contains(card, list) {
+      return list.some(function(elem) {
+           return elem._id === card._id
+      })
+    }
+
+  }
+
+  removeTag(tagObj) {
 
     if ( !contains(tagObj, this.state.news_tags) ) {
       this.setState({ 

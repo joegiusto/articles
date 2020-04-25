@@ -410,7 +410,7 @@ class HomePageThreeBase extends React.Component {
 			<div className="new-home-background"></div>
 
 			<div className="new-home">
-				<div className="container home-container position-relative">
+				<div className="container-fluid">
 					
 					<div className="new-home-text">
 						<h1>Welcome Joseph, here's a glance at what's happening.</h1>
