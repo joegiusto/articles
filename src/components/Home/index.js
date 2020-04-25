@@ -84,97 +84,27 @@ class HomePageThreeBase extends React.Component {
 
 	componentDidMount() {
 
-    axios.get('/ping')
-    .then(function (response) {
-      // handle success
-      console.log(response);
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    });
+    // axios.get('/ping')
+    // .then(function (response) {
+    //   // handle success
+    //   console.log(response);
+    // })
+    // .catch(function (error) {
+    //   // handle error
+    //   console.log(error);
+    // });
 
-    axios.post('/tag', {
-      content: "Hello there!"
-    })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+    // axios.post('/tag', {
+    //   content: "Hello there!"
+    // })
+    // .then(function (response) {
+    //   console.log(response);
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    // });
 
 		window.addEventListener('scroll', this.listenToScroll);
-
-		var paths = [
-			{
-				subPath: 'subscriptions/issues/',
-				dataPath: 'news/issues',
-				storage: 'issues'
-			},
-			{
-				subPath: 'subscriptions/stories/',
-				dataPath: 'news/stories',
-				storage: 'stories'
-			},
-			{
-				subPath: 'subscriptions/myths/',
-				dataPath: 'news/myths',
-				storage: 'myths'
-			},
-			// {
-			//   path: 'clothing/orders/',
-			//   storage: 'orders'
-			// },
-			// {
-			//   path: 'clothing/submissions',
-			//   storage: 'submissions'
-			// }
-		];
-    
-		// paths.map(topic => {
-		// 	this.props.firebase.user_data(topic.subPath, this.props.firebase.auth.currentUser.uid).once('value').then(snapshot => {
-		// 		const issuesObject = snapshot.val();
-		// 		let issuesList = [];
-
-		// 		if ( typeof issuesObject === 'object' && issuesObject !== null ) {
-		// 			issuesList = Object.keys(issuesObject).map(key => (
-		// 			{
-		// 				uid: key,
-		// 			}
-		// 			));
-		// 		} else {
-		// 			issuesList = [];
-		// 		}
-
-		// 		this.setState({
-		// 			[topic.storage]: issuesList,
-		// 			loading: false
-		// 		});
-
-		// 		// So maybe this is not the safest way to do this but it works for now! This will be someone elses problem one day :)
-		// 		let matchedStorage = "matched" + topic.storage.charAt(0).toUpperCase() + topic.storage.slice(1);
-
-		// 		issuesList.map((retrived) => (
-		// 			this.props.firebase.news_data(topic.dataPath, retrived.uid).once('value').then(snapshot => {
-    //       const issueSnapshot = snapshot.val();
-
-    //       issueSnapshot.uid = retrived.uid;
-
-    //       console.log(issueSnapshot);
-
-		// 			this.setState({
-		// 				[matchedStorage]: this.state[matchedStorage].concat(issueSnapshot)
-		// 			})
-
-		// 			// console.log(matchedStorage);
-
-		// 			})
-
-		// 		));
-
-		// 	});
-		// });
   }
   
   componentWillUnmount() {
@@ -182,17 +112,12 @@ class HomePageThreeBase extends React.Component {
 	}
 
   listenToScroll = () => {
-
 		const winScroll = document.body.scrollTop || document.documentElement.scrollTop
 
 		this.setState({
 			scroll: winScroll
 		})
   }
-  
-  // addUserSub() = () => {
-
-  // }
 
 	renderActiveTab(tab) {
 		switch(tab) {
@@ -413,7 +338,8 @@ class HomePageThreeBase extends React.Component {
 				<div className="container-fluid">
 					
 					<div className="new-home-text">
-						<h1>Welcome Joseph, here's a glance at what's happening.</h1>
+						<h1>Welcome {this.props.auth.user_details.user.first_name
+            }, here's a glance at what's happening.</h1>
 						{/* <p>Heres a glance at what's happening.</p> */}
 
 					<div>

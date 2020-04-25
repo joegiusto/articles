@@ -5,8 +5,12 @@
 			"path": "."
 		},
 		{
-			"name": "Just Source",
+			"name": "Website",
 			"path": "src"
+		},
+		{
+			"name": "Server",
+			"path": "iso-server"
 		}
 	],
 	"settings": {}
