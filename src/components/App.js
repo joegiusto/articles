@@ -68,9 +68,9 @@ import Chat from './Chat';
 import NotFoundPage from './Navigation/NotFoundPage';
 
 import * as ROUTES from '../constants/routes';
-import { withAuthentication } from './Session';
+// import { withAuthentication } from './Session';
 
-import { AuthUserContext } from './Session';
+// import { AuthUserContext } from './Session';
 
 import { connect } from "react-redux";
 import { setUserDetails } from "../actions/authActions";

@@ -7,7 +7,7 @@ import './assets/scss/index.scss';
 import App from './components/App';
 
 import * as serviceWorker from './serviceWorker';
-import Firebase, { FirebaseContext } from './components/Firebase';
+// import Firebase, { FirebaseContext } from './components/Firebase';
 
 import { Provider } from 'react-redux';
 
