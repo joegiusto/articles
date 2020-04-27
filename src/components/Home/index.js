@@ -500,7 +500,7 @@ class HomePageThreeBase extends React.Component {
 
 											<div className="chat-wrapper mt-2">
 												<div className="text-muted">Will be removed in release</div>
-												<Messages />
+												{/* <Messages /> */}
 											</div>
 
 										</div>
@@ -702,9 +702,7 @@ class MessagesBase extends Component {
     const { text, messages, loading } = this.state;
 
     return (
-
-      <AuthUserContext.Consumer>
-        {authUser => (
+        authUser => (
           <div>
             {!loading && messages && (
               <div className="dual-header">
@@ -744,9 +742,7 @@ class MessagesBase extends Component {
 
             </form>
           </div>
-        )}
-      </AuthUserContext.Consumer>
-
+        )
     );
   }
 }
@@ -863,8 +859,8 @@ class MessageItem extends Component {
 
 const condition = authUser => !!authUser;
 
-const Messages = withFirebase(MessagesBase);
-const HomePageThree = withFirebase(HomePageThreeBase);
+// const Messages = withFirebase(MessagesBase);
+// const HomePageThree = withFirebase(HomePageThreeBase);
 
 // export default compose(
 // // withEmailVerification,
@@ -882,6 +878,6 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   // { logoutUser, setUserDetails }
-)(HomePageThree);
+)(HomePageThreeBase);
 
 // export default HomePageThree;
