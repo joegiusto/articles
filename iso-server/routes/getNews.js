@@ -18,7 +18,6 @@ module.exports = app => {
       dbo.collection("articles_news").find().toArray(function(err, result) {
         if (err) throw err;
         data.news = result;
-        console.log(result);
         db.close();
         return res.send(data);
       });
