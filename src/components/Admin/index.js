@@ -17,7 +17,7 @@ const AdminPage = () => (
     <p>The Admin Page is accessible by every signed in admin user.</p>
     <Switch>
       {/* <Route exact path={ROUTES.ADMIN_DETAILS} component={UserItem} /> */}
-      <Route exact path={ROUTES.ADMIN} component={UserList} />
+      <Route exact path={ROUTES.ADMIN} component={UserListBase} />
     </Switch>
     {/* <div className="container-fluid p-0"><SimpleSlider/></div> */}
   </div>
@@ -176,9 +176,9 @@ const UserItem = ({ match }) => (
 const condition = authUser =>
 authUser && !!authUser.roles[ROLES.ADMIN];
 
-const UserList = withFirebase(UserListBase);
+// const UserList = withFirebase(UserListBase);
 
 export default compose(
   // withEmailVerification,
-  withAuthorization(condition),
+  // withAuthorization(condition),
 )(AdminPage);

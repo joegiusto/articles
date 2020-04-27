@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { compose } from 'recompose';
 
-import { AuthUserContext, withAuthorization, withEmailVerification } from '../Session';
-import { withFirebase } from '../Firebase';
+// import { AuthUserContext, withAuthorization, withEmailVerification } from '../Session';
+// import { withFirebase } from '../Firebase';
 
 class Chat extends Component {
   render(props) {
@@ -20,24 +20,24 @@ class Chat extends Component {
           <div className="col my-auto">
             Online List
             
-            <AuthUserContext.Consumer>
+            {/* <AuthUserContext.Consumer>
               {authUser => 
                 <OnlineList authUser={authUser}/>
               }
-            </AuthUserContext.Consumer>
+            </AuthUserContext.Consumer> */}
           </div>
 
           <div className="col my-auto">
 
             <div className="chat-wrapper">
 
-              <Messages />
+              {/* <Messages /> */}
 
-              <AuthUserContext.Consumer>
+              {/* <AuthUserContext.Consumer>
                 {authUser => 
                   <OnlineLog authUser={authUser}/>
                 }
-              </AuthUserContext.Consumer>
+              </AuthUserContext.Consumer> */}
 
             </div>
 
@@ -339,50 +339,52 @@ class MessagesBase extends Component {
 
     return (
 
-      <AuthUserContext.Consumer>
-        {authUser => (
-          <div>
-            {/* <OnlineLogBase authUser={authUser}/> */}
-            {!loading && messages && (
-              <div className="dual-header">
-                <div>Showing last {this.state.limit} messages.</div>
+      // <AuthUserContext.Consumer>
+      //   {authUser => (
+      //     <div>
+      //       {/* <OnlineLogBase authUser={authUser}/> */}
+      //       {!loading && messages && (
+      //         <div className="dual-header">
+      //           <div>Showing last {this.state.limit} messages.</div>
                 
 
-                <button className="btn show-more" type="button" onClick={this.onNextPage}>
-                  More
-                </button>
+      //           <button className="btn show-more" type="button" onClick={this.onNextPage}>
+      //             More
+      //           </button>
 
-                {/* <div>Name:{this.getUsername('1kgzHcDlDJbBVppJlVXqpsgvhAa2')}</div> */}
+      //           {/* <div>Name:{this.getUsername('1kgzHcDlDJbBVppJlVXqpsgvhAa2')}</div> */}
 
-              </div>
-            )}
-            {loading && <div>Loading ...</div>}
+      //         </div>
+      //       )}
+      //       {loading && <div>Loading ...</div>}
 
-            {messages ? (
-            <MessageList 
-              authUser={authUser}
-              messages={messages}
-              onEditMessage={this.onEditMessage}
-              onRemoveMessage={this.onRemoveMessage}
-            />
-            ) : (
-            <div>There are no messages ...</div>
-            )}
+      //       {messages ? (
+      //       <MessageList 
+      //         authUser={authUser}
+      //         messages={messages}
+      //         onEditMessage={this.onEditMessage}
+      //         onRemoveMessage={this.onRemoveMessage}
+      //       />
+      //       ) : (
+      //       <div>There are no messages ...</div>
+      //       )}
 
-            <form onSubmit={event => this.onCreateMessage(event, authUser)}>
+      //       <form onSubmit={event => this.onCreateMessage(event, authUser)}>
 
-              <input
-                type="text"
-                value={text}
-                onChange={this.onChangeText}
-                className="message-input"
-              />
-              <button className="btn submit-input" type="submit">Send</button>
+      //         <input
+      //           type="text"
+      //           value={text}
+      //           onChange={this.onChangeText}
+      //           className="message-input"
+      //         />
+      //         <button className="btn submit-input" type="submit">Send</button>
 
-            </form>
-          </div>
-        )}
-      </AuthUserContext.Consumer>
+      //       </form>
+      //     </div>
+      //   )}
+      // </AuthUserContext.Consumer>
+
+      null
 
     );
   }
@@ -500,11 +502,11 @@ class MessageItem extends Component {
 
 const condition = authUser => !!authUser;
 
-const Messages = withFirebase(MessagesBase);
-const OnlineLog = withFirebase(OnlineLogBase);
-const OnlineList = withFirebase(OnlineListBase);
+// const Messages = withFirebase(MessagesBase);
+// const OnlineLog = withFirebase(OnlineLogBase);
+// const OnlineList = withFirebase(OnlineListBase);
 
 export default compose(
 // withEmailVerification,
-withAuthorization(condition),
+// withAuthorization(condition),
 )(Chat);

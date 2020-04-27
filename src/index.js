@@ -54,13 +54,11 @@ if (localStorage.jwtToken) {
 }
 
 ReactDOM.render(
-  <FirebaseContext.Provider value={new Firebase()}>
     <PersistGate loading={<h1>Loading</h1>} persistor={persistor}>
       <Provider store={store}>
         <App /> 
       </Provider>
-    </PersistGate>
-  </FirebaseContext.Provider>, 
+    </PersistGate>,
 document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

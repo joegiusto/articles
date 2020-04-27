@@ -109,150 +109,151 @@ class OnlineLogBase extends React.Component {
 }
 
 const AccountPage = () => (
-  <AuthUserContext.Consumer>
-    {authUser => (
-      <div style={{height: '100vh', marginTop: '-50px'}} className="container">
-        <div className="row h-100 justify-content-center">
+  null
+  // <AuthUserContext.Consumer>
+  //   {authUser => (
+  //     <div style={{height: '100vh', marginTop: '-50px'}} className="container">
+  //       <div className="row h-100 justify-content-center">
 
-        <div className="col-sm-6 my-auto">
+  //       <div className="col-sm-6 my-auto">
 
-          <OnlineLog authUser={authUser}/>
-          <div className="card card-block p-5">
-            <h1>{authUser.username}</h1>
-            <h3 className="text-muted">{authUser.email}</h3>
+  //         <OnlineLog authUser={authUser}/>
+  //         <div className="card card-block p-5">
+  //           <h1>{authUser.username}</h1>
+  //           <h3 className="text-muted">{authUser.email}</h3>
 
-            {!authUser.roles.ADMIN ? (
-              <span></span>
-            ) : (
-              <div><span className="profile-role badge badge-pill badge-articles">Admin</span></div>
-            )}
+  //           {!authUser.roles.ADMIN ? (
+  //             <span></span>
+  //           ) : (
+  //             <div><span className="profile-role badge badge-pill badge-articles">Admin</span></div>
+  //           )}
 
-            <div className="mt-4"><PasswordForgetForm /></div>
-            <div className="mt-4"><PasswordChangeForm /></div>
-            <div><SignOutButton className="btn btn-dark mt-4"/></div>
-          </div>
+  //           <div className="mt-4"><PasswordForgetForm /></div>
+  //           <div className="mt-4"><PasswordChangeForm /></div>
+  //           <div><SignOutButton className="btn btn-dark mt-4"/></div>
+  //         </div>
 
-        </div>
+  //       </div>
 
-        <div className="col-sm-6 my-auto">
+  //       <div className="col-sm-6 my-auto">
 
-          <div className="card card-block p-5">
+  //         <div className="card card-block p-5">
 
-            <form action="">
-
-            
-
-            <div className="group d-flex justify-content-between">
-
-              <div className="group d-flex">
-                <div className="lead">MySQL:</div>
-                <div className="lead ml-1">0</div>
-              </div>
-
-              <div className="group d-flex">
-                <div className="lead">Firebase:</div>
-                <div className="lead ml-1">000000042</div>
-              </div>
-
-            </div>
-
-            <div className="group d-flex mt-3">
-              <div className="lead">Email:</div>
-              <div className="lead ml-1">example@provider.com</div>
-            </div>
-
-            <div className="group d-flex mt-3">
-              <div className="lead">Joined</div>
-              <div className="lead ml-1">00/00/0000</div>
-            </div>
-
-            <div className="row">
-
-              <div className="col-12 col-md-6">
-
-                <div className="form-group mt-3">
-                  <label for="exampleInputEmail1">First Name:</label>
-                  <input
-                    name="passwordOne"
-                    // value={passwordOne}
-                    // onChange={this.onChange}
-                    className="form-control"
-                    type="password"
-                    placeholder=""
-                  />
-                </div>
-
-              </div>
-
-              <div className="col-12 col-md-6">
-
-                <div className="form-group mt-3">
-                  <label for="exampleInputEmail1">Last Name:</label>
-                  <input
-                    name="passwordOne"
-                    // value={passwordOne}
-                    // onChange={this.onChange}
-                    className="form-control"
-                    type="password"
-                    placeholder=""
-                  />
-                </div>
-                
-              </div>
-
-              <div className="col-12 col-md-6">
-
-                <div className="form-group mt-3">
-                  <label for="exampleInputEmail1">Birthday:</label>
-                  <input
-                    name="passwordOne"
-                    // value={passwordOne}
-                    // onChange={this.onChange}
-                    className="form-control"
-                    type="password"
-                    placeholder=""
-                  />
-                </div>
-                
-              </div>
-
-              <div className="col-12 col-md-6">
-
-                <div className="form-group mt-3">
-                  <label for="exampleInputEmail1">Zip:</label>
-                  <input
-                    name="passwordOne"
-                    // value={passwordOne}
-                    // onChange={this.onChange}
-                    className="form-control"
-                    type="password"
-                    placeholder=""
-                  />
-                </div>
-                
-              </div>
-
-            </div>
+  //           <form action="">
 
             
 
-            </form>
+  //           <div className="group d-flex justify-content-between">
 
-          </div>
+  //             <div className="group d-flex">
+  //               <div className="lead">MySQL:</div>
+  //               <div className="lead ml-1">0</div>
+  //             </div>
 
-        </div>
+  //             <div className="group d-flex">
+  //               <div className="lead">Firebase:</div>
+  //               <div className="lead ml-1">000000042</div>
+  //             </div>
 
-      </div>
-      </div>
-    )}
-  </AuthUserContext.Consumer>
+  //           </div>
+
+  //           <div className="group d-flex mt-3">
+  //             <div className="lead">Email:</div>
+  //             <div className="lead ml-1">example@provider.com</div>
+  //           </div>
+
+  //           <div className="group d-flex mt-3">
+  //             <div className="lead">Joined</div>
+  //             <div className="lead ml-1">00/00/0000</div>
+  //           </div>
+
+  //           <div className="row">
+
+  //             <div className="col-12 col-md-6">
+
+  //               <div className="form-group mt-3">
+  //                 <label for="exampleInputEmail1">First Name:</label>
+  //                 <input
+  //                   name="passwordOne"
+  //                   // value={passwordOne}
+  //                   // onChange={this.onChange}
+  //                   className="form-control"
+  //                   type="password"
+  //                   placeholder=""
+  //                 />
+  //               </div>
+
+  //             </div>
+
+  //             <div className="col-12 col-md-6">
+
+  //               <div className="form-group mt-3">
+  //                 <label for="exampleInputEmail1">Last Name:</label>
+  //                 <input
+  //                   name="passwordOne"
+  //                   // value={passwordOne}
+  //                   // onChange={this.onChange}
+  //                   className="form-control"
+  //                   type="password"
+  //                   placeholder=""
+  //                 />
+  //               </div>
+                
+  //             </div>
+
+  //             <div className="col-12 col-md-6">
+
+  //               <div className="form-group mt-3">
+  //                 <label for="exampleInputEmail1">Birthday:</label>
+  //                 <input
+  //                   name="passwordOne"
+  //                   // value={passwordOne}
+  //                   // onChange={this.onChange}
+  //                   className="form-control"
+  //                   type="password"
+  //                   placeholder=""
+  //                 />
+  //               </div>
+                
+  //             </div>
+
+  //             <div className="col-12 col-md-6">
+
+  //               <div className="form-group mt-3">
+  //                 <label for="exampleInputEmail1">Zip:</label>
+  //                 <input
+  //                   name="passwordOne"
+  //                   // value={passwordOne}
+  //                   // onChange={this.onChange}
+  //                   className="form-control"
+  //                   type="password"
+  //                   placeholder=""
+  //                 />
+  //               </div>
+                
+  //             </div>
+
+  //           </div>
+
+            
+
+  //           </form>
+
+  //         </div>
+
+  //       </div>
+
+  //     </div>
+  //     </div>
+  //   )}
+  // </AuthUserContext.Consumer>
 );
 
 const condition = authUser => !!authUser;
 
-const OnlineLog = withFirebase(OnlineLogBase);
+// const OnlineLog = withFirebase(OnlineLogBase);
 
 export default compose(
-  withEmailVerification,
-  withAuthorization(condition),
+  // withEmailVerification,
+  // withAuthorization(condition),
 )(AccountPage);
