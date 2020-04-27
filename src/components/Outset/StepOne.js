@@ -77,7 +77,7 @@ const StepOne = (props) => (
 
     <div className="col-md-6 mb-3">
       <label for="validationTooltip01">First name</label>
-      <input onFocus={() => (props.changeFocus('firstName'))} type="text" className="form-control" id="validationTooltip01" onChange={(e) => props.handleChange(e)} name="first_name" value={props.user?.first_name} placeholder={"George"} required/>
+      <input onFocus={() => (props.changeFocus('first_name'))} type="text" className="form-control" id="validationTooltip01" onChange={(e) => props.handleChange(e)} name="first_name" value={props.first_name} required/>
       <div className="valid-tooltip">
         Looks good!
       </div>
@@ -85,7 +85,7 @@ const StepOne = (props) => (
 
     <div className="col-md-6 mb-3">
       <label for="validationTooltip02">Last name</label>
-      <input onFocus={() => (props.changeFocus('lastName'))} type="text" className="form-control" id="validationTooltip02" onChange={(e) => props.handleChange(e)} name="nameLast" value={props.nameLast} placeholder={""}/>
+      <input onFocus={() => (props.changeFocus('last_name'))} type="text" className="form-control" id="validationTooltip02" onChange={(e) => props.handleChange(e)} name="last_name" value={props.last_name} placeholder={""}/>
       <div className="valid-tooltip">
         Looks good!
       </div>

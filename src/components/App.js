@@ -30,11 +30,15 @@ import StoreSubmissionsSubmitPage from './Store/Submissions'
 import StoreManage from './Store/Manage'
 
 import NewsPage from './News'
-// Stroies placeholder
+import NewsManagePage from './News/Manage'
+
 import IssuesPage from './News/Issues'
 import IssuePage from './News/Issues/single.js'
 import MythsPage from './News/Myths'
-import NewsManagePage from './News/Manage'
+import MythPage from './News/Myths/single.js'
+import StoriesPage from './News/Stories'
+import StoryPage from './News/Stories/single.js'
+
 
 import PartyPage from './Party'
 import PartyProposalsPage from './Party/Proposals'
@@ -146,9 +150,13 @@ class App extends Component {
             <Route path={ROUTES.STORE_MANAGE} component={StoreManage} />
       
             <Route exact path={ROUTES.NEWS} component={NewsPage} />
-            <Route path={ROUTES.MYTHS} component={MythsPage} />
+
+            <Route path={ROUTES.STORIES} component={StoriesPage} exact={true}/>
+            <Route path={ROUTES.STORY} component={StoryPage}/>
             <Route path={ROUTES.ISSUES} component={IssuesPage} exact={true}/>
             <Route path={ROUTES.ISSUE} component={IssuePage}/>
+            <Route path={ROUTES.MYTHS} component={MythsPage} exact={true}/>
+            <Route path={ROUTES.MYTH} component={MythPage}/>
             
             <Route exact path={ROUTES.MANAGE} component={NewsManagePage} />
             <Route path={ROUTES.MANAGE_DETAILS} component={NewsManagePage} />

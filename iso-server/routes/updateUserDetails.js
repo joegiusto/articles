@@ -48,7 +48,6 @@ module.exports = app => {
         }
       }, function(err, res) {
         if (err) throw err;
-        console.log("1 news document replaced");
         db.close();
       });
 

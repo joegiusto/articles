@@ -11,13 +11,19 @@ import axios from "axios";
 export const setStories = () => dispatch => {
   console.log(`Getting Stories`);
 
+  dispatch({
+    type: 'SET_STORIES_LOADING',
+    loading: true
+  });
+
   axios
     .get("/getStories")
     .then( res => {
       console.log("Got Stories")
       dispatch({
         type: 'SET_STORIES',
-        payload: res.data
+        payload: res.data,
+        loading: false
       });
     }
     ) 

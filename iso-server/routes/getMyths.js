@@ -5,18 +5,15 @@ const url = "mongodb+srv://joegiusto:" + process.env.MONGODB_PASSWORD + "@articl
 module.exports = app => {
   app.get('/getMyths', function (req, res) {
   
-    // console.log(req.body.user);
-    console.log( new Date() );
+    console.log(`Call to /api/getMyths made at ${new Date()}`);
   
     MongoClient.connect(url, function(err, db) {
   
       if (err) throw err;
       var dbo = db.db("articles_data");
-      // var o_id = new ObjectId(req.body.user);
   
       dbo.collection("articles_news").find({news_type: 'myth'}).toArray(function(err, result) {
         if (err) throw err;
-        console.log(result);
         db.close();
         return res.send(result) 
       });

@@ -4,9 +4,8 @@ const url = "mongodb+srv://joegiusto:" + process.env.MONGODB_PASSWORD + "@articl
 
 module.exports = app => {
   app.post('/getUserDetails', (req, res) => {
-    console.log(req.body.user);
-    console.log("Someone calling getUserDetails")
-    console.log( new Date() );
+    
+    console.log(`Call to /api/getUserDetails made at ${new Date()} by user ${req.body.user}`);
 
     MongoClient.connect(url, function(err, db) {
 

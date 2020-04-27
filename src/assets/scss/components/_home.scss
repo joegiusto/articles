@@ -219,20 +219,37 @@
     transform: translateY(0px);
   }
 }
+.new-home-background {
+  // position: fixed;
+  width: 100%;
+  height: 700px;
+  background-size: cover;
+  background-position-y: 50%;
+  background-repeat: no-repeat;
+  // background-image: url('https://www.capitolhillhotel-dc.com/wp-content/uploads/2018/10/GettyImages-918038524-1.jpg');
+  // background-image: url('https://scontent-lga3-1.cdninstagram.com/v/t51.2885-15/e35/20394255_128423084438798_1141804217984352256_n.jpg?_nc_ht=scontent-lga3-1.cdninstagram.com&_nc_cat=102&_nc_ohc=SNT4AteMja4AX_LTLtQ&oh=b0dc66bf26a1f77573b0885b23eed8fe&oe=5EAF920A');
+  background-image: url('https://cdn.vox-cdn.com/thumbor/FIEnGuHQDj7TjXj-TG3DoAZ8j2w=/0x0:2000x1334/1200x800/filters:focal(840x507:1160x827)/cdn.vox-cdn.com/uploads/chorus_image/image/65362889/190522_18_33_12_DSC09249__1_.0.jpg');
+}
+
+video {
+  position: absolute;
+  left: 1rem;
+  top: 2rem;
+  
+  height: 350px;
+  opacity: 0.5;
+  z-index: 1;
+}
+
 .new-home {
   position: relative;
   // height: 500px;
-  &-background {
-    position: absolute;
-    width: 100%;
-    height: 500px;
-    background-size: cover;
-    background-position-y: 50%;
-    background-repeat: no-repeat;
-    // background-image: url('https://www.capitolhillhotel-dc.com/wp-content/uploads/2018/10/GettyImages-918038524-1.jpg');
-    background-image: url('https://scontent-lga3-1.cdninstagram.com/v/t51.2885-15/e35/20394255_128423084438798_1141804217984352256_n.jpg?_nc_ht=scontent-lga3-1.cdninstagram.com&_nc_cat=102&_nc_ohc=SNT4AteMja4AX_LTLtQ&oh=b0dc66bf26a1f77573b0885b23eed8fe&oe=5EAF920A');
-  }
-  &-text {
+  // margin-top: 25rem;
+  margin-top: -15rem;
+  // min-height: 1250px;
+  // min-height: calc(100% + 5000px);
+
+  .new-home-text {
     font-family: 'Open Sans Condensed', sans-serif;
     // position: absolute;
     height: 100%;
@@ -242,13 +259,15 @@
     
     
     h1 {
+      display: inline-block;
       font-family: carlmarx, sans-serif;
       font-weight: 700;
       font-style: normal;
       color: black;
       // text-shadow: 2px 2px #000;
       background-color: white;
-      background: linear-gradient(to top right, #f5f5f5fa, #f5f5f533);
+      // background: linear-gradient(to top right, rgba(245, 245, 245, 0.98), rgba(245, 245, 245, 0.2));
+      background: linear-gradient(to top right, rgba(245, 245, 245, 1), rgba(255, 255, 255, 0.7));
       padding: 0.25rem;
 
     }
@@ -341,13 +360,13 @@
     // }
   }
 
-  &-main {
+  .new-home-main {
     box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.15);
     border: solid 4px #000;
     margin-bottom: 1rem;
   }
 
-  &-side {
+  .new-home-side {
     box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.30);
     background-color: white;
     border-radius: 4px;
@@ -512,8 +531,10 @@
     .subscriptions-container {
       @import 'functionality-card.scss';
       // margin-top: 1rem;
+      height: 45vh;
       position: relative;
       margin: 1rem;
+
       @include media-breakpoint-down(md) {
         margin: 0.5rem;
       }
@@ -551,7 +572,7 @@
         font-size: 2rem;
       }
 
-      .issues-display {
+      .issues-display, .stories-display, .myths-display, .orders-display, .submissions-display {
         margin-top: 2.5rem;
         padding-top: 2.5rem;
         position: relative;
@@ -559,11 +580,12 @@
 
         display: grid;
         grid-template-columns: 1fr 1fr;
-        // grid-template-rows: ;
         gap: 0px 10px;
+        
         // grid-template-areas: ". .";
+        // grid-template-rows: ;
 
-        .issue {
+        .issue, .story, .myth {
           position: relative;
           background-color: rgba(255, 255, 255, 0.90);
           padding: 0.5rem;

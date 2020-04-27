@@ -21,26 +21,39 @@ class SingleOrderPage extends Component {
     const self = this;
     this.setState({orderLoading:true});
 
-    axios.post('/api/secure/getOrderDetails', {
-      order_id: self.state.order_id
-    })
-    .then(function (response) {
+    const storedOrders = this.props.auth.user_details.orders.find(x => x._id === this.props.match.params.id)
 
-      console.log(response);
-
+    if (storedOrders !== undefined) {
+      // Try to pull from local storage and if not there then do server call
       self.setState({
-        order: response.data.order,
+        order: storedOrders,
         orderLoading: false
       });
-
-    })
-    .catch(function (error) {
-      self.setState({
-        orderLoading: false
+    } else {
+      // Was not local, we make a server call!
+      axios.post('/api/secure/getOrderDetails', {
+        order_id: self.state.order_id
+      })
+      .then(function (response) {
+  
+        console.log(response);
+  
+        self.setState({
+          order: response.data.order,
+          orderLoading: false
+        });
+  
+      })
+      .catch(function (error) {
+        self.setState({
+          orderLoading: false
+        });
+        console.log("Post to /api/secure/getOrderDetails has failed, reason below.");
+        console.log(error);
       });
-      console.log("Post to /api/secure/getOrderDetails has failed, reason below.");
-      console.log(error);
-    });
+    }
+
+    
 
   }
 

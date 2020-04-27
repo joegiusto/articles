@@ -18,7 +18,6 @@ This section is still being worked on.
 
 Node.js,
 React,
-Firebase,
 Bootstrap,
 Redux
 

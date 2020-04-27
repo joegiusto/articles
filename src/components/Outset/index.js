@@ -1,13 +1,13 @@
 import React, { Component, useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { compose } from 'recompose';
-import { AuthUserContext, withAuthorization, withEmailVerification } from '../Session';
+
+// import { compose } from 'recompose';
+// import { AuthUserContext, withAuthorization, withEmailVerification } from '../Session';
 
 import { isValidPhoneNumber } from 'react-phone-number-input'
 
 import axios from 'axios';
 
-import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 // import { auth } from 'firebase';
 
@@ -22,14 +22,6 @@ import StepFive from './StepFive';
 import * as outsetPhotos from './outsetPhotos';
 
 import $ from "jquery";
-
-// const OutsetBaseWrap = (props) => (
-//   <AuthUserContext.Consumer>
-//     {authUser =>
-//       <Outset authUser={authUser}/>
-//     }
-//   </AuthUserContext.Consumer>
-// );
 
 class OutsetBase extends React.Component {
   constructor(props) {
@@ -53,7 +45,8 @@ class OutsetBase extends React.Component {
 
       // Step One States
       // nameFirst: props.user.first_name,
-      nameLast: '',
+      first_name: props.user.first_name,
+      last_name: '',
       
       city: '',
       state: '',
@@ -96,6 +89,7 @@ class OutsetBase extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleCellTwo = this.handleCellTwo.bind(this);
     this.setActiveTab = this.setActiveTab.bind(this);
+    // this.submitData = this.submitData.bind(this);
 
     this.onZipBlur = this.onZipBlur.bind(this);
 
@@ -130,50 +124,37 @@ class OutsetBase extends React.Component {
   };
 
   submitData() {
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
+    const self = this
 
-    today = mm + '/' + dd + '/' + yyyy;
+    const myobj = {...this.state}
 
-    this.props.firebase.user(this.props.authUser.uid).update({
+    // Whitelist object keys server side because the data is already here!
+    const allowedKeys = ['first_name', 'last_name', 'zip', 'city', 'state', 'cell', 'gender', 'age', 'zip', 'partyAffiliation', 'subscriptions', 'clothingCut', 'shirtSize', 'shoeSize'];
 
-      completed: true,
+    const newobj = Object.keys(myobj)
+    .filter(key => allowedKeys.includes(key))
+    .reduce((obj, key) => {
+      obj[key] = myobj[key];
+      return obj;
+    }, {});
 
-      // Step One (Not in Outset)
-      nameFirst: this.state.nameFirst,
-      nameLast: this.state.nameLast,
+    console.log(newobj)
 
-      // NOTE - Should all this be wrapped in outset? Yes, but I want it to be known this info is not user information, its is a way to enrich the users experience. Do not mistake the two.
-      outset: {
-        // Step One
-        city: this.state.city,
-        state: this.state.state,
-        zip: this.state.zip,
-        age: this.state.age,
-        cell: this.state.cell,
+    axios.post('/outsetUpdate', {
+      user: this.props.user._id,
+      outsetState: newobj
+    })
+    .then(function (response) {
+      console.log(response);
 
-        // Step Two
-        clothingCut: this.state.clothingCut, 
-        shirtSize: this.state.shirtSize,
-        shoeSize: this.state.shoeSize,
-
-        // Step Three
-        subscriptions: this.state.subscriptions,
-        
-        // Step Four
-        partyAffiliation: this.state.partyAffiliation,
-      },
-
-      // Step Five
-      legal: {
-        privacyAccept: today,
-        termsAccept: today,
-        cookieAccept: today
-      }
+      // Will be turned on and off many times...
+      self.props.history.push(ROUTES.HOME);
 
     })
+    .catch(function (error) {
+      console.log(error);
+    });
+
   }
 
   handleChange(event) {
@@ -286,13 +267,6 @@ class OutsetBase extends React.Component {
 
   componentDidMount() {
     const self = this;
-
-    // var maybe = this.props.firebase.functions.httpsCallable("storyAPI");
-    // maybe({text: 'testing'}).then(function(result) {
-    //   // Read result of the Cloud Function.
-    //   var sanitizedMessage = result.data.text;
-    //   console.log(sanitizedMessage);
-    // });
 
     axios.get('/getAllIssues')
     .then(function (response) {
@@ -615,23 +589,14 @@ class OutsetBase extends React.Component {
     } = this.state;
 
     const stepOneIsInvalid = (nameFirst === '') || (cell !== '' && !isValidPhoneNumber(cell));
-    // const phoneInvalid = ;
     const stepTwoIsInvalid = (clothingCut === '') || (clothingCut === 'male' && shirtSize === '') ||  (clothingCut === 'female' && shirtSize === '');
     const stepThreeIsInvalid = subscriptions.length < 3;
     const stepFourIsInvalid = partyAffiliation === '';
     const stepFiveIsInvalid = (cookieAccept && termsAccept && privacyAccept) === false;
 
-    // const clientKey = 'js-9qZHzu2Flc59Eq5rx10JdKERovBlJp3TQ3ApyC4TOa3tA8U7aVRnFwf41RpLgtE7';
-    // const cache = {};
-    // const container = this.state.zip;
-    // const errorDiv = container.find("div.text-error");
-
-
-
     return (
-    <AuthUserContext.Consumer>
 
-      {authUser => (
+
 
         <div className="larger-conainer">
 
@@ -692,7 +657,7 @@ class OutsetBase extends React.Component {
                 <div><span>Step Five:</span> {stepFiveIsInvalid ? ' No' : ' Yes'}</div> */}
 
                 {this.state.focus === '' ? 
-                  this.renderMessage(this.state.step, authUser)
+                  this.renderMessage(this.state.step)
                 : 
                   ''
                 }
@@ -710,7 +675,7 @@ class OutsetBase extends React.Component {
                   //   <span className="intro-placeholder-text">Questions will appear here</span>
                   // </div>
                   :
-                  this.renderStep(this.state.step, authUser)
+                  this.renderStep(this.state.step)
                 }
 
               </div>
@@ -763,7 +728,7 @@ class OutsetBase extends React.Component {
                 </div>
               </div>
   
-              <div className={"steps-box mx-auto" + (this.state.step === 0 ? '' : ' show')}>{this.renderStep(this.state.step, authUser)}</div>
+              <div className={"steps-box mx-auto" + (this.state.step === 0 ? '' : ' show')}>{this.renderStep(this.state.step)}</div>
 
             </div>
 
@@ -782,10 +747,8 @@ class OutsetBase extends React.Component {
           </div>
 
         </div>
-      )}
 
-      
-    </AuthUserContext.Consumer>
+
     )
   }
 }
@@ -810,39 +773,7 @@ function CanGoToNextStep(props) {
   } else {
     return <button disabled className={"btn btn-lg btn-articles-light step-controls-next" + (step === 0 ? ' d-none' : step >= 5 ? ' ' : ' d-inline-block')} onClick={() => (increment() + changeFocus(''))}>{step === 5 ? 'Finish' : 'Next'}</button>
   }
-
-  // Old way
-
-  // if (step === 1 && !stepOneIsInvalid) {
-  //   return <button className={"btn btn-lg btn-articles-light step-controls-next" + (step === 0 ? ' d-none' : step >= 5 ? ' d-none' : ' d-inline-block')} onClick={() => (increment() + changeFocus(''))}>Next</button>
-  // } else if (step === 2 && !stepTwoIsInvalid) {
-  //   return "true"
-  // } else if (step === 3 && !stepThreeIsInvalid) {
-  //   return "true"
-  // } else if (step === 4 && !stepFourIsInvalid) {
-  //   return "true"
-  // } else if (step === 5 && !stepFiveIsInvalid) {
-  //   return "true"
-  // } else {
-  //   return <button disabled className={"btn btn-lg btn-articles-light step-controls-next" + (step === 0 ? ' d-none' : step >= 5 ? ' d-none' : ' d-inline-block')} onClick={() => (increment() + changeFocus(''))}>Next</button>
-  // }
-
-  // return (
-  //   <div>Helllo {goOn ? 'true' : 'false'}</div>
-  // )
 }
-
-// const Outset = withFirebase(OutsetBase);
-
-// const condition = authUser => !!authUser;
-
-// export default compose(
-//   withAuthorization(condition),
-// )(Outset);
-
-const Outset = withFirebase(OutsetBase);
-
-const condition = authUser => !!authUser;
 
 const mapStateToProps = (state) => {
   return {
@@ -856,7 +787,3 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps)(OutsetBase);
-
-// export default compose(
-//   withAuthorization(condition),
-// )(OutsetBaseWrap);

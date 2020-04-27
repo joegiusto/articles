@@ -7,6 +7,9 @@
     "email": "joey@articles.media",
     "url": "https://github.com/joegiusto"
   },
+  "engines": {
+    "node": "10.15.3"
+  },
   "contributors": [
     ""
   ],

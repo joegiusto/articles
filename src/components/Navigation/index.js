@@ -86,7 +86,12 @@ function Menu(props) {
 
             <div className={'side-menu-notch-top-end-custom ' + (menuOpen ? 'show' : '')}>
 
-                {!props.user?.outset ? (
+                {console.log(props.isAuth)}
+
+                {!props.isAuth ? 
+                null
+                :
+                !props.user?.outset ? (
                   <Link className="menu-bar-link mr-3" to={ROUTES.OUTSET}>
                   <span className="badge badge-articles-light">
                     <i className="fas fa-file-signature"/>Please Complete Outset 
@@ -102,7 +107,9 @@ function Menu(props) {
                     {/* <h3 style ={{cursor: 'pointer'}} data-toggle="modal" data-target="#pin" className="top-headline mx-1 d-inline"><span className="badge badge-articles-light"><img className="gun-icon-img" src={gunIcon} alt=""/>Gun Laws<span className="badge badge-danger ml-1">4</span></span></h3> */}
                     {/* <h3 style ={{cursor: 'pointer'}} data-toggle="modal" data-target="#pin" className="top-headline mx-1 d-inline"><span className="badge badge-articles-light">+ <span className="badge badge-danger">23</span></span></h3> */}
                   </>
-                )}
+                )
+                }
+
 
                 {/* <>
 

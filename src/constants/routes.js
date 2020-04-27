@@ -33,9 +33,11 @@ export const STORE_MANAGE_DETAILS ='/store/manage/:id'
 // News
 export const NEWS ='/news'
 export const STORIES ='/news/stories'
+export const STORY ='/news/stories/:id'
 export const ISSUES ='/news/issues'
 export const ISSUE = '/news/issues/:id'
 export const MYTHS ='/news/myths'
+export const MYTH ='/news/myths/:id'
 
 export const MANAGE ='/news/manage'
 export const MANAGE_DETAILS = '/news/manage/:id';
