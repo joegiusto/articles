@@ -43,6 +43,7 @@ if (localStorage.jwtToken) {
 
   store.dispatch(setStories());
   store.dispatch(setMyths());
+
 // Check for expired token
   const currentTime = Date.now() / 1000; // to get in milliseconds
   if (decoded.exp < currentTime) {

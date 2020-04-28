@@ -85,9 +85,13 @@ class HomePageThreeBase extends React.Component {
   }
 
 	componentDidMount() {
-    if (this.props.auth.isAuthenticated !== true) {
+    if (this.props?.auth?.isAuthenticated !== true) {
+
+      console.log("Was not auth");
       this.props.history.push('/signin');
+
     }
+
 		window.addEventListener('scroll', this.listenToScroll);
   }
   
@@ -363,7 +367,7 @@ class HomePageThreeBase extends React.Component {
 				<div className="container-fluid">
 					
 					<div className="new-home-text">
-						<h1>Welcome {this.props.auth.user_details.user.first_name
+						<h1>Welcome {this.props.auth?.user_details?.user?.first_name
             }, here's a glance at what's happening.</h1>
 						{/* <p>Heres a glance at what's happening.</p> */}
 

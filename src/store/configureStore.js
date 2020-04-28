@@ -16,6 +16,8 @@ import errorReducer from "../reducers/errorReducer";
 import siteReducer from '../reducers/site';
 // import employeesReducer from '../reducers/employees';
 
+import { logoutUser } from "../actions/authActions";
+
 const persistConfig = {
   // transforms: [immutableTransform()],
   key: 'root',
@@ -49,7 +51,12 @@ export default () => {
     )
   )
 
-  let persistor = persistStore(store)
+  let persistor = persistStore(store, {}, () => {
+    console.log("Fires on rehydrate");
+    if (!store.getState().auth.isAuthenticated) {
+      store.dispatch(logoutUser());
+    };
+  })
 
   return { store, persistor };
   

@@ -520,9 +520,8 @@ class SubscribeListBase extends Component {
               </div>
 
               <div className="card mt-3">
-                <div className="card-header d-flex justify-content-between">
+                <div className="card-header">
                   <div>Issue Subscriptions</div>
-                  <div className="badge badge-success d-flex align-self-center">Update</div>
                 </div>
                 <div className="card-body">
                   <div className="row">

@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const passport = require("passport");
 const path = require('path');
 const app = express();
+const history = require('connect-history-api-fallback');
 
 const users = require("./routes/api/users");
 const mongoose = require("mongoose");
@@ -27,6 +28,8 @@ mongoose
   .then(() => console.log("Mongoose MongoDB successfully connected"))
   .catch(err => console.log(err));
 
+
+app.use(history());
 app.use( express.static(path.join(__dirname, '../build')) );
 
 app.use( bodyParser.json() );
