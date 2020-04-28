@@ -7,7 +7,7 @@ module.exports = app => {
 
     console.log("Call to /api/getNews at" + new Date());
 
-    MongoClient.connect(url, function(err, db) {
+    MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
 
       let data = {};
 

@@ -7,7 +7,7 @@ module.exports = app => {
     
     console.log(`Call to /api/getUserDetails made at ${new Date()} by user ${req.body.user}`);
 
-    MongoClient.connect(url, function(err, db) {
+    MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
 
       let data = {};
 
@@ -16,37 +16,39 @@ module.exports = app => {
       var o_id = new ObjectId(req.body.user);
 
       dbo.collection("articles_users").findOne( o_id, function(err, result) {
-        if (err) throw err;
+        // if (err) throw err;
         data.user = result
 
-        dbo.collection("articles_orders").find({user_id: req.body.user}).toArray(function(err, result) {
-          if (err) throw err;
-          data.orders = result
-        });
+        // dbo.collection("articles_orders").find({user_id: req.body.user}).toArray(function(err, result) {
+        //   if (err) throw err;
+        //   data.orders = result
+        // });
     
-        dbo.collection("articles_submissions").find({user_id: req.body.user}).toArray(function(err, result) {
-          if (err) throw err;
-          data.submissions = result;
-          data.subscriptions = [];
+        // dbo.collection("articles_submissions").find({user_id: req.body.user}).toArray(function(err, result) {
+        //   if (err) throw err;
+        //   data.submissions = result;
+        //   data.subscriptions = [];
 
-          let justNews = []
-          try {
-            justNews = data.user.subscriptions.map(sub => {
-              return ObjectId(sub.news_id);
-            })
-          } catch {
-            console.log("This user ain't got shit");
-          }
+        //   let justNews = []
+
+        //   try {
+        //     justNews = data.user.subscriptions.map(sub => {
+        //       return ObjectId(sub.news_id);
+        //     })
+        //   } catch {
+        //     console.log("This user ain't got shit");
+        //   }
           
 
-          dbo.collection("articles_news").find({ _id: {$in: justNews} }).toArray(function(err, result) {
-            if (err) throw err;
+        //   dbo.collection("articles_news").find({ _id: {$in: justNews} }).toArray(function(err, result) {
+        //     if (err) throw err;
             db.close();
-            data.subscriptionsBulk = result;
+            console.log(`Call to /api/getUserDetails done`)
+        //     data.subscriptionsBulk = result;
             return res.send(data);
-          });
+        //   });
           
-        });
+        // });
 
       });
 

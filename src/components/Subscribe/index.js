@@ -30,7 +30,9 @@ class SubscribeListBase extends Component {
       newsUser: [],
       newsUserMySQL: [],
 
-      mongoDBuser: {},
+      mongoDBuser: {
+        first_name: this.props.user_details?.first_name
+      },
       mongoDBsubmissions: []
     }
 
@@ -73,27 +75,26 @@ class SubscribeListBase extends Component {
     });
 
     // TODO - This needs to get taken out and replaced with the details of the global Redux state that gets set when user loads in.
-    axios.post('/api/secure/getUserDetails', {
-      user: self.props.auth.user.id
-    })
-    .then(function (response) {
-      console.log(response);
+    // axios.post('/api/secure/getUserDetails', {
+    //   user: self.props.auth.user.id
+    // })
+    // .then(function (response) {
+    //   console.log(response);
 
-      self.setState({
-        mongoDBuser: response.data.user,
-        mongoDBsubmissions: response.data.submissions,
-        mongoDBorders: response.data.orders,
-        mongoDBsubscriptionsBulk: response.data.subscriptionsBulk,
-      }, () => {
-        // self.mergeStuff()
-      })
+    //   self.setState({
+    //     mongoDBuser: response.data.user,
+    //     mongoDBsubmissions: response.data.submissions,
+    //     mongoDBorders: response.data.orders,
+    //     mongoDBsubscriptionsBulk: response.data.subscriptionsBulk,
+    //   }, () => {
+    //     // self.mergeStuff()
+    //   })
 
-    })
-    .catch(function (error) {
-      console.log("Get User Details Secure Failed");
-      console.log(axios.defaults.headers.common["Authorization"])
-      console.log(error);
-    });
+    // })
+    // .catch(function (error) {
+    //   console.log("Get User Details Secure Failed");
+    //   console.log(error);
+    // });
 
     axios.get('/getAllIssues')
     .then(function (response) {
@@ -801,6 +802,7 @@ const condition = authUser => !!authUser;
 
 const mapStateToProps = state => ({
   auth: state.auth,
+  user_details: state.auth.user_details.user,
   errors: state.errors
 });
 

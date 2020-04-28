@@ -51,11 +51,11 @@ export default () => {
     )
   )
 
-  let persistor = persistStore(store, {}, () => {
+  let persistor = persistStore(store, null, () => {
     console.log("Fires on rehydrate");
-    if (!store.getState().auth.isAuthenticated) {
-      store.dispatch(logoutUser());
-    };
+    // if (!store.getState().auth.isAuthenticated) {
+    //   store.dispatch(logoutUser());
+    // };
   })
 
   return { store, persistor };

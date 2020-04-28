@@ -7,7 +7,7 @@ const app = express();
 const history = require('connect-history-api-fallback');
 
 const users = require("./routes/api/users");
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const MongoClient = require('mongodb').MongoClient;
 const url = "mongodb+srv://joegiusto:" + process.env.MONGODB_PASSWORD + "@articles-xgwnd.mongodb.net/articles_data?retryWrites=true&w=majority";
 
@@ -25,7 +25,7 @@ mongoose
     url,
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
-  .then(() => console.log("Mongoose MongoDB successfully connected"))
+  .then(() => console.log("Mongoose successfully connected"))
   .catch(err => console.log(err));
 
 

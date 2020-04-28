@@ -10,6 +10,9 @@
   "contributors": [
     ""
   ],
+  "engines": {
+    "node": "10.15.3"
+  },
   "private": true,
   "dependencies": {
     "bcrypt": "^4.0.1",
