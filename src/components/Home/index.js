@@ -85,6 +85,9 @@ class HomePageThreeBase extends React.Component {
   }
 
 	componentDidMount() {
+    if (this.props.auth.isAuthenticated !== true) {
+      this.props.history.push('/signin');
+    }
 		window.addEventListener('scroll', this.listenToScroll);
   }
   
