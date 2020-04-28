@@ -11,6 +11,6 @@
   "start_url": "/home",
   "background_color": "#000000",
   "display": "standalone",
-  "scope": "https://articles.media",
+  "scope": "https://articles.media/",
   "theme_color": "#000000"
 }
