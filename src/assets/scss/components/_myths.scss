@@ -1,134 +1,193 @@
-.myths-head {
-  background-color: white;
-  border: solid 5px #000;
-  border-radius: 5px;
-  text-align: left;
-  padding: 1rem;
-
-  box-shadow: 2px 2px 2px $accent-color, -4px -4px 2px $base-color;
-  // box-shadow: 2px 2px 2px $accent-color, -4px -4px 2px $base-color;
-  // animation-direction: alternate;
-  // animation-duration: 2s;
-  // animation-name: alter;
-  
-  .title {
-
-  }
-  .body {
-
-  }
-  @keyframes alter {
-    from {
-      box-shadow: 2px 2px 2px $accent-color, -4px -4px 2px $base-color;
-    }
-    to {
-      box-shadow: -4px -4px 2px $accent-color, 2px 2px 2px $base-color;
-    }
-  }
-}
-
-.myths-footer {
-  color: white;
-  background: linear-gradient( 147deg, rgba(29,82,166,0.6), #3A78FC );
-  padding: 1rem;
-  text-align: left;
-  a { 
-    color: #fff;
-    font-weight: bold;
-    font-size: 1.2rem;
-  }
-  .text-muted {
-    margin-top: 20px;
-    color: $accent-color!important;
-  }
-}
-
-.myth-item {
-  background-color: rgb(255, 255, 255);
-  height: 175px;
-  margin-bottom: 30px;
-  // border-bottom-right-radius: 90px;
-  // clip-path: polygon(0 0, 100% 0, 100% 90%, 0% 100%);
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.35);
-  position: relative;
-  text-align: left;
-  &:hover {
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.70);
-  }
-  &-banner {
+section.myths-section {
+  .myths-head {
     background-color: white;
-    position: absolute;
-    left: 10px;
-    top: -15px;
-    font-size: 1.2rem;
-    font-family: forte;
-    // color: rgb(0, 0, 0);
-    z-index: 99;
-    // border: solid 1px;
-    border-style: solid;
-    padding: 0rem .3rem;
-  }
-  .item-head {
-    width: 100%;
-    height: 20px;
-    background-color: #000000;
-  }
-  .item-foot {
-    position: absolute;
-    bottom: 0px;
-    width: 100%;
-    height: 20px;
-    background-color: #000000;
-  }
-  .item-photo {
-    position: absolute;
-    left: 0px;
-    top: 20px;
-    height: 175px;
-    width: 200px;
-    z-index: 1;
-    -webkit-clip-path: polygon(0 0, 80% 0, 100% 100%, 0% 100%);
-    clip-path: polygon(0 0, 80% 0, 100% 100%, 0% 100%);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-image: url(https://www.snopes.com/tachyon/2018/05/windmill.jpg);
-  }
-  .item-background {
-    position: absolute;
-    left: 0px;
-    height: 175px;
-    width: 100%;
-    z-index: 0;
-    background-size: cover;
-    background-repeat: no-repeat;
-    // background-image: url(https://www.snopes.com/tachyon/2018/05/windmill.jpg);
-    filter: blur(3px) saturate(30%);
-  }
-  &-title {
-    position: absolute;
-    width: fit-content;
-    text-align: center;
-    top: 30%;
-    left: 55%;
-    transform: translateX(-50%) translateY(-50%);
-    // color: white;
-    // text-shadow: $accent-color 3px 0 10px;
-    font-size: 1.7rem;
-    // font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-weight: bold;
-    z-index: 1;
+    border: solid 5px #000;
+    border-radius: 5px;
+    text-align: left;
+    padding: 1rem;
+  
+    box-shadow: 2px 2px 2px $accent-color, -4px -4px 2px $base-color;
+    
+    .title {
+      font-family: brandon-grotesque, sans-serif;
+      font-style: normal;
+      font-weight: 900;
+      font-size: 2.5rem;
+    }
+  
+    .body {
+      font-family: montserrat, sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      font-style: normal;
+    }
+  
+    @keyframes alter {
+      from {
+        box-shadow: 2px 2px 2px $accent-color, -4px -4px 2px $base-color;
+      }
+      to {
+        box-shadow: -4px -4px 2px $accent-color, 2px 2px 2px $base-color;
+      }
+    }
   }
 
-  &::after {
-    content: " ";
-    position: absolute;
-    bottom: 0px;
-    right: -0px;
-    background-color: $accent-color;
-    height: 40px;
-    width: 40px;
-    z-index: 1;
-    -webkit-clip-path: polygon(100% 0, 0% 100%, 100% 100%);
-    clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+  .filter-box {
+    margin: 2.5rem 0;
+    margin-bottom: 3rem;
+
+    .myth-topic {
+      cursor: pointer;
+      border-radius: 0;
+      margin-right: 0.25rem;
+      margin-bottom: 0.25rem;
+      &:hover {
+        box-shadow: 0 0 0.20rem rgba(0, 0, 0, 0.9);
+      }
+    }
+
+    .input-group-text {
+      background-color: black;
+      color: white;
+    }
+    
+    .hint-badges {
+      font-size: 1.25rem;
+    }
+  }
+
+  .myth-item {
+    background-color: rgb(255, 255, 255);
+    height: 175px;
+    margin-bottom: 30px;
+    // border-bottom-right-radius: 90px;
+    // clip-path: polygon(0 0, 100% 0, 100% 90%, 0% 100%);
+    padding: 1rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.35);
+    position: relative;
+    text-align: left;
+    border: 2px solid #000;
+    cursor: pointer;
+  
+    &.last {
+      cursor: default;
+      box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+      border-style: dotted;
+  
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        right: -4px;
+        background-color: none;
+        height: 0px;
+        width: 0px;
+        z-index: 1;
+        // -webkit-clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+        // clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+        // box-shadow: 2px -2px #000;
+      }
+  
+      &:hover {
+        box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+      }
+  
+    }
+  
+    &:hover {
+      box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.70);
+    }
+  
+    &-banner {
+      background-color: white;
+      position: absolute;
+      left: 10px;
+      top: -15px;
+      font-size: 1.2rem;
+      font-family: forte;
+      // color: rgb(0, 0, 0);
+      z-index: 99;
+      // border: solid 1px;
+      border-style: solid;
+      padding: 0rem .3rem;
+    }
+  
+    .item-photo {
+      position: absolute;
+      left: 0px;
+      top: 20px;
+      height: 175px;
+      width: 200px;
+      z-index: 1;
+      -webkit-clip-path: polygon(0 0, 80% 0, 100% 100%, 0% 100%);
+      clip-path: polygon(0 0, 80% 0, 100% 100%, 0% 100%);
+      background-size: cover;
+      background-repeat: no-repeat;
+      // background-image: url(https://www.snopes.com/tachyon/2018/05/windmill.jpg);
+    }
+  
+    .item-background {
+      position: absolute;
+      left: 0px;
+      height: 175px;
+      width: 100%;
+      z-index: 0;
+      background-size: cover;
+      background-repeat: no-repeat;
+      // background-image: url(https://www.snopes.com/tachyon/2018/05/windmill.jpg);
+      filter: blur(3px) saturate(30%);
+    }
+    &-title {
+      // position: absolute;
+      width: fit-content;
+      // text-align: center;
+      // top: 30%;
+      // left: 55%;
+      // transform: translateX(-50%) translateY(-50%);
+      // color: white;
+      // text-shadow: $accent-color 3px 0 10px;
+      font-size: 1.7rem;
+      // font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-weight: bold;
+      z-index: 1;
+    }
+  
+    &::after {
+      content: " ";
+      position: absolute;
+      bottom: -4px;
+      right: -4px;
+      background-color: $accent-color;
+      height: 40px;
+      width: 40px;
+      z-index: 1;
+      -webkit-clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+      clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+      box-shadow: 2px -2px #000;
+    }
+  }
+
+  .myths-footer {
+    color: white;
+    background: linear-gradient( 147deg, rgba(29,82,166,0.6), #3A78FC );
+    padding: 1rem;
+    text-align: left;
+    a { 
+      color: #fff;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    .text-muted {
+      margin-top: 20px;
+      color: $accent-color!important;
+    }
   }
 }
+
+
+
+
+
+
+
+

@@ -65,7 +65,7 @@ ReactDOM.render(
     <PersistGate loading={<h1>Test</h1>} persistor={persistor}>
 
 
-      {/* {store.dispatch(setMyths())} */}
+      {store.dispatch(setMyths())}
 
       {/* <Greeting/> */}
 
