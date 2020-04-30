@@ -8,7 +8,7 @@ module.exports = app => {
     console.log(`Call to /api/updateUserDetails made at ${new Date()}`);
     // console.log(req.body.data);
   
-    MongoClient.connect(url, function(err, db) {
+    // MongoClient.connect(url, function(err, db) {
   
       if (err) throw err;
       var dbo = db.db("articles_data");
@@ -43,17 +43,16 @@ module.exports = app => {
             zip: myobj.address.zip,
             
           },
-          // "subscriptions.$[]": myobj.subscriptions
           subscriptions: myobj.subscriptions
         }
       }, function(err, res) {
         if (err) throw err;
-        db.close();
+        dbo.close();
       });
 
       return res.end();
 
-    });
+    // });
   
     
   

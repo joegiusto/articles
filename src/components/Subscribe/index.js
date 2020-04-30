@@ -4,21 +4,13 @@ import { Link } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
 import axios from 'axios';
 import moment from 'moment';
-import { compose } from 'recompose';
-import { AuthUserContext, withAuthorization, withEmailVerification } from '../Session';
+// import { compose } from 'recompose';
+// import { AuthUserContext, withAuthorization, withEmailVerification } from '../Session';
 
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 
 import { setUserDetails } from "../../actions/authActions";
-
-function loadingFiller(size) {
-  return(
-    <div style={{width: size}} className="loading-filler">
-
-    </div>
-  )
-}
 class SubscribeListBase extends Component {
   constructor(props) {
     super(props)
@@ -31,9 +23,29 @@ class SubscribeListBase extends Component {
       newsUserMySQL: [],
 
       mongoDBuser: {
-        first_name: this.props.user_details?.first_name
+        first_name: this.props.user_details?.first_name || '',
+        last_name: this.props.user_details?.last_name || '',
+
+        birth_date: this.props.user_details?.birth_date || '',
+        sign_up_date: this.props.user_details?.sign_up_date || '',
+        last_online_date: this.props.user_details?.last_online_date || '',
+
+        photo_url: this.props.user_details?.photo_url || '',
+
+        address: {
+          zip: this.props.user_details?.address?.zip || '',
+          city: this.props.user_details?.address?.city || '',
+          state: this.props.user_details?.address?.state || '',
+        },
+
+        submissions: this.props.user_details?.submissions || [],
+        submissionsFetched: this.props.user_details?.submissionsFetched || [],
+        orders: this.props.user_details?.orders || [],
+        ordersFetched: this.props.user_details?.ordersFetched || [],
+        subscriptions: this.props.user_details?.subscriptions || [],
+        subscriptionsFetched: this.props.user_details?.subscriptionsFetched || []
       },
-      mongoDBsubmissions: []
+      
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -48,31 +60,31 @@ class SubscribeListBase extends Component {
 
     let self = this;
     console.log('Making changes to subscriptions');
-    this.setState({ newsAllLoading: true });
+    // this.setState({ newsAllLoading: true });
 
     // Refresh for the newest info!
     this.props.setUserDetails(self.props.auth.user.id);
 
-    axios.get('/getNews')
-    .then(function (response) {
+    // axios.get('/getNews')
+    // .then(function (response) {
 
-      // handle success
-      console.log(response.data);
+    //   // handle success
+    //   console.log(response.data);
 
-      self.setState({
-        newsAll: response.data,
-      });
+    //   self.setState({
+    //     newsAll: response.data,
+    //   });
 
-      this.setState({ newsAllLoading: false });
+    //   this.setState({ newsAllLoading: false });
 
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
+    // })
+    // .catch(function (error) {
+    //   // handle error
+    //   console.log(error);
 
-      self.setState({ resultsLoading: true });
-      self.setState({ resultsLoadingError: error });
-    });
+    //   self.setState({ resultsLoading: true });
+    //   self.setState({ resultsLoadingError: error });
+    // });
 
     // TODO - This needs to get taken out and replaced with the details of the global Redux state that gets set when user loads in.
     // axios.post('/api/secure/getUserDetails', {
@@ -89,14 +101,13 @@ class SubscribeListBase extends Component {
     //   }, () => {
     //     // self.mergeStuff()
     //   })
-
     // })
     // .catch(function (error) {
     //   console.log("Get User Details Secure Failed");
     //   console.log(error);
     // });
 
-    axios.get('/getAllIssues')
+    axios.get('/getIssues')
     .then(function (response) {
 
       // handle success
@@ -156,53 +167,29 @@ class SubscribeListBase extends Component {
     }));
   }
 
-  // addSubscription(id) {
-  //   // console.log("I should be adding this ID to the subscriptions:" + id);
-
-  //   this.setState( prevState => ({
-  //     donationList: [...prevState.donationList, {
-  //       uid: id.toString(),
-  //       subscribedDate: this.props.firebase.serverValue.TIMESTAMP,
-  //       lastUserView: this.props.firebase.serverValue.TIMESTAMP
-  //     }]
-  //   }))
-
-  //   this.props.firebase.user_subscriptions(this.props.firebase.auth.currentUser.uid).child(id).set({
-  //     subscribedDate: this.props.firebase.serverValue.TIMESTAMP,
-  //     lastUserView: this.props.firebase.serverValue.TIMESTAMP
-  //   })
-    
-  // }
-
-  // removeSubscription(id) {
-  //   // console.log("I should be removing this ID to the subscriptions:" + id);
-
-  //   this.props.firebase.user_subscription(this.props.firebase.auth.currentUser.uid, id).remove();
-
-  //   this.setState({
-  //     donationList: this.state.donationList.filter(function( obj ) {
-  //       return obj.uid !== id.toString();
-  //     })
-  //   })
-    
-  // }
-
   addSubscriptionNew(issue) {
 
     this.setState(prevState => ({
 
-      mongoDBsubscriptionsBulk: [
-        ...prevState.mongoDBsubscriptionsBulk,
-        issue
-      ],
+      // mongoDBsubscriptionsBulk: [
+      //   ...prevState.mongoDBsubscriptionsBulk,
+      //   issue
+      // ],
       mongoDBuser: {
         ...prevState.mongoDBuser,
+
         subscriptions: [
           ...prevState.mongoDBuser.subscriptions,
           {
             news_id: issue._id
           }
+        ],
+
+        subscriptionsFetched: [
+          ...prevState.mongoDBuser.subscriptionsFetched,
+          issue
         ]
+
       }
 
     }))
@@ -213,13 +200,18 @@ class SubscribeListBase extends Component {
     console.log(id);
 
     this.setState(prevState => ({
-      mongoDBsubscriptionsBulk: this.state.mongoDBsubscriptionsBulk.filter(function( obj ) {
-        return obj._id !== id;
-      }),
+      // mongoDBsubscriptionsBulk: this.state.mongoDBsubscriptionsBulk.filter(function( obj ) {
+      //   return obj._id !== id;
+      // }),
       mongoDBuser: {
         ...prevState.mongoDBuser,
+        
         subscriptions: this.state.mongoDBuser.subscriptions.filter(function( obj ) {
           return obj.news_id !== id;
+        }),
+
+        subscriptionsFetched: this.state.mongoDBuser.subscriptionsFetched.filter(function( obj ) {
+          return obj._id !== id;
         })
       }
     }))
@@ -280,32 +272,16 @@ class SubscribeListBase extends Component {
 
     if (this.state.mongoDBuser.subscriptions && this.state.allIssues) {
 
-      // console.log( this.state.mongoDBuser.subscriptions.map((item, i) => Object.assign({}, item, this.state.allIssues[i])) );
-
-      // let mergedArray = this.state.mongoDBuser.subscriptions.map( ( item, i ) => {
-
-      //   if( item.news_id === this.state.allIssues[i]._id ) {
-      //     // Merging two objects
-      //     return Object.assign( 
-      //       {}, 
-      //       item,
-      //       this.state.allIssues[i]
-      //     )
-      //   }
-
-      // })
-
       console.log("This should have a .news_id for every item");
       console.log(this.state.mongoDBuser.subscriptions)
 
       let mergedArray = [];
-      // var results = []
 
       this.state.mongoDBuser.subscriptions.map( ( item, i ) => {
 
         console.log(i)
         console.log(item)
-        // console.log(this.state.allIssues[i])
+
         var toSearch = item.news_id;
 
         for(var i=0; i<this.state.allIssues.length; i++) {
@@ -315,19 +291,6 @@ class SubscribeListBase extends Component {
             }
           }
         }
-
-
-        // console.log( this.state.allIssues.filter(function (entry) { return entry._id === item.news_id; }) )
-        // this.state.allIssues.filter(function (entry) { return entry._id === item.news_id; });
-
-        // if( item.news_id === this.state.allIssues[i]._id ) {
-        //   // Merging two objects
-        //   return Object.assign( 
-        //     {}, 
-        //     item,
-        //     this.state.allIssues[i]
-        //   )
-        // }
 
       })
 
@@ -492,7 +455,7 @@ class SubscribeListBase extends Component {
                           disabled="true"
                           aria-describedby=""
                           value={ mongoDBuser?.address?.city || "" }
-                          placeholder="Loading..."
+                          placeholder=""
                         />
                         {/* <small id="emailHelp" class="form-text text-muted">Visible to just you.</small> */}
                       </div>
@@ -508,7 +471,7 @@ class SubscribeListBase extends Component {
                           disabled="true"
                           aria-describedby=""
                           value={ mongoDBuser?.address?.state || "" }
-                          placeholder="Loading..."
+                          placeholder=""
                         />
                         {/* <small id="emailHelp" class="form-text text-muted">Visible to just you.</small> */}
                       </div>
@@ -529,8 +492,8 @@ class SubscribeListBase extends Component {
                     <div className="col-12 col-md-6">
 
                       <small>Yours</small>
-                      {mongoDBsubscriptionsBulk ? 
-                      mongoDBsubscriptionsBulk.map((issue) => (
+                      {mongoDBuser?.subscriptionsFetched ? 
+                      mongoDBuser?.subscriptionsFetched.map((issue) => (
                         <div className="sub-item unsubscribe" onClick={() => this.removeSubscriptionNew(issue._id)}>{issue.news_title}</div>
                       ))
                       :
@@ -541,13 +504,13 @@ class SubscribeListBase extends Component {
                     <div className="col-12 col-md-6">
 
                       <small>All</small>
-                      {allIssues && mongoDBsubscriptionsBulk ? 
+                      {allIssues && mongoDBuser?.subscriptionsFetched ? 
 
                       allIssues.map((issue) => {
                         return (
                         <div>
 
-                        {(this.state.mongoDBsubscriptionsBulk.filter(sub => sub._id === issue._id.toString() )).length > 0
+                        {(mongoDBuser?.subscriptionsFetched.filter(sub => sub._id === issue._id.toString() )).length > 0
                         ? 
                         // <button onClick={() => this.removeSubscription(issue._id)} className="btn btn-articles-light un">Unsubscribe</button>
                         <div className={"sub-item unsubscribe"} onClick={() => this.removeSubscriptionNew(issue._id)}>{issue.news_title}</div>
@@ -652,9 +615,9 @@ class SubscribeListBase extends Component {
                 <span><b>Submissions</b></span>
                 <div className="subscription-list ml-3">
 
-                  {mongoDBuser?.submissions ? 
+                  {mongoDBuser?.submissionsFetched ? 
 
-                  mongoDBsubmissions?.map((submission) => (
+                  mongoDBuser?.submissionsFetched.map((submission) => (
                     <Link className="submission-item" to={ROUTES.STORE_SUBMISSIONS + "/" + submission._id}>
                       {submission.title}
                     </Link>
@@ -671,9 +634,9 @@ class SubscribeListBase extends Component {
                 <span><b>Orders</b></span>
                 <div className="subscription-list ml-3">
 
-                {mongoDBuser?.orders ? 
+                {mongoDBuser?.ordersFetched ? 
 
-                  mongoDBorders?.map((order) => (
+                  mongoDBuser?.ordersFetched.map((order) => (
                     <Link className="submission-item" to={ROUTES.STORE_ORDERS + "/" + order._id}>
                       {moment.unix(order.order_date).format('LL')} - {order.order_title}
                     </Link>
@@ -690,9 +653,9 @@ class SubscribeListBase extends Component {
                 <span><b>Subscriptions</b></span>
                 <div className="subscription-list ml-3">
                   
-                {mongoDBuser?.subscriptions ? 
+                {mongoDBuser?.subscriptionsFetched ? 
 
-                  mongoDBsubscriptionsBulk?.map((subscription) => (
+                  mongoDBuser?.subscriptionsFetched.map((subscription) => (
                     <Link className="submission-item" to={ROUTES.NEWS + "/" + subscription._id}>
                       {subscription.news_type} - {subscription.news_title}
                     </Link>
@@ -709,82 +672,6 @@ class SubscribeListBase extends Component {
 
           </div>
 
-          <div className="row mt-5">
-
-            {/* <div className="col-12 text-center">
-              Manage Subscriptions
-            </div> */}
-
-            <div className="col-12 col-md-6 d-none">
-              <h1>Your Subscriptions:</h1>
-              <div className="list">
-
-              {this.state.donationListLoaded === true ? 
-              this.state.donationList.map((news) => {
-                return (
-                  <div className="list-item">
-                    <div className="card d-flex flex-row justify-content-between">
-                      <span className="d-flex align-items-center pl-3"> 
-
-                        {/* { console.log( this.state.newsAll.filter(obj => { return obj.issue_id === news.id }) ) } */}
-                        {/* { console.log( this.getKeyByValue(this.state.newsAll, news.uid ) ) } */}
-                        {/* Need a way to get the name of the news piece based on id but this needs to be done above when compoonent mounts */}
-
-                        {news.uid}
-                      </span>
-                      <div>
-                        <button onClick={() => this.removeSubscription(news.uid)} className="btn btn-articles-light un">Unsubscribe</button>
-                      </div>
-                    </div>
-                  </div>
-                )
-              })
-              : 
-              'loading'
-              }
-
-              </div>
-            </div>
-
-            <div className="col-12 col-md-6 d-none">
-              <h1>All News:</h1>
-              <div className="list">
-                
-              {this.state.donationListLoaded === true ?
-
-                this.state.newsAll.map((news) => {
-                  return (
-                    <div className="list-item">
-                      <div className="card d-flex flex-row justify-content-between">
-                        <span className="d-flex align-items-center pl-3">{news.title}: {news.news_id}</span>
-                        <div>
-
-                            {
-                            (this.state.donationList.filter(sub => sub.uid === news.news_id.toString() )).length > 0
-                            ? 
-                            <button onClick={() => this.removeSubscription(news.news_id)} className="btn btn-articles-light un">Unsubscribe</button>
-                            : 
-                            <button onClick={() => this.addSubscription(news.news_id)} className="btn btn-articles-light">Subscribe</button>
-                            }
-                            
-                     
-                          {/* <button onClick={() => this.addSubscription(news.issue_id)} className="btn btn-articles-light">Subscribe</button> */}
-
-                        </div>
-                      </div>
-                    </div>
-                  )
-                })
-
-                :
-
-                'Loading'
-              }
-
-              </div>
-            </div>
-
-          </div>
         </div>
       </div>
     )
@@ -802,7 +689,7 @@ const condition = authUser => !!authUser;
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  user_details: state.auth.user_details.user,
+  user_details: state.auth.user_details,
   errors: state.errors
 });
 

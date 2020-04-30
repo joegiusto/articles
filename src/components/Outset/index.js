@@ -1,16 +1,11 @@
-import React, { Component, useState, useEffect } from 'react';
-import { Link, withRouter } from 'react-router-dom';
-
+import React from 'react';
+// import { Link, withRouter } from 'react-router-dom';
 // import { compose } from 'recompose';
 // import { AuthUserContext, withAuthorization, withEmailVerification } from '../Session';
-
-import { isValidPhoneNumber } from 'react-phone-number-input'
-
-import axios from 'axios';
-
-import * as ROUTES from '../../constants/routes';
 // import { auth } from 'firebase';
-
+import { isValidPhoneNumber } from 'react-phone-number-input'
+import axios from 'axios';
+import * as ROUTES from '../../constants/routes';
 import { connect } from 'react-redux';
 
 import StepOne from './StepOne';
@@ -20,7 +15,6 @@ import StepFour from './StepFour';
 import StepFive from './StepFive';
 
 import * as outsetPhotos from './outsetPhotos';
-
 import $ from "jquery";
 
 class OutsetBase extends React.Component {
@@ -45,7 +39,7 @@ class OutsetBase extends React.Component {
 
       // Step One States
       // nameFirst: props.user.first_name,
-      first_name: props.user.first_name,
+      first_name: props.user?.first_name || '',
       last_name: '',
       
       city: '',
@@ -186,67 +180,102 @@ class OutsetBase extends React.Component {
     let currentComponent = this;
 
     /** Handle successful response */
-		function handleResp(data)
-		{
-			// Check for error
-			if (data.error_msg)
-				errorDiv = data.error_msg;
-			else if ("city" in data)
-			{
-        // Set city and state
+		// function handleResp(data)
+		// {
+		// 	// Check for error
+		// 	if (data.error_msg)
+		// 		errorDiv = data.error_msg;
+		// 	else if ("city" in data)
+		// 	{
+    //     // Set city and state
         
-				// container.find("input[name='city']").val(data.city);
-        // container.find("input[name='state']").val(data.state);
+		// 		// container.find("input[name='city']").val(data.city);
+    //     // container.find("input[name='state']").val(data.state);
 
-        currentComponent.setState({city: data.city, state: data.state})
-			}
-		}
+    //     currentComponent.setState({city: data.city, state: data.state})
+		// 	}
+		// }
 	
 
-    if (zipcode.length == 5 && /^[0-9]+$/.test(zipcode))
-			{
+    if ( zipcode.length === 5 && /^[0-9]+$/.test(zipcode) ) {
 				// Clear error
         // errorDiv.empty();
-        errorDiv = ""
+        // errorDiv = ""
 				
 				// Check cache
-				if (zipcode in cache)
-				{
-					handleResp(cache[zipcode]);
-				}
-				else
-				{
+				// if (zipcode in cache)
+				// {
+				// 	handleResp(cache[zipcode]);
+				// }
+				// else
+				// {
+          const self = this
 					// Build url
-					var url = "https://www.zipcodeapi.com/rest/"+clientKey+"/info.json/" + zipcode + "/radians";
+          var url = "https://www.zipcodeapi.com/rest/"+clientKey+"/info.json/" + zipcode + "/radians";
+          
+          // Zip Code API
+          // axios.post('/outsetUpdate', {
+          //   user: this.props.user._id,
+          //   outsetState: newobj
+          // })
+          // .then(function (response) {
+          //   console.log(response);
+      
+          //   // Will be turned on and off many times...
+          //   self.props.history.push(ROUTES.HOME);
+      
+          // })
+          // .catch(function (error) {
+          //   console.log(error);
+          // });
+
+          axios.get(url)
+            .then(function (response) {
+
+              // handle success
+              console.log(response.data);
+
+              self.setState({
+                city: response.data.city, 
+                state: response.data.state});
+              })
+            .catch(function (error) {
+              // handle error
+              console.log(error);
+
+              // self.setState({ resultsLoading: true });
+              // self.setState({ resultsLoadingError: error });
+            });
 					
 					// Make AJAX request
-					$.ajax({
-						"url": url,
-						"dataType": "json"
-					}).done(function(data) {
-						handleResp(data);
+					// $.ajax({
+					// 	"url": url,
+					// 	"dataType": "json"
+					// }).done(function(data) {
+					// 	handleResp(data);
 						
-						// Store in cache
-						cache[zipcode] = data;
-					}).fail(function(data) {
-						if (data.responseText && (JSON = $.parseJSON(data.responseText)))
-						{
-							// Store in cache
-							cache[zipcode] = JSON;
+					// 	// Store in cache
+					// 	cache[zipcode] = data;
+					// }).fail(function(data) {
+					// 	if (data.responseText && (JSON = $.parseJSON(data.responseText)))
+					// 	{
+					// 		// Store in cache
+					// 		cache[zipcode] = JSON;
 							
-							// Check for error
-							if (JSON.error_msg)
-                // errorDiv.text(JSON.error_msg);
-                errorDiv = JSON.error_msg
-						}
-						else
-							errorDiv = 'Request failed.';
-					});
-				}
+					// 		// Check for error
+					// 		if (JSON.error_msg)
+          //       // errorDiv.text(JSON.error_msg);
+          //       errorDiv = JSON.error_msg
+					// 	}
+					// 	else
+					// 		errorDiv = 'Request failed.';
+          // });
+          
+				// }
       }
       
-      console.log(cache);
-      console.log(errorDiv);
+      // console.log(cache);
+      // console.log(errorDiv);
   }
 
   theAPI() {
@@ -268,7 +297,7 @@ class OutsetBase extends React.Component {
   componentDidMount() {
     const self = this;
 
-    axios.get('/getAllIssues')
+    axios.get('/getIssues')
     .then(function (response) {
 
       // handle success

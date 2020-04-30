@@ -33,6 +33,7 @@ const {store, persistor} = configureStore();
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
+  console.log("We meade it here!")
   // Set auth token header auth
   const token = localStorage.jwtToken;
   setAuthToken(token);
@@ -41,10 +42,7 @@ if (localStorage.jwtToken) {
   // Set user and isAuthenticated
   store.dispatch(setCurrentUser(decoded));
 
-  store.dispatch(setStories());
-  store.dispatch(setMyths());
-
-// Check for expired token
+  // Check for expired token
   const currentTime = Date.now() / 1000; // to get in milliseconds
   if (decoded.exp < currentTime) {
     // Logout user
@@ -54,9 +52,23 @@ if (localStorage.jwtToken) {
   }
 }
 
+// store.dispatch(setStories());
+
+// console.log("Render")
+
+function Greeting(props) {
+
+}
+
 ReactDOM.render(
   <FirebaseContext.Provider value={new Firebase()}>
-    <PersistGate loading={<h1>Loading</h1>} persistor={persistor}>
+    <PersistGate loading={<h1>Test</h1>} persistor={persistor}>
+
+
+      {/* {store.dispatch(setMyths())} */}
+
+      {/* <Greeting/> */}
+
       <Provider store={store}>
         <App /> 
       </Provider>

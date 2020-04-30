@@ -3,15 +3,15 @@ const MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectId; 
 const url = "mongodb+srv://joegiusto:" + process.env.MONGODB_PASSWORD + "@articles-xgwnd.mongodb.net/test?retryWrites=true&w=majority";
 
-module.exports = app => {
+module.exports = (app, db) => {
 
   app.post('/outsetUpdate', (req, res) => {
     console.log(`Call to /api/outsetUpdate made at ${new Date()}`);
   
-    MongoClient.connect(url, function(err, db) {
+    // MongoClient.connect(url, function(err, db) {
   
-      if (err) throw err;
-      var dbo = db.db("articles_data");
+      // if (err) throw err;
+      // var dbo = db.db("articles_data");
 
       // Passed user and outsetState
       // console.log(req.body.user)
@@ -47,7 +47,7 @@ module.exports = app => {
       //   db.close();
       // });
 
-      dbo.collection("articles_users").updateOne({_id: o_id}, {
+      db.collection("articles_users").updateOne({_id: o_id}, {
         // {subscriptions: myobj.subscriptions},
         $set: {
           first_name: outset.first_name,
@@ -88,6 +88,6 @@ module.exports = app => {
 
     });
   
-  });
+  // });
 
 } 

@@ -356,7 +356,7 @@ const mapStateToProps = (state) => {
     expenses: state.expenses,
     expensesTotal: (state.expenses).length,
     site: state.site,
-    user: state.auth?.user_details?.user,
+    user: state.auth?.user_details,
     first_name: state.auth.user_details?.user?.first_name,
     isAuth: state.auth.isAuthenticated
   };

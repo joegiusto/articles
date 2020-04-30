@@ -21,7 +21,7 @@ export default function(state = initialState, action) {
     case SET_CURRENT_USER_DETAILS:
       return {
         ...state,
-        user_details: action.payload
+        user_details: action.payload.user
       };
     case 'SET_CURRENT_USER_DETAILS_TO_EMPTY':
       return {

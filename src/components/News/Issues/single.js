@@ -23,7 +23,7 @@ class Issue extends React.Component {
     const self = this;
     this.setState({ loading: true });
 
-    const stored = this.props.auth.user_details.subscriptionsBulk.find(x => x._id === this.props.match.params.id)
+    const stored = this.props.auth.user_details?.subscriptionsBulk?.find(x => x._id === this.props.match.params.id)
 
     if (stored !== undefined) {
       // Try to pull from local storage and if not there then do server call

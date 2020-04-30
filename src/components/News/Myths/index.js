@@ -1,18 +1,27 @@
 import React, { useState } from 'react';
+import { connect } from "react-redux";
 
-export default function Myths(props) {
+function Myths(props) {
   const [search, changeSearch] = useState("");
-
 
   return (
   <div className='container text-center'>
-    <div className="mt-5 mb-2">
-      <div className="myths-head">
-        <h1 className="title">Myths</h1>
-        <p className="body">Ever have a president tell you windmills cause cancer? Or maybe you had someone tell you that electric cars actually have a larger carbon footprint then thier gasoline and diesel counterparts. Explore the many topics of common confusion here and the answers.</p>
-      </div>
-      {/* <p>Myths - example - See reddit saved post, "<a href="https://www.reddit.com/r/technology/comments/bj2h83/enough_with_the_actually_electric_cars_pollute/">Actually Electric Cars Pollute More</a>" Take the top common myths in this country at the moment and debunk them. Everything from electric cars to global warming and just explain them in a deteiled fact based/source-cited way that eveyone can easily reference and understand.</p> */}
+
+    <div className="myths-head my-5">
+      <h1 className="title">Myths</h1>
+      <p className="body">Ever have a president tell you windmills cause cancer? Or maybe you had someone tell you that electric cars actually have a larger carbon footprint then thier gasoline and diesel counterparts. Explore the many topics of common confusion here and the answers.</p>
     </div>
+
+    {/* <p>Myths - example - See reddit saved post, "<a href="https://www.reddit.com/r/technology/comments/bj2h83/enough_with_the_actually_electric_cars_pollute/">Actually Electric Cars Pollute More</a>" Take the top common myths in this country at the moment and debunk them. Everything from electric cars to global warming and just explain them in a deteiled fact based/source-cited way that eveyone can easily reference and understand.</p> */}
+
+    {props.myths.myths ?
+    (props.myths.myths.map(myth => (
+      <div>{myth.news_title}</div>
+    )))
+    : 
+    <div>Shit not loaded</div>
+    }
+
     <div className="row">
     
       <div className="col-12 mb-3">
@@ -105,3 +114,11 @@ export default function Myths(props) {
     </div>
   );
 }
+
+const mapStateToProps = state => ({
+  myths: state.myths,
+});
+
+export default connect(
+  mapStateToProps
+)(Myths);
