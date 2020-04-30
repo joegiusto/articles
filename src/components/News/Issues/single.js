@@ -1,13 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { withFirebase } from '../../Firebase';
+// import { withFirebase } from '../../Firebase';
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
-
-const Test = props => (
-  <h1>Test</h1>
-)
 
 class Issue extends React.Component {
   constructor(props) {
@@ -15,6 +11,7 @@ class Issue extends React.Component {
 
     this.state = {
       loading: false,
+      issues: []
     };
 
   }
@@ -23,7 +20,7 @@ class Issue extends React.Component {
     const self = this;
     this.setState({ loading: true });
 
-    const stored = this.props.auth.user_details?.subscriptionsBulk?.find(x => x._id === this.props.match.params.id)
+    const stored = this.props.issues.issues?.find(x => x._id === this.props.match.params.id)
 
     if (stored !== undefined) {
       // Try to pull from local storage and if not there then do server call
@@ -116,6 +113,7 @@ const mapStateToProps = state => ({
   auth: state.auth,
   user: state.auth.user_details,
   stories: state.stories,
+  issues: state.issues,
   myths: state.myths,
   errors: state.errors
 });

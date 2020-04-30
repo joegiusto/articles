@@ -350,7 +350,7 @@ class SubscribeListBase extends Component {
                   <div className="row">
 
                     <div className="col-12 col-md-6">
-                      <div class="form-group">
+                      <div className="form-group">
                         <label for="exampleInputEmail1">First Name:</label>
                         <input 
                           type="text" 
@@ -362,12 +362,12 @@ class SubscribeListBase extends Component {
                           onChange={this.handleUserChange}
                           placeholder="Loading..."
                         />
-                        {/* <small id="emailHelp" class="form-text text-muted">Visible to everyone.</small> */}
+                        {/* <small id="emailHelp" className="form-text text-muted">Visible to everyone.</small> */}
                       </div>
                     </div>
 
                     <div className="col-12 col-md-6">
-                      <div class="form-group">
+                      <div className="form-group">
                         <label for="exampleInputEmail1">Last Name:</label>
                         <input 
                           type="text" 
@@ -379,12 +379,12 @@ class SubscribeListBase extends Component {
                           onChange={this.handleUserChange}
                           placeholder="Loading..."
                         />
-                        {/* <small id="emailHelp" class="form-text text-muted">Visible to just you.</small> */}
+                        {/* <small id="emailHelp" className="form-text text-muted">Visible to just you.</small> */}
                       </div>
                     </div>
 
                     <div className="col-12 col-md-6">
-                      <div class="form-group">
+                      <div className="form-group">
                         <label for="exampleInputEmail1">Birth Date:</label>
                         <input 
                           type="text" 
@@ -396,12 +396,12 @@ class SubscribeListBase extends Component {
                           onChange={this.handleUserChange}
                           placeholder="Loading..."
                         />
-                        {/* <small id="emailHelp" class="form-text text-muted">Visible to just you.</small> */}
+                        {/* <small id="emailHelp" className="form-text text-muted">Visible to just you.</small> */}
                       </div>
                     </div>
 
                     <div className="col-12 col-md-12">
-                      <div class="form-group">
+                      <div className="form-group">
                         <label for="exampleInputEmail1">Photo URL:</label>
                         <input 
                           type="text" 
@@ -413,7 +413,7 @@ class SubscribeListBase extends Component {
                           onChange={this.handleUserChange}
                           placeholder="Uploads coming soon!"
                         />
-                        {/* <small id="emailHelp" class="form-text text-muted">Visible to just you.</small> */}
+                        {/* <small id="emailHelp" className="form-text text-muted">Visible to just you.</small> */}
                       </div>
                     </div>
 
@@ -428,7 +428,7 @@ class SubscribeListBase extends Component {
 
                 <div className="card-body">
 
-                  <div class="form-group">
+                  <div className="form-group">
                     <label for="exampleInputEmail1">Zip:</label>
                     <input 
                       type="text" 
@@ -440,13 +440,13 @@ class SubscribeListBase extends Component {
                       onChange={this.handleAddressChange}
                       placeholder="Loading..."
                     />
-                    {/* <small id="emailHelp" class="form-text text-muted">Visible to just you.</small> */}
+                    {/* <small id="emailHelp" className="form-text text-muted">Visible to just you.</small> */}
                   </div>
 
                   <div className="row">
 
                     <div className="col-12 col-md-6">
-                      <div class="form-group">
+                      <div className="form-group">
                         <label for="exampleInputEmail1">City:</label>
                         <input 
                           type="text" 
@@ -457,12 +457,12 @@ class SubscribeListBase extends Component {
                           value={ mongoDBuser?.address?.city || "" }
                           placeholder=""
                         />
-                        {/* <small id="emailHelp" class="form-text text-muted">Visible to just you.</small> */}
+                        {/* <small id="emailHelp" className="form-text text-muted">Visible to just you.</small> */}
                       </div>
                     </div>
 
                     <div className="col-12 col-md-6">
-                      <div class="form-group">
+                      <div className="form-group">
                         <label for="exampleInputEmail1">State:</label>
                         <input 
                           type="text" 
@@ -473,7 +473,7 @@ class SubscribeListBase extends Component {
                           value={ mongoDBuser?.address?.state || "" }
                           placeholder=""
                         />
-                        {/* <small id="emailHelp" class="form-text text-muted">Visible to just you.</small> */}
+                        {/* <small id="emailHelp" className="form-text text-muted">Visible to just you.</small> */}
                       </div>
                     </div>
 
@@ -547,39 +547,39 @@ class SubscribeListBase extends Component {
                     <div className="col-12 col-md-4">
                       <div>Terms:</div>
                       <div className="version">Version: 1.0</div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" checked type="radio" name="terms" id="inlineRadio1" value="option1"/>
-                        <label class="form-check-label" for="inlineRadio1">True</label>
+                      <div className="form-check form-check-inline">
+                        <input className="form-check-input" checked type="radio" name="terms" id="inlineRadio1" value="option1"/>
+                        <label className="form-check-label" for="inlineRadio1">True</label>
                       </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="terms" id="inlineRadio2" value="option2"/>
-                        <label class="form-check-label" for="inlineRadio2">False</label>
+                      <div className="form-check form-check-inline">
+                        <input className="form-check-input" type="radio" name="terms" id="inlineRadio2" value="option2"/>
+                        <label className="form-check-label" for="inlineRadio2">False</label>
                       </div>
                     </div>
 
                     <div className="col-12 col-md-4">
                       <div>Cookies:</div>
                       <div className="version">Version: 1.0</div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" checked type="radio" name="cookies" id="inlineRadio1" value="option1"/>
-                        <label class="form-check-label" for="inlineRadio1">True</label>
+                      <div className="form-check form-check-inline">
+                        <input className="form-check-input" checked type="radio" name="cookies" id="inlineRadio1" value="option1"/>
+                        <label className="form-check-label" for="inlineRadio1">True</label>
                       </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="cookies" id="inlineRadio2" value="option2"/>
-                        <label class="form-check-label" for="inlineRadio2">False</label>
+                      <div className="form-check form-check-inline">
+                        <input className="form-check-input" type="radio" name="cookies" id="inlineRadio2" value="option2"/>
+                        <label className="form-check-label" for="inlineRadio2">False</label>
                       </div>
                     </div>
 
                     <div className="col-12 col-md-4">
                       <div>Privacy:</div>
                       <div className="version">Version: 1.0</div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" checked type="radio" name="privacy" id="inlineRadio1" value="option1"/>
-                        <label class="form-check-label" for="inlineRadio1">True</label>
+                      <div className="form-check form-check-inline">
+                        <input className="form-check-input" checked type="radio" name="privacy" id="inlineRadio1" value="option1"/>
+                        <label className="form-check-label" for="inlineRadio1">True</label>
                       </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="privacy" id="inlineRadio2" value="option2"/>
-                        <label class="form-check-label" for="inlineRadio2">False</label>
+                      <div className="form-check form-check-inline">
+                        <input className="form-check-input" type="radio" name="privacy" id="inlineRadio2" value="option2"/>
+                        <label className="form-check-label" for="inlineRadio2">False</label>
                       </div>
                     </div>
 

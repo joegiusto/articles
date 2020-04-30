@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 // import { AuthUserContext } from '../Session';
 import {ReactModal, customStyles, modalContent} from './Modals';
 import * as ROUTES from '../../constants/routes';
-import * as ROLES from '../../constants/roles';
+// import * as ROLES from '../../constants/roles';
 
 // import { Manager, Reference, Popper } from 'react-popper';
 import { usePopper } from 'react-popper';
@@ -13,7 +13,9 @@ import { usePopper } from 'react-popper';
 import moment from 'moment';
 import Clock from 'react-live-clock';
 
-import gunIcon from '../../assets/img/icons/gun.svg'
+import CartPreview from './components/CartPreview'
+
+// import gunIcon from '../../assets/img/icons/gun.svg'
 
 // const Navigation = (props) => (
 //   <AuthUserContext.Consumer>
@@ -258,10 +260,14 @@ function Menu(props) {
           </div>
 
           {cartPreview ? 
-          <div className="subheading-font text-center mx-4 border border-dark">
-            <p className="d-inline-block">1</p><p className="d-inline-block">2</p><p className="d-inline-block">3</p>
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.CHECKOUT}><p className="btn btn-dark subheading-font mb-2">Checkout</p></Link>
-          </div>
+          <CartPreview
+            cart_items={props.expenses}
+            setMenuOpen={setMenuOpen}
+          />
+          // <div className="subheading-font text-center mx-4 border border-dark">
+          //   <p className="d-inline-block">1</p><p className="d-inline-block">2</p><p className="d-inline-block">3</p>
+          //   <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.CHECKOUT}><p className="btn btn-dark subheading-font mb-2">Checkout</p></Link>
+          // </div>
           : 
           null
           }
@@ -274,8 +280,9 @@ function Menu(props) {
           {/* New Section */}
           <p className="heading-font no-link"><b>Articles News</b></p>
           <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.NEWS}><p className="subheading-font"><i className="fas fa-newspaper"></i>News</p></Link>
+          <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORIES}><p className="subheading-font"><i className="fas fa-bullhorn"></i>Stories</p></Link>
           <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ISSUES}><p className="subheading-font"><i className="fas fa-person-booth "></i>Issues</p></Link>
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MYTHS}><p className="subheading-font"><i className="fas fa-ghost"></i>Myths</p></Link>
+          <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MYTHS}><p className="subheading-font"><i className="fas fa-ghost"></i>Myths</p></Link>
           {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.TOWN_HALL}><p className="subheading-font"><i className="fas fa-bell"></i>Town Hall</p></Link> */}
 
           <hr/>
@@ -312,12 +319,12 @@ function Menu(props) {
               {/* Admin */}
               {props.user?.roles?.isAdmin ?
               <>
-              <p className="heading-font no-link"><b>Admin Only</b></p>
-              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ADMIN}><p className="subheading-font"><i className="fas fa-bible"></i>Admin</p></Link>
-              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.REPORTS_MANAGE}><p className="subheading-font"><i className="fas fa-wallet"></i>Reports Manage</p></Link>
-              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE_MANAGE}><p className="subheading-font"><i className="fas fa-wallet"></i>Clothing Manage</p></Link>
-              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MANAGE}><p className="subheading-font"><i className="fas fa-wallet"></i>News Manage</p></Link>
-              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.DONATE}><p className="subheading-font"><i className="fas fa-wallet"></i>Donation</p></Link>
+              <p className="heading-font no-link"><b>Admin &nbsp;</b><div className="badge badge-warning">Role</div></p>
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ADMIN}><p className="subheading-font"><i className="fas fa-toolbox"></i>Admin</p></Link>
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.REPORTS_MANAGE}><p className="subheading-font"><i className="fas fa-toolbox"></i>Reports Manage</p></Link>
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE_MANAGE}><p className="subheading-font"><i className="fas fa-toolbox"></i>Clothing Manage</p></Link>
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MANAGE}><p className="subheading-font"><i className="fas fa-toolbox"></i>News Manage</p></Link>
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.DONATE}><p className="subheading-font"><i className="fas fa-toolbox"></i>Donation</p></Link>
               <hr/>
               </>
               :
@@ -327,7 +334,7 @@ function Menu(props) {
               {/* Playground */}
               {props.user?.roles?.isDev ?
               <>
-                <p className="heading-font no-link"><b>Dev Only</b></p>
+                <p className="heading-font no-link"><b>Dev &nbsp;</b><div className="badge badge-warning">Role</div></p>
                 <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PLAYGROUND}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Playground</p></Link>
                 <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MESH}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Mesh</p></Link>
                 <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MAIL}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Mesh</p></Link>

@@ -224,9 +224,9 @@ class newsAdd extends Component {
           </div>
           
           <div className="col-12 col-md-6">
-            <div class="form-group">
+            <div className="form-group">
               <label for="newsType">News Type:</label>
-              <select class="form-control" name="news_type" disabled={this.state.editLoading ? 'disabled' : ''} id="news_type" value={this.state.news_type} onChange={this.handleChange}>
+              <select className="form-control" name="news_type" disabled={this.state.editLoading ? 'disabled' : ''} id="news_type" value={this.state.news_type} onChange={this.handleChange}>
                 <option value={''}>Choose One</option>
                 <option value={'story'}>Story</option>
                 <option value={'issue'}>Issue</option>
@@ -236,7 +236,7 @@ class newsAdd extends Component {
           </div>
 
           <div className="col-12 col-md-6">
-            <div class="form-group">
+            <div className="form-group">
               <label for="news_title">{this.state.news_type === ''  ? 'News' : this.state.news_type} Title:</label>
               <input 
                 type="text" 
@@ -253,7 +253,7 @@ class newsAdd extends Component {
           </div>
 
           <div className="col-12 col-md-6">
-            <div class="form-group">
+            <div className="form-group">
               <label for="news_date">{this.state.news_type === '' ? 'News' : this.state.news_type} Date:</label>
               <input 
                 type="text" 
@@ -289,13 +289,13 @@ class newsAdd extends Component {
                   </div>
                   
                   <div className="edit" onClick={() => {this.setState({tagSelectOpen: !this.state.tagSelectOpen})}}>
-                    <i class="fas fa-file-signature"></i>
+                    <i className="fas fa-file-signature"></i>
                   </div>
 
                   {this.state.tagSelectOpen ? 
                   <div className="select noselect">
 
-                    <div class="form-group">
+                    <div className="form-group">
                       <input 
                         type="text" 
                         className="form-control" 
@@ -342,7 +342,7 @@ class newsAdd extends Component {
           </div>
 
           <div className="col-12">
-            <div class="form-group">
+            <div className="form-group">
               <label for="news_notes">Purpose of Story / Notes</label>
               <textarea 
                 className="form-control" 

@@ -22,6 +22,8 @@ import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 import { setStories } from "./actions/stories";
 import { setMyths } from "./actions/mythsActions";
+import { setIssues } from "./actions/issues";
+import { setSubmissions } from 'actions/submissionsActions';
 
 
 const {store, persistor} = configureStore();
@@ -64,8 +66,10 @@ ReactDOM.render(
   <FirebaseContext.Provider value={new Firebase()}>
     <PersistGate loading={<h1>Test</h1>} persistor={persistor}>
 
-
       {store.dispatch(setMyths())}
+      {store.dispatch(setStories())}
+      {store.dispatch(setIssues())}
+      {store.dispatch(setSubmissions())}
 
       {/* <Greeting/> */}
 

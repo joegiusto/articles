@@ -77,7 +77,7 @@ class SingleOrderPage extends Component {
                 {orderLoading ? 
     
                 <div className="loading">
-                  <i class="fas fa-pencil-alt"></i>
+                  <i className="fas fa-pencil-alt"></i>
                   <div>Loading... </div>
                 </div>
                   

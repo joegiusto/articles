@@ -97,7 +97,7 @@ const StepOne = (props) => (
 
     <div className="col-md-3 mb-3">
       <label for="validationTooltip05">Zip</label>
-      <input onBlur={() => props.onZipBlur(props.zip)} onFocus={() => (props.changeFocus('zip'))} type="zip" class={"form-control" + (props.highlightElement === 'location' ? ' outset-highlight' : '')} id="validationTooltip05" onChange={(e) => props.handleChange(e)} name="zip" value={props.zip} placeholder=""/>
+      <input onBlur={() => props.onZipBlur(props.zip)} onFocus={() => (props.changeFocus('zip'))} type="zip" className={"form-control" + (props.highlightElement === 'location' ? ' outset-highlight' : '')} id="validationTooltip05" onChange={(e) => props.handleChange(e)} name="zip" value={props.zip} placeholder=""/>
       <div className="invalid-tooltip">
         Please provide a valid zip.
       </div>
@@ -113,7 +113,7 @@ const StepOne = (props) => (
 
     <div className="col-md-5 mb-3">
       <label for="validationTooltip03">City / Town / Village</label>
-      <input onFocus={() => (props.changeFocus('city'))} type="text" class={"form-control" + (props.highlightElement === 'location' ? ' outset-highlight' : '')} id="validationTooltip03" onChange={(e) => props.handleChange(e)} name="city" value={props.city} placeholder=""/>
+      <input onFocus={() => (props.changeFocus('city'))} type="text" className={"form-control" + (props.highlightElement === 'location' ? ' outset-highlight' : '')} id="validationTooltip03" onChange={(e) => props.handleChange(e)} name="city" value={props.city} placeholder=""/>
       <div className="invalid-tooltip">
         Please provide a valid city.
       </div>
@@ -121,7 +121,7 @@ const StepOne = (props) => (
 
     <div className="col-md-3 mb-3">
       <label for="validationTooltip04">State</label>
-      <input onFocus={() => (props.changeFocus('state'))} type="text" class={"form-control" + (props.highlightElement === 'location' ? ' outset-highlight' : '')} id="validationTooltip04" onChange={(e) => props.handleChange(e)} name="state" value={props.state} placeholder=""/>
+      <input onFocus={() => (props.changeFocus('state'))} type="text" className={"form-control" + (props.highlightElement === 'location' ? ' outset-highlight' : '')} id="validationTooltip04" onChange={(e) => props.handleChange(e)} name="state" value={props.state} placeholder=""/>
       <div className="invalid-tooltip">
         Please provide a valid state.
       </div>
@@ -172,7 +172,7 @@ const StepOne = (props) => (
 
     {/* <div className="col-md-3 mb-3">
       <label htmlFor="validationTooltip04">Age</label>
-      <input onFocus={() => (props.changeFocus('age'))} type="number" class={"form-control" + (props.highlightElement === 'age' ? ' outset-highlight' : '')} id="validationTooltip04" onChange={(e) => props.handleChange(e)} name="age" value={props.age} placeholder=""/>
+      <input onFocus={() => (props.changeFocus('age'))} type="number" className={"form-control" + (props.highlightElement === 'age' ? ' outset-highlight' : '')} id="validationTooltip04" onChange={(e) => props.handleChange(e)} name="age" value={props.age} placeholder=""/>
       <div className="invalid-tooltip">
         Please provide a valid state.
       </div>

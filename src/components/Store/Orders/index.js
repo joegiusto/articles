@@ -37,7 +37,7 @@ class OrdersPage extends Component {
             <div className="card">
               <div className="card-body">
                 <div className="loading">
-                  <i class="fas fa-pencil-alt"></i>
+                  <i className="fas fa-pencil-alt"></i>
                   <div>Loading... ALL</div>
                 </div>
               </div>

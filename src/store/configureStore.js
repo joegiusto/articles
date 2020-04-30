@@ -9,7 +9,9 @@ import expensesReducer from '../reducers/expenses';
 import authReducer from "../reducers/authReducer";
 
 import storiesReducer from "../reducers/stories";
+import issuesReducer from "../reducers/issues";
 import mythsReducer from "../reducers/mythsReducer";
+import submissionsReducer from "../reducers/submissionsReducer";
 
 import errorReducer from "../reducers/errorReducer";
 // import filtersReducer from '../reducers/filters';
@@ -31,8 +33,11 @@ const persistedReducer = persistReducer(
     expenses: expensesReducer,
     auth: authReducer,
     errors: errorReducer,
+
     stories: storiesReducer,
+    issues: issuesReducer,
     myths: mythsReducer,
+    submissions: submissionsReducer,
     // filters: filtersReducer,
     // site: siteReducer,
     // employees: employeesReducer

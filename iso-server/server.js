@@ -38,6 +38,7 @@ mongoUtil.connectToServer( function( err, client ) {
   require('./routes/getIssues')(app, db);
   require('./routes/getStories')(app, db);
   require('./routes/getMyths')(app, db);
+  require('./routes/getSubmissions')(app, db);
 
   // const secureRoute = require('./routes/secure/secure-routes.js')(app, db);
   // app.use('/api/secure', passport.authenticate('jwt', {session: false}), secureRoute);
