@@ -19,7 +19,7 @@ module.exports = (app, db) => {
         if (err) throw err;
         data.tags = result;
         console.log(result);
-        db.close();
+        // db.close();
         return res.send(data);
       });
 

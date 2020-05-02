@@ -15,6 +15,8 @@ import Clock from 'react-live-clock';
 
 import CartPreview from './components/CartPreview'
 
+import { toggleSideMenuFixed } from '../../actions/siteActions'
+
 // import gunIcon from '../../assets/img/icons/gun.svg'
 
 // const Navigation = (props) => (
@@ -57,7 +59,7 @@ function Menu(props) {
   }
 
   return (
-    <div>
+    <div className={'menu-wrap ' + (props.site?.sideMenuFixed ? 'fixed' : '')}>
         <section onClick={() => {setMenuOpen(false)}} className={'side-menu-overlay' + (menuOpen || pinOpen ? " show" : "")}></section>
 
         <section className="menu-spacer"></section>
@@ -192,9 +194,14 @@ function Menu(props) {
 
           {/* Profile Photo and Account Section */}
           <div className="profile">
+              <div className="menu-pin-button" onClick={props.toggleSideMenuFixed}>
+                <i className="fas fa-columns"></i>
+                <div className={'columns-fill-in ' + (props.site.sideMenuFixed ? 'active' : '')}></div>
+              </div>
+
               <div className="profile-photo" >
-                  <img alt="" className="" style={{borderRadius: '100px'}} width="100%" height="100%" src=""/>
-                  <i className={!props.authUser ? 'fas fa-question':'fas fa-question'}></i>
+                  <img alt="" className="" style={{borderRadius: '100px'}} width="100%" height="100%" src={props?.user?.photo_url || ''}/>
+                  <i className={props?.user?.photo_url ? '':'fas fa-question'}></i>
               </div> 
 
               <div className="profile-welcome">
@@ -279,9 +286,9 @@ function Menu(props) {
 
           {/* New Section */}
           <p className="heading-font no-link"><b>Articles News</b></p>
-          <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.NEWS}><p className="subheading-font"><i className="fas fa-newspaper"></i>News</p></Link>
+          <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.NEWS}><p className="subheading-font"><i className="fas fa-newspaper"></i> Frontpage</p></Link>
           <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORIES}><p className="subheading-font"><i className="fas fa-bullhorn"></i>Stories</p></Link>
-          <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ISSUES}><p className="subheading-font"><i className="fas fa-person-booth "></i>Issues</p></Link>
+          <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ISSUES}><p className="subheading-font"><i className="fas fa-balance-scale"></i>Issues</p></Link>
           <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MYTHS}><p className="subheading-font"><i className="fas fa-ghost"></i>Myths</p></Link>
           {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.TOWN_HALL}><p className="subheading-font"><i className="fas fa-bell"></i>Town Hall</p></Link> */}
 
@@ -320,11 +327,11 @@ function Menu(props) {
               {props.user?.roles?.isAdmin ?
               <>
               <p className="heading-font no-link"><b>Admin &nbsp;</b><div className="badge badge-warning">Role</div></p>
-              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ADMIN}><p className="subheading-font"><i className="fas fa-toolbox"></i>Admin</p></Link>
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ADMIN}><p className="subheading-font"><i className="fas fa-toolbox"></i>Admin Panel</p></Link>
               <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.REPORTS_MANAGE}><p className="subheading-font"><i className="fas fa-toolbox"></i>Reports Manage</p></Link>
               <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE_MANAGE}><p className="subheading-font"><i className="fas fa-toolbox"></i>Clothing Manage</p></Link>
               <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MANAGE}><p className="subheading-font"><i className="fas fa-toolbox"></i>News Manage</p></Link>
-              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.DONATE}><p className="subheading-font"><i className="fas fa-toolbox"></i>Donation</p></Link>
+              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.DONATE}><p className="subheading-font"><i className="fas fa-toolbox"></i>Donation Manage</p></Link>
               <hr/>
               </>
               :
@@ -337,9 +344,11 @@ function Menu(props) {
                 <p className="heading-font no-link"><b>Dev &nbsp;</b><div className="badge badge-warning">Role</div></p>
                 <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PLAYGROUND}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Playground</p></Link>
                 <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MESH}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Mesh</p></Link>
-                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MAIL}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Mesh</p></Link>
-                <img src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-example-alternate_2x.png" height="45px" alt=""/>
-                <img className="p-0" src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" height="40px" alt=""/>
+                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MAIL}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Mail</p></Link>
+                <div className="app-links">
+                  <img className="app-badge" src="https://bibibop.com/data/sites/1/media/rewards/Download_badge-apple-white.png" alt=""/>
+                  <img className="app-badge" src="https://www.prorehab-pc.com/wp-content/uploads/2017/12/google-play-button.svg_.hi_.png" alt=""/>
+                </div>
               </>
               :
               null
@@ -369,4 +378,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Menu);
+export default connect(
+  mapStateToProps, 
+  { toggleSideMenuFixed } 
+)(Menu);

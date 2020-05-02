@@ -5,9 +5,9 @@ import * as ROUTES from '../../constants/routes';
 import { Link } from 'react-router-dom';
 import { withFirebase } from '../Firebase';
 import hero from 'assets/img/bg_home_banner.png';
+import axios from 'axios';
 
 function TypeSelect(props) {
-
 	// const [productSelect, changeProductSelect] = useState('Symbolic Adoptions');
 
 	return (
@@ -43,8 +43,8 @@ class StorePageBase extends Component {
   super(props);
 
     this.state = {
-      loadingCloting: false,
-			firebaseClothing: [],
+      loadingProducts: false,
+			products: [],
 			popOutVisible: false,
 			currentPopOut: ""
 		};
@@ -61,28 +61,49 @@ class StorePageBase extends Component {
 	}
 
 	componentDidMount() {
-		// console.log(this.props.match.params.id);
-		this.setState({ loadingCloting: true });
+		const self = this;
+		this.setState({ loadingProducts: true });
 
-    this.props.firebase.store().once('value').then(snapshot => {
+		axios.get('/getProducts')
+    .then(function (response) {
 
-      const issuesObject = snapshot.val();
+			// handle success
+			console.log('Got Products')
+      console.log(response.data.news);
 
-      // console.log(snapshot.val().color);
-
-      const clothingList = Object.keys(issuesObject).map(key => (
-        {
-          ...issuesObject[key],
-          uid: key,
-        }
-      ));
-
-      this.setState({
-       	firebaseClothing: clothingList,
-				loadingCloting: false,
+      self.setState({
+				products: response.data,
+				loadingProducts: false
       });
 
-    });
+      // self.setState({ resultsLoading: false });
+
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+
+      self.setState({ loadingProducts: true });
+      self.setState({ resultsLoadingError: error });
+		});
+		
+    // this.props.firebase.store().once('value').then(snapshot => {
+
+    //   const issuesObject = snapshot.val();
+
+    //   const clothingList = Object.keys(issuesObject).map(key => (
+    //     {
+    //       ...issuesObject[key],
+    //       uid: key,
+    //     }
+    //   ));
+
+    //   this.setState({
+    //    	firebaseClothing: clothingList,
+		// 		loadingCloting: false,
+    //   });
+
+    // });
 
 	}
 	
@@ -100,9 +121,9 @@ class StorePageBase extends Component {
 			return matchIndex 
 	}
 
-	test() {
-		return "Howdy!"
-	}
+	// test() {
+	// 	return "Howdy!"
+	// }
 	
 	render() {
 		
@@ -238,9 +259,9 @@ class StorePageBase extends Component {
 
                             <div className="dual-header">
 
-                                {this.state.loadingCloting && <div>Loading ...</div>}
+                                {this.state.loadingProducts && <div>Loading ...</div>}
                                 <div>
-                                    {this.state.firebaseClothing.map((product, index) => (
+                                    {this.state.products.map((product, index) => (
             
                                         <StoreItem setPopOutVisible={this.setPopOut} product={product} catalogId={product.uid} price={product.price} title={product.title} sale="%15" banner="Original" color="articles" />
             
@@ -248,7 +269,7 @@ class StorePageBase extends Component {
                                     
                                 </div>
 
-                                <div>{this.getIndexByUid("really-a-wolf") > -1 ? this.state.firebaseClothing[this.getIndexByUid("really-a-wolf")].title : <div>Loading...</div>} </div>
+                                {/* <div>{this.getIndexByUid("really-a-wolf") > -1 ? this.state.firebaseClothing[this.getIndexByUid("really-a-wolf")].title : <div>Loading...</div>} </div> */}
 
                             </div>
 

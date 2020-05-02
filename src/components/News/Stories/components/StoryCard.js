@@ -53,7 +53,7 @@ export default function MythCard(props) {
 function Last() {
   return (
     <div className="myth-item last">
-      <div className='myth-item-title'>...More Stories to Come</div>
+      <div className='myth-item-title'>More to Come...</div>
       <div className='myth-item-desc'>New content being added every week! If you have any ideas or suggestions let us know!</div>
     </div>
   )

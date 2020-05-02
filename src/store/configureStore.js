@@ -12,10 +12,11 @@ import storiesReducer from "../reducers/stories";
 import issuesReducer from "../reducers/issues";
 import mythsReducer from "../reducers/mythsReducer";
 import submissionsReducer from "../reducers/submissionsReducer";
+import siteReducer from "../reducers/siteReducer";
 
 import errorReducer from "../reducers/errorReducer";
 // import filtersReducer from '../reducers/filters';
-import siteReducer from '../reducers/site';
+// import siteReducer from '../reducers/site';
 // import employeesReducer from '../reducers/employees';
 
 import { logoutUser } from "../actions/authActions";
@@ -38,6 +39,7 @@ const persistedReducer = persistReducer(
     issues: issuesReducer,
     myths: mythsReducer,
     submissions: submissionsReducer,
+    site: siteReducer,
     // filters: filtersReducer,
     // site: siteReducer,
     // employees: employeesReducer
@@ -57,10 +59,7 @@ export default () => {
   )
 
   let persistor = persistStore(store, null, () => {
-    console.log("Fires on rehydrate");
-    // if (!store.getState().auth.isAuthenticated) {
-    //   store.dispatch(logoutUser());
-    // };
+    // console.log("Fires on rehydrate");
   })
 
   return { store, persistor };

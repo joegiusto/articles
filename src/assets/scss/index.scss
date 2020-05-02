@@ -80,6 +80,46 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.site-wrap {
+
+  &.fixed {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .menu-wrap {
+
+    &.fixed {
+
+      .side-menu {
+        position: fixed;
+        top: 50px;
+        transform: translate3d(0%, 0, 0)!important;
+        margin-top: 0px;
+        height: calc(100vh - 50px);
+        border-right: 2px solid #000;
+      }
+
+      .side-menu-notch-top {
+        transform: translate3d(0%, 0, 0)!important;
+      }
+
+      .side-menu-overlay {
+        display: none;
+      }
+    }
+  }
+
+  .content-wrap {
+
+    &.fixed {
+      margin-top: 50px;
+      padding-left: 300px;
+      width: 100%;
+    }
+  }
+} 
+
 i {
 
   &.far,&.fas,&.fal,&.fad {

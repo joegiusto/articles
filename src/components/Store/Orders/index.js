@@ -93,7 +93,7 @@ class OrdersPage extends Component {
 
 const mapStateToProps = state => ({
   // auth: state.auth,
-  orders: state.auth.user_details.orders,
+  orders: state.auth.user_details.ordersFetched,
   errors: state.errors
 });
 

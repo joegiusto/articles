@@ -21,7 +21,7 @@ class SingleOrderPage extends Component {
     const self = this;
     this.setState({orderLoading:true});
 
-    const storedOrders = this.props.auth.user_details.orders.find(x => x._id === this.props.match.params.id)
+    const storedOrders = this.props.auth.user_details.ordersFetched.find(x => x._id === this.props.match.params.id)
 
     if (storedOrders !== undefined) {
       // Try to pull from local storage and if not there then do server call
