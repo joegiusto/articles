@@ -118,7 +118,7 @@ class App extends Component {
             }
           </AuthUserContext.Consumer> */}
 
-          <div className={'content-wrap ' + (this.props.site?.sideMenuFixed ? 'fixed' : '')}>
+          <div className={'content-wrap' + (this.props.site?.sideMenuFixed ? ' fixed' : '') + (this.props.site?.colorModeDark ? ' dark-mode' : '')}>
             <Switch>
               {/* Something like this? */}
               {/* <Route path="*" component={OutsetPage}/> */}

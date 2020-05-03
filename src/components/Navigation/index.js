@@ -15,7 +15,7 @@ import Clock from 'react-live-clock';
 
 import CartPreview from './components/CartPreview'
 
-import { toggleSideMenuFixed } from '../../actions/siteActions'
+import { toggleSideMenuFixed, toggleColorMode } from '../../actions/siteActions'
 
 // import gunIcon from '../../assets/img/icons/gun.svg'
 
@@ -30,6 +30,7 @@ import { toggleSideMenuFixed } from '../../actions/siteActions'
 
 function Menu(props) {
   const [menuOpen, setMenuOpen] = useState(false);
+  // const [menuFixedWarning, setMenuFixedWarning] = useState(false);
   const [cartPreview, setCartPreview] = useState(false);
   const [pinOpen, setPinOpen] = useState(false);
   const [partySectionOpen, setPartySectionOpen] = useState(false);
@@ -48,9 +49,13 @@ function Menu(props) {
   const windowWidth = window.innerWidth;
   const scrollBarWidth = windowWidth - documentWidth;
 
-  // console.log(documentWidth, windowWidth, scrollBarWidth)
+  function menuFixedWarning() {
+    console.log("Menu is fixewd so menu can not be collapsed");
 
-  if ( menuOpen === false ) {
+    // setMenuFixedWarning;
+  }
+
+  if ( menuOpen === false || props.site.sideMenuFixed === true ) {
     document.body.style.overflow = 'auto';
     document.body.style.paddingRight = '0px';
   } else {
@@ -59,14 +64,14 @@ function Menu(props) {
   }
 
   return (
-    <div className={'menu-wrap ' + (props.site?.sideMenuFixed ? 'fixed' : '')}>
+    <div className={'menu-wrap' + (props.site?.sideMenuFixed ? ' fixed' : '') + (props.site?.colorModeDark ? ' dark-mode' : '')}>
         <section onClick={() => {setMenuOpen(false)}} className={'side-menu-overlay' + (menuOpen || pinOpen ? " show" : "")}></section>
 
         <section className="menu-spacer"></section>
 
         <section>
           <div className="nav-tab">
-            <button className={'hamburger hamburger--spin' + (menuOpen ? " is-active" : "")} type="button" onClick={() => {setMenuOpen(!menuOpen)}}>
+            <button className={'hamburger hamburger--spin' + (props.site?.sideMenuFixed ? ' is-active' : menuOpen ? " is-active" : "")} type="button" onClick={() => props.site?.sideMenuFixed ? (props.toggleSideMenuFixed(), setMenuOpen(!menuOpen)) : setMenuOpen(!menuOpen) }>
                 <span className="hamburger-box">
                 <span className="hamburger-inner"></span>
                 </span>
@@ -194,9 +199,16 @@ function Menu(props) {
 
           {/* Profile Photo and Account Section */}
           <div className="profile">
+
               <div className="menu-pin-button" onClick={props.toggleSideMenuFixed}>
                 <i className="fas fa-columns"></i>
                 <div className={'columns-fill-in ' + (props.site.sideMenuFixed ? 'active' : '')}></div>
+              </div>
+
+              <div className="color-mode-button" onClick={props.toggleColorMode}>
+                {props.site.colorModeDark ? <i class="far fa-moon"></i> : <i class="fas fa-sun"></i>}
+                {/* <i className="fas fa-columns"></i> */}
+                {/* <div className={'columns-fill-in ' + (props.site.colorModeDark ? 'active' : '')}></div> */}
               </div>
 
               <div className="profile-photo" >
@@ -380,5 +392,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps, 
-  { toggleSideMenuFixed } 
+  { toggleSideMenuFixed, toggleColorMode } 
 )(Menu);

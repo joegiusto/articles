@@ -45,6 +45,7 @@ mongoUtil.connectToServer( function( err, client ) {
 
   // const secureRoute = require('./routes/secure/secure-routes.js')(app, db);
   // app.use('/api/secure', passport.authenticate('jwt', {session: false}), secureRoute);
+
   // TODO / HELP / I GIVE UP! - I can not seem to nest secure routes anymore while keeping const "app.post" preserverd once I got the MongoDB var "db" passed down for a constant connection and getting everything faster. For now I will just be doing app.post secure routes done one by one untill I can just get them all done similir to how it was done on the lines above this comment
   app.post('/api/secure/getUserDetails', passport.authenticate('jwt', {session: false}), (req, res) => {
     
@@ -169,8 +170,6 @@ require("./config/passport")(passport);
 // Routes
 
 app.use("/api/users", users);
-
-
 
 app.listen(process.env.PORT || 8080);
 
