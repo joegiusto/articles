@@ -40,10 +40,127 @@ class HomePageFour extends Component {
 
             </div>
 
+            
+
           </div>
         </div>
 
+        <div className="container-fluid">
 
+          <div className="tile-section">
+
+            
+
+            <div className="tile">
+
+              <div className="tile-header">
+                <div className="tile-title">Frontpage</div>
+                <div className="tile-update"></div>
+              </div>
+
+              <div className="tile-content frontpage">
+
+                <div className="frontpage-count">
+                  <div className="count">0</div>
+                  <div className="item">Storeis</div>
+                </div>
+
+                <div className="frontpage-count">
+                  <div className="count">0</div>
+                  <div className="item">Issues</div>
+                </div>
+
+                <div className="frontpage-count">
+                  <div className="count">0</div>
+                  <div className="item">Myths</div>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div className="tile">
+
+              <div className="tile-header">
+                <div className="tile-title">Orders</div>
+                <div className="tile-update"></div>
+              </div>
+
+              <div className="tile-content"></div>
+
+            </div>
+
+            <div className="tile">
+
+              <div className="tile-header">
+                <div className="tile-title">Submissions</div>
+                <div className="tile-update"></div>
+              </div>
+
+              <div className="tile-content"></div>
+
+            </div>
+
+            <div className="tile">
+
+              <div className="tile-header">
+                <div className="tile-title">Other</div>
+                <div className="tile-update"></div>
+              </div>
+
+              <div className="tile-content"></div>
+
+            </div>
+
+            <div className="tile">
+              
+              <div className="tile-header">
+                <div className="tile-title">Other</div>
+                <div className="tile-update"></div>
+              </div>
+
+              <div className="tile-content"></div>
+
+            </div>
+
+            <div className="tile">
+
+              <div className="tile-header">
+                <div className="tile-title">Other</div>
+                <div className="tile-update"></div>
+              </div>
+
+              <div className="tile-content"></div>
+
+            </div>
+
+            <div className="tile">
+
+              <div className="tile-header">
+                <div className="tile-title">Other</div>
+                <div className="tile-update"></div>
+              </div>
+
+              <div className="tile-content">
+
+              </div>
+
+            </div>
+
+            <div className="tile">
+
+              <div className="tile-header">
+                <div className="tile-title">Other</div>
+                <div className="tile-update"></div>
+              </div>
+
+              <div className="tile-content"></div>
+
+            </div>
+
+          </div>
+
+        </div>
 
       </section>
     )

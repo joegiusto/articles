@@ -63,6 +63,12 @@ function Menu(props) {
     document.body.style.paddingRight = scrollBarWidth + 'px';
   }
 
+  if ( props.site.colorModeDark === true ) {
+    document.body.classList.add('dark')
+  } else {
+    document.body.classList.remove('dark')
+  }
+
   return (
     <div className={'menu-wrap' + (props.site?.sideMenuFixed ? ' fixed' : '') + (props.site?.colorModeDark ? ' dark-mode' : '')}>
         <section onClick={() => {setMenuOpen(false)}} className={'side-menu-overlay' + (menuOpen || pinOpen ? " show" : "")}></section>

@@ -2,6 +2,22 @@
 
   &.dark-mode {
 
+    .side-menu-notch-top-end-custom {
+      background-color: black;
+      border-bottom: 2px solid #3e3e3e;
+    }
+
+    .side-menu-notch-top  {
+      
+      background-color: #6f6f6f;
+      border-bottom: solid 2px #3e3e3e;
+
+      &-end {
+        background-color: #6f6f6f;
+        border-bottom: solid 2px #3e3e3e;
+      }
+    }
+
     .side-menu {
       background-color: #313131;
       color: white;
@@ -365,6 +381,7 @@
   background-color: #fff;
   transform: translate3d(-80%, 0, 0);
   transition-duration: 200ms;
+  transition-property: transform;
   border-bottom: solid 2px #000;
 
   &-end {

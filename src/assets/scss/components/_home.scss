@@ -754,16 +754,17 @@
 
 .home-page-four-page {
 
+  .container-fluid {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
   .top-bar {
     // height: 50px;
     width: 100%;
     background-color: $accent-color;
+    color: black;
     padding: 20px 0;
-
-    .container-fluid {
-      padding-left: 5%;
-      padding-right: 5%;
-    }
 
     .photo-section {
       display: flex;
@@ -795,7 +796,92 @@
 
       }
     }
-
     
   }
+
+  .tile-section {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+
+    .tile {
+      flex-grow: 1;
+      height: 200px;
+      width: 100%;
+      margin-bottom: 4rem;
+      width: 23%;
+      height: 360px;
+      margin-left: 1%;
+      margin-right: 1%;
+
+      .tile-header {
+        .tile-title {
+          font-family: brandon-grotesque, sans-serif;
+          font-style: normal;
+          font-weight: 500;
+          // font-size: 2.5rem;
+          // line-height: 2.4rem;
+        }
+
+        .tile-update {
+
+        }
+      }
+
+      
+
+      .tile-content {
+        cursor: pointer;
+        background-color: white;
+        box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.05);
+        height: 100%;
+        margin-top: 1rem;
+        transition-duration: 200ms;
+
+        &.frontpage {
+          display: flex;
+          // width: 100%;
+          // height: 100%;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          text-align: center;
+          padding: 0rem 20%;
+
+          .frontpage-count {
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            .count {
+              background-color: $accent-color;
+              width: 60%;
+              height: 50px;
+              // border: solid 2px rgba(0, 0, 0, 0.2);
+              box-shadow: 0px 0px 2px 1px  rgba(0, 0, 0, 0.2);
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+            }
+
+            .item {
+            
+            }
+
+          }
+        }
+
+        &:hover {
+          transform: translateY(-10px);
+          box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.15);
+          // transition-duration: 200ms;
+        }
+      }
+    }
+  }
+
 }
