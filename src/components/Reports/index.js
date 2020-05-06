@@ -305,6 +305,17 @@ class Reports extends Component {
             </div>
 
             <div className="mt-3">
+              <Link to={ROUTES.DONATE}>
+                <button className="btn btn-articles-light btn-lg w-100 report-quick-links">
+                  <div>
+                    <i className="fas fa-money-bill"></i>
+                    <span>Donate</span>
+                  </div>
+                </button>
+              </Link>
+            </div>
+
+            <div className="mt-3">
               <button className="btn btn-articles-light btn-lg w-100 report-quick-links">
                 <div>
                   <i className="fas fa-chart-line"></i>
@@ -321,18 +332,7 @@ class Reports extends Component {
                 </div>
               </button>
             </div>
-
-            <div className="mt-3">
-              <Link to={ROUTES.DONATE}>
-                <button className="btn btn-articles-light btn-lg w-100 report-quick-links">
-                  <div>
-                    <i className="fas fa-money-bill"></i>
-                    <span>Donate</span>
-                  </div>
-                </button>
-              </Link>
-            </div>
-
+            
           </div>
   
           <div className="col-12 col-md-8 col-lg-8">

@@ -139,6 +139,46 @@ mongoUtil.connectToServer( function( err, client ) {
       return res.end();
   });
 
+  app.post('/getOrderDetails', (req, res) => {
+
+    console.log("Call to /api/secure/getOrderDetails at" + new Date());
+
+    // MongoClient.connect(url, function(err, db) {
+
+      let data = {};
+
+      if (err) throw err;
+      var o_id = new ObjectId(req.body.order_id);
+
+      console.log(req.body.order_id);
+
+      db.collection("articles_orders").findOne( o_id, function(err, result) {
+        if (err) throw err;
+        data.order = result
+        // console.log(result);
+        // db.close();
+        return res.send(data);
+      });
+
+    // });
+    
+  });
+
+  app.post('/api/secure/getUsers', passport.authenticate('jwt', {session: false}), (req, res) => {
+    
+    console.log(`Call to /api/getUsers made here at ${new Date()} by user ${req.body.user}`);
+      let data = {};
+      
+      db.collection("articles_users").find({user_id: req.body.user}).toArray(function(err, result) {
+        if (err) throw err;
+        // console.log(`Call to /api/getUserDetails done`)
+        // console.log(result);
+        data.users = result
+        console.log(`Call to /api/getUsers done`)
+        return res.send(data);
+      });
+  });
+
 });
 
 mongoose

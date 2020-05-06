@@ -21,7 +21,7 @@ module.exports = app => {
         if (err) throw err;
         data.order = result
         console.log(result);
-        db.close();
+        // db.close();
         return res.send(data);
       });
 

@@ -1,3 +1,108 @@
+.admin-page {
+
+  .tab-bar {
+    border-bottom: 1px solid #000;
+    font-size: 1.5rem;
+
+    .tab {
+      position: relative;
+      margin-right: 1rem;
+      cursor: pointer;
+      
+      &.active {
+        font-weight: 500;
+
+        &:after {
+          content: '';
+          position: absolute;
+          height: 5px;
+          width: 100%;
+          top: 100%;
+          left: 0;
+          background-color: black;
+        }
+      }
+    }
+  }
+
+  .tab-content {
+
+    .admin-products {
+
+      .has-photo {
+        display: flex;
+        flex-direction: row;
+
+        .photo {
+          width: 20px;
+          height: 20px;
+          border-radius: 100px;
+          background-color: white;
+          border: solid 1px #000;
+          margin-right: 0.2rem;
+
+          &.link {
+            background-color: black;
+          }
+        }
+      }
+
+      .product-manage {
+        margin-top: 1rem;
+        width: auto;
+        // background-color: white;
+        padding: 1rem;
+        // border: 1px solid #000;
+        margin-bottom: 1rem;
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: center;
+        // align-items: center;
+
+        .preview {
+          background-color: black;
+          width: 300px;
+          height: 500px;
+        }
+
+        .details {
+          width: 500px;
+          margin-right: 2rem;
+          border: 1px solid #000;
+          background-color: white;
+          padding: 1rem;
+
+          .types {
+
+            .type {
+              margin-right: 0.5rem;
+            }
+          }
+  
+          .photos {
+  
+            .photo {
+              display: flex;
+              flex-direction: row;
+              // justify-content: center;
+              align-items: center;
+              margin-bottom: 1rem;
+  
+              .number {
+                margin-right: 0.5rem;
+                font-weight: bold;
+              }
+            }
+          }
+        }
+
+        
+      }
+    }
+  }
+
+}
+
 .submission-page {
   .slick-slide {
     // background-color: rgb(251, 255, 0);

@@ -11,7 +11,9 @@ export const SUBSCRIBE = '/subscribe';
 
 // Home
 export const HOME = '/home';
+
 export const HOME_OLD = '/home/old';
+
 export const MISSION = '/mission';
 export const REPORTS = '/reports';
 export const REPORTS_MANAGE = '/reports/manage';

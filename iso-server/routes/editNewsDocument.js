@@ -21,8 +21,9 @@ module.exports = (app, db) => {
       return obj;
     }, {});
 
-    db.collection("articles_news").replaceOne({_id: o_id}, {myobj}, function(err, result) {
+    db.collection("articles_news").replaceOne({_id: o_id}, myobj, function(err, result) {
       if (err) throw err;
+      console.log(myobj);
       console.log("1 news document replaced");
       // db.close();
     });

@@ -51,33 +51,37 @@ class HomePageFour extends Component {
 
             
 
+
             <div className="tile">
 
               <div className="tile-header">
                 <div className="tile-title">Frontpage</div>
                 <div className="tile-update"></div>
               </div>
+              
+              <Link to={ROUTES.NEWS}>
+                <div className="tile-content frontpage">
 
-              <div className="tile-content frontpage">
+                  <div className="frontpage-count">
+                    <div className="count">0</div>
+                    <div className="item">Storeis</div>
+                  </div>
 
-                <div className="frontpage-count">
-                  <div className="count">0</div>
-                  <div className="item">Storeis</div>
+                  <div className="frontpage-count">
+                    <div className="count">0</div>
+                    <div className="item">Issues</div>
+                  </div>
+
+                  <div className="frontpage-count">
+                    <div className="count">0</div>
+                    <div className="item">Myths</div>
+                  </div>
+
                 </div>
-
-                <div className="frontpage-count">
-                  <div className="count">0</div>
-                  <div className="item">Issues</div>
-                </div>
-
-                <div className="frontpage-count">
-                  <div className="count">0</div>
-                  <div className="item">Myths</div>
-                </div>
-
-              </div>
-
+              </Link>
+              
             </div>
+
 
             <div className="tile">
 
@@ -86,7 +90,7 @@ class HomePageFour extends Component {
                 <div className="tile-update"></div>
               </div>
 
-              <div className="tile-content"></div>
+              <Link to={ROUTES.STORE_ORDERS}><div className="tile-content"></div></Link>
 
             </div>
 
@@ -150,11 +154,13 @@ class HomePageFour extends Component {
             <div className="tile">
 
               <div className="tile-header">
-                <div className="tile-title">Other</div>
+                <div className="tile-title">View Old</div>
                 <div className="tile-update"></div>
               </div>
 
-              <div className="tile-content"></div>
+              <Link to={ROUTES.HOME_OLD}>
+                <div className="tile-content"></div>
+              </Link>
 
             </div>
 

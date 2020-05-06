@@ -1,3 +1,35 @@
+.employees-page {
+  height: calc(100vh - 150px);
+
+  .search-bar {
+    padding-top: 2rem;
+    text-align: center;
+    font-family: Forte;
+    font-size: 1.4rem;
+    // letter-spacing: 0.4rem;
+
+    .search-letter {
+      text-transform: uppercase;
+      // margin-right: 0.5rem;
+      padding: 0rem 0.3rem;
+      cursor: pointer;
+      line-height: 0;
+      transition-duration: 200ms;
+
+      &.active {
+        background-color: $accent-color;
+      }
+
+      &:hover {
+        // background-color: $accent-color;
+        font-size: 1.8rem;
+      }
+    }
+  }
+
+  
+}
+
 .employee-directory-card {
   border: solid 2px #000;
   box-shadow: 5px 6px 0px #131313;
@@ -47,11 +79,12 @@
     }
   }
   &-directory {
-    // height: 35px;
     margin-top: 2rem;
     font-family: 'Forte';
     position: relative;
+    text-transform: uppercase;
     font-size: 1.3rem;
+    text-align: center;
     & .active {
       background-color: $accent-color;
     }

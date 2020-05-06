@@ -2,14 +2,16 @@ import React, {Component} from 'react';
 import moment from 'moment';
 import Tilt from 'react-tilt';
 import { Link } from "react-router-dom";
+
 import { employeeList } from "../../../sample_data/sampleData";
-// import Popper from 'popper.js'
+
 import { Manager, Reference, Popper } from 'react-popper';
 
 const EmployeePageDetails = ({match}) => (
   <div className='container-fluid container-custom'>
 
     <div className="d-none">{isLetter = filterItems(letters, match.params.id)}</div>
+
     {isLetter.length > 0 ? <IsLetterSearch match={match}/> : <IsIdSearch match={match}/>}
 
   </div>
@@ -21,7 +23,7 @@ var letterBreadcrumb = "";
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 // const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 var isLetter = '';
-var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '⛔'];
+var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'anonymous'];
 
 function filterItems(arr, query) {
   return arr.filter(function(el) {
@@ -61,47 +63,22 @@ function filterByValue(array, string) {
       );
 };
 
-// function filterByValueTeardown(array, string) {
-//   return array.filter(o =>
-//       Object
-//       .keys(o)
-//       .filter(key => 'nameLast')
-//       // .some(k => o[k]
-//       //   .toString()
-//       //   .toLowerCase()
-//       //   .charAt(0)
-//       //   .includes(string.toLowerCase())
-//       // )
-//       );
-// };
-
-// const arrayOfObject = [{ name: 'Paul', country: 'Canada', }, { name: 'Lea', country: 'Italy', }, { name: 'John', country: 'Italy' }];
-
-// console.log('Teardown');
-// console.log(filterByValueTeardown(employeeList, 'V'));
-// console.log('Teardown End');
-
 const IsLetterSearch = ({match}) => (
   <div>
     <div className="d-none">{employeeNumber = employeeList.findIndex(x => x.nameLast.charAt(0) === match.params.id)}</div>
-    {/* {alert(employeeNumber)} */}
-
-    {/* {employeeList.findIndex(x => x.nameLast.charAt(0) === match.params.id).map((test) => {
-      return <div>Number of people found {test} </div>;
-    })} */}
 
     {console.log(filterByValue(employeeList, match.params.id)) /* [{name: 'Lea', country: 'Italy'}, {name: 'John', country: 'Italy'}] */}
 
     <div className="d-none">{letterBreadcrumb = match.params.id}</div>
 
     <div className="employee-directory">
-      <Link className='employee-a' to='⛔'> <span className={letterBreadcrumb === '⛔' ? 'active' : ''}><i className="fas fa-eye-slash"></i></span></Link>
+      <Link className='employee-a' to='anonymous'> <span className={letterBreadcrumb === 'anonymous' ? 'active' : ''}><i className="fas fa-eye-slash"></i></span></Link>
       {alphabet.map((letter) => {
         return <Link className="employee-a employee-letter" to={letter}><span className={letterBreadcrumb === letter ? 'active' : ''}>{letter}</span></Link>;
       })}
     </div>
 
-    <div className="row mt-5">
+    <div className="row mt-5 justify-content-center">
       {filterByValue(employeeList, match.params.id).map((employee) => {
         // return <span>Test {employee.id}</span>
         return <div className="col-6">
@@ -110,17 +87,11 @@ const IsLetterSearch = ({match}) => (
           </div> </Tilt> </Link>
         </div>
       })}
-      {filterByValue(employeeList, match.params.id).length === 0 ? <h3 className="col-12 page-subtitle text-muted">No employees match that search.</h3> : ''}
+      {filterByValue(employeeList, match.params.id).length === 0 ? <h3 className="col-12 page-subtitle text-muted text-center">No employees match that search.</h3> : ''}
     </div>
 
   </div>
 );
-
-// const EmployeeDirectory = ({match}) => (
-//   <div className="col-6 w-100 bg-white shadow-sm p-5">
-//     <Link to={employeeList[employeeNumber].id}><div>{employeeList[employeeNumber].nameLast + ', ' + employeeList[employeeNumber].nameFirst}</div></Link>
-//   </div>
-// );
 
 const IsIdSearch = ({match}) => (
   <div>
@@ -139,14 +110,10 @@ const IsIdSearch = ({match}) => (
   </div>
 );
 
-// const weekBeforeOneStart = moment().subtract(1, 'weeks').startOf('isoWeek');
-// const weekBeforeOneEnd = moment().subtract(1, 'weeks').endOfOf('isoWeek');
-
 function weeksAgoStart(weeks) {
   return (
     moment().subtract(weeks, 'weeks').startOf('isoWeek').format('LL')
   )
-  
 };
 
 function weeksAgoEnd(weeks) {
@@ -369,7 +336,6 @@ const Yes = ({}) => (
     
   </div>
 );
-
 class ToggleableExample extends Component {
   state = {
     isOpen: false,
@@ -409,7 +375,7 @@ class ToggleableExample extends Component {
               <Popper placement="auto">
               {({ ref, style, placement, arrowProps }) => (
                 <div className="popper text-left" ref={ref} style={style} data-placement={placement}>
-                  <div className="dual-header"><span>Graphs Coming Soon.</span><span><span className="text-muted">September 2019</span></span></div>
+                  <div className="dual-header"><span>Graphs Coming Soon.</span><span><span className="text-muted">2021</span></span></div>
                   <br/>
                   <span className="text-muted">Visualize pay between total spending and department employee average.</span>
                   <br/>
@@ -441,10 +407,6 @@ const No = () => (
     <h3>No record of this employee</h3>
     <p>We never delete employee data but if an employee chooses to stay anonymous we will redact thier name and any other identifying info from the record. You are most likly seeing this error because you have incorrecly typed in the employees pin, please refer to the pin and search again.</p>
   </div>
-);
-
-const AnonNote = () => (
-  <p>AnonNote.</p>
 );
 
 const SharedSocials= () => (

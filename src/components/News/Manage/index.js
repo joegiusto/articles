@@ -242,7 +242,7 @@ class AdminPage extends Component {
   
               <div className="catagories">
                 <NewsTypeSelector catagory={this.state.catagory} changeCatagory={this.changeCatagory} changeCatagoryTo="All" displayCatagoryAs="All" />
-                <NewsTypeSelector catagory={this.state.catagory} changeCatagory={this.changeCatagory} changeCatagoryTo="story" displayCatagoryAs="Stoires" />
+                <NewsTypeSelector catagory={this.state.catagory} changeCatagory={this.changeCatagory} changeCatagoryTo="story" displayCatagoryAs="Stories" />
                 <NewsTypeSelector catagory={this.state.catagory} changeCatagory={this.changeCatagory} changeCatagoryTo="issue" displayCatagoryAs="Issues" />
                 <NewsTypeSelector catagory={this.state.catagory} changeCatagory={this.changeCatagory} changeCatagoryTo="myth" displayCatagoryAs="Myths" />
               </div>
@@ -322,9 +322,9 @@ class AdminPage extends Component {
   
                     <div className={"tags " + (catagory === "All" ? '' : 'd-none')}>
   
-                      {result.news_tags?.length > 1 ?
+                      {result.news_tags?.length > 0 ?
                         result.news_tags?.map(tag => (
-                          <div className="badge badge-dark">{tag.tag_name}</div>
+                          <div onClick={() => this.getNewsByTag(tag.tag_name)} className="badge badge-dark">{tag.tag_name}</div>
                         ))
                         :
                         <div className="badge badge-dark">None</div>

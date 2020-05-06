@@ -1,6 +1,6 @@
-const MongoClient = require('mongodb').MongoClient;
-var ObjectId = require('mongodb').ObjectId; 
-const url = "mongodb+srv://joegiusto:" + process.env.MONGODB_PASSWORD + "@articles-xgwnd.mongodb.net/test?retryWrites=true&w=majority";
+// const MongoClient = require('mongodb').MongoClient;
+// var ObjectId = require('mongodb').ObjectId; 
+// const url = "mongodb+srv://joegiusto:" + process.env.MONGODB_PASSWORD + "@articles-xgwnd.mongodb.net/test?retryWrites=true&w=majority";
 
 module.exports = (app, db) => {
   app.post('/getNewsByTag', (req, res) => {
@@ -22,8 +22,8 @@ module.exports = (app, db) => {
       } } ).toArray(function(err, result) {
         if (err) throw err;
         data.tags = result;
-        console.log(result);
-        db.close();
+        // console.log(result);
+        // db.close();
         return res.send(data);
       });
 

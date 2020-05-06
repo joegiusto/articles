@@ -250,6 +250,8 @@ class SubscribeListBase extends Component {
         // self.mergeStuff()
       })
 
+      self.props.setUserDetails(self.props.auth.user.id);
+
     })
     .catch(function (error) {
       console.log(error);

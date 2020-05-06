@@ -7,7 +7,7 @@
   color: rgb(0, 0, 0);
   padding: 1rem;
   padding-top: 2rem;
-  margin-top: 8rem;
+  margin-top: 4rem;
   margin-bottom: 1rem;
   position: relative;
 
@@ -181,7 +181,7 @@
   &.bottom-add {
     position: relative;
     position: sticky;
-    top: 11rem;
+    top: 5rem;
 
     @include media-breakpoint-down(md) {
       // margin-top: 2rem;

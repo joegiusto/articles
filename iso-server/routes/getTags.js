@@ -18,7 +18,7 @@ module.exports = (app, db) => {
       db.collection("articles_tags").find().toArray(function(err, result) {
         if (err) throw err;
         data.tags = result;
-        console.log(result);
+        // console.log(result);
         // db.close();
         return res.send(data);
       });

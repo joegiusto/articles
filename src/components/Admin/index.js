@@ -11,59 +11,87 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const AdminPage = () => (
-  <div>
-    <h1>Admin</h1>
-    <p>The Admin Page is accessible by every signed in admin user.</p>
-    <UserListBase/>
-  </div>
-);
+import Users from './components/Users';
+import News from '../News/Manage';
+import Products from './components/Products'
+import Submissions from './components/Submissions'
 
-class UserListBase extends Component {
+class Admin extends Component {
   constructor(props) {
   super(props);
   
-  this.state = {
-    loading: false,
-    users: [],
-  };
+    this.state = {
+      tab: localStorage.getItem( 'admin-portal-tab' ) || 'users',
+    };
 
   }
 
+  activeTab(newTab) {
+    localStorage.setItem( 'admin-portal-tab', newTab );
+
+    this.setState({
+      tab: newTab
+    })
+  }
+
+  activeContent(currentTab) {
+    switch(currentTab) {
+      case 'users':
+        return (
+          <Users></Users>
+        )
+      case 'news':
+        return (
+          <News match={this.props.match}></News>
+        )
+      case 'products':
+        return (
+          <Products match={this.props.match}></Products>
+        )
+      case 'submissions':
+        return (
+          <Submissions match={this.props.match}></Submissions>
+        )
+      case 'donations':
+        return (
+          <div className="mt-5 alert alert-danger">This data is still located on Firebase</div>
+        )
+      case 'expenses':
+        return (
+          <div className="mt-5 alert alert-danger">This data is still located on Firebase</div>
+        )
+      default:
+        // code block
+    }
+  }
+
   render() {
-    const { users, loading } = this.state;
 
     return (
-      <div>
-        <h2>Users</h2>
+      <div className="admin-page">
 
-        {loading && <div>Loading ...</div>}
+        <div className="tab-bar">
+          <div className="container-fluid">
 
-        <ul>
-          {users.map(user => (
-            <li key={user.uid}>
-              <span>
-                <strong>ID:</strong> {user.uid}
-              </span>
+            <span onClick={() => this.activeTab('users')} className={"tab" + (this.state.tab === 'users' ? ' active' : '')}>Users</span>
+            <span onClick={() => this.activeTab('news')} className={"tab" + (this.state.tab === 'news' ? ' active' : '')}>News</span>
+            <span onClick={() => this.activeTab('products')} className={"tab" + (this.state.tab === 'products' ? ' active' : '')}>Products</span>
+            <span onClick={() => this.activeTab('submissions')} className={"tab" + (this.state.tab === 'submissions' ? ' active' : '')}>Submissions</span>
+            <span onClick={() => this.activeTab('donations')} className={"tab" + (this.state.tab === 'donations' ? ' active' : '')}>Donations</span>
+            <span onClick={() => this.activeTab('expenses')} className={"tab" + (this.state.tab === 'expenses' ? ' active' : '')}>Expenses</span>
 
-              <span>
-                <strong>E-Mail:</strong> {user.email}
-              </span>
+          </div>
+        </div>
 
-              <span>
-                <strong>Name:</strong> {user.nameFirst + ' ' + user.nameLast}
-              </span>
+        <div className="tab-content">
+          <div className="container-fluid">
+            {this.activeContent(this.state.tab)}
+          </div>
+        </div>
 
-              <span>
-                <Link to={`${ROUTES.ADMIN}/${user.uid}`}>Details</Link>
-              </span>
-
-            </li>
-          ))}
-        </ul>
       </div>
     );
   }
 }
 
-export default AdminPage
+export default Admin
