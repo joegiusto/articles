@@ -14,17 +14,17 @@ module.exports = (app, db) => {
       return res.send(data);
     });
 
-    db.collection("articles_donations").insertOne(
-      {
-        amount: 5000,
-        date: 1574187988687,
-        name: 'Joey Giusto',
-        message: "Another deposit",
-        createdBy: "5e90cc96579a17440c5d7d52",
-        wasMatched: false,
-        matchedBy: null,
-      }
-    )
+    // db.collection("articles_donations").insertOne(
+    //   {
+    //     amount: 5000,
+    //     date: 1574187988687,
+    //     name: 'Joey Giusto',
+    //     message: "Another deposit",
+    //     createdBy: "5e90cc96579a17440c5d7d52",
+    //     wasMatched: false,
+    //     matchedBy: null,
+    //   }
+    // )
     
   });
 }
