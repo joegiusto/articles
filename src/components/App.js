@@ -64,7 +64,7 @@ import MailPage from './Mail';
 import AdminPage from './Admin';
 // import DonatePage from './Donate';
 
-// import PlaygroundPage from './Playground';
+import PlaygroundPage from './Playground';
 import Chat from './Chat';
 
 import NotFoundPage from './Navigation/NotFoundPage';
@@ -183,12 +183,28 @@ class App extends Component {
               <Route path={ROUTES.ACCOUNT} component={AccountPage} />
               <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
               
-              <Route path={ROUTES.ADMIN} component={AdminPage} />
+              <Route exact path={ROUTES.ADMIN} component={AdminPage} />
+
+              <Route exact path={ROUTES.ADMIN_USERS} component={AdminPage} />
+              <Route path={ROUTES.ADMIN_USER_DETAILS} component={AdminPage} />
+
+              <Route exact path={ROUTES.ADMIN_NEWS} component={AdminPage} />
+              <Route path={ROUTES.ADMIN_NEWS_DETAILS} component={AdminPage} />
+
+              <Route exact path={ROUTES.ADMIN_PRODUCTS} component={AdminPage} />
+              <Route path={ROUTES.ADMIN_PRODUCT_DETAILS} component={AdminPage} />
+
+              <Route exact path={ROUTES.ADMIN_SUBMISSIONS} component={AdminPage} />
+              <Route path={ROUTES.ADMIN_SUBMISSION_DETAILS} component={AdminPage} />
+
+              <Route exact path={ROUTES.ADMIN_DONATIONS} component={AdminPage} />
+              <Route exact path={ROUTES.ADMIN_EXPENSES} component={AdminPage} />
+
               {/* <Route path={ROUTES.DONATE} component={DonatePage} /> */}
   
               <Route path={ROUTES.MAIL} component={MailPage} />
   
-              {/* <Route path={ROUTES.PLAYGROUND} component={PlaygroundPage} /> */}
+              <Route path={ROUTES.PLAYGROUND} component={PlaygroundPage} />
               <Route path={ROUTES.CHAT} component={Chat} />
   
               <Route component={NotFoundPage} />

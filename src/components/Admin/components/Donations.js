@@ -1,12 +1,13 @@
 import React, {Component} from 'react'
 import axios from 'axios'
 
-class Submissions extends Component {
+class Donations extends Component {
   constructor(props) {
   super(props);
   
     this.state = {
-      submissions: [],
+      donations: [],
+      total: 0
     };
 
   }
@@ -15,13 +16,18 @@ class Submissions extends Component {
     this.props.setLoaction(this.props.tabLocation);
     const self = this;
 
-    axios.get('/getSubmissions')
+    axios.get('/getDonations')
     .then(function (response) {
 
-      console.log(response);
+      let total = 0;
+
+      for (var i=0; i < self.state.donations.length; i++) {
+        total += self.state.donations[i].ammount
+      }
 
       self.setState({ 
-        submissions: response.data,
+        donations: response.data,
+        total: total
       });
 
     })
@@ -29,7 +35,7 @@ class Submissions extends Component {
       console.log(error);
 
       self.setState({
-        submissions: [],
+        donations: [],
       })
     });
   }
@@ -44,27 +50,29 @@ class Submissions extends Component {
       <div className="mt-5">
 
         <div className="">
-          <h5>Submissions Info</h5>
+          <h5>Donations</h5>
         </div>
 
         <table class="table table-bordered bg-white">
           <thead>
             <tr>
-              <th scope="col">User</th>
-              <th scope="col">Title</th>
-              {/* <th scope="col">Price</th> */}
-              {/* <th scope="col">Card Photos</th> */}
+              <th scope="col">Name</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Message</th>
+              <th scope="col">Created By</th>
+              <th scope="col">Was Matched</th>
             </tr>
           </thead>
           <tbody>
 
-            {this.state.submissions.map(product => (
+            {this.state.donations.map(donation => (
 
               <tr>
-                <th scope="row">{product.user_id}</th>
-                <td>{product.title}</td>
-                {/* <td>${product.price / 100}</td> */}
-                {/* <td>p-c</td> */}
+                <th scope="row">{donation.name}</th>
+                <td>${(donation.amount / 100).toFixed(2)}</td>
+                <td>{donation.message}</td>
+                <td>{donation.createdBy}</td>
+                <td>{donation.wasMatched ? 'True' : 'False'}</td>
               </tr>
               
             ))}
@@ -79,4 +87,4 @@ class Submissions extends Component {
   }
 }
 
-export default Submissions
+export default Donations

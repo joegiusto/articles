@@ -21,6 +21,7 @@ class Users extends Component {
 
   componentDidMount() {
     const self = this;
+    this.props.setLoaction(this.props.tabLocation);
 
     axios.post('/api/secure/getUsers')
     .then(function (response) {
@@ -84,6 +85,10 @@ class Users extends Component {
         outsetComplete: 0,
       })
     });
+  }
+
+  componentWillUnmount() {
+    this.props.setLoaction('');
   }
 
   // calc(user) {

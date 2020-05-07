@@ -159,7 +159,11 @@ class HomePageFour extends Component {
               </div>
 
               <Link to={ROUTES.HOME_OLD}>
-                <div className="tile-content"></div>
+                <div className="tile-content old-home">
+                  <i class="fas fa-campground fa-5x"></i>
+                  
+                  <button className="btn btn-articles-light">View Old Home</button>
+                </div>
               </Link>
 
             </div>

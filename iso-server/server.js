@@ -12,21 +12,13 @@ var ObjectId = require('mongodb').ObjectId;
 const url = `mongodb+srv://joegiusto:${encodeURIComponent(process.env.MONGODB_PASSWORD)}@articles-xgwnd.mongodb.net/articles_data?retryWrites=true&w=majority`;
 // const urlGoose = `mongodb+srv://joegiusto:${encodeURIComponent(process.env.MONGODB_PASSWORD)}@articles-xgwnd.mongodb.net/articles_data?retryWrites=true&w=majority`;
 
-const router = require('express').Router();
-
+// const router = require('express').Router();
 // const secureRoute = '';
 
 mongoUtil.connectToServer( function( err, client ) {
-  
   if (err) console.log(err);
-  // Start the rest of your app here
+
   var db = mongoUtil.getDb();
-
-  // db.collection("articles_users").find().toArray(function(err, result) {
-  //   if (err) throw err;
-  //   console.log(result)
-  // });
-
   require('./routes/addNewsDocument')(app, db);
   require('./routes/editNewsDocument')(app, db);
   require('./routes/getNewsDocument')(app, db);
@@ -41,7 +33,14 @@ mongoUtil.connectToServer( function( err, client ) {
   require('./routes/getMyths')(app, db);
 
   require('./routes/getSubmissions')(app, db);
+
   require('./routes/getProducts')(app, db);
+  require('./routes/getProduct')(app, db);
+  require('./routes/upsertProduct')(app, db);
+
+  require('./routes/getDonations')(app, db);
+
+  require('./routes/getExpenses')(app, db);
 
   // const secureRoute = require('./routes/secure/secure-routes.js')(app, db);
   // app.use('/api/secure', passport.authenticate('jwt', {session: false}), secureRoute);
@@ -108,7 +107,7 @@ mongoUtil.connectToServer( function( err, client ) {
       });
   });
 
-  app.post('/api/secure/updateUserDetails', (req, res) => {
+  app.post('/api/secure/updateUserDetails', passport.authenticate('jwt', {session: false}), (req, res) => {
     console.log(`Call to /api/updateUserDetails made at ${new Date()}`);
       
       var myobj = req.body.user_details;
@@ -139,44 +138,38 @@ mongoUtil.connectToServer( function( err, client ) {
       return res.end();
   });
 
-  app.post('/getOrderDetails', (req, res) => {
+  app.post('/getOrderDetails', passport.authenticate('jwt', {session: false}), (req, res) => {
 
     console.log("Call to /api/secure/getOrderDetails at" + new Date());
 
-    // MongoClient.connect(url, function(err, db) {
+    let data = {};
 
-      let data = {};
+    if (err) throw err;
+    var o_id = new ObjectId(req.body.order_id);
 
+    console.log(req.body.order_id);
+
+    db.collection("articles_orders").findOne( o_id, function(err, result) {
       if (err) throw err;
-      var o_id = new ObjectId(req.body.order_id);
-
-      console.log(req.body.order_id);
-
-      db.collection("articles_orders").findOne( o_id, function(err, result) {
-        if (err) throw err;
-        data.order = result
-        // console.log(result);
-        // db.close();
-        return res.send(data);
-      });
-
-    // });
+      data.order = result
+      return res.send(data);
+    });
     
   });
 
   app.post('/api/secure/getUsers', passport.authenticate('jwt', {session: false}), (req, res) => {
     
     console.log(`Call to /api/getUsers made here at ${new Date()} by user ${req.body.user}`);
-      let data = {};
-      
-      db.collection("articles_users").find({user_id: req.body.user}).toArray(function(err, result) {
-        if (err) throw err;
-        // console.log(`Call to /api/getUserDetails done`)
-        // console.log(result);
-        data.users = result
-        console.log(`Call to /api/getUsers done`)
-        return res.send(data);
-      });
+    let data = {};
+    
+    db.collection("articles_users").find({user_id: req.body.user}).toArray(function(err, result) {
+      if (err) throw err;
+
+      data.users = result
+      console.log(`Call to /api/getUsers done`)
+      return res.send(data);
+    });
+
   });
 
 });
@@ -208,7 +201,6 @@ app.use(passport.initialize());
 require("./config/passport")(passport);
 
 // Routes
-
 app.use("/api/users", users);
 
 app.listen(process.env.PORT || 8080);
@@ -221,29 +213,3 @@ app.get('/', function (req, res) {
 app.get('/ping', function (req, res) {
   return res.send('pong');
 });
-
-// require('./routes/addNewsDocument')(app);
-// require('./routes/editNewsDocument')(app);
-// require('./routes/getNewsByTag')(app);
-// require('./routes/getNews')(app);
-// require('./routes/getTags')(app);
-// require('./routes/outsetUpdate')(app);
-
-// app.get('/getAllIssues', function (req, res) {
-//   console.log(`Call to /api/getAllIssues made at ${new Date()}`);
-
-//   MongoClient.connect(url, function(err, db) {
-
-//     if (err) throw err;
-//     var dbo = db.db("articles_data");
-//     // var o_id = new ObjectId(req.body.user);
-
-//     dbo.collection("articles_news").find({news_type: 'issue'}).toArray(function(err, result) {
-//       if (err) throw err;
-//       db.close();
-//       return res.send(result) 
-//     });
-
-//   });
-
-// });

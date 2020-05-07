@@ -69,7 +69,23 @@ export const PASSWORD_FORGET = '/pw-forget';
 
 // Admin
 export const ADMIN = '/admin';
-export const ADMIN_DETAILS = '/admin/:id';
+
+export const ADMIN_USERS = '/admin/users';
+export const ADMIN_USER_DETAILS = '/admin/users/:id';
+
+export const ADMIN_NEWS = '/admin/news';
+export const ADMIN_NEWS_DETAILS = '/admin/news/:id';
+
+export const ADMIN_PRODUCTS = '/admin/products';
+export const ADMIN_PRODUCT_DETAILS = '/admin/products/:id';
+
+export const ADMIN_SUBMISSIONS = '/admin/submissions';
+export const ADMIN_SUBMISSION_DETAILS = '/admin/submissions/:id';
+
+export const ADMIN_DONATIONS = '/admin/donations';
+export const ADMIN_EXPENSES = '/admin/expenses';
+
+// export const ADMIN_DETAILS = '/admin/:id';
 
 // Donate
 export const DONATE = '/donate';

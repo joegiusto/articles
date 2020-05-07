@@ -296,7 +296,7 @@ class Reports extends Component {
             </div>
 
             <div className="mt-3">
-              <Link to={ROUTES.EMPLOYEES + '/' + '⛔'}><button className="btn btn-articles-light btn-lg w-100 report-quick-links">
+              <Link to={ROUTES.EMPLOYEES}><button className="btn btn-articles-light btn-lg w-100 report-quick-links">
                 <div>
                   <i className="fas fa-user-tie"></i>
                   <span>Employee Data</span>

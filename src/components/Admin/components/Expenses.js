@@ -1,12 +1,13 @@
-import React, {Component} from 'react'
-import axios from 'axios'
+import React, {Component} from 'react';
+import axios from 'axios';
+import moment from 'moment';
 
-class Submissions extends Component {
+class Donations extends Component {
   constructor(props) {
   super(props);
   
     this.state = {
-      submissions: [],
+      expenses: [],
     };
 
   }
@@ -15,13 +16,13 @@ class Submissions extends Component {
     this.props.setLoaction(this.props.tabLocation);
     const self = this;
 
-    axios.get('/getSubmissions')
+    axios.get('/getExpenses')
     .then(function (response) {
 
       console.log(response);
 
       self.setState({ 
-        submissions: response.data,
+        expenses: response.data,
       });
 
     })
@@ -29,7 +30,7 @@ class Submissions extends Component {
       console.log(error);
 
       self.setState({
-        submissions: [],
+        expenses: [],
       })
     });
   }
@@ -44,27 +45,29 @@ class Submissions extends Component {
       <div className="mt-5">
 
         <div className="">
-          <h5>Submissions Info</h5>
+          <h5>Expenses</h5>
         </div>
 
         <table class="table table-bordered bg-white">
           <thead>
             <tr>
-              <th scope="col">User</th>
-              <th scope="col">Title</th>
-              {/* <th scope="col">Price</th> */}
-              {/* <th scope="col">Card Photos</th> */}
+              <th scope="col">Reason</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Date</th>
+              <th scope="col">Note</th>
+              <th scope="col">File</th>
             </tr>
           </thead>
           <tbody>
 
-            {this.state.submissions.map(product => (
+            {this.state.expenses.map(expense => (
 
               <tr>
-                <th scope="row">{product.user_id}</th>
-                <td>{product.title}</td>
-                {/* <td>${product.price / 100}</td> */}
-                {/* <td>p-c</td> */}
+                <th scope="row">{expense.reason}</th>
+                <td>${expense.amount / 100}</td>
+                <td>{moment.unix(expense.date).format("LL")}</td>
+                <td>{expense.note}</td>
+                <td><a target="_blank" rel="noopener noreferrer" href={expense.file}><i class="far fa-file-pdf"></i></a></td>
               </tr>
               
             ))}
@@ -79,4 +82,4 @@ class Submissions extends Component {
   }
 }
 
-export default Submissions
+export default Donations

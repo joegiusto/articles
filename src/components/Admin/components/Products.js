@@ -1,5 +1,22 @@
 import React, {Component} from 'react'
 import axios from 'axios'
+import StoreItem from '../../Store/StoreItemAlpha'
+
+const inital_state = {
+  title: '',
+  type: '',
+  price: 0,
+  ourCost: 0,
+  material: '',
+  photos: {
+    one: '',
+    two: '',
+    three: '',
+    four: '',
+    five: '',
+    six: ''
+  },
+}
 
 class Products extends Component {
   constructor(props) {
@@ -7,11 +24,25 @@ class Products extends Component {
   
     this.state = {
       products: [],
+
+      currentProduct: '',
+
+      view: 'details',
+
+      activeProduct: {
+        ...inital_state
+      },
+
+      activeProductLoading: false,
+      activeProductError: false
     };
 
+    this.handleProductChange = this.handleProductChange.bind(this);
+    this.handleProductPhotoChange = this.handleProductPhotoChange.bind(this);
   }
 
   componentDidMount() {
+    this.props.setLoaction(this.props.tabLocation);
     const self = this;
 
     axios.get('/getProducts')
@@ -31,6 +62,44 @@ class Products extends Component {
         products: [],
       })
     });
+  }
+  
+  componentDidUpdate(prevProps, prevState) {
+    const self = this;
+
+    if (prevState.currentProduct !== this.state.currentProduct) {
+      // console.log("activeProduct Changed!")
+      self.setState({
+        activeProductLoading: true
+      })
+      
+      axios.post('/getProduct', {
+        product_id: this.state.currentProduct
+      })
+      .then(function (response) {
+
+        self.setState({ 
+          activeProduct: response.data,
+          activeProductLoading: false,
+          activeProductError: false
+        });
+
+      })
+      .catch(function (error) {
+        console.log(error);
+
+        self.setState({
+          activeProduct: {},
+          activeProductLoading: false,
+          activeProductError: true
+        })
+      });
+
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.setLoaction('');
   }
 
   renderType(type) {
@@ -57,11 +126,77 @@ class Products extends Component {
   renderPhotos(productPhotos) {
     return(
       <div className="has-photo">
-        {productPhotos.map((photo) => (
-          <span className={"photo" + (photo === "" ? "" : "link")}></span>
-        ))}
+        <span className={"photo" + (productPhotos.one === "" ? "" : " link")}></span>
+        <span className={"photo" + (productPhotos.two === "" ? "" : " link")}></span>
+        <span className={"photo" + (productPhotos.three === "" ? "" : " link")}></span>
+        <span className={"photo" + (productPhotos.four === "" ? "" : " link")}></span>
+        <span className={"photo" + (productPhotos.five === "" ? "" : " link")}></span>
+        <span className={"photo" + (productPhotos.six === "" ? "" : " link")}></span>
       </div>
     )
+  }
+
+  changeType(type) {
+    this.setState({
+      activeProduct: {
+        ...this.state.activeProduct,
+        type: type
+      }
+    })
+  }
+
+  handleProductChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      ...this.state,
+      activeProduct: {
+        ...this.state.activeProduct,
+        [name]: value
+      }
+    });
+  }
+
+  handleProductPhotoChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      ...this.state,
+      activeProduct: {
+        ...this.state.activeProduct,
+        photos: {
+          ...this.state.activeProduct.photos,
+          [name]: value
+        }
+      }
+    });
+  }
+
+  onSubmit() {
+    console.log('onSubmit called!')
+    const self = this;
+
+    axios.post('/upsertProduct', {
+      product: this.state.activeProduct
+    })
+    .then(function (response) {
+
+      self.setState({
+        currentProduct: '',
+
+        activeProduct: inital_state,
+        activeProductLoading: false,
+        activeProductError: false
+      });
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   render() {
@@ -92,7 +227,7 @@ class Products extends Component {
                 <td>{this.renderType(product.type)}</td>
                 <td>${product.price / 100}</td>
                 <td>{this.renderPhotos(product.photos)}</td>
-                <td><div className="badge badge-articles mr-2">Edit</div><div className="badge badge-danger">Delete</div></td>
+                <td><div className="badge badge-articles mr-2" onClick={() => this.setState({currentProduct: product._id})}>Edit</div><div className="badge badge-danger">Delete</div></td>
               </tr>
               
             ))}
@@ -104,69 +239,179 @@ class Products extends Component {
 
         <div className="product-manage">
 
-          <div className="preview">
-
+          <div className="preview d-flex justify-content-center align-items-center store-page pt-4">
+            <StoreItem setPopOutVisible={this.setPopOut} catalogId='1' price={this.state.activeProduct.price} title={this.state.activeProduct.title} sale="%15" banner={this.state.activeProduct.type} color="articles" />
           </div>
 
           <div className="details">
+
+            {
+            this.state.currentProduct === '' ? 
+            '' 
+            : 
+            <div className="d-flex justify-content-between">
+              <div className="badge badge-dark mb-3">{this.state.currentProduct}</div>
+
+              {/*  */}
+              {this.state.activeProductLoading ? 
+              <div className="badge badge-warning mb-3">Loading</div>
+              :
+              this.state.activeProductError ? 
+              <div className="badge badge-danger mb-3">Error</div>
+              :
+              <div className="badge badge-success mb-3">Success</div>
+              }
+            </div>
+            }
+
+            <div class="btn-group w-100 mb-3" role="group" aria-label="First group">
+              <button type="button" class="btn btn-dark">Details</button>
+              <button type="button" class="btn btn-light border">Preview</button>
+            </div>
+
             <div class="form-group">
               <label for="title">Title</label>
-              <input type="text" class="form-control" id="title"/>
+              <input 
+                type="text"
+                className="form-control"
+                value={this.state.activeProduct.title}
+                onChange={this.handleProductChange}
+                id="title"
+                name="title"
+              />
             </div>
   
             <div class="form-group">
               <label for="exampleInputPassword1">Type</label>
               <div className="types">
-                <span className="badge badge-light shadow-sm border type">Original</span>
-                <span className="badge badge-light shadow-sm border type">Sponsered</span>
-                <span className="badge badge-light shadow-sm border type">Partnership</span>
+                <span onClick={() => this.changeType('Original')} className={"badge shadow-sm border type " + (this.state.activeProduct.type === 'Original' ? 'badge-dark' : 'badge-light')}>Original</span>
+                <span onClick={() => this.changeType('Sponsered')} className={"badge shadow-sm border type " + (this.state.activeProduct.type === 'Sponsered' ? 'badge-dark' : 'badge-light')}>Sponsered</span>
+                <span onClick={() => this.changeType('Partnership')} className={"badge shadow-sm border type " + (this.state.activeProduct.type === 'Partnership' ? 'badge-dark' : 'badge-light')}>Partnership</span>
               </div>
             </div>
   
             <div class="form-group">
-              <label for="price">Price</label>
-              <input type="number" class="form-control" id="price"/>
+              <label for="price">Price ${(this.state.activeProduct.price / 100).toFixed(2)}</label>
+              <input 
+                type="number"
+                className="form-control"
+                value={this.state.activeProduct.price} 
+                onChange={this.handleProductChange}
+                id="price"
+                name="price"
+              />
             </div>
   
             <div class="form-group">
-              <label for="our-cost">Our Cost</label>
-              <input type="number" class="form-control" id="our-cost"/>
+              <label for="our-cost">Our Cost ${(this.state.activeProduct.ourCost / 100).toFixed(2)}</label>
+              <input 
+              type="number" 
+              class="form-control" 
+              value={this.state.activeProduct.ourCost}
+              onChange={this.handleProductChange} 
+              id="ourCost"
+              name="ourCost"
+              />
             </div>
   
             <div className="photos">
               <div className="pb-2">Showcase Photos</div>
+
               <div className="photo">
                 <span className="number">1</span>
-                <input type="text" class="form-control" id="our-cost"/>
+                <input
+                type="text"
+                value={this.state.activeProduct.photos?.one}
+                onChange={this.handleProductPhotoChange}
+                className="form-control"
+                id="one"
+                name="one"
+                />
               </div>
+
               <div className="photo">
                 <span className="number">2</span>
-                <input type="text" class="form-control" id="our-cost"/>
+                <input
+                type="text"
+                value={this.state.activeProduct.photos?.two}
+                onChange={this.handleProductPhotoChange}
+                className="form-control"
+                id="two"
+                name="two"
+                />
               </div>
+
               <div className="photo">
                 <span className="number">3</span>
-                <input type="text" class="form-control" id="our-cost"/>
+                <input
+                type="text"
+                value={this.state.activeProduct.photos?.three}
+                onChange={this.handleProductPhotoChange}
+                className="form-control"
+                id="three"
+                name="three"
+                />
               </div>
+
               <div className="photo">
                 <span className="number">4</span>
-                <input type="text" class="form-control" id="our-cost"/>
+                <input
+                type="text"
+                value={this.state.activeProduct.photos?.four}
+                onChange={this.handleProductPhotoChange}
+                className="form-control"
+                id="four"
+                name="four"
+                />
               </div>
+
               <div className="photo">
                 <span className="number">5</span>
-                <input type="text" class="form-control" id="our-cost"/>
+                <input
+                type="text"
+                value={this.state.activeProduct.photos?.five}
+                onChange={this.handleProductPhotoChange}
+                className="form-control"
+                id="five"
+                name="five"
+                />
               </div>
+
               <div className="photo">
                 <span className="number">6</span>
-                <input type="text" class="form-control" id="our-cost"/>
+                <input
+                type="text"
+                value={this.state.activeProduct.photos?.six}
+                onChange={this.handleProductPhotoChange}
+                className="form-control"
+                id="six"
+                name="six"
+                />
               </div>
+
             </div>
   
             <div class="form-group">
               <label for="our-cost">Material</label>
-              <input type="text" class="form-control" id="our-cost"/>
+              <input
+              type="text"
+              className="form-control"
+              value={this.state.activeProduct.material}
+              onChange={this.handleProductChange} 
+              id="material"
+              name="material"
+              />
             </div>
 
-            <div className="btn btn-articles-light">Add Product</div>
+            {this.state.currentProduct === '' ? 
+            <div onClick={() => this.onSubmit()} className="btn btn-articles-light">Add Product</div>
+            :
+            this.state.activeProductError ?
+            <div className="btn btn-articles-light disabled" style={{cursor: 'not-allowed'}}>Update Product</div>
+            :
+            <div onClick={() => this.onSubmit()} className="btn btn-articles-light">Update Product</div>
+            }
+            
 
           </div>
 

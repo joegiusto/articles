@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 import { BrowserRouter as Route, Switch } from 'react-router-dom';
+import Tilt from 'react-tilt';
+import { Link } from "react-router-dom";
+
 import * as ROUTES from '../../constants/routes';
+import { employeeList } from "../../sample_data/sampleData";
 
 const Test = () => {
   return (
@@ -38,18 +42,36 @@ class EmployeesPage extends Component {
 
           </div>
 
-          <div className="row h-100 justify-content-center">
+          <div className="card card-block p-5">
+            <h1>Employee Directory</h1>
+            <p>As part of our transparency efforts we provide a directory of our employees to the public along with some details about them and payrole info. Please, snoop around! :)</p>
+          </div>
 
-           <Switch>
-            <Route exact path={ROUTES.EMPLOYEES} component={Test}/>
-            <Route path={ROUTES.EMPLOYEES_DETAILS} component={Test}/>
+          <div>
+            {employeeList.map(employee => (
+              <Link className="employee-a" to={employee.id}>
+                <Tilt options={{ max: "20", scale: '1.025' }} className="Tilt employee-directory-card">
+                  <div className="bg-white p-5">
+                    <div>{employee.nameLast + (employee.nameFirst !== 'Anonymous' ? ', ' + employee.nameFirst : ' Anonymous')}</div>
+                  </div>
+                </Tilt>
+              </Link>
+            ))}
+          </div>
+
+          <div className="row justify-content-center">
+
+            <div className="col-sm-7 mt-3">
+              
+            </div>
+
+            <Switch>
+              <Route exact path={ROUTES.EMPLOYEES} component={Test}/>
+              <Route path={ROUTES.EMPLOYEES_DETAILS} component={Test}/>
            </Switch>
 
-            <div className="col-sm-6 my-auto">
-              <div className="card card-block p-5">
-                <h1>Employee Directory</h1>
-                <p>As part of our transparency efforts we provide a directory of our employees to the public along with some details about them and payrole info. Please, snoop around! :)</p>
-              </div>
+            <div className="col-12">
+              
             </div>
   
           </div>

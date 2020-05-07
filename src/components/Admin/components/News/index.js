@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
-import { compose } from 'recompose';
+// import { compose } from 'recompose';
 
-import { withFirebase } from '../../Firebase';
-import { withAuthorization, withEmailVerification } from '../../Session';
-import * as ROLES from '../../../constants/roles';
-import * as ROUTES from '../../../constants/routes';
+// import { withFirebase } from '../../Firebase';
+// import { withAuthorization, withEmailVerification } from '../../Session';
+// import * as ROLES from '../../../constants/roles';
+import * as ROUTES from '../../../../constants/routes';
 
 import axios from 'axios';
 
@@ -51,6 +51,7 @@ class AdminPage extends Component {
   }
 
   componentDidMount() {
+    this.props.setLoaction('news');
     let self = this;
 
     self.setState({ tagsLoading: true });
@@ -97,7 +98,7 @@ class AdminPage extends Component {
   }
 
   componentWillUnmount() {
-    // this.props.firebase.issues().off();
+    this.props.setLoaction('');
   }
 
   getNewsByTag(tag) {
@@ -173,7 +174,7 @@ class AdminPage extends Component {
 
     this.setState({
       catagory: catagory,
-      searchFilter: 'Content',
+      // searchFilter: 'Content',
       results: catagory !== 'All' ? this.state.resultsOriginal.filter(result => result.news_type == catagory) : this.state.resultsOriginal,
       searchedTag: ''
     })
@@ -311,16 +312,16 @@ class AdminPage extends Component {
   
                     <span className="date badge badge-dark border ml-2">{d.toLocaleString().split(',')[0]} </span>
                     
-                    <Link onClick={() => this.setState({isEdit: true})} to={"/news/manage/" + result._id}><span className="title ml-2">{result.news_title} <small>({result.news_type})</small></span></Link>
+                    <Link onClick={() => this.setState({isEdit: true})} to={ROUTES.ADMIN_NEWS + '/' + result._id}><span className="title ml-2">{result.news_title} <small>({result.news_type})</small></span></Link>
   
-                    <div className={"tags " + (catagory === "All" ? '' : 'd-none')}>
+                    <div className={"tags " + (catagory === "All" ? '' : '')}>
   
                       {result.news_tags?.length > 0 ?
                         result.news_tags?.map(tag => (
                           <div onClick={() => this.getNewsByTag(tag.tag_name)} className="badge badge-dark">{tag.tag_name}</div>
                         ))
                         :
-                        <div className="badge badge-dark">None</div>
+                        <div className="badge badge-dark" style={{cursor: 'default'}}>None</div>
                       }
   
                     </div>
