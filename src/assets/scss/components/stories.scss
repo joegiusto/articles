@@ -1,0 +1,293 @@
+.stories-page {
+  position: relative;
+
+  .news-one-head {
+    background-color: $accent-color;
+    padding: 0.3rem;
+    border: 3px solid #000;
+    border-bottom: 0px solid #000;
+    box-shadow: 0px 7.5px 4px 0px #000;
+
+    display: flex;
+    justify-content: space-between;
+
+    .back-link {
+      background-color: white;
+      border-radius: 5px;
+      padding: 0.1rem 1rem;
+      cursor: pointer;
+    }
+
+    .date-badge {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Forte';
+      width: 170px;
+      perspective: 1000px;
+      cursor: pointer;
+      // display: flex;
+      // align-items: center;
+      
+      &:hover .date-badge-inner{
+        transform: rotateY(180deg);
+      }
+
+      .date-badge-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+        height: 25px;
+        padding: 0.25rem 0.4rem;
+      }
+
+      .front, .back {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-backface-visibility: hidden; /* Safari */
+        backface-visibility: hidden;
+      }
+
+      .front {
+        background-color: $base-color;
+      }
+
+      .back {
+        background-color: black;
+        color: white;
+        transform: rotateY(180deg);
+      }
+    }
+
+    .author-link {
+      display: flex;
+      align-items: center;
+
+      font-family: brandon-grotesque, sans-serif;
+      font-style: normal;
+      font-weight: 400;
+
+      .person {
+        font-weight: bold;
+        cursor: pointer;
+        margin-left: 0.05rem;
+        padding: 0rem 0.45rem;
+        border-radius: 10px;
+
+        &:hover {
+          background-color: white;
+
+        }
+      }
+    }
+
+  }
+
+  
+
+  .ad {
+    position: fixed;
+    right: 10vw;
+    width: 200px;
+    border: 3px solid #955408;
+    z-index: 2;
+
+    .details-slide-out {
+      margin-top: -3px;
+      width: calc(100% + 6px);
+      height: calc(100% + 6px);
+      position: absolute;
+      top: 0;
+      left: -3px;
+      background-color: $accent-color;
+      z-index: -20;
+      transition-duration: 200ms;
+      color: rgb(0, 0, 0);
+      padding: 0.75rem;
+      text-align: center;
+      border: 3px solid #000;
+
+      font-family: brandon-grotesque, sans-serif;
+      font-style: normal;
+      font-weight: 400;
+
+      &.expand {
+        transform: translateX(-100%);
+      }
+    }
+
+    .photo-banner {
+      position: relative;
+      height: 50vh;
+
+      .ad-warning {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 0.1rem 0.5rem;
+        background-color: #955408;
+        color: white;
+        font-family: 'Forte';
+        font-size: 2rem;
+      }
+
+      .logo {
+        $height: 125px;
+        position: absolute;
+        bottom: -$height / 2;
+        right: -20px;
+        height: $height;
+        width: auto;
+        object-fit: cover;
+
+        img {
+          width: auto;
+          height: 100%;
+        }
+      }
+
+      .icon {
+        position: absolute;
+        bottom: calc(-125px / 2);
+        left: 20px;
+        height: 125px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 3.5rem;
+      }
+
+      .photo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .details {
+      padding: 0.75rem 0;
+      padding-top: 80px;
+
+      background-color: #343746;
+      color: white;
+      // display: flex;
+      // flex-wrap: nowrap;
+      // flex-direction: column;
+      // justify-content: center;
+      // align-items: center;
+
+      .detail {
+        margin-left: 5%;
+
+        .icon {
+          display: inline-block;
+          width: 30px;
+          text-align: right;
+          margin-right: 20px;
+
+          i {
+            display: inline-block;
+            margin-right: auto;
+            margin-left: auto;
+          }
+        }
+      }
+
+      .action {
+        margin-top: 1rem;
+        padding: 0.25rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid white;
+        border-radius: 10px;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        cursor: pointer;
+        transition-duration: 200ms;
+
+        &:hover {
+          background-color: white;
+          color: black;
+        }
+
+        &:active {
+          background-color: gray;
+        }
+      }
+
+      .explanation {
+        margin-top: 0.5rem;
+        padding: 0.25rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.8em;
+        cursor: pointer;
+
+        &:hover {
+          color: rgb(177, 177, 177);
+        }
+      }
+    }
+  }
+
+  .content-wrapper {
+    margin-bottom: 5rem;
+
+    .hero {
+      position: relative;
+      z-index: -1;
+
+
+      .image {
+        width: calc(100% - 2rem);
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+      }
+
+      .title {
+        position: absolute;
+        left: 50%;
+        width: 100%;
+        max-width: 800px;
+        text-align: center;
+        transform: translateX(-50%);
+        bottom: 0;
+        padding: 0.5rem;
+        border: 3px solid #000;
+        border-bottom: 0px solid #000;
+        background-color: rgba(0, 0, 0, 0.75);
+        color: white;
+
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 2.5rem;
+        line-height: 2.4rem;
+      }
+
+    }
+
+    .content {
+      background-color: white;
+      box-shadow: 0px -7.5px 4px 0px #000;
+      // color: white;
+      border: 3px solid #000;
+      border-top: 0px solid #000;
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+      padding-left: 15%;
+      padding-right: 15%;
+    }
+  }
+}

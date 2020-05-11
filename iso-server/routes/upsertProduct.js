@@ -1,4 +1,4 @@
-const moment = require('moment');
+// const moment = require('moment');
 var ObjectId = require('mongodb').ObjectId; 
 
 module.exports = (app, db) => {
@@ -14,7 +14,7 @@ module.exports = (app, db) => {
       $set: {
         title: product.title,
         type: product.type,
-        price: product.price,
+        price: parseInt(product.price),
         ourCost: product.ourCost,
         material: product.material,
         photos: {

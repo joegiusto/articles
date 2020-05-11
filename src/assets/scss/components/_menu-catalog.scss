@@ -103,6 +103,11 @@
         }
       &.flip {
         transform: rotateY(180deg);
+        // backface-visibility: hidden;
+
+        // .menu-catalog-item {
+        //     opacity: 0;
+        // }
       }
     }
     
@@ -135,11 +140,13 @@
 
 .menu-catalog {
     position: rlative;
+
     &-item {
         display: flex;
         flex-direction: column;
         position: relative;
         backface-visibility: hidden;
+
         &-back {
             position: absolute;
             height: 100%;
@@ -150,9 +157,7 @@
             padding: 0px 1rem;
             text-align: left;
             backface-visibility: hidden;
-            .footer {
-                // margin-bottom: 0.35rem;
-            }
+
             .hide-banner {
                 position: absolute;
                 border-radius: 10px;
@@ -187,6 +192,7 @@
                 -webkit-clip-path: polygon(25% 85%, 75% 85%, 100% 100%, 0% 100%);
                 clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%);
                 backface-visibility: hidden;
+
                 &-background {
                     // background-color: gray;
                     position: absolute;
@@ -228,15 +234,19 @@
                 .active {
                     color: white;
                 }
+
                 .btn-articles.active {
                     background-color: pink;
                 }
+
                 .btn-info.active {
                     background-color: #17a2b8!important;
                 }
+
                 .btn-red.active {
                     background-color: #dc3545;
                 }
+
                 .btn-blue.active {
                     background-color: #3295ff;
                 }
@@ -255,6 +265,7 @@
             border-style: solid;
             padding: 0rem .3rem;
         }
+
         &-sale {
             background-color: rgb(255, 0, 0);
             font-size: .8rem;
@@ -279,9 +290,11 @@
 
 .store-panel {
     height: 460px;
+
     &-1 {
       background: rgb(0,0,0);
     }
+
     &-2 {
       background: rgb(255, 255, 255);
       background-image: url(http://historygarage.com/wp-content/uploads/2016/04/Jeep-driving-up-stairs.jpg);
@@ -289,24 +302,29 @@
       background-size: contain;
       // filter: blur(5px);
     }
+
     &-3 {
       background: rgb(204,204,204);
       background: linear-gradient(0deg, rgba(204,204,204,1) 0%, rgba(255,255,255,1) 100%);
     }
+
     &-image-1 {
       background-image: url(https://mymodernmet.com/wp/wp-content/uploads/archive/w-leZAxreDXSpoMROe6G_1082098865.jpeg);
       background-position: 50%;
     }
+
     &-image-2 {
       background-image: url(http://historygarage.com/wp-content/uploads/2016/04/Jeep-driving-up-stairs.jpg);
       background-position: 0%;
       background-size: contain;
     }
+
     &-image-3 {
       background-image: url(https://media.licdn.com/dms/image/C511BAQEP_DE_g0A6kw/company-background_10000/0?e=2159024400&v=beta&t=nd7c8WoN6Ilj6ps-bxQ__Bb0iRd2G_GP9qN2kyyPQzM);
       background-position: 0%;
       background-size: cover;
       background-repeat: no-repeat;
+
       .logo-banner {
         position: absolute;
         top: 20px;
@@ -317,6 +335,7 @@
         box-shadow: 0px 0px 5px 2px #000;
         z-index: 2;
       }
+
       .product-select {
         position: absolute;
         top: 20px;
@@ -327,6 +346,7 @@
         box-shadow: 0px 0px 5px 2px #000;
         z-index: 1;
         text-align: left;
+
         .btn-group-vertical {
           // margin-left: 2rem;
           height: 152px;
@@ -335,10 +355,12 @@
             text-align: left;
           }
         }
+        
         .list-group-item {
           padding: 0.40rem 5.25rem;
           
         }
       }
+
     }
   }

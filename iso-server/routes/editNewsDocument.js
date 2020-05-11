@@ -13,7 +13,7 @@ module.exports = (app, db) => {
     myobj.news_type = myobj.news_type.toLowerCase();
     myobj.news_date = new Date();
 
-    const allowedKeys = ['news_type', 'news_title', 'news_notes', 'news_date', 'news_tags'];
+    const allowedKeys = ['news_type', 'news_title', 'news_notes', 'news_date', 'news_tags', "hero_url"];
     myobj = Object.keys(myobj)
     .filter(key => allowedKeys.includes(key))
     .reduce((obj, key) => {

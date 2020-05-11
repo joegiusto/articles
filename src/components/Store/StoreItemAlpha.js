@@ -28,10 +28,10 @@ const StoreItem = (props) => {
         <div className={"slick-slide d-inline-block " + (flipped ? 'flip' : '')}>
           <div className="menu-catalog-item">
               <div className={"menu-catalog-item-banner btn-outline-" + (color)}>
-                  <span>{props.banner}</span>
+                  <span>{props.banner || '?'}</span>
               </div>
               {props.sale ? (<div className={"menu-catalog-item-sale px-4"}><span>${(props.price / 100).toFixed(2)}</span></div>) : (<span></span>)}
-              <h5 className="mb-0 pb-1" >{props.title}</h5>
+              <h5 className="mb-0 pb-1" >{props.title || <div>&nbsp;</div>}</h5>
               {/* <!-- <div className="menu-catalog-item-photo"></div> --> */}
               <div className={"menu-catalog-item-photo-experimental-background backdrop-" + (color)}></div>
               <div className={"menu-catalog-item-photo-experimental floor-" + (color)}></div>
@@ -100,9 +100,9 @@ const StoreItem = (props) => {
           <div className="menu-catalog-item-back pt-3">
               <div className="hide-banner"></div>
               <div>
-                <p>Material: Cotton</p>
-                <p>Manufacture Cost: $21</p>
-                <p className="mb-0">Sale Amount: $30</p>
+                <p>Material: {props.material}</p>
+                <p>Manufacture Cost: ${(props.ourCost / 100).toFixed(2)}</p>
+                <p className="mb-0">Sale Amount: ${(props.price / 100).toFixed(2)}</p>
               </div>
               <div className="spacer"></div>
               <div className="footer">

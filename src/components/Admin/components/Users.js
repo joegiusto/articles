@@ -9,6 +9,8 @@ class Users extends Component {
       users: [],
       outsetComplete: 0,
       
+      zips: {},
+
       republicanParty: 0,
       democratParty: 0,
       greenParty: 0,
@@ -73,6 +75,26 @@ class Users extends Component {
               otherParty: self.state.otherParty + 1
             })
         }
+
+        const currentUserZip = self.state.users[i].address.zip
+
+        if (self.state.zips[currentUserZip] === undefined) {
+          self.setState({
+            zips: {
+              ...self.state.zip,
+              [self.state.users[i].address.zip]: 0
+            }
+          })
+        }
+
+        self.setState({
+          zips: {
+            ...self.state.zip,
+            [self.state.users[i].address.zip]: self.state.zips[currentUserZip] + 1
+          }
+        })
+
+        console.log(self.state.zips[currentUserZip])
   
       }
 
@@ -91,9 +113,22 @@ class Users extends Component {
     this.props.setLoaction('');
   }
 
-  // calc(user) {
+  // TODO - Convert this logic to server side code and use https://www.npmjs.com/package/zipcodes to build local directory as loop goes or after loop is done do one call wuth all zips to get names
+  checkZipName(zip) {
+    const directory = {
+      12524: 'Fishkill'
+    }
 
-  // }
+    if ( Object.keys(directory).indexOf(zip) > -1 ) {
+
+      return( [Object.values(directory)[Object.keys(directory).indexOf(zip)]] )
+
+    } else {
+
+      return( zip )
+      
+    }
+  }
 
   render() {
 
@@ -123,7 +158,7 @@ class Users extends Component {
                 <td>{user.first_name}</td>
                 <td>{user.last_name}</td>
                 <td>{user.outset === true ? 'True' : 'False'}</td>
-                <td>{user.roles.isAdmin === "true" ? 'True' : 'False'}</td>
+                <td>{user.roles?.isAdmin === "true" ? 'True' : 'False'}</td>
               </tr>
               
             ))}
@@ -138,24 +173,39 @@ class Users extends Component {
         <div className="row">
 
           <div className="col-12 col-md-6">
+
             <div className="card">
               <div className="card-header">Outset</div>
               <div className="card-body">
                 <div>Outset Complete: {(Math.floor((this.state.outsetComplete / this.state.users.length) * 100))}%</div>
               </div>
             </div>
+
+            <div className="card mt-3">
+              <div className="card-header">Geographical Data</div>
+              <div className="card-body">
+
+                {
+                  Object.entries(this.state.zips).map(([key, val]) => 
+                      <div key={key}>{this.checkZipName(key)}: {val}</div>
+                  )
+                }
+
+              </div>
+            </div>
+
           </div>
 
           <div className="col-12 col-md-6">
             <div className="card mt-3 mt-md-0">
               <div className="card-header">Political</div>
               <div className="card-body">
-                <div>Republican: {(Math.floor((this.state.republicanParty / this.state.users.length) * 100))}%</div>
-                <div>Democrat: {(Math.floor((this.state.democratParty / this.state.users.length) * 100))}%</div>
-                <div>Green: {(Math.floor((this.state.greenParty / this.state.users.length) * 100))}%</div>
-                <div>Independent: {(Math.floor((this.state.independentParty / this.state.users.length) * 100))}%</div>
-                <div>Articles: {(Math.floor((this.state.articlesParty / this.state.users.length) * 100))}%</div>
-                <div>Other: {(Math.floor((this.state.otherParty / this.state.users.length) * 100))}%</div>
+                <div>Republican: {(Math.floor((this.state.republicanParty / this.state.users.length) * 100))}% ({this.state.republicanParty})</div>
+                <div>Democrat: {(Math.floor((this.state.democratParty / this.state.users.length) * 100))}% ({this.state.democratParty})</div>
+                <div>Green: {(Math.floor((this.state.greenParty / this.state.users.length) * 100))}% ({this.state.greenParty})</div>
+                <div>Independent: {(Math.floor((this.state.independentParty / this.state.users.length) * 100))}% ({this.state.independentParty})</div>
+                <div>Articles: {(Math.floor((this.state.articlesParty / this.state.users.length) * 100))}% ({this.state.articlesParty})</div>
+                <div>Other: {(Math.floor((this.state.otherParty / this.state.users.length) * 100))}% ({this.state.otherParty})</div>
               </div>
             </div>
           </div>

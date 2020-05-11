@@ -1,7 +1,16 @@
-import React, { useState } from 'react';
+import React, { Component, useState } from 'react';
+import { connect } from "react-redux";
 // import playButtonLight from '../../assets/img/News/yt_logo_mono_light.png'
 import playButtonDark from '../../assets/img/News/yt_logo_mono_dark.png'
 import moment from 'moment';
+
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+import IssueDevelopmentCard from './IssueDevelopmentCard'
+import StoriesDisplay from './StoriesDisplay'
+import MythsDisplay from './MythsDisplay'
 
 import * as ROUTES from '../../constants/routes';
 import { Link } from 'react-router-dom';
@@ -18,115 +27,71 @@ function FlintCounter() {
   );
 }
 
-const Page = () => (
-  <div className='container-fluid news-container pt-4'>
+class Frontpage extends Component {
+  constructor(props) {
+    super(props);
 
-    <div className="row justify-content-between"> 
-      <div className="col-12 col-md-8">
-        <div className="p-4">
+    this.state = {
+      // issues: []
+    }
+  }
 
-          <div className="row pl-4 focused-news-panel shadow">
+  componentDidMount() {
+    console.log("Mounted");
+  }
 
-            <div className='col-12'>
-              <div className="dual-header">
-                <div className="heading-font">Subscribed Developments</div>
-                <Link to={ROUTES.SUBSCRIBE}><div id='manage-subscriptions'>Manage Subscriptions</div></Link>
-              </div>
+  render() {
+    const settings = {
+      arrows: true,
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 4,
+      slidesToScroll: 4
+    };
+    
+    return(
+      <section className="frontpage-section">
+        <div className='container-fluid'>
 
-            </div>
+          <div className="row mb-5">
 
-            <div className="col">
-              <div className="subscriped-story-card">
-                <div className='subscribe-controls'>
-                  <i className="fas fa-bookmark"></i>
+            {/* Left Side */}
+            <div className="col-12 col-md-8">
+
+              <div className="issue-development">
+
+                <div className="d-flex justify-content-between">
+                  <span className="title heading-font">Issue Developments</span>
+                  {/* <span>Showing 4 out of {this.props.issues.issues.length}</span> */}
                 </div>
-                <div className='subscriped-story-card-title'>Flint Water Cleanup</div>
-                <div className='subscriped-story-card-subtitle'>Mayor Gives Update</div>
-                <FlintCounter></FlintCounter>
+
+                <Slider {...settings}>
+  
+                  {this.props.issues.issues.map((issue) => (
+                    <IssueDevelopmentCard issue={issue}/>
+                  ))}
+  
+                </Slider>
+                <div className="manage-subscriptions small">Manage Issue Subscriptions</div>
               </div>
+
+              <div className="stories">
+                <span className="title heading-font">News Stories</span>
+                <StoriesDisplay stories={this.props.stories.stories}/>
+              </div>
+
+              <div className="myths">
+                <span className="title heading-font">Myths Collection</span>
+                <MythsDisplay myths={this.props.myths.myths}/>
+              </div>
+
             </div>
 
-            <div className="col">
-              <div className="subscriped-story-card">
-                <div className='subscribe-controls'>
-                  <i className="fas fa-bookmark"></i>
-                </div>
-                <div className='subscriped-story-card-title'>Gun Laws</div>
-                <div className='subscriped-story-card-subtitle'>States Pass New Law</div>
-                <div className='state-icons'>
-                  <span className="state-icon"></span>
-                  <span className="state-icon"></span>
-                  <span className="state-icon"></span>
-                </div>
-              </div>
-            </div>
+            {/* Right Side */}
+            <div className="col-12 col-md-4">
 
-            <div className="col">
-              <div className="subscriped-story-card empty">
-                <i className="far fa-bookmark"></i>
-                <div>Subscribe To More Stories.</div>
-              </div>
-            </div>
-
-            <div className="col">
-              <div className="subscriped-story-card empty">
-                <i className="far fa-bookmark"></i>
-                <div>Subscribe To More Stories.</div>
-              </div>
-            </div>
-
-            <div className="col">
-              <div className="subscriped-story-card empty">
-                <i className="far fa-bookmark"></i>
-                <div>Subscribe To More Stories.</div>
-              </div>
-            </div>
-
-            <hr className='w-100 mx-5 mt-4'/>
-
-          </div>
-
-          <div className="row mt-4 pl-4 focused-news-panel shadow">
-
-            <div className='col-12'>
-              <div className="large-story-card">
-                <div className="subscribe-controls">
-                  <i className="far fa-bookmark"></i>
-                </div>
-                <h3 className='title pl-3'>The<br></br>Mueller<br></br>Report</h3>
-              </div>
-            </div>
-
-            <div className='col-6 pt-4'>
-              <div className="medium-story-card">
-                <div className="subscribe-controls">
-                  <i className="far fa-bookmark"></i>
-                </div>
-                <h3 className='title pl-3'>The<br></br>Mueller<br></br>Report</h3>
-              </div>
-            </div>
-
-            <div className='col-6 pt-4'>
-              <div className="medium-story-card">
-                <div className="subscribe-controls">
-                  <i className="far fa-bookmark"></i>
-                </div>
-                <h3 className='title pl-3'>The<br></br>Mueller<br></br>Report</h3>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      </div>
-
-      <div className="col-12 col-md-4">
-        
-        <div className="side-news-panel side-news-panel-shadow affix">
-          <div className="row">
-            <div className="col-12">
               <div className="the-recap">
-                {/* <h1>The Recap <i className="fas fa-share fa-rotate-90"></i></h1> */}
                 <div className="the-recap-embed"></div>
                 <div className="the-recap-embed-overlay">
                   <div className="background"></div>
@@ -134,110 +99,244 @@ const Page = () => (
                   <span className="text">Coming Soon</span>
                 </div>
               </div>
+
+              
+
             </div>
+
           </div>
+
+      
+          <div className="row justify-content-between">
+            
+            <div className="col-12 col-md-8">
+              <div className="p-4">
+      
+                <div className="row pl-4 focused-news-panel shadow">
+      
+                  <div className='col-12'>
+                    <div className="dual-header">
+                      <div className="heading-font">Subscribed Developments</div>
+                      <Link to={ROUTES.SUBSCRIBE}><div id='manage-subscriptions'>Manage Subscriptions</div></Link>
+                    </div>
+      
+                  </div>
+      
+                  <div className="col">
+                    
+                  </div>
+      
+                  <div className="col">
+                    <div className="subscriped-story-card">
+                      <div className='subscribe-controls'>
+                        <i className="fas fa-bookmark"></i>
+                      </div>
+                      <div className='subscriped-story-card-title'>Gun Laws</div>
+                      <div className='subscriped-story-card-subtitle'>States Pass New Law</div>
+                      <div className='state-icons'>
+                        <span className="state-icon"></span>
+                        <span className="state-icon"></span>
+                        <span className="state-icon"></span>
+                      </div>
+                    </div>
+                  </div>
+      
+                  <div className="col">
+                    <div className="subscriped-story-card empty">
+                      <i className="far fa-bookmark"></i>
+                      <div>Subscribe To More Stories.</div>
+                    </div>
+                  </div>
+      
+                  <div className="col">
+                    <div className="subscriped-story-card empty">
+                      <i className="far fa-bookmark"></i>
+                      <div>Subscribe To More Stories.</div>
+                    </div>
+                  </div>
+      
+                  <div className="col">
+                    <div className="subscriped-story-card empty">
+                      <i className="far fa-bookmark"></i>
+                      <div>Subscribe To More Stories.</div>
+                    </div>
+                  </div>
+      
+                  <hr className='w-100 mx-5 mt-4'/>
+      
+                </div>
+      
+                <div className="row mt-4 pl-4 focused-news-panel shadow">
+      
+                  <div className='col-12'>
+                    <div className="large-story-card">
+                      <div className="subscribe-controls">
+                        <i className="far fa-bookmark"></i>
+                      </div>
+                      <h3 className='title pl-3'>The<br></br>Mueller<br></br>Report</h3>
+                    </div>
+                  </div>
+      
+                  <div className='col-6 pt-4'>
+                    <div className="medium-story-card">
+                      <div className="subscribe-controls">
+                        <i className="far fa-bookmark"></i>
+                      </div>
+                      <h3 className='title pl-3'>The<br></br>Mueller<br></br>Report</h3>
+                    </div>
+                  </div>
+      
+                  <div className='col-6 pt-4'>
+                    <div className="medium-story-card">
+                      <div className="subscribe-controls">
+                        <i className="far fa-bookmark"></i>
+                      </div>
+                      <h3 className='title pl-3'>The<br></br>Mueller<br></br>Report</h3>
+                    </div>
+                  </div>
+      
+                </div>
+      
+              </div>
+            </div>
+      
+            <div className="col-12 col-md-4">
+              
+              <div className="side-news-panel side-news-panel-shadow affix">
+                <div className="row">
+                  <div className="col-12">
+                    <div className="the-recap">
+                      {/* <h1>The Recap <i className="fas fa-share fa-rotate-90"></i></h1> */}
+                      <div className="the-recap-embed"></div>
+                      <div className="the-recap-embed-overlay">
+                        <div className="background"></div>
+                        <img src={playButtonDark} alt=""/>
+                        <span className="text">Coming Soon</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+      
+              <div className="side-news-panel side-news-panel-shadow affix text-center">
+      
+                <div className="weather-header"></div>
+      
+                <div className="dual-header">
+      
+                  <div className="weather-title ml-3 mt-2">Weekly Weather <span className="highlight ml-1 py-1 px-2">Fishkill, NY</span></div>
+      
+                  <div className="weather-toggle-switch mr-3 mt-2">
+                    <i className="fas active fa-home mr-0"></i>
+                    <span className="divide">/</span>
+                    <i className="fas fa-search-location mr-0"></i>
+                  </div>
+      
+                </div>
+      
+                <div className="weather-content mt-4">
+                  <div className="row justify-content-center">
+                    <div className="col-auto">
+                      <div className={'day-tile ' + (moment().format('d') === 0 ? 'active' : '')}>
+                        <div className="day">Sun.</div>
+                        <div className="date">{moment().add(-2, 'day').format('MM/DD')}</div>
+                        <div className="icon">
+                          <i className="fas fa-sun"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-auto">
+                      <div className={'day-tile ' + (moment().format('d') === 1 ? 'active' : '')}>
+                        <div className="day">Mon.{moment().format('d')}</div>
+                        <div className="date">{moment().add(-1, 'day').format('MM/DD')}</div>
+                        <div className="icon">
+                          <i className="fas fa-cloud-sun"></i>
+                        </div>
+                      </div>
+                    </div>
+      
+                    <div className="col-auto">
+                      <div className={'day-tile ' + (moment().format('d') === 2 ? 'active' : '')}>
+                        
+                        <div className="day">Tues.{moment().format('d')}</div>
+      
+                        <div className="date">{moment().add(0, 'day').format('MM/DD')}</div>
+      
+                        <div className="icon">
+                          <i className="fas fa-cloud-sun"></i>
+                        </div>
+      
+                      </div>
+                    </div>
+      
+                    <div className="col-auto">
+                      <div className={'day-tile ' + (moment().format('d') === 3 ? 'active' : '')}>
+                        <div className="day">Wed.</div>
+                        <div className="date">{moment().add(1, 'day').format('MM/DD')}</div>
+                        <div className="icon">
+                          <i className="fas fa-cloud-showers-heavy"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-auto">
+                      <div className={'day-tile ' + (moment().format('d') === 4 ? 'active' : '')}>
+                        <div className="day">Thur.</div>
+                        <div className="date">{moment().add(2, 'day').format('MM/DD')}</div>
+                        <div className="icon">
+                          <i className="fas fa-cloud-showers-heavy"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-auto">
+                      <div className={'day-tile ' + (moment().format('d') === 5 ? 'active' : '')}>
+                        <div className="day">Fri.</div>
+                        <div className="date">{moment().add(3, 'day').format('MM/DD')}</div>
+                        <div className="icon">
+                          <i className="fas fa-cloud-sun"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-auto">
+                      <div className={'day-tile ' + (moment().format('d') === 6 ? 'active' : '')}>
+                        <div className="day">Sat.</div>
+                        <div className="date">{moment().add(4, 'day').format('MM/DD')}</div>
+                        <div className="icon">
+                          <i className="fas fa-sun"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+      
+                <div className="weather-footer mt-3">
+      
+                </div>
+      
+              </div>
+      
+            </div>
+      
+          </div>
+
+
         </div>
+      </section>
+    )
+  }
+}
 
-        <div className="side-news-panel side-news-panel-shadow affix text-center">
+// const Page = () => (
+  
+// );
 
-          <div className="weather-header"></div>
+// export default Page;
 
-          <div className="dual-header">
+const mapStateToProps = state => ({
+  issues: state.issues,
+  stories: state.stories,
+  myths: state.myths
+});
 
-            <div className="weather-title ml-3 mt-2">Weekly Weather <span className="highlight ml-1 py-1 px-2">Fishkill, NY</span></div>
-
-            <div className="weather-toggle-switch mr-3 mt-2">
-              <i className="fas active fa-home mr-0"></i>
-              <span className="divide">/</span>
-              <i className="fas fa-search-location mr-0"></i>
-            </div>
-
-          </div>
-
-          <div className="weather-content mt-4">
-            <div className="row justify-content-center">
-              <div className="col-auto">
-                <div className={'day-tile ' + (moment().format('d') === 0 ? 'active' : '')}>
-                  <div className="day">Sun.</div>
-                  <div className="date">{moment().add(-2, 'day').format('MM/DD')}</div>
-                  <div className="icon">
-                    <i className="fas fa-sun"></i>
-                  </div>
-                </div>
-              </div>
-              <div className="col-auto">
-                <div className={'day-tile ' + (moment().format('d') === 1 ? 'active' : '')}>
-                  <div className="day">Mon.{moment().format('d')}</div>
-                  <div className="date">{moment().add(-1, 'day').format('MM/DD')}</div>
-                  <div className="icon">
-                    <i className="fas fa-cloud-sun"></i>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-auto">
-                <div className={'day-tile ' + (moment().format('d') === 2 ? 'active' : '')}>
-                  
-                  <div className="day">Tues.{moment().format('d')}</div>
-
-                  <div className="date">{moment().add(0, 'day').format('MM/DD')}</div>
-
-                  <div className="icon">
-                    <i className="fas fa-cloud-sun"></i>
-                  </div>
-
-                </div>
-              </div>
-
-              <div className="col-auto">
-                <div className={'day-tile ' + (moment().format('d') === 3 ? 'active' : '')}>
-                  <div className="day">Wed.</div>
-                  <div className="date">{moment().add(1, 'day').format('MM/DD')}</div>
-                  <div className="icon">
-                    <i className="fas fa-cloud-showers-heavy"></i>
-                  </div>
-                </div>
-              </div>
-              <div className="col-auto">
-                <div className={'day-tile ' + (moment().format('d') === 4 ? 'active' : '')}>
-                  <div className="day">Thur.</div>
-                  <div className="date">{moment().add(2, 'day').format('MM/DD')}</div>
-                  <div className="icon">
-                    <i className="fas fa-cloud-showers-heavy"></i>
-                  </div>
-                </div>
-              </div>
-              <div className="col-auto">
-                <div className={'day-tile ' + (moment().format('d') === 5 ? 'active' : '')}>
-                  <div className="day">Fri.</div>
-                  <div className="date">{moment().add(3, 'day').format('MM/DD')}</div>
-                  <div className="icon">
-                    <i className="fas fa-cloud-sun"></i>
-                  </div>
-                </div>
-              </div>
-              <div className="col-auto">
-                <div className={'day-tile ' + (moment().format('d') === 6 ? 'active' : '')}>
-                  <div className="day">Sat.</div>
-                  <div className="date">{moment().add(4, 'day').format('MM/DD')}</div>
-                  <div className="icon">
-                    <i className="fas fa-sun"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="weather-footer mt-3">
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-  </div>
-);
-
-export default Page;
+export default connect(
+  mapStateToProps
+)(Frontpage);

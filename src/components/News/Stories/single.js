@@ -1,13 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { withFirebase } from '../../Firebase';
+import moment from 'moment'
+// import { withFirebase } from '../../Firebase';
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 
-const Test = props => (
-  <h1>Test</h1>
-)
+import Ad from './Ad'
 
 class Issue extends React.Component {
   constructor(props) {
@@ -62,16 +61,47 @@ class Issue extends React.Component {
     // news_notes.replace(/(\r\n|\n|\r)/gm, "")
 
     return (
-      <div className="issues-page">
+      <div className="stories-page">
         {loading ?
         <div className="alert alert-danger">Loading Issue - {this.props.match.params.id}</div>
         :
         <div className="container single mt-5">
-          <div className="link" onClick={() => this.props.history.goBack()}>{String.fromCharCode(11148)} Back to Home</div>
-          <div className="card ">
+
+          <Ad/>
+
+          <div className="content-wrapper">
+
+          <div className="news-one-head">
+
+            <span className="back-link" onClick={() => this.props.history.goBack()}>{String.fromCharCode(11148)}</span>
+
+            <span className="date-badge">
+              <div className="date-badge-inner">
+                <span className="front">{moment(Date.Now).format("LL")}</span>
+                <span className="back">Updated {moment('05-05-1998').format("LL")}</span>
+              </div>
+            </span>
+
+            <span className="author-link"> Written By:<span className="person">Joey Giusto</span> </span>
+
+          </div>
+
+            <div className="hero">
+              <img src={this.state?.hero_url} alt="" className="image"/>
+              <div className="title">{this.state.news_title}</div>
+            </div>
+
+            <div className="content">
+              {/* <img className="my-5 mx-auto d-block" src="https://www.tesla.com/xNVh4yUEc3B9/13_Desktop_Order.png" alt=""/> */}
+              <p>{this.state?.news_notes}</p>
+            </div>
+            
+          </div>
+
+          <div className="card d-none">
             <h3 className="card-header">{this.state.news_title}</h3>
             <div className="card-body">
-              <div style={{whiteSpace: 'pre-wrap'}} dangerouslySetInnerHTML={{__html: this.state?.news_notes?.replace('<break>', '<div className="alert alert-danger my-3">Testing Break</div>').replace(/(\r\n|\n|\r)/gm, "")}}>
+              <div style={{whiteSpace: 'pre-wrap'}} dangerouslySetInnerHTML={{__html: this.state?.news_notes?.replace(/(\r\n|\n|\r)/gm, "")}}>
                 {/* { dangerouslySetInnerHTML={{__html: this.state?.news_notes?} } */}
                 {/* {this.state?.news_notes?.replace('<break>', '<div className="alert alert-danger">Test</div>')} */}
               </div>
@@ -82,6 +112,7 @@ class Issue extends React.Component {
               {/* <button onClick={() => this.props.history.goBack()} className="btn btn-articles-light">Go Back</button> */}
             </div>
           </div>
+          
         </div>
         }
       </div>

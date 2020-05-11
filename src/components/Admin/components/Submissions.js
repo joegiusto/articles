@@ -52,6 +52,7 @@ class Submissions extends Component {
             <tr>
               <th scope="col">User</th>
               <th scope="col">Title</th>
+              <th scope="col">Actions</th>
               {/* <th scope="col">Price</th> */}
               {/* <th scope="col">Card Photos</th> */}
             </tr>
@@ -63,6 +64,7 @@ class Submissions extends Component {
               <tr>
                 <th scope="row">{product.user_id}</th>
                 <td>{product.title}</td>
+                <td><div className="badge badge-danger">Delete</div></td>
                 {/* <td>${product.price / 100}</td> */}
                 {/* <td>p-c</td> */}
               </tr>

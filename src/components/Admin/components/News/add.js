@@ -10,6 +10,7 @@ const initial_state = {
   news_notes: "",
   news_date: new Date(),
   news_tags: [],
+  hero_url: "",
 
   tagSelectOpen: false,
 
@@ -81,7 +82,8 @@ class newsAdd extends Component {
       console.log(error);
 
       self.setState({
-        editLoading: false
+        editLoading: false,
+        editLoadingError: true
       });
     });
 
@@ -112,9 +114,9 @@ class newsAdd extends Component {
       })
     }
 
-    function contains(card, list) {
+    function contains(obj, list) {
       return list.some(function(elem) {
-           return elem._id === card._id
+           return elem._id === obj._id
       })
     }
 
@@ -122,15 +124,17 @@ class newsAdd extends Component {
 
   removeTag(tagObj) {
 
-    if ( !contains(tagObj, this.state.news_tags) ) {
+    if ( contains(tagObj, this.state.news_tags) ) {
       this.setState({ 
-        news_tags: [...this.state.news_tags, {...tagObj} ] 
+        news_tags:  this.state.news_tags.filter(function( obj ) {
+          return obj._id !== tagObj._id;
+        }) 
       })
     }
 
-    function contains(card, list) {
+    function contains(obj, list) {
       return list.some(function(elem) {
-           return elem._id === card._id
+           return elem._id === obj._id
       })
     }
 
@@ -222,6 +226,26 @@ class newsAdd extends Component {
             null
             }
           </div>
+
+          <div className="col-12">
+            {
+              this.state.news_id === '' ? 
+              '' 
+              : 
+              <div className="d-flex justify-content-between">
+                <div className="badge badge-dark mb-3">{this.state.news_id}</div>
+  
+                {this.state.editLoading ? 
+                <div className="badge badge-warning mb-3">Loading</div>
+                :
+                this.state.editLoadingError ? 
+                <div className="badge badge-danger mb-3">Error</div>
+                :
+                <div className="badge badge-success mb-3">Success</div>
+                }
+              </div>
+            }
+          </div>
           
           <div className="col-12 col-md-6">
             <div className="form-group">
@@ -245,6 +269,23 @@ class newsAdd extends Component {
                 name="news_title" 
                 aria-describedby=""
                 value={this.state.news_title}
+                onChange={this.handleChange}
+                placeholder=""
+                disabled={this.state.editLoading ? 'disabled' : ''}
+              />
+            </div>
+          </div>
+
+          <div className="col-12 col-md-6">
+            <div className="form-group">
+              <label for="news_title">Hero URL:</label>
+              <input 
+                type="text" 
+                className="form-control" 
+                id="hero_url"
+                name="hero_url" 
+                aria-describedby=""
+                value={this.state.hero_url}
                 onChange={this.handleChange}
                 placeholder=""
                 disabled={this.state.editLoading ? 'disabled' : ''}
@@ -280,7 +321,7 @@ class newsAdd extends Component {
                   <div className="tags">
                     {this.state.news_tags.length > 0 ?
                     this.state.news_tags.map((tag) => (
-                      <div className="badge badge-dark d-inline-block mr-1">{tag.tag_name}</div>
+                      <div onClick={() => this.removeTag(tag)} className="badge badge-dark d-inline-block mr-1">{tag.tag_name}</div>
                     ))
                     :
                     <div className="badge badge-danger d-inline-block">No Tags</div>
@@ -337,7 +378,7 @@ class newsAdd extends Component {
 
             </div>
 
-           
+          
 
           </div>
 

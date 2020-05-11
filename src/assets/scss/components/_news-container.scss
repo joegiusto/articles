@@ -1,5 +1,101 @@
-.news-container {
-  max-width: none!important;
+section.frontpage-section {
+  padding-top: 1rem;
+
+  .issue-development {
+    background-color: white;
+    border: 2px solid #000;
+    padding: 1rem;
+    border-radius: 10px;
+    padding: 1rem 2rem;
+    padding-bottom: 0.5rem;
+
+    .title {
+      font-size: 1.3rem;
+    }
+
+    .manage-subscriptions {
+      margin-top: 0.5rem;
+      padding: 0.25rem 0rem;
+      width: 200px;
+
+      margin-left: auto;
+      margin-right: auto;
+
+      display: flex;
+      justify-content: center;
+      align-self: center;
+
+      background-color: black;
+      color: white;
+    }
+
+    .slick-slider {
+      // margin: 0 1rem;
+
+      .slick-dots {
+        right: 0;
+        top: -37px;
+        width: auto;
+        margin-right: 1rem;
+      }
+
+      .slick-arrow {
+        color: white;
+        &:before {
+          color: black;
+        }
+      }
+
+      .subscriped-story-card {
+        margin-right: 1rem;
+      }
+    }
+
+  }
+
+  .stories {
+    margin-top: 1rem;
+    background-color: white;
+    border: 2px solid #000;
+    padding: 1rem;
+    border-radius: 10px;
+    padding: 1rem 1rem;
+    // padding-bottom: 0.5rem;
+
+    .story-card {
+      cursor: pointer;
+      padding: 1rem;
+      height: 200px;
+      background-color: white;
+      border: 1px solid rgb(116, 116, 116);
+      border-radius: 10px;
+      font-family: montserrat, sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      font-style: normal;
+    }
+
+    .story-card-large {
+      margin-bottom: 1rem;
+    }
+  }
+
+  .myths {
+    margin-top: 1rem;
+    background-color: white;
+    border: 2px solid #000;
+    padding: 1rem;
+    border-radius: 10px;
+    padding: 1rem 1rem;
+    padding-bottom: 0.0rem;
+
+    .myth-card {
+      background-color: $accent-color;
+      margin-bottom: 1rem;
+      padding: 0.5rem 1rem;
+    }
+  }
+
 }
 
 .highlight {
