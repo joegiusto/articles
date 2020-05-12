@@ -22,6 +22,7 @@ class Issue extends React.Component {
     const self = this;
     this.setState({ loading: true });
 
+    // Returns undefined if the id of news is not in local storage
     const storedStories = this.props.stories.stories.find(x => x._id === this.props.match.params.id)
 
     if (storedStories !== undefined ) {
@@ -56,35 +57,31 @@ class Issue extends React.Component {
 
   render() {
 
-    const {loading, news_notes} = this.state;
-
-    // news_notes.replace(/(\r\n|\n|\r)/gm, "")
+    const { loading } = this.state;
 
     return (
       <div className="stories-page">
         {loading ?
         <div className="alert alert-danger">Loading Issue - {this.props.match.params.id}</div>
         :
-        <div className="container single mt-5">
-
-          <Ad/>
+        <div className="container-fluid single mt-5">
 
           <div className="content-wrapper">
 
-          <div className="news-one-head">
+            <div className="news-one-head">
 
-            <span className="back-link" onClick={() => this.props.history.goBack()}>{String.fromCharCode(11148)}</span>
+              <span className="back-link" onClick={() => this.props.history.goBack()}>{String.fromCharCode(11148)}</span>
 
-            <span className="date-badge">
-              <div className="date-badge-inner">
-                <span className="front">{moment(Date.Now).format("LL")}</span>
-                <span className="back">Updated {moment('05-05-1998').format("LL")}</span>
-              </div>
-            </span>
+              <span className="date-badge">
+                <div className="date-badge-inner">
+                  <span className="front">{moment(Date.Now).format("LL")}</span>
+                  <span className="back">Updated {moment('05-05-1998').format("LL")}</span>
+                </div>
+              </span>
 
-            <span className="author-link"> Written By:<span className="person">Joey Giusto</span> </span>
+              <span className="author-link"> Written By:<span className="person">Joey Giusto</span> </span>
 
-          </div>
+            </div>
 
             <div className="hero">
               <img src={this.state?.hero_url} alt="" className="image"/>
@@ -92,11 +89,20 @@ class Issue extends React.Component {
             </div>
 
             <div className="content">
-              {/* <img className="my-5 mx-auto d-block" src="https://www.tesla.com/xNVh4yUEc3B9/13_Desktop_Order.png" alt=""/> */}
-              <p>{this.state?.news_notes}</p>
+              {/* All */}
+              {/* <p>{this.state?.news_notes}</p> */}
+
+              {/* Formatted */}
+              {/* <span dangerouslySetInnerHTML={{__html: this.state?.news_notes?.replace(/(\r\n|\n|\r)/gm, "")}}></span> */}
+
+              {/* Formated Line Space */}
+              <div dangerouslySetInnerHTML={{ __html: decodeURIComponent(this.state?.news_notes).replace(/\+/g, " ").replace(/\r/g, "<br/>") }}></div>
+              
             </div>
             
           </div>
+
+          <Ad/>
 
           <div className="card d-none">
             <h3 className="card-header">{this.state.news_title}</h3>

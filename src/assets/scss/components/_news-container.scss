@@ -1,3 +1,17 @@
+.content-wrap.dark-mode {
+  
+  section.frontpage-section {
+
+    .issue-development, .stories, .myths {
+      background-color: $dark-mode-card-color;
+
+      .story-card, .myth-card {
+        background-color: black;
+      }
+    }
+  }
+}
+
 section.frontpage-section {
   padding-top: 1rem;
 

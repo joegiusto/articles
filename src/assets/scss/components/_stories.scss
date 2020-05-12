@@ -1,106 +1,53 @@
+.content-wrap.fixed {
+  .ad {
+    margin-right: 2.5rem;
+    margin-left: 2.5rem;
+  }
+}
+
+.content-wrap.dark-mode {
+
+  .content-wrapper {
+
+    .news-one-head {
+      color: black;
+
+      .back-link {
+        background-color: rgb(0, 0, 0);
+        color: white;
+        border-radius: 5px;
+        padding: 0.1rem 1rem;
+        cursor: pointer;
+      }
+    }
+    
+    .content {
+      background-color: $dark-mode-card-color!important;
+    }
+  }
+}
+
 .stories-page {
   position: relative;
 
-  .news-one-head {
-    background-color: $accent-color;
-    padding: 0.3rem;
-    border: 3px solid #000;
-    border-bottom: 0px solid #000;
-    box-shadow: 0px 7.5px 4px 0px #000;
-
+  .single {
     display: flex;
-    justify-content: space-between;
-
-    .back-link {
-      background-color: white;
-      border-radius: 5px;
-      padding: 0.1rem 1rem;
-      cursor: pointer;
-    }
-
-    .date-badge {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      font-family: 'Forte';
-      width: 170px;
-      perspective: 1000px;
-      cursor: pointer;
-      // display: flex;
-      // align-items: center;
-      
-      &:hover .date-badge-inner{
-        transform: rotateY(180deg);
-      }
-
-      .date-badge-inner {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        text-align: center;
-        transition: transform 0.8s;
-        transform-style: preserve-3d;
-        height: 25px;
-        padding: 0.25rem 0.4rem;
-      }
-
-      .front, .back {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        -webkit-backface-visibility: hidden; /* Safari */
-        backface-visibility: hidden;
-      }
-
-      .front {
-        background-color: $base-color;
-      }
-
-      .back {
-        background-color: black;
-        color: white;
-        transform: rotateY(180deg);
-      }
-    }
-
-    .author-link {
-      display: flex;
-      align-items: center;
-
-      font-family: brandon-grotesque, sans-serif;
-      font-style: normal;
-      font-weight: 400;
-
-      .person {
-        font-weight: bold;
-        cursor: pointer;
-        margin-left: 0.05rem;
-        padding: 0rem 0.45rem;
-        border-radius: 10px;
-
-        &:hover {
-          background-color: white;
-
-        }
-      }
-    }
-
+    flex-direction: row;
+    justify-content: center;
   }
 
-  
-
   .ad {
-    position: fixed;
-    right: 10vw;
+    position: sticky;
+    top: calc(3rem + 50px);
+    align-self: start;
     width: 200px;
     border: 3px solid #955408;
     z-index: 2;
+    margin: 0rem 5rem;
 
     .details-slide-out {
       margin-top: -3px;
-      width: calc(100% + 6px);
+      width: calc(100% + 3px);
       height: calc(100% + 6px);
       position: absolute;
       top: 0;
@@ -108,10 +55,14 @@
       background-color: $accent-color;
       z-index: -20;
       transition-duration: 200ms;
-      color: rgb(0, 0, 0);
+      background-color: #343746;
+      color: white;
+      // color: rgb(0, 0, 0);
       padding: 0.75rem;
       text-align: center;
-      border: 3px solid #000;
+      // border: 3px solid #000;
+      border: 3px solid #955408;
+      border-right: 0px solid transparent;
 
       font-family: brandon-grotesque, sans-serif;
       font-style: normal;
@@ -242,14 +193,105 @@
 
   .content-wrapper {
     margin-bottom: 5rem;
+    max-width: 1200px;
+    width: 100%;
+
+    .news-one-head {
+      background-color: $accent-color;
+      padding: 0.3rem;
+      border: 3px solid #000;
+      border-bottom: 0px solid #000;
+      box-shadow: 0px 7.5px 4px 0px #000;
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+  
+      .back-link {
+        background-color: white;
+        border-radius: 5px;
+        padding: 0.1rem 1rem;
+        cursor: pointer;
+      }
+  
+      .date-badge {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: 'Forte';
+        width: 170px;
+        perspective: 1000px;
+        cursor: pointer;
+        // display: flex;
+        // align-items: center;
+        
+        &:hover .date-badge-inner{
+          transform: rotateY(180deg);
+        }
+  
+        .date-badge-inner {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          text-align: center;
+          transition: transform 0.8s;
+          transform-style: preserve-3d;
+          height: 25px;
+          padding: 0.25rem 0.4rem;
+        }
+  
+        .front, .back {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          -webkit-backface-visibility: hidden; /* Safari */
+          backface-visibility: hidden;
+        }
+  
+        .front {
+          background-color: $base-color;
+        }
+  
+        .back {
+          background-color: black;
+          color: white;
+          transform: rotateY(180deg);
+        }
+      }
+  
+      .author-link {
+        display: flex;
+        align-items: center;
+  
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 400;
+  
+        .person {
+          font-weight: bold;
+          cursor: pointer;
+          margin-left: 0.05rem;
+          padding: 0rem 0.45rem;
+          border-radius: 10px;
+  
+          &:hover {
+            background-color: white;
+  
+          }
+        }
+      }
+  
+    }
 
     .hero {
       position: relative;
       z-index: -1;
 
-
       .image {
         width: calc(100% - 2rem);
+        max-height: 600px;
+        object-fit: cover;
         margin-left: auto;
         margin-right: auto;
         display: block;
@@ -281,13 +323,24 @@
     .content {
       background-color: white;
       box-shadow: 0px -7.5px 4px 0px #000;
-      // color: white;
       border: 3px solid #000;
       border-top: 0px solid #000;
       padding-top: 3rem;
       padding-bottom: 3rem;
       padding-left: 15%;
       padding-right: 15%;
+      white-space: break-spaces;
+
+      // Font looks bad
+      // font-family: brandon-grotesque, sans-serif;
+      // font-style: normal;
+      // font-weight: 400;
+      // font-size: 1.3rem;
+
+      a {
+        background-color: $base-color;
+        padding: 0rem 0.25rem;
+      }
     }
   }
 }

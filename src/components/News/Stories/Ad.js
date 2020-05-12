@@ -40,7 +40,7 @@ class Ad extends React.Component {
           <div>is</div>
           <div className="badge badge-light">1.7 miles away</div>
           <hr/>
-          <div className="mt-5 pt-5">As always all ads we display to you will be completly transparent and follow our privacy policy.To change your Zip code settings click here</div>
+          <div className="mt-5 pt-5">As always all ads we display to you will be completly transparent and follow our privacy policy.To change your Zip code settings click here (Note to testers this is hard edited in so this page is not working yet)</div>
         </div>
 
         <div className="photo-banner">

@@ -346,10 +346,10 @@ function Menu(props) {
               <>
               <p className="heading-font no-link"><b>Admin &nbsp;</b><div className="badge badge-warning">Role</div></p>
               <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ADMIN_USERS}><p className="subheading-font"><i className="fas fa-toolbox"></i>Admin Portal</p></Link>
-              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.REPORTS_MANAGE}><p className="subheading-font"><i className="fas fa-toolbox"></i>Reports Manage</p></Link>
-              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE_MANAGE}><p className="subheading-font"><i className="fas fa-toolbox"></i>Clothing Manage</p></Link>
-              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MANAGE}><p className="subheading-font"><i className="fas fa-toolbox"></i>News Manage</p></Link>
-              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.DONATE}><p className="subheading-font"><i className="fas fa-toolbox"></i>Donation Manage</p></Link>
+              {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.REPORTS_MANAGE}><p className="subheading-font"><i className="fas fa-toolbox"></i>Reports Manage</p></Link> */}
+              {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE_MANAGE}><p className="subheading-font"><i className="fas fa-toolbox"></i>Clothing Manage</p></Link> */}
+              {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MANAGE}><p className="subheading-font"><i className="fas fa-toolbox"></i>News Manage</p></Link> */}
+              {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.DONATE}><p className="subheading-font"><i className="fas fa-toolbox"></i>Donation Manage</p></Link> */}
               <hr/>
               </>
               :
