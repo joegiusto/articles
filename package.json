@@ -16,6 +16,7 @@
   "private": true,
   "dependencies": {
     "@popperjs/core": "^2.3.3",
+    "aws-sdk": "^2.673.0",
     "axios": "^0.19.2",
     "bcrypt": "^4.0.1",
     "bcryptjs": "^2.4.3",
