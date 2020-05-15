@@ -1,1 +1,1 @@
-web: cd iso-server && node server.js
+web: node iso-server/server.js
