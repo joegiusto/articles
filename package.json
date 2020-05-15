@@ -30,7 +30,6 @@
     "jwt-decode": "^2.2.0",
     "moment": "^2.24.0",
     "node-sass": "^4.13.1",
-    "passport": "^0.4.1",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-bootstrap-typeahead": "^3.4.6",
