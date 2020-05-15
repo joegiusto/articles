@@ -1,3 +1,3 @@
 worker: npm start
-worker: npm install --prefix ./iso-server
+worker: cd iso-server && npm install
 web: node iso-server/server.js
