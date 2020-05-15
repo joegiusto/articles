@@ -11,6 +11,7 @@
   // border-right: solid 5px #000;
   // box-shadow: 0 8px 6px -6px black;
   background-color: white;
+  
   background: 
     linear-gradient(45deg, $accent-color 0% 20%, rgba(255, 255, 255, 0) 20% 80%, $base-color 80%),
     linear-gradient(135deg, darken($base-color, 5%) 0% 25%, rgba(0, 0, 0, 0.75)% 80%, darken($accent-color, 5%) 80% 100%);

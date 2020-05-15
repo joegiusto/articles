@@ -107,7 +107,7 @@ app.use("/api/users", users);
 app.listen(process.env.PORT || 8080);
 
 app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, '../build', 'index.html'));
 });
 
 // Used to make sure server is up in one place, though this was in MySQL days
