@@ -1,1 +1,1 @@
-web: cd iso-server && npm install && node server.js
+web: cd iso-server && node server.js

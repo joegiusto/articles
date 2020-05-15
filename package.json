@@ -60,6 +60,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "heroku-postbuild": "cd iso-server && npm install",
     "server": "cd iso-server & nodemon server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
