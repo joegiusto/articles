@@ -61,24 +61,3 @@
     font-family: 'Merienda One', cursive;
   }
 }
-
-footer {
-  font-family: 'Merienda One', cursive;
-  background-color: #000;
-  color: white;
-  // height: 90px;
-  height: auto;
-  border-top: 1px solid #fff;
-  // padding: 1rem 1rem;
-
-  a {
-    text-decoration: underline;
-    color: white;
-    padding: 3px 10px;
-
-    &:hover {
-      background-color: white;
-      color: #000;
-    }
-  }
-}

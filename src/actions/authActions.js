@@ -40,6 +40,10 @@ export const loginUser = userData => dispatch => {
 
       // Set current user
       dispatch(setCurrentUser(decoded));
+
+      // console.log("THis is the decoded object")
+      // dispatch(setUserDetails(decoded.id));
+
     })
     .catch(err => {
       console.log(err)

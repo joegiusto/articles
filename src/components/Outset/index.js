@@ -1,21 +1,15 @@
 import React from 'react';
-// import { Link, withRouter } from 'react-router-dom';
-// import { compose } from 'recompose';
-// import { AuthUserContext, withAuthorization, withEmailVerification } from '../Session';
-// import { auth } from 'firebase';
 import { isValidPhoneNumber } from 'react-phone-number-input'
 import axios from 'axios';
-import * as ROUTES from '../../constants/routes';
 import { connect } from 'react-redux';
 
+import * as outsetPhotos from './outsetPhotos';
+import * as ROUTES from '../../constants/routes';
 import StepOne from './StepOne';
 import StepTwo from './StepTwo';
 import StepThree from './StepThree';
 import StepFour from './StepFour';
 import StepFive from './StepFive';
-
-import * as outsetPhotos from './outsetPhotos';
-import $ from "jquery";
 
 class OutsetBase extends React.Component {
   constructor(props) {

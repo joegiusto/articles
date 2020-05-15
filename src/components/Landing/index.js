@@ -8,9 +8,14 @@ import slideHead from '../../assets/img/slide-head.png';
 import StoreItem from '../Store/StoreItemAlpha';
 
 import placeholder from '../../assets/img/placeholder.png'
+
+import * as ROUTES from '../../constants/routes'
+import { Link } from 'react-router-dom'
 // import ArticlesHomePageSlick from './ArticlesHomePageSlick';
 import logo from '../../assets/img/logo.png'
 import flag from '../../assets/img/flag.png'
+import newsWave from '../../assets/gif/news-wave.gif'
+import sheep from '../../assets/img/landing/sheep.svg'
 
 class SimpleSlider extends Component {
   render() {
@@ -56,66 +61,119 @@ class LandingPage extends Component {
 			timeToNextTime: 100,
 
 			avenueTab: 0,
-			avenueScroll: true,
+			avenueScroll: false,
 			// avenueControls
 			avenueTabDetails: [
 				{
 					title: 'Transparency',
-					description: 'All money that is handled by Articles such as clothign sales, donations, ad revenue or whatever else we find ourselves venturing into will be public live for the people to see and criticize.',
+					description: 'All money that is handled by Articles such as donations, clothing sales, ad revenue or whatever else we find ourselves venturing into will be public live for the people to see and ask about.',
 					component: 
 					<div className="fake-sales">
-						<div className="sale">
+						{this.startSalesAnimation()}
+
+						<div className="fake-note">This data is for display purposes only, live data on <Link to={ROUTES.REPORTS}>report page</Link></div>
+
+						<div className="sale active" style={{'animationDelay': '0s'}}>
 							<div className="amount revenue">$20</div>
 							<div className="person">Casey Newton</div>
-
 						</div>
-						<div className="sale">
+
+						<div className="sale active" style={{'animationDelay': '0.7s'}}>
 							<div className="amount revenue">$30</div>
 							<div className="person">Frank Walker</div>
-
 						</div>
-						<div className="sale">
+
+						<div className="sale active" style={{'animationDelay': '1.4s'}}>
 							<div className="amount expense">$10</div>
 							<div className="person">User Memberships</div>
-
 						</div>
-						<div className="sale">
+
+						<div className="sale active" style={{'animationDelay': '2.1s'}}>
 							<div className="amount revenue">$10</div>
 							<div className="person">Athena A.A</div>
-
 						</div>
-						<div className="sale">
+
+						<div className="sale active" style={{'animationDelay': '2.8s'}}>
 							<div className="amount expense">$50</div>
 							<div className="person">Website Servers</div>
-
 						</div>
-						<div className="sale">
+
+						<div className="sale active" style={{'animationDelay': '3.5s'}}>
 							<div className="amount expense">$10</div>
 							<div className="person">Mileage Reimbursement</div>
-
 						</div>
+
+						<div className="sale active" style={{'animationDelay': '4.2s'}}>
+							<div className="amount revenue">$10</div>
+							<div className="person">Mileage Reimbursement</div>
+						</div>
+
 					</div>,
 					avenueExpanded: false,
 					avenueVisible: false
 				},
 				{
 					title: 'Clothing',
-					description: '',
-					component: <div className="store-page pt-3"><StoreItem catalogId='1' price={3000} title="Wolf Hoodie" sale="%15" banner="Original" color="articles"/></div>,
+					description: 'To help support the platform and raise awareness of our mission we will be selling clothing for our supporters to wear.',
+					component: 
+					<div className="store-scene">
+
+						<div className="row">
+							<div className="col-4">
+								<div className="icon"><i class="fas fa-3x fa-tshirt"></i></div>
+							</div>
+
+							<div className="col-4">
+								<div className="icon"><i class="fas fa-3x fa-tshirt"></i></div>
+							</div>
+
+							<div className="col-4">
+								<div className="icon"><i class="fas fa-3x fa-tshirt"></i></div>
+							</div>
+						</div>
+
+						<div className="row mt-5">
+							<div className="col-4">
+								<div style={{animationDelay: '-.5s'}} className="icon"><i class="fas fa-4x fa-tshirt"></i></div>
+							</div>
+
+							<div className="col-4">
+								<div style={{animationDelay: '-.5s'}} className="icon"><i class="fas fa-4x fa-tshirt"></i></div>
+							</div>
+
+							<div className="col-4">
+								<div style={{animationDelay: '-.5s'}} className="icon"><i class="fas fa-4x fa-tshirt"></i></div>
+							</div>
+						</div>
+
+					</div>,
 					avenueExpanded: false,
 					avenueVisible: false
 				},
 				{
 					title: 'News',
-					description: 'All money that is handled by Articles such as clothign sales, donations, ad revenue or whatever else we find ourselves venturing into will be public live for the people to see and criticize.',
+					description: 'As the state of mainstream news continues to decay we will be stepping in to fight misinformation and easeabilty .',
+					component: 
+					<div className="news-scene">
+						<img className="news-wave" src={newsWave} alt=""/>
+						{/* <img style={{animationDelay: '0s'}} className="news-sheep" src={sheep} alt=""/> */}
+						{/* <img style={{animationDelay: '1s'}} className="news-sheep" src={sheep} alt=""/> */}
+						{/* <img style={{animationDelay: '2s'}} className="news-sheep" src={sheep} alt=""/> */}
+					</div>,
 					avenueExpanded: false,
 					avenueVisible: false
 				},
 				{
 					title: 'Politics',
-					description: 'All money that is handled by Articles such as clothign sales, donations, ad revenue or whatever else we find ourselves venturing into will be public live for the people to see and criticize.',
+					description: 'To be trasparent from the start, we plan to use the platform to encourage politcal reform. As we build a household name and gain the turst of users we will take this battle to a national level and fix some of the problems that plague this nation',
 					avenueExpanded: false,
-					avenueVisible: false
+					avenueVisible: false,
+					component: 
+					<div className="politics-screen">
+						<div className="red-circle"></div>
+						<div className="blue-circle"></div>
+						<div className="pink-circle"></div>
+					</div>
 				},
 			]
 
@@ -123,14 +181,20 @@ class LandingPage extends Component {
 	}
 
 	componentDidMount() {
-		this.interval = setInterval(this.thingToDo, 100);
 
+		// Default scroll of slides if avenue scroll is enabled
+		if (this.state.avenueScroll) {
+			this.interval = setInterval(this.thingToDo, 100);
+		}
+		
 		// First we get the viewport height and we multiple it by 1% to get a value for a vh unit
-		const vh = window.innerHeight;
+		// const vh = window.innerHeight;
 		// Then we set the value in the --vh custom property to the root of the document
-		document.documentElement.style.setProperty('--vh', `${vh}px`);
+		// document.documentElement.style.setProperty('--vh', `${vh}px`);
 
 		const thisCopy = this;
+
+		this.startSalesAnimation();
 
 		let avenues = [...this.state.avenueTabDetails];
 
@@ -166,6 +230,33 @@ class LandingPage extends Component {
 
 	componentWillUnmount() {
 		clearInterval(this.interval);
+	}
+
+	startSalesAnimation() {
+		console.log("Sales Animation Started!");
+
+		// var i = 0;
+		// var sales = [];
+		// sales = document.getElementsByClassName('sale');
+
+		// myLoop();
+
+		// function myLoop() {
+			
+		// 	         //  create a loop function
+		// 	setTimeout(function() {   
+		// 		console.log(i);
+		// 		sales[i].classList.add('active');   //  your code here
+		// 		i++;
+				
+		// 		                 //  increment the counter
+		// 		if (i < sales.length) {           //  if the counter < 10, call the loop function
+		// 			myLoop();             //  ..  again which will trigger another 
+		// 		}          
+		// 		             //  ..  setTimeout()
+		// 	}, 700)
+		// }
+
 	}
 
 	thingToDo = () => {
@@ -364,10 +455,7 @@ class LandingPage extends Component {
 	}
 
 	render() {
-
 		const {timeToNextTime, avenueTab, avenueScroll, avenueTabDetails, timeProgress} = this.state
-
-		
 
 		return (
 			<div className="landing-page landing-new">
@@ -465,207 +553,45 @@ class LandingPage extends Component {
 					<div className="text-center motto-block">Something To Stand For</div>
 				</section>
 
-				<section className="avenues-section">
-
-				</section>
-
 				<section className="tour-section">
 					
 					<div className="content">
 
-					<div className="container ">
+						<div className="container ">
+							
+							<div className="controls noselect">
+								<div className="avenue-selector">
+									<div onClick={() => this.jumpTo( (avenueTab === 0 ? avenueTabDetails.length - 1 : avenueTab - 1) )} className="avenue avenue-control prev"> { '<' } </div>
 
-						<div className="controls noselect">
-							<div className="avenue-selector">
-								<div onClick={() => this.jumpTo( (avenueTab === 0 ? avenueTabDetails.length - 1 : avenueTab - 1) )} className="avenue avenue-control prev"> { '<' } </div>
+									<span className="avenue-filler"></span>
+									<div onClick={() => this.jumpTo(0, true)} className={"avenue transparency ml-0 " + (avenueTab === 0 ? 'active' : '')}>Transparency</div>
+									<div onClick={() => this.jumpTo(1, true)} className={"avenue clothing " + (avenueTab === 1 ? 'active' : '')}>Clothing</div>
+									<div onClick={() => this.jumpTo(2, true)} className={"avenue news " + (avenueTab === 2 ? 'active' : '')}>News</div>
+									<div onClick={() => this.jumpTo(3, true)} className={"avenue politics " + (avenueTab === 3 ? 'active' : '')}>Politics</div>
+									<span className="avenue-filler"></span>
 
-								<div className="avenue-filler"></div>
-								<div onClick={() => this.jumpTo(0, true)} className={"avenue transparency ml-0 " + (avenueTab === 0 ? 'active' : '')}>Transparency</div>
-								<div onClick={() => this.jumpTo(1, true)} className={"avenue clothing " + (avenueTab === 1 ? 'active' : '')}>Clothing</div>
-								<div onClick={() => this.jumpTo(2, true)} className={"avenue news " + (avenueTab === 2 ? 'active' : '')}>News</div>
-								<div onClick={() => this.jumpTo(3, true)} className={"avenue politics " + (avenueTab === 3 ? 'active' : '')}>Politics</div>
-								<div className="avenue-filler"></div>
-
-								<div onClick={() => this.jumpTo( (avenueTab === avenueTabDetails.length - 1 ? 0 : avenueTab + 1) )} className="avenue avenue-control next"> > </div>
-							</div>
-
-							<div className="timer">
-								
-								<div className="time">{ 10 }</div>
-
-								<div onClick={() => this.toggleAvenueScroll()} className="pause-play"><i className={"far " + (avenueScroll === true ? 'fa-pause-circle' : 'fa-play-circle')}></i></div>
-
-								<div className="progress">
-									<div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style={{width: timeProgress + "%"}}></div>
+									<div onClick={() => this.jumpTo( (avenueTab === avenueTabDetails.length - 1 ? 0 : avenueTab + 1) )} className="avenue avenue-control next"> > </div>
 								</div>
 
-								{/* <div className="timer-bar">
-									<div className="progress"></div>
-								</div> */}
+								{/* TODO - Once site is done, finish this and get it working for mobile, to much to do right now with just myself working on this :( ) */}
+								<div className="timer d-none">
+									
+									<div className="time">{ 10 }</div>
 
+									<div onClick={() => this.toggleAvenueScroll()} className="pause-play"><i className={"far mr-0 " + (avenueScroll === true ? 'fa-pause-circle' : 'fa-play-circle')}></i></div>
+
+									<div className="progress">
+										<div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style={{width: timeProgress + "%"}}></div>
+									</div>
+
+								</div>
 							</div>
-						</div>
 
 						</div>
 
 						<div className="container">
 
 							<NewCustomPanel identifier={this.state.avenueTabDetails[this.state.avenueTab]}/>
-
-							<div className="d-none">
-								<div className={"custom-panel " + (avenueTab === 0 ? '' : 'd-none')}>
-	
-									<div className="top">
-	
-										<div className="row">
-	
-											<div className="col-12 col-md-8">
-												<div className="left">
-	
-													<div className="content-title mb-4" style={{lineHeight: "45px"}}>Transparency</div>
-													{/* <h6 className="content-highlight content-text">It's a bit to explain though...</h6> */}
-													<div className="content-text">
-														All money that is handled by Articles such as clothign sales, donations, ad revenue or whatever else we find ourselves venturing into, will be public for the people to see and criticize.
-													</div>
-	
-												</div>
-											</div>
-	
-											<div className="col-12 col-md-4">
-												<div className="right w-100">
-													{/* <img className="img-fluid" height="376px" src="https://www.economist.com/sites/default/files/images/print-edition/20130921_USD000_0.jpg" alt=""/> */}
-													<div className="fake-sales">
-														<div className="sale">
-															<div className="amount revenue">$20</div>
-															<div className="person">Casey Newton</div>
-	
-														</div>
-														<div className="sale">
-															<div className="amount revenue">$30</div>
-															<div className="person">Frank Walker</div>
-	
-														</div>
-														<div className="sale">
-															<div className="amount expense">$10</div>
-															<div className="person">User Memberships</div>
-	
-														</div>
-														<div className="sale">
-															<div className="amount revenue">$10</div>
-															<div className="person">Athena A.A</div>
-	
-														</div>
-														<div className="sale">
-															<div className="amount expense">$50</div>
-															<div className="person">Website Servers</div>
-	
-														</div>
-														<div className="sale">
-															<div className="amount expense">$10</div>
-															<div className="person">Mileage Reimbursement</div>
-	
-														</div>
-													</div>
-												</div>
-											</div>
-	
-										</div>
-									</div>
-	
-								</div>
-	
-								<div className={"custom-panel " + (avenueTab === 1 ? '' : 'd-none')}>
-	
-									<div className="top">
-										<div className="row">
-	
-											<div className="col-12 col-md-8">
-												<div className="left">
-	
-													<div className="content-title mb-4" style={{lineHeight: "45px"}}>Clothing</div>
-													{/* <h6 className="content-highlight content-text">It's a bit to explain though...</h6> */}
-													<div className="content-text">
-														All money that is handled by Articles such as clothign sales, donations, ad revenue or whatever else we find ourselves venturing into will be public live for the people to see and criticize.
-													</div>
-	
-												</div>
-											</div>
-	
-											<div className="col-12 col-md-4">
-												<div className="right" style={{transform: "translateX(-25%) translateY(-50%) scale(0.5)"}}>
-													<div className="scale-down store-page d-flex">
-														<StoreItem catalogId='1' price={3000} title="Wolf Hoodie" sale="%15" banner="Original" color="articles"/>
-														<StoreItem catalogId='1' price={3000} title="Wolf Hoodie" sale="%15" banner="Original" color="articles"/>
-														<StoreItem catalogId='1' price={3000} title="Wolf Hoodie" sale="%15" banner="Original" color="articles"/>
-													</div>
-												</div>
-											</div>
-	
-										</div>
-									</div>
-	
-								</div>
-	
-								<div className={"custom-panel " + (avenueTab === 2 ? '' : 'd-none')}>
-	
-									<div className="top">
-										<div className="row">
-	
-											<div className="col-12 col-md-8">
-												<div className="left">
-	
-													<div className="content-title mb-4" style={{lineHeight: "45px"}}>News</div>
-													{/* <h6 className="content-highlight content-text">It's a bit to explain though...</h6> */}
-													<div className="content-text">
-														All money that is handled by Articles such as clothign sales, donations, ad revenue or whatever else we find ourselves venturing into will be public live for the people to see and criticize.
-													</div>
-	
-												</div>
-											</div>
-	
-											<div className="col-12 col-md-4">
-												<div className="right w-100">
-													<div className="news-paper"></div>
-												</div>
-											</div>
-	
-										</div>
-									</div>
-	
-								</div>
-	
-								<div className={"custom-panel " + (avenueTab === 3 ? '' : 'd-none')}>
-	
-									<div className="top">
-										<div className="row">
-	
-											<div className="col-12 col-md-8">
-												<div className="left">
-	
-													<div className="content-title mb-4" style={{lineHeight: "45px"}}>Politics</div>
-													{/* <h6 className="content-highlight content-text">It's a bit to explain though...</h6> */}
-													<div className="content-text">
-														All money that is handled by Articles such as clothign sales, donations, ad revenue or whatever else we find ourselves venturing into will be public live for the people to see and criticize.
-													</div>
-	
-												</div>
-											</div>
-	
-											<div className="col-12 col-md-4">
-												<div className="right w-100">
-													{/* <img className="img-fluid" height="376px" src="https://www.economist.com/sites/default/files/images/print-edition/20130921_USD000_0.jpg" alt=""/> */}
-													<div className="circles">
-														<div className="blue"></div>
-														<div className="red"></div>
-													</div>
-												</div>
-											</div>
-	
-										</div>
-									</div>
-	
-								</div>
-							</div>
 
 						</div>
 
@@ -682,6 +608,7 @@ class LandingPage extends Component {
 							<p>Good, read more about our misison here, then take our tour to get to know the site.</p>
 							<button className="btn btn-articles-light alt">Read On</button>
 						</div>
+
 						<div className="info">
 							<div className="title">Ready?</div>
 							<p>Get started with an account today and start participating in our platform.</p>
@@ -689,7 +616,6 @@ class LandingPage extends Component {
 						</div>
 
 					</div>
-
 				</section>
 				
 				<section className="intro-section d-none accent">
@@ -729,11 +655,11 @@ class LandingPage extends Component {
 					</div>
 				</section>
 
-				<footer>
+				<div className="section-break">
 
 					<img className="text-center d-block ml-auto mr-auto" src={logo} height="35px" alt=""/>
 
-				</footer>
+				</div>
 
 				<section className="intro-section base">
 					<div className="background"></div>
@@ -772,13 +698,13 @@ class LandingPage extends Component {
 					</div>
 				</section>
 
-				<footer>
+				<div className="section-break">
 
 					<img className="text-center d-block ml-auto mr-auto" src={flag} height="35px" alt=""/>
 
-				</footer>
+				</div>
 
-				<section className="intro-section accent">
+				<section className="intro-section accent d-none">
 					<div className="background"></div>
 					<div className="content">
 						<div className="container">
@@ -815,13 +741,11 @@ class LandingPage extends Component {
 					</div>
 				</section>
 
-				<footer>
-
+				<div className="section-break d-none">
 					<img className="text-center d-block ml-auto mr-auto" src={logo} height="35px" alt=""/>
+				</div>
 
-				</footer>
-
-				<section className="intro-section base">
+				<section className="intro-section base d-none">
 					<div className="background"></div>
 					<div className="content">
 						<div className="container">
@@ -860,18 +784,29 @@ class LandingPage extends Component {
 
 				<footer>
 
-					<img className="text-center d-block ml-auto mr-auto" src={logo} height="35px" alt=""/>
+					<div className="background">
+						<img src="https://www.doylecollection.com/var/doyle/storage/images/media/doyle-redesign/images/blog/dupont/washington-neighbourhoods-image-1/263475-1-eng-US/washington-neighbourhoods-image-1.jpg" alt=""/>
+					</div>
+
+					<div className="container">
+
+						<div className="logo">
+							<img className="" src={logo} height="50px" alt=""/>
+							<span className="title">Articles</span>
+						</div>
+
+					</div>
 
 				</footer>
 
-				<section>
+				{/* <section>
 					<div className="container">
 						<div className="row">
 							<div className="col-12 col-md-6">Learn</div>
 							<div className="col-12 col-md-6">Don't</div>
 						</div>
 					</div>
-				</section>
+				</section> */}
 
 			</div>
 		)
