@@ -15,6 +15,9 @@ import { Link } from 'react-router-dom'
 import logo from '../../assets/img/logo.png'
 import flag from '../../assets/img/flag.png'
 import newsWave from '../../assets/gif/news-wave.gif'
+
+import Tilt from 'react-tilt';
+
 import sheep from '../../assets/img/landing/sheep.svg'
 
 class SimpleSlider extends Component {
@@ -662,40 +665,89 @@ class LandingPage extends Component {
 				</div>
 
 				<section className="intro-section base">
+
 					<div className="background"></div>
-					<div className="content">
+
+					<div className="content link-panels">
 						<div className="container">
 
-							<div className="custom-panel">
+							<div className="mission-snippet">
+								<div className="title">Read about our mission</div>
+								<div className="text">All the details about what we are doing and the direction we want to take this company.</div>
+								<Link to={ROUTES.MISSION}><div className="btn btn-articles-light">Mission</div></Link>
+							</div>
 
-								<div className="top">
-									<div className="row">
+							<div className="row">
 
-										<div className="col-12 col-md-6">
-											<div className="left">
+								<div className="col-6">
 
-												<div className="content-title mb-4" style={{lineHeight: "45px"}}>Clothing</div>
-												<h6 className="content-highlight content-text">It's a bit to explain though...</h6>
-												<div className="content-text">
-													Articles is a for-profit political organization and platform, working to make America a better place for the people through avenues of transparency, clothing, news and politics.
-												</div>
-
+									<Link to={ROUTES.STORE}>
+										{/* <Tilt options={{ max: "10", scale: '1.025' }}> */}
+											<div className="link-panel">
+												<div className="title">Store</div>
+												<div className="text">Shop our collection of clothing, as well as products made in collaboration with other brands.</div>
+												<div className="arrow">></div>
 											</div>
-										</div>
+										{/* </Tilt> */}
+									</Link>
+									
+								</div>
 
-										<div className="col-12 col-md-6">
-											<div className="right">
-												<img className="img-fluid" height="376px" src="https://www.economist.com/sites/default/files/images/print-edition/20130921_USD000_0.jpg" alt=""/>
-											</div>
+								<div className="col-6">
+									<Link to={ROUTES.NEWS}>
+										<div className="link-panel">
+											<div className="title">News</div>
+											<div className="text">Our take on the truth, source based facts, clear stated opinions.</div>
+											<div className="arrow">></div>
 										</div>
+									</Link>
+								</div>
 
-									</div>
+								<div className="col-6">
+									<Link to={ROUTES.STORE_SUBMISSIONS}>
+										<div className="link-panel">
+											<div className="title">Submissions</div>
+											<div className="text">Submit designs you have for a chance to get them printed and make some money.</div>
+											<div className="arrow">></div>
+										</div>
+									</Link>
+								</div>
+
+								<div className="col-6">
+									<Link to={ROUTES.REPORTS}>
+										<div className="link-panel">
+											<div className="title">Reports</div>
+											<div className="text">An inside look into our finances. We believe transparency is key to ending corruption.</div>
+											<div className="arrow">></div>
+										</div>
+									</Link>
+								</div>
+
+								<div className="col-6">
+									<Link to={ROUTES.SIGN_UP}>
+										<div className="link-panel">
+											<div className="title">Sign Up</div>
+											<div className="text">Create an account for all sorts of benifits and access to the entire site.</div>
+											<div className="arrow">></div>
+										</div>
+									</Link>
+								</div>
+
+								<div className="col-6">
+									<Link to={ROUTES.PRESS}>
+										<div className="link-panel">
+											<div className="title">Press and Buisness</div>
+											<div className="text">To reach out with questions or any other inquires</div>
+											<div className="arrow">></div>
+										</div>
+									</Link>
 								</div>
 
 							</div>
 
 						</div>
 					</div>
+
 				</section>
 
 				<div className="section-break">
