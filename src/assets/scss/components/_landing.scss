@@ -47,10 +47,11 @@
     background-color: black;
 
     &.brand-name {
+      padding: 0.75rem 0;
       text-align: center;
       // color: white;
       font-family: forte;
-      font-size: 2rem;
+      font-size: 1.5rem;
     }
 
     &.motto {
@@ -597,6 +598,7 @@
 
     &.base {
       background-color: $base-color;
+      // background-color: #efefef;
     }
 
     &.accent {
@@ -632,10 +634,10 @@
           margin-top: 1rem;
           margin-bottom: 2rem;
           width: 100%;
-          font-family: montserrat, sans-serif;
-          font-weight: 400;
-          font-size: 16px;
+          font-family: brandon-grotesque, sans-serif;
           font-style: normal;
+          font-weight: 900;
+          font-size: 1.5rem;
         }
       }
 
@@ -694,7 +696,6 @@
     .custom-panel {
       margin-top: 3rem;
       background-color: white;
-      // box-shadow: 0px 8px 7px 0px #000;
       margin-bottom: 3.2rem;
 
       .top {
@@ -709,33 +710,22 @@
           height: 100%;
           display: flex;
           align-items: center;
-          // padding: 0rem 1rem;
 
           .img-fluid {
-            // height: 100%;
             object-fit: cover;
-            // padding: 2rem 1.1rem;
-            // position: absolute;
-            // top: 50%;
-            // left: 50%;
-            // transform: translateX(-50%) translateY(-50%);
           }
 
         }
       }
       .middle {
-        // box-shadow: inset 0px 2px 3px 0px #000, inset 0px -2px 3px 0px #000;
-        // border-right: solid 1px #000;
-        // border-left: solid 0.1px #000;
-        // margin-top: 10px;
         z-index: -1;
-        // background-color: lighten($base-color, 7.5%);
-        
         padding: 1.5rem 2.5rem;
         padding-top: 4rem;
       }
+
       .bottom {
         padding: 2rem;
+        
         .card {
           background-color: $accent-color;
           border-radius: 0px;
@@ -750,7 +740,6 @@
     .opacity-panel {
       background-color: white;
       padding: 2.5rem;
-      // border-right: solid 5px #000;
       box-shadow: 5px 0px 5px 5px #000;
 
       .right {
@@ -761,6 +750,7 @@
 
   .more-section {
     position: relative;
+
     .background {
       position: absolute;
       top: 0%;
@@ -770,17 +760,18 @@
       background-color: $accent-color;
       z-index: -1;
     }
+
     .content {
-      // margin-top: 3rem;
       z-index: 1;
       color: #000;
-
       display: flex;
       justify-content: center;
       flex-direction: row;
+
       .info:first-child {
         border-right: solid 2px #000;
       }
+
       .info {
         padding: 3rem;
       }
@@ -790,6 +781,8 @@
   .section-break {
     padding: 1rem 0rem;
     background-color: $accent-color;
+    // background-color: black;
+    color: white;
     border-top: 3px solid #000;
     border-bottom: 3px solid #000;
   }
@@ -798,82 +791,7 @@
     position: relative;
     padding: 5rem 0rem;
     background-color: black;
-    // font-family: forte;
-
-    .background {
-      position: absolute;
-      z-index: 1;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 200px;
-      background: linear-gradient( 
-        rgb(0, 0, 0),
-        rgb(255, 255, 255) 
-      );
-
-      img {
-        position: relative;
-        z-index: -1;
-        height: 100%;
-        width: 100%;
-        max-width: 1400px;
-        display: block;
-        margin: 0 auto;
-        object-fit: cover;
-        object-position: 0% 40%;
-        opacity: 0.3;
-        // background-position: bottom;
-      }
-    }
-
-    .logo {
-      position: relative;
-      display: flex;
-      align-items: center;
-      z-index: 1;
-      
-      .title {
-        margin-left: 15px;
-        font-family: forte;
-        font-size: 2rem;
-      }
-    }
-
-    .inside {
-      display: flex;
-      justify-content: space-evenly;
-
-      .logo {
-        // position: absolute;
-        // height: 100%;
-        // width: 100%;
-        transform: translateX(11px);
-      }
-
-      .app-list {
-
-        .app {
-          background-color: rgba(255, 255, 255, 0.5);
-          // padding: 0.5rem 0.5rem 0.2rem 0.2rem;
-          text-align: left;
-          margin-top: 0.5rem;
-          width: 100%;
-          display: block;
-          padding: 0.5rem;
-          display: flex;
-
-          .platform-logo {
-
-          }
-
-          .platform-date {
-            padding-left: 0.5rem;
-          }
-        }
-      }
-    }
-
+    border-top: 5px solid $accent-color;
   }
 
   .content {
@@ -918,11 +836,9 @@
       display: inline-block;
       background-color: rgba(0, 0, 0, 0.75);
       color: white;
-
     }
 
     .content-badge {
-      // display: inline-block;
       background-color: white;
       padding: 0.05rem 0.25rem;
       border-radius: 10px;
@@ -933,65 +849,6 @@
       font-size: 1.2rem;
       transform: translateZ(0) translateY(0px);
       padding: 0.1rem 0.5rem;
-      // animation: gentle 1.5s alternate infinite;
-      backface-visibility: hidden;
-      -webkit-font-smoothing: antialiased;
-      animation-timing-function: ease-in-out;
-
-      @keyframes gentle {
-        from {
-          transform: translateZ(0) translateY(-1px);
-          border-bottom: solid 4px #000;
-        }
-        to {
-          transform: translateZ(0) translateY(1px);
-          border-bottom: solid 4/lpx transparent;
-        }
-      }
-
-      &.alt-1 {
-        // animation-duration: 2s;
-      }
-
-      &.alt-2 {
-        // animation-duration: 1.2s;
-        animation-delay: .5s;
-      }
-
-      &.alt-3 {
-        // animation-duration: 1.7s;
-        animation-delay: 1s;
-      }
-
-      &.alt-4 {
-        // animation-duration: 2.2s;
-        animation-delay: .75s;
-      }
-
-      &.alt-5 {
-        // animation-duration: 1s;
-        animation-delay: .25s;
-      }
-
-      &.alt-6 {
-        // animation-duration: 1.5s;
-        // animation-delay: .5s;
-      }
-
-      &.alt-7 {
-        // animation-duration: 2.7s;
-        animation-delay: .5s;
-      }
-
-      &.alt-8 {
-        // animation-duration: 0.9s;
-        animation-delay: .5s;
-      }
-
-      &.alt-9 {
-        // animation-duration: 1.8s;
-      }
-      
     }
 
     .content-card {

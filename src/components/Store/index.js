@@ -129,6 +129,7 @@ class StorePageBase extends Component {
 		
 		return(
 			<section className="store-page">
+				
 				<div className={"pop-out-viewer-container " + (this.props.match.params.id ? ' active' : '')}>
 					<Link to={ROUTES.STORE} onClick={() => this.setPopOut(false)}>
 						<div className="background"></div>

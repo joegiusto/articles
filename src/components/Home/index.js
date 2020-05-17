@@ -60,22 +60,21 @@ class HomePageFour extends Component {
               </div>
               
               <Link to={ROUTES.NEWS}>
-                <div className="tile-content frontpage">
+                <div className="tile-content">
 
-                  <div className="frontpage-count">
-                    <div className="count">0</div>
-                    <div className="item">Storeis</div>
-                  </div>
+                  <div className="icons">
 
-                  <div className="frontpage-count">
-                    <div className="count">0</div>
-                    <div className="item">Issues</div>
-                  </div>
+                    <div className="head-icon">
+                      <i class="fas fa-newspaper"></i>
+                    </div>
+                    
+                    <i class="fas fa-bullhorn"></i>
+                    <i class="fas fa-balance-scale"></i>
+                    <i class="fas fa-ghost"></i>
 
-                  <div className="frontpage-count">
-                    <div className="count">0</div>
-                    <div className="item">Myths</div>
                   </div>
+                  <div className="title">View News</div>
+                  <div className="text">Home to stories, issues and myths along with weather and video content.</div>
 
                 </div>
               </Link>
@@ -90,7 +89,21 @@ class HomePageFour extends Component {
                 <div className="tile-update"></div>
               </div>
 
-              <Link to={ROUTES.STORE_ORDERS}><div className="tile-content"></div></Link>
+              <Link to={ROUTES.STORE_ORDERS}>
+                <div className="tile-content">
+
+                  <div className="icons">
+                    <div className="head">
+                      <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <i class="fas fa-shopping-cart"></i>
+                  </div>
+
+                  <div className="title">0 Active Orders</div>
+                  <div className="text">To help support Articles order from our store.</div>
+
+                </div>
+              </Link>
 
             </div>
 
@@ -119,34 +132,13 @@ class HomePageFour extends Component {
             <div className="tile">
               
               <div className="tile-header">
-                <div className="tile-title">Other</div>
-                <div className="tile-update"></div>
-              </div>
-
-              <div className="tile-content"></div>
-
-            </div>
-
-            <div className="tile">
-
-              <div className="tile-header">
-                <div className="tile-title">Other</div>
-                <div className="tile-update"></div>
-              </div>
-
-              <div className="tile-content"></div>
-
-            </div>
-
-            <div className="tile">
-
-              <div className="tile-header">
-                <div className="tile-title">Other</div>
+                <div className="tile-title">Ethics and Privacy</div>
                 <div className="tile-update"></div>
               </div>
 
               <div className="tile-content">
-
+                <div className="title">No Changes</div>
+                <div className="text">Whenever we make changes to how we use your data or other criticla changes to the site, we wilol alert you here.</div>
               </div>
 
             </div>
@@ -154,17 +146,49 @@ class HomePageFour extends Component {
             <div className="tile">
 
               <div className="tile-header">
-                <div className="tile-title">View Old</div>
+                <div className="tile-title">Reports</div>
                 <div className="tile-update"></div>
               </div>
 
-              <Link to={ROUTES.HOME_OLD}>
-                <div className="tile-content old-home">
-                  <i class="fas fa-campground fa-5x"></i>
-                  
-                  <button className="btn btn-articles-light">View Old Home</button>
+              <div className="tile-content">
+                <div className="title">$0.00 Raised This Month</div>
+                <div className="text">For more inforamtion about our finances check out our reports.</div>
+              </div>
+
+            </div>
+
+            <div className="tile">
+
+              <div className="tile-header">
+                <div className="tile-title">Newsletter</div>
+                <div className="tile-update"></div>
+              </div>
+
+              <div className="tile-content">
+                <div className="icons">
+                  <div className="head">
+                    <i class="fas fa-envelope-open-text"></i>
+                  </div>
                 </div>
-              </Link>
+                <div className="title">Weekly Updates</div>
+                <div className="text">Get sent an mail about everything going on with Articles. Sent out every Sunday.</div>
+              </div>
+
+            </div>
+
+            <div className="tile">
+
+              <div className="tile-header">
+                <div className="tile-title">Temporarily</div>
+                <div className="tile-update"></div>
+              </div>
+
+              {/* <Link to={ROUTES.HOME_OLD}> */}
+                <div className="tile-content old-home">
+                  <Link to={ROUTES.LANDING}><button className="btn btn-articles-light">Landing</button></Link>
+                  <Link to={ROUTES.HOME_OLD}><button className="btn btn-articles-light">Old Home</button></Link>
+                </div>
+              {/* </Link> */}
 
             </div>
 

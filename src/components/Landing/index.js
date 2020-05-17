@@ -750,115 +750,14 @@ class LandingPage extends Component {
 
 				</section>
 
-				<div className="section-break">
-
-					<img className="text-center d-block ml-auto mr-auto" src={flag} height="35px" alt=""/>
-
-				</div>
-
-				<section className="intro-section accent d-none">
-					<div className="background"></div>
-					<div className="content">
-						<div className="container">
-
-							<div className="custom-panel">
-
-								<div className="top">
-									<div className="row">
-
-										<div className="col-12 col-md-6">
-											<div className="left">
-
-												<div className="content-title mb-4" style={{lineHeight: "45px"}}>News</div>
-												<h6 className="content-highlight content-text">It's a bit to explain though...</h6>
-												<div className="content-text">
-													Articles is a for-profit political organization and platform, working to make America a better place for the people through avenues of transparency, clothing, news and politics.
-												</div>
-
-											</div>
-										</div>
-
-										<div className="col-12 col-md-6">
-											<div className="right">
-												<img className="img-fluid" height="376px" src="https://www.economist.com/sites/default/files/images/print-edition/20130921_USD000_0.jpg" alt=""/>
-											</div>
-										</div>
-
-									</div>
-								</div>
-
-							</div>
-
-						</div>
-					</div>
-				</section>
-
 				<div className="section-break d-none">
-					<img className="text-center d-block ml-auto mr-auto" src={logo} height="35px" alt=""/>
+					<img className="text-center d-block ml-auto mr-auto" src={flag} height="35px" alt=""/>
 				</div>
-
-				<section className="intro-section base d-none">
-					<div className="background"></div>
-					<div className="content">
-						<div className="container">
-
-							<div className="custom-panel">
-
-								<div className="top">
-									<div className="row">
-
-										<div className="col-12 col-md-6">
-											<div className="left">
-
-												<div className="content-title mb-4" style={{lineHeight: "45px"}}>Politics</div>
-												<h6 className="content-highlight content-text">It's a bit to explain though...</h6>
-												<div className="content-text">
-													Articles is a for-profit political organization and platform, working to make America a better place for the people through avenues of transparency, clothing, news and politics.
-												</div>
-
-											</div>
-										</div>
-
-										<div className="col-12 col-md-6">
-											<div className="right">
-												<img className="img-fluid" height="376px" src="https://www.economist.com/sites/default/files/images/print-edition/20130921_USD000_0.jpg" alt=""/>
-											</div>
-										</div>
-
-									</div>
-								</div>
-
-							</div>
-
-						</div>
-					</div>
-				</section>
 
 				<footer>
 
-					<div className="background">
-						<img src="https://www.doylecollection.com/var/doyle/storage/images/media/doyle-redesign/images/blog/dupont/washington-neighbourhoods-image-1/263475-1-eng-US/washington-neighbourhoods-image-1.jpg" alt=""/>
-					</div>
-
-					<div className="container">
-
-						<div className="logo">
-							<img className="" src={logo} height="50px" alt=""/>
-							<span className="title">Articles</span>
-						</div>
-
-					</div>
 
 				</footer>
-
-				{/* <section>
-					<div className="container">
-						<div className="row">
-							<div className="col-12 col-md-6">Learn</div>
-							<div className="col-12 col-md-6">Don't</div>
-						</div>
-					</div>
-				</section> */}
 
 			</div>
 		)

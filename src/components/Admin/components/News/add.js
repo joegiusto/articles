@@ -214,7 +214,7 @@ class newsAdd extends Component {
         this.props.news_id === undefined ? 
           null
           :
-          <Link to={ROUTES.MANAGE}><div className="clear" onClick={() => this.changeIsEdit(false)}>Cancel Edit</div></Link>
+          <Link to={ROUTES.ADMIN_NEWS}><div className="clear" onClick={() => this.changeIsEdit(false)}>Cancel Edit</div></Link>
         }
 
         <div className="row">

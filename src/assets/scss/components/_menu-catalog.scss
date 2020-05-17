@@ -192,6 +192,7 @@
                 -webkit-clip-path: polygon(25% 85%, 75% 85%, 100% 100%, 0% 100%);
                 clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%);
                 backface-visibility: hidden;
+                
 
                 &-background {
                     // background-color: gray;
@@ -201,6 +202,12 @@
                     left: 15%;
                     width: 70%;
                     backface-visibility: hidden;
+
+                    img {
+                        height: 100%;
+                        width: 100%;
+                        object-fit: cover;
+                    }
                 } 
             }
 

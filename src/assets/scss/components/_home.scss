@@ -821,17 +821,13 @@
         .tile-title {
           font-family: brandon-grotesque, sans-serif;
           font-style: normal;
-          font-weight: 500;
-          // font-size: 2.5rem;
-          // line-height: 2.4rem;
+          font-weight: 900;
         }
 
         .tile-update {
 
         }
       }
-
-      
 
       .tile-content {
         cursor: pointer;
@@ -840,41 +836,22 @@
         height: 100%;
         margin-top: 1rem;
         transition-duration: 200ms;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
 
-        &.frontpage {
-          display: flex;
-          // width: 100%;
-          // height: 100%;
-          flex-direction: row;
-          align-items: center;
-          justify-content: space-between;
-          text-align: center;
-          padding: 0rem 20%;
+        .title {
+          font-family: brandon-grotesque, sans-serif;
+          font-style: normal;
+          font-weight: 900;
+        }
 
-          .frontpage-count {
-            width: 30%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-
-            .count {
-              background-color: $accent-color;
-              width: 60%;
-              height: 50px;
-              // border: solid 2px rgba(0, 0, 0, 0.2);
-              box-shadow: 0px 0px 2px 1px  rgba(0, 0, 0, 0.2);
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              justify-content: center;
-            }
-
-            .item {
-            
-            }
-
-          }
+        .text {
+          font-family: montserrat, sans-serif;
+          font-weight: 400;
+          font-style: normal;
         }
 
         &.old-home {

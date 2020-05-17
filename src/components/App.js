@@ -96,224 +96,122 @@ class App extends Component {
 
   render(props) {
     return (
-      <Router>
-        <div className={'site-wrap ' + (this.props.site?.sideMenuFixed ? 'fixed' : '')}>
+      <Router onUpdate={() => window.scrollTo(0, 0)}>
+        {/* <ScrollToTop> */}
+          <div className={'site-wrap ' + (this.props.site?.sideMenuFixed ? 'fixed' : '')}>
 
-          <Navigation />
+            <Navigation />
 
-          {/* <AuthUserContext.Consumer>
-            {authUser =>
-              <div style={{position: 'absolute', top: '0px', zIndex: '1000', color: 'red', pointerEvents: 'none'}}>
+            {/* <AuthUserContext.Consumer>
+              {authUser =>
+                <div style={{position: 'absolute', top: '0px', zIndex: '1000', color: 'red', pointerEvents: 'none'}}>
 
-              {!authUser ? (
-                <div>Assume Completion of Outset while authUser loads</div>
-              ) : (
-                <>
-                  {authUser.outset.completed ? 'Completed, site can be used' : "Not completed, plesae complete Outset"}
-                </>
-              )
+                {!authUser ? (
+                  <div>Assume Completion of Outset while authUser loads</div>
+                ) : (
+                  <>
+                    {authUser.outset.completed ? 'Completed, site can be used' : "Not completed, plesae complete Outset"}
+                  </>
+                )
+                }
+
+              </div>
               }
+            </AuthUserContext.Consumer> */}
 
+            <div className={'content-wrap' + (this.props.site?.sideMenuFixed ? ' fixed' : '') + (this.props.site?.colorModeDark ? ' dark-mode' : '')}>
+              <Switch>
+                <Route exact path={ROUTES.LANDING} component={LandingPage} />
+          
+                <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
+                <Route path={ROUTES.SIGN_IN} component={SignInPage} />
+    
+                <Route path={ROUTES.OUTSET} component={OutsetPage} />
+    
+                <PrivateRoute path={ROUTES.SUBSCRIBE} component={SubscribePage} />
+                
+                <Route exact path={ROUTES.HOME} component={HomePage} />
+                <Route path={ROUTES.HOME_OLD} component={HomePageOld} />
+    
+                <Route path={ROUTES.MISSION} component={MissionPage} />
+                <Route path={ROUTES.REPORTS} component={ReportsPage} exact={true}/>
+                <Route path={ROUTES.REPORTS_MANAGE} component={ReportsManagePage} />
+          
+                <Route exact path={ROUTES.STORE} component={StorePage} />
+                <Route exact path={ROUTES.STORE_VIEW} component={StorePage} />
+                <Route path={ROUTES.CHECKOUT} component={StoreCheckoutPage} />
+    
+                <Route exact path={ROUTES.STORE_ORDERS} component={OrdersPage}/>
+                <Route path={ROUTES.STORE_ORDERS_DETAILS} component={SingleOrderPage}/>
+    
+                <Route path={ROUTES.STORE_SUBMISSIONS} component={StoreSubmissionsPage} />
+                <Route path={ROUTES.STORE_SUBMISSIONS_SUBMIT} component={StoreSubmissionsSubmitPage}/>
+    
+                <Route path={ROUTES.STORE_MANAGE} component={StoreManage} />
+          
+                <Route exact path={ROUTES.NEWS} component={NewsPage} />
+    
+                <Route path={ROUTES.STORIES} component={StoriesPage} exact={true}/>
+                <Route path={ROUTES.STORY} component={StoryPage}/>
+                <Route path={ROUTES.ISSUES} component={IssuesPage} exact={true}/>
+                <Route path={ROUTES.ISSUE} component={IssuePage}/>
+                <Route path={ROUTES.MYTHS} component={MythsPage} exact={true}/>
+                <Route path={ROUTES.MYTH} component={MythPage}/>
+                
+                <Route exact path={ROUTES.MANAGE} component={NewsManagePage} />
+                <Route path={ROUTES.MANAGE_DETAILS} component={NewsManagePage} />
+    
+                <Route path={ROUTES.TOWN_HALL} component={TownHallPage} />
+          
+                <Route exact path={ROUTES.PARTY} component={PartyPage} />
+                <Route path={ROUTES.PROPOSALS} component={PartyProposalsPage} />
+                
+                <Route path={ROUTES.MESH} component={MeshPage} />
+          
+                <Route exact path={ROUTES.SUPPORT} component={SupportPage} />
+                <Route path={ROUTES.JOBS} component={JobsPage} />
+                <Route path={ROUTES.PRESS} component={PressPage} />
+                <Route path={ROUTES.TRANSLATIONS} component={TranslationsPage} />
+          
+                <Route path={ROUTES.EMPLOYEES} component={EmployeePage} exact={true}/>
+                <Route path={ROUTES.EMPLOYEES_DETAILS} component={EmployeePageDetails} />
+          
+                <Route path={ROUTES.ACCOUNT} component={AccountPage} />
+                <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
+                
+                <Route exact path={ROUTES.ADMIN} component={AdminPage} />
+
+                <Route exact path={ROUTES.ADMIN_USERS} component={AdminPage} />
+                <Route path={ROUTES.ADMIN_USER_DETAILS} component={AdminPage} />
+
+                <Route exact path={ROUTES.ADMIN_NEWS} component={AdminPage} />
+                <Route path={ROUTES.ADMIN_NEWS_DETAILS} component={AdminPage} />
+
+                <Route exact path={ROUTES.ADMIN_PRODUCTS} component={AdminPage} />
+                <Route path={ROUTES.ADMIN_PRODUCT_DETAILS} component={AdminPage} />
+
+                <Route exact path={ROUTES.ADMIN_SUBMISSIONS} component={AdminPage} />
+                <Route path={ROUTES.ADMIN_SUBMISSION_DETAILS} component={AdminPage} />
+
+                <Route exact path={ROUTES.ADMIN_DONATIONS} component={AdminPage} />
+                <Route exact path={ROUTES.ADMIN_EXPENSES} component={AdminPage} />
+
+                {/* <Route path={ROUTES.DONATE} component={DonatePage} /> */}
+    
+                <Route path={ROUTES.MAIL} component={MailPage} />
+    
+                <Route path={ROUTES.PLAYGROUND} component={PlaygroundPage} />
+                <Route path={ROUTES.CHAT} component={Chat} />
+    
+                <Route component={NotFoundPage} />
+              </Switch>
             </div>
-            }
-          </AuthUserContext.Consumer> */}
 
-          <div className={'content-wrap' + (this.props.site?.sideMenuFixed ? ' fixed' : '') + (this.props.site?.colorModeDark ? ' dark-mode' : '')}>
-            <Switch>
-              {/* Something like this? */}
-              {/* <Route path="*" component={OutsetPage}/> */}
-              {/* <Redirect from="*" to="/outset"/> */}
-  
-              <Route exact path={ROUTES.LANDING} component={LandingPage} />
-        
-              <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
-              <Route path={ROUTES.SIGN_IN} component={SignInPage} />
-  
-              <Route path={ROUTES.OUTSET} component={OutsetPage} />
-  
-              <PrivateRoute path={ROUTES.SUBSCRIBE} component={SubscribePage} />
-              {/* <Route path={ROUTES.SUBSCRIBE} component={SubscribePage} /> */}
-              
-              <Route exact path={ROUTES.HOME} component={HomePage} />
-              <Route path={ROUTES.HOME_OLD} component={HomePageOld} />
-  
-              <Route path={ROUTES.MISSION} component={MissionPage} />
-              <Route path={ROUTES.REPORTS} component={ReportsPage} exact={true}/>
-              <Route path={ROUTES.REPORTS_MANAGE} component={ReportsManagePage} />
-        
-              <Route exact path={ROUTES.STORE} component={StorePage} />
-              <Route exact path={ROUTES.STORE_VIEW} component={StorePage} />
-              <Route path={ROUTES.CHECKOUT} component={StoreCheckoutPage} />
-  
-              <Route exact path={ROUTES.STORE_ORDERS} component={OrdersPage}/>
-              <Route path={ROUTES.STORE_ORDERS_DETAILS} component={SingleOrderPage}/>
-  
-              <Route path={ROUTES.STORE_SUBMISSIONS} component={StoreSubmissionsPage} />
-              <Route path={ROUTES.STORE_SUBMISSIONS_SUBMIT} component={StoreSubmissionsSubmitPage}/>
-  
-              <Route path={ROUTES.STORE_MANAGE} component={StoreManage} />
-        
-              <Route exact path={ROUTES.NEWS} component={NewsPage} />
-  
-              <Route path={ROUTES.STORIES} component={StoriesPage} exact={true}/>
-              <Route path={ROUTES.STORY} component={StoryPage}/>
-              <Route path={ROUTES.ISSUES} component={IssuesPage} exact={true}/>
-              <Route path={ROUTES.ISSUE} component={IssuePage}/>
-              <Route path={ROUTES.MYTHS} component={MythsPage} exact={true}/>
-              <Route path={ROUTES.MYTH} component={MythPage}/>
-              
-              <Route exact path={ROUTES.MANAGE} component={NewsManagePage} />
-              <Route path={ROUTES.MANAGE_DETAILS} component={NewsManagePage} />
-  
-              <Route path={ROUTES.TOWN_HALL} component={TownHallPage} />
-        
-              <Route exact path={ROUTES.PARTY} component={PartyPage} />
-              <Route path={ROUTES.PROPOSALS} component={PartyProposalsPage} />
-              
-              <Route path={ROUTES.MESH} component={MeshPage} />
-        
-              <Route exact path={ROUTES.SUPPORT} component={SupportPage} />
-              <Route path={ROUTES.JOBS} component={JobsPage} />
-              <Route path={ROUTES.PRESS} component={PressPage} />
-              <Route path={ROUTES.TRANSLATIONS} component={TranslationsPage} />
-        
-              <Route path={ROUTES.EMPLOYEES} component={EmployeePage} exact={true}/>
-              <Route path={ROUTES.EMPLOYEES_DETAILS} component={EmployeePageDetails} />
-        
-              <Route path={ROUTES.ACCOUNT} component={AccountPage} />
-              <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
-              
-              <Route exact path={ROUTES.ADMIN} component={AdminPage} />
-
-              <Route exact path={ROUTES.ADMIN_USERS} component={AdminPage} />
-              <Route path={ROUTES.ADMIN_USER_DETAILS} component={AdminPage} />
-
-              <Route exact path={ROUTES.ADMIN_NEWS} component={AdminPage} />
-              <Route path={ROUTES.ADMIN_NEWS_DETAILS} component={AdminPage} />
-
-              <Route exact path={ROUTES.ADMIN_PRODUCTS} component={AdminPage} />
-              <Route path={ROUTES.ADMIN_PRODUCT_DETAILS} component={AdminPage} />
-
-              <Route exact path={ROUTES.ADMIN_SUBMISSIONS} component={AdminPage} />
-              <Route path={ROUTES.ADMIN_SUBMISSION_DETAILS} component={AdminPage} />
-
-              <Route exact path={ROUTES.ADMIN_DONATIONS} component={AdminPage} />
-              <Route exact path={ROUTES.ADMIN_EXPENSES} component={AdminPage} />
-
-              {/* <Route path={ROUTES.DONATE} component={DonatePage} /> */}
-  
-              <Route path={ROUTES.MAIL} component={MailPage} />
-  
-              <Route path={ROUTES.PLAYGROUND} component={PlaygroundPage} />
-              <Route path={ROUTES.CHAT} component={Chat} />
-  
-              <Route component={NotFoundPage} />
-            </Switch>
           </div>
-
-          {/* <Redirect from="*" to="/outset"/> */}
-
-        </div>
       </Router>
     )
   }
 }
-
-// const App = () => (
-//   <Router>
-//     <div>
-
-//       <Navigation />
-
-//       {/* <AuthUserContext.Consumer>
-//         {authUser =>
-//           <div style={{position: 'absolute', top: '0px', zIndex: '1000', color: 'red', pointerEvents: 'none'}}>
-
-//           {!authUser ? (
-//             <div>Assume Completion of Outset while authUser loads</div>
-//           ) : (
-//             <>
-//               {authUser.outset.completed ? 'Completed, site can be used' : "Not completed, plesae complete Outset"}
-//             </>
-//           )
-//           }
-
-//         </div>
-//         }
-//       </AuthUserContext.Consumer> */}
-
-//       <Switch>
-//         {/* Something like this? */}
-//         {/* <Route path="*" component={OutsetPage}/> */}
-//         {/* <Redirect from="*" to="/outset"/> */}
-
-//         <Route exact path={ROUTES.LANDING} component={LandingPage} />
-  
-//         <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
-//         <Route path={ROUTES.SIGN_IN} component={SignInPage} />
-
-//         <Route path={ROUTES.OUTSET} component={OutsetPage} />
-
-//         <PrivateRoute exact path={ROUTES.SUBSCRIBE} component={SubscribePage} />
-//         {/* <Route path={ROUTES.SUBSCRIBE} component={SubscribePage} /> */}
-        
-//         <Route path={ROUTES.HOME} component={HomePage} />
-//         <Route path={ROUTES.MISSION} component={MissionPage} />
-
-//         <Route path={ROUTES.REPORTS} component={ReportsPage} exact={true}/>
-//         <Route path={ROUTES.REPORTS_MANAGE} component={ReportsManagePage} />
-  
-//         <Route exact path={ROUTES.STORE} component={StorePage} />
-//         <Route exact path={ROUTES.STORE_VIEW} component={StorePage} />
-//         <Route path={ROUTES.CHECKOUT} component={StoreCheckoutPage} />
-//         <Route path={ROUTES.STORE_SUBMISSIONS} component={StoreSubmissionsPage} />
-//         <Route path={ROUTES.STORE_SUBMISSIONS_SUBMIT} component={StoreSubmissionsSubmitPage}/>
-
-//         <Route path={ROUTES.STORE_MANAGE} component={StoreManage} />
-  
-//         <Route exact path={ROUTES.NEWS} component={NewsPage} />
-//         <Route path={ROUTES.MYTHS} component={MythsPage} />
-//         <Route path={ROUTES.ISSUES} component={IssuesPage} exact={true}/>
-//         <Route path={ROUTES.ISSUE} component={IssuePage}/>
-        
-//         <Route path={ROUTES.MANAGE} component={NewsManagePage} />
-
-//         <Route path={ROUTES.TOWN_HALL} component={TownHallPage} />
-  
-//         <Route exact path={ROUTES.PARTY} component={PartyPage} />
-//         <Route path={ROUTES.PROPOSALS} component={PartyProposalsPage} />
-        
-//         <Route path={ROUTES.MESH} component={MeshPage} />
-  
-//         <Route exact path={ROUTES.SUPPORT} component={SupportPage} />
-//         <Route path={ROUTES.JOBS} component={JobsPage} />
-//         <Route path={ROUTES.PRESS} component={PressPage} />
-//         <Route path={ROUTES.TRANSLATIONS} component={TranslationsPage} />
-  
-//         <Route path={ROUTES.EMPLOYEES} component={EmployeePage} exact={true}/>
-//         <Route path={ROUTES.EMPLOYEES_DETAILS} component={EmployeePageDetails} />
-  
-//         <Route path={ROUTES.ACCOUNT} component={AccountPage} />
-//         <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
-        
-//         <Route path={ROUTES.ADMIN} component={AdminPage} />
-//         {/* <Route path={ROUTES.DONATE} component={DonatePage} /> */}
-
-//         <Route path={ROUTES.MAIL} component={MailPage} />
-
-//         {/* <Route path={ROUTES.PLAYGROUND} component={PlaygroundPage} /> */}
-//         <Route path={ROUTES.CHAT} component={Chat} />
-
-//         <Route component={NotFoundPage} />
-//       </Switch>
-
-//       {/* <Redirect from="*" to="/outset"/> */}
-
-//     </div>
-//   </Router>
-// );
-
-// export default withAuthentication(App);
 
 const mapStateToProps = state => ({
   auth: state.auth,

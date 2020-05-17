@@ -33,7 +33,9 @@ const StoreItem = (props) => {
               {props.sale ? (<div className={"menu-catalog-item-sale px-4"}><span>${(props.price / 100).toFixed(2)}</span></div>) : (<span></span>)}
               <h5 className="mb-0 pb-1" >{props.title || <div>&nbsp;</div>}</h5>
               {/* <!-- <div className="menu-catalog-item-photo"></div> --> */}
-              <div className={"menu-catalog-item-photo-experimental-background backdrop-" + (color)}></div>
+              <div className={"menu-catalog-item-photo-experimental-background backdrop-" + (color)}>
+                {/* <img src="https://i.pinimg.com/originals/c3/88/85/c388856f7e8781ab2e33cd889305cecb.jpg" alt=""/> */}
+              </div>
               <div className={"menu-catalog-item-photo-experimental floor-" + (color)}></div>
 
               <div className="menu-catalog-item-number">{slide}</div>
