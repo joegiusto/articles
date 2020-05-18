@@ -55,6 +55,7 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
     "slick-carousel": "^1.8.1",
+    "socket.io": "^2.3.0",
     "styled-components": "^5.1.0",
     "validator": "^13.0.0"
   },

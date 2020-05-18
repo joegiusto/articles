@@ -4,6 +4,11 @@ const bodyParser = require('body-parser');
 const passport = require("passport");
 const path = require('path');
 const app = express();
+const cors = require('cors');
+var http = require('http').createServer(app);
+// var io = require('socket.io')(http);
+var io = require('socket.io')(http);
+const allNamespace = io.of('/');
 // const history = require('connect-history-api-fallback');
 let mongoUtil = require('./db');
 const mongoose = require('mongoose');
@@ -75,6 +80,13 @@ mongoUtil.connectToServer( function( err, client ) {
 
 });
 
+app.use(cors());
+app.options('*', cors());
+
+http.listen(process.env.PORT || 8080, () => {
+  console.log( `running http`);
+});
+
 mongoose
 .connect(
   url, {
@@ -104,10 +116,32 @@ require("./config/passport")(passport);
 // Routes
 app.use("/api/users", users);
 
-app.listen(process.env.PORT || 8080);
+// app.listen(process.env.PORT || 8080);
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, './build', 'index.html'));
+});
+
+// io.origins('*:*');
+
+io.on('connection', (socket) => {
+  console.log('User connected');
+  
+  io.of('/').clients((error, clients) => {
+    if (error) throw error;
+    console.log(clients);
+    io.emit( 'online', clients );
+  });
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+    
+    io.of('/').clients((error, clients) => {
+      if (error) throw error;
+      console.log(clients);
+      io.emit( 'online', clients );
+    });
+  });
 });
 
 // Used to make sure server is up in one place, though this was in MySQL days

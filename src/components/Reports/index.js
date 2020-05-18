@@ -11,6 +11,9 @@ import {ClothingTable} from "./table.js"
 import moment from 'moment';
 import Chart from 'chart.js';
 import Component from 'react-live-clock/lib/Component';
+import socketIOClient from 'socket.io-client'
+const ENDPOINT = "http://localhost:8081/";
+let socket = ''
 
 class Reports extends Component {
   constructor(props) {
@@ -44,13 +47,18 @@ class Reports extends Component {
      };
   }
 
+  
+
   componentDidMount() {
     this.onListenForDonations();
+    
+    socket = socketIOClient(ENDPOINT);
   }
 
   componentWillUnmount() {
     this.props.firebase.donations().off();
     this.props.firebase.expenses().off();
+    socket.disconnect();
   }
 
   onListenForDonations() {

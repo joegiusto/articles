@@ -17,6 +17,7 @@ import Products from './components/Products'
 import Submissions from './components/Submissions'
 import Donations from './components/Donations'
 import Expenses from './components/Expenses'
+import Sockets from './components/Socket'
 
 const Test = () => {
   return(
@@ -102,6 +103,7 @@ class Admin extends Component {
             <Link to={ROUTES.ADMIN_SUBMISSIONS}><span className={"tab" + (this.state.tab === 'submissions' ? ' active' : '')}>Submissions</span></Link>
             <Link to={ROUTES.ADMIN_DONATIONS}><span className={"tab" + (this.state.tab === 'donations' ? ' active' : '')}>Donations</span></Link>
             <Link to={ROUTES.ADMIN_EXPENSES}><span className={"tab" + (this.state.tab === 'expenses' ? ' active' : '')}>Expenses</span></Link>
+            <Link to={ROUTES.ADMIN_SOCKET}><span className={"tab" + (this.state.tab === 'sockets' ? ' active' : '')}>Sockets</span></Link>
 
           </div>
         </div>
@@ -139,6 +141,13 @@ class Admin extends Component {
                 tabLocation='expenses'
                 setLoaction={this.setLoaction}
                 ></Expenses> 
+              }/>
+
+              <Route exact path={ROUTES.ADMIN_SOCKET} render={() => <Sockets 
+                match={this.props.match}
+                tabLocation='sockets'
+                setLoaction={this.setLoaction}
+                ></Sockets> 
               }/>
 
             </Switch>

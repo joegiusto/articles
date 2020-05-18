@@ -84,6 +84,7 @@ export const ADMIN_SUBMISSION_DETAILS = '/admin/submissions/:id';
 
 export const ADMIN_DONATIONS = '/admin/donations';
 export const ADMIN_EXPENSES = '/admin/expenses';
+export const ADMIN_SOCKET = '/admin/socket';
 
 // export const ADMIN_DETAILS = '/admin/:id';
 
