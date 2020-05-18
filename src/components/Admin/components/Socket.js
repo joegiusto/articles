@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import axios from 'axios'
 import socketIOClient from 'socket.io-client'
-const ENDPOINT = "http://localhost:8080/";
+const ENDPOINT = "/";
 let socket = ''
 
 class Submissions extends Component {

@@ -12,7 +12,7 @@ import moment from 'moment';
 import Chart from 'chart.js';
 import Component from 'react-live-clock/lib/Component';
 import socketIOClient from 'socket.io-client'
-const ENDPOINT = "http://localhost:8081/";
+const ENDPOINT = "/";
 let socket = ''
 
 class Reports extends Component {
@@ -46,8 +46,6 @@ class Reports extends Component {
 
      };
   }
-
-  
 
   componentDidMount() {
     this.onListenForDonations();
