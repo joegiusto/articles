@@ -1,58 +1,15 @@
 import React, { Component } from 'react';
-import Slider from "react-slick";
 
-import ShowcaseCard from './ShowcaseCard';
-
-import slideHead from '../../assets/img/slide-head.png';
-
-import StoreItem from '../Store/StoreItemAlpha';
-
-import placeholder from '../../assets/img/placeholder.png'
+// import ShowcaseCard from './ShowcaseCard';
+// import slideHead from '../../assets/img/slide-head.png';
+// import StoreItem from '../Store/StoreItemAlpha';
+// import placeholder from '../../assets/img/placeholder.png'
 
 import * as ROUTES from '../../constants/routes'
 import { Link } from 'react-router-dom'
-// import ArticlesHomePageSlick from './ArticlesHomePageSlick';
 import logo from '../../assets/img/logo.png'
 import flag from '../../assets/img/flag.png'
 import newsWave from '../../assets/gif/news-wave.gif'
-
-import Tilt from 'react-tilt';
-
-import sheep from '../../assets/img/landing/sheep.svg'
-
-class SimpleSlider extends Component {
-  render() {
-    const settings = {
-      dots: true,
-			infinite: false,
-			arrows: true,
-      speed: 500,
-			slidesToShow: 1.20,
-			centerPadding: '20px',
-      slidesToScroll: 1
-    };
-    return (
-      <div className="pb-4">
-        <div className="content-title">Slide Example</div >
-        <Slider {...settings}>
-
-          <div className="slide-container pr-3">
-            <div className="real-slide"><h3>1</h3></div>
-          </div>
-
-          <div className="slide-container pr-3">
-						<div className="real-slide"><h3>1</h3></div>
-          </div>
-
-          <div className="slide-container pr-3">
-						<div className="real-slide"><h3>1</h3></div>
-          </div>
-
-        </Slider>
-      </div>
-    );
-  }
-}
 
 class LandingPage extends Component {
 	constructor(props) {
@@ -753,11 +710,6 @@ class LandingPage extends Component {
 				<div className="section-break d-none">
 					<img className="text-center d-block ml-auto mr-auto" src={flag} height="35px" alt=""/>
 				</div>
-
-				<footer>
-
-
-				</footer>
 
 			</div>
 		)

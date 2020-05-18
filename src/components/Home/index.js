@@ -49,9 +49,6 @@ class HomePageFour extends Component {
 
           <div className="tile-section">
 
-            
-
-
             <div className="tile">
 
               <div className="tile-header">
@@ -68,9 +65,11 @@ class HomePageFour extends Component {
                       <i class="fas fa-newspaper"></i>
                     </div>
                     
-                    <i class="fas fa-bullhorn"></i>
-                    <i class="fas fa-balance-scale"></i>
-                    <i class="fas fa-ghost"></i>
+                    <div className="sub-icons">
+                      <i class="fas fa-bullhorn"></i>
+                      <i class="fas fa-balance-scale"></i>
+                      <i class="fas fa-ghost mr-0"></i>
+                    </div>
 
                   </div>
                   <div className="title">View News</div>
@@ -93,10 +92,13 @@ class HomePageFour extends Component {
                 <div className="tile-content">
 
                   <div className="icons">
-                    <div className="head">
+                    <div className="head-icon">
                       <i class="fas fa-clipboard-list"></i>
                     </div>
-                    <i class="fas fa-shopping-cart"></i>
+                    <div className="sub-icons">
+                      <i class="fas fa-shopping-cart"></i>
+                      <i class="fas fa-tshirt mr-0"></i>
+                    </div>
                   </div>
 
                   <div className="title">0 Active Orders</div>
@@ -114,18 +116,49 @@ class HomePageFour extends Component {
                 <div className="tile-update"></div>
               </div>
 
-              <div className="tile-content"></div>
+              <div className="tile-content">
+
+                <div className="icons">
+                  <div className="head-icon">
+                    <i class="fas fa-chalkboard"></i>
+                  </div>
+                  <div className="sub-icons">
+                    <i class="fas fa-pencil-alt"></i>
+                    <i class="fas fa-mouse-pointer"></i>
+                    <i class="fas fa-mouse mr-0"></i>
+                  </div>
+                </div>
+
+                <div className="title">
+                  0 Entries This Period
+                </div>
+
+                <div className="text">
+                  Submit a design for a chance to win <b>$$$</b> and get your product made for you.
+                </div>
+
+              </div>
 
             </div>
 
             <div className="tile">
 
               <div className="tile-header">
-                <div className="tile-title">Other</div>
+                <div className="tile-title">Instagram</div>
                 <div className="tile-update"></div>
               </div>
 
-              <div className="tile-content"></div>
+              <div className="tile-content instagram">
+                <div className="photo">
+                  <img src="https://www.nationalgeographic.com/content/dam/archaeologyandhistory/2020/02/washington-dc-statehood-explainer/washington-dc-aerial-2548942.adapt.1900.1.jpg" alt=""/>
+                </div>
+                <div className="icon">
+                  <i class="fab fa-instagram mr-0" aria-hidden="true"></i>
+                  <div className="text">
+                    May 20th 2020
+                  </div>
+                </div>
+              </div>
 
             </div>
 
@@ -137,8 +170,16 @@ class HomePageFour extends Component {
               </div>
 
               <div className="tile-content">
+                <div className="icons">
+                  <div className="head-icon">
+                    <i class="fas fa-binoculars"></i>
+                  </div>
+                  <div className="sub-icons">
+                    <i class="fas fa-search-location mr-0"></i>
+                  </div>
+                </div>
                 <div className="title">No Changes</div>
-                <div className="text">Whenever we make changes to how we use your data or other criticla changes to the site, we wilol alert you here.</div>
+                <div className="text">Whenever we make changes to how we use your data or other criticle changes to the site, we will alert you here.</div>
               </div>
 
             </div>
@@ -151,6 +192,15 @@ class HomePageFour extends Component {
               </div>
 
               <div className="tile-content">
+                <div className="icons">
+                  <div className="head-icon">
+                    <i class="fas fa-receipt"></i>
+                  </div>
+                  <div className="sub-icons">
+                    <i class="fas fa-money-check-alt"></i>
+                    <i class="fas fa-money-bill mr-0"></i>
+                  </div>
+                </div>
                 <div className="title">$0.00 Raised This Month</div>
                 <div className="text">For more inforamtion about our finances check out our reports.</div>
               </div>
@@ -166,8 +216,11 @@ class HomePageFour extends Component {
 
               <div className="tile-content">
                 <div className="icons">
-                  <div className="head">
+                  <div className="head-icon">
                     <i class="fas fa-envelope-open-text"></i>
+                  </div>
+                  <div className="sub-icons">
+                    <i class="fas fa-at mr-0"></i>
                   </div>
                 </div>
                 <div className="title">Weekly Updates</div>

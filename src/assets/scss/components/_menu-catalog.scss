@@ -28,6 +28,14 @@
     background-image: linear-gradient(to bottom, rgba(29, 138, 255, .5), #000000);
 }
 
+.dark-mode {
+    .store-page {
+        .slick-slide {
+            background-color: $dark-mode-card-color;
+        }
+    }
+}
+
 .store-page {
     .slick-container {
         // background-color: #000000;

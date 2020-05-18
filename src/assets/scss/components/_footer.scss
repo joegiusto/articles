@@ -1,0 +1,61 @@
+.dark-mode {
+  footer.site-footer {
+    border-top: 5px solid $base-color;
+    background-color: black;
+    color: white;
+  }
+}
+
+footer.site-footer {
+  margin-top: auto;
+  position: relative;
+  padding: 3rem 0rem;
+  background-color: white;
+  border-top: 5px solid black;
+
+  .footer-panel {
+
+    .brand {
+      font-size: 2rem;
+      font-family: forte;
+    }
+
+    .title {
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 1rem;
+    }
+
+    a {
+      display: block;
+      font-family: montserrat, sans-serif;
+      font-weight: 400;
+      font-size: 12px;
+    }
+
+    &.first {
+      .copyright {
+        font-family: montserrat, sans-serif;
+        font-weight: 400;
+        font-size: 12px;
+      }
+    }
+
+    &.fourth {
+      .icons {
+        font-size: 2rem;
+      }
+    }
+
+    &.fifth {
+
+      .btn {
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 1.5rem;
+      }
+    }
+  }
+}

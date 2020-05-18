@@ -51,6 +51,7 @@ $grid-breakpoints: (
 @import 'components/donate';
 @import 'components/mail';
 @import 'components/not-found';
+@import 'components/footer';
 
 @import 'components/admin';
 
@@ -95,7 +96,7 @@ body {
 
   &.fixed {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
   }
 
   .menu-wrap {
@@ -122,9 +123,13 @@ body {
   }
 
   .content-wrap {
+    height: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 
     &.fixed {
-      margin-top: 50px;
+      // margin-top: 50px;
       padding-left: 300px;
       width: 100%;
     }
