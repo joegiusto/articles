@@ -34,6 +34,10 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+
+    @include media-breakpoint-down(md) {
+      flex-direction: column;
+    }
   }
 
   .ad {
@@ -44,6 +48,11 @@
     border: 3px solid #955408;
     z-index: 2;
     margin: 0rem 5rem;
+    margin-bottom: 5rem;
+
+    @include media-breakpoint-down(md) {
+      margin-bottom: 2rem;
+    }
 
     .details-slide-out {
       margin-top: -3px;
@@ -199,6 +208,10 @@
     font-weight: 400;
     font-size: 16px;
     font-style: normal;
+
+    @include media-breakpoint-down(md) {
+      margin-bottom: 2rem;
+    }
 
     .news-one-head {
       background-color: $accent-color;

@@ -72,8 +72,13 @@ class HomePageFour extends Component {
                     </div>
 
                   </div>
+
                   <div className="title">View News</div>
                   <div className="text">Home to stories, issues and myths along with weather and video content.</div>
+
+                  <div className="tile-extra">
+                    0 Subscribed Updates
+                  </div>
 
                 </div>
               </Link>
@@ -103,6 +108,10 @@ class HomePageFour extends Component {
 
                   <div className="title">0 Active Orders</div>
                   <div className="text">To help support Articles order from our store.</div>
+
+                  <div className="tile-extra">
+                    0 Lifetime Orders
+                  </div>
 
                 </div>
               </Link>
@@ -135,6 +144,10 @@ class HomePageFour extends Component {
 
                 <div className="text">
                   Submit a design for a chance to win <b>$$$</b> and get your product made for you.
+                </div>
+
+                <div className="tile-extra">
+                  0 Lifetime Entries
                 </div>
 
               </div>
@@ -170,6 +183,7 @@ class HomePageFour extends Component {
               </div>
 
               <div className="tile-content">
+
                 <div className="icons">
                   <div className="head-icon">
                     <i class="fas fa-binoculars"></i>
@@ -178,8 +192,13 @@ class HomePageFour extends Component {
                     <i class="fas fa-search-location mr-0"></i>
                   </div>
                 </div>
+
                 <div className="title">No Changes</div>
                 <div className="text">Whenever we make changes to how we use your data or other criticle changes to the site, we will alert you here.</div>
+
+                <div className="tile-extra">
+                  
+                </div>
               </div>
 
             </div>
@@ -192,6 +211,7 @@ class HomePageFour extends Component {
               </div>
 
               <div className="tile-content">
+
                 <div className="icons">
                   <div className="head-icon">
                     <i class="fas fa-receipt"></i>
@@ -201,8 +221,13 @@ class HomePageFour extends Component {
                     <i class="fas fa-money-bill mr-0"></i>
                   </div>
                 </div>
+
                 <div className="title">$0.00 Raised This Month</div>
                 <div className="text">For more inforamtion about our finances check out our reports.</div>
+
+                <div className="tile-extra">
+                </div>
+
               </div>
 
             </div>
@@ -215,6 +240,7 @@ class HomePageFour extends Component {
               </div>
 
               <div className="tile-content">
+
                 <div className="icons">
                   <div className="head-icon">
                     <i class="fas fa-envelope-open-text"></i>
@@ -223,8 +249,14 @@ class HomePageFour extends Component {
                     <i class="fas fa-at mr-0"></i>
                   </div>
                 </div>
+
                 <div className="title">Weekly Updates</div>
                 <div className="text">Get sent an mail about everything going on with Articles. Sent out every Sunday.</div>
+
+                <div className="tile-extra">
+                  45 Others Subscribed
+                </div>
+
               </div>
 
             </div>

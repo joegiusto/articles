@@ -7,14 +7,14 @@ const Footer = (props) => (
     <div className="container-fluid">
       <div className="row">
 
-        <div className="col col-auto flex-fill">
+        <div className="col-12 mb-2 mb-md-0 col-md-auto flex-fill">
           <div className="footer-panel first pl-md-5">
             <Link to={ROUTES.LANDING}><div className="brand">Articles</div></Link>
             <div className="copyright">Copyright @2020 Articles Media</div>
           </div>
         </div>
 
-        <div className="col col-auto flex-fill">
+        <div className="col-6 col-md-auto flex-fill">
           <div className="footer-panel">
             <div className="title">Main</div>
             <Link to={ROUTES.REPORTS}>Reports</Link>
@@ -25,7 +25,7 @@ const Footer = (props) => (
           </div>
         </div>
 
-        <div className="col col-auto flex-fill">
+        <div className="col-6 col-md-auto mb-3 mb-md-0 flex-fill">
           <div className="footer-panel">
             <div className="title">News</div>
             <Link to={ROUTES.REPORTS}>Stories</Link>
