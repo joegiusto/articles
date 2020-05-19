@@ -19,9 +19,9 @@ const Footer = (props) => (
             <div className="title">Main</div>
             <Link to={ROUTES.REPORTS}>Reports</Link>
             <Link to={ROUTES.REPORTS}>Privacy</Link>
-            <div className="title mt-3">Clothing</div>
+            {/* <div className="title mt-3">Clothing</div>
             <Link to={ROUTES.REPORTS}>Store</Link>
-            <Link to={ROUTES.REPORTS}>Submissions</Link>
+            <Link to={ROUTES.REPORTS}>Submissions</Link> */}
           </div>
         </div>
 
@@ -31,9 +31,9 @@ const Footer = (props) => (
             <Link to={ROUTES.REPORTS}>Stories</Link>
             <Link to={ROUTES.REPORTS}>Issues</Link>
             <Link to={ROUTES.REPORTS}>Myths</Link>
-            <div className="title mt-3">Politics</div>
+            {/* <div className="title mt-3">Politics</div>
             <Link to={ROUTES.REPORTS}>About</Link>
-            <Link to={ROUTES.REPORTS}>Involvements</Link>
+            <Link to={ROUTES.REPORTS}>Involvements</Link> */}
           </div>
         </div>
 

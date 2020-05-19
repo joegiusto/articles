@@ -41,38 +41,70 @@ class Submissions extends Component {
   render() {
 
     return (
-      <div className="mt-5">
+      <div className="admin-submissions container-fluid">
 
-        <div className="">
-          <h5>Submissions Info</h5>
+        <div className="row">
+
+          <div className="col-12 col-md-4">
+
+            <div className="admin-side-by-side-form">
+
+              <div className="form-group">
+                <input className="form-control" type="text" value="" placeholder="Title"/>
+              </div>
+
+              <div className="form-group">
+                <input className="form-control" type="text" value="" placeholder="User ID"/>
+              </div>
+
+              <div className="form-group">
+                <textarea className="form-control" type="text" rows="5" placeholder="Notes"/>
+              </div>
+
+              {/* <div className="form-group">
+                <input className="form-control" type="text" placeholder="File"/>
+              </div> */}
+
+              <div className="submit">
+                <div className="btn btn-articles-light w-100">Submit</div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div className="col-12 col-md-8">
+            <table class="table table-sm table-bordered bg-white mt-3">
+              <thead className="thead-dark">
+                <tr>
+                  <th scope="col">User</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Actions</th>
+                  {/* <th scope="col">Price</th> */}
+                  {/* <th scope="col">Card Photos</th> */}
+                </tr>
+              </thead>
+              <tbody>
+
+                {this.state.submissions.map(product => (
+
+                  <tr>
+                    <th scope="row">{product.user_id}</th>
+                    <td>{product.title}</td>
+                    <td><div className="badge badge-danger">Delete</div></td>
+                    {/* <td>${product.price / 100}</td> */}
+                    {/* <td>p-c</td> */}
+                  </tr>
+                  
+                ))}
+
+              </tbody>
+            </table>
+          </div>
+
         </div>
 
-        <table class="table table-bordered bg-white">
-          <thead>
-            <tr>
-              <th scope="col">User</th>
-              <th scope="col">Title</th>
-              <th scope="col">Actions</th>
-              {/* <th scope="col">Price</th> */}
-              {/* <th scope="col">Card Photos</th> */}
-            </tr>
-          </thead>
-          <tbody>
-
-            {this.state.submissions.map(product => (
-
-              <tr>
-                <th scope="row">{product.user_id}</th>
-                <td>{product.title}</td>
-                <td><div className="badge badge-danger">Delete</div></td>
-                {/* <td>${product.price / 100}</td> */}
-                {/* <td>p-c</td> */}
-              </tr>
-              
-            ))}
-
-          </tbody>
-        </table>
+        
 
         {/* <div className="btn btn-articles-light">Add Submission</div> */}
 

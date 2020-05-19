@@ -9,7 +9,7 @@ var http = require('http').createServer(app);
 // var io = require('socket.io')(http);
 var io = require('socket.io')(http);
 const allNamespace = io.of('/');
-// const history = require('connect-history-api-fallback');
+const history = require('connect-history-api-fallback');
 let mongoUtil = require('./db');
 const mongoose = require('mongoose');
 var ObjectId = require('mongodb').ObjectId; 
@@ -101,7 +101,7 @@ mongoose
 
 const users = require("./routes/api/users");
 
-// app.use(history());
+app.use(history());
 app.use( express.static(path.join(__dirname, '../build')) );
 
 app.use( bodyParser.json() );

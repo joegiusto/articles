@@ -133,83 +133,87 @@ class Users extends Component {
   render() {
 
     return (
-      <div className="mt-5">
-
-        <div className="">
-          <h5>User Info</h5>
-        </div>
-
-        <table class="table table-bordered bg-white">
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Outset</th>
-              <th scope="col">Admin</th>
-            </tr>
-          </thead>
-          <tbody>
-
-            {this.state.users.map(user => (
-
-              <tr>
-                <th scope="row">{user._id}</th>
-                <td>{user.first_name}</td>
-                <td>{user.last_name}</td>
-                <td>{user.outset === true ? 'True' : 'False'}</td>
-                <td>{user.roles?.isAdmin === "true" ? 'True' : 'False'}</td>
-              </tr>
-              
-            ))}
-
-          </tbody>
-        </table>
-
-        <div className="mt-5">
-          <h5>User Info Stats</h5>
-        </div>
+      <div className="admin-users container-fluid mt-3">
 
         <div className="row">
 
-          <div className="col-12 col-md-6">
-
-            <div className="card">
-              <div className="card-header">Outset</div>
-              <div className="card-body">
-                <div>Outset Complete: {(Math.floor((this.state.outsetComplete / this.state.users.length) * 100))}%</div>
+          <div className="col-12 col-md-4">
+  
+            <div className="row">
+  
+              <div className="col-12 col-md-6">
+  
+                <div className="card">
+                  <div className="card-header">Outset</div>
+                  <div className="card-body">
+                    <div>Outset Complete: {(Math.floor((this.state.outsetComplete / this.state.users.length) * 100))}%</div>
+                  </div>
+                </div>
+  
+                <div className="card mt-3">
+                  <div className="card-header">Geographical Data</div>
+                  <div className="card-body">
+  
+                    {
+                      Object.entries(this.state.zips).map(([key, val]) => 
+                          <div key={key}>{this.checkZipName(key)}: {val}</div>
+                      )
+                    }
+  
+                  </div>
+                </div>
+  
               </div>
-            </div>
-
-            <div className="card mt-3">
-              <div className="card-header">Geographical Data</div>
-              <div className="card-body">
-
-                {
-                  Object.entries(this.state.zips).map(([key, val]) => 
-                      <div key={key}>{this.checkZipName(key)}: {val}</div>
-                  )
-                }
-
+  
+              <div className="col-12 col-md-6">
+                <div className="card mt-3 mt-md-0">
+                  <div className="card-header">Political</div>
+                  <div className="card-body">
+                    <div>Republican: {(Math.floor((this.state.republicanParty / this.state.users.length) * 100))}% ({this.state.republicanParty})</div>
+                    <div>Democrat: {(Math.floor((this.state.democratParty / this.state.users.length) * 100))}% ({this.state.democratParty})</div>
+                    <div>Green: {(Math.floor((this.state.greenParty / this.state.users.length) * 100))}% ({this.state.greenParty})</div>
+                    <div>Independent: {(Math.floor((this.state.independentParty / this.state.users.length) * 100))}% ({this.state.independentParty})</div>
+                    <div>Articles: {(Math.floor((this.state.articlesParty / this.state.users.length) * 100))}% ({this.state.articlesParty})</div>
+                    <div>Other: {(Math.floor((this.state.otherParty / this.state.users.length) * 100))}% ({this.state.otherParty})</div>
+                  </div>
+                </div>
               </div>
+  
             </div>
-
+  
           </div>
-
-          <div className="col-12 col-md-6">
-            <div className="card mt-3 mt-md-0">
-              <div className="card-header">Political</div>
-              <div className="card-body">
-                <div>Republican: {(Math.floor((this.state.republicanParty / this.state.users.length) * 100))}% ({this.state.republicanParty})</div>
-                <div>Democrat: {(Math.floor((this.state.democratParty / this.state.users.length) * 100))}% ({this.state.democratParty})</div>
-                <div>Green: {(Math.floor((this.state.greenParty / this.state.users.length) * 100))}% ({this.state.greenParty})</div>
-                <div>Independent: {(Math.floor((this.state.independentParty / this.state.users.length) * 100))}% ({this.state.independentParty})</div>
-                <div>Articles: {(Math.floor((this.state.articlesParty / this.state.users.length) * 100))}% ({this.state.articlesParty})</div>
-                <div>Other: {(Math.floor((this.state.otherParty / this.state.users.length) * 100))}% ({this.state.otherParty})</div>
-              </div>
-            </div>
+  
+          <div className="col-12 col-md-8">
+  
+            <table class="table table-sm table-bordered bg-white">
+              <thead className="thead-dark">
+                <tr>
+                  <th scope="col">User ID</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">State</th>
+                  <th scope="col">Outset</th>
+                  <th scope="col">Admin</th>
+                </tr>
+              </thead>
+              <tbody>
+  
+                {this.state.users.map(user => (
+  
+                  <tr>
+                    <th scope="row">{user._id}</th>
+                    <td>{`${user.first_name} ${user.last_name}`}</td>
+                    <td>{user.address.state}</td>
+                    <td>{user.outset === true ? 'True' : 'False'}</td>
+                    <td>{user.roles?.isAdmin === "true" ? 'True' : 'False'}</td>
+                  </tr>
+                  
+                ))}
+  
+              </tbody>
+            </table>
+  
           </div>
-
+          
         </div>
 
       </div>

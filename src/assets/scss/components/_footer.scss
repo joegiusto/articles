@@ -9,9 +9,13 @@
 footer.site-footer {
   margin-top: auto;
   position: relative;
-  padding: 3rem 0rem;
+  // padding: 3rem 0rem;
   background-color: white;
   border-top: 5px solid black;
+  height: 175px;
+  display: flex;
+  align-items: center;
+
 
   .footer-panel {
 

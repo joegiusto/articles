@@ -42,7 +42,7 @@ class Submissions extends Component {
         </div>
 
         <div className="stat mt-4">
-          <h5>High Traffic</h5>
+          <h5>Limit Sockets (Only logged in users)</h5>
           <button className="btn btn-articles-light mr-1">Yes</button>
           <button className="btn btn-articles-light disabled">No</button>
         </div>

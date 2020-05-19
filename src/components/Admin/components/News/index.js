@@ -225,14 +225,15 @@ class AdminPage extends Component {
           <div className="col-12 col-md-7">
             <div className="news-manage-plate">
               <h1>News Management</h1>
-              <div className="row justify-content-between">
+
+              {/* <div className="row justify-content-between d-none">
                 <div className="col-12 col-md-7">
                   <p>Page for only Admins and Writers to manage news details. Here you can update and create content for Article's News Pages. The content server is pulling data from <span className="badge badge-warning">{this.state.contentServer}</span> we can only hope this will never change.</p>
                 </div>
                 <div className="col-12 col-md-4">
                 <p>Looking for <Link to={ROUTES.SUBSCRIBE}>personal news managemnet?</Link> </p>
                 </div>
-              </div>
+              </div> */}
   
               <div className="catagories">
                 <NewsTypeSelector catagory={this.state.catagory} changeCatagory={this.changeCatagory} changeCatagoryTo="All" displayCatagoryAs="All" />

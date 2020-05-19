@@ -208,7 +208,7 @@ class newsAdd extends Component {
 
     return(
       <div className="news-manage-plate bottom-add">
-        <h1>News Management</h1>
+        <h1>Document Details</h1>
         
         {
         this.props.news_id === undefined ? 
