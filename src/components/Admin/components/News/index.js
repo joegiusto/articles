@@ -298,7 +298,7 @@ class AdminPage extends Component {
               </div>
   
               <div className="results">
-                <div className="results-header">Results:</div>
+                <div className="results-header">Results: {this.state.results.length}</div>
                 {resultsLoading ? 
                 (resultsLoadingError === '' ? <span className="badge badge-success">Loading...</span> : <div><div className="badge badge-danger">Error Loading Results</div><div><small>Most likely the content server is off.</small></div></div>)
                 :

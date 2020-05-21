@@ -15,8 +15,10 @@ class HomePageFour extends Component {
     }
   }
 
-  test() {
-    console.log("Test")
+  componentDidMount() {
+    if (!this.props.auth.isAuthenticated) {
+      this.props.history.push("/signin");
+    }
   }
 
   render() {
@@ -39,8 +41,6 @@ class HomePageFour extends Component {
               </div>
 
             </div>
-
-            
 
           </div>
         </div>
@@ -121,36 +121,70 @@ class HomePageFour extends Component {
             <div className="tile">
 
               <div className="tile-header">
+                <div className="tile-title">Reports</div>
+                <div className="tile-update"></div>
+              </div>
+
+              <Link to={ROUTES.REPORTS}>
+                <div className="tile-content">
+
+                  <div className="icons">
+                    <div className="head-icon">
+                      <i class="fas fa-receipt"></i>
+                    </div>
+                    <div className="sub-icons reports">
+                      <i class="fas fa-money-check-alt"></i>
+                      <i class="fas fa-money-bill mr-0"></i>
+                    </div>
+                  </div>
+
+                  <div className="title">$0.00 Raised This Month</div>
+                  <div className="text">For more inforamtion about our finances check out our reports.</div>
+
+                  <div className="tile-extra">
+                  </div>
+
+                </div>
+              </Link>
+              
+
+            </div>
+
+            <div className="tile">
+
+              <div className="tile-header">
                 <div className="tile-title">Submissions</div>
                 <div className="tile-update"></div>
               </div>
 
-              <div className="tile-content">
+              <Link to={ROUTES.STORE_SUBMISSIONS}>
+                <div className="tile-content">
 
-                <div className="icons">
-                  <div className="head-icon">
-                    <i class="fas fa-chalkboard"></i>
+                  <div className="icons">
+                    <div className="head-icon">
+                      <i class="fas fa-chalkboard"></i>
+                    </div>
+                    <div className="sub-icons">
+                      <i class="fas fa-pencil-alt"></i>
+                      <i class="fas fa-mouse-pointer"></i>
+                      <i class="fas fa-mouse mr-0"></i>
+                    </div>
                   </div>
-                  <div className="sub-icons">
-                    <i class="fas fa-pencil-alt"></i>
-                    <i class="fas fa-mouse-pointer"></i>
-                    <i class="fas fa-mouse mr-0"></i>
+
+                  <div className="title">
+                    0 Entries This Period
                   </div>
-                </div>
 
-                <div className="title">
-                  0 Entries This Period
-                </div>
+                  <div className="text">
+                    Submit a design for a chance to win <b>$$$</b> and get your product made for you.
+                  </div>
 
-                <div className="text">
-                  Submit a design for a chance to win <b>$$$</b> and get your product made for you.
-                </div>
+                  <div className="tile-extra">
+                    0 Lifetime Entries
+                  </div>
 
-                <div className="tile-extra">
-                  0 Lifetime Entries
                 </div>
-
-              </div>
+              </Link>
 
             </div>
 
@@ -203,34 +237,7 @@ class HomePageFour extends Component {
 
             </div>
 
-            <div className="tile">
-
-              <div className="tile-header">
-                <div className="tile-title">Reports</div>
-                <div className="tile-update"></div>
-              </div>
-
-              <div className="tile-content">
-
-                <div className="icons">
-                  <div className="head-icon">
-                    <i class="fas fa-receipt"></i>
-                  </div>
-                  <div className="sub-icons">
-                    <i class="fas fa-money-check-alt"></i>
-                    <i class="fas fa-money-bill mr-0"></i>
-                  </div>
-                </div>
-
-                <div className="title">$0.00 Raised This Month</div>
-                <div className="text">For more inforamtion about our finances check out our reports.</div>
-
-                <div className="tile-extra">
-                </div>
-
-              </div>
-
-            </div>
+            
 
             <div className="tile">
 
@@ -252,6 +259,11 @@ class HomePageFour extends Component {
 
                 <div className="title">Weekly Updates</div>
                 <div className="text">Get sent an mail about everything going on with Articles. Sent out every Sunday.</div>
+
+                <div className="input-toggle">
+                  <input id="true" name="newsletter" type="radio"/>
+                  <input id="false" name="newsletter" type="radio"/>
+                </div>
 
                 <div className="tile-extra">
                   45 Others Subscribed

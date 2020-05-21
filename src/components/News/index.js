@@ -57,7 +57,7 @@ class Frontpage extends Component {
           <div className="row mb-5">
 
             {/* Left Side */}
-            <div className="col-12 col-md-8">
+            <div className="col-12 col-md-8 pr-md-0">
 
               <div className="issue-development">
 
@@ -66,14 +66,23 @@ class Frontpage extends Component {
                   {/* <span>Showing 4 out of {this.props.issues.issues.length}</span> */}
                 </div>
 
-                <Slider {...settings}>
-  
+                <div className="issue-development-cards">
                   {this.props.issues.issues.map((issue) => (
                     <IssueDevelopmentCard issue={issue}/>
                   ))}
-  
-                </Slider>
-                <div className="manage-subscriptions small">Manage Issue Subscriptions</div>
+
+                  <IssueDevelopmentCard issue={{news_title: "Subscribe to More"}}/>
+                  <IssueDevelopmentCard issue={{news_title: "Manage Subscriptions"}}/>
+                </div>
+
+                {/* <Slider {...settings}>
+                  {this.props.issues.issues.map((issue) => (
+                    <IssueDevelopmentCard issue={issue}/>
+                  ))}
+                </Slider> */}
+
+                {/* <div className="manage-subscriptions small">Manage Issue Subscriptions</div> */}
+
               </div>
 
               <div className="stories">
@@ -89,25 +98,129 @@ class Frontpage extends Component {
             </div>
 
             {/* Right Side */}
-            <div className="col-12 col-md-4">
+            <div className="col-12 col-md-4 pl-md-0">
 
-              <div className="the-recap">
-                <div className="the-recap-embed"></div>
-                <div className="the-recap-embed-overlay">
-                  <div className="background"></div>
-                  <img src={playButtonDark} alt=""/>
-                  <span className="text">Coming Soon</span>
+              <div className="side-panel">
+
+                <div className="the-recap">
+  
+                  <div className="the-recap-embed"></div>
+                  <div className="the-recap-embed-overlay">
+                    <div className="background"></div>
+                    <img src={playButtonDark} alt=""/>
+                    <span className="text">Coming Soon</span>
+                  </div>
+  
+                  <div className="content">
+                    {/* In this video */}
+                  </div>
+  
                 </div>
-              </div>
+  
+                <div className="side-news-panel side-news-panel-shadow affix text-center weather">
+        
+                  <div className="weather-header"></div>
+        
+                  <div className="dual-header">
+        
+                    <div className="weather-title ml-3 mt-2">Weekly Weather <span className="highlight ml-1 py-1 px-2">Fishkill, NY</span></div>
+        
+                    <div className="weather-toggle-switch mr-3 mt-2">
+                      <i className="fas active fa-home mr-0"></i>
+                      <span className="divide">/</span>
+                      <i className="fas fa-search-location mr-0"></i>
+                    </div>
+        
+                  </div>
+        
+                  <div className="weather-content mt-4">
+                    <div className="row justify-content-center">
+                      <div className="col-auto">
+                        <div className={'day-tile ' + (moment().format('d') === 0 ? 'active' : '')}>
+                          <div className="day">Sun.</div>
+                          <div className="date">{moment().add(-2, 'day').format('MM/DD')}</div>
+                          <div className="icon">
+                            <i className="fas fa-sun"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-auto">
+                        <div className={'day-tile ' + (moment().format('d') === 1 ? 'active' : '')}>
+                          <div className="day">Mon.{moment().format('d')}</div>
+                          <div className="date">{moment().add(-1, 'day').format('MM/DD')}</div>
+                          <div className="icon">
+                            <i className="fas fa-cloud-sun"></i>
+                          </div>
+                        </div>
+                      </div>
+        
+                      <div className="col-auto">
+                        <div className={'day-tile ' + (moment().format('d') === 2 ? 'active' : '')}>
+                          
+                          <div className="day">Tues.{moment().format('d')}</div>
+        
+                          <div className="date">{moment().add(0, 'day').format('MM/DD')}</div>
+        
+                          <div className="icon">
+                            <i className="fas fa-cloud-sun"></i>
+                          </div>
+        
+                        </div>
+                      </div>
+        
+                      <div className="col-auto">
+                        <div className={'day-tile ' + (moment().format('d') === 3 ? 'active' : '')}>
+                          <div className="day">Wed.</div>
+                          <div className="date">{moment().add(1, 'day').format('MM/DD')}</div>
+                          <div className="icon">
+                            <i className="fas fa-cloud-showers-heavy"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-auto">
+                        <div className={'day-tile ' + (moment().format('d') === 4 ? 'active' : '')}>
+                          <div className="day">Thur.</div>
+                          <div className="date">{moment().add(2, 'day').format('MM/DD')}</div>
+                          <div className="icon">
+                            <i className="fas fa-cloud-showers-heavy"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-auto">
+                        <div className={'day-tile ' + (moment().format('d') === 5 ? 'active' : '')}>
+                          <div className="day">Fri.</div>
+                          <div className="date">{moment().add(3, 'day').format('MM/DD')}</div>
+                          <div className="icon">
+                            <i className="fas fa-cloud-sun"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-auto">
+                        <div className={'day-tile ' + (moment().format('d') === 6 ? 'active' : '')}>
+                          <div className="day">Sat.</div>
+                          <div className="date">{moment().add(4, 'day').format('MM/DD')}</div>
+                          <div className="icon">
+                            <i className="fas fa-sun"></i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+        
+                  <div className="weather-footer mt-3">
+        
+                  </div>
+        
+                </div>
 
-              
+              </div>
 
             </div>
 
           </div>
 
       
-          <div className="row justify-content-between">
+          <div className="row justify-content-between d-none">
             
             <div className="col-12 col-md-8">
               <div className="p-4">
@@ -205,15 +318,20 @@ class Frontpage extends Component {
               <div className="side-news-panel side-news-panel-shadow affix">
                 <div className="row">
                   <div className="col-12">
+
                     <div className="the-recap">
-                      {/* <h1>The Recap <i className="fas fa-share fa-rotate-90"></i></h1> */}
+
                       <div className="the-recap-embed"></div>
+
                       <div className="the-recap-embed-overlay">
                         <div className="background"></div>
                         <img src={playButtonDark} alt=""/>
-                        <span className="text">Coming Soon</span>
+                        <span className="text">Coming Soonn</span>
                       </div>
+
+
                     </div>
+
                   </div>
                 </div>
               </div>

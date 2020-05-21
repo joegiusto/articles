@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import { Switch, Route } from 'react-router'
 import { Switch, Route, Link, Router } from 'react-router-dom';
+import { connect } from "react-redux";
 
 // import { compose } from 'recompose';
 // import { withFirebase } from '../Firebase';
@@ -19,12 +20,6 @@ import Donations from './components/Donations'
 import Expenses from './components/Expenses'
 import Sockets from './components/Socket'
 
-const Test = () => {
-  return(
-    <div>Hello</div>
-  )
-}
-
 class Admin extends Component {
   constructor(props) {
   super(props);
@@ -33,7 +28,12 @@ class Admin extends Component {
     this.state = {
       tab: '',
     };
+  }
 
+  componentDidMount() {
+    if (!this.props.user.roles.isAdmin === true) {
+      this.props.history.push("/signin");
+    }
   }
 
   setLoaction(tab) {
@@ -160,4 +160,10 @@ class Admin extends Component {
   }
 }
 
-export default Admin
+const mapStateToProps = state => ({
+  user: state.auth.user_details,
+});
+
+export default connect(
+  mapStateToProps,
+)(Admin);

@@ -7,26 +7,39 @@ const StoriesDisplay = (props) => (
   <div className="row">
     {props.stories.map((story, i) => (
       
-      i === 0 ? 
-      <div className="col-12 col-md-12">
+      // i === 0 ?
+      <div className={"col-12 " + ( i === 0 ? 'col-md-12' : 'col-md-6')}>
 
         <Link to={ROUTES.STORIES + '/' + story._id}>
-          <div className="story-card story-card-large">
-            {story.news_title}
+          <div className={"story-card " + ( i === 0 ? 'story-card-large' : '')}>
+
+            <div className="image">
+              <img src={story.hero_url} alt=""/>
+            </div>
+
+            <div className="title">
+              {story.news_title}
+            </div>
+
           </div>
         </Link>
 
       </div>
-      :
-      <div className="col-12 col-md-6">
+      // :
+      // <div className="col-12 col-md-6">
 
-        <Link to={ROUTES.STORIES + '/' + story._id}>
-          <div className="story-card">
-            {story.news_title}
-          </div>
-        </Link>
+      //   <Link to={ROUTES.STORIES + '/' + story._id}>
+      //     <div className="story-card">
+      //       <div className="image">
+      //         <img src={story.hero_url} alt=""/>
+      //       </div>
+      //       <div className="title">
+      //         {story.news_title}
+      //       </div>
+      //     </div>
+      //   </Link>
 
-      </div>
+      // </div>
 
     ))}
   </div>

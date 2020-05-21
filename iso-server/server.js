@@ -16,6 +16,23 @@ var ObjectId = require('mongodb').ObjectId;
 var AWS = require('aws-sdk');
 const url = `mongodb+srv://joegiusto:${encodeURIComponent(process.env.MONGODB_PASSWORD)}@articles-xgwnd.mongodb.net/articles_data?retryWrites=true&w=majority`;
 
+// app.use(
+
+//   history({
+//     verbose: true,
+//     rewrites: [
+//       {
+//         from: /^\/api\/.*$/,
+//         to: function(context) {
+//           console.log(context.parsedUrl.pathname);
+//           return context.parsedUrl.pathname;
+//         }
+//       }
+//     ]
+//   })
+
+// );
+
 const s3 = new AWS.S3({
   accessKeyId: process.env.accessKeyId,
   secretAccessKey: process.env.secretAccessKey,
@@ -48,37 +65,47 @@ async function listAllObjectsFromS3Bucket(bucket, prefix) {
 // Fuck this for now
 // listAllObjectsFromS3Bucket('articles-website');
 
-mongoUtil.connectToServer( function( err, client ) {
-  if (err) console.log(err);
+function connectWithRetryMongo() {
+  mongoUtil.connectToServer( function( err, client ) {
+    // if (err) {
+    //   setTimeout(connectWithRetryMongo, 5000);
+    //   console.log('Failed to connect to mongo - retrying in 5 sec')
+    //   console.log(err)
+    // };
+  
+    var db = mongoUtil.getDb();
+  
+    require('./routes/getNewsDocument')(app, db);
+    // Replace add and edit with upsert
+    require('./routes/addNewsDocument')(app, db);
+    require('./routes/editNewsDocument')(app, db);
+  
+    require('./routes/getNewsByTag')(app, db);
+    require('./routes/getNews')(app, db);
+    require('./routes/getTags')(app, db);
+    require('./routes/outsetUpdate')(app, db);
+  
+    require('./routes/getProducts')(app, db);
+    require('./routes/getProduct')(app, db);
+    require('./routes/upsertProduct')(app, db);
+  
+    require('./routes/getIssues')(app, db);
+    require('./routes/getStories')(app, db);
+    require('./routes/getMyths')(app, db);
+    require('./routes/getSubmissions')(app, db);
+    require('./routes/getDonations')(app, db);
+    require('./routes/getExpenses')(app, db);
+  
+    // const secureRoute = require('./routes/secure/secure-routes.js')(app, db);
+    // app.use('/api/secure', passport.authenticate('jwt', {session: false}), secureRoute);
+    // TODO / HELP / I GIVE UP! - I can not seem to nest secure routes anymore while keeping const "app.post" preserverd once I got the MongoDB var "db" passed down for a constant connection and getting everything faster. For now I will just be doing app.post secure routes done one by one untill I can just get them all done similir to how it was done on the lines above this comment
+    require('./routes/secure/secure')(app, db);
+  });
+}
 
-  var db = mongoUtil.getDb();
-  require('./routes/getNewsDocument')(app, db);
-  // Replace add and edit with upsert
-  require('./routes/addNewsDocument')(app, db);
-  require('./routes/editNewsDocument')(app, db);
+connectWithRetryMongo();
 
-  require('./routes/getNewsByTag')(app, db);
-  require('./routes/getNews')(app, db);
-  require('./routes/getTags')(app, db);
-  require('./routes/outsetUpdate')(app, db);
 
-  require('./routes/getProducts')(app, db);
-  require('./routes/getProduct')(app, db);
-  require('./routes/upsertProduct')(app, db);
-
-  require('./routes/getIssues')(app, db);
-  require('./routes/getStories')(app, db);
-  require('./routes/getMyths')(app, db);
-  require('./routes/getSubmissions')(app, db);
-  require('./routes/getDonations')(app, db);
-  require('./routes/getExpenses')(app, db);
-
-  // const secureRoute = require('./routes/secure/secure-routes.js')(app, db);
-  // app.use('/api/secure', passport.authenticate('jwt', {session: false}), secureRoute);
-  // TODO / HELP / I GIVE UP! - I can not seem to nest secure routes anymore while keeping const "app.post" preserverd once I got the MongoDB var "db" passed down for a constant connection and getting everything faster. For now I will just be doing app.post secure routes done one by one untill I can just get them all done similir to how it was done on the lines above this comment
-  require('./routes/secure/secure')(app, db);
-
-});
 
 app.use(cors());
 app.options('*', cors());
@@ -87,21 +114,27 @@ http.listen(process.env.PORT || 8080, () => {
   console.log( `running http`);
 });
 
-mongoose
-.connect(
-  url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true 
-})
-.then(() => console.log("Mongoose successfully connected"))
-.catch(err => {
-  console.log("Mongoose connection error");
-  console.log(err.message)
-});
+function connectWithRetryMongoose() {
+  mongoose
+  .connect(
+    url, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true 
+  })
+  .then(() => console.log("Mongoose successfully connected"))
+  .catch(err => {
+    console.log("Mongoose connection error");
+    console.error('Failed to connect to mongoose - retrying in 5 sec', err);
+    setTimeout(connectWithRetryMongoose, 5000);
+    console.log(err.message)
+  });
+}
+
+connectWithRetryMongoose();
 
 const users = require("./routes/api/users");
 
-app.use(history());
+
 app.use( express.static(path.join(__dirname, '../build')) );
 
 app.use( bodyParser.json() );

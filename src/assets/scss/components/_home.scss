@@ -895,6 +895,24 @@
             flex-direction: row;
             -webkit-text-stroke: 1px white;
 
+            &.reports {
+
+              .fas:first-child {
+                // background-color: blue;
+                // color: $accent-color;
+                position: absolute;
+                top: -.6rem;
+                left: calc(50% + 1.5rem);
+              }
+              .fas:last-child {
+                // background-color: blue;
+                // color: $accent-color;
+                position: absolute;
+                top: -2.4rem;
+                left: calc(50% + 1.5rem);
+              }
+            }
+
             @include media-breakpoint-down(md) {
               font-size: 1.5rem;
               top: 10px;

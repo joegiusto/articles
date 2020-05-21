@@ -15,32 +15,63 @@
 section.frontpage-section {
   padding-top: 1rem;
 
+  .issue-development, .stories, .myths {
+
+    .title {
+      display: block;
+      font-size: 1.3rem;
+      width: 100%;
+      margin-bottom: .5rem;
+      background-color: black;
+      padding: 0.25rem 0.5rem;
+      color: white;
+    }
+  }
+
   .issue-development {
-    background-color: white;
-    border: 2px solid #000;
     padding: 1rem;
     border-radius: 10px;
     padding: 1rem 2rem;
     padding-bottom: 0.5rem;
+    padding-top: 0rem;
 
     .title {
       font-size: 1.3rem;
+      width: 100%;
+      margin-bottom: .5rem;
+      background-color: black;
+      padding: 0.25rem 0.5rem;
+      color: white;
     }
 
     .manage-subscriptions {
       margin-top: 0.5rem;
       padding: 0.25rem 0rem;
       width: 200px;
-
       margin-left: auto;
       margin-right: auto;
-
       display: flex;
       justify-content: center;
       align-self: center;
-
       background-color: black;
       color: white;
+    }
+
+    .issue-development-cards {
+      display: grid;
+      row-gap: 10px;
+      column-gap: 10px;
+      // grid-template: auto / auto auto auto;
+      grid-template-columns: repeat(4, 1fr);
+
+      @include media-breakpoint-down(lg) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .subscriped-story-card {
+        // width: 200px;
+        // margin-right: 1rem;
+      }
     }
 
     .slick-slider {
@@ -68,40 +99,70 @@ section.frontpage-section {
   }
 
   .stories {
-    margin-top: 1rem;
-    background-color: white;
-    border: 2px solid #000;
-    padding: 1rem;
+    margin-top: 2rem;
+    padding: 0rem 2rem;
     border-radius: 10px;
-    padding: 1rem 1rem;
-    // padding-bottom: 0.5rem;
 
     .story-card {
+      position: relative;
       cursor: pointer;
       padding: 1rem;
-      height: 200px;
-      background-color: white;
+      height: 225px;
+      // background-color: white;
       border: 1px solid rgb(116, 116, 116);
-      border-radius: 10px;
+      // border-radius: 10px;
       font-family: montserrat, sans-serif;
       font-weight: 400;
       font-size: 16px;
       font-style: normal;
+      margin-bottom: 0.5rem;
+
+      .image {
+        z-index: -1;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        img {  
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .title {
+        position: absolute;
+        left: 50%;
+        width: 100%;
+        // max-width: 800px;
+        text-align: center;
+        transform: translateX(-50%);
+        bottom: 0;
+        padding: 0.5rem;
+        border: 3px solid #000;
+        border-bottom: 0px solid #000;
+        background-color: rgba(0, 0, 0, 0.75);
+        color: white;
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 1.5rem;
+        // line-height: 2.4rem;
+      }
     }
 
     .story-card-large {
-      margin-bottom: 1rem;
+      height: 350px;
+      margin-bottom: 0.5rem;
     }
   }
 
   .myths {
-    margin-top: 1rem;
-    background-color: white;
-    border: 2px solid #000;
-    padding: 1rem;
+    margin-top: 2rem;
+    padding: 0rem 2rem;
     border-radius: 10px;
-    padding: 1rem 1rem;
-    padding-bottom: 0.0rem;
 
     .myth-card {
       background-color: $accent-color;
@@ -110,6 +171,10 @@ section.frontpage-section {
     }
   }
 
+  .side-panel {
+    position: sticky;
+    top: calc(50px + 1rem);
+  }
 }
 
 .highlight {
@@ -119,19 +184,97 @@ section.frontpage-section {
   font-style: italic;
   text-transform: capitalize;
   font-weight: 400;
+
   &:hover {
     text-decoration: underline;
     cursor: pointer;
   }
 }
 
-.the-recap-embed {
-  width: 100%;
-  height: 300px;
-  background-color: #000;
+.the-recap {
+  position: relative;
+  background-color: white;
+  border: 3px solid #000;
+
+  .the-recap-embed-overlay {
+    position: relative;
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+    height: 300px;
+    text-align: center;
+
+    @include media-breakpoint-down(md) {
+      height: 200px;
+    }
+  
+    .background {
+      height: auto;
+      width: 100%;
+      margin: 0 auto;
+      height: inherit;
+      background-image: url('../../img/News/scape-1.jpg');
+      // border-radius: 10px;
+      border-bottom: solid 3px #000;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+  
+    img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+  
+      transform: translate(-50%, -50%);
+      width: 300px;
+      height: auto;
+      -webkit-filter: drop-shadow(12px 12px 25px rgba(0,0,0,0.5));
+  
+      @include media-breakpoint-down(md) {
+        width: 100px;
+      }
+    }
+  
+    .text {
+      color: white;
+      position: absolute;
+      bottom: 5%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 1.5rem;
+      width: 100%;
+      letter-spacing: .3rem;
+      // text-shadow: 0 0 7px white;
+      animation: textBlink 1s infinite;
+      // text-align: center;
+      @include media-breakpoint-down(md) {
+        font-size: 1rem;
+      }
+    }
+    $size: 12px;
+    $color: white;
+    @keyframes textBlink {
+      0% {
+        text-shadow: 0 0 $size $color;
+      }
+      50% {
+        text-shadow: 0 0 0px $color;
+      }
+      100% {
+        text-shadow: 0 0 $size $color;
+      }
+    }
+  }
+
+  .content {
+    // padding: 1rem;
+  }
 }
 
 .weather {
+  margin-top: 0.5rem;
 
   &-header {
     background-color: #000;
@@ -244,63 +387,6 @@ section.frontpage-section {
 
 }
 
-.the-recap-embed-overlay {
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
-  width: 100%;
-  height: 300px;
-  padding-right: 15px;
-  padding-left: 15px;
-  text-align: center;
-  .background {
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    width: 100%;
-    height: inherit;
-    background-image: url('../../img/News/scape-1.jpg');
-    border-radius: 10px;
-    border: solid 2px #000;
-    background-size: cover;
-  }
-  img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 300px;
-    -webkit-filter: drop-shadow(12px 12px 25px rgba(0,0,0,0.5));
-  }
-  .text {
-    color: white;
-    position: absolute;
-    bottom: 5%;
-    left: 50%;
-    transform: translateX(-50%);
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 1.5rem;
-    letter-spacing: .3rem;
-    // text-shadow: 0 0 7px white;
-    animation: textBlink 1s infinite;
-    // text-align: center;
-  }
-  $size: 12px;
-  $color: white;
-  @keyframes textBlink {
-    0% {
-      text-shadow: 0 0 $size $color;
-    }
-    50% {
-      text-shadow: 0 0 0px $color;
-    }
-    100% {
-      text-shadow: 0 0 $size $color;
-    }
-  }
-}
-
 .focused-news-panel, .side-news-panel {
   background-color: white;
   padding: .4rem .4rem .4rem .4rem;
@@ -319,6 +405,7 @@ section.frontpage-section {
   color: white;
   padding: .5rem;
   box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.5);
+
   &.empty {
     padding-top: 1rem;
     background-color: white;
@@ -326,15 +413,18 @@ section.frontpage-section {
     border: 1px solid rgba(0, 0, 0, 0.5);
     font-size: 1.5rem;
     text-align: center;
+
     div {
       font-size: 1rem;
       font-weight: 100;
       font-style: italic;
     }
   }
+  
   &-title {
 
   }
+
   &-subtitle {
     font-size: 0.7rem;
     color: rgba(255, 255, 255, 0.76)
@@ -359,6 +449,7 @@ section.frontpage-section {
     text-transform: uppercase;
     position: absolute;
     bottom: 0px;
+
     @include media-breakpoint-down(md) {
       font-size: 3rem;
     }
@@ -384,6 +475,7 @@ section.frontpage-section {
   width: 100%;
   height: 30px;
   padding: 0rem 0rem 2.5rem 10px;
+
   .state-icon {
     margin-right: 5px;
     height: 30px;
@@ -392,8 +484,9 @@ section.frontpage-section {
     border-radius: 100%;
     display: inline-block;
     position: relative;
+
     &::after {
-      content: ' ';
+      content: '';
       position: absolute;
       top: 50%;
       left: 50%;
@@ -413,6 +506,7 @@ section.frontpage-section {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
   .fas {
     cursor: pointer;
   }

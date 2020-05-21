@@ -1,6 +1,7 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect} from 'react';
 
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
 import PrivateRoute from "./private-route/PrivateRoute";
 
@@ -78,6 +79,21 @@ import * as ROUTES from '../constants/routes';
 import { connect } from "react-redux";
 import { setUserDetails } from "../actions/authActions";
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  const parts = pathname.split('/');
+
+  useEffect(() => {
+    if (parts[1] === 'admin') {
+      // Was a page where router changes within like admin lookups
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname]);
+
+  return null;
+}
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -98,6 +114,8 @@ class App extends Component {
   render(props) {
     return (
       <Router onUpdate={() => window.scrollTo(0, 0)}>
+
+        <ScrollToTop />
 
         <div className={'site-wrap ' + (this.props.site?.sideMenuFixed ? 'fixed' : '')}>
 
