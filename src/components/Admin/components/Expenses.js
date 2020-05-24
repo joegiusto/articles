@@ -63,7 +63,7 @@ class Donations extends Component {
                 <div className="content">
                   <div className="match-button active mr-2">User</div>
                   <div className="match-button mr-2">Admin</div>
-                  <select class="form-control" disabled id="exampleFormControlSelect1">
+                  <select className="form-control" disabled id="exampleFormControlSelect1">
                     <option>Joey Giusto</option>
                   </select>
                 </div>
@@ -87,7 +87,7 @@ class Donations extends Component {
 
           <div className="col-12 col-md-8">
 
-            <table class="table table-sm table-bordered bg-white mt-3">
+            <table className="table table-sm table-bordered bg-white mt-3">
               <thead className="thead-dark">
                 <tr>
                   <th scope="col">Reason</th>
@@ -106,7 +106,7 @@ class Donations extends Component {
                     <td>${expense.amount / 100}</td>
                     <td>{moment.unix(expense.date).format("LL")}</td>
                     <td>{expense.note}</td>
-                    <td><a target="_blank" rel="noopener noreferrer" href={expense.file}><i class="far fa-file-pdf"></i></a></td>
+                    <td><a target="_blank" rel="noopener noreferrer" href={expense.file}><i className="far fa-file-pdf"></i></a></td>
                   </tr>
                   
                 ))}

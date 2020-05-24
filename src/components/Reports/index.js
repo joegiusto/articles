@@ -51,6 +51,10 @@ class Reports extends Component {
     this.onListenForDonations();
     
     socket = socketIOClient(ENDPOINT);
+
+    socket.on('adminMessage', function(msg){
+      console.log(`Admin Message: ${msg}`);
+    });
   }
 
   componentWillUnmount() {

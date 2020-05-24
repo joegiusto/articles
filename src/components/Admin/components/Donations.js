@@ -88,11 +88,11 @@ class Donations extends Component {
               <div className="payment-type">
 
                 <div onClick={() => this.changeType('cash')} className={"type " + (this.state.current.type === 'cash' ? 'active' : '')}>
-                  <i class="fas fa-money-bill fa-3x"></i>
+                  <i className="fas fa-money-bill fa-3x"></i>
                 </div>
 
                 <div onClick={() => this.changeType('card')} className={"type " + (this.state.current.type === 'card' ? 'active' : '')}>
-                  <i class="far fa-credit-card fa-3x"></i>
+                  <i className="far fa-credit-card fa-3x"></i>
                 </div>
 
               </div>
@@ -114,7 +114,7 @@ class Donations extends Component {
                 <div className="content">
                   <div className="match-button active mr-2">No</div>
                   <div className="match-button mr-2">Yes</div>
-                  <select class="form-control" disabled id="exampleFormControlSelect1">
+                  <select className="form-control" disabled id="exampleFormControlSelect1">
                     <option>Joey Giusto</option>
                     <option>Investment Firm XYZ</option>
                   </select>
@@ -126,7 +126,7 @@ class Donations extends Component {
                 <div className="content">
                   <div className="match-button active mr-2">User</div>
                   <div className="match-button mr-2">Admin</div>
-                  <select class="form-control" disabled id="exampleFormControlSelect1">
+                  <select className="form-control" disabled id="exampleFormControlSelect1">
                     <option>Joey Giusto</option>
                   </select>
                 </div>
@@ -146,7 +146,7 @@ class Donations extends Component {
 
           <div className="col-12 col-md-8">
 
-            <table class="table table-sm table-bordered bg-white mt-3">
+            <table className="table table-sm table-bordered bg-white mt-3">
               <thead className="thead-dark">
                 <tr>
                   <th scope="col">Name</th>

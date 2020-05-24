@@ -297,12 +297,12 @@ class Products extends Component {
             }
 
             {/* This will be for mobile to toggle between details and card to save screen space */}
-            {/* <div class="btn-group w-100 mb-3" role="group" aria-label="First group">
-              <button type="button" class="btn btn-dark">Details</button>
-              <button type="button" class="btn btn-light border">Preview</button>
+            {/* <div className="btn-group w-100 mb-3" role="group" aria-label="First group">
+              <button type="button" className="btn btn-dark">Details</button>
+              <button type="button" className="btn btn-light border">Preview</button>
             </div> */}
 
-            <div class="form-group type-group">
+            <div className="form-group type-group">
               {/* <label for="exampleInputPassword1">Type</label> */}
               <div className="types noselect">
                 <span onClick={() => this.changeType('Original')} className={"type badge shadow-sm border type " + (this.state.activeProduct.type === 'Original' ? 'badge-dark' : 'badge-light')}>Original</span>
@@ -315,7 +315,7 @@ class Products extends Component {
 
               <div className="col-md-6">
 
-                <div class="form-group">
+                <div className="form-group">
                   <label for="title">Title</label>
                   <input 
                     type="text"
@@ -327,7 +327,7 @@ class Products extends Component {
                   />
                 </div>
       
-                <div class="form-group">
+                <div className="form-group">
                   <label for="price">Price ${(this.state.activeProduct.price / 100).toFixed(2)}</label>
                   <input 
                     type="number"
@@ -339,11 +339,11 @@ class Products extends Component {
                   />
                 </div>
     
-                <div class="form-group">
+                <div className="form-group">
                   <label for="our-cost">Our Cost ${(this.state.activeProduct.ourCost / 100).toFixed(2)}</label>
                   <input 
                   type="number" 
-                  class="form-control" 
+                  className="form-control" 
                   value={this.state.activeProduct.ourCost}
                   onChange={this.handleProductChange} 
                   id="ourCost"
@@ -351,7 +351,7 @@ class Products extends Component {
                   />
                 </div>
 
-                <div class="form-group">
+                <div className="form-group">
                   <label for="our-cost">Material</label>
                   <input
                   type="text"
@@ -476,7 +476,7 @@ class Products extends Component {
           className='table table-bordered bg-white'
         />
 
-        {/* <table class="table table-bordered bg-white mt-3">
+        {/* <table className="table table-bordered bg-white mt-3">
           <thead>
             <tr>
               <th scope="col">Item</th>

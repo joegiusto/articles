@@ -21,3 +21,12 @@ $main_colorTwo: rgb(255, 242, 169);
 .bg3 {
   animation-duration:10s;
 }
+
+@keyframes slide {
+  0% {
+    transform:translateX(-25%);
+  }
+  100% {
+    transform:translateX(25%);
+  }
+}

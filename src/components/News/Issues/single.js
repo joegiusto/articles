@@ -68,7 +68,7 @@ class Issue extends React.Component {
           <div className="card ">
             <h3 className="card-header">{this.state.news_title}</h3>
             <div className="card-body">
-              <div style={{whiteSpace: 'pre-wrap'}} dangerouslySetInnerHTML={{__html: this.state?.news_notes?.replace('<break>', '<div class="alert alert-danger my-3">Testing Break</div>').replace(/(\r\n|\n|\r)/gm, "")}}>
+              <div style={{whiteSpace: 'pre-wrap'}} dangerouslySetInnerHTML={{__html: this.state?.news_notes?.replace('<break>', '<div className="alert alert-danger my-3">Testing Break</div>').replace(/(\r\n|\n|\r)/gm, "")}}>
                 {/* { dangerouslySetInnerHTML={{__html: this.state?.news_notes?} } */}
                 {/* {this.state?.news_notes?.replace('<break>', '<div className="alert alert-danger">Test</div>')} */}
               </div>

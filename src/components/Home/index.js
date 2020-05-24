@@ -62,13 +62,13 @@ class HomePageFour extends Component {
                   <div className="icons">
 
                     <div className="head-icon">
-                      <i class="fas fa-newspaper"></i>
+                      <i className="fas fa-newspaper"></i>
                     </div>
                     
                     <div className="sub-icons">
-                      <i class="fas fa-bullhorn"></i>
-                      <i class="fas fa-balance-scale"></i>
-                      <i class="fas fa-ghost mr-0"></i>
+                      <i className="fas fa-bullhorn"></i>
+                      <i className="fas fa-balance-scale"></i>
+                      <i className="fas fa-ghost mr-0"></i>
                     </div>
 
                   </div>
@@ -98,11 +98,11 @@ class HomePageFour extends Component {
 
                   <div className="icons">
                     <div className="head-icon">
-                      <i class="fas fa-clipboard-list"></i>
+                      <i className="fas fa-clipboard-list"></i>
                     </div>
                     <div className="sub-icons">
-                      <i class="fas fa-shopping-cart"></i>
-                      <i class="fas fa-tshirt mr-0"></i>
+                      <i className="fas fa-shopping-cart"></i>
+                      <i className="fas fa-tshirt mr-0"></i>
                     </div>
                   </div>
 
@@ -130,11 +130,11 @@ class HomePageFour extends Component {
 
                   <div className="icons">
                     <div className="head-icon">
-                      <i class="fas fa-receipt"></i>
+                      <i className="fas fa-receipt"></i>
                     </div>
                     <div className="sub-icons reports">
-                      <i class="fas fa-money-check-alt"></i>
-                      <i class="fas fa-money-bill mr-0"></i>
+                      <i className="fas fa-money-check-alt"></i>
+                      <i className="fas fa-money-bill mr-0"></i>
                     </div>
                   </div>
 
@@ -162,12 +162,12 @@ class HomePageFour extends Component {
 
                   <div className="icons">
                     <div className="head-icon">
-                      <i class="fas fa-chalkboard"></i>
+                      <i className="fas fa-chalkboard"></i>
                     </div>
                     <div className="sub-icons">
-                      <i class="fas fa-pencil-alt"></i>
-                      <i class="fas fa-mouse-pointer"></i>
-                      <i class="fas fa-mouse mr-0"></i>
+                      <i className="fas fa-pencil-alt"></i>
+                      <i className="fas fa-mouse-pointer"></i>
+                      <i className="fas fa-mouse mr-0"></i>
                     </div>
                   </div>
 
@@ -200,7 +200,7 @@ class HomePageFour extends Component {
                   <img src="https://www.nationalgeographic.com/content/dam/archaeologyandhistory/2020/02/washington-dc-statehood-explainer/washington-dc-aerial-2548942.adapt.1900.1.jpg" alt=""/>
                 </div>
                 <div className="icon">
-                  <i class="fab fa-instagram mr-0" aria-hidden="true"></i>
+                  <i className="fab fa-instagram mr-0" aria-hidden="true"></i>
                   <div className="text">
                     May 20th 2020
                   </div>
@@ -220,10 +220,10 @@ class HomePageFour extends Component {
 
                 <div className="icons">
                   <div className="head-icon">
-                    <i class="fas fa-binoculars"></i>
+                    <i className="fas fa-binoculars"></i>
                   </div>
                   <div className="sub-icons">
-                    <i class="fas fa-search-location mr-0"></i>
+                    <i className="fas fa-search-location mr-0"></i>
                   </div>
                 </div>
 
@@ -250,10 +250,10 @@ class HomePageFour extends Component {
 
                 <div className="icons">
                   <div className="head-icon">
-                    <i class="fas fa-envelope-open-text"></i>
+                    <i className="fas fa-envelope-open-text"></i>
                   </div>
                   <div className="sub-icons">
-                    <i class="fas fa-at mr-0"></i>
+                    <i className="fas fa-at mr-0"></i>
                   </div>
                 </div>
 

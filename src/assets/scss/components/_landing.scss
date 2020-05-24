@@ -1136,16 +1136,6 @@
   }
 }
 
-@keyframes slide {
-  0% {
-    transform:translateX(-25%);
-  }
-  100% {
-    transform:translateX(25%);
-  }
-}
-
-
 .header-container {
   display: flex;
   align-items: flex-end;

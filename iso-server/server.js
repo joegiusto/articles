@@ -115,6 +115,7 @@ http.listen(process.env.PORT || 8080, () => {
 });
 
 function connectWithRetryMongoose() {
+  console.log("Ran");
   mongoose
   .connect(
     url, {
@@ -164,6 +165,11 @@ io.on('connection', (socket) => {
     if (error) throw error;
     console.log(clients);
     io.emit( 'online', clients );
+  });
+
+  socket.on('adminMessage', (data) => {
+    console.log(data);
+    socket.emit('adminMessage', data);
   });
 
   socket.on('disconnect', () => {

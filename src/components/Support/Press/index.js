@@ -26,7 +26,7 @@ const Page = () => (
                 <div className="text">845-214-2713</div>
 
                 <div className="hover-icon">
-                  <i class="fas fa-phone"></i>
+                  <i className="fas fa-phone"></i>
                 </div>
               </div>
 
@@ -35,7 +35,7 @@ const Page = () => (
                 <div className="text">joey@articles.media</div>
 
                 <div className="hover-icon">
-                  <i class="far fa-envelope-open"></i>
+                  <i className="far fa-envelope-open"></i>
                 </div>
               </div>
               

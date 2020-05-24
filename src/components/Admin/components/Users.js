@@ -185,7 +185,7 @@ class Users extends Component {
   
           <div className="col-12 col-md-8">
   
-            <table class="table table-sm table-bordered bg-white">
+            <table className="table table-sm table-bordered bg-white">
               <thead className="thead-dark">
                 <tr>
                   <th scope="col">User ID</th>

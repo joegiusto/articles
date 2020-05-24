@@ -212,7 +212,7 @@ function Menu(props) {
               </div>
 
               <div className="color-mode-button" onClick={props.toggleColorMode}>
-                {props.site.colorModeDark ? <i class="far fa-moon"></i> : <i class="fas fa-sun"></i>}
+                {props.site.colorModeDark ? <i className="far fa-moon"></i> : <i className="fas fa-sun"></i>}
                 {/* <i className="fas fa-columns"></i> */}
                 {/* <div className={'columns-fill-in ' + (props.site.colorModeDark ? 'active' : '')}></div> */}
               </div>
@@ -344,7 +344,7 @@ function Menu(props) {
               {/* Admin */}
               {props.user?.roles?.isAdmin ?
               <>
-              <p className="heading-font no-link"><b>Admin &nbsp;</b><div className="badge badge-warning">Role</div></p>
+              <p className="heading-font no-link"><b>Admin &nbsp;</b><span className="badge badge-warning">Role</span></p>
               <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ADMIN_USERS}><p className="subheading-font"><i className="fas fa-toolbox"></i>Admin Portal</p></Link>
               {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.REPORTS_MANAGE}><p className="subheading-font"><i className="fas fa-toolbox"></i>Reports Manage</p></Link> */}
               {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE_MANAGE}><p className="subheading-font"><i className="fas fa-toolbox"></i>Clothing Manage</p></Link> */}
@@ -359,7 +359,7 @@ function Menu(props) {
               {/* Playground */}
               {props.user?.roles?.isDev ?
               <>
-                <p className="heading-font no-link"><b>Dev &nbsp;</b><div className="badge badge-warning">Role</div></p>
+                <p className="heading-font no-link"><b>Dev &nbsp;</b><span className="badge badge-warning">Role</span></p>
                 <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PLAYGROUND}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Playground</p></Link>
                 <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MESH}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Mesh</p></Link>
                 <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MAIL}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Mail</p></Link>

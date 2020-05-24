@@ -20,8 +20,6 @@ class UserIssuesBase extends Component {
      };
   }
 
-  
-
   componentDidMount() {
 
     // var cat = 'news/issues';

@@ -80,29 +80,29 @@ class LandingPage extends Component {
 
 						<div className="row">
 							<div className="col-4">
-								<div className="icon"><i class="fas fa-3x fa-tshirt"></i></div>
+								<div className="icon"><i className="fas fa-3x fa-tshirt"></i></div>
 							</div>
 
 							<div className="col-4">
-								<div className="icon"><i class="fas fa-3x fa-tshirt"></i></div>
+								<div className="icon"><i className="fas fa-3x fa-tshirt"></i></div>
 							</div>
 
 							<div className="col-4">
-								<div className="icon"><i class="fas fa-3x fa-tshirt"></i></div>
+								<div className="icon"><i className="fas fa-3x fa-tshirt"></i></div>
 							</div>
 						</div>
 
 						<div className="row mt-5">
 							<div className="col-4">
-								<div style={{animationDelay: '-.5s'}} className="icon"><i class="fas fa-4x fa-tshirt"></i></div>
+								<div style={{animationDelay: '-.5s'}} className="icon"><i className="fas fa-4x fa-tshirt"></i></div>
 							</div>
 
 							<div className="col-4">
-								<div style={{animationDelay: '-.5s'}} className="icon"><i class="fas fa-4x fa-tshirt"></i></div>
+								<div style={{animationDelay: '-.5s'}} className="icon"><i className="fas fa-4x fa-tshirt"></i></div>
 							</div>
 
 							<div className="col-4">
-								<div style={{animationDelay: '-.5s'}} className="icon"><i class="fas fa-4x fa-tshirt"></i></div>
+								<div style={{animationDelay: '-.5s'}} className="icon"><i className="fas fa-4x fa-tshirt"></i></div>
 							</div>
 						</div>
 

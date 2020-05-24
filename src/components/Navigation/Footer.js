@@ -40,7 +40,7 @@ const Footer = (props) => (
         <div className="col col-auto flex-fill">
           <div className="footer-panel fourth">
             <div className="title">Follow Us</div>
-            <div className="icons"><i class="fab fa-instagram"></i><i class="fab fa-youtube"></i><i class="fab fa-facebook"></i></div>
+            <div className="icons"><i className="fab fa-instagram"></i><i className="fab fa-youtube"></i><i className="fab fa-facebook"></i></div>
           </div>
         </div>
 

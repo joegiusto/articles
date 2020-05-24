@@ -51,7 +51,7 @@ class Ad extends React.Component {
           </div>
 
           <div className="icon">
-            <i class="fas fa-mug-hot"></i>
+            <i className="fas fa-mug-hot"></i>
           </div>
 
           <img className="photo" src="https://media-cdn.tripadvisor.com/media/photo-s/0c/8b/a7/c7/photo0jpg.jpg" alt=""/>
@@ -60,17 +60,17 @@ class Ad extends React.Component {
         <div className="details">
 
           <div className="detail">
-            <span className="icon"><i class="fas fa-store-alt"></i></span>
+            <span className="icon"><i className="fas fa-store-alt"></i></span>
             <span>Bank Square</span>
           </div>
 
           <div className="detail">
-            <span className="icon"><i class="fas fa-search-location"></i></span>
+            <span className="icon"><i className="fas fa-search-location"></i></span>
             <span>Beacon, NY</span>
           </div>
 
           <div className="detail">
-            <span className="icon"><i class="fas fa-user-friends"></i></span>
+            <span className="icon"><i className="fas fa-user-friends"></i></span>
             <span>5-10 Employees</span>
           </div>
 

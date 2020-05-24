@@ -74,7 +74,7 @@ class Submissions extends Component {
           </div>
 
           <div className="col-12 col-md-8">
-            <table class="table table-sm table-bordered bg-white mt-3">
+            <table className="table table-sm table-bordered bg-white mt-3">
               <thead className="thead-dark">
                 <tr>
                   <th scope="col">User</th>
