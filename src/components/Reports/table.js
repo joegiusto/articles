@@ -36,19 +36,19 @@ export function ClothingTable () {
 
                 <div className="results-dual-header">
 
-                  <div className="page noselect">
+                  {/* <div className="page noselect">
                     <i className="fas fa-chevron-circle-left"></i>
                     Page 0/0
                     <i style={{marginLeft: '10px'}} className="fas fa-chevron-circle-right"></i>
-                  </div>
+                  </div> */}
                 
-                  <span className="results noselect">
+                  {/* <span className="results noselect">
                     <span>Results:</span>
                     <span className={"result result-active"}>10</span>
                     <span className={"result"}>50</span>
                     <span className={"result"}>100</span>
                     <span className={"result"}>250</span>
-                  </span>
+                  </span> */}
 
                 </div>
 

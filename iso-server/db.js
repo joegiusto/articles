@@ -9,11 +9,11 @@ module.exports = {
     MongoClient.connect( url, { useNewUrlParser: true, useUnifiedTopology: true}, function( err, client ) {
       if (err) {
         console.log(err)
-        console.log('Failed to connect to mongo - retrying is not setup yet')
+        console.log('\x1b[31m%s\x1b[0m', '[Startup] Mongo Failed')
         // setTimeout(module.exports.connectToServer, 5000);
       } else {
         _db  = client.db('articles_data');
-        console.log("Now connected");
+        console.log('\x1b[32m%s\x1b[0m', '[Startup] Mongo Ready');
         return callback( err );
       }
     } );

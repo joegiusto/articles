@@ -16,6 +16,9 @@ var ObjectId = require('mongodb').ObjectId;
 var AWS = require('aws-sdk');
 const url = `mongodb+srv://joegiusto:${encodeURIComponent(process.env.MONGODB_PASSWORD)}@articles-xgwnd.mongodb.net/articles_data?retryWrites=true&w=majority`;
 
+let mongooseConnectionAttempts = 1
+const mongooseConnectionAttemptsMax = 5
+
 // app.use(
 
 //   history({
@@ -105,28 +108,30 @@ function connectWithRetryMongo() {
 
 connectWithRetryMongo();
 
-
-
 app.use(cors());
 app.options('*', cors());
 
 http.listen(process.env.PORT || 8080, () => {
-  console.log( `running http`);
+  console.log( '\x1b[32m%s\x1b[0m', '[Startup] HTTP Ready');
 });
 
 function connectWithRetryMongoose() {
-  console.log("Ran");
   mongoose
   .connect(
     url, {
       useNewUrlParser: true,
       useUnifiedTopology: true 
   })
-  .then(() => console.log("Mongoose successfully connected"))
+  .then(() => console.log('\x1b[32m%s\x1b[0m', '[Startup] Mongoose Ready'))
   .catch(err => {
-    console.log("Mongoose connection error");
-    console.error('Failed to connect to mongoose - retrying in 5 sec', err);
-    setTimeout(connectWithRetryMongoose, 5000);
+    console.log('\x1b[31m%s\x1b[0m', `[Startup] Mongoose Failed - Retry attempt ${mongooseConnectionAttempts}/${mongooseConnectionAttemptsMax}`);
+
+    if (mongooseConnectionAttempts <= mongooseConnectionAttemptsMax) {
+      mongooseConnectionAttempts++
+      connectWithRetryMongoose()
+    }
+
+    // setTimeout(connectWithRetryMongoose, 5000);
     console.log(err.message)
   });
 }
@@ -169,7 +174,46 @@ io.on('connection', (socket) => {
 
   socket.on('adminMessage', (data) => {
     console.log(data);
-    socket.emit('adminMessage', data);
+    socket.send('hi');
+    io.emit('adminMessage', data);
+  });
+
+  function recieveDonation(object) {
+    io.emit('recieveDonation', object);
+    console.log(object);
+  }
+
+  socket.on('recieveDonation', (data) => {
+
+    recieveDonation({
+      amount: 1000,
+      createdAt: Date.now(),
+      note: 'Fake Donation',
+      uid: Date.now(),
+      name: 'Test',
+      department: 'other',
+      file: 'https://en.wikipedia.org/wiki/Rickrolling'
+    });
+
+  });
+
+  function recieveExpense(object) {
+    io.emit('recieveExpense', object);
+    console.log(object);
+  }
+
+  socket.on('recieveExpense', (data) => {
+
+    recieveExpense({
+      amount: 1000,
+      createdAt: Date.now(),
+      note: 'Fake Expense',
+      uid: Date.now(),
+      name: 'Sample',
+      department: 'other',
+      file: 'https://en.wikipedia.org/wiki/Rickrolling'
+    });
+
   });
 
   socket.on('disconnect', () => {
@@ -181,6 +225,7 @@ io.on('connection', (socket) => {
       io.emit( 'online', clients );
     });
   });
+
 });
 
 // Used to make sure server is up in one place, though this was in MySQL days

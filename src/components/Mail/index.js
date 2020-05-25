@@ -27,7 +27,6 @@ class EmailHome extends Component {
   }
 
   componentDidMount() {
-
     var senderWords = ['Jack', 'Poper', 'King', 'Max', 'Joey', 'Willington', 'Smith', 'Cole', 'Dr.', 'Heavy-Bottoms'];
     var subjectWords = ['Rock', 'Paper', 'Scissors', 'Deal', 'Weekend Only', 'Going Fast', 'Limited Offer'];
     var contentWords = ['Blah', 'Buisness', 'Stoinks', 'Fast', 'ASAP', 'Coffee'];

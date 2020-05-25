@@ -48,9 +48,48 @@ class Reports extends Component {
   }
 
   componentDidMount() {
+    const self = this;
     this.onListenForDonations();
     
     socket = socketIOClient(ENDPOINT);
+
+    socket.on('online', function(msg){
+      console.log(msg)
+    });
+
+    socket.on('recieveDonation', function(msg){
+      console.log(JSON.stringify(msg));
+
+      self.setState({
+        firebaseData: {
+          ...self.state.firebaseData,
+          revenue: {
+            ...self.state.firebaseData.revenue,
+            donations: [
+              ...self.state.firebaseData.revenue.donations,
+              msg
+            ]
+          }
+        }
+      })
+    });
+
+    socket.on('recieveExpense', function(msg){
+      console.log(JSON.stringify(msg));
+
+      self.setState({
+        firebaseData: {
+          ...self.state.firebaseData,
+          expenses: {
+            ...self.state.firebaseData.expenses,
+            other: [
+              ...self.state.firebaseData.expenses.other,
+              msg
+            ]
+          }
+        }
+      })
+    });
 
     socket.on('adminMessage', function(msg){
       console.log(`Admin Message: ${msg}`);
@@ -58,9 +97,9 @@ class Reports extends Component {
   }
 
   componentWillUnmount() {
+    socket.disconnect();
     this.props.firebase.donations().off();
     this.props.firebase.expenses().off();
-    socket.disconnect();
   }
 
   onListenForDonations() {
@@ -95,8 +134,6 @@ class Reports extends Component {
         for (var i=0; i<this.state.firebaseData.revenue.donations.length; i++) {
           total += this.state.firebaseData.revenue.donations[i].amount;
         }
-
-        console.log(total)
 
         this.setState({totals: {
           ...this.state.totals,
@@ -148,8 +185,6 @@ class Reports extends Component {
           total += this.state.firebaseData.expenses.other[i].amount;
         }
 
-        console.log(total)
-
         this.setState({totals: {
           ...this.state.totals,
           expenses: total
@@ -191,7 +226,6 @@ class Reports extends Component {
  }
 
   getTableComponent(tableSelector, subtableSelector) {
-    console.log('Switch');
     switch(tableSelector) {
       case 'donations':
         return(<DonationTable firebaseData={this.state.firebaseData} fetch="donations"/>)
@@ -354,14 +388,14 @@ class Reports extends Component {
                 <input className="search-input pl-2" type="text" placeholder="Search service is currently offline"/>
               </div>
 
-              <div className="mt-3 reports-shadow date-input">
+              {/* <div className="mt-3 reports-shadow date-input">
 
                 <div className="pt-1">
                   <i className="fas fa-calendar-alt"></i>
-                  <span>2019</span>
+                  <span>20</span>
                 </div>
 
-              </div>
+              </div> */}
             </div>
 
             <div className="reports-side reports-shadow">
@@ -421,10 +455,10 @@ class Reports extends Component {
 
             </div>
 
-            <div className="donation-snippet mt-3">
+            {/* <div className="donation-snippet mt-3">
               <p>All donations go towards supporting the platform and encouraging more transparency and voice in American Politics.</p>
               <p><span>The next revoulution needs you!</span></p>
-            </div>
+            </div> */}
 
           </div>
 
@@ -592,19 +626,19 @@ function PreorderTable () {
 
                 <div className="results-dual-header">
 
-                  <div className="page noselect">
+                  {/* <div className="page noselect">
                     <i className="fas fa-chevron-circle-left"></i>
                     Page 0/0
                     <i style={{marginLeft: '10px'}} className="fas fa-chevron-circle-right"></i>
-                  </div>
+                  </div> */}
                 
-                  <span className="results noselect">
+                  {/* <span className="results noselect">
                     <span>Results:</span>
                     <span className={"result result-active"}>10</span>
                     <span className={"result"}>50</span>
                     <span className={"result"}>100</span>
                     <span className={"result"}>250</span>
-                  </span>
+                  </span> */}
 
                 </div>
 
@@ -789,19 +823,19 @@ const StyledDonationList = (props) => (
 
               <div className="results-dual-header">
 
-                <div className="page noselect">
+                {/* <div className="page noselect">
                   <i onClick={() => props.changePage(props.page - 1)} className="fas fa-chevron-circle-left"></i>
                   Page {props.page}/1
                   <i onClick={() => props.changePage(props.page + 1)} style={{marginLeft: '10px'}} className="fas fa-chevron-circle-right"></i>
-                </div>
+                </div> */}
               
-                <span className="results noselect">
+                {/* <span className="results noselect">
                   <span>Results:</span>
                   <span onClick={() => props.changeLimit(10)} className={"result" + (props.limit === 10 ? ' result-active' : '')}>10</span>
                   <span onClick={() => props.changeLimit(50)} className={"result" + (props.limit === 50 ? ' result-active' : '')}>50</span>
                   <span onClick={() => props.changeLimit(100)} className={"result" + (props.limit === 100 ? ' result-active' : '')}>100</span>
                   <span onClick={() => props.changeLimit(250)} className={"result" + (props.limit === 250 ? ' result-active' : '')}>250</span>
-                </span>
+                </span> */}
 
               </div>
 
@@ -826,10 +860,10 @@ const StyledDonationItem = ({fetch, donation}) => (
 
     {/* <td>{moment(donation.createdAt).format('LL') }</td> */}
 
-    <td>{fetch === 'donations' ? donation.name.split(" ")[0] + " " + (donation.name.split(' ')[1]).charAt(0) : donation.name}</td>
+    <td>{fetch === 'donations' ? donation.name.split(" ")[0] + " " + ( (donation.name.split(' ')[1]) ? donation.name.split(' ')[1].charAt(0) : ' ' ) : donation.name}</td>
 
     {/* <td>{donation.name.split(" ")[0] + " " + (donation.name.split(' ')[1]).charAt(0)}</td> */}
-    <td>{donation.note === "match" ? (<div><span role="img" aria-label="emoji">⭐</span>Matched</div>) : (<div>{donation.note}</div>) }</td>
+    <td>{donation.note === "match" ? (<div><span role="img" aria-label="emoji">⭐</span>Matched</div>) : (<div>...</div>) }</td>
     <td>${(donation.amount / 100).toFixed(2)}</td>
   </tr>
 )

@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import axios from 'axios'
 import socketIOClient from 'socket.io-client'
 const ENDPOINT = "/";
-let socket = ''
+let socket = undefined;
 
 class Submissions extends Component {
   constructor(props) {
@@ -18,10 +18,11 @@ class Submissions extends Component {
   }
 
   componentDidMount() {
-    this.props.setLoaction(this.props.tabLocation);
-    const self = this;
     socket = socketIOClient(ENDPOINT);
 
+    this.props.setLoaction(this.props.tabLocation);
+    const self = this;
+    
     socket.on('online', function(msg){
       self.setState({
         sockets: msg
@@ -46,6 +47,15 @@ class Submissions extends Component {
     this.setState({
       [name]: value
     });
+  }
+
+  pushTestDonation() {
+    // const self = this;
+    socket.emit('recieveDonation', null);
+  }
+
+  pushTestExpense() {
+    socket.emit('recieveExpense', null);
   }
 
   pushSocket() {
@@ -76,6 +86,9 @@ class Submissions extends Component {
           <input type="text" name="socketMessage" id="socketMessage" value={this.state.socketMessage} onChange={this.handleChange}/>
           <button onClick={() => this.pushSocket()} className="btn btn-articles-light">Send</button>
         </div>
+
+        <button onClick={() => this.pushTestDonation()} className="btn btn-articles-light">Fake Donation</button>
+        <button onClick={() => this.pushTestExpense()} className="btn btn-articles-light">Fake Expense</button>
 
       </div>
     );
