@@ -67,7 +67,7 @@ class newsAdd extends Component {
       editLoading: true
     });
 
-    axios.post('/getNewsDocument', {
+    axios.post('/api/getNewsDocument', {
       news_id: news_id
     })
     .then(function (response) {
@@ -148,7 +148,7 @@ class newsAdd extends Component {
     if (this.props.news_id === undefined) {
 
       // If props.news_id is not set then we are dealing with a new document so we call /addNewsDocument
-      axios.post('/addNewsDocument', {
+      axios.post('/api/addNewsDocument', {
         data: self.state
       })
       .then(function (response) {
@@ -173,7 +173,7 @@ class newsAdd extends Component {
       console.log("We need to update a existing document");
 
       // If props.news_id is not set then we are dealing with a new document so we call /addNewsDocument
-      axios.post('/editNewsDocument', {
+      axios.post('/api/editNewsDocument', {
         data: self.state
       })
       .then(function (response) {

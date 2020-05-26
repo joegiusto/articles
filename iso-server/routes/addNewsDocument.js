@@ -1,9 +1,5 @@
-// const MongoClient = require('mongodb').MongoClient;
-// const url = "mongodb+srv://joegiusto:" + process.env.MONGODB_PASSWORD + "@articles-xgwnd.mongodb.net/test?retryWrites=true&w=majority";
-
 module.exports = (app, db) => {
-
-  app.post('/addNewsDocument', (req, res) => {
+  app.post('/api/addNewsDocument', (req, res) => {
     console.log(`Call to /api/addNewsDocument made at ${new Date()}`);
   
     // Always assume client sends the wrong thing.
@@ -23,11 +19,8 @@ module.exports = (app, db) => {
     db.collection("articles_news").insertOne(myobj, function(err, result) {
       if (err) throw err;
       console.log("1 news document inserted");
-      // db.close();
     });
   
     return res.end();
-  
   });
-
 } 

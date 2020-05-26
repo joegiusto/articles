@@ -5,7 +5,7 @@
 
 module.exports = (app, db) => {
 
-  app.get('/getMyths', function (req, res) {
+  app.get('/api/getMyths', function (req, res) {
   
     console.log(`Call to /api/getMyths made at ${new Date()}`);
   

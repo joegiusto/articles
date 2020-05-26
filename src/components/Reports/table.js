@@ -4,7 +4,7 @@ export function ClothingTable () {
   return (
   <>
     <div className="full-table">
-      <table className='table articles-table table-bordered'>
+      <table className='table articles-table table-sm table-hover table-bordered'>
         <thead>
           <tr className="table-articles-head">
             {/* <th scope="col">Order #</th> */}
@@ -17,7 +17,9 @@ export function ClothingTable () {
         <tbody>
 
           <tr>
-            <td colspan="4">No clothing sales yet to report for this category</td>
+            <td colspan="4">
+              <div className="mx-auto">No clothing sales yet to report.</div>
+            </td>
           </tr>
 
           {/* {sales.map((object, i) =>

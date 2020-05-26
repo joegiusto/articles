@@ -363,6 +363,7 @@ function Menu(props) {
                 <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PLAYGROUND}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Playground</p></Link>
                 <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MESH}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Mesh</p></Link>
                 <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MAIL}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Mail</p></Link>
+                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.OUTSET}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Outset</p></Link>
                 <div className="app-links">
                   <img className="app-badge" src="https://bibibop.com/data/sites/1/media/rewards/Download_badge-apple-white.png" alt=""/>
                   <img className="app-badge" src="https://www.prorehab-pc.com/wp-content/uploads/2017/12/google-play-button.svg_.hi_.png" alt=""/>

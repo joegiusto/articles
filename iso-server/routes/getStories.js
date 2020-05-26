@@ -4,7 +4,7 @@
 // const url = `mongodb+srv://joegiusto:${encodeURIComponent(process.env.MONGODB_PASSWORD)}@articles-xgwnd.mongodb.net/articles_data?retryWrites=true&w=majority`;
 
 module.exports = (app, db) => {
-  app.get('/getStories', function (req, res) {
+  app.get('/api/getStories', function (req, res) {
 
     console.log(`Call to /api/getStories made at ${new Date()}`);
   

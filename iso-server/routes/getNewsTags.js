@@ -3,9 +3,9 @@
 // const url = "mongodb+srv://joegiusto:" + process.env.MONGODB_PASSWORD + "@articles-xgwnd.mongodb.net/test?retryWrites=true&w=majority";
 
 module.exports = (app, db) => {
-  app.get('/getTags', (req, res) => {
+  app.get('/api/getNewsTags', (req, res) => {
 
-    console.log("Call to /api/getTags at" + new Date());
+    console.log("Call to /api/getNewsTags at" + new Date());
 
     // MongoClient.connect(url, function(err, db) {
 

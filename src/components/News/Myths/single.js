@@ -33,7 +33,7 @@ class Issue extends React.Component {
       });
     } else {
       // Was not local, we make a server call!
-      axios.post('/getNewsDocument', {
+      axios.post('/api/getNewsDocument', {
         news_id: this.props.match.params.id
       })
       .then(function (response) {

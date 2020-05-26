@@ -1,5 +1,5 @@
 module.exports = (app, db) => {
-  app.get('/getProducts', function (req, res) {
+  app.get('/api/getProducts', function (req, res) {
 
     console.log(`Call to /api/getProducts made at ${new Date()}`);
 

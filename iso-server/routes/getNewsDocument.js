@@ -3,7 +3,7 @@ var ObjectId = require('mongodb').ObjectId;
 const url = "mongodb+srv://joegiusto:" + process.env.MONGODB_PASSWORD + "@articles-xgwnd.mongodb.net/test?retryWrites=true&w=majority";
 
 module.exports = (app, db) => {
-  app.post('/getNewsDocument', (req, res) => {
+  app.post('/api/getNewsDocument', (req, res) => {
 
     console.log("Call to /api/getNewsDocument at" + new Date());
 

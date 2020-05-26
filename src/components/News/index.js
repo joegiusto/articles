@@ -54,7 +54,7 @@ class Frontpage extends Component {
       <section className="frontpage-section">
         <div className='container-fluid'>
 
-          <div className="row mb-5">
+          <div className="row mb-5 justify-content-between">
 
             {/* Left Side */}
             <div className="col-12 col-md-8 pr-md-0">

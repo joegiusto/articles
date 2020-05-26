@@ -1,7 +1,7 @@
 var ObjectId = require('mongodb').ObjectId; 
 
 module.exports = (app, db) => {
-  app.post('/getProduct', (req, res) => {
+  app.post('/api/getProduct', (req, res) => {
 
     console.log("Call to /api/getProduct" + new Date());
 

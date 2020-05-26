@@ -12,7 +12,7 @@ export const setMyths = () => dispatch => {
   console.log(`Getting Myths`);
 
   axios
-    .get("/getMyths")
+    .get("/api/getMyths")
     .then( res => {
       console.log("Got Myths")
       dispatch({

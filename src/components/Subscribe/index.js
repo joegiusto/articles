@@ -65,7 +65,7 @@ class SubscribeListBase extends Component {
     // Refresh for the newest info!
     this.props.setUserDetails(self.props.auth.user.id);
 
-    // axios.get('/getNews')
+    // axios.get('/api/getNews')
     // .then(function (response) {
 
     //   // handle success
@@ -107,7 +107,7 @@ class SubscribeListBase extends Component {
     //   console.log(error);
     // });
 
-    axios.get('/getIssues')
+    axios.get('/api/getIssues')
     .then(function (response) {
 
       // handle success

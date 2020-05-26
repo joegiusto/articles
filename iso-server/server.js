@@ -23,22 +23,22 @@ const mongooseConnectionAttemptsMax = 5
 let mongoConnectionAttempts = 1
 const mongoConnectionAttemptsMax = 5
 
-// app.use(
+app.use(
 
-//   history({
-//     verbose: true,
-//     rewrites: [
-//       {
-//         from: /^\/api\/.*$/,
-//         to: function(context) {
-//           console.log(context.parsedUrl.pathname);
-//           return context.parsedUrl.pathname;
-//         }
-//       }
-//     ]
-//   })
+  history({
+    verbose: true,
+    rewrites: [
+      {
+        from: /^\/api\/.*$/,
+        to: function(context) {
+          console.log(context.parsedUrl.pathname);
+          return context.parsedUrl.pathname;
+        }
+      }
+    ]
+  })
 
-// );
+);
 
 const s3 = new AWS.S3({
   accessKeyId: process.env.accessKeyId,
@@ -94,7 +94,7 @@ function connectWithRetryMongo() {
   
     require('./routes/getNewsByTag')(app, db);
     require('./routes/getNews')(app, db);
-    require('./routes/getTags')(app, db);
+    require('./routes/getNewsTags')(app, db);
     require('./routes/outsetUpdate')(app, db);
 
     require('./routes/getRevenue')(app, db);
@@ -109,7 +109,6 @@ function connectWithRetryMongo() {
     require('./routes/getMyths')(app, db);
     require('./routes/getSubmissions')(app, db);
     require('./routes/getDonations')(app, db);
-    require('./routes/getExpenses')(app, db);
   
     // const secureRoute = require('./routes/secure/secure-routes.js')(app, db);
     // app.use('/api/secure', passport.authenticate('jwt', {session: false}), secureRoute);

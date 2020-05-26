@@ -63,6 +63,8 @@ class Reports extends Component {
     socket.on('recieveDonation', function(msg){
       console.log(JSON.stringify(msg));
 
+      // msg.amount = parseInt(msg.amount);
+
       self.setState({
         firebaseData: {
           ...self.state.firebaseData,
@@ -96,6 +98,30 @@ class Reports extends Component {
 
     socket.on('adminMessage', function(msg){
       console.log(`Admin Message: ${msg}`);
+    });
+
+    axios.get('/api/getOrders')
+    .then(function (response) {
+
+      console.log(response);
+
+      self.setState({
+        firebaseData: {
+          ...self.state.firebaseData,
+          revenue: {
+            ...self.state.firebaseData.revenue,
+            orders: response.data.orders
+          },
+        },
+      });
+
+    })
+    .catch(function (error) {
+      console.log(error);
+
+      self.setState({
+        products: [],
+      })
     });
 
     axios.get('/api/getExpenses')
@@ -326,7 +352,7 @@ class Reports extends Component {
       case 'expenses':
         return(<DonationTable firebaseData={this.state.firebaseData} fetch="expenses"/>)
       case 'payroll':
-        return(<payrollTable/>)
+        return(<PayrollTable/>)
       case 'revenue':
         return(<RevenueTable/>)
       default:
@@ -555,42 +581,6 @@ class Reports extends Component {
   }
 }
 
-function ExpenseTable () {
-  return (
-    <div className="px-1">
-      <table className="table table-bordered">
-      <thead>
-        <tr>
-          <th scope="col">Receipt</th>
-          <th scope="col">Date</th>
-          <th scope="col">For</th>
-          <th scope="col">Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row"><a target="_blank" href="https://cdn.articles.media/2019/documents/domain-order.pdf"><i className="fas fa-file-invoice"></i></a></th>
-          <td>06/26/2019</td>
-          <td>Domain Registration</td>
-          <td>$10.66</td>
-        </tr>
-        <tr>
-          <th scope="row"><a target="_blank" href="https://cdn.articles.media/2019/documents/email-order.pdf"><i className="fas fa-file-invoice"></i></a></th>
-          <td>08/09/2019</td>
-          <td>Email Account</td>
-          <td>$12.97</td>
-        </tr>
-        <tr>
-          {/* <th scope="row">3</th> */}
-          <td colspan="3">Total</td>
-          <td>$23.63</td>
-        </tr>
-      </tbody>
-    </table>
-    </div>
-  )
-}
-
 function RevenueTable () {
   return (
     <table className="table table-sm table-hover mt-2">
@@ -635,41 +625,6 @@ function RevenueTable () {
         </tr>
         <tr>
           <th scope="row">Grant</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr>
-      </tbody>
-    </table>
-  )
-}
-
-function SampleTable () {
-  return (
-    <table className="table table-sm table-hover mt-2">
-      <thead className="thead-dark">
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Handle</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
           <td>Larry</td>
           <td>the Bird</td>
           <td>@twitter</td>
@@ -742,7 +697,7 @@ function PreorderTable () {
   )
 }
 
-function payrollTable () {
+function PayrollTable () {
   return (
     <div>
       <p className="mt-2">We currently do not have any employee under payroll but this is a sample of what an entry may look like.</p>
@@ -884,7 +839,7 @@ class DonationTableBase extends Component {
 
 const StyledDonationList = (props) => (
   <div className="full-table">
-    <table className="table articles-table table-bordered">
+    <table className="table articles-table table-sm table-hover table-bordered">
       <thead>
         <tr className="table-articles-head">
           {/* <th scope="col">DONATION ID</th> */}

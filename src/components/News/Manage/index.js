@@ -57,7 +57,7 @@ class AdminPage extends Component {
     self.setState({ searchLoading: true });
     self.setState({ resultsLoading: true });
 
-    axios.get('/getNews')
+    axios.get('/api/getNews')
     .then(function (response) {
       console.log(response.data.news);
 
@@ -75,7 +75,7 @@ class AdminPage extends Component {
       self.setState({ resultsLoadingError: error });
     });
 
-    axios.get('/getTags')
+    axios.get('/api/getNewsTags')
     .then(function (response) {
 
       // handle success
@@ -106,7 +106,7 @@ class AdminPage extends Component {
 
     console.log(tag);
 
-    axios.post('/getNewsByTag', {
+    axios.post('/api/getNewsByTag', {
       tag: tag
     })
     .then(function (response) {

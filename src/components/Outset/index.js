@@ -128,7 +128,7 @@ class OutsetBase extends React.Component {
 
     console.log(newobj)
 
-    axios.post('/outsetUpdate', {
+    axios.post('/api/outsetUpdate', {
       user: this.props.user._id,
       outsetState: newobj
     })
@@ -291,7 +291,7 @@ class OutsetBase extends React.Component {
   componentDidMount() {
     const self = this;
 
-    axios.get('/getIssues')
+    axios.get('/api/getIssues')
     .then(function (response) {
 
       // handle success

@@ -64,7 +64,7 @@ class StorePageBase extends Component {
 		const self = this;
 		this.setState({ loadingProducts: true });
 
-		axios.get('/getProducts')
+		axios.get('/api/getProducts')
     .then(function (response) {
 
 			// handle success

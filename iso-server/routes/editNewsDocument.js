@@ -4,7 +4,7 @@ const url = "mongodb+srv://joegiusto:" + process.env.MONGODB_PASSWORD + "@articl
 
 module.exports = (app, db) => {
 
-  app.post('/editNewsDocument', (req, res) => {
+  app.post('/api/editNewsDocument', (req, res) => {
     console.log(`Call to /api/editNewsDocument made at ${new Date()}`);
       
     // Always assume client sends the wrong thing.

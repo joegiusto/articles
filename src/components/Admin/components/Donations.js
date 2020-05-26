@@ -46,7 +46,7 @@ class Donations extends Component {
     const self = this;
     socket = socketIOClient(ENDPOINT);
 
-    axios.get('/getDonations')
+    axios.get('/api/getDonations')
     .then(function (response) {
 
       let total = 0;
@@ -115,6 +115,7 @@ class Donations extends Component {
         ...INITIAL_CURRENT,
         _id: moment().unix(),
         date: moment().unix(),
+        amount: parseInt(this.state.amount)
       }
     })
 

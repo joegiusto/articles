@@ -17,7 +17,7 @@ export const setSubmissions = () => dispatch => {
   });
 
   axios
-    .get("/getSubmissions")
+    .get("/api/getSubmissions")
     .then( res => {
       console.log("Got Submissions")
       dispatch({

@@ -3,7 +3,7 @@
 // const url = "mongodb+srv://joegiusto:" + process.env.MONGODB_PASSWORD + "@articles-xgwnd.mongodb.net/test?retryWrites=true&w=majority";
 
 module.exports = (app, db) => {
-  app.get('/getNews', (req, res) => {
+  app.get('/api/getNews', (req, res) => {
 
     console.log("Call to /api/getNews at" + new Date());
 

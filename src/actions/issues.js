@@ -17,7 +17,7 @@ export const setIssues = () => dispatch => {
   });
 
   axios
-    .get("/getIssues")
+    .get("/api/getIssues")
     .then( res => {
       console.log("Got Issues");
       console.log(res.data)

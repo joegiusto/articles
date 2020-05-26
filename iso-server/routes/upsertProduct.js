@@ -3,7 +3,7 @@ var ObjectId = require('mongodb').ObjectId;
 
 module.exports = (app, db) => {
 
-  app.post('/upsertProduct', (req, res) => {
+  app.post('/api/upsertProduct', (req, res) => {
     console.log(`Call to /api/upsertProduct made at ${new Date()}`);
 
     // const o_id = new ObjectId(req.body.product);

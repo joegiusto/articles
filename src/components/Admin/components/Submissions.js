@@ -15,7 +15,7 @@ class Submissions extends Component {
     this.props.setLoaction(this.props.tabLocation);
     const self = this;
 
-    axios.get('/getSubmissions')
+    axios.get('/api/getSubmissions')
     .then(function (response) {
 
       console.log(response);

@@ -47,7 +47,7 @@ class Products extends Component {
     this.props.setLoaction(this.props.tabLocation);
     const self = this;
 
-    axios.get('/getProducts')
+    axios.get('/api/getProducts')
     .then(function (response) {
 
       console.log(response);
@@ -75,7 +75,7 @@ class Products extends Component {
         activeProductLoading: true
       })
       
-      axios.post('/getProduct', {
+      axios.post('/api/getProduct', {
         product_id: this.state.currentProduct
       })
       .then(function (response) {
@@ -182,7 +182,7 @@ class Products extends Component {
     console.log('onSubmit called!')
     const self = this;
 
-    axios.post('/upsertProduct', {
+    axios.post('/api/upsertProduct', {
       product: this.state.activeProduct
     })
     .then(function (response) {
