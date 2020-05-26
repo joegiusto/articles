@@ -1,6 +1,28 @@
 import React, {Component} from 'react'
 import axios from 'axios'
 import moment from 'moment'
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import {CardElement} from '@stripe/react-stripe-js';
+import 'react-day-picker/lib/style.css';
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+import socketIOClient from 'socket.io-client'
+const ENDPOINT = "/";
+let socket = undefined;
+
+const stripePromise = loadStripe('pk_live_VE6HtyhcU3HCa6bin4uKgFgL00jeOY6SEW');
+
+const INITIAL_CURRENT = {
+  _id: moment().unix(),
+  date: moment().unix(),
+  type: '',
+  matched: false,
+  message: "",
+  name: "",
+  amount: 500,
+  wasMatched: false,
+  createdBy: "5e90cc96579a17440c5d7d52"
+}
 
 class Donations extends Component {
   constructor(props) {
@@ -11,16 +33,18 @@ class Donations extends Component {
       total: 0,
 
       current: {
-        type: '',
-        matched: false
+        ...INITIAL_CURRENT,
       }
     };
 
+    this.handleCurrentChange = this.handleCurrentChange.bind(this);
+    this.handleDayChange = this.handleDayChange.bind(this);
   }
 
   componentDidMount() {
     this.props.setLoaction(this.props.tabLocation);
     const self = this;
+    socket = socketIOClient(ENDPOINT);
 
     axios.get('/getDonations')
     .then(function (response) {
@@ -48,6 +72,7 @@ class Donations extends Component {
 
   componentWillUnmount() {
     this.props.setLoaction('');
+    socket.disconnect();
   }
 
   handleCurrentChange(event) {
@@ -72,6 +97,54 @@ class Donations extends Component {
         type: type
       }
     });
+  }
+
+  cardSubmit() {
+    console.log("card tried")
+  }
+
+  cashSubmit() {
+    console.log("cash tried")
+
+    this.setState({
+      donations: [
+        ...this.state.donations,
+        this.state.current
+      ],
+      current: {
+        ...INITIAL_CURRENT,
+        _id: moment().unix(),
+        date: moment().unix(),
+      }
+    })
+
+    socket.emit('recieveDonation', this.state.current);
+  }
+
+  editDonation(id) {
+    console.log(`edit tried ${id}`)
+    console.log(
+      ...this.state.donations.filter(function( obj ) {
+        return obj._id == id;
+      })
+    )
+    this.setState({
+      // donations: this.state.donations.filter(function( obj ) {
+      //   return obj._id !== id;
+      // })
+    });
+  }
+
+  removeDonation(id) {
+    this.setState({
+      donations: this.state.donations.filter(function( obj ) {
+        return obj._id !== id;
+      })
+    });
+  }
+
+  handleDayChange(day) {
+    this.setState({ selectedDay: day, date: moment(day, 'Y-M-D').unix() });
   }
 
   render() {
@@ -102,11 +175,19 @@ class Donations extends Component {
               </div>
 
               <div className="form-group">
-                <input className="form-control" type="text" placeholder="Name"/>
+                <DayPickerInput 
+                  style={{display: 'block'}}
+                  onDayChange={this.handleDayChange} 
+                  inputProps={{className: 'form-control'}}
+                />
               </div>
 
               <div className="form-group">
-                <input className="form-control" type="number" placeholder="Amount"/>
+                <input className="form-control" autoComplete={"off"} type="text" name="name" onChange={this.handleCurrentChange} value={this.state.current.name} placeholder="Name"/>
+              </div>
+
+              <div className="form-group">
+                <input className="form-control" type="number" name="amount" onChange={this.handleCurrentChange} value={this.state.current.amount} placeholder="Amount"/>
               </div>
 
               <div className="match-details">
@@ -133,11 +214,39 @@ class Donations extends Component {
               </div>
 
               <div className="form-group">
-                <textarea className="form-control" type="text" rows="5" placeholder="Message"/>
+                <textarea className="form-control" type="text" name="message" onChange={this.handleCurrentChange} value={this.state.current.message} rows="5" placeholder="Message"/>
               </div>
 
+              {this.state.current.type === 'card' ?
+
+              <Elements stripe={stripePromise}>
+                <CardElement
+                  options={{
+                    style: {
+                      base: {
+                        border: '1px solid #000!important',
+                        fontSize: '16px',
+                        color: '#424770',
+                        '::placeholder': {
+                          color: '#aab7c4',
+                        },
+                      },
+                      invalid: {
+                        color: '#9e2146',
+                      },
+                    },
+                  }}
+                />
+              </Elements>
+
+              :
+
+              ''
+
+              }
+
               <div className="submit">
-                <div className="btn btn-articles-light w-100">Submit</div>
+                <div className={"btn btn-articles-light w-100 " + (this.state.current.type === '' ? 'disabled' : '')} onClick={() => (this.state.current.type === 'card' ? this.cardSubmit() : this.cashSubmit() ) }>Submit</div>
               </div>
 
             </div>
@@ -149,11 +258,13 @@ class Donations extends Component {
             <table className="table table-sm table-bordered bg-white mt-3">
               <thead className="thead-dark">
                 <tr>
+                  <th scope="col">Date</th>
                   <th scope="col">Name</th>
                   <th scope="col">Amount</th>
                   <th scope="col">Message</th>
                   <th scope="col">Created By</th>
                   <th scope="col">Was Matched</th>
+                  <th scope="col">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -161,11 +272,16 @@ class Donations extends Component {
                 {this.state.donations.map(donation => (
 
                   <tr>
-                    <th scope="row">{donation.name}</th>
+                    <th scope="row">{moment.unix(donation.date).format('LL')}</th>
+                    <td>{donation.name}</td>
                     <td>${(donation.amount / 100).toFixed(2)}</td>
                     <td>{donation.message}</td>
                     <td>{donation.createdBy}</td>
                     <td>{donation.wasMatched ? 'True' : 'False'}</td>
+                    <td>
+                      <div onClick={() => this.removeDonation(donation._id)} className="badge badge-danger">Delete</div>
+                      <div onClick={() => this.editDonation(donation._id)} className="badge badge-dark ml-1">Edit</div>
+                    </td>
                   </tr>
                   
                 ))}

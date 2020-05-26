@@ -50,8 +50,15 @@ class Submissions extends Component {
   }
 
   pushTestDonation() {
-    // const self = this;
-    socket.emit('recieveDonation', null);
+    socket.emit('recieveDonation', {
+      amount: 1000,
+      date: Math.floor(new Date().getTime()/1000.0),
+      note: 'Fake Donation',
+      uid: Date.now(),
+      name: 'Test',
+      department: 'other',
+      file: 'https://en.wikipedia.org/wiki/Rickrolling'
+    });
   }
 
   pushTestExpense() {

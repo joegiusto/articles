@@ -7,6 +7,8 @@ import { employeeList, sales, donations, expenses } from "../../sample_data/samp
 
 import * as ROUTES from '../../constants/routes';
 
+import axios from 'axios';
+
 import {ClothingTable} from "./table.js"
 import moment from 'moment';
 import Chart from 'chart.js';
@@ -49,7 +51,8 @@ class Reports extends Component {
 
   componentDidMount() {
     const self = this;
-    this.onListenForDonations();
+    
+    // this.onListenForDonations();
     
     socket = socketIOClient(ENDPOINT);
 
@@ -94,6 +97,86 @@ class Reports extends Component {
     socket.on('adminMessage', function(msg){
       console.log(`Admin Message: ${msg}`);
     });
+
+    axios.get('/api/getExpenses')
+    .then(function (response) {
+
+      console.log(response);
+
+      self.setState({
+        firebaseData: {
+          ...self.state.firebaseData,
+          expenses: {
+            ...self.state.firebaseData.expenses,
+            other: response.data
+          },
+        },
+      });
+
+    })
+    .catch(function (error) {
+      console.log(error);
+
+      self.setState({
+        products: [],
+      })
+    });
+
+    axios.get('/api/getRevenue')
+    .then(function (response) {
+
+      self.setState({
+        firebaseData: {
+          ...self.state.firebaseData,
+          revenue: {
+            ...self.state.firebaseData.revenue,
+            donations: response.data.donations
+          },
+        },
+      });
+
+    })
+    .catch(function (error) {
+      console.log(error);
+
+      self.setState({
+        products: [],
+      })
+    });
+  }
+
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+
+    if (prevState.firebaseData.revenue.donations !== this.state.firebaseData.revenue.donations ) {
+      console.log("New math needed!");
+
+      var total = 0;
+
+      for (var i=0; i<this.state.firebaseData.revenue.donations.length; i++) {
+        total += this.state.firebaseData.revenue.donations[i].amount;
+      }
+
+      this.setState({totals: {
+        ...this.state.totals,
+        donations: total
+      }});
+
+    }
+
+    if (prevState.firebaseData.expenses.other !== this.state.firebaseData.expenses.other ) {
+
+      var total = 0;
+
+      for (var i=0; i<this.state.firebaseData.expenses.other.length; i++) {
+        total += this.state.firebaseData.expenses.other[i].amount;
+      }
+
+      this.setState({totals: {
+        ...this.state.totals,
+        expenses: total
+      }})
+
+    }
   }
 
   componentWillUnmount() {
@@ -116,29 +199,29 @@ class Reports extends Component {
         }
         ));
 
-        this.setState({
+        // this.setState({
 
-          firebaseData: {
-            revenue: {
-              ...this.state.firebaseData.revenue,
-              donations: donationList,
-            },
-          },
+        //   firebaseData: {
+        //     revenue: {
+        //       ...this.state.firebaseData.revenue,
+        //       donations: donationList,
+        //     },
+        //   },
           
-          loading: false,
+        //   loading: false,
 
-        });
+        // });
 
-        var total = 0;
+        // var total = 0;
 
-        for (var i=0; i<this.state.firebaseData.revenue.donations.length; i++) {
-          total += this.state.firebaseData.revenue.donations[i].amount;
-        }
+        // for (var i=0; i<this.state.firebaseData.revenue.donations.length; i++) {
+        //   total += this.state.firebaseData.revenue.donations[i].amount;
+        // }
 
-        this.setState({totals: {
-          ...this.state.totals,
-          donations: total
-        }})
+        // this.setState({totals: {
+        //   ...this.state.totals,
+        //   donations: total
+        // }})
 
 
       } else {
@@ -150,6 +233,7 @@ class Reports extends Component {
       const expenseObject = snapshot.val();
 
       if (expenseObject) {
+
         const expenseList = Object.keys(expenseObject).map(key => ({
           ...expenseObject[key],
           uid: key,
@@ -165,34 +249,35 @@ class Reports extends Component {
           return 0;
         });
 
-        this.setState({
+        // this.setState({
           // expensesFirebase: expenseList,
 
-          firebaseData: {
-            ...this.state.firebaseData,
-            expenses: {
-              ...this.state.firebaseData.expenses,
-              other: expenseList,
-            },
-          },
+        //   firebaseData: {
+        //     ...this.state.firebaseData,
+        //     expenses: {
+        //       ...this.state.firebaseData.expenses,
+        //       other: expenseList,
+        //     },
+        //   },
 
-          loading: false,
-        });
+        //   loading: false,
+        // });
 
-        var total = 0;
+        // var total = 0;
 
-        for (var i=0; i<this.state.firebaseData.expenses.other.length; i++) {
-          total += this.state.firebaseData.expenses.other[i].amount;
-        }
+        // for (var i=0; i<this.state.firebaseData.expenses.other.length; i++) {
+        //   total += this.state.firebaseData.expenses.other[i].amount;
+        // }
 
-        this.setState({totals: {
-          ...this.state.totals,
-          expenses: total
-        }})
+        // this.setState({totals: {
+        //   ...this.state.totals,
+        //   expenses: total
+        // }})
 
       } else {
         this.setState({ donationsFirebase: null, loading: false });
       }
+
     }); 
 
   }
@@ -856,7 +941,8 @@ const StyledDonationItem = ({fetch, donation}) => (
 
     {fetch === 'expenses' ? <td><a rel="noopener noreferrer" target="_blank" href={donation.file}><i className="fas fa-file-invoice"></i></a></td> : undefined}
 
-    <td>{fetch === 'donations' ? moment(donation.createdAt).format('LL') : moment.unix(donation.date).format('LL')}</td>
+    {/* <td>{fetch === 'donations' ? moment(donation.createdAt).format('LL') : moment.unix(donation.date).format('LL')}</td> */}
+    <td>{moment.unix(donation.date).format('LL')}</td>
 
     {/* <td>{moment(donation.createdAt).format('LL') }</td> */}
 

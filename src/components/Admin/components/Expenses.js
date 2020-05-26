@@ -16,7 +16,7 @@ class Donations extends Component {
     this.props.setLoaction(this.props.tabLocation);
     const self = this;
 
-    axios.get('/getExpenses')
+    axios.get('/api/getExpenses')
     .then(function (response) {
 
       console.log(response);

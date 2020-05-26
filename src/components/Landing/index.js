@@ -636,7 +636,7 @@ class LandingPage extends Component {
 
 							<div className="row">
 
-								<div className="col-6">
+								<div className="col-link-panel col-12 col-md-6">
 
 									<Link to={ROUTES.STORE}>
 										{/* <Tilt options={{ max: "10", scale: '1.025' }}> */}
@@ -650,7 +650,7 @@ class LandingPage extends Component {
 									
 								</div>
 
-								<div className="col-6">
+								<div className="col-link-panel col-12 col-md-6">
 									<Link to={ROUTES.NEWS}>
 										<div className="link-panel">
 											<div className="title">News</div>
@@ -660,7 +660,7 @@ class LandingPage extends Component {
 									</Link>
 								</div>
 
-								<div className="col-6">
+								<div className="col-link-panel col-12 col-md-6">
 									<Link to={ROUTES.STORE_SUBMISSIONS}>
 										<div className="link-panel">
 											<div className="title">Submissions</div>
@@ -670,7 +670,7 @@ class LandingPage extends Component {
 									</Link>
 								</div>
 
-								<div className="col-6">
+								<div className="col-link-panel col-12 col-md-6">
 									<Link to={ROUTES.REPORTS}>
 										<div className="link-panel">
 											<div className="title">Reports</div>
@@ -680,7 +680,7 @@ class LandingPage extends Component {
 									</Link>
 								</div>
 
-								<div className="col-6">
+								<div className="col-link-panel col-12 col-md-6">
 									<Link to={ROUTES.SIGN_UP}>
 										<div className="link-panel">
 											<div className="title">Sign Up</div>
@@ -690,7 +690,7 @@ class LandingPage extends Component {
 									</Link>
 								</div>
 
-								<div className="col-6">
+								<div className="col-link-panel col-12 col-md-6">
 									<Link to={ROUTES.PRESS}>
 										<div className="link-panel">
 											<div className="title">Press and Buisness</div>

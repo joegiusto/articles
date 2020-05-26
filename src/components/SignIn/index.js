@@ -10,6 +10,7 @@ import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
 import { loginUser } from "../../actions/authActions";
+import { setUserDetails } from "../../actions/authActions";
 
 const SignInPage = () => (
   <div className="SignInPage">
@@ -57,7 +58,8 @@ class SignInFormBase extends Component {
   componentWillReceiveProps(nextProps) {
 
     if (nextProps.auth.isAuthenticated) {
-      this.props.history.push("/subscribe"); // push user to dashboard when they login
+      this.props.setUserDetails(nextProps.auth.user.id);
+      this.props.history.push("/home"); // push user to dashboard when they login
     }
 
     if (nextProps.errors) {
@@ -161,7 +163,7 @@ const mapStateToProps = state => ({
 
 const SignInFormMapped = connect(
   mapStateToProps,
-  { loginUser }
+  { loginUser, setUserDetails }
 )(SignInForm);
 
 export default SignInPage;

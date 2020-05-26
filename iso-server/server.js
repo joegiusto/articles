@@ -12,12 +12,16 @@ const allNamespace = io.of('/');
 const history = require('connect-history-api-fallback');
 let mongoUtil = require('./db');
 const mongoose = require('mongoose');
-var ObjectId = require('mongodb').ObjectId; 
+var ObjectId = require('mongodb').ObjectId;
 var AWS = require('aws-sdk');
 const url = `mongodb+srv://joegiusto:${encodeURIComponent(process.env.MONGODB_PASSWORD)}@articles-xgwnd.mongodb.net/articles_data?retryWrites=true&w=majority`;
+// const stripe = require('stripe')(process.env.STRIPE_PASSWORD);
 
 let mongooseConnectionAttempts = 1
 const mongooseConnectionAttemptsMax = 5
+
+let mongoConnectionAttempts = 1
+const mongoConnectionAttemptsMax = 5
 
 // app.use(
 
@@ -70,11 +74,16 @@ async function listAllObjectsFromS3Bucket(bucket, prefix) {
 
 function connectWithRetryMongo() {
   mongoUtil.connectToServer( function( err, client ) {
-    // if (err) {
-    //   setTimeout(connectWithRetryMongo, 5000);
-    //   console.log('Failed to connect to mongo - retrying in 5 sec')
-    //   console.log(err)
-    // };
+
+    if (err) {
+      console.log('\x1b[31m%s\x1b[0m', `[Startup] Mongo Failed - Retry attempt ${mongoConnectionAttempts}/${mongoConnectionAttemptsMax}`)
+      console.log(err)
+
+      if (mongoConnectionAttempts <= mongoConnectionAttemptsMax) {
+        mongoConnectionAttempts++
+        connectWithRetryMongo()
+      }
+    };
   
     var db = mongoUtil.getDb();
   
@@ -87,6 +96,9 @@ function connectWithRetryMongo() {
     require('./routes/getNews')(app, db);
     require('./routes/getTags')(app, db);
     require('./routes/outsetUpdate')(app, db);
+
+    require('./routes/getRevenue')(app, db);
+    require('./routes/getExpenses')(app, db);
   
     require('./routes/getProducts')(app, db);
     require('./routes/getProduct')(app, db);
@@ -103,6 +115,8 @@ function connectWithRetryMongo() {
     // app.use('/api/secure', passport.authenticate('jwt', {session: false}), secureRoute);
     // TODO / HELP / I GIVE UP! - I can not seem to nest secure routes anymore while keeping const "app.post" preserverd once I got the MongoDB var "db" passed down for a constant connection and getting everything faster. For now I will just be doing app.post secure routes done one by one untill I can just get them all done similir to how it was done on the lines above this comment
     require('./routes/secure/secure')(app, db);
+
+
   });
 }
 
@@ -125,14 +139,12 @@ function connectWithRetryMongoose() {
   .then(() => console.log('\x1b[32m%s\x1b[0m', '[Startup] Mongoose Ready'))
   .catch(err => {
     console.log('\x1b[31m%s\x1b[0m', `[Startup] Mongoose Failed - Retry attempt ${mongooseConnectionAttempts}/${mongooseConnectionAttemptsMax}`);
+    console.log(err.message)
 
     if (mongooseConnectionAttempts <= mongooseConnectionAttemptsMax) {
       mongooseConnectionAttempts++
       connectWithRetryMongoose()
     }
-
-    // setTimeout(connectWithRetryMongoose, 5000);
-    console.log(err.message)
   });
 }
 
@@ -140,7 +152,7 @@ connectWithRetryMongoose();
 
 const users = require("./routes/api/users");
 
-
+// Not sure wehat this did
 app.use( express.static(path.join(__dirname, '../build')) );
 
 app.use( bodyParser.json() );
@@ -158,6 +170,8 @@ app.use("/api/users", users);
 // app.listen(process.env.PORT || 8080);
 
 app.get('/', function (req, res) {
+  // TEMP
+  res.set({"Cache-Control": "no-store, no-cache"})
   res.sendFile(path.join(__dirname, './build', 'index.html'));
 });
 
@@ -185,15 +199,19 @@ io.on('connection', (socket) => {
 
   socket.on('recieveDonation', (data) => {
 
-    recieveDonation({
-      amount: 1000,
-      createdAt: Date.now(),
-      note: 'Fake Donation',
-      uid: Date.now(),
-      name: 'Test',
-      department: 'other',
-      file: 'https://en.wikipedia.org/wiki/Rickrolling'
-    });
+    // recieveDonation({
+    //   amount: 1000,
+    //   date: Math.floor(new Date().getTime()/1000.0),
+    //   note: 'Fake Donation',
+    //   uid: Date.now(),
+    //   name: 'Test',
+    //   department: 'other',
+    //   file: 'https://en.wikipedia.org/wiki/Rickrolling'
+    // });
+
+    recieveDonation(data)
+
+    // console.log(data);
 
   });
 
@@ -206,7 +224,7 @@ io.on('connection', (socket) => {
 
     recieveExpense({
       amount: 1000,
-      createdAt: Date.now(),
+      date: Math.floor(new Date().getTime()/1000.0),
       note: 'Fake Expense',
       uid: Date.now(),
       name: 'Sample',
