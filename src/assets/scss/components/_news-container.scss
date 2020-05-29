@@ -12,8 +12,150 @@
   }
 }
 
+.content-wrap.fixed {
+  .top-bar {
+    display: flex;
+    margin-bottom: 0.5rem;
+  }
+
+  .side-bar {
+    display: none;
+  }
+
+  .content {
+    margin-top: 1rem;
+  }
+}
+
 section.frontpage-section {
-  padding-top: 1rem;
+  // padding-top: 1rem;
+  display: flex;
+  // flex-direction: row;
+
+  .top-bar {
+    display: none;
+    flex-direction: row;
+
+    .link {
+      font-family: montserrat, sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      font-size: 1.1rem;
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 0.5rem;
+      padding: 0.5rem 0.5rem;
+      padding-left: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+
+      i {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 20px;
+      }
+
+      &.active {
+        background-color: $accent-color;
+
+        &:hover {
+          background-color: $accent-color!important;
+        }
+      }
+
+      &:hover {
+        background-color: rgba(128, 128, 128, 0.20);
+      }
+
+      &:active {
+        background-color: rgba(128, 128, 128, 0.40);
+      }
+    }
+  }
+
+  .side-bar {
+    background-color: white;
+    width: 300px;
+    padding: 1rem;
+    box-shadow: 1px 0px 5px #000;
+
+    @include media-breakpoint-down(md) {
+      display: none;
+    }
+
+    .content {
+      position: sticky;
+      top: 175px;
+      left: 0px;
+      padding-right: 1rem;
+    }
+
+    .title {
+      font-family: brandon-grotesque, sans-serif;
+      font-style: normal;
+      font-weight: 900;
+      font-size: 2rem;
+    }
+
+    .link {
+      font-family: montserrat, sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      font-size: 1.1rem;
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 0.5rem;
+      padding: 0.5rem 0.5rem;
+      padding-left: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+
+      i {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 20px;
+      }
+
+      &.active {
+        background-color: $accent-color;
+
+        &:hover {
+          background-color: $accent-color!important;
+        }
+      }
+
+      &:hover {
+        background-color: rgba(128, 128, 128, 0.20);
+      }
+
+      &:active {
+        background-color: rgba(128, 128, 128, 0.40);
+      }
+    }
+  }
+
+  .content {
+    margin-top: 1rem;
+    width: 100%;
+    margin-left: 1rem;
+    margin-right: 1rem;
+
+    .search {
+      margin-bottom: 1rem;
+
+      @include media-breakpoint-down(md) {
+        display: none;
+      }
+
+      .background {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+      }
+    }
+  }
 
   .issue-development, .stories, .myths {
 

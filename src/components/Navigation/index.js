@@ -70,7 +70,7 @@ function Menu(props) {
   }
 
   return (
-    <div className={'menu-wrap' + (props.site?.sideMenuFixed ? ' fixed' : '') + (props.site?.colorModeDark ? ' dark-mode' : '')}>
+    <div className={'menu-wrap noselect' + (props.site?.sideMenuFixed ? ' fixed' : '') + (props.site?.colorModeDark ? ' dark-mode' : '')}>
         <section onClick={() => {setMenuOpen(false)}} className={'side-menu-overlay' + (menuOpen || pinOpen ? " show" : "")}></section>
 
         <section className="menu-spacer"></section>
@@ -321,7 +321,8 @@ function Menu(props) {
           </div>
 
           <div className={"tab-content " + (partySectionOpen ? "" : "")}>
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PARTY}><p className="subheading-font"><i className="fas fa-users"></i>Information</p></Link>
+            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PARTY}><p className="subheading-font"><i className="fas fa-users"></i>Info</p></Link>
+            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.POLICY}><p className="subheading-font"><i class="fas fa-file-contract"></i>Policy</p></Link>
           </div>
           
 

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import * as ROUTES from '../../../constants/routes'
 
 const Page = () => (
-  <div className="not-found-page">
+  <div className="press-page">
     <div style={{height: '100vh', marginTop: '-50px'}} className="container">
       <div className="row h-100 justify-content-center">
         <div className="col-sm-6 my-auto">

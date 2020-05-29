@@ -115,7 +115,6 @@ class Donations extends Component {
         ...INITIAL_CURRENT,
         _id: moment().unix(),
         date: moment().unix(),
-        amount: parseInt(this.state.amount)
       }
     })
 
@@ -256,39 +255,41 @@ class Donations extends Component {
 
           <div className="col-12 col-md-8">
 
-            <table className="table table-sm table-bordered bg-white mt-3">
-              <thead className="thead-dark">
-                <tr>
-                  <th scope="col">Date</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Amount</th>
-                  <th scope="col">Message</th>
-                  <th scope="col">Created By</th>
-                  <th scope="col">Was Matched</th>
-                  <th scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-
-                {this.state.donations.map(donation => (
-
+            <div className="table-responsive">
+              <table className="table table-sm table-bordered bg-white mt-3">
+                <thead className="thead-dark">
                   <tr>
-                    <th scope="row">{moment.unix(donation.date).format('LL')}</th>
-                    <td>{donation.name}</td>
-                    <td>${(donation.amount / 100).toFixed(2)}</td>
-                    <td>{donation.message}</td>
-                    <td>{donation.createdBy}</td>
-                    <td>{donation.wasMatched ? 'True' : 'False'}</td>
-                    <td>
-                      <div onClick={() => this.removeDonation(donation._id)} className="badge badge-danger">Delete</div>
-                      <div onClick={() => this.editDonation(donation._id)} className="badge badge-dark ml-1">Edit</div>
-                    </td>
+                    <th scope="col">Date</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Message</th>
+                    <th scope="col">Created By</th>
+                    <th scope="col">Was Matched</th>
+                    <th scope="col">Action</th>
                   </tr>
-                  
-                ))}
+                </thead>
+                <tbody>
 
-              </tbody>
-            </table>
+                  {this.state.donations.map(donation => (
+
+                    <tr>
+                      <th scope="row">{moment.unix(donation.date).format('LL')}</th>
+                      <td>{donation.name}</td>
+                      <td>${(donation.amount / 100).toFixed(2)}</td>
+                      <td>{donation.message}</td>
+                      <td>{donation.createdBy}</td>
+                      <td>{donation.wasMatched ? 'True' : 'False'}</td>
+                      <td>
+                        <div onClick={() => this.removeDonation(donation._id)} className="badge badge-danger">Delete</div>
+                        <div onClick={() => this.editDonation(donation._id)} className="badge badge-dark ml-1">Edit</div>
+                      </td>
+                    </tr>
+                    
+                  ))}
+
+                </tbody>
+              </table>
+            </div>
 
           </div>
         </div>

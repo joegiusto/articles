@@ -47,6 +47,7 @@ export const MANAGE_DETAILS = '/news/manage/:id';
 
 // Party
 export const PARTY ='/party'
+export const POLICY ='/party/policy'
 export const TOWN_HALL ='/party/town-hall'
 export const PROPOSALS ='/party/proposals'
 

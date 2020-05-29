@@ -19,59 +19,61 @@ const Issues = (props) => (
           <GzyCard
           issue={issue}
           podcast={true}
-          podcastDay="Monday"
+          podcastDay=""
           podcastLink=""
           topText="Rising Cost"
           // midText={issue?.news_title}
           bottomText="The Unspoken Issues"
-          backgroundImage="https://www.hood.edu/sites/default/files/styles/width_720/public/content/home/hero-image/D8A_2404%20copy.jpg?itok=ZZUFQMvz"
+          backgroundImage={issue.hero_url}
           />
         )))
         : 
         <div>Issues Loading...</div>
         }
   
-        <GzyCard
-          podcast={true}
-          podcastDay="Monday"
-          podcastLink=""
-          topText="Rising Cost"
-          midText="COLLEGE DEBT"
-          bottomText="The Unspoken Issues"
-          backgroundImage="https://www.hood.edu/sites/default/files/styles/width_720/public/content/home/hero-image/D8A_2404%20copy.jpg?itok=ZZUFQMvz"
-        />
-  
-        <GzyCard
-          podcast={true}
-          podcastDay="Wednesday"
-          topText="Politics and tesla"
-          midText="DOOMED TO FAIL"
-          bottomText="THE GOVERMENT AND TESLA"
-          backgroundImage="https://mondrian.mashable.com/uploads%252Fcard%252Fimage%252F975189%252F92d8e786-429d-4abf-92d2-1a1fd52d75d6.png%252F950x534__filters%253Aquality%252880%2529.png?signature=KQxUEq6LbhXAcmb_-cc6Ede63lY=&source=https%3A%2F%2Fblueprint-api-production.s3.amazonaws.com"
-        />
-  
-        <GzyCard
-          podcast={true}
-          podcastDay="Friday"
-          topText="plain english"
-          midText="THE PAY GAP"
-          bottomText="whats really going on"
-          backgroundImage="https://au.res.keymedia.com/files/image/Human%20Capital/glass%20ceiling.jpg"
-        />
-  
-        <GzyCard 
-          topText="a misdiagnosed problem"
-          midText="GUN LAWS"
-          bottomText="what we are doing wrong"
-          backgroundImage="https://ikengachronicles.com/wp-content/uploads/2017/09/GUNS-26-2-17-890x395.jpg"
-        />
-  
-        <GzyCard 
-          topText="Breaking the silence"
-          midText="Swiss Banks"
-          bottomText="Why America is poor"
-          backgroundImage="https://www.swissinfo.ch/image/8422586/3x2/640/426/abf96c3bf391199fae817dc21f66133a/qh/71938066-8422592.jpg"
-        />
+        <div className="d-none">
+          <GzyCard
+            podcast={true}
+            podcastDay="Monday"
+            podcastLink=""
+            topText="Rising Cost"
+            midText="COLLEGE DEBT"
+            bottomText="The Unspoken Issues"
+            backgroundImage="https://www.hood.edu/sites/default/files/styles/width_720/public/content/home/hero-image/D8A_2404%20copy.jpg?itok=ZZUFQMvz"
+          />
+    
+          <GzyCard
+            podcast={true}
+            podcastDay="Wednesday"
+            topText="Politics and tesla"
+            midText="DOOMED TO FAIL"
+            bottomText="THE GOVERMENT AND TESLA"
+            backgroundImage="https://mondrian.mashable.com/uploads%252Fcard%252Fimage%252F975189%252F92d8e786-429d-4abf-92d2-1a1fd52d75d6.png%252F950x534__filters%253Aquality%252880%2529.png?signature=KQxUEq6LbhXAcmb_-cc6Ede63lY=&source=https%3A%2F%2Fblueprint-api-production.s3.amazonaws.com"
+          />
+    
+          <GzyCard
+            podcast={true}
+            podcastDay="Friday"
+            topText="plain english"
+            midText="THE PAY GAP"
+            bottomText="whats really going on"
+            backgroundImage="https://au.res.keymedia.com/files/image/Human%20Capital/glass%20ceiling.jpg"
+          />
+    
+          <GzyCard 
+            topText="a misdiagnosed problem"
+            midText="GUN LAWS"
+            bottomText="what we are doing wrong"
+            backgroundImage="https://ikengachronicles.com/wp-content/uploads/2017/09/GUNS-26-2-17-890x395.jpg"
+          />
+    
+          <GzyCard 
+            topText="Breaking the silence"
+            midText="Swiss Banks"
+            bottomText="Why America is poor"
+            backgroundImage="https://www.swissinfo.ch/image/8422586/3x2/640/426/abf96c3bf391199fae817dc21f66133a/qh/71938066-8422592.jpg"
+          />
+        </div>
   
         {/* <GzyCard 
           topText="G-Eazy FT. Skizzy Mars & KYLE"

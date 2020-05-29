@@ -179,7 +179,7 @@ class Reports extends Component {
       var total = 0;
 
       for (var i=0; i<this.state.firebaseData.revenue.donations.length; i++) {
-        total += this.state.firebaseData.revenue.donations[i].amount;
+        total += parseInt(this.state.firebaseData.revenue.donations[i].amount);
       }
 
       this.setState({totals: {
@@ -882,7 +882,7 @@ const StyledDonationList = (props) => (
           </td>
 
           <td colSpan="1" className="border-right-0 text-right table-articles-head">Total:</td>
-          <td colSpan="1" className="border-left-0 table-articles-head">${(props.donationsFirebase.reduce((a, b) => a + (b['amount'] || 0), 0) / 100).toFixed(2)}</td>
+          <td colSpan="1" className="border-left-0 table-articles-head">${(props.donationsFirebase.reduce((a, b) => a + (parseInt(b['amount'] || 0)), 0) / 100).toFixed(2)}</td>
         </tr>
       </tbody>
     </table>
