@@ -8,19 +8,20 @@ function Myths(props) {
 
   return (
  <section className="myths-section">
-    <div className='container'>
+    {/* <div className='container'> */}
   
-      <div className="myths-head mt-5">
+      <div className="myths-head ">
         <h1 className="title">Myths</h1>
         <p className="body">You ever hear someone say windmills cause cancer? Maybe, you had someone tell you that electric cars actually have a larger carbon footprint then gasoline and diesel vehicles. Explore the many topics of common confusion here.</p>
       </div>
   
       {/* <p>Myths - example - See reddit saved post, "<a href="https://www.reddit.com/r/technology/comments/bj2h83/enough_with_the_actually_electric_cars_pollute/">Actually Electric Cars Pollute More</a>" Take the top common myths in this country at the moment and debunk them. Everything from electric cars to global warming and just explain them in a deteiled fact based/source-cited way that eveyone can easily reference and understand.</p> */}
   
-      <div className="row">
+      <div className="row mt-4">
       
         <div className="col-12">
-          <div className="filter-box">
+
+          <div className="filter-box d-none">
             <div className="input-group">
               <div className="input-group-prepend">
                 <span className="input-group-text" id="basic-addon1"><i className="fas fa-search"></i></span>
@@ -72,7 +73,7 @@ function Myths(props) {
         <p className="text-muted">This is not actually a thing yet but something like this would be cool, partnering with other sites to drive views to them and to encourage people to keep asing questions.</p>
       </div>
   
-    </div>
+    {/* </div> */}
  </section>
   );
 }

@@ -84,7 +84,7 @@ function ScrollToTop() {
   const parts = pathname.split('/');
 
   useEffect(() => {
-    if (parts[1] === 'admin') {
+    if (parts[1] === 'admin' || 'news') {
       // Was a page where router changes within like admin lookups
     } else {
       window.scrollTo(0, 0);
@@ -180,11 +180,14 @@ class App extends Component {
         
               <Route exact path={ROUTES.NEWS} component={NewsPage} />
   
-              <Route path={ROUTES.STORIES} component={StoriesPage} exact={true}/>
+              {/* <Route path={ROUTES.STORIES} component={StoriesPage} exact={true}/> */}
+              <Route path={ROUTES.STORIES} component={NewsPage} exact={true}/>
               <Route path={ROUTES.STORY} component={StoryPage}/>
-              <Route path={ROUTES.ISSUES} component={IssuesPage} exact={true}/>
+              {/* <Route path={ROUTES.ISSUES} component={IssuesPage} exact={true}/> */}
+              <Route path={ROUTES.ISSUES} component={NewsPage} exact={true}/>
               <Route path={ROUTES.ISSUE} component={IssuePage}/>
-              <Route path={ROUTES.MYTHS} component={MythsPage} exact={true}/>
+              {/* <Route path={ROUTES.MYTHS} component={MythsPage} exact={true}/> */}
+              <Route path={ROUTES.MYTHS} component={NewsPage} exact={true}/>
               <Route path={ROUTES.MYTH} component={MythPage}/>
               
               <Route exact path={ROUTES.MANAGE} component={NewsManagePage} />

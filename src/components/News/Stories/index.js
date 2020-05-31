@@ -8,19 +8,21 @@ function Myths(props) {
 
   return (
  <section className="myths-section">
-    <div className='container'>
+    {/* <div className='container'> */}
   
-      <div className="myths-head mt-5">
+      <div className="myths-head">
         <h1 className="title">Stories</h1>
         <p className="body">Stories from around the country.</p>
       </div>
   
       {/* <p>Myths - example - See reddit saved post, "<a href="https://www.reddit.com/r/technology/comments/bj2h83/enough_with_the_actually_electric_cars_pollute/">Actually Electric Cars Pollute More</a>" Take the top common myths in this country at the moment and debunk them. Everything from electric cars to global warming and just explain them in a deteiled fact based/source-cited way that eveyone can easily reference and understand.</p> */}
   
-      <div className="row">
+      <div className="row mt-4">
       
         <div className="col-12">
-          <div className="filter-box">
+
+          <div className="filter-box d-none">
+
             <div className="input-group">
               <div className="input-group-prepend">
                 <span className="input-group-text" id="basic-addon1"><i className="fas fa-search"></i></span>
@@ -60,19 +62,19 @@ function Myths(props) {
           <StoryCard key={i} index={i} length={props.stories.stories.length} myth={myth}/>
         )))
         : 
-        <div>Myths Loading</div>
+        <div>Myths Loading...</div>
         }
   
       </div>
   
-      <div className="myths-footer mb-3 d-none">
+      <div className="myths-footer mb-2 d-none">
         <h1 className="title">Liked that?</h1>
         <p className="body">Ask more questions with our partner <a href="https://www.answers.com">Answers.com</a></p>
         <input type="text"/>
         <p className="text-muted">This is not actually a thing yet but something like this would be cool, partnering with other sites to drive views to them and to encourage people to keep asing questions.</p>
       </div>
   
-    </div>
+    {/* </div> */}
  </section>
   );
 }

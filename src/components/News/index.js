@@ -12,12 +12,16 @@ import IssueDevelopmentCard from './IssueDevelopmentCard'
 import StoriesDisplay from './StoriesDisplay'
 import MythsDisplay from './MythsDisplay'
 
+import Stories from './Stories/index';
+import Issues from './Issues/index';
+import Myths from './Myths/index';
+
 import statesImage from '../../assets/img/states.jpg'
 
 import background from '../../assets/img/card-1.png'
 
 import * as ROUTES from '../../constants/routes';
-import { Link } from 'react-router-dom';
+import { Link, Switch, Route } from 'react-router-dom';
 
 function FlintCounter() {
   // Declare a new state variable, which we'll call "count"
@@ -29,6 +33,68 @@ function FlintCounter() {
       {/* <div></div> */}
     </div>
   );
+}
+
+function SearchHead(props) {
+  return(
+    <div className={"search-head"}>
+      <img src={background} alt="" className="background"/>
+      <h1 className="title">Search</h1>
+      <input type="text" className="form-control"/>
+      <p className="body">Easily access content across all of our news content and publications.</p>
+
+      <div className="tags">
+        <div className="type">Trending</div>
+        <div className="badge badge-articles">Coronavirus</div>
+        <div className="badge badge-articles">United Nations</div>
+        <div className="badge badge-articles">2020 Elections</div>
+        <div className="badge badge-articles">Global Warming</div>
+        <div className="badge badge-articles">Flint Michigan</div>
+      </div>
+    </div>
+  )
+}
+
+function JustFrontpage(props) {
+  return (
+    <>
+      <div className="issue-development">
+        
+        <div className="d-flex justify-content-between">
+          <span className="title heading-font">Issue Developments</span>
+          {/* <span>Showing 4 out of {this.props.issues.issues.length}</span> */}
+        </div>
+
+        <div className="issue-development-cards">
+          {props.issues.issues.map((issue) => (
+            <IssueDevelopmentCard issue={issue}/>
+          ))}
+
+          <IssueDevelopmentCard issue={{news_title: "Subscribe to More"}}/>
+          <IssueDevelopmentCard issue={{news_title: "Manage Subscriptions"}}/>
+        </div>
+
+        {/* <Slider {...settings}>
+          {this.props.issues.issues.map((issue) => (
+            <IssueDevelopmentCard issue={issue}/>
+          ))}
+        </Slider> */}
+
+        {/* <div className="manage-subscriptions small">Manage Issue Subscriptions</div> */}
+
+      </div>
+
+      <div className="stories">
+        <span className="title heading-font">News Stories</span>
+        <StoriesDisplay stories={props.stories.stories}/>
+      </div>
+
+      <div className="myths">
+        <span className="title heading-font">Myths Collection</span>
+        <MythsDisplay myths={props.myths.myths}/>
+      </div>
+    </>
+  )
 }
 
 class Frontpage extends Component {
@@ -61,29 +127,53 @@ class Frontpage extends Component {
 
           <div className="content">
 
-            <img src={statesImage} className="head-image" alt=""/>
+            <div className="states-heatmap">
+              <img src={statesImage} className="head-image" alt=""/>
+              <div className="live-dots">
+                <div className="dot"></div>
+                <div className="dot"></div>
+                <div className="dot"></div>
+              </div>
+            </div>
 
             <h5 className="title">Discover</h5>
   
-            <div className="link active">
-              <i class="fas fa-newspaper"></i>
-              <div className="text">Frontpage</div>
-            </div>
-  
-            <div className="link">
-              <i class="fas fa-bullhorn"></i>
-              <div className="text">Stories</div>
-            </div>
-  
-            <div className="link">
-              <i class="fas fa-balance-scale"></i>
-              <div className="text">Issues</div>
-            </div>
-  
-            <div className="link">
-              <i class="fas fa-ghost"></i>
-              <div className="text">Myths</div>
-            </div>
+            <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS}>
+              <div className={"link " + (this.props.location.pathname === "/news" ? 'active' : null)}>
+                <i class="fas fa-newspaper"></i>
+                <div className="text">Frontpage</div>
+              </div>
+            </Link>
+
+            <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.STORIES}>
+              <div className={"link " + (this.props.location.pathname === "/news/stories" ? 'active' : null)}>
+                <i class="fas fa-bullhorn"></i>
+                <div className="text">Stories</div>
+              </div>
+            </Link>
+
+            <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.ISSUES}>
+              <div className={"link " + (this.props.location.pathname === "/news/issues" ? 'active' : null)}>
+                <i class="fas fa-balance-scale"></i>
+                <div className="text">Issues</div>
+              </div>
+            </Link>
+            
+            <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.MYTHS}>
+              <div className={"link " + (this.props.location.pathname === "/news/myths" ? 'active' : null)}>
+                <i class="fas fa-ghost"></i>
+                <div className="text">Myths</div>
+              </div>
+            </Link>
+
+            <h5 className="title mt-3">Feature</h5>
+
+            <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS}>
+              <div className={"link " + (this.props.location.pathname === "/news/coronavirus" ? 'active' : null)}>
+                <i class="fas fa-lungs-virus"></i>
+                <div className="text">Coronavirus</div>
+              </div>
+            </Link>
 
           </div>
 
@@ -116,66 +206,25 @@ class Frontpage extends Component {
 
             </div>
 
-            <div className="frontpage-head">
-              <img src={background} alt="" className="background"/>
-              <h1 className="title">Search</h1>
-              <input type="text" className="form-control"/>
-              <p className="body">Easily access content across all of our news content and publications.</p>
-
-              <div className="tags">
-                <div className="type">Trending</div>
-                <div className="badge badge-articles">Coronavirus</div>
-                <div className="badge badge-articles">United Nations</div>
-                <div className="badge badge-articles">2020 Elections</div>
-                <div className="badge badge-articles">Global Warming</div>
-                <div className="badge badge-articles">Flint Michigan</div>
-              </div>
-            </div>
-
-            {/* <div className="search">
-              <img src={background} alt="" className="background"/>
-            </div> */}
+            {this.props.location.pathname === "/news" ?
+            <SearchHead></SearchHead>
+            :
+            null
+            }
+            
   
-            <div className="row mb-5 justify-content-between">
+            <div className="row mb-4 justify-content-between">
   
               {/* Left Side */}
               <div className="col-12 col-md-8 pr-md-0">
-  
-                <div className="issue-development">
-  
-                  <div className="d-flex justify-content-between">
-                    <span className="title heading-font">Issue Developments</span>
-                    {/* <span>Showing 4 out of {this.props.issues.issues.length}</span> */}
-                  </div>
-  
-                  <div className="issue-development-cards">
-                    {this.props.issues.issues.map((issue) => (
-                      <IssueDevelopmentCard issue={issue}/>
-                    ))}
-  
-                    <IssueDevelopmentCard issue={{news_title: "Subscribe to More"}}/>
-                    <IssueDevelopmentCard issue={{news_title: "Manage Subscriptions"}}/>
-                  </div>
-  
-                  {/* <Slider {...settings}>
-                    {this.props.issues.issues.map((issue) => (
-                      <IssueDevelopmentCard issue={issue}/>
-                    ))}
-                  </Slider> */}
-  
-                  {/* <div className="manage-subscriptions small">Manage Issue Subscriptions</div> */}
-  
-                </div>
-  
-                <div className="stories">
-                  <span className="title heading-font">News Stories</span>
-                  <StoriesDisplay stories={this.props.stories.stories}/>
-                </div>
-  
-                <div className="myths">
-                  <span className="title heading-font">Myths Collection</span>
-                  <MythsDisplay myths={this.props.myths.myths}/>
-                </div>
+
+                <Switch>
+                  {/* <Route exact path={ROUTES.NEWS} render={() => <h1>Front</h1>}/> */}
+                  <Route exact path={ROUTES.NEWS} render={() => <JustFrontpage stories={this.props.stories} issues={this.props.issues} myths={this.props.myths}></JustFrontpage>}/>
+                  <Route exact path={ROUTES.STORIES} render={() => <Stories></Stories>}/>
+                  <Route exact path={ROUTES.ISSUES} render={() => <Issues></Issues> }/>
+                  <Route exact path={ROUTES.MYTHS} render={() => <Myths></Myths> }/>
+                </Switch>
   
               </div>
   
@@ -183,6 +232,12 @@ class Frontpage extends Component {
               <div className="col-12 col-md-4 pl-md-0">
   
                 <div className="side-panel">
+
+                  {this.props.location.pathname === "/news" ?
+                  null
+                  :
+                  <SearchHead></SearchHead>
+                  }
   
                   <div className="the-recap">
     

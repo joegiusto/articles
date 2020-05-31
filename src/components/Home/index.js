@@ -295,15 +295,16 @@ class HomePageFour extends Component {
 
                   <div className="icons">
                     <div className="head-icon">
-                      <i className="fas fa-envelope-open-text"></i>
+                      <i class="fas fa-toolbox"></i>
                     </div>
                     <div className="sub-icons">
-                      <i className="fas fa-at mr-0"></i>
+                      <i class="fas fa-tools"></i>
+                      <i class="fas fa-cog mr-0"></i>
                     </div>
                   </div>
 
                   <div className="title">Settings</div>
-                  <div className="text">Manage your profile and data.</div>
+                  <div className="text">Manage your account and data.</div>
 
                 </div>
               </Link>
@@ -318,12 +319,21 @@ class HomePageFour extends Component {
                 <div className="tile-update"></div>
               </div>
 
-              {/* <Link to={ROUTES.HOME_OLD}> */}
-                <div style={{height: 'auto', display: 'flex', flexDirection: 'row', padding: '3rem 0'}} className="tile-content old-home">
+
+              <div style={{height: 'auto', display: 'flex', flexDirection: 'column', padding: '3rem 0'}} className="tile-content old-home">
+
+                <div>
                   <Link to={ROUTES.LANDING}><button className="btn btn-articles-light my-2">Landing Page</button></Link>
                   <Link to={ROUTES.HOME_OLD}><button className="btn btn-articles-light my-2 ml-2">Old Home Page</button></Link>
                 </div>
-              {/* </Link> */}
+
+                {/* <div className="introduce-badge">
+                  <span className="brand">Articles</span><span className="product"> <span className="seperator">-</span> Themes</span>
+                </div>
+
+                <input type="text" placeholder="#000-000 Theme code" className="form-control"/> */}
+
+              </div>
 
             </div>
             :

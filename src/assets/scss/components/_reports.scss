@@ -1,7 +1,9 @@
+// @import 'bootstrap/scss/bootstrap';
+
 .content-wrap.fixed {
 
   .container {
-    // max-width: calc(95vw - 300px)!important;
+    max-width: 100%!important;
   }
 }
 
