@@ -354,7 +354,7 @@ class Reports extends Component {
       case 'payroll':
         return(<PayrollTable/>)
       case 'revenue':
-        return(<RevenueTable/>)
+        return(<DonationTable firebaseData={this.state.firebaseData} fetch="expenses"/>)
       default:
         // Useless because tableSelector state always starts at something
     };
@@ -495,8 +495,8 @@ class Reports extends Component {
             <div className="search">
               
               <div className="input-wrap reports-shadow mt-3 dual-header">
-                <div className=""><i className="fas fa-search-dollar mx-2"></i></div>
-                <input className="search-input pl-2" type="text" placeholder="Search service is currently offline"/>
+                <div><i className="fas fa-search-dollar d-flex align-items-center fa-2x h-100 "></i></div>
+                <input className="search-input d-flex align-content-center pl-2" type="text" placeholder="Search service is currently offline"/>
               </div>
 
               {/* <div className="mt-3 reports-shadow date-input">
@@ -516,7 +516,7 @@ class Reports extends Component {
                   {this.tableSelectorChoice('donations')}
                   {this.tableSelectorChoice('clothing')}
                   {this.tableSelectorChoice('payroll')}
-                  <div className="d-inline-block main-seperation"><div className="wall"></div></div>
+                  {/* <div className="d-inline-block main-seperation"><div className="wall"></div></div> */}
                   {this.tableSelectorChoice('revenue')}
                   {this.tableSelectorChoice('expenses')}
                 </div>

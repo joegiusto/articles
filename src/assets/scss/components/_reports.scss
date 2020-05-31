@@ -1,9 +1,17 @@
+.content-wrap.fixed {
+
+  .container {
+    // max-width: calc(95vw - 300px)!important;
+  }
+}
+
 .fixed-componsation-50 {
   height: 50px;
 }
 
 .search {
   display: flex;
+
   .input-wrap {
     flex-grow: 1;
     padding: .6rem;
@@ -11,11 +19,12 @@
     background-color: #ffffff;
     border-radius: 3px;
   }
+
   .search-input {
     flex-grow: 1;
-    margin-left: 1rem;
     border-radius: 5px;
   }
+
   .date-input {
     border-top: 5px solid $accent-color;
     background-color: white;
@@ -260,16 +269,21 @@
 
     .main {
       cursor: pointer;
+      display: flex;
       overflow-x: scroll;
       padding: .6rem .6rem;
       border: solid 1px #000;
       background-color: $base-color;
       border-radius: 10px;
+
+
+
       .main-seperation {
         cursor: default;
         margin-right: .3rem;
         position: relative;
         width: 15px;
+
         .wall {
           position: absolute;
           width: 2.5px;
@@ -280,10 +294,23 @@
           background-color: rgb(77, 77, 77);
         }
       }
-      .selection:last-child {
-        margin-right: 0rem;
+
+      // Word to https://blog.alexandergottlieb.com/overflow-scroll-and-the-right-padding-problem-a-css-only-solution-6d442915b3f4
+      .selection:last-child:after {
+        content: "";
+        display: block;
+        position: absolute;
+        right: -0.5rem;
+        width: 0.5rem;
+        height: 1px;
       }
+
+      .selection:last-child {
+        margin-right: 2rem;
+      }
+
       .selection {
+        position: relative;
         text-transform: capitalize;
         // border: solid 2px black;
         border-radius: 5px;

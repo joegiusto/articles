@@ -99,14 +99,40 @@ class App extends Component {
     super(props);
 
     this.state = {
-      test: 'test'
+      test: 'test',
+      width: 0,
+      sideMenuFixedMinWidth: 992,
+      canBeFixed: true
     }
+
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
 
   componentDidMount() {
 
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
+
     if (this.props.auth.isAuthenticated) {
       this.props.setUserDetails(this.props.auth.user.id);
+    } 
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+  
+  updateWindowDimensions() {
+    this.setState({ width: window.innerWidth });
+
+    if (window.innerWidth < this.state.sideMenuFixedMinWidth) {
+      this.setState({
+        canBeFixed: false
+      })
+    } else {
+      this.setState({
+        canBeFixed: true
+      })
     }
     
   }
@@ -117,11 +143,11 @@ class App extends Component {
 
         <ScrollToTop />
 
-        <div className={'site-wrap ' + (this.props.site?.sideMenuFixed ? 'fixed' : '')}>
+        <div className={'site-wrap ' + (this.props.site?.sideMenuFixed && this.state.canBeFixed ? 'fixed' : '')}>
 
           <Navigation />
 
-          <div className={'content-wrap' + (this.props.site?.sideMenuFixed ? ' fixed' : '') + (this.props.site?.colorModeDark ? ' dark-mode' : '')}>
+          <div className={'content-wrap' + (this.props.site?.sideMenuFixed && this.state.canBeFixed ? ' fixed' : '') + (this.props.site?.colorModeDark ? ' dark-mode' : '')}>
 
             <Switch>
               <Route exact path={ROUTES.LANDING} component={LandingPage} />

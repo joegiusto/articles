@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
+import axios from 'axios';
 
 import { connect } from "react-redux";
 
@@ -50,9 +51,20 @@ class SignInFormBase extends Component {
   }
 
   componentDidMount() {
+    const self = this
+
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/subscribe");
     }
+
+    axios.get('/ping')
+    .then(function (response) {
+      console.log("The server is up!");
+      self.setState({serverUp: true});
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -94,6 +106,12 @@ class SignInFormBase extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
+
+        {this.state.serverUp ? 
+        null
+        :
+        <div className="alert alert-danger mt-3">Server Down! Signing in will not work in mean time.</div>
+        }
 
         <h1>Sign In</h1>
 

@@ -75,12 +75,12 @@ const Issues = (props) => (
           />
         </div>
   
-        {/* <GzyCard 
+        <GzyCard 
           topText="G-Eazy FT. Skizzy Mars & KYLE"
           midText="MONICA LEWINSKY"
           bottomText="PROD. BY TY FIFE & CHRISTOPH ANDERSON"
           backgroundImage="http://4.bp.blogspot.com/-Wjz6L4LYzGQ/T2TnAoHfbtI/AAAAAAAAgIo/x8zDn6SzBwI/s1600/north%2BSt%2BP.jpg"
-        /> */}
+        />
   
         <div className="col-12 col-md-6 mt-5 d-none">
           <div className="issue-item shadow-sm">
@@ -118,7 +118,7 @@ function GzyCard (props) {
           <div className="g-card-text-card">
             <div className="top-text"></div>
             <div className="mid-text">{issue?.news_title}</div>
-            <div className="bottom-text"></div>
+            <div className="bottom-text">{issue?.bottomText}</div>
           </div>
         </div>
       </Link>

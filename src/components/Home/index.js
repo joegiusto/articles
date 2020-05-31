@@ -138,7 +138,7 @@ class HomePageFour extends Component {
                     </div>
                   </div>
 
-                  <div className="title">$0.00 Raised This Month</div>
+                  <div className="title">$100.00 Raised This Month</div>
                   <div className="text">For more inforamtion about our finances check out our reports.</div>
 
                   <div className="tile-extra">
@@ -172,11 +172,11 @@ class HomePageFour extends Component {
                   </div>
 
                   <div className="title">
-                    0 Entries This Period
+                    5 Entries This Period
                   </div>
 
                   <div className="text">
-                    Submit a design for a chance to win <b>$$$</b> and get your product made for you.
+                    Submit a design for a chance to win some money and get your product made!
                   </div>
 
                   <div className="tile-extra">
@@ -195,17 +195,24 @@ class HomePageFour extends Component {
                 <div className="tile-update"></div>
               </div>
 
-              <div className="tile-content instagram">
-                <div className="photo">
-                  <img src="https://www.nationalgeographic.com/content/dam/archaeologyandhistory/2020/02/washington-dc-statehood-explainer/washington-dc-aerial-2548942.adapt.1900.1.jpg" alt=""/>
-                </div>
-                <div className="icon">
-                  <i className="fab fa-instagram mr-0" aria-hidden="true"></i>
+              <a href="https://www.instagram.com/articles.media/" target="_blank" rel="noopener noreferrer">
+                <div className="tile-content instagram">
+
+                  <div className="photo">
+                    <i className="icon fab fa-instagram mr-0" aria-hidden="true"></i>
+                    <img src="https://www.nationalgeographic.com/content/dam/archaeologyandhistory/2020/02/washington-dc-statehood-explainer/washington-dc-aerial-2548942.adapt.1900.1.jpg" alt=""/>
+                  </div>
+
                   <div className="text">
                     May 20th 2020
                   </div>
+
+                  <div className="tile-extra">
+                    Opens instagram.com
+                  </div>
+
                 </div>
-              </div>
+              </a>
 
             </div>
 
@@ -228,7 +235,7 @@ class HomePageFour extends Component {
                 </div>
 
                 <div className="title">No Changes</div>
-                <div className="text">Whenever we make changes to how we use your data or other criticle changes to the site, we will alert you here.</div>
+                <div className="text">Whenever we make changes, we will alert you here.</div>
 
                 <div className="tile-extra">
                   
@@ -260,9 +267,12 @@ class HomePageFour extends Component {
                 <div className="title">Weekly Updates</div>
                 <div className="text">Get sent an mail about everything going on with Articles. Sent out every Sunday.</div>
 
-                <div className="input-toggle">
-                  <input id="true" name="newsletter" type="radio"/>
-                  <input id="false" name="newsletter" type="radio"/>
+                <div className="radio-switch-toggle noselect">
+                  <input id="false" value="false" name="newsletter" type="radio" checked/>
+                  <label for="false">No</label>
+
+                  <input id="true" value="true" name="newsletter" type="radio"/>
+                  <label for="true">Yes</label>
                 </div>
 
                 <div className="tile-extra">
@@ -276,18 +286,49 @@ class HomePageFour extends Component {
             <div className="tile">
 
               <div className="tile-header">
-                <div className="tile-title">Temporarily</div>
+                <div className="tile-title">Account</div>
+                <div className="tile-update"></div>
+              </div>
+
+              <Link to={ROUTES.SUBSCRIBE}>
+                <div className="tile-content">
+
+                  <div className="icons">
+                    <div className="head-icon">
+                      <i className="fas fa-envelope-open-text"></i>
+                    </div>
+                    <div className="sub-icons">
+                      <i className="fas fa-at mr-0"></i>
+                    </div>
+                  </div>
+
+                  <div className="title">Settings</div>
+                  <div className="text">Manage your profile and data.</div>
+
+                </div>
+              </Link>
+
+            </div>
+
+            {this.props.user?.roles.isAdmin === "true" ?
+            <div className="tile" style={{height: 'auto'}}>
+
+              <div className="tile-header">
+                <div className="tile-title">Temporarily Admin Only</div>
                 <div className="tile-update"></div>
               </div>
 
               {/* <Link to={ROUTES.HOME_OLD}> */}
-                <div className="tile-content old-home">
-                  <Link to={ROUTES.LANDING}><button className="btn btn-articles-light">Landing</button></Link>
-                  <Link to={ROUTES.HOME_OLD}><button className="btn btn-articles-light">Old Home</button></Link>
+                <div style={{height: 'auto', display: 'flex', flexDirection: 'row', padding: '3rem 0'}} className="tile-content old-home">
+                  <Link to={ROUTES.LANDING}><button className="btn btn-articles-light my-2">Landing Page</button></Link>
+                  <Link to={ROUTES.HOME_OLD}><button className="btn btn-articles-light my-2 ml-2">Old Home Page</button></Link>
                 </div>
               {/* </Link> */}
 
             </div>
+            :
+            null
+            }
 
           </div>
 
