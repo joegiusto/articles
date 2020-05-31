@@ -343,7 +343,7 @@ function Menu(props) {
               <hr/>
 
               {/* Admin */}
-              {props.user?.roles?.isAdmin ?
+              {props.user?.roles?.isAdmin = "true" ?
               <>
               <p className="heading-font no-link"><b>Admin &nbsp;</b><span className="badge badge-warning">Role</span></p>
               <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ADMIN_USERS}><p className="subheading-font"><i className="fas fa-toolbox"></i>Admin Portal</p></Link>
@@ -358,7 +358,7 @@ function Menu(props) {
               }
 
               {/* Playground */}
-              {props.user?.roles?.isDev ?
+              {props.user?.roles?.isDev = "true" ?
               <>
                 <p className="heading-font no-link"><b>Dev &nbsp;</b><span className="badge badge-warning">Role</span></p>
                 <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PLAYGROUND}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Playground</p></Link>
