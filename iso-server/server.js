@@ -115,7 +115,9 @@ function connectWithRetryMongo() {
     // TODO / HELP / I GIVE UP! - I can not seem to nest secure routes anymore while keeping const "app.post" preserverd once I got the MongoDB var "db" passed down for a constant connection and getting everything faster. For now I will just be doing app.post secure routes done one by one untill I can just get them all done similir to how it was done on the lines above this comment
     require('./routes/secure/secure')(app, db);
 
-
+    app.get('/sitemap.xml', function(req, res) {
+      res.sendFile(__dirname + '/sitemap.xml');
+    });
   });
 }
 
