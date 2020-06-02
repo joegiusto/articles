@@ -229,7 +229,7 @@ function Menu(props) {
                   {!props.isAuth ? (
                   <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SIGN_IN} id='nav-sign-in'>Log In / Sign Up</Link>
                   ) : (
-                  <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SUBSCRIBE} id='nav-sign-in'>{props?.user?.first_name} {props?.user?.last_name}</Link>
+                  <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SETTINGS} id='nav-sign-in'>{props?.user?.first_name} {props?.user?.last_name}</Link>
                   )}
                   </span>
                 </p>
@@ -322,7 +322,7 @@ function Menu(props) {
 
           <div className={"tab-content " + (partySectionOpen ? "" : "")}>
             <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PARTY}><p className="subheading-font"><i className="fas fa-users"></i>Info</p></Link>
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.POLICY}><p className="subheading-font"><i class="fas fa-file-contract"></i>Policy</p></Link>
+            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.POLICY}><p className="subheading-font"><i className="fas fa-file-contract"></i>Policy</p></Link>
           </div>
           
 

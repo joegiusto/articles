@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Helmet } from "react-helmet";
 import { connect } from 'react-redux';
 // import { DateRangePicker } from 'react-dates';
 import { Link } from "react-router-dom";
@@ -387,6 +388,10 @@ class Reports extends Component {
  render() {
    return (
     <div className="reports-page">
+
+      <Helmet>
+        <title>Reports - Articles</title>
+      </Helmet>
 
       <div className="fixed-total dual-header">
         <span className="help">Help <i className="far fa-question-circle"></i></span>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Helmet } from "react-helmet";
 import { connect } from 'react-redux';
 // import { compose } from 'recompose';
 // import { withAuthorizationHide } from '../Session';
@@ -49,116 +50,115 @@ class Submissions extends Component {
 
   render() {
     return (
-      <div className='container-fluid'>
-
-        <div className="row my-auto justify-content-between">
-
-          <div className="col-12 col-md-3 pl-md-0 col-side-panel">
-
-            <div className="submission-side-panel">
-
-              <div className="top">
-                <h1 className="submission-side-panel_title">Submission Area</h1>
-                <p className="submission-side-panel_slogan">Here artist and individuals can submit clothing ideas of thier own to have a chance to be voted on and picked to go in our shop. Artist will recieve 50% of net profit for the sales of their design.</p>
-              </div>
-      
-              <div className="steps">
-                <div className="step one">
-                  <i className="fas fa-pencil-ruler"></i>
-                  <div>
-                    <h5>Step One</h5>
-                    <p>Create a design</p>
-                  </div>
+      <div className="submission-page">
+        <div className='container-fluid'>
+  
+          <div className="row my-auto justify-content-between">
+  
+            <div className="col-12 col-md-3 pl-md-0 col-side-panel">
+  
+              <div className="submission-side-panel">
+  
+                <div className="top">
+                  <h1 className="submission-side-panel_title">Submission Area</h1>
+                  <p className="submission-side-panel_slogan">Here artist and individuals can submit clothing ideas of thier own to have a chance to be voted on and picked to go in our shop. Artist will recieve 50% of net profit for the sales of their design.</p>
                 </div>
         
-                <div className="step two">
-                  <i className="far fa-thumbs-up"></i>
-                  <div>
-                    <h5>Step Two</h5>
-                    <p>Submit design and wait for our approval</p>
-                    <a href="">Terms</a>
-                  </div>
-                </div>
-        
-                <div className="step three">
-                  <i className="fas fa-trophy"></i>
-                  <div>
-                    <h5>Step Three</h5>
-                    <p>Users will vote on designs, top design gets thier item added to the store for a month, thier submission mailed to them, and recieve a percent of the profit from thier items sales.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="fill"></div>
-              
-              <Switch>
-                <Route exact path={ROUTES.STORE_SUBMISSIONS} render={() =>
-                  <Link to={ROUTES.STORE_SUBMISSIONS_SUBMIT}><button className="submission-side-panel_submit btn btn-dark w-100 mt-3">Submit a Design <i className="fas fa-mouse-pointer ml-2"></i></button></Link>
-                } />
-                <Route exact path={ROUTES.STORE_SUBMISSIONS_SUBMIT} render={() =>
-                  <Link to={ROUTES.STORE_SUBMISSIONS}><button className="submission-side-panel_submit btn btn-dark w-100 mt-3">View Designs <i className="fas fa-mouse-pointer ml-2"></i></button></Link>
-                } />
-              </Switch>
-              
-            </div>
-
-          </div>
-
-          <div className="col-12 col-md-9">
-
-            <div>
-              
-              <Switch>
-              <Route exact path={ROUTES.STORE_SUBMISSIONS} render={() =>
-                <div className="listings">
-                  <h1>
-                    {moment().format('MMMM')} Submissions
-                  </h1>
-
-                  <h5>Next Pick At End of Month <span className="badge badge-danger"><Countdown date={moment().startOf('month').add(1, 'months').format('YYYY-MM-DD')} /></span></h5>
-      
-                  {/* <p>Sort by <a href="#">Top</a> <a href="#">New</a> <a href="#">Controversial</a></p> */}
-
-                  <div className={this.state.filterBarLocation > 117 ? 'filter-blur' : ''}></div>
-
-                  <div id="filters" className="filters d-flex justify-content-between">
-
-                    <div className="badges">
-
-                      <div className="top">
-                        <div className={"badge " + (this.state.filter === 'new' ? 'badge-dark' : 'badge-light')}>New</div>
-                        {/* TODO Hold off on this one for now! */}
-                        {/* <div className="badge badge-light">Controversial</div> */}
-                        <div className={"badge " + (this.state.filter === 'top' ? 'badge-dark' : 'badge-light')}>Top (Month)</div>
-                      </div>
-
-                    </div>
-
+                <div className="steps">
+                  <div className="step one">
+                    <i className="fas fa-pencil-ruler"></i>
                     <div>
-                      <div className="badge badge-danger login-warning">Please login or sign up to vote</div>
+                      <h5>Step One</h5>
+                      <p>Create a design</p>
                     </div>
-
                   </div>
-
-                  {/* <div className="login-alert alert alert-danger w-100">
-                    <div className="d-flex align-items-center justify-content-between">
-                      <span>Please login or create an account with us to vote.</span>
-                      <button className="btn btn-articles-light">Log In</button>
+          
+                  <div className="step two">
+                    <i className="far fa-thumbs-up"></i>
+                    <div>
+                      <h5>Step Two</h5>
+                      <p>Submit design and wait for our approval</p>
+                      <a href="">Terms</a>
                     </div>
-                  </div> */}
-
-                  <SubmissionsList/>
+                  </div>
+          
+                  <div className="step three">
+                    <i className="fas fa-trophy"></i>
+                    <div>
+                      <h5>Step Three</h5>
+                      <p>Users will vote on designs, top design gets thier item added to the store for a month, thier submission mailed to them, and recieve a percent of the profit from thier items sales.</p>
+                    </div>
+                  </div>
                 </div>
-              } />
-              <Route path={ROUTES.STORE_SUBMISSIONS_SUBMIT} component={SubmitBase} />
-              </Switch>
-
+  
+                <div className="fill"></div>
+                
+                <Switch>
+                  <Route exact path={ROUTES.STORE_SUBMISSIONS} render={() =>
+                    <Link to={ROUTES.STORE_SUBMISSIONS_SUBMIT}><button className="submission-side-panel_submit btn btn-dark w-100 mt-3">Submit a Design <i className="fas fa-mouse-pointer ml-2"></i></button></Link>
+                  } />
+                  <Route exact path={ROUTES.STORE_SUBMISSIONS_SUBMIT} render={() =>
+                    <Link to={ROUTES.STORE_SUBMISSIONS}><button className="submission-side-panel_submit btn btn-dark w-100 mt-3">View Designs <i className="fas fa-mouse-pointer ml-2"></i></button></Link>
+                  } />
+                </Switch>
+                
+              </div>
+  
             </div>
-            
+  
+            <div className="col-12 col-md-9 px-md-0">
+  
+              <div>
+                
+                <Switch>
+
+                  <Route exact path={ROUTES.STORE_SUBMISSIONS} render={() =>
+                    <div className="listings">
+                      <h1>
+                        {moment().format('MMMM')} Submissions
+                      </h1>
+    
+                      <h5>Next Pick At End of Month <span className="badge badge-danger"><Countdown date={moment().startOf('month').add(1, 'months').format('YYYY-MM-DD')} /></span></h5>
+          
+                      {/* <p>Sort by <a href="#">Top</a> <a href="#">New</a> <a href="#">Controversial</a></p> */}
+    
+                      <div className={this.state.filterBarLocation > 117 ? 'filter-blur' : ''}></div>
+    
+                      <div id="filters" className="filters d-flex justify-content-between">
+    
+                        <div className="badges">
+    
+                          <div className="top">
+                            <div className={"badge " + (this.state.filter === 'new' ? 'badge-dark' : 'badge-light')}>New</div>
+                            {/* TODO Hold off on this one for now! */}
+                            {/* <div className="badge badge-light">Controversial</div> */}
+                            <div className={"badge " + (this.state.filter === 'top' ? 'badge-dark' : 'badge-light')}>Top (Month)</div>
+                          </div>
+    
+                        </div>
+    
+                        <div>
+                          <div className="badge badge-danger login-warning">Please login or sign up to vote</div>
+                        </div>
+    
+                      </div>
+    
+                      <SubmissionsList/>
+                      
+                    </div>
+                  } />
+
+                  <Route path={ROUTES.STORE_SUBMISSIONS_SUBMIT} component={SubmitBase} />
+                  
+                </Switch>
+  
+              </div>
+              
+            </div>
+  
           </div>
-
+  
         </div>
-
       </div>
     )
   }
@@ -185,12 +185,18 @@ class SubmissionsListBase extends Component {
   }
 
   render() {
-    const { submissions, loading } = this.state;
+    const { loading } = this.state;
     
     return (
     <div>
-      {loading && <div>Loading ...</div>}
-      <div className="row">
+
+      <Helmet>
+        <title>Submissions - Articles</title>
+      </Helmet>
+
+      {/* {loading && <div>Loading ...</div>} */}
+
+      <div className="submissions">
 
         {
           this.props.submissions?.submissions ?
@@ -202,19 +208,7 @@ class SubmissionsListBase extends Component {
           null
         }
 
-        {submissions.map(submission => (
-          <SubmissionsItem function={this.add} name={submission.name} state={submission.state} submission={submission} key={'extra-' + submission.uid}/> 
-        ))}
-
-        {submissions.map(submission => (
-          <SubmissionsItem function={this.add} name={submission.name} state={submission.state} submission={submission} key={'extra-' + submission.uid}/> 
-        ))}
-
-        {submissions.map(submission => (
-          <SubmissionsItem function={this.add} name={submission.name} state={submission.state} submission={submission} key={'extra-' + submission.uid}/> 
-        ))}
-
-        <div className="col-12 ">
+        <div className="col-12 px-md-0">
           <div className="think-you-can-do-better">
             <h1>Think you can do better?</h1>
             <p>Submissions are open to everyone that follows the rules of submissions and is signed up with the site. Remember, winner gets thier design printed and sent to them as well as 50% of all the net-profit that it takes in on the store.</p>
@@ -299,35 +293,37 @@ class SubmissionsItemBase extends Component {
   render() {
 
     return (
-      <div  className="col-12 col-sm-4 col-md-3 col-xl-2 mt-4">
+      <div className="submission">
+
+        <div className="submission-user">
+          {this.props.submission.title}
+        </div>
           
-        <div className="submission-item">
-
-          <div className="submission-user">{this.props.submission.title}</div>
-
-          {/* Take this out for now */}
-          {/* <div className="submission-state">{this.props.submission.state}</div> */}
+        <div className="submission-card">
 
           <div className={"submission-photo"}>
             <img src={this.props.submission.preview} alt=""/>
           </div>
 
           <div className="voting-bar">
-            <div className="vote count">{this.props.submission.votes || 0}</div>
+            <div className="count">{ this.props.submission.votes || 0 }</div>
     
-            <button className={"vote vote-up " + (this.state.vote && this.state.vote != null ? 'active' : '')} onClick={() => {
-              this.setState({vote: true}); 
-              this.tryAdd(this.props.submission.uid, this.props.submission.votes);
-            }}>
-              <i style={{width: 'auto'}} className="far fa-thumbs-up"></i>
-            </button>
-    
-            <button className={"vote vote-down " + (!this.state.vote && this.state.vote != null ? 'active' : '')} onClick={() => {
-              this.setState({vote: false});
-              this.trySubtract(this.props.submission.uid, this.props.submission.votes);
-            }}>
-              <i style={{width: 'auto'}} className="far fa-thumbs-down"></i>
-            </button>
+            <div className="voting-buttons">
+              <button className={"vote vote-up " + (this.state.vote && this.state.vote != null ? 'active' : '')} onClick={() => {
+                this.setState({vote: true}); 
+                this.tryAdd(this.props.submission.uid, this.props.submission.votes);
+              }}>
+                <i style={{width: 'auto'}} className="far fa-thumbs-up"></i>
+              </button>
+      
+              <button className={"vote vote-down " + (!this.state.vote && this.state.vote != null ? 'active' : '')} onClick={() => {
+                this.setState({vote: false});
+                this.trySubtract(this.props.submission.uid, this.props.submission.votes);
+              }}>
+                <i style={{width: 'auto'}} className="far fa-thumbs-down"></i>
+              </button>
+            </div>
+
           </div>
 
         </div>

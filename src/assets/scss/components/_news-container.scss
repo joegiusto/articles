@@ -14,24 +14,27 @@
 
 .content-wrap.fixed {
 
-  .top-bar {
-    display: flex;
-    margin-bottom: 0.5rem;
-
-    display: none;
-  }
-
-  .side-bar {
-    display: none;
-  }
-
-  .content {
-    margin-top: 1rem;
+  section.frontpage-section {
+    .top-bar {
+      display: flex;
+      margin-bottom: 0.5rem;
+  
+      display: none;
+    }
+  
+    .side-bar {
+      display: none;
+    }
+  
+    .content {
+      margin-top: 1rem;
+    }
   }
 }
 
 section.frontpage-section {
   display: flex;
+  flex-grow: 1;
 
   .search-head {
     position: relative;

@@ -7,7 +7,7 @@ export const SIGN_IN = '/signin';
 
 // Account Creation
 export const OUTSET = '/outset';
-export const SUBSCRIBE = '/subscribe';
+export const SETTINGS = '/settings';
 
 // Home
 export const HOME = '/home';
@@ -58,8 +58,12 @@ export const MESH ='/mesh'
 export const EMPLOYEES = '/employees'
 export const EMPLOYEES_DETAILS = '/employees/:id'
 
+// Privacy
+export const PRIVACY ='/privacy'
+
 // Support
 export const SUPPORT ='/support'
+export const UPDATES ='/support/updates'
 export const JOBS ='/support/jobs'
 export const PRESS ='/support/press'
 export const TRANSLATIONS ='/support/translations'

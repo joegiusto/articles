@@ -1,4 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
+import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom'
 import moment from 'moment'
@@ -25,6 +26,10 @@ class HomePageFour extends Component {
 
     return(
       <section className="home-page-four-page">
+
+      <Helmet>
+        <title>Home - Articles</title>
+      </Helmet>
 
         <div className="top-bar">
           <div className="container-fluid">
@@ -85,7 +90,6 @@ class HomePageFour extends Component {
               
             </div>
 
-
             <div className="tile">
 
               <div className="tile-header">
@@ -142,6 +146,7 @@ class HomePageFour extends Component {
                   <div className="text">For more inforamtion about our finances check out our reports.</div>
 
                   <div className="tile-extra">
+                    $200.00 Raised Alltime
                   </div>
 
                 </div>
@@ -223,24 +228,27 @@ class HomePageFour extends Component {
                 <div className="tile-update"></div>
               </div>
 
-              <div className="tile-content">
-
-                <div className="icons">
-                  <div className="head-icon">
-                    <i className="fas fa-binoculars"></i>
+              <Link to={ROUTES.PRIVACY}>
+                <div className="tile-content">
+  
+                  <div className="icons">
+                    <div className="head-icon">
+                      <i className="fas fa-binoculars"></i>
+                    </div>
+                    <div className="sub-icons">
+                      <i className="fas fa-search-location mr-0"></i>
+                    </div>
                   </div>
-                  <div className="sub-icons">
-                    <i className="fas fa-search-location mr-0"></i>
+  
+                  <div className="title">No Changes</div>
+                  <div className="text">Whenever we make changes, we will alert you here.</div>
+  
+                  <div className="tile-extra">
+                    &nbsp;
                   </div>
-                </div>
 
-                <div className="title">No Changes</div>
-                <div className="text">Whenever we make changes, we will alert you here.</div>
-
-                <div className="tile-extra">
-                  
                 </div>
-              </div>
+              </Link>
 
             </div>
 
@@ -253,34 +261,36 @@ class HomePageFour extends Component {
                 <div className="tile-update"></div>
               </div>
 
-              <div className="tile-content">
+              <Link to={ROUTES.UPDATES}>
+                <div className="tile-content">
 
-                <div className="icons">
-                  <div className="head-icon">
-                    <i className="fas fa-envelope-open-text"></i>
+                  <div className="icons">
+                    <div className="head-icon">
+                      <i className="fas fa-envelope-open-text"></i>
+                    </div>
+                    <div className="sub-icons">
+                      <i className="fas fa-at mr-0"></i>
+                    </div>
                   </div>
-                  <div className="sub-icons">
-                    <i className="fas fa-at mr-0"></i>
+
+                  <div className="title">Weekly Updates</div>
+                  <div className="text">Get sent an mail about everything going on with Articles. Sent out every Sunday.</div>
+
+                  <div className="radio-switch-toggle noselect">
+                    <input id="false" value="false" name="newsletter" type="radio" checked/>
+                    <label htmlFor="false">No</label>
+
+                    <input id="true" value="true" name="newsletter" type="radio"/>
+                    <label htmlFor="true">Yes</label>
                   </div>
+
+                  <div className="tile-extra">
+                    45 Others Subscribed
+                  </div>
+
                 </div>
-
-                <div className="title">Weekly Updates</div>
-                <div className="text">Get sent an mail about everything going on with Articles. Sent out every Sunday.</div>
-
-                <div className="radio-switch-toggle noselect">
-                  <input id="false" value="false" name="newsletter" type="radio" checked/>
-                  <label for="false">No</label>
-
-                  <input id="true" value="true" name="newsletter" type="radio"/>
-                  <label for="true">Yes</label>
-                </div>
-
-                <div className="tile-extra">
-                  45 Others Subscribed
-                </div>
-
-              </div>
-
+              </Link>
+              
             </div>
 
             <div className="tile">
@@ -290,7 +300,7 @@ class HomePageFour extends Component {
                 <div className="tile-update"></div>
               </div>
 
-              <Link to={ROUTES.SUBSCRIBE}>
+              <Link to={ROUTES.SETTINGS}>
                 <div className="tile-content">
 
                   <div className="icons">
@@ -305,6 +315,10 @@ class HomePageFour extends Component {
 
                   <div className="title">Settings</div>
                   <div className="text">Manage your account and data.</div>
+
+                  <div className="tile-extra">
+                    &nbsp;
+                  </div>
 
                 </div>
               </Link>

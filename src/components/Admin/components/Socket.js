@@ -4,13 +4,14 @@ import socketIOClient from 'socket.io-client'
 const ENDPOINT = "/";
 let socket = undefined;
 
-class Submissions extends Component {
+class Sockets extends Component {
   constructor(props) {
   super(props);
   
     this.state = {
       sockets: [],
-      socketMessage: ''
+      socketMessage: '',
+      photos: []
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -31,6 +32,24 @@ class Submissions extends Component {
 
     socket.on('adminMessage', function(msg){
       console.log(`Admin Message: ${msg}`);
+    });
+
+    axios.get('/api/photos')
+    .then(function (response) {
+
+      console.log(response);
+
+      self.setState({ 
+        photos: response.data,
+      });
+
+    })
+    .catch(function (error) {
+      console.log(error);
+
+      self.setState({
+        photos: [],
+      })
     });
   }
 
@@ -97,9 +116,15 @@ class Submissions extends Component {
         <button onClick={() => this.pushTestDonation()} className="btn btn-articles-light">Fake Donation</button>
         <button onClick={() => this.pushTestExpense()} className="btn btn-articles-light">Fake Expense</button>
 
+        <div className="aws-photo-test mt-3">
+          {this.state.photos.map(photo => (
+            <a href={`https://articles-website.s3.amazonaws.com/${photo}`} target="_blank" rel="noopener noreferrer"><img className="mr-1" height="150px" alt="" src={`https://articles-website.s3.amazonaws.com/${photo}`} /></a>
+          ))}
+        </div>
+
       </div>
     );
   }
 }
 
-export default Submissions
+export default Sockets

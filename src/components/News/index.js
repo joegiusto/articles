@@ -1,4 +1,5 @@
 import React, { Component, useState } from 'react';
+import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
 // import playButtonLight from '../../assets/img/News/yt_logo_mono_light.png'
 import playButtonDark from '../../assets/img/News/yt_logo_mono_dark.png'
@@ -40,7 +41,7 @@ function SearchHead(props) {
     <div className={"search-head"}>
       <img src={background} alt="" className="background"/>
       <h1 className="title">Search</h1>
-      <input type="text" className="form-control"/>
+      <input id="search" name="search" value={props.searchText} onChange={props.onChange} type="text" className="form-control"/>
       <p className="body">Easily access content across all of our news content and publications.</p>
 
       <div className="tags">
@@ -102,13 +103,18 @@ class Frontpage extends Component {
     super(props);
 
     this.state = {
-      // issues: []
+      search: ''
     }
   }
 
   componentDidMount() {
     console.log("Mounted");
   }
+
+  onChange = event => {
+    console.log("Fired")
+    this.setState({ [event.target.name]: event.target.value });
+  };
 
   render() {
     const settings = {
@@ -122,6 +128,10 @@ class Frontpage extends Component {
     
     return(
       <section className="frontpage-section">
+
+      <Helmet>
+        <title>News - Articles</title>
+      </Helmet>
 
         <div className="side-bar noselect">
 
@@ -207,7 +217,7 @@ class Frontpage extends Component {
             </div>
 
             {this.props.location.pathname === "/news" ?
-            <SearchHead></SearchHead>
+            <SearchHead onChange={this.onChange} searchText={this.state.search}></SearchHead>
             :
             null
             }
@@ -222,7 +232,7 @@ class Frontpage extends Component {
                   {/* <Route exact path={ROUTES.NEWS} render={() => <h1>Front</h1>}/> */}
                   <Route exact path={ROUTES.NEWS} render={() => <JustFrontpage stories={this.props.stories} issues={this.props.issues} myths={this.props.myths}></JustFrontpage>}/>
                   <Route exact path={ROUTES.STORIES} render={() => <Stories></Stories>}/>
-                  <Route exact path={ROUTES.ISSUES} render={() => <Issues></Issues> }/>
+                  <Route exact path={ROUTES.ISSUES} render={() => <Issues searchText={this.state.search}></Issues> }/>
                   <Route exact path={ROUTES.MYTHS} render={() => <Myths></Myths> }/>
                 </Switch>
   
@@ -236,7 +246,7 @@ class Frontpage extends Component {
                   {this.props.location.pathname === "/news" ?
                   null
                   :
-                  <SearchHead></SearchHead>
+                  <SearchHead onChange={this.onChange} searchText={this.state.search}></SearchHead>
                   }
   
                   <div className="the-recap">

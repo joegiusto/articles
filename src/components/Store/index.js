@@ -1,4 +1,5 @@
 import React, { Component, useState } from 'react';
+import { Helmet } from "react-helmet";
 import StoreItem from './StoreItemAlpha';
 import {One, Two, Three, Four} from './SponseredItems';
 import * as ROUTES from '../../constants/routes';
@@ -12,6 +13,10 @@ function TypeSelect(props) {
 
 	return (
 	<div className={"type-select-container w-100 " + (isNaN(props.modificationType) ? ' mt-3 pt-3': ' ')}>
+
+		<Helmet>
+			<title>Store - Articles</title>
+		</Helmet>
 
 		{(props.modificationType === 1 ? <h4>Continue To...</h4> : null )}
 

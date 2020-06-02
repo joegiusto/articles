@@ -2,7 +2,11 @@ $main_colorOne: rgb(238, 117, 127);
 $main_colorTwo: rgb(255, 242, 169);
 
 .bg {
-  animation:slide 8s ease-in-out infinite alternate;
+  // animation:slide 8s ease-in-out infinite alternate;
+  animation-name: slide;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-duration: 8s;
   background-image: linear-gradient(-60deg, $main_colorOne 50%, $main_colorTwo 50%);
   bottom:0;
   left:-50%;
@@ -24,9 +28,9 @@ $main_colorTwo: rgb(255, 242, 169);
 
 @keyframes slide {
   0% {
-    transform:translateX(-25%);
+    transform: translateX(-25%);
   }
   100% {
-    transform:translateX(25%);
+    transform: translateX(25%);
   }
 }

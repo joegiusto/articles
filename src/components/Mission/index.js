@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Helmet } from "react-helmet";
+
 import { Manager, Reference, Popper } from 'react-popper';
 
 import Scrollspy from 'react-scrollspy';
@@ -141,6 +143,10 @@ const Mission = (props) => {
 
   return(
     <div className='container-fluid container-custom container-mission'>
+
+      <Helmet>
+        <title>Mission - Articles</title>
+      </Helmet>
 
       <div className="mission-page">
         <div className="row h-100 justify-content-center">

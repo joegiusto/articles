@@ -52,6 +52,10 @@
 
     @include media-breakpoint-down(md) {
       margin-bottom: 2rem;
+      margin-left: 0;
+      margin-right: 0;
+      width: 50%;
+      // height: 200px;
     }
 
     .details-slide-out {
@@ -80,11 +84,21 @@
       &.expand {
         transform: translateX(-100%);
       }
+
+      @include media-breakpoint-down(md) {
+        &.expand {
+          transform: translateX(100%);
+        }
+      }
     }
 
     .photo-banner {
       position: relative;
       height: 50vh;
+
+      @include media-breakpoint-down(md) {
+        height: 300px;
+      }
 
       .ad-warning {
         position: absolute;
@@ -142,6 +156,10 @@
       // flex-direction: column;
       // justify-content: center;
       // align-items: center;
+
+      @include media-breakpoint-down(md) {
+        padding-top: 40px;
+      }
 
       .detail {
         margin-left: 5%;

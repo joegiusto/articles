@@ -48,19 +48,27 @@ const s3 = new AWS.S3({
 async function listAllObjectsFromS3Bucket(bucket, prefix) {
   let isTruncated = true;
   let marker;
+  let photos = [];
   while(isTruncated) {
     let params = { Bucket: bucket };
     if (prefix) params.Prefix = prefix;
     if (marker) params.Marker = marker;
     try {
       const response = await s3.listObjects(params).promise();
+
       response.Contents.forEach(item => {
-        console.log(item.Key);
+        // console.log(item.Key);
+        photos.push(item.Key)
       });
+
       isTruncated = response.IsTruncated;
+
       if (isTruncated) {
         marker = response.Contents.slice(-1)[0].Key;
       }
+
+      // console.log(photos)
+      return(photos);
   } catch(error) {
       // throw error;
       console.log(error);
@@ -70,7 +78,6 @@ async function listAllObjectsFromS3Bucket(bucket, prefix) {
 }
 
 // Fuck this for now
-// listAllObjectsFromS3Bucket('articles-website');
 
 function connectWithRetryMongo() {
   mongoUtil.connectToServer( function( err, client ) {
@@ -248,6 +255,13 @@ io.on('connection', (socket) => {
 });
 
 // Used to make sure server is up in one place, though this was in MySQL days
-app.get('/ping', function (req, res) {
+app.get('/api/ping', function (req, res) {
   return res.send('pong');
+});
+
+app.get('/api/photos', function (req, res) {
+  listAllObjectsFromS3Bucket('articles-website').then(results => {
+    console.log("Call to /api/photos/ done");
+    return res.send(results);
+  })
 });

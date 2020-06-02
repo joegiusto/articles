@@ -1,4 +1,5 @@
 import React, {Component, useEffect} from 'react';
+import { Helmet } from "react-helmet";
 
 import { BrowserRouter as Router, Route, Switch, } from 'react-router-dom';
 import { useLocation } from "react-router-dom";
@@ -14,7 +15,7 @@ import SignUpPage from './SignUp';
 import SignInPage from './SignIn';
 
 import OutsetPage from './Outset';
-import SubscribePage from './Subscribe';
+import SettingsPage from './Settings';
 
 import HomePage from './Home';
 import HomePageOld from './Home/components/HomePageThree'
@@ -50,7 +51,10 @@ import TownHallPage from './Party/TownHall'
 
 import MeshPage from './Mesh'
 
+import Privacy from './Privacy'
+
 import SupportPage from './Support'
+import UpdatesPage from './Updates'
 import JobsPage from './Support/Jobs'
 import PressPage from './Support/Press'
 import TranslationsPage from './Support/Translations'
@@ -84,7 +88,7 @@ function ScrollToTop() {
   const parts = pathname.split('/');
 
   useEffect(() => {
-    if (parts[1] === 'admin' || 'news') {
+    if (parts[1] === 'admin' || parts[1] === 'news') {
       // Was a page where router changes within like admin lookups
     } else {
       window.scrollTo(0, 0);
@@ -141,6 +145,11 @@ class App extends Component {
     return (
       <Router onUpdate={() => window.scrollTo(0, 0)}>
 
+        {/* Fallback if page does not have a Helemet element inside it */}
+        <Helmet>
+          <title>Articles</title>
+        </Helmet>
+
         <ScrollToTop />
 
         <div className={'site-wrap ' + (this.props.site?.sideMenuFixed && this.state.canBeFixed ? 'fixed' : '')}>
@@ -157,7 +166,7 @@ class App extends Component {
   
               <Route path={ROUTES.OUTSET} component={OutsetPage} />
   
-              <PrivateRoute path={ROUTES.SUBSCRIBE} component={SubscribePage} />
+              <PrivateRoute path={ROUTES.SETTINGS} component={SettingsPage} />
               
               <Route exact path={ROUTES.HOME} component={HomePage} />
               <Route path={ROUTES.HOME_OLD} component={HomePageOld} />
@@ -201,6 +210,7 @@ class App extends Component {
               <Route path={ROUTES.MESH} component={MeshPage} />
         
               <Route exact path={ROUTES.SUPPORT} component={SupportPage} />
+              <Route exact path={ROUTES.UPDATES} component={UpdatesPage} />
               <Route path={ROUTES.JOBS} component={JobsPage} />
               <Route path={ROUTES.PRESS} component={PressPage} />
               <Route path={ROUTES.TRANSLATIONS} component={TranslationsPage} />
@@ -211,7 +221,7 @@ class App extends Component {
               <Route path={ROUTES.ACCOUNT} component={AccountPage} />
               <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
               
-              <Route exact path={ROUTES.ADMIN} component={AdminPage} />
+              <Route path={ROUTES.PRIVACY} component={Privacy} />
 
               <Route exact path={ROUTES.ADMIN_USERS} component={AdminPage} />
               <Route path={ROUTES.ADMIN_USER_DETAILS} component={AdminPage} />
@@ -232,7 +242,7 @@ class App extends Component {
               {/* <Route path={ROUTES.DONATE} component={DonatePage} /> */}
   
               <Route path={ROUTES.MAIL} component={MailPage} />
-  
+              <Route path={ROUTES.MESH} component={MeshPage} />
               <Route path={ROUTES.PLAYGROUND} component={PlaygroundPage} />
               <Route path={ROUTES.CHAT} component={Chat} />
   

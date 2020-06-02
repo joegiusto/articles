@@ -57,7 +57,7 @@ class SignInFormBase extends Component {
       this.props.history.push("/subscribe");
     }
 
-    axios.get('/ping')
+    axios.get('/api/ping')
     .then(function (response) {
       console.log("The server is up!");
       self.setState({serverUp: true});

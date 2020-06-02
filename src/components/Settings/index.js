@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Helmet } from "react-helmet";
 import { withFirebase } from '../Firebase';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
@@ -311,6 +312,10 @@ class SubscribeListBase extends Component {
 
     return(
       <div className="subscriptions-page">
+
+      <Helmet>
+        <title>Settings - Articles</title>
+      </Helmet>
 
         <div className="container">
 

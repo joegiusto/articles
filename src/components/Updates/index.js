@@ -2,10 +2,7 @@ import React, {Component} from 'react'
 import { Helmet } from "react-helmet";
 import { connect } from "react-redux"
 import { Link } from 'react-router-dom'
-import * as ROUTES from '../../../constants/routes';
-import axios from 'axios';
-import moment from 'moment';
-import OrderCard from './OrderCard';
+import * as ROUTES from '../../constants/routes';
 
 class OrdersPage extends Component {
   constructor(props) {
@@ -31,29 +28,20 @@ class OrdersPage extends Component {
       <div className="order-details">
 
         <Helmet>
-          <title>Orders - Articles</title>
+          <title>Updates - Articles</title>
         </Helmet>
 
         <div className="container d-flex flex-column align-items-center">
 
           <div className="orders-card card">
-            <div className="card-header">Orders</div>
+            <div className="card-header">Updates</div>
             <div className="card-body">
-
-              {orderLoading ?
-                null
-              :
-              this.props.orders.map((order) => (
-                <Link to={ROUTES.STORE_ORDERS + '/' + order._id}>
-                  <OrderCard order={order} />
-                </Link>
-              ))}
 
             </div>
             <div className="card-footer"></div>
           </div>
 
-          <Link to={ROUTES.STORE}><div className="btn btn-articles-light">Back To Store</div></Link>
+          {/* <Link to={ROUTES.STORE}><div className="btn btn-articles-light">Back To Store</div></Link> */}
 
         </div>
       </div>

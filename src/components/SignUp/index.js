@@ -50,7 +50,7 @@ class SignUpFormBase extends Component {
     const self = this;
 
     // We need to check if the server is up before allowing users to sign up.
-    axios.get('/ping')
+    axios.get('/api/ping')
     .then(function (response) {
       console.log("The server is up!");
       self.setState({serverUp: true});

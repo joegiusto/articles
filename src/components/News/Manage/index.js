@@ -229,7 +229,7 @@ class AdminPage extends Component {
                   <p>Page for only Admins and Writers to manage news details. Here you can update and create content for Article's News Pages. The content server is pulling data from <span className="badge badge-warning">{this.state.contentServer}</span> we can only hope this will never change.</p>
                 </div>
                 <div className="col-12 col-md-4">
-                <p>Looking for <Link to={ROUTES.SUBSCRIBE}>personal news managemnet?</Link> </p>
+                <p>Looking for <Link to={ROUTES.SETTINGS}>personal news managemnet?</Link> </p>
                 </div>
               </div>
   
