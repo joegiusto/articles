@@ -1,5 +1,6 @@
 require('dotenv').config()
 const express = require('express');
+const fileUpload = require('express-fileupload');
 const bodyParser = require('body-parser');
 const passport = require("passport");
 const path = require('path');
@@ -76,8 +77,6 @@ async function listAllObjectsFromS3Bucket(bucket, prefix) {
     }
   }
 }
-
-// Fuck this for now
 
 function connectWithRetryMongo() {
   mongoUtil.connectToServer( function( err, client ) {
@@ -165,6 +164,8 @@ app.use( express.static(path.join(__dirname, '../build')) );
 
 app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded({ extended: true }) );
+
+app.use(fileUpload());
 
 // Passport middleware
 app.use(passport.initialize());
@@ -264,4 +265,39 @@ app.get('/api/photos', function (req, res) {
     console.log("Call to /api/photos/ done");
     return res.send(results);
   })
+});
+
+app.post('/api/addPhoto', function (req, res) {
+
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).send('No files were uploaded.');
+  }
+
+  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+  let sampleFile = req.files.file;
+
+  // console.log(req.files)
+  // console.log(req.files.file.type)
+
+  // Use the mv() method to place the file somewhere on your server
+  // sampleFile.mv(__dirname + '/photos/' + req.files.file.name, function(err) {
+  //   if (err)
+  //     return res.status(500).send(err);
+
+  //   res.send('File uploaded!');
+  // });
+
+  // let albumName = 'articles-website'
+  // var base64data = Buffer(sampleFile, 'binary');
+
+  var params = {Bucket: 'articles-website', Key: sampleFile.name, ContentType: "image/jpeg", Body: sampleFile.data, ACL: "public-read"};
+  s3.upload(params, function(err, data) {
+    console.log(err, data);
+    if (err) {
+      return res.status(500).send(err);
+    }
+      
+    res.send('File uploaded!');
+  });
+  
 });

@@ -30,11 +30,13 @@ class EmployeesPage extends Component {
     
     return(
       <div className="employees-page">
-        <div className="container h-100">
+        <div className="container">
 
           <div className="search-bar">
 
-            <span role="img" aria-label="Anonymous Emoji" className={"search-letter" + (this.state.searchTerm === "anonymous" ? ' active' : '')} onClick={() => (this.setState({searchTerm: "anonymous"}))}>⛔</span>
+            <span className={"search-letter" + (this.state.searchTerm === "anonymous" ? ' active' : '')} onClick={() => (this.setState({searchTerm: "anonymous"}))}>
+              <i class="fas fa-eye-slash" aria-hidden="true"></i>
+            </span>
 
             {alphabet.map(letter => (
               <span className={"search-letter"  + (this.state.searchTerm === letter ? ' active' : '')} onClick={() => (this.setState({searchTerm: letter}))}>{letter}</span>
@@ -42,19 +44,19 @@ class EmployeesPage extends Component {
 
           </div>
 
-          <div className="card card-block p-5">
+          <div className="card card-block p-5 py-2">
             <h1>Employee Directory</h1>
-            <p>As part of our transparency efforts we provide a directory of our employees to the public along with some details about them and payrole info. Please, snoop around! :)</p>
+            <p>As part of our transparency efforts we provide a directory of our employees to the public along with some details about them.</p>
           </div>
 
           <div>
             {employeeList.map(employee => (
-              <Link className="employee-a" to={employee.id}>
-                <Tilt options={{ max: "20", scale: '1.025' }} className="Tilt employee-directory-card">
+              <Link className="employee-a" to={ROUTES.EMPLOYEES + '/' + employee.id}>
+                {/* <Tilt options={{ max: "20", scale: '1.025' }} className="Tilt employee-directory-card"> */}
                   <div className="bg-white p-5">
                     <div>{employee.nameLast + (employee.nameFirst !== 'Anonymous' ? ', ' + employee.nameFirst : ' Anonymous')}</div>
                   </div>
-                </Tilt>
+                {/* </Tilt> */}
               </Link>
             ))}
           </div>

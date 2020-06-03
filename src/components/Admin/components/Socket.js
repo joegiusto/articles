@@ -15,6 +15,7 @@ class Sockets extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.onChange = this.onChange.bind(this);
     // this.pushSocket = this.pushSocket.bind(this);
   }
 
@@ -92,10 +93,56 @@ class Sockets extends Component {
     })
   }
 
+  // handleFile(e) {
+
+  //   let file = e.target.files[0];
+
+  //   this.setState({
+  //     file: file
+  //   });
+  // }
+
+  // handleUpload(e) {
+
+  //   let file = this.state.file
+  //   let formdata= new FormData
+  //   formdata.append('image', file)
+  // }
+
+  onChange(e) {
+    console.log(e.target.files);
+    const data = new FormData();
+
+    this.setState({
+      file: e.target.files[0]
+    }, 
+      () => {
+        data.append('file', this.state.file);
+        
+        axios.post("/api/addPhoto", data, { // receive two parameter endpoint url ,form data 
+        
+        })
+        .then(res => { // then print response status
+          console.log(res.statusText)
+          this.setState({
+            photos: [...this.state.photos, this.state.file.name]
+          })
+        })
+      }
+    )
+
+  }
+
+  removePhoto(photo) {
+    this.setState({
+      photos: this.state.photos.filter(arrayPhoto => arrayPhoto !== photo)
+    })
+  }
+
   render() {
 
     return (
-      <div className="mt-5">
+      <div className="admin-sockets mt-5">
 
         <div className="stat">
           <h5>Socket Info</h5>
@@ -116,10 +163,24 @@ class Sockets extends Component {
         <button onClick={() => this.pushTestDonation()} className="btn btn-articles-light">Fake Donation</button>
         <button onClick={() => this.pushTestExpense()} className="btn btn-articles-light">Fake Expense</button>
 
-        <div className="aws-photo-test mt-3">
-          {this.state.photos.map(photo => (
-            <a href={`https://articles-website.s3.amazonaws.com/${photo}`} target="_blank" rel="noopener noreferrer"><img className="mr-1" height="150px" alt="" src={`https://articles-website.s3.amazonaws.com/${photo}`} /></a>
+        <div className="aws-photo-test">
+
+          <div className="upload-photo-wrap mr-1">
+            <div className="upload-photo noselect">+</div>
+            <input onChange={this.onChange} type="file" name="myfile" />
+          </div>
+
+          {this.state.photos.map((photo, i) => (
+            <span className="image-container">
+
+              <div onClick={() => this.removePhoto(photo)} className="delete noselect">X</div>
+              <a key={i} href={`https://articles-website.s3.amazonaws.com/${photo}`} target="_blank" rel="noopener noreferrer">
+                <img key={i} height="150px" alt="" src={`https://articles-website.s3.amazonaws.com/${photo}`} />
+              </a>
+
+            </span>
           ))}
+
         </div>
 
       </div>

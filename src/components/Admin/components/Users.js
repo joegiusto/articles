@@ -185,32 +185,34 @@ class Users extends Component {
   
           <div className="col-12 col-md-8">
   
-            <table className="table table-sm table-bordered bg-white">
-              <thead className="thead-dark">
-                <tr>
-                  <th scope="col">User ID</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">State</th>
-                  <th scope="col">Outset</th>
-                  <th scope="col">Admin</th>
-                </tr>
-              </thead>
-              <tbody>
-  
-                {this.state.users.map(user => (
-  
+            <div className="table-responsive">
+              <table className="table table-sm table-bordered bg-white">
+                <thead className="thead-dark">
                   <tr>
-                    <th scope="row">{user._id}</th>
-                    <td>{`${user.first_name} ${user.last_name}`}</td>
-                    <td>{user.address.state}</td>
-                    <td>{user.outset === true ? 'True' : 'False'}</td>
-                    <td>{user.roles?.isAdmin === "true" ? 'True' : 'False'}</td>
+                    <th scope="col">User ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">State</th>
+                    <th scope="col">Outset</th>
+                    <th scope="col">Admin</th>
                   </tr>
-                  
-                ))}
-  
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+    
+                  {this.state.users.map(user => (
+    
+                    <tr>
+                      <th scope="row">{user._id}</th>
+                      <td>{`${user.first_name} ${user.last_name}`}</td>
+                      <td>{user.address.state}</td>
+                      <td>{user.outset === true ? 'True' : 'False'}</td>
+                      <td>{user.roles?.isAdmin === "true" ? 'True' : 'False'}</td>
+                    </tr>
+                    
+                  ))}
+    
+                </tbody>
+              </table>
+            </div>
   
           </div>
           

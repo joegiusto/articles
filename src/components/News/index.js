@@ -185,6 +185,13 @@ class Frontpage extends Component {
               </div>
             </Link>
 
+            {/* <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS}>
+              <div className={"link " + (this.props.location.pathname === "/news/coronavirus" ? 'active' : null)}>
+                <i class="fas fa-lungs-virus"></i>
+                <div className="text">Black Lives Matter</div>
+              </div>
+            </Link> */}
+
           </div>
 
         </div>

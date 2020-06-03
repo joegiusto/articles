@@ -17,7 +17,6 @@ footer.site-footer {
   display: flex;
   align-items: center;
 
-
   .footer-panel {
 
     .brand {
@@ -26,10 +25,10 @@ footer.site-footer {
     }
 
     .title {
-        font-family: brandon-grotesque, sans-serif;
-        font-style: normal;
-        font-weight: 900;
-        font-size: 1rem;
+      font-family: brandon-grotesque, sans-serif;
+      font-style: normal;
+      font-weight: 900;
+      font-size: 1rem;
     }
 
     a {
@@ -45,11 +44,18 @@ footer.site-footer {
         font-weight: 400;
         font-size: 12px;
       }
+
+      @include media-breakpoint-down(md) {
+        margin: 1rem 0;
+      }
     }
 
     &.fourth {
       .icons {
-        font-size: 2rem;
+        a {
+          font-size: 2rem;
+          display: inline-block;
+        }
       }
     }
 

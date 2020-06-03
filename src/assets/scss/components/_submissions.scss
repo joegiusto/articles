@@ -13,7 +13,7 @@
     background-color: white;
     background: linear-gradient(45deg, $accent-color, $base-color 80%);
     color: #000;
-    padding: 1rem;
+    padding: 1rem 0.25rem;
     text-shadow: 0px 1px #6b6b6b;
     height: calc(100vh - 80px);
     position: sticky;
@@ -37,20 +37,32 @@
   
     .top {
       // border: $sharedBorder;
-      padding: 0.75rem;
+      padding: 0 0.5rem;
+      // padding-bottom: 0;
       border-radius: 10px;
-      background-color: $sharedBackground;
+      // background-color: $sharedBackground;
+
+      h1 {
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 2.5rem;
+  
+        @include media-breakpoint-down(md) {
+          margin-top: 0;
+        }
+      }
     }
   
     &_title {
-      font-family: OpenSansRegular, Helvetica, sans-serif;
-      font-size: 3rem;
+      font-family: brandon-grotesque, sans-serif;
       font-style: normal;
-      font-weight: normal;
-      letter-spacing: normal;
-  
-      font-family: forte;
-      font-size: 2.2vw;
+      font-weight: 900;
+      font-size: 2.5rem;
+
+      @include media-breakpoint-down(md) {
+        font-size: 1.5rem;
+      }
     }
   
     &_slogan {
@@ -76,51 +88,54 @@
       .step {
         margin-top: .5rem;
         padding: .25rem;
-        background-color: $sharedBackground;
+        
         display: flex;
         flex-direction: row;
         border-radius: 10px;
         font-size: 14px;
-  
-        p {
-          margin-bottom: 5px;
-        }
-  
-        i {
-          position: absolute;
-          top: -5px;
-          left: -10px;
-  
+
+        .icon {
           font-size: 1.5rem;
-          
-          background-color: white;
-          // border: solid 1px rgb(146, 146, 146);
+          background-color: rgba(255, 255, 255, 0.5);
+          color: black;
           box-shadow: 0 0px 6px -2px black;
           border-radius: 10px;
           padding: .5rem;
+          display: flex;
+          align-items: center;
+        }
+
+        .snippet {
+          background-color: white;
+          box-shadow: 0 0px 6px -2px black;
+          border-radius: 10px;
+          width: 100%;
+          padding: 0.5rem;
+
+          h5 {
+            font-family: brandon-grotesque, sans-serif;
+            font-style: normal;
+            font-weight: 900;
+            margin-bottom: .1rem;
+          }
+
+          p {
+            margin-bottom: 0.5rem;
+          }
         }
   
-        h5 {
-          text-decoration: underline;
-          font-weight: bold;
-        }
+        // &.one {
+        //   // margin-top: 5rem;
+        //   transform: translateX(0%);
+        // }
   
-        div {
-          padding-left: 2.25rem;
-        }
+        // &.two {
+        //   transform: translateX(0%);
+        // }
   
-        &.one {
-          // margin-top: 5rem;
-          transform: translateX(0%);
-        }
-  
-        &.two {
-          transform: translateX(0%);
-        }
-  
-        &.three {
-          transform: translateX(0%);
-        }
+        // &.three {
+        //   transform: translateX(0%);
+        // }
   
       }
     }
@@ -137,44 +152,55 @@
   .listings {
     font-family: montserrat, sans-serif;
 
+    .month {
+      margin-top: 1rem;
+      font-family: brandon-grotesque, sans-serif;
+      font-style: normal;
+      font-weight: 900;
+      font-size: 2.5rem;
+      margin-bottom: 0;
+
+      @include media-breakpoint-down(md) {
+        margin-top: 0;
+      }
+    }
+
     .submissions {
       display: flex;
       flex-wrap: wrap;
-      margin-right: 15px;
-    }
-  
-    h1 {
-      letter-spacing: 0.00em;
-      margin-top: 2rem;
-      font-size: 3rem;
-      line-height: 1.5rem;
-      margin-bottom: 1rem;
     }
   
     .filters {
       margin-top: 1.25rem;
       margin-bottom: 1.25rem;
-  
       position: sticky;
       z-index: 1;
-      top: 60px;
-  
+      top: 70px;
       font-size: 20px;
       background-color: white;
       padding: 0.5rem 1rem;
       border: solid 1px #000;
-      border-radius: 10px;
-  
-      .login-warning {
-        position: absolute;
-        bottom: 0px;
-        left: 50%;
-        transform: translateX(-50%) translateY(50%);
-      }
-  
-      .badges {
-        display: flex;
+      margin-left: -5px;
+      margin-right: -5px;
+      display: flex;
+      flex-direction: row;
+
+      @include media-breakpoint-down(md) {
         flex-direction: column;
+      }
+
+      .login-notice {
+        position: absolute;
+        top: -5px;
+        right: 5px;
+        transform: translateY(-50%);
+      }
+
+      .timer {
+        position: absolute;
+        top: -5px;
+        left: 5px;
+        transform: translateY(-50%);
       }
   
       .badge {
@@ -206,27 +232,39 @@
     }
   
     .submission {
-      // background-color: #000;
       height: auto;
       position: relative;
-      width: calc(100% / 4);
+      width: calc(100% / 4 - 0.5rem);
+      margin-right: 0.5rem;
+
+      @include media-breakpoint-down(md) {
+        width: calc(100% / 2);
+      }
+
+      .submission-user {
+        background-color: white;
+        border: 2px solid #727272;
+        border-bottom: none;
+        padding: 0.1rem 0.2rem;
+      }
 
       .submission-card {
-        margin-bottom: 1rem;
-        // cursor: pointer;
+        margin-bottom: 2rem;
 
         .submission-photo {
-          // position: absolute;
-          // bottom: 42px;
           border: 2px solid rgb(114, 114, 114);
           width: 100%;
-          height: 500px;
+          height: 100%;
           overflow: hidden;
+
+          @include media-breakpoint-down(md) {
+            height: 100%;
+          }
     
           img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             transition-duration: 200ms;
             transition-timing-function: ease-in;
 
@@ -279,28 +317,29 @@
             transform: translateY(-50%);
             height: calc(100% + 10px);
             width: 100px;
-            padding: 1rem;
             border-radius: 0px;
+
+            @include media-breakpoint-down(md) {
+              width: auto;
+              padding: 0 0.5rem;
+            }
           }
         }
-      }
-  
-      .submission-name {
-
       }
       
     }
   
     .think-you-can-do-better {
-      margin-top: 2rem;
+      // margin-top: 2rem;
       margin-bottom: 15px;
       padding: 1rem;
       background-color: black;
       color: white;
-      border-radius: 10px;
-  
+      // border-radius: 10px;
+      margin-left: -5px;
+      margin-right: -5px;
       display: flex;
-      // flex-direction: row;
+      align-items: center;
       
       h1 {
         flex: 1;
@@ -309,7 +348,12 @@
   
       p {
         flex: 1;
-        // flex-grow: 1;
+        margin-bottom: 0;
+      }
+
+      @include media-breakpoint-down(md) {
+        flex-direction: column;
+        align-items: flex-start;
       }
   
     }

@@ -151,7 +151,7 @@ const Mission = (props) => {
       <div className="mission-page">
         <div className="row h-100 justify-content-center">
 
-          <div className="col-3">
+          <div className="col-12 col-md-3">
 
             <div className="side-bar-container-new">
               <div className="side-bar-new">

@@ -58,11 +58,9 @@ export const MESH ='/mesh'
 export const EMPLOYEES = '/employees'
 export const EMPLOYEES_DETAILS = '/employees/:id'
 
-// Privacy
-export const PRIVACY ='/privacy'
-
 // Support
 export const SUPPORT ='/support'
+export const PRIVACY ='/support/privacy'
 export const UPDATES ='/support/updates'
 export const JOBS ='/support/jobs'
 export const PRESS ='/support/press'

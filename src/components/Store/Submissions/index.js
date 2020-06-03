@@ -55,7 +55,7 @@ class Submissions extends Component {
   
           <div className="row my-auto justify-content-between">
   
-            <div className="col-12 col-md-3 pl-md-0 col-side-panel">
+            <div className="col-12 col-md-2 pl-md-0 col-side-panel">
   
               <div className="submission-side-panel">
   
@@ -65,30 +65,32 @@ class Submissions extends Component {
                 </div>
         
                 <div className="steps">
+
                   <div className="step one">
-                    <i className="fas fa-pencil-ruler"></i>
-                    <div>
+                    <i className="fas fa-pencil-ruler icon"></i>
+                    <div className="snippet">
                       <h5>Step One</h5>
                       <p>Create a design</p>
                     </div>
                   </div>
           
                   <div className="step two">
-                    <i className="far fa-thumbs-up"></i>
-                    <div>
+                    <i className="far fa-thumbs-up icon"></i>
+                    <div className="snippet">
                       <h5>Step Two</h5>
-                      <p>Submit design and wait for our approval</p>
-                      <a href="">Terms</a>
+                      <p>Submit design and wait for approval</p>
+                      {/* <a href="">Terms</a> */}
                     </div>
                   </div>
           
                   <div className="step three">
-                    <i className="fas fa-trophy"></i>
-                    <div>
+                    <i className="fas fa-trophy icon"></i>
+                    <div className="snippet">
                       <h5>Step Three</h5>
-                      <p>Users will vote on designs, top design gets thier item added to the store for a month, thier submission mailed to them, and recieve a percent of the profit from thier items sales.</p>
+                      <p>Top voted designs creator will recieve their printed design as well as profit from sales of thier item</p>
                     </div>
                   </div>
+
                 </div>
   
                 <div className="fill"></div>
@@ -106,7 +108,7 @@ class Submissions extends Component {
   
             </div>
   
-            <div className="col-12 col-md-9 px-md-0">
+            <div className="col-12 col-md-10">
   
               <div>
                 
@@ -114,32 +116,26 @@ class Submissions extends Component {
 
                   <Route exact path={ROUTES.STORE_SUBMISSIONS} render={() =>
                     <div className="listings">
-                      <h1>
+
+                      <h1 className="month">
                         {moment().format('MMMM')} Submissions
                       </h1>
     
-                      <h5>Next Pick At End of Month <span className="badge badge-danger"><Countdown date={moment().startOf('month').add(1, 'months').format('YYYY-MM-DD')} /></span></h5>
+                      {/* <h5>Next Pick At End of Month <span className="badge badge-danger"><Countdown date={moment().startOf('month').add(1, 'months').format('YYYY-MM-DD')} /></span></h5> */}
           
-                      {/* <p>Sort by <a href="#">Top</a> <a href="#">New</a> <a href="#">Controversial</a></p> */}
-    
-                      <div className={this.state.filterBarLocation > 117 ? 'filter-blur' : ''}></div>
     
                       <div id="filters" className="filters d-flex justify-content-between">
-    
-                        <div className="badges">
-    
-                          <div className="top">
+  
+                          <div className="sorts">
+                            <div className={"badge " + (this.state.filter === 'top' ? 'badge-dark' : 'badge-light')}>Top</div>
                             <div className={"badge " + (this.state.filter === 'new' ? 'badge-dark' : 'badge-light')}>New</div>
-                            {/* TODO Hold off on this one for now! */}
-                            {/* <div className="badge badge-light">Controversial</div> */}
-                            <div className={"badge " + (this.state.filter === 'top' ? 'badge-dark' : 'badge-light')}>Top (Month)</div>
+                            <div className={"badge " + (this.state.filter === 'controversial' ? 'badge-dark' : 'badge-light')}>Controversial</div>
                           </div>
-    
-                        </div>
-    
-                        <div>
-                          <div className="badge badge-danger login-warning">Please login or sign up to vote</div>
-                        </div>
+
+                          <div className="other">
+                            <span className="timer badge badge-danger"><Countdown date={moment().startOf('month').add(1, 'months').format('YYYY-MM-DD')} /></span>
+                            <div className="login-notice badge badge-danger">Please login or sign up to vote</div>
+                          </div>
     
                       </div>
     
@@ -208,7 +204,7 @@ class SubmissionsListBase extends Component {
           null
         }
 
-        <div className="col-12 px-md-0">
+        <div className="col-12 px-0">
           <div className="think-you-can-do-better">
             <h1>Think you can do better?</h1>
             <p>Submissions are open to everyone that follows the rules of submissions and is signed up with the site. Remember, winner gets thier design printed and sent to them as well as 50% of all the net-profit that it takes in on the store.</p>
@@ -349,44 +345,47 @@ class SubmitBase extends Component {
     return(
       <div>
         <div className="submit">
-          <h1>Submit a Design</h1>
+
+          <h1 className="month">Submit a Design</h1>
           
-          <div className="card">
-
-            <div className="">Design Resources availbe to assist you with creating your mock ups</div>
-
-            <div>
-              <div className="btn btn-articles-light">
-                Download
-              </div>
-            </div>
-
+          <div className="btn btn-articles-light">
+            Download Resources
           </div>
 
           <div className="builder">
 
             <div className="preview">
+
               <div className="box"></div>
+
               <div className="thumbnails">
+
                 <div className="thumbnail">
                   <div className="main badge badge-light border">Main</div>
                 </div>
+
                 <div className="thumbnail">
 
                 </div>
+
                 <div className="thumbnail">
 
                 </div>
+
                 <div className="thumbnail">
 
                 </div>
+
                 <div className="thumbnail">
 
                 </div>
+
                 <div className="thumbnail">
 
                 </div>
+
               </div>
+
             </div>
 
             <div className="form">

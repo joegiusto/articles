@@ -72,8 +72,8 @@ class HomePageFour extends Component {
                     
                     <div className="sub-icons">
                       <i className="fas fa-bullhorn"></i>
-                      <i className="fas fa-balance-scale"></i>
-                      <i className="fas fa-ghost mr-0"></i>
+                      <i className="fas fa-balance-scale mr-0 mr-md-2"></i>
+                      <i className="fas fa-ghost mr-0 d-none d-md-inline-block"></i>
                     </div>
 
                   </div>
@@ -137,8 +137,8 @@ class HomePageFour extends Component {
                       <i className="fas fa-receipt"></i>
                     </div>
                     <div className="sub-icons reports">
-                      <i className="fas fa-money-check-alt"></i>
-                      <i className="fas fa-money-bill mr-0"></i>
+                      <i className="fas fa-money-check-alt mr-0 mr-md-2"></i>
+                      <i className="fas fa-money-bill d-none d-md-inline-block mr-0"></i>
                     </div>
                   </div>
 
@@ -171,13 +171,13 @@ class HomePageFour extends Component {
                     </div>
                     <div className="sub-icons">
                       <i className="fas fa-pencil-alt"></i>
-                      <i className="fas fa-mouse-pointer"></i>
-                      <i className="fas fa-mouse mr-0"></i>
+                      <i className="fas fa-mouse-pointer mr-0 mr-md-2"></i>
+                      <i className="fas fa-mouse d-none d-md-inline-block mr-0"></i>
                     </div>
                   </div>
 
                   <div className="title">
-                    5 Entries This Period
+                    No Entry This Period
                   </div>
 
                   <div className="text">
@@ -185,7 +185,7 @@ class HomePageFour extends Component {
                   </div>
 
                   <div className="tile-extra">
-                    0 Lifetime Entries
+                    5 Entries So Far
                   </div>
 
                 </div>
@@ -244,7 +244,7 @@ class HomePageFour extends Component {
                   <div className="text">Whenever we make changes, we will alert you here.</div>
   
                   <div className="tile-extra">
-                    &nbsp;
+                    Last Change: <span className="badge badge-light">June 2020</span>
                   </div>
 
                 </div>
@@ -276,7 +276,7 @@ class HomePageFour extends Component {
                   <div className="title">Weekly Updates</div>
                   <div className="text">Get sent an mail about everything going on with Articles. Sent out every Sunday.</div>
 
-                  <div className="radio-switch-toggle noselect">
+                  <div className="radio-switch-toggle noselect d-none">
                     <input id="false" value="false" name="newsletter" type="radio" checked/>
                     <label htmlFor="false">No</label>
 
@@ -317,7 +317,7 @@ class HomePageFour extends Component {
                   <div className="text">Manage your account and data.</div>
 
                   <div className="tile-extra">
-                    &nbsp;
+                    Updated: <span className="badge badge-light">June 2020</span>
                   </div>
 
                 </div>

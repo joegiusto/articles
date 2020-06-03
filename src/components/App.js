@@ -51,10 +51,11 @@ import TownHallPage from './Party/TownHall'
 
 import MeshPage from './Mesh'
 
-import Privacy from './Privacy'
+
 
 import SupportPage from './Support'
-import UpdatesPage from './Updates'
+import Privacy from './Support/Privacy'
+import UpdatesPage from './Support/Updates'
 import JobsPage from './Support/Jobs'
 import PressPage from './Support/Press'
 import TranslationsPage from './Support/Translations'

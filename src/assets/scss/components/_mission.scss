@@ -169,6 +169,11 @@
     justify-content: flex-end;
     align-items: center;
 
+    @include media-breakpoint-down(md) {
+      height: 100%;
+      display: none;
+    }
+
     .side-bar-new {
       height: 95%;
       width: 300px;
@@ -178,6 +183,13 @@
       overflow-y: scroll;
       display: flex;
       flex-direction: column;
+
+      @include media-breakpoint-down(md) {
+        width: 100%;
+        height: 100%;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+      }
 
       .scroll-percent {
         margin-bottom: 1rem;
@@ -759,7 +771,7 @@
   }
 }
 
-@media (min-width: 768px){
+@media (min-width: 768px) {
   .mission-page {
     .responsive-header {
       font-size: 60px;

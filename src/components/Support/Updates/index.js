@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { Helmet } from "react-helmet";
 import { connect } from "react-redux"
 import { Link } from 'react-router-dom'
-import * as ROUTES from '../../constants/routes';
+import * as ROUTES from '../../../constants/routes';
 
 class OrdersPage extends Component {
   constructor(props) {

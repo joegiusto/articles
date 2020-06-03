@@ -18,35 +18,44 @@ const Footer = (props) => (
           <div className="footer-panel">
             <div className="title">Main</div>
             <Link to={ROUTES.REPORTS}>Reports</Link>
-            <Link to={ROUTES.REPORTS}>Privacy</Link>
-            {/* <div className="title mt-3">Clothing</div>
-            <Link to={ROUTES.REPORTS}>Store</Link>
-            <Link to={ROUTES.REPORTS}>Submissions</Link> */}
+            <Link to={ROUTES.PRIVACY}>Privacy</Link>
+            <Link to={ROUTES.STORE}>Store</Link>
           </div>
         </div>
 
         <div className="col-6 col-md-auto mb-3 mb-md-0 flex-fill">
           <div className="footer-panel">
             <div className="title">News</div>
-            <Link to={ROUTES.REPORTS}>Stories</Link>
-            <Link to={ROUTES.REPORTS}>Issues</Link>
-            <Link to={ROUTES.REPORTS}>Myths</Link>
-            {/* <div className="title mt-3">Politics</div>
-            <Link to={ROUTES.REPORTS}>About</Link>
-            <Link to={ROUTES.REPORTS}>Involvements</Link> */}
+            <Link to={ROUTES.STORIES}>Stories</Link>
+            <Link to={ROUTES.ISSUES}>Issues</Link>
+            <Link to={ROUTES.MYTHS}>Myths</Link>
           </div>
         </div>
 
-        <div className="col col-auto flex-fill">
+        <div className="col-6 col-auto flex-fill">
           <div className="footer-panel fourth">
+
             <div className="title">Follow Us</div>
-            <div className="icons"><i className="fab fa-instagram"></i><i className="fab fa-youtube"></i><i className="fab fa-facebook"></i></div>
+
+            <div className="icons">
+              <a href="https://www.instagram.com/articles.media/" target="_blank" rel="noopener noreferrer">
+                <i className="fab fa-instagram"></i>
+              </a>
+              <a href="https://www.youtube.com/channel/UCeftkiTtcniDx87GqoEmFAg" target="_blank" rel="noopener noreferrer">
+                <i className="fab fa-youtube"></i>
+              </a>
+              <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+                <i className="fab fa-facebook"></i>
+              </a>
+            </div>
+
           </div>
         </div>
 
-        <div className="col col-auto flex-fill pr-md-5">
+        <div className="col-6 col-auto flex-fill align-self-end pr-md-5 mb-3 mb-md-0">
           <div className="footer-panel fifth">
-            <button className="btn btn-articles-light">Our Mission</button>
+            <div className="title">Please Read</div>
+            <Link to={ROUTES.MISSION}><button className="btn btn-articles-light mt-2">Our Mission</button></Link>
           </div>
         </div>
 
