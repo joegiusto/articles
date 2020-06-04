@@ -2,8 +2,8 @@
   // background-color: wheat;
 
   .container {
-    height: calc(100vh - 175px);
-    margin-top: -50px;
+    height: calc(100vh - 50px - 175px);
+    // margin-top: -50px;
   }
 
   .img-container {
@@ -27,6 +27,12 @@
       border: 0.5px solid #000;
       transition-duration: 500ms;
 
+      @media only screen and (max-width: 350px) {
+        position: relative;
+        border-radius: 0;
+        margin: 0;
+      }
+
       &:hover {
         border-radius: 0;
         color: white;
@@ -35,8 +41,6 @@
       }
     }
   }
-
-  
 
   h1 {
     font-family: brandon-grotesque, sans-serif;
@@ -47,8 +51,13 @@
   p, .alert, .btn {
     font-family: montserrat, sans-serif;
     font-weight: 400;
-    // font-size: 14px;
-    // margin-top: 10px;
+  }
+
+  .card-footer {
+
+    @media only screen and (max-width: 390px) {
+      flex-wrap: wrap;
+    }
   }
 
   .hover-icon {

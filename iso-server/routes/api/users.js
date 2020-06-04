@@ -1,7 +1,12 @@
 const express = require("express");
 // const router = express.Router();
 const app = express();
+
 const bcrypt = require("bcryptjs");
+
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
 const jwt = require("jsonwebtoken");
 // const keys = require("../../config/keys");
 
@@ -48,9 +53,25 @@ app.post("/register", (req, res) => {
 
       const newUser = new User({
         first_name: req.body.first_name,
+        last_name: req.body.last_name,
         email: req.body.email,
         password: req.body.password
       });
+
+      const msg = {
+        to: req.body.email,
+        from: {
+          email: "joey@articles.media",
+          name: "Articles"
+        },
+        subject: 'Welcome to Articles!',
+        text: 'Thank you for signing up!',
+        html: `
+        <strong>Hello ${req.body.first_name},</strong>
+        <br>
+        <p>Thank you for taking the time to sign up and become apart of what we are building. This is an automated email but you can respond to reach out to me with any questions or concerns you may have. Feel free to respond to this email or start send one to joey@articles.media, I just ask that you read the frequently asked questions <a href="https://articles.media">here</a> before sending anything to help cut down on repeat questions.</p>
+        `,
+      };
 
       // Hash password before saving in database
       bcrypt.genSalt(10, (err, salt) => {
@@ -59,7 +80,20 @@ app.post("/register", (req, res) => {
           newUser.password = hash;
           newUser
             .save()
-            .then(user => res.json(user))
+            .then(user => {
+
+              res.json(user)
+
+              sgMail
+                .send(msg)
+                .then(() => {}, error => {
+                  console.error(error);
+              
+                  if (error.response) {
+                    console.error(error.response.body)
+                  }
+                });
+            })
             .catch(err => console.log(err));
         });
       });

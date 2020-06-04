@@ -76,6 +76,7 @@ class SignUpFormBase extends Component {
     
     const newUser = {
       first_name: nameFirst,
+      last_name: nameLast,
       email: email,
       password: passwordOne,
       password2: passwordTwo

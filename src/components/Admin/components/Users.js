@@ -9,7 +9,11 @@ class Users extends Component {
       users: [],
       outsetComplete: 0,
       
-      zips: {},
+      zips: {
+        // Is capital for display purposes, changing this to lowercase will show in reports
+        None: 0
+        // The rest of the zips get populated once data loads
+      },
 
       republicanParty: 0,
       democratParty: 0,
@@ -44,7 +48,7 @@ class Users extends Component {
           })
         }
 
-        switch(self.state.users[i].political.party) {
+        switch(self.state.users[i].political?.party) {
           case 'republican':
             self.setState({
               republicanParty: self.state.republicanParty + 1
@@ -77,25 +81,29 @@ class Users extends Component {
         }
 
         const currentUserZip = self.state.users[i].address.zip
-
-        if (self.state.zips[currentUserZip] === undefined) {
-          self.setState({
-            zips: {
-              ...self.state.zip,
-              [self.state.users[i].address.zip]: 0
-            }
-          })
-        }
-
-        self.setState({
-          zips: {
-            ...self.state.zip,
-            [self.state.users[i].address.zip]: self.state.zips[currentUserZip] + 1
-          }
-        })
-
         console.log(self.state.zips[currentUserZip])
   
+
+        if (currentUserZip === undefined || currentUserZip === null || currentUserZip === "") {
+
+          self.setState({
+            zips: {
+              ...self.state.zips,
+              None: self.state.zips.None + 1
+            }
+          })
+
+        } else {
+
+          self.setState({
+            zips: {
+              ...self.state.zips,
+              [self.state.users[i].address.zip]: (!isNaN(self.state.zips[currentUserZip]) ? (self.state.zips[currentUserZip] + 1) : 1)
+            }
+          })
+
+        }
+
       }
 
     })
@@ -183,15 +191,16 @@ class Users extends Component {
   
           </div>
   
-          <div className="col-12 col-md-8">
+          <div className="col-12 col-md-8 mt-2 mt-md-0">
   
             <div className="table-responsive">
               <table className="table table-sm table-bordered bg-white">
                 <thead className="thead-dark">
                   <tr>
-                    <th scope="col">User ID</th>
+                    {/* <th scope="col">User ID</th> */}
                     <th scope="col">Name</th>
                     <th scope="col">State</th>
+                    <th scope="col">Party</th>
                     <th scope="col">Outset</th>
                     <th scope="col">Admin</th>
                   </tr>
@@ -200,12 +209,14 @@ class Users extends Component {
     
                   {this.state.users.map(user => (
     
-                    <tr>
-                      <th scope="row">{user._id}</th>
-                      <td>{`${user.first_name} ${user.last_name}`}</td>
+                    <tr key={user._id}>
+                      {/* <th scope="row">{user._id}</th> */}
+                      {/* <td>{`${user.first_name} ${user.last_name}`}</td> */}
+                      <td><span style={{width: '150px', display: 'inline-block'}}>{user.first_name} {user.last_name}</span> <span className="badge badge-light">{user._id}</span></td>
                       <td>{user.address.state}</td>
+                      <td>{user.political?.party || 'None'}</td>
                       <td>{user.outset === true ? 'True' : 'False'}</td>
-                      <td>{user.roles?.isAdmin === "true" ? 'True' : 'False'}</td>
+                      <td>{user.roles?.isAdmin === true ? 'True' : 'False'}</td>
                     </tr>
                     
                   ))}

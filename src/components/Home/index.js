@@ -37,7 +37,7 @@ class HomePageFour extends Component {
             <div className="photo-section">
 
               <div className="photo">
-                <img src={this.props.user?.photo_url} alt=""/>
+                <img src={this.props.user?.photo_url ? this.props.user?.photo_url : 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Black_colour.jpg/1200px-Black_colour.jpg'} alt=""/>
               </div>
 
               <div>
@@ -305,11 +305,11 @@ class HomePageFour extends Component {
 
                   <div className="icons">
                     <div className="head-icon">
-                      <i class="fas fa-toolbox"></i>
+                      <i className="fas fa-toolbox"></i>
                     </div>
                     <div className="sub-icons">
-                      <i class="fas fa-tools"></i>
-                      <i class="fas fa-cog mr-0"></i>
+                      <i className="fas fa-tools"></i>
+                      <i className="fas fa-cog mr-0"></i>
                     </div>
                   </div>
 
@@ -325,7 +325,7 @@ class HomePageFour extends Component {
 
             </div>
 
-            {this.props.user?.roles.isAdmin === "true" ?
+            {this.props.user?.roles?.isAdmin === true ?
             <div className="tile" style={{height: 'auto'}}>
 
               <div className="tile-header">

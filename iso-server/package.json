@@ -15,6 +15,7 @@
   },
   "private": true,
   "dependencies": {
+    "@sendgrid/mail": "^7.1.1",
     "aws-sdk": "^2.673.0",
     "bcrypt": "^4.0.1",
     "bcryptjs": "^2.4.3",
