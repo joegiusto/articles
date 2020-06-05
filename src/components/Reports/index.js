@@ -571,6 +571,10 @@ class Reports extends Component {
 
             </div>
 
+            <ExampleChart chartTitle="Test" type="line"></ExampleChart>
+
+            {/* <ExampleChart chartTitle="Test" type="line"></ExampleChart> */}
+
             {/* <div className="donation-snippet mt-3">
               <p>All donations go towards supporting the platform and encouraging more transparency and voice in American Politics.</p>
               <p><span>The next revoulution needs you!</span></p>
@@ -584,6 +588,80 @@ class Reports extends Component {
     </div>
    )
   }
+}
+
+class ExampleChart extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      chartTitle: this.props.chartTitle,
+      type: this.props.type
+    };
+  }
+
+  componentDidMount() {
+    var ctx = document.getElementById(this.state.chartTitle);
+
+    new Chart(ctx, {
+        type: this.state.type,
+        data: {
+            labels: ['April', 'May', 'June', 'July', 'August', 'September'],
+            datasets: [{
+                label: '$ in Donations',
+                data: [0, 0, 0, 50, 20, 50],
+                backgroundColor: [
+                  'rgba(63, 191, 127, 0.2)'
+                ],
+                borderColor: [
+                  'rgba(63, 191, 127, 1)'
+                ],
+                borderWidth: 1,
+                lineTension: 0.1,
+            },
+            {
+              label: '$ in Expenses',
+              data: [0, 0, 0, 20, 2, 10],
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)'
+              ],
+              borderWidth: 2,
+              lineTension: 0.1,
+          }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+  }
+
+  render() {
+    return (
+      <div className="chart-component">
+        <h5>Revenue vs Expenses</h5>
+        <p>How much we are spending a month compared to how much we are making.</p>
+        <span className="badge badge-dark border mr-1">1 Year</span>
+        <span className="badge badge-light border mr-1">6 Months</span>
+        <span className="badge badge-light border mr-1">1 Month</span>
+        <span className="badge badge-light border">1 Week</span>
+        <canvas className='chart mb-3 bg-white' id={this.state.chartTitle} width="100%" height="45px"></canvas>
+
+        <h5>Payrole Comparison</h5>
+        <p>The amount of money being spent on payrole compared to revenues and expenses.</p>
+        <canvas className='chart mb-3 bg-white' id={this.state.chartTitle} width="100%" height="45px"></canvas>
+      </div>
+    )
+  }
+
 }
 
 function RevenueTable () {
@@ -646,7 +724,6 @@ function PreorderTable () {
       <table className='table articles-table table-bordered'>
         <thead>
           <tr className="table-articles-head">
-            {/* <th scope="col">Order #</th> */}
             <th scope="col">Date</th>
             <th scope="col">Name</th>
             <th scope="col">Order Summary</th>
@@ -705,28 +782,65 @@ function PreorderTable () {
 function PayrollTable () {
   return (
     <div>
-      <p className="mt-2">We currently do not have any employee under payroll but this is a sample of what an entry may look like.</p>
-      <table className="table table-sm table-hover mt-2">
-        <thead className="thead-dark">
-          <tr>
+      <table className='table articles-table table-sm table-bordered'>
+        <thead>
+          <tr className="table-articles-head">
             <th scope="col">Name</th>
-            <th scope="col">Period</th>
-            <th scope="col">Department</th>
-            <th scope="col">Amount</th>
+            <th scope="col">Role</th>
+            <th scope="col">Total</th>
+            {/* <th className='text-right' scope="col">Total</th> */}
           </tr>
         </thead>
         <tbody>
+
+          {/* {sales.map((object, i) =>
+
+            <tr key={i} className="bg-light">
+              <td>{object.date || 'test'}</td>
+              <td>{object.name}</td>
+              <td>{object.note}</td>
+              <td className='text-right'>${object.total.toFixed(2)}</td>
+            </tr>
+
+          )} */}
+
           <tr>
             <th scope="row"><Link to={'employees/42'}>Joey Giusto</Link></th>
-            <td>September</td>
-            <td>Administration</td>
-            <td>$00.00</td>
+            <td>Admin</td>
+            <td>$0.00</td>
           </tr>
-        </tbody>
-      </table>
-      <p>Click on an employee name to navagate to the employee directory</p>
-    </div>
 
+          <tr>
+            <td colSpan="1" className="border-right-0 table-articles-head">
+
+                <div className="results-dual-header">
+
+                  {/* <div className="page noselect">
+                    <i className="fas fa-chevron-circle-left"></i>
+                    Page 0/0
+                    <i style={{marginLeft: '10px'}} className="fas fa-chevron-circle-right"></i>
+                  </div> */}
+                
+                  {/* <span className="results noselect">
+                    <span>Results:</span>
+                    <span className={"result result-active"}>10</span>
+                    <span className={"result"}>50</span>
+                    <span className={"result"}>100</span>
+                    <span className={"result"}>250</span>
+                  </span> */}
+
+                </div>
+
+            </td>
+
+            <td colSpan="1" className="border-right-0 text-right table-articles-head">Total:</td>
+            <td colSpan="1" className="border-left-0 table-articles-head">$0.00</td>
+          </tr>
+
+        </tbody>
+
+      </table>
+    </div>
   )
 }
 
@@ -850,7 +964,8 @@ const StyledDonationList = (props) => (
           {/* <th scope="col">DONATION ID</th> */}
           {props.fetch === 'expenses' ? <th scope="col">File</th> : undefined}
           <th scope="col">DATE</th>
-          <th scope="col">NAME</th>
+          {props.fetch === 'expenses' ? undefined : <th scope="col">NAME</th>}
+          {/* <th scope="col">NAME</th> */}
           <th scope="col">NOTE</th>
           <th scope="col">AMOUNT</th>
         </tr>
@@ -864,7 +979,7 @@ const StyledDonationList = (props) => (
           />
         ))}
         <tr>
-          <td colSpan={props.fetch === 'expenses' ? '3' : '2'} className="border-right-0 table-articles-head">
+          <td colSpan={props.fetch === 'expenses' ? '2' : '2'} className="border-right-0 table-articles-head">
 
               <div className="results-dual-header">
 
@@ -906,10 +1021,25 @@ const StyledDonationItem = ({fetch, donation}) => (
 
     {/* <td>{moment(donation.createdAt).format('LL') }</td> */}
 
-    <td>{fetch === 'donations' ? donation.name.split(" ")[0] + " " + ( (donation.name.split(' ')[1]) ? donation.name.split(' ')[1].charAt(0) : ' ' ) : donation.name}</td>
+    {fetch === 'donations' ? 
+      <td>{fetch === 'donations' ? donation.name.split(" ")[0] + " " + ( (donation.name.split(' ')[1]) ? 
+        donation.name.split(' ')[1].charAt(0) 
+        : 
+        ' '
+        ) 
+      : 
+      donation.name}</td> 
+      : 
+      undefined 
+    }
 
     {/* <td>{donation.name.split(" ")[0] + " " + (donation.name.split(' ')[1]).charAt(0)}</td> */}
-    <td>{donation.note === "match" ? (<div><span role="img" aria-label="emoji">⭐</span>Matched</div>) : (<div>...</div>) }</td>
+    {fetch === 'donations' ?
+      <td>{donation.note === "match" ? (<div><span role="img" aria-label="emoji">⭐</span>Matched</div>) : (<div>...</div>) }</td>
+      :
+      <td>{donation.reason}</td>
+    }
+
     <td>${(donation.amount / 100).toFixed(2)}</td>
   </tr>
 )

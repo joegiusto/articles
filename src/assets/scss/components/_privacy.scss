@@ -2,6 +2,17 @@
   font-family: montserrat, sans-serif;
   font-weight: 400;
 
+  .card-wrap {
+    position: relative;
+    
+    .watcher {
+      position: absolute;
+      top: 0;
+      transform: translateY(-100%);
+      left: 1rem;
+    }
+  }
+
   .card {
     margin-bottom: 2rem;
 

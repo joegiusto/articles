@@ -9,7 +9,7 @@ $decal-color: #b06565;
 
   // Counts on small browser
   min-height: 500px;
-  
+
   // min-height: 100vh;
   // height: 100%;
   // padding-top: 8rem;
@@ -23,6 +23,19 @@ $decal-color: #b06565;
     height: 100%;
     flex-grow: 1;
     padding: 1rem 0;
+
+    .heading-font {
+      font-size: 1.1rem;
+
+      .extra {
+        position: absolute;
+        top: 0;
+        transform: translateY(-50%);
+        padding-left: 0.8rem;
+        left: 0;
+        font-size: 0.8rem;
+      }
+    }
   }
 
   .spacer {
@@ -117,6 +130,10 @@ $decal-color: #b06565;
       margin-top: 1rem;
       font-weight: bold;
       color: #000000;
+      font-family: brandon-grotesque, sans-serif;
+      font-style: normal;
+      font-weight: 900;
+      // font-size: 1rem;
     }
 
     form {

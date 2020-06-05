@@ -47,6 +47,14 @@ section.frontpage-section {
     box-shadow: 2px 2px 2px $accent-color, -4px -4px 2px $base-color;
     transition-duration: 200ms;
 
+    .search-button {
+
+      &.active {
+        background-color: #495057;
+        color: white;
+      }
+    }
+
     .background {
       position: absolute;
       z-index: -1;

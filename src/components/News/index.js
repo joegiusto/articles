@@ -42,6 +42,13 @@ function SearchHead(props) {
       <img src={background} alt="" className="background"/>
       <h1 className="title">Search</h1>
       <input id="search" name="search" value={props.searchText} onChange={props.onChange} type="text" className="form-control"/>
+
+      <div className="my-2">
+        <Link to={ROUTES.STORIES}><button className={"search-button mr-1 " + (props.pathname === "/news/stories" ? 'active' : '')}>Stories</button></Link>
+        <Link to={ROUTES.ISSUES}><button className={"search-button mr-1 " + (props.pathname === "/news/issues" ? 'active' : '')}>Issues</button></Link>
+        <Link to={ROUTES.MYTHS}><button className={"search-button mr-1 " + (props.pathname === "/news/myths" ? 'active' : '')}>Myths</button></Link>
+      </div>
+
       <p className="body">Easily access content across all of our news content and publications.</p>
 
       <div className="tags">
@@ -224,7 +231,7 @@ class Frontpage extends Component {
             </div>
 
             {this.props.location.pathname === "/news" ?
-            <SearchHead onChange={this.onChange} searchText={this.state.search}></SearchHead>
+            <SearchHead onChange={this.onChange} searchText={this.state.search} pathname={this.props.location.pathname}></SearchHead>
             :
             null
             }
@@ -238,9 +245,9 @@ class Frontpage extends Component {
                 <Switch>
                   {/* <Route exact path={ROUTES.NEWS} render={() => <h1>Front</h1>}/> */}
                   <Route exact path={ROUTES.NEWS} render={() => <JustFrontpage stories={this.props.stories} issues={this.props.issues} myths={this.props.myths}></JustFrontpage>}/>
-                  <Route exact path={ROUTES.STORIES} render={() => <Stories></Stories>}/>
+                  <Route exact path={ROUTES.STORIES} render={() => <Stories searchText={this.state.search}></Stories>}/>
                   <Route exact path={ROUTES.ISSUES} render={() => <Issues searchText={this.state.search}></Issues> }/>
-                  <Route exact path={ROUTES.MYTHS} render={() => <Myths></Myths> }/>
+                  <Route exact path={ROUTES.MYTHS} render={() => <Myths searchText={this.state.search}></Myths> }/>
                 </Switch>
   
               </div>
@@ -253,7 +260,7 @@ class Frontpage extends Component {
                   {this.props.location.pathname === "/news" ?
                   null
                   :
-                  <SearchHead onChange={this.onChange} searchText={this.state.search}></SearchHead>
+                  <SearchHead onChange={this.onChange} searchText={this.state.search} pathname={this.props.location.pathname}></SearchHead>
                   }
   
                   <div className="the-recap">

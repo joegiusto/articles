@@ -1,3 +1,15 @@
+.dark-mode {
+
+  .btn-articles-light {
+    background-color: $base-color;
+    
+    &:hover {
+      background-color: #000;
+      color: #fff;
+    }
+  }
+}
+
 .btn-articles-light {
   color: #212529;
   background-color: #fff;
