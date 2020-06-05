@@ -396,6 +396,20 @@
       }
     }
 
+    .sub-revenue, .sub-clothing, .sub-expenses {
+
+      @include media-breakpoint-down(md) {
+        display: flex;
+        overflow-x: scroll!important;
+      }
+    }
+
+    .sub-clothing {
+      div {
+        display: flex;
+      }
+    }
+
     .sub {
       cursor: pointer;
       overflow-x: scroll;
@@ -403,11 +417,14 @@
       border: solid 1px #000;
       background-color: $base-color;
       border-radius: 10px;
+
       &:empty {
         padding: .0rem;
         border: solid 0px #000;
       }
+
       .selection {
+        position: relative;
         display: inline-block;
         text-transform: capitalize;
         border: solid 2px black;
@@ -415,8 +432,26 @@
         padding: .0rem .3rem;
         margin-right: .3rem;
         font-size: 1.2rem;
+
+        &:last-child {
+          &:after {
+            content: "";
+            display: block;
+            position: absolute;
+            right: -1rem;
+            width: 1rem;
+            height: 1px;
+          }
+        }
+
         &-active {
           background-color: $accent-color;
+        }
+
+        @include media-breakpoint-down(md) {
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
       }
     }

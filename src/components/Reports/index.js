@@ -494,7 +494,7 @@ class Reports extends Component {
   
               <div className="mt-3">
                 <Link to={ROUTES.DONATE}>
-                  <button className="btn btn-articles-light btn-lg w-100 report-quick-links">
+                  <button className="btn btn-articles-light btn-lg w-100 mb-3 report-quick-links">
                     <div>
                       <i className="fas fa-money-bill"></i>
                       <span>Donate</span>
