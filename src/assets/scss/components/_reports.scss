@@ -1,5 +1,3 @@
-// @import 'bootstrap/scss/bootstrap';
-
 .content-wrap.fixed {
 
   .container {
@@ -85,7 +83,49 @@
 }
 
 .reports-page {
-  // height: 500vh;
+
+  .reports-side-menu {
+    position: sticky;
+    top: calc(100px + 1rem);
+
+    .other-tag {
+      display: block!important;
+      width: max-content;
+    }
+
+    .active {
+      background-color: $accent-color;
+      border-color: #000;
+      border-bottom: 3px solid #000;
+    }
+  }
+
+  .chart-block {
+    padding: 0.75rem;
+    background-color: white;
+    // border: 2px solid #000;
+    box-shadow: 3px 3px 2px 0px rgba(0, 0, 0, 0.6), -2px -2px 2px 0px rgba(0, 0, 0, 0.4);
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    border-top: 4px solid $accent-color;
+    border-radius: 5px;
+
+    font-family: montserrat, sans-serif;
+    font-weight: 400;
+
+    h5 {
+      font-family: brandon-grotesque, sans-serif;
+      font-style: normal;
+      font-weight: 900;
+    }
+
+    .scale {
+
+      .badge {
+        cursor: pointer;
+      }
+    }
+  }
 
   .help {
     cursor: pointer;
@@ -161,6 +201,7 @@
     font-size: 1.5rem;
     font-weight: bold;
     text-transform: uppercase;
+
     .total {
       color: black;
       text-shadow: 0px 0px 0px #000;
@@ -168,14 +209,16 @@
   }
   .live {
     position: absolute;
-    top: 5px;
-    left: 30px;
+    top: 0px;
+    left: 0.5rem;
     background-color: red;
     color: white;
     text-transform: uppercase;
     font-weight: bold;
     padding: 0.1rem 0.5rem;
     z-index: 1;
+    transform: translateY(-50%);
+    
     .recording-dot {
       $size: 0.75rem;
       margin-right: 0.3rem;
@@ -200,7 +243,7 @@
     background-color: $accent-color;
     border: solid 3px #000;
     border-bottom-width: 1px;
-    border-radius: 5px;
+    // border-radius: 5px;
     box-shadow: 0px 3px 3px -2px #000;
     margin-top: 1rem;
     position: relative;

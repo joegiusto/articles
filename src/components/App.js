@@ -22,6 +22,7 @@ import HomePageOld from './Home/components/HomePageThree'
 
 import MissionPage from './Mission';
 import ReportsPage from './Reports';
+import ReportsCharts from './Reports';
 import ReportsManagePage from './Reports/Manage';
 
 import StorePage from './Store'
@@ -174,6 +175,8 @@ class App extends Component {
   
               <Route path={ROUTES.MISSION} component={MissionPage} />
               <Route path={ROUTES.REPORTS} component={ReportsPage} exact={true}/>
+              <Route path={ROUTES.REPORTS_CHARTS} component={ReportsPage} exact={true}/>
+              <Route path={ROUTES.REPORTS_REPORT} component={ReportsPage} exact={true}/>
               <Route path={ROUTES.REPORTS_MANAGE} component={ReportsManagePage} />
         
               <Route exact path={ROUTES.STORE} component={StorePage} />

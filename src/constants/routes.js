@@ -16,6 +16,8 @@ export const HOME_OLD = '/home/old';
 
 export const MISSION = '/mission';
 export const REPORTS = '/reports';
+export const REPORTS_CHARTS = '/reports/charts';
+export const REPORTS_REPORT = '/reports/report';
 export const REPORTS_MANAGE = '/reports/manage';
 
 // Store

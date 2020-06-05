@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Helmet } from "react-helmet";
 import { connect } from 'react-redux';
 // import { DateRangePicker } from 'react-dates';
-import { Link } from "react-router-dom";
+import { Link, Switch, Route } from "react-router-dom";
 import { withFirebase } from '../Firebase';
 import { employeeList, sales, donations, expenses } from "../../sample_data/sampleData";
 
@@ -406,181 +406,207 @@ class Reports extends Component {
 
           <div className="col-12 col-md-4 col-lg-4">
 
-            <div className="static-wrapper">
-              <div className="live">
-                <span className="recording-dot d-inline-block"></span>
-                <span>Live</span>
-              </div>
-  
-              <div id='info' className={"info " + (this.state.menuExpanded ? 'expanded' : '')}>
-  
-                <div className="normal">
-                  <div className="px-2 pt-4">
-  
-                    <div>Current Balance:</div>
-                    <h2>${((this.state.totals.donations - this.state.totals.expenses) / 100 ).toFixed(2)}</h2>
-  
-                    <div className="time-container">
-                      <div className="progress">
-                        <div className="progress-bar bg-rev" role="progressbar" style={{width: (this.state.totals.donations / ((this.state.totals.donations + this.state.totals.expenses) / 100) ).toFixed(0) +"%"}} aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">{( this.state.totals.donations / ((this.state.totals.donations + this.state.totals.expenses) / 100) ).toFixed(0)}%</div>
-                        <div className="progress-bar bg-danger" role="progressbar" style={{width: (this.state.totals.expenses / ((this.state.totals.donations + this.state.totals.expenses) / 100) ).toFixed(0) + "%"}} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">{( this.state.totals.expenses / ((this.state.totals.donations + this.state.totals.expenses) / 100) ).toFixed(0)}%</div>
-                      </div>
+            <div className="reports-side-menu">
+
+              <div className="static-wrapper">
+                <div className="live">
+                  <span className="recording-dot d-inline-block"></span>
+                  <span>Live</span>
+                </div>
     
-                      <div className="text-muted">Revenue | Expenses</div>
+                <div id='info' className={"info " + (this.state.menuExpanded ? 'expanded' : '')}>
     
-                      <div className="mt-4">
+                  <div className="normal">
+                    <div className="px-2 pt-4">
     
-                        <div className="row">
+                      <div>Current Balance:</div>
+                      <h2>${((this.state.totals.donations - this.state.totals.expenses) / 100 ).toFixed(2)}</h2>
     
-                          <div className="col-12 col-xl-6">
-                            <div className="snippet positive">
-                            Revenue: ${this.state.totals.donations / 100}
-                            </div>
-                          </div>
-    
-                          <div className="col-12 col-xl-6">
-                            <div className="snippet negative">
-                            Expenses: -${this.state.totals.expenses / 100}
-                            </div>
-                          </div>
-    
+                      <div className="time-container">
+                        <div className="progress">
+                          <div className="progress-bar bg-rev" role="progressbar" style={{width: (this.state.totals.donations / ((this.state.totals.donations + this.state.totals.expenses) / 100) ).toFixed(0) +"%"}} aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">{( this.state.totals.donations / ((this.state.totals.donations + this.state.totals.expenses) / 100) ).toFixed(0)}%</div>
+                          <div className="progress-bar bg-danger" role="progressbar" style={{width: (this.state.totals.expenses / ((this.state.totals.donations + this.state.totals.expenses) / 100) ).toFixed(0) + "%"}} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">{( this.state.totals.expenses / ((this.state.totals.donations + this.state.totals.expenses) / 100) ).toFixed(0)}%</div>
                         </div>
-    
+      
+                        <div className="text-muted">Revenue | Expenses</div>
+      
+                        <div className="mt-4">
+      
+                          <div className="row">
+      
+                            <div className="col-12 col-xl-6">
+                              <div className="snippet positive">
+                              Revenue: ${this.state.totals.donations / 100}
+                              </div>
+                            </div>
+      
+                            <div className="col-12 col-xl-6">
+                              <div className="snippet negative">
+                              Expenses: -${this.state.totals.expenses / 100}
+                              </div>
+                            </div>
+      
+                          </div>
+      
+                        </div>
                       </div>
+    
                     </div>
-  
                   </div>
+    
                 </div>
-  
               </div>
-            </div>
 
-            <div className="mt-3">
-              <Link to={ROUTES.EMPLOYEES}><button className="btn btn-articles-light btn-lg w-100 report-quick-links">
-                <div>
-                  <i className="fas fa-user-tie"></i>
-                  <span>Employee Data</span>
-                </div>
-              </button></Link>
-            </div>
+              <div className="mt-3">
+                <Link to={ROUTES.REPORTS_CHARTS}>
+                  <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (this.props.location.pathname === "/reports/charts" ? 'active' : null)}>
+                    <div>
+                      <i className="fas fa-chart-line"></i>
+                      <span>Data Charts</span>
+                    </div>
+                  </button>
+                </Link>
+              </div>
+  
+              <div className="mt-3">
+                <Link to={ROUTES.REPORTS_REPORT}>
+                  <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (this.props.location.pathname === "/reports/report" ? 'active' : null)}>
+                    <div>
+                      <i className="fas fa-flag"></i>
+                      <span>Report Expense</span>
+                    </div>
+                  </button>
+                </Link>
+              </div>
 
-            <div className="mt-3">
-              <Link to={ROUTES.DONATE}>
-                <button className="btn btn-articles-light btn-lg w-100 report-quick-links">
+              {/* <div className="mt-3"> */}
+                <span className="badge badge-light border border-black other-tag mt-3 mx-auto d-inline-block">Or Check Out</span>
+              {/* </div> */}
+  
+              <div className="mt-3">
+                <Link to={ROUTES.EMPLOYEES}><button className="btn btn-articles-light btn-lg w-100 report-quick-links">
                   <div>
-                    <i className="fas fa-money-bill"></i>
-                    <span>Donate</span>
+                    <i className="fas fa-user-tie"></i>
+                    <span>Employee Data</span>
                   </div>
-                </button>
-              </Link>
-            </div>
+                </button></Link>
+              </div>
+  
+              <div className="mt-3">
+                <Link to={ROUTES.DONATE}>
+                  <button className="btn btn-articles-light btn-lg w-100 report-quick-links">
+                    <div>
+                      <i className="fas fa-money-bill"></i>
+                      <span>Donate</span>
+                    </div>
+                  </button>
+                </Link>
+              </div>
 
-            <div className="mt-3">
-              <button className="btn btn-articles-light btn-lg w-100 report-quick-links">
-                <div>
-                  <i className="fas fa-chart-line"></i>
-                  <span>Data Charts <span style={{fontSize: '0.8rem'}}>(Coming soon!)</span></span>
-                </div>
-              </button>
-            </div>
-
-            <div className="mt-3">
-              <button className="btn btn-articles-light btn-lg w-100 report-quick-links">
-                <div>
-                  <i className="fas fa-flag"></i>
-                  <span>Report Expense <span style={{fontSize: '0.8rem'}}>(Coming soon!)</span></span>
-                </div>
-              </button>
             </div>
             
           </div>
   
-          <div className="col-12 col-md-8 col-lg-8">
+          <Switch>
 
-            <div className="search">
-              
-              <div className="input-wrap reports-shadow mt-3 dual-header">
-                <div><i className="fas fa-search-dollar d-flex align-items-center fa-2x h-100 "></i></div>
-                <input className="search-input d-flex align-content-center pl-2" type="text" placeholder="Search service is currently offline"/>
-              </div>
+            <Route exact={true} path={ROUTES.REPORTS} render={() => 
+              <div className="col-12 col-md-8 col-lg-8">
 
-              {/* <div className="mt-3 reports-shadow date-input">
-
-                <div className="pt-1">
-                  <i className="fas fa-calendar-alt"></i>
-                  <span>20</span>
-                </div>
-
-              </div> */}
-            </div>
-
-            <div className="reports-side reports-shadow">
-              <div className="table-selector">
-      
-                <div className="main">
-                  {this.tableSelectorChoice('donations')}
-                  {this.tableSelectorChoice('clothing')}
-                  {this.tableSelectorChoice('payroll')}
-                  {/* <div className="d-inline-block main-seperation"><div className="wall"></div></div> */}
-                  {this.tableSelectorChoice('revenue')}
-                  {this.tableSelectorChoice('expenses')}
-                </div>
-  
-                <div className={"sub sub-donations " + (this.state.tableSelector === 'donations' ? '' : 'd-none')}>
-                  {/* For the future */}
-                </div>
-  
-                <div className={"sub sub-clothing dual-header " + (this.state.tableSelector === 'clothing' ? '' : 'd-none')}>
-                  <div>
-                    {this.subTableSelectorChoice('clothing-all', 'all')}
-                    {this.subTableSelectorChoice('clothing-originals', 'originals')}
-                    {this.subTableSelectorChoice('clothing-partnerships', 'partnerships')}
-                    {this.subTableSelectorChoice('clothing-submissions', 'submissions')}
-                    {this.subTableSelectorChoice('clothing-sponsored', 'sponsored')}
+                <div className="search">
+                  
+                  <div className="input-wrap reports-shadow mt-3 dual-header">
+                    <div><i className="fas fa-search-dollar d-flex align-items-center fa-2x h-100 "></i></div>
+                    <input className="search-input d-flex align-content-center pl-2" type="text" placeholder="Search service is currently offline"/>
                   </div>
-                  <div>
-                    {this.subTableSelectorChoice('clothing-preorders', 'preorders')}
+
+                </div>
+
+                <div className="reports-side reports-shadow">
+                  <div className="table-selector">
+          
+                    <div className="main">
+                      {this.tableSelectorChoice('donations')}
+                      {this.tableSelectorChoice('clothing')}
+                      {this.tableSelectorChoice('payroll')}
+                      {/* <div className="d-inline-block main-seperation"><div className="wall"></div></div> */}
+                      {this.tableSelectorChoice('revenue')}
+                      {this.tableSelectorChoice('expenses')}
+                    </div>
+      
+                    <div className={"sub sub-donations " + (this.state.tableSelector === 'donations' ? '' : 'd-none')}>
+                      {/* For the future */}
+                    </div>
+      
+                    <div className={"sub sub-clothing dual-header " + (this.state.tableSelector === 'clothing' ? '' : 'd-none')}>
+                      <div>
+                        {this.subTableSelectorChoice('clothing-all', 'all')}
+                        {this.subTableSelectorChoice('clothing-originals', 'originals')}
+                        {this.subTableSelectorChoice('clothing-partnerships', 'partnerships')}
+                        {this.subTableSelectorChoice('clothing-submissions', 'submissions')}
+                        {this.subTableSelectorChoice('clothing-sponsored', 'sponsored')}
+                      </div>
+                      <div>
+                        {this.subTableSelectorChoice('clothing-preorders', 'preorders')}
+                      </div>
+                    </div>
+          
+                    <div className={"sub sub-expenses " + (this.state.tableSelector === 'expenses' ? '' : 'd-none')}>
+                      {this.subTableSelectorChoice('expenses-all', 'all')}
+                      {this.subTableSelectorChoice('expenses-payroll', 'payroll', true, {tableSelector: 'payroll'})}
+                      {this.subTableSelectorChoice('expenses-production-inventory', 'inventory')}
+                      {this.subTableSelectorChoice('expenses-reoccuring', 'reoccuring')}
+                      {this.subTableSelectorChoice('expenses-utilities', 'utilities')}
+                      {this.subTableSelectorChoice('expenses-other', 'other')}
+                    </div>
+          
+                    <div className={"sub sub-payroll " + (this.state.tableSelector === 'payroll' ? '' : 'd-none')}>
+                      {/* For the future */}
+                    </div>
+          
+                    <div className={"sub sub-revenue " + (this.state.tableSelector === 'revenue' ? '' : 'd-none')}>
+                      {this.subTableSelectorChoice('revenue-all', 'all')}
+                      {this.subTableSelectorChoice('revenue-donations', 'donations', true, {tableSelector: 'donations'})}
+                      {this.subTableSelectorChoice('revenue-clothing', 'clothing', true, {tableSelector: 'clothing'})}
+                      {this.subTableSelectorChoice('revenue-grants', 'grants')}
+                      {this.subTableSelectorChoice('revenue-ads', 'ads')}
+                      {this.subTableSelectorChoice('revenue-sponsorships', 'sponsorships')}
+                    </div>
+          
                   </div>
+          
+                  {this.getTableComponent(this.state.tableSelector, this.state.subtableSelector)}
+
                 </div>
-      
-                <div className={"sub sub-expenses " + (this.state.tableSelector === 'expenses' ? '' : 'd-none')}>
-                  {this.subTableSelectorChoice('expenses-all', 'all')}
-                  {this.subTableSelectorChoice('expenses-payroll', 'payroll', true, {tableSelector: 'payroll'})}
-                  {this.subTableSelectorChoice('expenses-production-inventory', 'inventory')}
-                  {this.subTableSelectorChoice('expenses-reoccuring', 'reoccuring')}
-                  {this.subTableSelectorChoice('expenses-utilities', 'utilities')}
-                  {this.subTableSelectorChoice('expenses-other', 'other')}
-                </div>
-      
-                <div className={"sub sub-payroll " + (this.state.tableSelector === 'payroll' ? '' : 'd-none')}>
-                  {/* For the future */}
-                </div>
-      
-                <div className={"sub sub-revenue " + (this.state.tableSelector === 'revenue' ? '' : 'd-none')}>
-                  {this.subTableSelectorChoice('revenue-all', 'all')}
-                  {this.subTableSelectorChoice('revenue-donations', 'donations', true, {tableSelector: 'donations'})}
-                  {this.subTableSelectorChoice('revenue-clothing', 'clothing', true, {tableSelector: 'clothing'})}
-                  {this.subTableSelectorChoice('revenue-grants', 'grants')}
-                  {this.subTableSelectorChoice('revenue-ads', 'ads')}
-                  {this.subTableSelectorChoice('revenue-sponsorships', 'sponsorships')}
-                </div>
-      
+
               </div>
-      
-              {this.getTableComponent(this.state.tableSelector, this.state.subtableSelector)}
+            }/>
 
-            </div>
+            <Route path={ROUTES.REPORTS_CHARTS} render={() => 
+              <div className="col-12 col-md-8 col-lg-8">
+                <ExampleChart chartTitle="Test" type="line"></ExampleChart>
+              </div>
+            }/>
 
-            <ExampleChart chartTitle="Test" type="line"></ExampleChart>
+            <Route path={ROUTES.REPORTS_REPORT} render={() => 
+              <div className="col-12 col-md-8 col-lg-8">
 
-            {/* <ExampleChart chartTitle="Test" type="line"></ExampleChart> */}
+                <Link to={ROUTES.REPORTS}>
+                  <div className="border d-inline-block mt-3">
+                    <div className="btn btn-articles-light alt py-1">
+                      <i class="far fa-hand-point-left"></i>
+                      <span>Back to Table Reports</span>
+                    </div>
+                  </div>
+                </Link>
 
-            {/* <div className="donation-snippet mt-3">
-              <p>All donations go towards supporting the platform and encouraging more transparency and voice in American Politics.</p>
-              <p><span>The next revoulution needs you!</span></p>
-            </div> */}
+                <div className="mt-3">
+                  This section is currently in development, expected release date of July 1st 2020.
+                </div>
 
-          </div>
+              </div>
+            }/>
+
+          </Switch>
 
         </div>
 
@@ -606,10 +632,10 @@ class ExampleChart extends Component {
     new Chart(ctx, {
         type: this.state.type,
         data: {
-            labels: ['April', 'May', 'June', 'July', 'August', 'September'],
+            labels: [ 'July', 'August', 'September', 'October', 'November', 'December', 'January', 'Febuary', 'March', 'April', 'May', 'June' ],
             datasets: [{
                 label: '$ in Donations',
-                data: [0, 0, 0, 50, 20, 50],
+                data: [50, 0, 0, 0, 50, 0, 0, 0, 0, 100, 50, 0],
                 backgroundColor: [
                   'rgba(63, 191, 127, 0.2)'
                 ],
@@ -621,7 +647,7 @@ class ExampleChart extends Component {
             },
             {
               label: '$ in Expenses',
-              data: [0, 0, 0, 20, 2, 10],
+              data: [10.66, 0, 12.97, 0, 0, 0, 0, 0, 0, 0, 0, 7.59],
               backgroundColor: [
                   'rgba(255, 99, 132, 0.2)'
               ],
@@ -635,9 +661,18 @@ class ExampleChart extends Component {
         options: {
             scales: {
                 yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
+                  ticks: {
+                    fontFamily: "brandon-grotesque",
+                    beginAtZero: true
+                  }
+                }],
+                xAxes: [{
+                  gridLines: {
+                    display: false
+                  },
+                  ticks: {
+                    fontFamily: "brandon-grotesque",
+                  }
                 }]
             }
         }
@@ -647,21 +682,69 @@ class ExampleChart extends Component {
   render() {
     return (
       <div className="chart-component">
-        <h5>Revenue vs Expenses</h5>
-        <p>How much we are spending a month compared to how much we are making.</p>
-        <span className="badge badge-dark border mr-1">1 Year</span>
-        <span className="badge badge-light border mr-1">6 Months</span>
-        <span className="badge badge-light border mr-1">1 Month</span>
-        <span className="badge badge-light border">1 Week</span>
-        <canvas className='chart mb-3 bg-white' id={this.state.chartTitle} width="100%" height="45px"></canvas>
 
-        <h5>Payrole Comparison</h5>
-        <p>The amount of money being spent on payrole compared to revenues and expenses.</p>
-        <canvas className='chart mb-3 bg-white' id={this.state.chartTitle} width="100%" height="45px"></canvas>
+        <Link to={ROUTES.REPORTS}>
+          <div className="border d-inline-block mt-3">
+            <div className="btn btn-articles-light alt py-1">
+              <i class="far fa-hand-point-left"></i>
+              <span>Back to Table Reports</span>
+            </div>
+          </div>
+        </Link>
+
+        <div className="chart-block">
+          <h5>Revenue vs Expenses</h5>
+          <p>How much we are spending a month compared to how much we are making.</p>
+
+          <ChartBlockTimeFrame />
+
+          <canvas className='chart mb-3 bg-white' id={this.state.chartTitle} width="100%" height="45px"></canvas>
+        </div>
+
+        <div className="chart-block">
+          <h5>Payrole Comparison</h5>
+          <p>The amount of money being spent on payrole compared to revenues and expenses.</p>
+
+          <ChartBlockTimeFrame />
+
+          {/* <canvas className='chart mb-3 bg-white' id={this.state.chartTitle} width="100%" height="45px"></canvas> */}
+          <div className="badge badge-info mt-3">No Chart Added Yet</div>
+        </div>
+
+        <div className="chart-block">
+          <h5>Median USA Income vs Our Employees</h5>
+          <p>The amount of money being spent on payrole compared to revenues and expenses.</p>
+
+          <ChartBlockTimeFrame />
+
+          {/* <canvas className='chart mb-3 bg-white' id={this.state.chartTitle} width="100%" height="45px"></canvas> */}
+          <div className="badge badge-info mt-3">No Chart Added Yet</div>
+        </div>
+
+        <div className="chart-block">
+          <h5>Employee to CEO Pay Diffrence</h5>
+          <p>The % of employee worth to CEO pay. (Lowest Paid Employee, Median Employee Pay, Top Employee pay)</p>
+
+          <ChartBlockTimeFrame />
+
+          {/* <canvas className='chart mb-3 bg-white' id={this.state.chartTitle} width="100%" height="45px"></canvas> */}
+          <div className="badge badge-info mt-3">No Chart Added Yet</div>
+        </div>
       </div>
     )
   }
 
+}
+
+function ChartBlockTimeFrame (props) {
+  return (
+    <div className="scale">
+      <span className="badge badge-dark border mr-1">1 Year</span>
+      <span className="badge badge-light border mr-1">6 Months</span>
+      <span className="badge badge-light border mr-1">1 Month</span>
+      <span className="badge badge-light border">1 Week</span>
+    </div>
+  )
 }
 
 function RevenueTable () {
