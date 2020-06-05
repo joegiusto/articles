@@ -34,7 +34,7 @@ class OutsetBase extends React.Component {
       // Step One States
       // nameFirst: props.user.first_name,
       first_name: props.user?.first_name || '',
-      last_name: '',
+      last_name: props.user?.last_name || '',
       
       city: '',
       state: '',

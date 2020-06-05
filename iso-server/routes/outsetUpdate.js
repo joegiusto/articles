@@ -52,7 +52,7 @@ module.exports = (app, db) => {
       }
     }, function(err, res) {
       if (err) throw err;
-      return res.end();
+
     });
 
     });
