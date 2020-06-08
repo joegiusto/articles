@@ -31,11 +31,25 @@ const StoreItem = (props) => {
                   <span>{props.banner || '?'}</span>
               </div>
               {props.sale ? (<div className={"menu-catalog-item-sale px-4"}><span>${(props.price / 100).toFixed(2)}</span></div>) : (<span></span>)}
+
               <h5 className="mb-0 pb-1" >{props.title || <div>&nbsp;</div>}</h5>
-              {/* <!-- <div className="menu-catalog-item-photo"></div> --> */}
+
+              <div className="menu-catalog-item-photo">
+                <img className={slide === 1 ? '' : 'd-none'} src={props.product?.photos?.one} alt=""/>
+                <img className={slide === 2 ? '' : 'd-none'} src={props.product?.photos?.two} alt=""/>
+                <img className={slide === 3 ? '' : 'd-none'} src={props.product?.photos?.three} alt=""/>
+                <img className={slide === 4 ? '' : 'd-none'} src={props.product?.photos?.four} alt=""/>
+                <img className={slide === 5 ? '' : 'd-none'} src={props.product?.photos?.five} alt=""/>
+                <img className={slide === 6 ? '' : 'd-none'} src={props.product?.photos?.six} alt=""/>
+                {/* <img src="https://cdn.articles.media/store/old_sheep_mockup_back.jpg" alt=""/> */}
+                {/* <img src="https://cdn.articles.media/store/old_wolf_mockup_front.jpg" alt=""/> */}
+                {/* <img src="https://cdn.articles.media/store/old_wolf_mockup_back.jpg" alt=""/> */}
+              </div>
+
               <div className={"menu-catalog-item-photo-experimental-background backdrop-" + (color)}>
                 {/* <img src="https://i.pinimg.com/originals/c3/88/85/c388856f7e8781ab2e33cd889305cecb.jpg" alt=""/> */}
               </div>
+
               <div className={"menu-catalog-item-photo-experimental floor-" + (color)}></div>
 
               <div className="menu-catalog-item-number">{slide}</div>

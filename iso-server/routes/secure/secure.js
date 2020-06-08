@@ -129,4 +129,34 @@ module.exports = (app, db) => {
 
   });
 
+  app.post('/api/secure/toggleRole', passport.authenticate('jwt', {session: false}), (req, res) => {
+    
+    console.log(`Call to /api/secure/toggleRole made here at ${new Date()} by user ${req.body.user}`);
+
+    var o_id = new ObjectId(req.body.user);
+
+    const access = `roles.${req.body.role}`
+
+    db.collection("articles_users").updateOne({_id: o_id}, {
+      $set: {
+        [access]: req.body.permission
+      }
+    }, function(err, res) {
+      if (err) {
+        throw err
+      };
+
+    });
+    
+    return res.send({note: 'worked'});
+
+    // db.collection("articles_users").find({user_id: req.body.user}).toArray(function(err, result) {
+    //   if (err) throw err;
+    //   data.users = result
+    //   console.log(`Call to /api/secure/toggleRole done`)
+    //   return res.send(data);
+    // });
+
+  });
+
 } 

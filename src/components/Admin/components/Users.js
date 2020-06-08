@@ -140,6 +140,35 @@ class Users extends Component {
     }
   }
 
+  toggleRole(user_id, role, permission) {
+    const self = this;
+
+    // console.log(`Changing the role for user ${user_id} of ${role} to ${permission}`);
+    // const index = this.state.users.findIndex((user) => user._id === user_id)
+
+    this.setState(prevState => ({
+
+      users: prevState.users.map(
+        el => el._id === user_id ? { ...el, roles: { ...el.roles, [role]: permission} } : el
+      )
+
+    }));
+
+    axios.post('/api/secure/toggleRole', {
+      user: user_id,
+      role: role,
+      permission: permission
+    })
+    .then(function (response) {
+
+      console.log(response);
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
   render() {
 
     return (
@@ -205,6 +234,8 @@ class Users extends Component {
                     <th scope="col">Party</th>
                     <th scope="col">Outset</th>
                     <th scope="col">Admin</th>
+                    <th scope="col">Dev</th>
+                    <th scope="col">Writer</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -218,7 +249,9 @@ class Users extends Component {
                       <td>{user.address.state}</td>
                       <td>{user.political?.party || 'None'}</td>
                       <td>{user.outset === true ? 'True' : 'False'}</td>
-                      <td>{user.roles?.isAdmin === true ? 'True' : 'False'}</td>
+                      <td>{user.roles?.isAdmin === true ? <div onClick={() => this.toggleRole(user._id, 'isAdmin', false )} className="badge badge-danger">True</div> : <div onClick={() => this.toggleRole(user._id, 'isAdmin', true )} className="badge badge-success">False</div>}</td>
+                      <td>{user.roles?.isDev === true ? <div onClick={() => this.toggleRole(user._id, 'isDev', false )} className="badge badge-danger">True</div> : <div onClick={() => this.toggleRole(user._id, 'isDev', true )} className="badge badge-success">False</div>}</td>
+                      <td>{user.roles?.isWriter === true ? <div onClick={() => this.toggleRole(user._id, 'isWriter', false )} className="badge badge-danger">True</div> : <div onClick={() => this.toggleRole(user._id, 'isWriter', true )} className="badge badge-success">False</div>}</td>
                     </tr>
                     
                   ))}

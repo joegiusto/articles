@@ -55,7 +55,7 @@ class HomePageFour extends Component {
           <div className="tile-section">
 
             {
-              !this.props.user?.outset ?
+              this.props.user?.outset ?
               null
               :
               <div className="tile w-100 outset-tile">
@@ -63,7 +63,7 @@ class HomePageFour extends Component {
                   
                   <div className="tile-content">
 
-                    <div className="attention"></div>
+                    <div className="attention">Action Needed</div>
 
                     <div className="icons">
                       <div className="head-icon">
@@ -355,13 +355,12 @@ class HomePageFour extends Component {
             </div>
 
             {this.props.user?.roles?.isAdmin === true ?
-            <div className="tile" style={{height: 'auto'}}>
+            <div className="tile old-home">
 
               <div className="tile-header">
-                <div className="tile-title">Temporarily Admin Only</div>
+                <div className="tile-title">Admin Only</div>
                 <div className="tile-update"></div>
               </div>
-
 
               <div style={{height: 'auto', display: 'flex', flexDirection: 'column', padding: '3rem 0'}} className="tile-content old-home">
 

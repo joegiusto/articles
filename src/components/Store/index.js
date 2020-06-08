@@ -195,10 +195,6 @@ class StorePageBase extends Component {
 					</div>
 				</div>
 
-				<div className="is-admin">
-					<Link to={ROUTES.STORE_MANAGE}><button className="btn btn-articles-light">Admin: Manage</button></Link>
-				</div>
-
 				<div className="container-fluid d-none">
 					<div className="row feature-top mt-5">
 
@@ -259,29 +255,29 @@ class StorePageBase extends Component {
 
 					<div className='row justify-content-center'>
 
-					    <div className="featured-items d-none">
+					    <div className="featured-items">
 
-                            <h1 className="mt-2 mt-md-4 store-heading">Featured</h1>
+								<h1 className="mt-2 mt-md-4 store-heading">Featured</h1>
 
-                            <div className="dual-header">
+								<div className="dual-header">
 
-                                {this.state.loadingProducts && <div>Loading ...</div>}
-                                <div>
-                                    {this.state.products.map((product, index) => (
-            
-                                        <StoreItem setPopOutVisible={this.setPopOut} product={product} catalogId={product.uid} price={product.price} title={product.title} sale="%15" banner="Original" color="articles" />
-            
-                                    ))}
-                                    
-                                </div>
+										{this.state.loadingProducts && <div>Loading ...</div>}
+										<div>
+												{this.state.products.map((product, index) => (
 
-                                {/* <div>{this.getIndexByUid("really-a-wolf") > -1 ? this.state.firebaseClothing[this.getIndexByUid("really-a-wolf")].title : <div>Loading...</div>} </div> */}
+														<StoreItem setPopOutVisible={this.setPopOut} product={product} catalogId={product.uid} price={product.price} title={product.title} sale="%15" banner="Original" color="articles" />
 
-                            </div>
+												))}
+												
+										</div>
+
+										{/* <div>{this.getIndexByUid("really-a-wolf") > -1 ? this.state.firebaseClothing[this.getIndexByUid("really-a-wolf")].title : <div>Loading...</div>} </div> */}
+
+								</div>
 
 						</div>
 
-						<div className="featured-items">
+						<div className="featured-items d-none">
 
 							<h1 className="mt-2 mt-md-4 store-heading">Featured</h1>
 
