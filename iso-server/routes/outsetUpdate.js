@@ -17,7 +17,7 @@ module.exports = (app, db) => {
       }
     });
 
-    console.log(correctSubscriptions);
+    // console.log(correctSubscriptions);
 
     db.collection("articles_users").updateOne({_id: o_id}, {
       $set: {
@@ -43,10 +43,9 @@ module.exports = (app, db) => {
         subscriptions: correctSubscriptions,
 
         political: {
-          party: outset.partAffiliation
+          party: outset.partyAffiliation
         },
 
-        sign_up_date: moment().unix(),
         outset: true
         
       }

@@ -2,7 +2,12 @@
 
 .larger-container {
   overflow-y: hidden;
-  max-height: calc(100vh - 50px);
+  height: calc(100vh - 50px - 175px);
+  position: relative;
+
+  @include media-breakpoint-down(md) {
+    height: 100%;
+  }
 }
 
 .background-images::-webkit-scrollbar { 
@@ -80,10 +85,13 @@
   padding: 2rem;
   border-top: solid 5px $accent-color;
   box-shadow: 0 0.5px 0 0 #ffffff inset, 0 1px 2px 0 #B3B3B3;
-  // overflow: hidden;
+  
+  @include media-breakpoint-down(md) {
+    padding: 1rem;
+  }
 
   .row {
-    flex-wrap: nowrap;
+    // flex-wrap: nowrap;
     height: 100%;
 
     .col-12 {
@@ -453,6 +461,7 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+
     .shoe-size-item {
       cursor: pointer;
       flex-direction: column;
@@ -500,6 +509,18 @@
     border: solid 1px #000;
     height: 100%;
     overflow-y: scroll;
+
+    @include media-breakpoint-down(md) {
+      padding: 0.5rem;
+    }
+
+    .pick-count {
+      font-family: montserrat, sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      text-align: center;
+      padding: 0.5rem 0rem;
+    }
 
     .selection-toolbar {
       position: absolute;
@@ -845,41 +866,50 @@
     margin-top: 1rem;
     // height: calc(100vh - 4rem - 50px);
     height: auto;
-    padding-bottom: 5rem;
-    margin-bottom: 7rem;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
     position: unset;
     margin-left: auto;
     margin-right: auto;
+
     .intro-title {
       font-size: 2rem;
       letter-spacing: 0.5rem;
       line-height: 2rem;
     }
+
     .intro-message {
       font-size: 1rem;
     }
+
     .outset-details-scroll {
       overflow-y: visible;
       height: auto;
       padding-right: 1rem;
     }
+
     .oddball-explanation {
       font-size: 0.8rem;
     }
+
     .row > .col-md-6:first-child {
       border-right: none;
       border-bottom: solid 1px rgb(204, 204, 204);
       margin-bottom: 20px;
       height: auto;
     }
+
     .cut-container {
       flex-direction: column;
       justify-content: center;
+
       .female-sign, .skip-sign {
         margin-top: 0.75rem;
       }
     }
+
     .shirt-section {
+
       .clothing-tag-wrap {
         flex-basis: calc(45%);
         &.input-tag {
@@ -887,11 +917,13 @@
         }
       }
     }
+
     .step-controls {
       align-content: center;
       // width: 100%;
 
       position: fixed;
+      z-index: 1;
       background-color: white;
       bottom: 15px;
       padding: 0.5rem;
@@ -903,6 +935,7 @@
         display: flex;
         justify-content: center;
       }
+
       .step-controls-next, .step-controls-back {
 
       }
@@ -1123,9 +1156,11 @@
 
   // Step Two
   .shirt-section{
+
     .small-tag-wrap {
       position: relative;
       filter: drop-shadow(0px 0px 2px rgba(50, 50, 0, 0.5));
+
       .tag {
         cursor: pointer;
         margin-bottom: 1rem;
@@ -1209,6 +1244,7 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+
     .shoe-size-item {
       cursor: pointer;
       flex-direction: column;
@@ -1247,68 +1283,77 @@
   // End Step Two
 
   // Step Three
-  .selection-container {
-    position: relative;
-    background-color: $base-color;
-    border-radius: 5px;
-    padding: 1rem;
-    padding-top: 50px;
-    border: solid 1px #000;
-    .selection-toolbar {
-      position: absolute;
-      left: 1px;
-      top: 1px;
-      width: calc(100% - 1px);
-      height: 40px;
-      background-color: lighten($base-color, 6%);
-      .toolbar-items {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        text-align: center;
-        height: 40px;
-        .toolbar-item {
-          position: relative;
-          flex-grow: 1;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-right: solid 1px #000;
-          border-bottom: solid 1px #000;
-          // border-radius: 5px;
-          &:first-child {
-            border-left: none;
-          }
-          &:last-child {
-            border-right: none;
-          }
-          .view-track {
-            position: absolute;
-            top: 2.5px;
-            left: 2.5px;
-            line-height: 0px;
-            // background-color: white;
-            // border: solid 2px #000;
-            // border-radius: 100px;
-            .fa-times {
-              color: red;
-            }
-            .fa-check {
-              color: green;
-            }
-          }
-          &.active {
-            background-color: $base-color;
-            border-bottom: none;
-          }
-        }
+  // .selection-container {
+  //   position: relative;
+  //   background-color: $base-color;
+  //   border-radius: 5px;
+  //   padding: 1rem;
+  //   padding-top: 50px;
+  //   border: solid 1px #000;
 
-      }
-    }
-    .selection-content {
+  //   .pick-count {
+  //     font-family: montserrat, sans-serif;
+  //     font-weight: 400;
+  //     font-style: normal;
+  //   }
+
+  //   .selection-toolbar {
+  //     position: absolute;
+  //     left: 1px;
+  //     top: 1px;
+  //     width: calc(100% - 1px);
+  //     height: 40px;
+  //     background-color: lighten($base-color, 6%);
+
+  //     .toolbar-items {
+  //       display: flex;
+  //       flex-direction: row;
+  //       justify-content: space-between;
+  //       text-align: center;
+  //       height: 40px;
+
+  //       .toolbar-item {
+  //         position: relative;
+  //         flex-grow: 1;
+  //         display: flex;
+  //         align-items: center;
+  //         justify-content: center;
+  //         border-right: solid 1px #000;
+  //         border-bottom: solid 1px #000;
+  //         // border-radius: 5px;
+  //         &:first-child {
+  //           border-left: none;
+  //         }
+  //         &:last-child {
+  //           border-right: none;
+  //         }
+  //         .view-track {
+  //           position: absolute;
+  //           top: 2.5px;
+  //           left: 2.5px;
+  //           line-height: 0px;
+  //           // background-color: white;
+  //           // border: solid 2px #000;
+  //           // border-radius: 100px;
+  //           .fa-times {
+  //             color: red;
+  //           }
+  //           .fa-check {
+  //             color: green;
+  //           }
+  //         }
+  //         &.active {
+  //           background-color: $base-color;
+  //           border-bottom: none;
+  //         }
+  //       }
+
+  //     }
+  //   }
+  //   .selection-content {
       
-    }
-  }
+  //   }
+  // }
 
   .issue-recommendation {
     background-color: white;

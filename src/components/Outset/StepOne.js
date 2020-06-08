@@ -36,7 +36,7 @@ function Example(props) {
         // </button>
 
         <div ref={ref} onMouseEnter={() => {setShouldShowElement(true)}} onMouseLeave={() => {setShouldShowElement(false)}}>
-          <label for="validationTooltip02">Email</label>
+          <label htmlFor="validationTooltip02">Email</label>
           <input disabled onFocus={() => (props.changeFocus('email'))} type="text" className="form-control" id="validationTooltip03" placeholder={props.user?.email}/>
           <div className="valid-tooltip">
             Looks good!
@@ -76,7 +76,7 @@ const StepOne = (props) => (
     </div>
 
     <div className="col-md-6 mb-3">
-      <label for="validationTooltip01">First name</label>
+      <label htmlFor="validationTooltip01">First name</label>
       <input onFocus={() => (props.changeFocus('first_name'))} type="text" className="form-control" id="validationTooltip01" onChange={(e) => props.handleChange(e)} name="first_name" value={props.first_name} required/>
       <div className="valid-tooltip">
         Looks good!
@@ -84,7 +84,7 @@ const StepOne = (props) => (
     </div>
 
     <div className="col-md-6 mb-3">
-      <label for="validationTooltip02">Last name</label>
+      <label htmlFor="validationTooltip02">Last name</label>
       <input onFocus={() => (props.changeFocus('last_name'))} type="text" className="form-control" id="validationTooltip02" onChange={(e) => props.handleChange(e)} name="last_name" value={props.last_name} placeholder={""}/>
       <div className="valid-tooltip">
         Looks good!
@@ -96,7 +96,7 @@ const StepOne = (props) => (
   <div className="form-row">
 
     <div className="col-md-3 mb-3">
-      <label for="validationTooltip05">Zip</label>
+      <label htmlFor="validationTooltip05">Zip</label>
       <input onBlur={() => props.onZipBlur(props.zip)} onFocus={() => (props.changeFocus('zip'))} type="zip" className={"form-control" + (props.highlightElement === 'location' ? ' outset-highlight' : '')} id="validationTooltip05" onChange={(e) => props.handleChange(e)} name="zip" value={props.zip} placeholder=""/>
       <div className="invalid-tooltip">
         Please provide a valid zip.
@@ -104,7 +104,7 @@ const StepOne = (props) => (
     </div>
 
     <div className="col-1">
-      <label for="validationTooltip03">&nbsp;</label>
+      <label htmlFor="validationTooltip03">&nbsp;</label>
       <div style={{
         padding: '0.375rem 0',
         textAlign: 'center'
@@ -112,7 +112,7 @@ const StepOne = (props) => (
     </div>
 
     <div className="col-md-5 mb-3">
-      <label for="validationTooltip03">City / Town / Village</label>
+      <label htmlFor="validationTooltip03">City / Town / Village</label>
       <input onFocus={() => (props.changeFocus('city'))} type="text" className={"form-control" + (props.highlightElement === 'location' ? ' outset-highlight' : '')} id="validationTooltip03" onChange={(e) => props.handleChange(e)} name="city" value={props.city} placeholder=""/>
       <div className="invalid-tooltip">
         Please provide a valid city.
@@ -120,7 +120,7 @@ const StepOne = (props) => (
     </div>
 
     <div className="col-md-3 mb-3">
-      <label for="validationTooltip04">State</label>
+      <label htmlFor="validationTooltip04">State</label>
       <input onFocus={() => (props.changeFocus('state'))} type="text" className={"form-control" + (props.highlightElement === 'location' ? ' outset-highlight' : '')} id="validationTooltip04" onChange={(e) => props.handleChange(e)} name="state" value={props.state} placeholder=""/>
       <div className="invalid-tooltip">
         Please provide a valid state.
@@ -132,7 +132,7 @@ const StepOne = (props) => (
   <div className="form-row">
     
     <div className="col-md-6 mb-3">
-      <label for="validationTooltip03">Cell</label>
+      <label htmlFor="validationTooltip03">Cell</label>
       <div className="input-group mb-2">
         <div className="input-group-prepend">
           <div className="input-group-text"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/1280px-Flag_of_the_United_States.svg.png" style={{marginRight: '2px'}} height="10px"/></div>
@@ -171,7 +171,7 @@ const StepOne = (props) => (
     </div>
 
     {/* <div className="col-md-3 mb-3">
-      <label htmlFor="validationTooltip04">Age</label>
+      <label htmlhtmlFor="validationTooltip04">Age</label>
       <input onFocus={() => (props.changeFocus('age'))} type="number" className={"form-control" + (props.highlightElement === 'age' ? ' outset-highlight' : '')} id="validationTooltip04" onChange={(e) => props.handleChange(e)} name="age" value={props.age} placeholder=""/>
       <div className="invalid-tooltip">
         Please provide a valid state.
@@ -179,7 +179,7 @@ const StepOne = (props) => (
     </div> */}
 
     <div className="col-md-3 mb-3">
-      <label for="validationTooltip04">Gender</label>
+      <label htmlFor="validationTooltip04">Gender</label>
       <select onFocus={() => (props.changeFocus('gender'))} onChange={(e) => (props.handleChange(e))} value={props.gender} className="form-control" name="gender" id="">
         <option value="">Choose</option>
         <option value="male">Male</option>

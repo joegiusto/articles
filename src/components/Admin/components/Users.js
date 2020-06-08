@@ -124,7 +124,9 @@ class Users extends Component {
   // TODO - Convert this logic to server side code and use https://www.npmjs.com/package/zipcodes to build local directory as loop goes or after loop is done do one call wuth all zips to get names
   checkZipName(zip) {
     const directory = {
-      12524: 'Fishkill'
+      12524: 'Fishkill',
+      12533: "Hopewell Junction",
+      12508: "Beacon"
     }
 
     if ( Object.keys(directory).indexOf(zip) > -1 ) {

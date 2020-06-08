@@ -29,6 +29,7 @@ class Reports extends Component {
        menuExpanded: false,
        tableSelector: 'donations',
        subtableSelector: '',
+       chartPeriodSelector: '1y',
 
        firebaseData: {
         expenses: {
@@ -48,6 +49,8 @@ class Reports extends Component {
        }
 
      };
+
+     this.setChartPeriodSelector = this.setChartPeriodSelector.bind(this);
   }
 
   componentDidMount() {
@@ -307,6 +310,12 @@ class Reports extends Component {
 
     }); 
 
+  }
+
+  setChartPeriodSelector(newChartPeriod) {
+    this.setState({
+      chartPeriodSelector: newChartPeriod
+    })
   }
 
   setTableSelector(newSelector) {
@@ -583,7 +592,7 @@ class Reports extends Component {
 
             <Route path={ROUTES.REPORTS_CHARTS} render={() => 
               <div className="col-12 col-md-8 col-lg-8">
-                <ExampleChart chartTitle="Test" type="line"></ExampleChart>
+                <ExampleChart chartTitle="Test" type="line" setChartPeriodSelector={this.setChartPeriodSelector} chartPeriodSelector={this.state.chartPeriodSelector}></ExampleChart>
               </div>
             }/>
 
@@ -679,7 +688,7 @@ class ExampleChart extends Component {
     });
   }
 
-  render() {
+  render(props) {
     return (
       <div className="chart-component">
 
@@ -696,7 +705,7 @@ class ExampleChart extends Component {
           <h5>Revenue vs Expenses</h5>
           <p>How much we are spending a month compared to how much we are making.</p>
 
-          <ChartBlockTimeFrame />
+          <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} />
 
           <canvas className='chart mb-3 bg-white' id={this.state.chartTitle} width="100%" height="45px"></canvas>
         </div>
@@ -705,7 +714,7 @@ class ExampleChart extends Component {
           <h5>Payrole Comparison</h5>
           <p>The amount of money being spent on payrole compared to revenues and expenses.</p>
 
-          <ChartBlockTimeFrame />
+          <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} />
 
           {/* <canvas className='chart mb-3 bg-white' id={this.state.chartTitle} width="100%" height="45px"></canvas> */}
           <div className="badge badge-info mt-3">No Chart Added Yet</div>
@@ -715,7 +724,7 @@ class ExampleChart extends Component {
           <h5>Median USA Income vs Our Employees</h5>
           <p>The amount of money being spent on payrole compared to revenues and expenses.</p>
 
-          <ChartBlockTimeFrame />
+          <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} />
 
           {/* <canvas className='chart mb-3 bg-white' id={this.state.chartTitle} width="100%" height="45px"></canvas> */}
           <div className="badge badge-info mt-3">No Chart Added Yet</div>
@@ -725,7 +734,7 @@ class ExampleChart extends Component {
           <h5>Employee to CEO Pay Diffrence</h5>
           <p>The % of employee worth to CEO pay. (Lowest Paid Employee, Median Employee Pay, Top Employee pay)</p>
 
-          <ChartBlockTimeFrame />
+          <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} />
 
           {/* <canvas className='chart mb-3 bg-white' id={this.state.chartTitle} width="100%" height="45px"></canvas> */}
           <div className="badge badge-info mt-3">No Chart Added Yet</div>
@@ -739,10 +748,10 @@ class ExampleChart extends Component {
 function ChartBlockTimeFrame (props) {
   return (
     <div className="scale">
-      <span className="badge badge-dark border mr-1">1 Year</span>
-      <span className="badge badge-light border mr-1">6 Months</span>
-      <span className="badge badge-light border mr-1">1 Month</span>
-      <span className="badge badge-light border">1 Week</span>
+      <span onClick={() => props.setChartPeriodSelector('1y')} className={"badge border mr-1 " + (props.chartPeriodSelector === "1y" ? 'badge-dark' : 'badge-light')}>1 Year</span>
+      <span onClick={() => props.setChartPeriodSelector('6m')} className={"badge border mr-1 " + (props.chartPeriodSelector === "6m" ? 'badge-dark' : 'badge-light')}>6 Months</span>
+      <span onClick={() => props.setChartPeriodSelector('1m')} className={"badge border mr-1 " + (props.chartPeriodSelector === "1m" ? 'badge-dark' : 'badge-light')}>1 Month</span>
+      <span onClick={() => props.setChartPeriodSelector('1w')} className={"badge border " + (props.chartPeriodSelector === "1w" ? 'badge-dark' : 'badge-light')}>1 Week</span>
     </div>
   )
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import { isValidPhoneNumber } from 'react-phone-number-input'
 import axios from 'axios';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import * as outsetPhotos from './outsetPhotos';
 import * as ROUTES from '../../constants/routes';
@@ -36,17 +37,18 @@ class OutsetBase extends React.Component {
       first_name: props.user?.first_name || '',
       last_name: props.user?.last_name || '',
       
-      city: '',
-      state: '',
-      zip: '',
-      cell: '',
-      age: '',
-      gender: '',
+      zip: props.user?.address?.zip || '',
+      city: props.user?.address?.city || '',
+      state:  props.user?.address?.state ||'',
+      
+      cell: props.user?.cell || '',
+      age: moment.unix(props.user?.birth_date).format('MM-DD-YYYY') || '',
+      gender: props.user?.gender || '',
 
       // Step Two States
-      clothingCut: '', 
-      shirtSize: '',
-      shoeSize: '',
+      clothingCut: props.user?.clothing?.cut || '', 
+      shirtSize: props.user?.clothing?.shirt || '',
+      shoeSize: props.user?.clothing?.shoe || '',
 
       // Step Three States
       subscriptions: [],
@@ -223,7 +225,14 @@ class OutsetBase extends React.Component {
           //   console.log(error);
           // });
 
-          axios.get(url)
+          var instance = axios.create();
+          delete instance.defaults.headers.common['Authorization'];
+
+          // instance.get("http://api.com");
+
+          instance.get(url, {}, {
+            'Accept': 'application/json',
+          })
             .then(function (response) {
 
               // handle success
@@ -384,27 +393,12 @@ class OutsetBase extends React.Component {
     this.setState({step: this.state.step - 1 })
   }
 
-  changeFirst(newValue) {
-    this.setState({
-      nameFirst: newValue,
-    });
-  }
-
   handleCellTwo(event) {
     const target = event.target;
     const value = target.value;
     const name = target.name;
  
     this.setState({ [name]: this.state.cell.replace(/\D[^\.]/g, "") });
-  }
-
-  // changeCell(f) {
-  //   f_val = f.value.replace(/\D[^\.]/g, "");
-  //   f.value = f_val.slice(0,3)+"-"+f_val.slice(3,6)+"-"+f_val.slice(6);
-  // }
-
-  log(string) {
-    console.log(string);
   }
 
   changeFocus(focus) {
@@ -416,16 +410,16 @@ class OutsetBase extends React.Component {
 
   renderReasonForInformation(focus) {
     switch(focus) {
-      case 'firstName':
-        return "We use your first name to address you across the site and in emails. Only your first name is visble to other users."
-      case 'lastName':
-        return (<div>Again, we just use your last name to address you across the site and in emails. This will <b>not</b> be visble to other users.</div> )
-      case 'city':
-        return "We use this info to recommend popular stories in your area and get an idea of where our users live."
+      case 'first_name':
+        return "We use your first name to address you on the site and in emails. Only your first name is visble to other users if you decide to post or submit any content."
+      case 'last_name':
+        return (<div>This will <b>not</b> be visble to other users. We just use your last name to address you on the site and in emails.</div>)
+      case 'city' :
+        return "We use this info to suggest news content and ads from your area and to get an idea of where our users base lives."
       case 'state':
-        return "We use this info to recommend popular stories in your area and get an idea of where our users live."
+        return "We use this info to suggest news content and ads from your area and to get an idea of where our users base lives."
       case 'zip':
-        return "We use this info to recommend popular stories in your area and get an idea of where our users live."
+        return "We use this info to suggest news content and ads from your area and to get an idea of where our users base lives."
       case 'cell':
         return (<span>By entering your cell phone number we can send you minimal updates about whats going on with Articles.<hr/><span style={{fontSize: '0.85rem'}} className="text-muted">Text messaging rates may apply - If you have unlimited text messaging then you are good 👍</span></span>)
       case 'age':
@@ -531,7 +525,7 @@ class OutsetBase extends React.Component {
         )
       case 1:
         return (
-          <div className="intro-message"><b>{this.state.nameFirst}</b>, that's a nice name! We just want to collect a little more information on you. Click an input to learn what we will do with that info.</div>
+          <div className="intro-message"><b>{this.state.first_name}</b>, that's a nice name! We just want to collect a little more information on you. Click an input to learn what we will do with that info.</div>
         )
       case 2: 
         return (
@@ -621,7 +615,7 @@ class OutsetBase extends React.Component {
 
 
 
-        <div className="larger-conainer">
+        <div className="larger-container">
 
           {/* <div className="what-i-need"></div> */}
 

@@ -50,9 +50,38 @@ class HomePageFour extends Component {
           </div>
         </div>
 
-        <div className="container-fluid">
+        <div className="container-fluid">     
 
           <div className="tile-section">
+
+            {
+              !this.props.user?.outset ?
+              null
+              :
+              <div className="tile w-100 outset-tile">
+                <Link to={ROUTES.OUTSET}>
+                  
+                  <div className="tile-content">
+
+                    <div className="attention"></div>
+
+                    <div className="icons">
+                      <div className="head-icon">
+                        <i className="fas fa-road"></i>
+                      </div>
+
+                      <div className="sub-icons">
+                        <i className="fas fa-hiking mr-0"></i>
+                      </div>
+                    </div>
+
+                    <div className="title">Get started with Articles</div>
+                    <div className="text">Please complete your outset to finish setting up your account</div>
+
+                  </div>
+                </Link>
+              </div>
+            }
 
             <div className="tile">
 

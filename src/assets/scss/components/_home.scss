@@ -126,6 +126,30 @@
           overflow: visible;
         }
 
+        .attention {
+          position: absolute;
+          top: 0;
+          left: 0;
+          margin: 1rem;
+          width: 10px;
+          height: 10px;
+          background-color: black;
+          border-radius: 100px;
+          animation-name: grow-shrink;
+          animation-duration: 1s;
+          animation-iteration-count: infinite;
+          animation-direction: alternate;
+
+          @keyframes grow-shrink {
+            from {
+              transform: scale(0.7);
+            }
+            to {
+              transform: scale(1.3);
+            }
+          }
+        }
+
         .icons {
           position: relative;
           z-index: 5;

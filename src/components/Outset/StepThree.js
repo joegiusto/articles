@@ -207,7 +207,7 @@ function StepThree(props) {
         {renderTab(props.uiStuff.activeTab)}
       </div> */}
 
-      Pick at least three to continue {props.subscriptions.length || 0}/3
+      <div className="pick-count">Pick at least three to continue <span className="badge badge-dark">{props.subscriptions.length || 0}/3</span></div>
 
       {props.allIssues?.length > 0 ? 
 
