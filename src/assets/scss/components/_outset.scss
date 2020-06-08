@@ -109,6 +109,7 @@
   }
 
   .intro {
+
     &-title {
       font-family: brandon-grotesque, Helvetica, sans-serif;
       font-size: 4.5rem;
@@ -119,6 +120,7 @@
       text-transform: uppercase;
       color: rgb(0, 0, 0);
     }
+
     &-message {
       margin-top: 15px;
       font-family: OpenSansRegular, Helvetica, sans-serif;
@@ -130,6 +132,7 @@
       text-transform: none;
       color: #44555F;
     }
+    
     &-placeholder {
       &-container {
         text-align: center;

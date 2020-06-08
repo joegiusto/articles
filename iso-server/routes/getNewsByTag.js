@@ -1,5 +1,5 @@
 module.exports = (app, db) => {
-  app.post('/getNewsByTag', (req, res) => {
+  app.post('/api/getNewsByTag', (req, res) => {
 
     console.log("Call to /api/getNewsByTag at" + new Date());
     console.log(req.body.tag);
