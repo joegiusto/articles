@@ -1,6 +1,7 @@
 const initialState = {
   colorModeDark: false,
-  sideMenuFixed: false
+  sideMenuFixed: false,
+  userSubscriptions: false
 };
 export default function(state = initialState, action) {
   switch (action.type) {
@@ -14,6 +15,11 @@ export default function(state = initialState, action) {
         ...state,
         colorModeDark: !state.colorModeDark
       };
+    case 'TOGGLE_USER_SUBSCRIPTIONS':
+      return {
+        ...state,
+        userSubscriptions: !state.userSubscriptions
+      }
     default:
       return state;
   }

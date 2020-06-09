@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../../../constants/routes'
+import { toggleUserSubscriptions } from '../../../actions/siteActions'
 
 const Issues = (props) => {
 
@@ -15,12 +16,85 @@ const Issues = (props) => {
 
     <div className="issues-head">
       <h1 className="title">Issues</h1>
-      <p className="body">Overview of the most pressing issues and status updates on them.</p>
+      <p className="body">Overview of the most pressing issues and status updates on them. {props.site?.userSubscriptions ? "Only works on All Issues sort" : "some"}</p>
+    </div>
+
+    <div className="subscription-badges noselect mt-3">
+      <div onClick={() => props.toggleUserSubscriptions()} className={"badge border " + (props.site?.userSubscriptions === true ? 'badge-dark ' : 'badge-light ') + (props.user_subscriptions?.length > 0 ? '' : 'd-none')}>My Subscriptions</div>
+      <div onClick={() => props.toggleUserSubscriptions()} className={"ml-1 badge border " + (props.site?.userSubscriptions === false ? 'badge-dark' : 'badge-light')}>All Issues</div>
     </div>
 
     <div className="row mb-4">
 
-      {props.searchText !== "" ? 
+      {props.site.userSubscriptions ? 
+      props.user_subscriptions ?
+      (props.user_subscriptions.map((issue, i) => (
+        <GzyCard
+        issue={issue}
+        podcast={true}
+        podcastDay=""
+        podcastLink=""
+        topText="Rising Cost"
+        // midText={issue?.news_title}
+        bottomText="The Unspoken Issues"
+        backgroundImage={issue.hero_url}
+        />
+      )))
+      : 
+      <div>Issues Loading...</div>
+      :
+      props.searchText !== "" ? 
+
+        filterByValue(props.issues?.issues, props.searchText).map((issue, i) => (
+          <GzyCard
+          issue={issue}
+          podcast={true}
+          podcastDay=""
+          podcastLink=""
+          topText="Rising Cost"
+          // midText={issue?.news_title}
+          bottomText="The Unspoken Issues"
+          backgroundImage={issue.hero_url}
+          />
+        ))
+
+      :
+
+        props.issues?.issues ?
+        (props.issues?.issues.map((issue, i) => (
+          <GzyCard
+          issue={issue}
+          podcast={true}
+          podcastDay=""
+          podcastLink=""
+          topText="Rising Cost"
+          // midText={issue?.news_title}
+          bottomText="The Unspoken Issues"
+          backgroundImage={issue.hero_url}
+          />
+        )))
+        : 
+        <div>Issues Loading...</div>
+
+      } 
+
+      {/* {props.user_subscriptions ?
+      (props.user_subscriptions.map((issue, i) => (
+        <GzyCard
+        issue={issue}
+        podcast={true}
+        podcastDay=""
+        podcastLink=""
+        topText="Rising Cost"
+        // midText={issue?.news_title}
+        bottomText="The Unspoken Issues"
+        backgroundImage={issue.hero_url}
+        />
+      )))
+      : 
+      <div>Issues Loading...</div>} */}
+
+      {/* {props.searchText !== "" ? 
 
         filterByValue(props.issues?.issues, props.searchText).map((issue, i) => (
           <GzyCard
@@ -51,7 +125,7 @@ const Issues = (props) => {
       : 
       <div>Issues Loading...</div>
         
-      }
+      } */}
 
       
 
@@ -155,9 +229,12 @@ function GzyCard (props) {
 }
 
 const mapStateToProps = state => ({
-  issues: state.issues
+  issues: state.issues,
+  site: state.site,
+  user_subscriptions: state.auth.user_details.subscriptionsFetched
 });
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  { toggleUserSubscriptions } 
 )(Issues);

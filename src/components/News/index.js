@@ -39,9 +39,20 @@ function FlintCounter() {
 function SearchHead(props) {
   return(
     <div className={"search-head"}>
+
       <img src={background} alt="" className="background"/>
+
       <h1 className="title">Search</h1>
-      <input id="search" name="search" value={props.searchText} onChange={props.onChange} type="text" className="form-control"/>
+
+      <input 
+      id="search" 
+      name="search" 
+      value={props.searchText} 
+      onChange={props.onChange} 
+      type="text" 
+      className="form-control"
+      placeholder={props.userSubscriptions ? "Only works on 'All Issues' sort" : ""}
+      />
 
       <div className="my-2">
         <Link to={ROUTES.STORIES}><button className={"search-button mr-1 " + (props.pathname === "/news/stories" ? 'active' : '')}>Stories</button></Link>
@@ -231,7 +242,7 @@ class Frontpage extends Component {
             </div>
 
             {this.props.location.pathname === "/news" ?
-            <SearchHead onChange={this.onChange} searchText={this.state.search} pathname={this.props.location.pathname}></SearchHead>
+            <SearchHead userSubscriptions={this.props.site?.userSubscriptions} onChange={this.onChange} searchText={this.state.search} pathname={this.props.location.pathname}></SearchHead>
             :
             null
             }
@@ -260,7 +271,7 @@ class Frontpage extends Component {
                   {this.props.location.pathname === "/news" ?
                   null
                   :
-                  <SearchHead onChange={this.onChange} searchText={this.state.search} pathname={this.props.location.pathname}></SearchHead>
+                  <SearchHead userSubscriptions={this.props.site?.userSubscriptions} onChange={this.onChange} searchText={this.state.search} pathname={this.props.location.pathname}></SearchHead>
                   }
   
                   <div className="the-recap">
@@ -397,7 +408,8 @@ class Frontpage extends Component {
 const mapStateToProps = state => ({
   issues: state.issues,
   stories: state.stories,
-  myths: state.myths
+  myths: state.myths,
+  site: state.site
 });
 
 export default connect(

@@ -129,8 +129,6 @@ class Donations extends Component {
           date: moment().unix(),
         }
       })
-  
-      
 
     } else {
 
