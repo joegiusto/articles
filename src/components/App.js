@@ -70,7 +70,7 @@ import PasswordForgetPage from './PasswordForget';
 import MailPage from './Mail';
 
 import AdminPage from './Admin';
-// import DonatePage from './Donate';
+import DonatePage from './Donate';
 
 import PlaygroundPage from './Playground';
 import Chat from './Chat';
@@ -243,7 +243,7 @@ class App extends Component {
               <Route exact path={ROUTES.ADMIN_EXPENSES} component={AdminPage} />
               <Route exact path={ROUTES.ADMIN_SOCKET} component={AdminPage} />
 
-              {/* <Route path={ROUTES.DONATE} component={DonatePage} /> */}
+              <Route path={ROUTES.DONATE} component={DonatePage} />
   
               <Route path={ROUTES.MAIL} component={MailPage} />
               <Route path={ROUTES.MESH} component={MeshPage} />

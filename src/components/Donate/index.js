@@ -3,9 +3,15 @@ import { compose } from 'recompose';
 import { withAuthorizationHide } from '../Session';
 import { withFirebase } from '../Firebase';
 
+import { connect } from "react-redux";
+
 import * as ROLES from '../../constants/roles';
 import moment from 'moment';
+import {CardElement, ElementsConsumer} from '@stripe/react-stripe-js';
 
+import ArticlesBackground from '../../assets/img/banner.jpg'
+import power from '../../assets/img/Store/power.png'
+  
 const STRIPE_PUBLIC_KEY = 'pk_live_VE6HtyhcU3HCa6bin4uKgFgL00jeOY6SEW'; // TODO: PUT YOUR STRIPE PUBLISHABLE KEY HERE
 const FIREBASE_FUNCTION = 'https://us-central1-articles-1776.cloudfunctions.net/charge/'; // TODO: PUT YOUR FIREBASE FUNCTIONS URL HERE
 
@@ -15,12 +21,138 @@ const elements = stripe.elements();
 const charge_amount = 1000;
 const charge_currency = 'usd';
 
+const CARD_OPTIONS = {
+  iconStyle: 'solid',
+  style: {
+    base: {
+      iconColor: '#c4f0ff',
+      color: '#fff',
+      fontWeight: 500,
+      fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
+      fontSize: '16px',
+      fontSmoothing: 'antialiased',
+      ':-webkit-autofill': {color: '#fce883'},
+      '::placeholder': {color: '#87bbfd'},
+    },
+    invalid: {
+      iconColor: '#ffc7ee',
+      color: '#ffc7ee',
+    },
+  },
+};
+
+const CardField = ({onChange}) => (
+  <fieldset className="FormGroup">
+    <div className="FormRow">
+      <CardElement options={CARD_OPTIONS} onChange={onChange} />
+    </div>
+  </fieldset>
+);
+
+class NewDonateBase extends Component {
+  constructor (props) {
+    super(props);
+
+    this.state = {
+      
+    };
+
+  }
+
+  componentWillUnmount() {
+    console.log("Something has to happen here because of crash")
+  }
+
+  onChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  componentDidMount() {
+
+  }
+  
+  render(props) {
+    return (
+      <div className="donate-page">
+
+        <div className="donate-form">
+          <div className="inner">
+
+            {/* <img src={power} alt="" className="power"/> */}
+
+            <div className="title">Name</div>
+            <input className="form-control" type="text" value={`${this.props.user?.first_name} ${this.props.user?.last_name}` || ''}/>
+
+            <div className="title">Amount:</div>
+            <div className="amount-group">
+              <input className="form-control" type="text" placeholder="$0.00"/>
+              <button className="btn btn-articles-light">$1</button>
+              <button className="btn btn-articles-light">$5</button>
+              <button className="btn btn-articles-light">$10</button>
+              <button className="btn btn-articles-light">$20</button>
+              <button className="btn btn-articles-light">$50</button>
+            </div>
+
+            <div className="title">Card Info:</div>
+            <input className="form-control" type="text"/>
+
+            <img src={power} alt="" className="power mt-4"/>
+            <div className="btn btn-articles-light alt d-block mx-auto mt-4">Donate</div>
+
+          </div>
+        </div>
+
+        <div className="intro-section">
+
+          <img src={ArticlesBackground} alt=""/>
+
+          <div className="container">
+            <div className="row">
+              
+              <div className="col-12 col-md-5">
+                <div className="info">
+                  <div className="blur"></div>
+                  <div className="title">Thinking About Donating?</div>
+                  <div className="text">fijewbfewuibfewuibwfe wbuefiubewf bewfiu bewiu bfewiubfewi8u ebwuifew buiewb uiew bfu iewbfeiwu b efwiub efwiube wfi</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <div className="other-ways-section">
+          <div className="container">
+            <div className="row">
+              <div className="col-12 col-md-5">
+                <div className="title">
+                  Other Ways To Support
+                </div>
+                <div className="text">
+                  Besides donating there are other ways to support us while recving something in return!
+                </div>
+                <ul className="mt-3">
+                  <li>Buy Merchandise</li>
+                  <li>Pay To Hide Ads</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    );
+  }
+}
+
 const NoError = (props) => (
   <h1>Test</h1>
 )
 
 const DonatePage = (props) => (
   <div>
+    <NewDonate></NewDonate>
     <div className="mt-5 container-fluid container-custom">
       <div className="row justify-content-center">
 
@@ -67,116 +199,7 @@ class App extends Component {
   };
 
   componentDidMount() {
-    const elForm = document.getElementById('form');
-    const elPaymentButton = document.getElementById('payment-request-button');
-    const elCard = document.getElementById('card-element');
-    const elError = document.getElementById('error');
-    const elProcessing = document.getElementById('processing');
-    const elThanks = document.getElementById('thanks');
-
-    // Custom styling can be passed to options when creating an Element.
-    // (Note that this demo uses a wider set of styles than the guide below.)
-    var style = {
-      base: {
-        color: '#32325d',
-        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-        fontSmoothing: 'antialiased',
-        fontSize: '16px',
-        '::placeholder': {
-          color: '#aab7c4'
-        }
-      },
-      invalid: {
-        color: '#fa755a',
-        iconColor: '#fa755a'
-      }
-    };
-
-    var card = elements.create('card', {style: style});
-    card.mount('#card-element');
-
-    // Handle real-time validation errors from the card Element.
-    card.addEventListener('change', function(event) {
-      var displayError = elError;
-      if (event.error) {
-        displayError.textContent = event.error.message;
-      } else {
-        displayError.textContent = '';
-      }
-    });
-
-    console.log(this.state.amount);
-
-    // Handle form submission.
-    var form = elForm;
-
-    // TODO Clean up this sad excuss of a file, relearn super(props), and this. bindings so I don't quit programming and drive myself crazy again...
-    var self = this;
-
-    form.addEventListener('submit', function(event) {
-      event.preventDefault();
-
-      submitCard(self.state.amount);
-
-    });
-
-    function submitCard(amount) {
-      stripe.createToken(card).then(function(result) {
-        if (result.error) {
-          // Inform the user if there was an error.
-          var errorElement = elError;
-          errorElement.textContent = result.error.message;
-        } else {
-          // Send the token to your server.
-          // stripeTokenHandler(result.token);
-          reBuiltCharge(result.token, amount);
-        }
-      });
-    }
-
-    let isSubmitting, isSuccess;
-    async function reBuiltCharge(token, newCharge) {
-
-      // Pass the received token to our Firebase function
-      let res = await charge(token, newCharge, charge_currency);
-      if (res.body.error) return elError.textContent = res.body.error;
-      console.log("Promise done");
-
-      // Card successfully charged
-      card.clear();
-      isSuccess = true;
-
-      isSubmitting = false;
-      elProcessing.style.display = 'none';
-
-      // Either display thanks or re-display form if there was an error
-      if (isSuccess === true) {
-          elThanks.style.display = 'block';
-          console.log('Form hidden, thank you!');
-      } else {
-          elForm.style.display = 'block';
-          console.log('Form should be visbile again!');
-      }
-    }
-
-    // Function used by all three methods to send the charge data to your Firebase function
-    async function charge(token, amount, currency) {
-      const res = await fetch(FIREBASE_FUNCTION, {
-          method: 'POST',
-          redirect: 'manual',
-          body: JSON.stringify({
-              token,
-              charge: {
-                  amount,
-                  currency,
-              },
-          }),
-      });
-      const data = await res.json();
-      data.body = JSON.parse(data.body);
-      return data;
-    }
-
+    
   }
   
   render() {
@@ -629,10 +652,19 @@ const DonateActivity = withFirebase(DonateActivityBase);
 
 export default DonatePage
 
-const condition = authUser =>
-authUser && !!authUser.roles[ROLES.ADMIN];
+// const condition = authUser =>
+// authUser && !!authUser.roles[ROLES.ADMIN];
 
 const NotUnlessAdmin = compose(
   // withEmailVerification,
-  withAuthorizationHide(condition),
 )(DonateForm);
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  user: state.auth.user_details,
+  errors: state.errors
+});
+
+const NewDonate = connect(
+  mapStateToProps,
+)(NewDonateBase);

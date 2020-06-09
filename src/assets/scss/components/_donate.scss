@@ -1,3 +1,136 @@
+.donate-page {
+  position: relative;
+  font-family: montserrat, sans-serif;
+  font-weight: 400;
+
+  .title {
+    position: relative;
+    font-family: brandon-grotesque, sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-control {
+    border-bottom: 2px solid #000;
+  }
+
+  .intro-section {
+    position: relative;
+    height: 800px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .other-ways-section {
+    padding: 5rem 0;
+    background-color: white;
+  }
+
+  .amount-group {
+    display: flex;
+  }
+
+  .info {
+    padding: 0.5rem;
+
+    .blur {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.8);
+      filter: blur(5px);
+    }
+
+    
+
+    .text {
+      position: relative;
+    }
+  }
+
+  .donate-form {
+    position: absolute;
+    top: 100px;
+    right: 20%;
+    z-index: 1;
+    height: calc(100% - 100px);
+    width: 30%;
+    
+    @include media-breakpoint-down(md) {
+      position: relative;
+      height: auto;
+      top: 0;
+      width: auto;
+      right: 0;
+      left: 0;
+      margin: 0.5rem;
+    }
+
+    .power {
+      // position: absolute;
+      // left: 50%;
+      // top: 0;
+      width: 175px;
+      display: block;
+      margin: 0 auto;
+      // transform: translateY(-50%) translateX(-50%);
+    }
+
+    .inner {
+      background-color: $accent-color;
+      position: sticky;
+      top: 100px;
+      padding: 16px 32px;
+      border-radius: 2rem;
+      margin-bottom: 1rem;
+      overflow-x: hidden;
+
+      @include media-breakpoint-down(md) {
+        position: relative;
+        top: 0;
+      }
+    }
+
+    .title {
+      position: relative;
+      font-family: brandon-grotesque, sans-serif;
+      font-style: normal;
+      font-weight: 900;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      margin-top: 1rem;
+      color: white;
+      z-index: 1;
+
+      &::after {
+        z-index: -10;
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -30%;
+        border-radius: 1rem;
+        background-color: black;
+        width: 300px;
+        height: 100%;
+      }
+    }
+  }
+}
 
 /**
  * The CSS shown here will not be introduced in the Quickstart guide, but shows

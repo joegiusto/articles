@@ -83,6 +83,21 @@ class Reports extends Component {
       })
     });
 
+    socket.on('deleteDonation', function(id){
+
+      self.setState({
+        firebaseData: {
+          ...self.state.firebaseData,
+          revenue: {
+            ...self.state.firebaseData.revenue,
+            donations: self.state.firebaseData.revenue.donations.filter(function( obj ) {
+              return obj._id !== id;
+            })
+          }
+        }
+      })
+    });
+
     socket.on('recieveExpense', function(msg){
       console.log(JSON.stringify(msg));
 

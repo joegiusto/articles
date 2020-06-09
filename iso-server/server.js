@@ -16,7 +16,7 @@ const mongoose = require('mongoose');
 var ObjectId = require('mongodb').ObjectId;
 var AWS = require('aws-sdk');
 const url = `mongodb+srv://joegiusto:${encodeURIComponent(process.env.MONGODB_PASSWORD)}@articles-xgwnd.mongodb.net/articles_data?retryWrites=true&w=majority`;
-// const stripe = require('stripe')(process.env.STRIPE_PASSWORD);
+const stripe = require('stripe')(process.env.STRIPE_TEST_PASSWORD);
 
 let mongooseConnectionAttempts = 1
 const mongooseConnectionAttemptsMax = 5
@@ -206,7 +206,12 @@ io.on('connection', (socket) => {
     console.log(object);
   }
 
+  function deleteDonation(id) {
+    io.emit('deleteDonation', id);
+  }
+
   socket.on('recieveDonation', (data) => {
+    console.log("Recieved a donation from somewhere")
 
     // recieveDonation({
     //   amount: 1000,
@@ -219,6 +224,24 @@ io.on('connection', (socket) => {
     // });
 
     recieveDonation(data)
+
+    // console.log(data);
+
+  });
+
+  socket.on('deleteDonation', (id) => {
+
+    // recieveDonation({
+    //   amount: 1000,
+    //   date: Math.floor(new Date().getTime()/1000.0),
+    //   note: 'Fake Donation',
+    //   uid: Date.now(),
+    //   name: 'Test',
+    //   department: 'other',
+    //   file: 'https://en.wikipedia.org/wiki/Rickrolling'
+    // });
+
+    deleteDonation(id)
 
     // console.log(data);
 
@@ -299,5 +322,25 @@ app.post('/api/addPhoto', function (req, res) {
       
     res.send('File uploaded!');
   });
+  
+});
+
+app.post('/api/charge', function (req, res) {
+
+  stripe.charges.create({
+    amount: 1000,
+    currency: 'usd',
+    description: 'Articles Website Store',
+    // id: 'tok_visa',
+    source: 'tok_visa'
+  })
+.then((charge) => {
+    console.log("Success")
+    console.log(charge)
+}).catch((err) => {
+    // charge failed. Alert user that charge failed somehow
+    console.log("Error")
+    console.log(err)
+});
   
 });

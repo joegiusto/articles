@@ -15,13 +15,13 @@ const stripePromise = loadStripe('pk_live_VE6HtyhcU3HCa6bin4uKgFgL00jeOY6SEW');
 const INITIAL_CURRENT = {
   _id: moment().unix(),
   date: moment().unix(),
-  type: '',
+  type: 'cash',
   matched: false,
   message: "",
   name: "",
   amount: 500,
   wasMatched: false,
-  createdBy: "5e90cc96579a17440c5d7d52"
+  createdBy: "5e90cc96579a17440c5d7d52",
 }
 
 class Donations extends Component {
@@ -31,6 +31,7 @@ class Donations extends Component {
     this.state = {
       donations: [],
       total: 0,
+      isFake: false,
 
       current: {
         ...INITIAL_CURRENT,
@@ -75,6 +76,12 @@ class Donations extends Component {
     socket.disconnect();
   }
 
+  changeIsFake(newValue) {
+    this.setState({
+      isFake: newValue
+    })
+  }
+
   handleCurrentChange(event) {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -104,21 +111,58 @@ class Donations extends Component {
   }
 
   cashSubmit() {
-    console.log("cash tried")
+    const self = this;
+    console.log("cash tried");
 
-    this.setState({
-      donations: [
-        ...this.state.donations,
-        this.state.current
-      ],
-      current: {
-        ...INITIAL_CURRENT,
-        _id: moment().unix(),
-        date: moment().unix(),
-      }
-    })
+    if (this.state.isFake) {
 
-    socket.emit('recieveDonation', this.state.current);
+      socket.emit('recieveDonation', this.state.current);
+
+      this.setState({
+        donations: [
+          ...this.state.donations,
+          this.state.current
+        ],
+        current: {
+          ...INITIAL_CURRENT,
+          _id: moment().unix(),
+          date: moment().unix(),
+        }
+      })
+  
+      
+
+    } else {
+
+      axios.post('/api/upsertDonation', {
+        donation: self.state.current
+      })
+      .then(function (response) {
+
+        socket.emit('recieveDonation', self.state.current);
+  
+        self.setState({
+          donations: [
+            ...self.state.donations,
+            self.state.current
+          ],
+          current: {
+            ...INITIAL_CURRENT,
+            _id: moment().unix(),
+            date: moment().unix(),
+          }
+        })
+    
+        console.log("This was called");
+        
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    }
+
+    
   }
 
   editDonation(id) {
@@ -136,11 +180,27 @@ class Donations extends Component {
   }
 
   removeDonation(id) {
-    this.setState({
-      donations: this.state.donations.filter(function( obj ) {
-        return obj._id !== id;
-      })
+    const self = this;
+
+    axios.post('/api/deleteDonation', {
+      _id: id 
+    })
+    .then(function (response) {
+
+      socket.emit('deleteDonation', id);
+
+      self.setState({
+        donations: self.state.donations.filter(function( obj ) {
+          return obj._id !== id;
+        })
+      });
+
+    })
+    .catch(function (error) {
+      console.log(error);
     });
+
+    
   }
 
   handleDayChange(day) {
@@ -213,6 +273,15 @@ class Donations extends Component {
                 </div>
               </div>
 
+              <div className="match-details">
+                <small>Is Fake?</small>
+                <div className="content">
+                  <div onClick={() => this.changeIsFake(false)} className={"match-button mr-2 " + (this.state.isFake === true ? '' : 'active')}>No</div>
+                  <div onClick={() => this.changeIsFake(true)} className={"match-button mr-2 " + (this.state.isFake ? 'active' : '')}>Yes</div>
+                  <div>Just fake on reports not database</div>
+                </div>
+              </div>
+
               <div className="form-group">
                 <textarea className="form-control" type="text" name="message" onChange={this.handleCurrentChange} value={this.state.current.message} rows="5" placeholder="Message"/>
               </div>
@@ -246,7 +315,7 @@ class Donations extends Component {
               }
 
               <div className="submit">
-                <div className={"btn btn-articles-light w-100 " + (this.state.current.type === '' ? 'disabled' : '')} onClick={() => (this.state.current.type === 'card' ? this.cardSubmit() : this.cashSubmit() ) }>Submit</div>
+                <div className={"btn btn-articles-light w-100 mb-3 " + (this.state.current.type === '' ? 'disabled' : '')} onClick={() => (this.state.current.type === 'card' ? this.cardSubmit() : this.cashSubmit() ) }>Submit</div>
               </div>
 
             </div>
