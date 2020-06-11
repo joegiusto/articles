@@ -1,16 +1,30 @@
 import React, {Component} from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import axios from 'axios';
+import moment from 'moment'
+
+import 'react-day-picker/lib/style.css';
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+
+import {
+  formatDate,
+  parseDate,
+} from 'react-day-picker/moment';
+
+// import 'moment/locale/it';
+
 import * as ROUTES from '../../../../constants/routes';
 
 const initial_state = {
   // Keep in mind any new states that are added here must be whitelisted on the server route for addNewsDocument and editNewsDocument
   news_type: "",
   news_title: "",
+  news_tagline: "",
   news_notes: "",
   news_date: new Date(),
   news_tags: [],
   hero_url: "",
+  last_update: new Date(),
 
   tagSelectOpen: false,
 
@@ -32,6 +46,8 @@ class newsAdd extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.pushNews = this.pushNews.bind(this);
+    this.handleUpdateDayChange = this.handleUpdateDayChange.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
   }
 
   componentDidMount() {
@@ -138,6 +154,20 @@ class newsAdd extends Component {
       })
     }
 
+  }
+
+  handleDateChange(day) {
+    this.setState({ 
+      last_update: day,
+      // date: moment(day, 'Y-M-D').unix() 
+    });
+  }
+
+  handleUpdateDayChange(day) {
+    this.setState({ 
+      last_update: day,
+      // date: moment(day, 'Y-M-D').unix() 
+    });
   }
 
   pushNews() {
@@ -293,7 +323,7 @@ class newsAdd extends Component {
             </div>
           </div>
 
-          <div className="col-12 col-md-6">
+          {/* <div className="col-12 col-md-6">
             <div className="form-group">
               <label for="news_date">{this.state.news_type === '' ? 'News' : this.state.news_type} Date:</label>
               <input 
@@ -308,8 +338,7 @@ class newsAdd extends Component {
                 placeholder=""
               />
             </div>
-          </div>
-          
+          </div> */}
 
           <div className="col-12 col-md-6">
 
@@ -378,8 +407,74 @@ class newsAdd extends Component {
 
             </div>
 
-          
+          </div>
 
+          <div className="col-12 col-md-6">
+            <div className="form-group">
+              <label for="news_date">News Date:</label>
+              <DayPickerInput 
+                style={{display: 'block'}}
+                onDayChange={this.handleDateChange}
+                inputProps={{className: 'form-control'}}
+                placeholder={`${formatDate(new Date(this.state.news_date))}`}
+                formatDate={formatDate}
+                parseDate={parseDate}
+                dayPickerProps={{
+                  showWeekNumbers: true,
+                  todayButton: 'Today',
+                }}
+              />
+            </div>
+          </div>
+
+          <div className="col-12 col-md-6">
+            <div className="form-group">
+              <label for="news_date">Last Update:</label>
+              <DayPickerInput 
+                style={{display: 'block'}}
+                onDayChange={this.handleUpdateDayChange}
+                inputProps={{className: 'form-control'}}
+                placeholder={`${formatDate(new Date(this.state.last_update))}`}
+                formatDate={formatDate}
+                parseDate={parseDate}
+                dayPickerProps={{
+                  showWeekNumbers: true,
+                  todayButton: 'Today',
+                }}
+              />
+            </div>
+          </div>
+          
+          {/* <div className="col-12 col-md-6">
+            <div className="form-group">
+              <label for="news_date">Last Update:</label>
+              <input 
+                type="text" 
+                className="form-control" 
+                id="news_date"
+                name="news_date" 
+                aria-describedby=""
+                value={this.state.last_update}
+                onChange={this.handleChange}
+                disabled
+                placeholder=""
+              />
+            </div>
+          </div> */}
+
+          <div className="col-12">
+            <div className="form-group">
+              <label for="news_tagline">Tagline</label>
+              <textarea 
+                className="form-control" 
+                id="news_tagline" 
+                name="news_tagline"
+                value={this.state.news_tagline}
+                onChange={this.handleChange}
+                rows="3"
+                disabled={this.state.editLoading ? 'disabled' : ''}>
+            </textarea>
+            </div>
           </div>
 
           <div className="col-12">

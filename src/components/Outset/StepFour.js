@@ -1,13 +1,19 @@
 import React from 'react';
 import articlesLogo from '../../assets/img/logo.png';
+import articlesCard from '../../assets/img/card-1.png';
 
 function PolitcalPartyCard(props) {
   return (
     <div onClick={() => (props.changeParty(props.backend_name))} className={"politcal-party-card " + props.backend_name + (props.currentParty === props.backend_name ? ' active' : '')}>
-      <img className="full-background" src={props.fullImage} alt=""/>
-      <div className="image"></div>
-      <div className="name">{props.display_name}</div>
-      <div className="info"></div>
+      <div className="body">
+        <img className="full-background" src={props.fullImage} alt=""/>
+        <div className="image"></div>
+        <img className="logo" src={props.logo} alt=""/>
+        <div className="info"></div>
+      </div>
+      <div className="footer">
+        <div className="name">{props.display_name}</div>
+      </div>
     </div>
   )
 }
@@ -15,6 +21,14 @@ function PolitcalPartyCard(props) {
 const StepFour = (props) => (
 
   <div className="party-group outset-details-scroll mb-3">
+
+    <PolitcalPartyCard 
+      {...props} 
+      display_name="Articles Party"
+      backend_name="articles"
+      fullImage={articlesCard}
+      logo={articlesLogo}
+    />
 
     <PolitcalPartyCard 
       {...props} 
@@ -75,7 +89,7 @@ const StepFour = (props) => (
     <PolitcalPartyCard 
       {...props} 
       display_name="Socialist Equality Party"
-      backend_name="socialist"
+      backend_name="socialist-equality"
       fullImage="https://api.wbez.org/v2/images/6e0286a3-3f92-44da-9d5b-bb105f7ed295.jpg?width=640&height=312&mode=FILL&threshold=0"
     />
 
@@ -88,16 +102,9 @@ const StepFour = (props) => (
 
     <PolitcalPartyCard 
       {...props} 
-      display_name="Articles Party"
-      backend_name="articles"
-      fullImage={articlesLogo}
-    />
-
-    <PolitcalPartyCard 
-      {...props} 
       display_name="Other"
       backend_name="other"
-      fullImage=""
+      fullImage="https://wallpaperaccess.com/full/318056.png"
     />
     
 

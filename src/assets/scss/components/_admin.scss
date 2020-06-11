@@ -10,8 +10,11 @@
       background-color: #000!important;
       color: white!important;
     }
+
   }
+
 }
+
 .admin-page {
   font-family: montserrat, sans-serif;
   font-weight: 400;
@@ -320,7 +323,7 @@
     .admin-sockets {
       // background-color: yellow;
 
-      .aws-photo-test {
+      .aws-photo-test, .aws-profile-photo-test {
         flex-wrap: wrap;
         display: flex;
         margin: 1rem 0;

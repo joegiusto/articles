@@ -35,7 +35,10 @@ function Example(props) {
         //   Reference element
         // </button>
 
-        <div ref={ref} onMouseEnter={() => {setShouldShowElement(true)}} onMouseLeave={() => {setShouldShowElement(false)}}>
+        <div ref={ref} 
+        // onMouseEnter={() => {setShouldShowElement(true)}} 
+        // onMouseLeave={() => {setShouldShowElement(false)}}
+        >
           <label htmlFor="validationTooltip02">Email</label>
           <input disabled onFocus={() => (props.changeFocus('email'))} type="text" className="form-control" id="validationTooltip03" placeholder={props.user?.email}/>
           <div className="valid-tooltip">

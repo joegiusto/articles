@@ -15,11 +15,19 @@ class Users extends Component {
         // The rest of the zips get populated once data loads
       },
 
+      articlesParty: 0,
       republicanParty: 0,
       democratParty: 0,
-      greenParty: 0,
+
       independentParty: 0,
-      articlesParty: 0,
+      greenParty: 0,
+      libertarianParty: 0,
+      constitutionParty: 0,
+      reformParty: 0,
+      legalMarijuanaNowParty: 0,
+      socialistEqualityParty: 0,
+      justiceParty: 0,
+      
       otherParty: 0
     };
 
@@ -49,19 +57,19 @@ class Users extends Component {
         }
 
         switch(self.state.users[i].political?.party) {
-          case 'republican':
+          case 'articles':
             self.setState({
-              republicanParty: self.state.republicanParty + 1
-             })
-             break;
+             articlesParty: self.state.articlesParty + 1
+            })
+            break;
           case 'democrat':
             self.setState({
               democratParty: self.state.democratParty + 1
              })
              break;
-          case 'green':
+          case 'republican':
             self.setState({
-              greenParty: self.state.greenParty + 1
+              republicanParty: self.state.republicanParty + 1
              })
              break;
           case 'independent':
@@ -69,9 +77,39 @@ class Users extends Component {
               independentParty: self.state.independentParty + 1
              })
              break;
-          case 'articles':
+          case 'green':
             self.setState({
-             articlesParty: self.state.articlesParty + 1
+              greenParty: self.state.greenParty + 1
+             })
+             break;
+          case 'libertarian':
+            self.setState({
+              libertarianParty: self.state.libertarianParty + 1
+             })
+             break;
+          case 'constitution':
+            self.setState({
+              constitutionParty: self.state.constitutionParty + 1
+             })
+             break;
+          case 'reform':
+            self.setState({
+              reformParty: self.state.reformParty + 1
+            })
+            break;
+          case 'legal-marijuana-now':
+            self.setState({
+              legalMarijuanaNowParty: self.state.legalMarijuanaNowParty + 1
+            })
+            break;
+          case 'socialist-equality':
+            self.setState({
+              socialistEqualityParty: self.state.socialistEqualityParty + 1
+            })
+            break;
+          case 'justice':
+            self.setState({
+              justiceParty: self.state.justiceParty + 1
             })
             break;
           default:
@@ -208,12 +246,22 @@ class Users extends Component {
                 <div className="card mt-3 mt-md-0">
                   <div className="card-header">Political</div>
                   <div className="card-body">
+
+                    <div>Articles: {(Math.floor((this.state.articlesParty / this.state.users.length) * 100))}% ({this.state.articlesParty})</div>
                     <div>Republican: {(Math.floor((this.state.republicanParty / this.state.users.length) * 100))}% ({this.state.republicanParty})</div>
                     <div>Democrat: {(Math.floor((this.state.democratParty / this.state.users.length) * 100))}% ({this.state.democratParty})</div>
-                    <div>Green: {(Math.floor((this.state.greenParty / this.state.users.length) * 100))}% ({this.state.greenParty})</div>
+
                     <div>Independent: {(Math.floor((this.state.independentParty / this.state.users.length) * 100))}% ({this.state.independentParty})</div>
-                    <div>Articles: {(Math.floor((this.state.articlesParty / this.state.users.length) * 100))}% ({this.state.articlesParty})</div>
+                    <div>Green: {(Math.floor((this.state.greenParty / this.state.users.length) * 100))}% ({this.state.greenParty})</div>
+                    <div>Libertarian: {(Math.floor((this.state.libertarianParty / this.state.users.length) * 100))}% ({this.state.libertarianParty})</div>
+                    <div>Constitution: {(Math.floor((this.state.constitutionParty / this.state.users.length) * 100))}% ({this.state.constitutionParty})</div>
+                    <div>Reform: {(Math.floor((this.state.reformParty / this.state.users.length) * 100))}% ({this.state.reformParty})</div>
+                    <div>Legal Marijuana: {(Math.floor((this.state.legalMarijuanaNowParty / this.state.users.length) * 100))}% ({this.state.legalMarijuanaNowParty})</div>
+                    <div>Socialist Equality: {(Math.floor((this.state.socialistEqualityParty / this.state.users.length) * 100))}% ({this.state.socialistEqualityParty})</div>
+                    <div>Justice: {(Math.floor((this.state.justiceParty / this.state.users.length) * 100))}% ({this.state.justiceParty})</div>
+                  
                     <div>Other: {(Math.floor((this.state.otherParty / this.state.users.length) * 100))}% ({this.state.otherParty})</div>
+
                   </div>
                 </div>
               </div>

@@ -54,7 +54,7 @@ class SignInFormBase extends Component {
     const self = this
 
     if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/subscribe");
+      this.props.history.push("/home");
     }
 
     axios.get('/api/ping')

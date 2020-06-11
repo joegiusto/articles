@@ -55,15 +55,41 @@
     position: relative;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 
-    &-badge {
-      z-index: 1;
-      position: absolute;
-      background-color: black;
-      color: white;
-      border: solid 1px #000;
-      bottom: 0px;
-      right: 0px;
-      padding: 0.2rem 0.8rem;
+    .g-card-badge {
+
+      &.covered {
+        z-index: 1;
+        position: absolute;
+        background-color: black;
+        color: white;
+        border: solid 1px #000;
+        bottom: 0px;
+        right: 0px;
+        padding: 0.2rem 0.8rem;
+      }
+
+      &.date {
+        z-index: 1;
+        position: absolute;
+        background-color: red;
+        color: white;
+        top: 0px;
+        left: 0px;
+        padding: 0.2rem 0.8rem;
+      }
+
+      &.update {
+        z-index: 1;
+        position: absolute;
+        background-color: $base-color;
+        color: black;
+        top: 0px;
+        right: 0px;
+        padding: 0.2rem 0.8rem;
+      }
+    }
+
+    &-badge {   
       // border-top-left-radius: 15px;
     }
 

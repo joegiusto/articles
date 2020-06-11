@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import { connect } from "react-redux";
 import axios from 'axios'
 import socketIOClient from 'socket.io-client'
 const ENDPOINT = "/";
@@ -11,11 +12,13 @@ class Sockets extends Component {
     this.state = {
       sockets: [],
       socketMessage: '',
-      photos: []
+      photos: [],
+      fakeImageHash: 0
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.onChangeProfile = this.onChangeProfile.bind(this);
     // this.pushSocket = this.pushSocket.bind(this);
   }
 
@@ -133,6 +136,32 @@ class Sockets extends Component {
 
   }
 
+  onChangeProfile(e) {
+    console.log(e.target.files);
+    const data = new FormData();
+
+    this.setState({
+      file: e.target.files[0],
+    }, 
+      () => {
+        data.append('file', this.state.file);
+        data.append('user', this.props.user_id);
+        
+        axios.post("/api/addProfilePhoto", data, { // receive two parameter endpoint url ,form data 
+        
+        })
+        .then(res => { // then print response status
+          console.log(res.statusText)
+          this.setState({
+            // photos: [...this.state.photos, 'profile_photos/' + this.props.user_id + '.' + this.state.file.name.split('.')[1]],
+            fakeImageHash: this.state.fakeImageHash + 1
+          })
+        })
+      }
+    )
+
+  }
+
   removePhoto(photo) {
     this.setState({
       photos: this.state.photos.filter(arrayPhoto => arrayPhoto !== photo)
@@ -163,6 +192,16 @@ class Sockets extends Component {
         <button onClick={() => this.pushTestDonation()} className="btn btn-articles-light">Fake Donation</button>
         <button onClick={() => this.pushTestExpense()} className="btn btn-articles-light">Fake Expense</button>
 
+        <div className="aws-profile-photo-test">
+
+          <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${this.props.user_id}.JPG?${this.state.fakeImageHash}`} height="150" width="150" alt=""/>
+
+          <div className="upload-photo-wrap mr-1">
+            <div className="upload-photo noselect">+</div>
+            <input onChange={this.onChangeProfile} accept=".jpg" type="file" name="myfile" />
+          </div>
+        </div>
+
         <div className="aws-photo-test">
 
           <div className="upload-photo-wrap mr-1">
@@ -188,4 +227,12 @@ class Sockets extends Component {
   }
 }
 
-export default Sockets
+// export default Sockets
+
+const mapStateToProps = state => ({
+  user_id: state.auth.user.id
+});
+
+export default connect(
+  mapStateToProps,
+)(Sockets);

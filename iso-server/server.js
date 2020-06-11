@@ -17,7 +17,7 @@ var ObjectId = require('mongodb').ObjectId;
 var AWS = require('aws-sdk');
 const url = `mongodb+srv://joegiusto:${encodeURIComponent(process.env.MONGODB_PASSWORD)}@articles-xgwnd.mongodb.net/articles_data?retryWrites=true&w=majority`;
 const stripe = require('stripe')(process.env.STRIPE_TEST_PASSWORD);
-
+const sharp = require('sharp');
 let mongooseConnectionAttempts = 1
 const mongooseConnectionAttemptsMax = 5
 
@@ -284,7 +284,7 @@ app.get('/api/ping', function (req, res) {
 });
 
 app.get('/api/photos', function (req, res) {
-  listAllObjectsFromS3Bucket('articles-website').then(results => {
+  listAllObjectsFromS3Bucket('articles-website', '').then(results => {
     console.log("Call to /api/photos/ done");
     return res.send(results);
   })
@@ -299,19 +299,80 @@ app.post('/api/addPhoto', function (req, res) {
   // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
   let sampleFile = req.files.file;
 
-  // console.log(req.files)
-  // console.log(req.files.file.type)
-
   // Use the mv() method to place the file somewhere on your server
   // sampleFile.mv(__dirname + '/photos/' + req.files.file.name, function(err) {
   //   if (err)
-  //     return res.status(500).send(err);
+  //     // return res.status(500).send(err);
+  //     console.log(err);
+  //   console.log("Complete");
+  //   // res.send('File uploaded!');
 
-  //   res.send('File uploaded!');
   // });
 
   // let albumName = 'articles-website'
   // var base64data = Buffer(sampleFile, 'binary');
+
+  var resizedPhoto = Buffer
+
+  // sharp(sampleFile.data)
+  // .resize(300, 300)
+  // .toFile(__dirname + '/photos/' + sampleFile.name.split('.')[0] + '_1.' + sampleFile.name.split('.')[1], (err, info) => { 
+  //   resizedPhoto = info;
+  //   console.log("Done");
+  //   console.log(info);
+
+  //   var params = {Bucket: 'articles-website', Key: sampleFile.name, ContentType: "image/jpeg", Body: info, ACL: "public-read"};
+  //   s3.upload(params, function(err, data) {
+  //     console.log(err, data);
+  //     if (err) {
+  //       return res.status(500).send(err);
+  //     }
+        
+  //     res.send('File uploaded!');
+  //   });
+  // });
+
+  // sharp(sampleFile.data)
+  // .resize(200, 200)
+  // .toBuffer()
+  // .then( data => {
+  //   // console.log(resizedPhoto);
+  //   // console.log("-")
+  //   // console.log(sampleFile.data)
+
+  //   var params = {Bucket: 'articles-website', Key: sampleFile.name, ContentType: "image/jpeg", Body: data, ACL: "public-read"};
+  //   s3.upload(params, function(err, data) {
+  //     console.log(err, data);
+  //     if (err) {
+  //       return res.status(500).send(err);
+  //     }
+        
+  //     res.send('File uploaded!');
+  //   });
+  // })
+  // .catch( err => { 
+  //   console.log("Fail");
+  //   console.log(err);
+  // });
+
+  // sharp(sampleFile.data)
+  // .resize(200, 200)
+  // .toBuffer()
+  // .then( data => {
+  //   console.log(resizedPhoto);
+  //   console.log("-")
+  //   console.log(sampleFile.data)
+
+  //   resizedPhoto.mv(__dirname + '/photos/' + req.files.file.name.split('.')[0] + '-1' + req.files.file.name.split('.')[1], function(err) {
+  //     if (err)
+  //       console.log(err);
+  //     console.log("Complete");
+  //   });
+  // })
+  // .catch( err => { 
+  //   console.log("Fail");
+  //   console.log(err);
+  // });
 
   var params = {Bucket: 'articles-website', Key: sampleFile.name, ContentType: "image/jpeg", Body: sampleFile.data, ACL: "public-read"};
   s3.upload(params, function(err, data) {
@@ -321,6 +382,42 @@ app.post('/api/addPhoto', function (req, res) {
     }
       
     res.send('File uploaded!');
+  });
+  
+});
+
+app.post('/api/addProfilePhoto', function (req, res) {
+
+  console.log(`${req.body.user} Is trying to change their profile photo`);
+
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).send('No files were uploaded.');
+  }
+
+  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+  let sampleFile = req.files.file;
+
+  var resizedPhoto = Buffer
+
+  sharp(sampleFile.data)
+  .resize(200, 200)
+  .toBuffer()
+  .then( data => {
+
+    var params = {Bucket: 'articles-website/profile_photos', Prefix: 'profile_photos', Key: req.body.user + '.' + sampleFile.name.split('.')[1], ContentType: "image/jpeg", Body: data, ACL: "public-read"};
+    s3.upload(params, function(err, data) {
+      console.log(err, data);
+      if (err) {
+        return res.status(500).send(err);
+      }
+        
+      res.send('File uploaded!');
+    });
+
+  })
+  .catch( err => { 
+    console.log("Fail");
+    console.log(err);
   });
   
 });

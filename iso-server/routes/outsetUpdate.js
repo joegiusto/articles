@@ -3,6 +3,7 @@ var ObjectId = require('mongodb').ObjectId;
 
 module.exports = (app, db) => {
   app.post('/api/outsetUpdate', (req, res) => {
+
     console.log(`Call to /api/outsetUpdate made at ${new Date()}`);
 
     const o_id = new ObjectId(req.body.user);
@@ -49,9 +50,11 @@ module.exports = (app, db) => {
         outset: true
         
       }
-    }, function(err, res) {
+    }, function(err, result) {
+
       if (err) throw err;
 
+      return res.send(result);
     });
 
     });

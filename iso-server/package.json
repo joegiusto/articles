@@ -38,6 +38,7 @@
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "recompose": "^0.30.0",
+    "sharp": "^0.25.3",
     "socket.io": "^2.3.0",
     "stripe": "^8.60.0",
     "validator": "^13.0.0"

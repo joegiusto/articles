@@ -322,16 +322,15 @@ function Menu(props) {
 
           <div className={"tab-content " + (partySectionOpen ? "" : "")}>
             <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PARTY}><p className="subheading-font"><i className="fas fa-users"></i>Info</p></Link>
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.POLICY}><p className="subheading-font"><i className="fas fa-scroll"></i>Policy</p></Link>
+            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PROPOSALS}><p className="subheading-font"><i className="fas fa-scroll"></i>Proposals</p></Link>
           </div>
           
-
           {/* Support Section */}
-          {/* <hr/> */}
-          {/* <p className="heading-font no-link"><b>Support</b></p> */}
-          {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SUPPORT}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Help Us</p></Link> */}
+          <hr/>
+          <p className="heading-font no-link"><b>Support</b></p>
+          <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SUPPORT}><p className="subheading-font"><i class="fas fa-hands-helping"></i>Help Us</p></Link>
           {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.JOBS}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Jobs</p></Link> */}
-          {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PRESS}><p className="subheading-font"><i className="fas fa-address-card"></i>Press</p></Link> */}
+          <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PRESS}><p className="subheading-font"><i className="far fa-address-card"></i>Press</p></Link>
           {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.TRANSLATIONS}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Translations</p></Link> */}
           {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.LANDING}><p className="subheading-font"><i className="fas fa-map-pin"></i>Landing</p></Link> */}
           {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.OUTSET}><p className="subheading-font"><i className="fas fa-horse"></i>Outset</p></Link> */}

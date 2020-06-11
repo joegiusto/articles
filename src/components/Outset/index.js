@@ -12,6 +12,8 @@ import StepThree from './StepThree';
 import StepFour from './StepFour';
 import StepFive from './StepFive';
 
+import { setUserDetails } from "../../actions/authActions";
+
 class OutsetBase extends React.Component {
   constructor(props) {
     super(props);
@@ -138,6 +140,7 @@ class OutsetBase extends React.Component {
       console.log(response);
 
       // Will be turned on and off many times...
+      self.props.setUserDetails(self.props.user_id);
       self.props.history.push(ROUTES.HOME);
 
     })
@@ -583,8 +586,11 @@ class OutsetBase extends React.Component {
       default:
         return (
         <div className="intro-message text-center">
-          0%<br/>Submitting
-          <button onClick={() => (this.submitData())} className="btn btn-articles-light">Test</button>
+          {/* 0%<br/>Submitting
+          <button onClick={() => (this.submitData())} className="btn btn-articles-light">Test</button> */}
+          <div>Review the information below and make sure everything looks correct, if you wish to go back and fix anything now is the time to do so.</div>
+          <div>Name: {this.state.first_name} {this.state.last_name}</div>
+          <div>Address: </div>
         </div>
         )
     }
@@ -619,7 +625,7 @@ class OutsetBase extends React.Component {
 
           {/* <div className="what-i-need"></div> */}
 
-          <div className={"background-images d-none step-" + this.state.step}>
+          <div className={"background-images d-none d-md-block  step-" + this.state.step}>
 
             {/* Step Zero */}
             <img className="join" src={outsetPhotos.join} alt=""/>
@@ -714,7 +720,7 @@ class OutsetBase extends React.Component {
                   {/* <button className={"btn mr-0 btn-lg btn-articles-light step-controls-done" + (this.state.step === 5 ? ' d-inline-block' : ' d-none' )} onClick={() => (this.increment())}>Done</button> */}
                   <CanGoToNextStep step={this.state.step} increment={() => (this.increment(), window.scroll(0, 0))} changeFocus={() => (this.changeFocus(''))} stepOneIsInvalid={stepOneIsInvalid} stepTwoIsInvalid={stepTwoIsInvalid} stepFiveIsInvalid={stepFiveIsInvalid} stepFourIsInvalid={stepFourIsInvalid} stepThreeIsInvalid={stepThreeIsInvalid}></CanGoToNextStep>
                   
-                  <button className={"btn btn-lg btn-articles-light step-controls-back" + (this.state.step === 6 ? '' : ' d-none')} onClick={() => (this.decrement() + this.changeFocus(''))}>Submitting</button>
+                  <button className={"btn btn-lg btn-articles-light step-controls-back" + (this.state.step === 6 ? '' : ' d-none')} onClick={() => (this.submitData())}>Finish</button>
                 </div>
 
                 <div className="dots">
@@ -798,9 +804,13 @@ const mapStateToProps = (state) => {
     // expensesTotal: (state.expenses).length,
     // site: state.site,
     user: state.auth?.user_details,
+    user_id: state.auth?.user?.id,
     // first_name: state.auth.user_details?.user?.first_name,
     // isAuth: state.auth.isAuthenticated
   };
 };
 
-export default connect(mapStateToProps)(OutsetBase);
+export default connect(
+  mapStateToProps,
+  { setUserDetails }
+  )(OutsetBase);

@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
+import moment from 'moment'
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../../../constants/routes'
 import { toggleUserSubscriptions } from '../../../actions/siteActions'
@@ -16,7 +17,7 @@ const Issues = (props) => {
 
     <div className="issues-head">
       <h1 className="title">Issues</h1>
-      <p className="body">Overview of the most pressing issues and status updates on them. {props.site?.userSubscriptions ? "Only works on All Issues sort" : "some"}</p>
+      <p className="body">Overview of the most pressing issues and status updates on them.</p>
     </div>
 
     <div className="subscription-badges noselect mt-3">
@@ -210,10 +211,27 @@ function GzyCard (props) {
         <div className="g-card">
 
           {(podcast ? 
-            <div className="g-card-badge">
+            <div className="g-card-badge covered">
               <i className="fab fa-youtube"></i>Covered {props.podcastDay}
             </div>
           : '')}
+
+          <div className="g-card-badge date">
+            <i class="fas fa-calendar-alt"></i>
+            {moment(issue?.news_date).format("LL")}
+          </div>
+
+          {
+          issue?.last_update !== "" || issue?.last_update !== null || issue?.last_update !== undefined ?
+          null
+          :
+          <div className="g-card-badge update">
+            <i class="fas fa-calendar-day"></i>
+            {moment(issue?.last_update).format("LL")}
+          </div>
+          }
+
+          
 
           <div style={{backgroundImage: image}} className="g-card-background"></div>
           <div className="g-card-text-card">
