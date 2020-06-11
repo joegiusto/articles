@@ -177,10 +177,11 @@ require("./config/passport")(passport);
 app.use("/api/users", users);
 
 // app.listen(process.env.PORT || 8080);
+res.set({"Cache-Control": "no-store, no-cache"})
 
 app.get('/', function (req, res) {
   // TEMP
-  res.set({"Cache-Control": "no-store, no-cache"})
+  
   res.sendFile(path.join(__dirname, './build', 'index.html'));
 });
 

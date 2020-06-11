@@ -487,7 +487,7 @@ class LandingPage extends Component {
 												<div className="content-title mb-4" style={{lineHeight: "45px"}}>Dear America, We Have a Plan!</div>
 												<h6 className="content-highlight content-text">It's a bit to explain though...</h6>
 												<div className="content-text">
-													Articles is a political organization and platform, working to make America a better place for the people through avenues of transparency, clothing, news and politics.
+													Articles is a 1 political organization and platform, working to make America a better place for the people through avenues of transparency, clothing, news and politics.
 												</div>
 
 											</div>
