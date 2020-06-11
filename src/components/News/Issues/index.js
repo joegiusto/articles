@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import moment from 'moment'
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../../../constants/routes'
-import { toggleUserSubscriptions } from '../../../actions/siteActions'
+import { toggleUserSubscriptions, filterIssuesDateType } from '../../../actions/siteActions'
 
 const Issues = (props) => {
 
@@ -11,6 +11,15 @@ const Issues = (props) => {
     return array.filter(o =>
         Object.keys(o).some(k => String(o[k]).toLowerCase().includes(string.toLowerCase())));
   }
+
+  const dateTypeFilter = (props.site?.dateType === 'post' ? 
+  props.issues?.issues.sort((a, b) => new Date(b.news_date) - new Date(a.news_date))
+  :
+  props.issues?.issues.sort((a, b) => new Date(b.last_update) - new Date(a.last_update))
+  )
+
+  // const sortedIssues = props.issues?.issues.sort((a, b) => new Date(b.news_date) - new Date(a.news_date))
+  // console.log(sortedIssues)
 
   return (
   <section className="issues-section issues-page text-center">
@@ -20,10 +29,28 @@ const Issues = (props) => {
       <p className="body">Overview of the most pressing issues and status updates on them.</p>
     </div>
 
-    <div className="subscription-badges noselect mt-3">
-      <div onClick={() => props.toggleUserSubscriptions()} className={"badge border " + (props.site?.userSubscriptions === true ? 'badge-dark ' : 'badge-light ') + (props.user_subscriptions?.length > 0 ? '' : 'd-none')}>My Subscriptions</div>
-      <div onClick={() => props.toggleUserSubscriptions()} className={"ml-1 badge border " + (props.site?.userSubscriptions === false ? 'badge-dark' : 'badge-light')}>All Issues</div>
+    <div className="filters noselect mt-3 mb-1">
+      <span className="subscription-badges">
+        <span className="bold">Type: </span>
+        <div onClick={() => props.toggleUserSubscriptions()} className={"badge border " + (props.site?.userSubscriptions === true ? 'badge-dark ' : 'badge-light ') + (props.user_subscriptions?.length > 0 ? '' : 'd-none')}>Subscribed</div>
+        <div onClick={() => props.toggleUserSubscriptions()} className={"ml-1 badge border " + (props.site?.userSubscriptions === false ? 'badge-dark' : 'badge-light')}>All</div>
+      </span>
+
+      <span className="subscription-badges ml-md-5">
+        <span className="bold">Date: </span>
+        <div onClick={() => props.filterIssuesDateType()} className={"badge border " + (props.site?.dateType === 'post' ? 'badge-dark ' : 'badge-light ')}>Posted</div>
+        <div onClick={() => props.filterIssuesDateType()} className={"ml-1 badge border " + (props.site?.dateType === 'update' ? 'badge-dark' : 'badge-light')}>Updated</div>
+      </span>
+
+      {/* <span className="subscription-badges ml-5">
+        <span className="bold">Time: </span>
+        <div onClick={() => props.toggleUserSubscriptions()} className={"badge border " + (props.site?.userSubscriptions === true ? 'badge-dark ' : 'badge-light ') + (props.user_subscriptions?.length > 0 ? '' : 'd-none')}>Newest</div>
+        <div onClick={() => props.toggleUserSubscriptions()} className={"ml-1 badge border " + (props.site?.userSubscriptions === false ? 'badge-dark' : 'badge-light')}>Oldest</div>
+      </span> */}
+
     </div>
+
+    
 
     <div className="row mb-4">
 
@@ -32,9 +59,8 @@ const Issues = (props) => {
       (props.user_subscriptions.map((issue, i) => (
         <GzyCard
         issue={issue}
-        podcast={true}
+        podcast={false}
         podcastDay=""
-        podcastLink=""
         topText="Rising Cost"
         // midText={issue?.news_title}
         bottomText="The Unspoken Issues"
@@ -219,6 +245,10 @@ function GzyCard (props) {
           <div className="g-card-badge date">
             <i class="fas fa-calendar-alt"></i>
             {moment(issue?.news_date).format("LL")}
+            <div className="sub">
+              <i class="fas fa-calendar-day"></i>
+              {moment(issue?.last_update).format("LL")}
+            </div>
           </div>
 
           {
@@ -230,8 +260,6 @@ function GzyCard (props) {
             {moment(issue?.last_update).format("LL")}
           </div>
           }
-
-          
 
           <div style={{backgroundImage: image}} className="g-card-background"></div>
           <div className="g-card-text-card">
@@ -254,5 +282,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { toggleUserSubscriptions } 
+  { toggleUserSubscriptions, filterIssuesDateType } 
 )(Issues);

@@ -1,4 +1,5 @@
 .issues-section {
+
   .issues-head {
     background-color: white;
     border: solid 5px #000;
@@ -35,10 +36,35 @@
     }
   }
 
+  .filters {
+    position: sticky;
+    z-index: 5;
+    background-color: white;
+    border: solid 1px #000;
+    padding: 0.25rem;
+    width: 100%;
+    top: 55px;
+
+    @include media-breakpoint-down(md) {
+      position: relative;
+      top: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
   .subscription-badges {
 
     .badge {
       font-size: 1rem;
+    }
+
+    .bold {
+      font-family: brandon-grotesque, sans-serif;
+      font-style: normal;
+      font-weight: 900;
+      font-size: 1.25rem;
     }
   }
 
@@ -56,6 +82,8 @@
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 
     .g-card-badge {
+      transition-duration: .5s;
+      font-size: 0.9rem;
 
       &.covered {
         z-index: 1;
@@ -69,13 +97,17 @@
       }
 
       &.date {
-        z-index: 1;
+        position: relative;
+        z-index: 2;
         position: absolute;
         background-color: red;
         color: white;
         top: 0px;
         left: 0px;
-        padding: 0.2rem 0.8rem;
+        padding: 0.2rem 1rem;
+        backface-visibility: hidden;
+        transform: translateZ(0);
+        -webkit-font-smoothing: subpixel-antialiased;
       }
 
       &.update {
@@ -87,6 +119,24 @@
         right: 0px;
         padding: 0.2rem 0.8rem;
       }
+
+      .sub {
+        z-index: 0;
+        position: absolute;
+        background-color: $accent-color;
+        color: black;
+        top: 100%;
+        height: 100%;
+        width: 100%;
+        right: 0px;
+        padding: 0.2rem 0.8rem;
+        transform: translateY(-100%);
+        transition-duration: 200ms;
+        backface-visibility: hidden;
+        // transform: translateZ(0);
+        -webkit-font-smoothing: subpixel-antialiased;
+      }
+
     }
 
     &-badge {   
@@ -150,6 +200,16 @@
       
       .g-card-background {
         filter: none;
+      }
+
+      .g-card-badge.date {
+        transform: translateX(-8px) translateY(-8px);
+        box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.7);
+
+        .sub {
+          box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.7);
+          transform: translateY(0%);
+        }
       }
     }
   }

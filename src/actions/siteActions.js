@@ -21,3 +21,11 @@ export const toggleUserSubscriptions = () => dispatch => {
     type: 'TOGGLE_USER_SUBSCRIPTIONS',
   });
 };
+
+export const filterIssuesDateType = () => dispatch => {
+  console.log(`Toggling the filter on date type display!`);
+
+  dispatch({
+    type: 'FILTER_ISSUE_DATE_TYPE',
+  });
+};
