@@ -12,13 +12,20 @@ const Issues = (props) => {
         Object.keys(o).some(k => String(o[k]).toLowerCase().includes(string.toLowerCase())));
   }
 
-  const dateTypeFilter = (props.site?.dateType === 'post' ? 
+  const fakeAll = (props.site?.dateType === 'post' ? 
   props.issues?.issues.sort((a, b) => new Date(b.news_date) - new Date(a.news_date))
   :
   props.issues?.issues.sort((a, b) => new Date(b.last_update) - new Date(a.last_update))
   )
 
+  const fakeSubs = (props.site?.dateType === 'post' ? 
+  props.user_subscriptions.sort((a, b) => new Date(b.news_date) - new Date(a.news_date))
+  :
+  props.user_subscriptions.sort((a, b) => new Date(b.last_update) - new Date(a.last_update))
+  )
+
   // const sortedIssues = props.issues?.issues.sort((a, b) => new Date(b.news_date) - new Date(a.news_date))
+  // const fake = props.issues?.issues.sort((a, b) => new Date(b.last_update) - new Date(a.last_update))
   // console.log(sortedIssues)
 
   return (
@@ -62,6 +69,7 @@ const Issues = (props) => {
         podcast={false}
         podcastDay=""
         topText="Rising Cost"
+        dateType={props.site?.dateType}
         // midText={issue?.news_title}
         bottomText="The Unspoken Issues"
         backgroundImage={issue.hero_url}
@@ -79,6 +87,7 @@ const Issues = (props) => {
           podcastDay=""
           podcastLink=""
           topText="Rising Cost"
+          dateType={props.site?.dateType}
           // midText={issue?.news_title}
           bottomText="The Unspoken Issues"
           backgroundImage={issue.hero_url}
@@ -95,6 +104,7 @@ const Issues = (props) => {
           podcastDay=""
           podcastLink=""
           topText="Rising Cost"
+          dateType={props.site?.dateType}
           // midText={issue?.news_title}
           bottomText="The Unspoken Issues"
           backgroundImage={issue.hero_url}
@@ -242,12 +252,24 @@ function GzyCard (props) {
             </div>
           : '')}
 
-          <div className="g-card-badge date">
-            <i class="fas fa-calendar-alt"></i>
-            {moment(issue?.news_date).format("LL")}
-            <div className="sub">
-              <i class="fas fa-calendar-day"></i>
-              {moment(issue?.last_update).format("LL")}
+          <div className="g-card-badge date" style={props.dateType !== 'post' ? {backgroundColor: 'red'} : {backgroundColor: '#ffb7b7', color: 'black'} }>
+
+            {props.dateType !== 'post' ? <i class="fas fa-calendar-alt"></i> : <i class="fas fa-redo-alt"></i> }
+            
+            {props.dateType !== 'post' ?
+            moment(issue?.news_date).format("LL")
+            :
+            moment(issue?.last_update).format("LL")
+            }
+            <div className="sub" style={ props.dateType === 'post' ? {backgroundColor: 'red', color: 'white'} : {backgroundColor: '#ffb7b7'} }>
+              {/* <i class="fas fa-calendar-day"></i> */}
+              {props.dateType === 'post' ?  <i class="fas fa-calendar-alt"></i> : <i class="fas fa-redo-alt"></i> }
+              {/* {moment(issue?.last_update).format("LL")} */}
+              {props.dateType === 'post' ?
+                moment(issue?.news_date).format("LL")
+                :
+                moment(issue?.last_update).format("LL")
+              }
             </div>
           </div>
 
@@ -255,10 +277,11 @@ function GzyCard (props) {
           issue?.last_update !== "" || issue?.last_update !== null || issue?.last_update !== undefined ?
           null
           :
-          <div className="g-card-badge update">
-            <i class="fas fa-calendar-day"></i>
-            {moment(issue?.last_update).format("LL")}
-          </div>
+          null
+          // <div className="g-card-badge update">
+          //   <i class="fas fa-calendar-day"></i>
+          //   {moment(issue?.last_update).format("LL")}
+          // </div>
           }
 
           <div style={{backgroundImage: image}} className="g-card-background"></div>

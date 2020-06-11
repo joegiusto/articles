@@ -9,7 +9,7 @@ module.exports = (app, db) => {
   
     console.log(`Call to /api/getMyths made at ${new Date()}`);
   
-    db.collection("articles_news").find({news_type: 'myth'}).toArray(function(err, result) {
+    db.collection("articles_news").find({news_type: 'myth'}).sort({"news_date": -1}).toArray(function(err, result) {
       if (err) throw err;
       console.log(`Call to /api/getMyths done`);
       return res.send(result) 
