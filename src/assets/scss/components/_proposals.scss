@@ -1,0 +1,122 @@
+section.proposals-page {
+  padding-top: 3rem;
+  font-family: montserrat, sans-serif;
+  font-weight: 400;
+
+  h1 {
+    font-family: brandon-grotesque, sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 4rem;
+  }
+
+  .proposals {
+    position: relative;
+    display: grid;
+    grid-row-gap: 10px;
+    row-gap: 10px;
+    grid-column-gap: 10px;
+    column-gap: 10px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: max-content;
+    margin: 1rem 0rem;
+    margin-top: 3rem;
+    min-height: 260px;
+
+    @include media-breakpoint-down(md) {
+      grid-template-columns: repeat(1, 1fr);
+      min-height: 0px;
+    }
+
+    .after-text {
+      $real-font-size: 3rem;
+
+      text-align: right;
+      position: absolute;
+      top: 130px;
+      width: 300px;
+      left: calc(-150px - #{$real-font-size} );
+      transform: rotate(-90deg);
+      font-family: brandon-grotesque, sans-serif;
+      font-style: normal;
+      font-weight: 900;
+      font-size: $real-font-size;
+      line-height: $real-font-size;
+
+      @include media-breakpoint-down(md) {
+        position: relative;
+        width: auto;
+        left: 0;
+        top: 0;
+        text-align: left;
+        transform: rotate(0deg);
+      }
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      left: -20px;
+      width: 5px;
+      height: 100%;
+      background-color: black;
+      border-radius: 5px;
+    }
+
+    .proposal {
+      position: relative;
+      padding: 0.75rem;
+      background-color: white;
+      box-shadow: 0px 0px 1px 2px rgba(0, 0, 0, 0.4);
+      transition-duration: 500ms;
+
+      &:hover {
+        box-shadow: 0px 0px 1px 2px rgba(0, 0, 0, 1);
+
+        &:after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 5px;
+          background-color: white;
+          border-right: 1px solid #000;
+        }
+      }
+
+      &:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 5px;
+        background-color: black;
+        border-right: 1px solid transparent;
+        transition-duration: 200ms;
+      }
+
+      .title {
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 1rem;
+      }
+
+      .the-short {
+
+        .label {
+          font-size: 0.7rem;
+          text-decoration: underline;
+          margin-top: 5px;
+          color: rgb(65, 65, 65);
+        }
+
+        .description {
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+}
