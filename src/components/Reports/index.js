@@ -23,7 +23,7 @@ class Reports extends Component {
     super(props);
 
      this.state = {
-       text: '',
+       searchText: '',
        loading: false,
        limit: 5,
        menuExpanded: false,
@@ -408,8 +408,17 @@ class Reports extends Component {
       <span onClick={() => this.setSubTableSelector(dataValue, redirect, location)} className={"selection " + (this.state.subtableSelector === dataValue ? 'selection-active' : '')}>{redirect ? <i style={{marginRight: '2.5px'}} className="fas fa-link"></i> : ''}{printValue}</span>
     )
   }
+
+  filterByValue(array, string) {
+    return array.filter(o =>
+        Object.keys(o).some(k => String(o[k]).toLowerCase().includes(string.toLowerCase())));
+  }
+
+  onChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
  
- render() {
+ render(props) {
    return (
     <div className="reports-page">
 
@@ -504,10 +513,10 @@ class Reports extends Component {
               </div>
 
               {/* <div className="mt-3"> */}
-                <span className="badge badge-light border border-black other-tag mt-3 mx-auto d-inline-block">Or Check Out</span>
+                <div className="badge badge-light border border-black other-tag mt-3 mx-auto d-none d-md-block">Or Check Out</div>
               {/* </div> */}
   
-              <div className="mt-3">
+              <div className="d-none d-md-block mt-3">
                 <Link to={ROUTES.EMPLOYEES}><button className="btn btn-articles-light btn-lg w-100 report-quick-links">
                   <div>
                     <i className="fas fa-user-tie"></i>
@@ -516,7 +525,7 @@ class Reports extends Component {
                 </button></Link>
               </div>
   
-              <div className="mt-3">
+              <div className="d-none d-md-block mt-3">
                 <Link to={ROUTES.DONATE}>
                   <button className="btn btn-articles-light btn-lg w-100 mb-3 report-quick-links">
                     <div>
@@ -536,12 +545,48 @@ class Reports extends Component {
             <Route exact={true} path={ROUTES.REPORTS} render={() => 
               <div className="col-12 col-md-8 col-lg-8">
 
-                <div className="search">
+                <div className="search mt-3">
                   
-                  <div className="input-wrap reports-shadow mt-3 dual-header">
-                    <div><i className="fas fa-search-dollar d-flex align-items-center fa-2x h-100 "></i></div>
-                    <input className="search-input d-flex align-content-center pl-2" type="text" placeholder="Search service is currently offline"/>
+                  <div className="input-wrap dual-header">
+                    
+                    <div className="icon">
+                      <i className="fas fa-search-dollar d-flex align-items-center fa-2x h-100 "></i>
+                    </div>
+
+                    <div className="dropdown-wrap">
+
+                      <input 
+                      className="search-input d-flex align-content-center pl-2" 
+                      type="text" 
+                      placeholder="Search service is currently offline"
+                      value={this.state.searchText}
+                      name="searchText"
+                      onChange={this.onChange} 
+                      />
+
+                      <div className="results-wrap">
+                      {
+                        this.state.searchText !== '' ?
+
+                        this.filterByValue(this.state.firebaseData.expenses.other, this.state.searchText).map((item, i) => (
+                        <div className="result">
+                          <div>{item.reason} - ${(item.amount / 100).toFixed(2)}</div>
+                          <div>{moment.unix(item.date).format("LL")}</div>
+                        </div>
+                        ))
+
+                        :
+
+                        null
+
+                      }
+                      </div>
+
+                    </div>
+
                   </div>
+
+                  
 
                 </div>
 

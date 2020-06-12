@@ -48,6 +48,7 @@ import StoryPage from './News/Stories/single.js'
 
 import PartyPage from './Party'
 import PartyProposalsPage from './Party/Proposals'
+import ProposalSingle from './Party/Proposals/Single'
 import TownHallPage from './Party/TownHall'
 
 import MeshPage from './Mesh'
@@ -209,7 +210,8 @@ class App extends Component {
               <Route path={ROUTES.TOWN_HALL} component={TownHallPage} />
         
               <Route exact path={ROUTES.PARTY} component={PartyPage} />
-              <Route path={ROUTES.PROPOSALS} component={PartyProposalsPage} />
+              <Route exact path={ROUTES.PROPOSALS} component={PartyProposalsPage} />
+              <Route path={ROUTES.PROPOSAL} component={ProposalSingle} />
               
               <Route path={ROUTES.MESH} component={MeshPage} />
         

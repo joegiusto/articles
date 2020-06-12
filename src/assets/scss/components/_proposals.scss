@@ -10,6 +10,27 @@ section.proposals-page {
     font-size: 4rem;
   }
 
+  .party-stats {
+    position: relative;
+    display: grid;
+    grid-row-gap: 10px;
+    row-gap: 10px;
+    grid-column-gap: 10px;
+    column-gap: 10px;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: max-content;
+
+    @include media-breakpoint-down(md) {
+      grid-template-columns: repeat(1, 1fr);
+    }
+    
+    .party-stat {
+      background-color: whitesmoke;
+      border: 1px solid rgb(87, 87, 87);
+      padding: 0.25rem;
+    }
+  }
+
   .proposals {
     position: relative;
     display: grid;
@@ -94,7 +115,7 @@ section.proposals-page {
         width: 5px;
         background-color: black;
         border-right: 1px solid transparent;
-        transition-duration: 200ms;
+        transition-duration: 500ms;
       }
 
       .title {

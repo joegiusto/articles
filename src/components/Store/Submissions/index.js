@@ -55,7 +55,7 @@ class Submissions extends Component {
   
           <div className="row my-auto justify-content-between">
   
-            <div className="col-12 col-md-2 pl-md-0 col-side-panel">
+            <div className="col-12 col-md-3 pl-md-0 col-side-panel">
   
               <div className="submission-side-panel">
   
@@ -108,7 +108,7 @@ class Submissions extends Component {
   
             </div>
   
-            <div className="col-12 col-md-10">
+            <div className="col-12 col-md-9">
   
               <div>
                 

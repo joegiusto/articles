@@ -52,6 +52,7 @@ export const PARTY ='/party'
 export const POLICY ='/party/policy'
 export const TOWN_HALL ='/party/town-hall'
 export const PROPOSALS ='/party/proposals'
+export const PROPOSAL ='/party/proposals/:id'
 
 // Mesh
 export const MESH ='/mesh'
