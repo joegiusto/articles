@@ -25,6 +25,87 @@ module.exports = (app, db) => {
     //     matchedBy: null,
     //   }
     // )
+
+    // db.collection("articles_proposals").remove({});
+
+    // db.collection("articles_proposals").insertMany(
+    //   [
+    //     {
+    //       type: 'social',
+    //       title: 'Revise The Pledge Of Alligence',
+    //       url: 'revise-the-pledge-of-alligence',
+    //       description: "Revert the pledge back to its creators vision",
+    //       content: ""
+    //     },
+    //     {
+    //       type: 'social',
+    //       title: 'Legalize Marijuana',
+    //       url: 'legalize-marijuana',
+    //       description: "Mariuana and alcohol equal availability"
+    //     },
+    //     {
+    //       type: 'social',
+    //       title: 'Expand Psychedelic Studys',
+    //       url: 'expand-psychedelic-studys',
+    //       description: "Expand psychedelic studys and trials"
+    //     },
+    //     {
+    //       type: 'social',
+    //       title: 'Lower Charges For Psychedelic Possession',
+    //       url: 'legalize-marijuana',
+    //       description: "Study is still needed, jail is not"
+    //     },
+    //     {
+    //       type: 'social',
+    //       title: 'Universal Emergency Number',
+    //       url: 'universal-emergency-number',
+    //       description: "One number for everyone, anywhere"
+    //     },
+    //     {
+    //       type: 'eduacation',
+    //       title: 'Class Size Reduction',
+    //       url: 'class-size-reduction',
+    //       description: 'Limit of 1-20 teacher/student for core subjects'
+    //     },
+    //     {
+    //       type: 'eduacation',
+    //       title: 'Public School Lunch Reform',
+    //       url: 'school-lunch-reform',
+    //       description: 'Better lunch, for all'
+    //     },
+    //     {
+    //       type: 'financial',
+    //       title: 'NASA Funding',
+    //       url: 'nasa-funding',
+    //       description: 'Set NASA budget to 2% (min) of Budget',
+    //       cut: "Federal Budeget"
+    //     },
+    //     {
+    //       type: 'financial',
+    //       title: 'Tidy Up Tax Loopholes',
+    //       url: 'tax-loopholes',
+    //       description: 'Provide patches to common abused loopholes'
+    //     },
+    //     {
+    //       type: 'fundemental',
+    //       title: 'Mental Health Equality In Healthcare',
+    //       url: 'mental-health-equality',
+    //       description: 'Fair treatment of mental issues'
+    //     },
+    //     {
+    //       type: 'fundemental',
+    //       title: 'Federal Gun Laws',
+    //       url: 'federal-gun-laws',
+    //       description: 'Standard to protect people and gun owners'
+    //     },
+    //     {
+    //       type: 'fundemental',
+    //       title: 'Purto Rico Statehood',
+    //       url: 'purto-rico-statehood',
+    //       description: 'Allow Purto Rico to join the union'
+    //     }
+    //   ]
+    // )
     
   });
 }

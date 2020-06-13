@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from "react-helmet";
 import { Link } from 'react-router-dom';
 
 import * as ROUTES from '../../../constants/routes'
@@ -9,12 +10,13 @@ const proposals = {
     {
       title: 'Revise The Pledge Of Alligence',
       url: 'revise-the-pledge-of-alligence',
-      description: "Revert the pledge back to its creators vision"
+      description: "Revert the pledge back to its creators vision",
+      content: ""
     },
     {
       title: 'Legalize Marijuana',
       url: 'legalize-marijuana',
-      description: "Revert the pledge back to its creators vision"
+      description: "Mariuana and alcohol equal availability"
     },
     {
       title: 'Expand Psychedelic Studys',
@@ -25,6 +27,11 @@ const proposals = {
       title: 'Lower Charges For Psychedelic Possession',
       url: 'legalize-marijuana',
       description: "Study is still needed, jail is not"
+    },
+    {
+      title: 'Universal Emergency Number',
+      url: 'universal-emergency-number',
+      description: "One number for everyone, anywhere"
     }
   ],
   eduacation: [
@@ -90,12 +97,21 @@ class Proposals extends Component {
     }
   }
 
+  componentDidMount() {
+
+  }
+
   render(props) {
 
     const {...state} = this.state
 
     return (
       <section className="proposals-page">
+
+        <Helmet>
+          <title>Proposals - Articles</title>
+        </Helmet>
+
         <div className="container">
 
           <h1>Proposals</h1>
@@ -134,7 +150,7 @@ class Proposals extends Component {
                 <div className="progress-bar" style={{width: '2px', backgroundColor: '#ffc8c8'}}></div>
               </div>
             </div>
-            
+
           </div>
 
           {/* Social */}

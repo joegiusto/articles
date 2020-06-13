@@ -109,6 +109,8 @@ function connectWithRetryMongo() {
     require('./routes/getProducts')(app, db);
     require('./routes/getProduct')(app, db);
     require('./routes/upsertProduct')(app, db);
+
+    require('./routes/getProposal')(app, db);
   
     require('./routes/getIssues')(app, db);
     require('./routes/getStories')(app, db);
@@ -213,37 +215,13 @@ io.on('connection', (socket) => {
   socket.on('recieveDonation', (data) => {
     console.log("Recieved a donation from somewhere")
 
-    // recieveDonation({
-    //   amount: 1000,
-    //   date: Math.floor(new Date().getTime()/1000.0),
-    //   note: 'Fake Donation',
-    //   uid: Date.now(),
-    //   name: 'Test',
-    //   department: 'other',
-    //   file: 'https://en.wikipedia.org/wiki/Rickrolling'
-    // });
-
     recieveDonation(data)
-
-    // console.log(data);
 
   });
 
   socket.on('deleteDonation', (id) => {
 
-    // recieveDonation({
-    //   amount: 1000,
-    //   date: Math.floor(new Date().getTime()/1000.0),
-    //   note: 'Fake Donation',
-    //   uid: Date.now(),
-    //   name: 'Test',
-    //   department: 'other',
-    //   file: 'https://en.wikipedia.org/wiki/Rickrolling'
-    // });
-
     deleteDonation(id)
-
-    // console.log(data);
 
   });
 

@@ -52,7 +52,7 @@ export const loginUser = userData => dispatch => {
         payload: err.response
       })
     }
-    );
+  );
 };
 
 // Set logged in user

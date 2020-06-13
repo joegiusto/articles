@@ -1,3 +1,17 @@
+.content-wrap.fixed {
+
+  section.proposals-page {
+
+    .container {
+      // margin-left: 4rem;
+      // max-width: calc(100% - 4rem);
+      padding-left: 6rem;
+      max-width: 1920px;
+      width: 1920px;
+    }
+  }
+}
+
 section.proposals-page {
   padding-top: 3rem;
   font-family: montserrat, sans-serif;
@@ -138,6 +152,24 @@ section.proposals-page {
           font-size: 0.9rem;
         }
       }
+    }
+  }
+
+  &.single {
+
+    .title-fake {
+      height: 4rem;
+      width: 300px;
+      background-color: #212529;
+      // border-radius: 10px;
+    }
+
+    .description-fake {
+      margin-top: 1rem;
+      height: 1rem;
+      width: 150px;
+      background-color: #212529;
+      // border-radius: 3px;
     }
   }
 }
