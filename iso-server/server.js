@@ -122,6 +122,8 @@ function connectWithRetryMongo() {
 
     require('./routes/getDonationTimeframe')(app, db);
 
+    require('./routes/updateLastRead')(app, db);
+
     require('./routes/getProposal')(app, db);
   
     require('./routes/getIssues')(app, db);

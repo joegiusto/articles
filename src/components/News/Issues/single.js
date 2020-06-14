@@ -50,11 +50,45 @@ class Issue extends React.Component {
         });
       });
     }
+
+    // Set the date that the user was last lookign at this story
+    if ( this.props.user._id ) {
+      console.log("Is a user")
+
+      console.log(this.props.user?.subscriptions)
+
+      const lastDate = this.props.user?.subscriptions.find(x => x.news_id === this.props.match.params.id)
+
+      console.log(lastDate)
+
+      this.setState({
+        lastRead: lastDate.lastRead
+      })
+
+      axios.post('/api/updateLastRead', {
+        news_id: this.props.match.params.id,
+        user: this.props.user._id
+      })
+      .then(function (response) {
+
+        console.log(response);
+
+      })
+      .catch(function (error) {
+
+        console.log(error);
+
+      });
+
+    } 
+
+    // console.log(`Is not a user ${this.props.user._id}`)
+    
   }
 
   render() {
 
-    const {loading, news_notes} = this.state;
+    const {loading, news_notes, lastRead} = this.state;
 
     // news_notes.replace(/(\r\n|\n|\r)/gm, "")
 
@@ -68,15 +102,21 @@ class Issue extends React.Component {
           <div className="card ">
             <h3 className="card-header">{this.state.news_title}</h3>
             <div className="card-body">
+
+              {lastRead !== undefined ? <div>Last Opened: {lastRead}</div> : null}
+              
+
               <div style={{whiteSpace: 'pre-wrap'}} dangerouslySetInnerHTML={{__html: this.state?.news_notes?.replace('<break>', '<div className="alert alert-danger my-3">Testing Break</div>').replace(/(\r\n|\n|\r)/gm, "")}}>
                 {/* { dangerouslySetInnerHTML={{__html: this.state?.news_notes?} } */}
                 {/* {this.state?.news_notes?.replace('<break>', '<div className="alert alert-danger">Test</div>')} */}
               </div>
+
               {/* <div className="w-100" style={{background: this.state.data.photoExtra}}>
                 <img src={this.state.data.photo} className="img-fluid" alt=""/>
               </div> */}
               {/* <small className="d-block">Photo Extra Info: {this.state.data.photoExtra}</small> */}
               {/* <button onClick={() => this.props.history.goBack()} className="btn btn-articles-light">Go Back</button> */}
+
             </div>
           </div>
         </div>
@@ -85,29 +125,6 @@ class Issue extends React.Component {
     )
   }
 }
-
-// const Issue = () => (
-//   <div className='container issues-page text-center'>
-
-
-
-//     <div className="mt-3">
-//       <h1>Issues</h1>
-//       <p>Overview of the most pressing issues and status updates on them. </p>
-//       <p>Unlike normal stories </p>
-//       {/* <p>Monday - blank - Tuesday - blank - Wednesday - blank</p> */}
-//     </div>
-
-//     <div className="row mb-5">
-
-//     </div>
-
-//   </div>
-// );
-
-// const Issue = withFirebase(IssueBase);
-
-// export default withRouter(Issue);
 
 const mapStateToProps = state => ({
   auth: state.auth,

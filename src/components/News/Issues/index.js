@@ -18,11 +18,13 @@ const Issues = (props) => {
   props.issues?.issues.sort((a, b) => new Date(b.last_update) - new Date(a.last_update))
   )
 
+  if (props.user_subscriptions !== undefined) {
   const fakeSubs = (props.site?.dateType === 'post' ? 
   props.user_subscriptions.sort((a, b) => new Date(b.news_date) - new Date(a.news_date))
   :
   props.user_subscriptions.sort((a, b) => new Date(b.last_update) - new Date(a.last_update))
   )
+  }
 
   // const sortedIssues = props.issues?.issues.sort((a, b) => new Date(b.news_date) - new Date(a.news_date))
   // const fake = props.issues?.issues.sort((a, b) => new Date(b.last_update) - new Date(a.last_update))

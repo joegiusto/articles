@@ -5,8 +5,8 @@ module.exports = (app, db) => {
 
     console.log(`Start Date: ${req.body.start} - End Date: ${req.body.end}`)
 
-    console.log(new Date(req.body.start))
-    console.log(new Date("2010-04-29T00:00:00.000Z"))
+    // console.log(new Date(req.body.start))
+    // console.log(new Date("2010-04-29T00:00:00.000Z"))
 
     db.collection("articles_donations").find(
       { date : { 
@@ -15,7 +15,7 @@ module.exports = (app, db) => {
       }}
     ).toArray(function(error, documents) {
       if (error) throw error;
-      console.log(documents)
+      // console.log(documents)
       res.send(documents);
     } )
 
