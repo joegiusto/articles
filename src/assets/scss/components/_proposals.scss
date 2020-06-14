@@ -169,7 +169,58 @@ section.proposals-page {
       height: 1rem;
       width: 150px;
       background-color: #212529;
+      margin-bottom: 1rem;
       // border-radius: 3px;
+    }
+
+    .proposal-body {
+
+      >div, >p {
+        margin-left: 0.5rem;
+      }
+
+      .title {
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 1.5rem;
+      }
+
+      .text {
+
+      }
+
+      .quote-wrap {
+        position: relative;
+        margin-bottom: 1rem;
+
+        .icon {
+          position: absolute;
+          top: 10px;
+          z-index: 1;
+          left: 0;
+          font-size: 2rem;
+        }
+      }
+
+      .quote {
+        position: relative;
+        background-color: rgb(226, 226, 226);
+        border-left: 2px solid #212529;
+        width: 100%;
+        max-width: 550px;
+        padding: 0.8rem 1.4rem;
+        margin-left: 1rem;
+        
+        &:after {
+          position: absolute;
+          left: -10px;
+          width: 2px;
+          height: 100%;
+          top: 0;
+          background-color: #212529;
+        }
+      }
     }
   }
 }

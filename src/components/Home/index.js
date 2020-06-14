@@ -1,5 +1,6 @@
 import React, { Component, useState, useEffect } from 'react';
 import { Helmet } from "react-helmet";
+import axios from 'axios';
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom'
 import moment from 'moment'
@@ -12,14 +13,34 @@ class HomePageFour extends Component {
     super(props);
 
     this.state = {
-
+      total: 0
     }
   }
 
   componentDidMount() {
+    const self = this;
+
     if (!this.props.auth.isAuthenticated) {
       this.props.history.push("/signin");
     }
+
+    axios
+    .post("/api/getDonationTimeframe", {
+      start: new Date(2020, moment().month(), 1),
+      // end: new Date(2020, 6, 30)
+    })
+    .then((res) => {
+      console.log("Got");
+      console.log(res);
+
+      self.setState({
+        total: res.data.map((item) => (item.amount) ).reduce((prev, next) => prev + next)
+      })
+    }) // re-direct to login on successful register
+    .catch(err => {
+      console.log(err); 
+    }
+    );
   }
 
   render() {
@@ -143,7 +164,7 @@ class HomePageFour extends Component {
                   <div className="text">To help support Articles order from our store.</div>
 
                   <div className="tile-extra">
-                    0 Lifetime Orders
+                    {this.props.user?.ordersFetched?.length || 0} Lifetime Orders
                   </div>
 
                 </div>
@@ -171,11 +192,11 @@ class HomePageFour extends Component {
                     </div>
                   </div>
 
-                  <div className="title">$100.00 Raised This Month</div>
+                  <div className="title">${(this.state.total / 100).toFixed(2)} Raised This Month</div>
                   <div className="text">For more inforamtion about our finances check out our reports.</div>
 
                   <div className="tile-extra">
-                    $200.00 Raised Alltime
+                    $250.00 Raised Alltime
                   </div>
 
                 </div>

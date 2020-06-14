@@ -10,11 +10,16 @@
 }
 
 .search {
+  margin-top: 2rem;
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
   box-shadow: 3px 3px 2px 0px rgba(0, 0, 0, 0.6), -2px -2px 2px 0px rgba(0, 0, 0, 0.4);
   border-radius: 3px;
+
+  @include media-breakpoint-down(md) {
+    margin-top: 1rem;
+  }
 
   .input-wrap {
     flex-grow: 1;
@@ -279,11 +284,13 @@
       animation-timing-function: ease-in;
       animation-iteration-count: infinite;
     }
+
     @keyframes dot-blink {
       from {opacity: 1;}
       to {opacity: 0;}
     }
   }
+
   .info {
     // height: 200px;
     background-color: $accent-color;
@@ -291,7 +298,7 @@
     border-bottom-width: 1px;
     // border-radius: 5px;
     box-shadow: 0px 3px 3px -2px #000;
-    margin-top: 1rem;
+    margin-top: 2rem;
     position: relative;
     transition-duration: 1s;
     // overflow-y: hidden;
@@ -509,8 +516,8 @@
     border: solid 3px #000;
     padding: 1rem;
     max-height: 188px;
-    
     position: relative;
+
     header {
       position: absolute;
       font-family: forte;

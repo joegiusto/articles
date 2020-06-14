@@ -340,7 +340,7 @@ class Donations extends Component {
                   {this.state.donations.map(donation => (
 
                     <tr>
-                      <th scope="row">{moment.unix(donation.date).format('LL')}</th>
+                      <th scope="row">{moment(donation.date).format('LL')}</th>
                       <td>{donation.name}</td>
                       <td>${(donation.amount / 100).toFixed(2)}</td>
                       <td>{donation.message}</td>

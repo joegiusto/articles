@@ -18,11 +18,21 @@ var AWS = require('aws-sdk');
 const url = `mongodb+srv://joegiusto:${encodeURIComponent(process.env.MONGODB_PASSWORD)}@articles-xgwnd.mongodb.net/articles_data?retryWrites=true&w=majority`;
 const stripe = require('stripe')(process.env.STRIPE_TEST_PASSWORD);
 const sharp = require('sharp');
+
+var React = require('react');
+var ReactDOMServer = require('react-dom/server');
+
 let mongooseConnectionAttempts = 1
 const mongooseConnectionAttemptsMax = 5
 
 let mongoConnectionAttempts = 1
 const mongoConnectionAttemptsMax = 5
+
+// const element = React.createElement(
+//   'h1',
+//   {className: 'greeting'},
+//   'Hello, world!'
+// );
 
 app.use(
 
@@ -110,6 +120,8 @@ function connectWithRetryMongo() {
     require('./routes/getProduct')(app, db);
     require('./routes/upsertProduct')(app, db);
 
+    require('./routes/getDonationTimeframe')(app, db);
+
     require('./routes/getProposal')(app, db);
   
     require('./routes/getIssues')(app, db);
@@ -122,6 +134,14 @@ function connectWithRetryMongo() {
     // app.use('/api/secure', passport.authenticate('jwt', {session: false}), secureRoute);
     // TODO / HELP / I GIVE UP! - I can not seem to nest secure routes anymore while keeping const "app.post" preserverd once I got the MongoDB var "db" passed down for a constant connection and getting everything faster. For now I will just be doing app.post secure routes done one by one untill I can just get them all done similir to how it was done on the lines above this comment
     require('./routes/secure/secure')(app, db);
+
+    // app.get('/api/getServerReact', (req, res) => {
+
+    //   console.log("Call to /api/getServerReact" + new Date());
+  
+    //   return res.send(ReactDOMServer.renderToString(element));
+      
+    // });
 
     app.get('/sitemap.xml', function(req, res) {
       res.sendFile(__dirname + '/sitemap.xml');

@@ -545,7 +545,7 @@ class Reports extends Component {
             <Route exact={true} path={ROUTES.REPORTS} render={() => 
               <div className="col-12 col-md-8 col-lg-8">
 
-                <div className="search mt-3">
+                <div className="search">
                   
                   <div className="input-wrap dual-header">
                     
@@ -1169,7 +1169,7 @@ const StyledDonationItem = ({fetch, donation}) => (
     {fetch === 'expenses' ? <td><a rel="noopener noreferrer" target="_blank" href={donation.file}><i className="fas fa-file-invoice"></i></a></td> : undefined}
 
     {/* <td>{fetch === 'donations' ? moment(donation.createdAt).format('LL') : moment.unix(donation.date).format('LL')}</td> */}
-    <td>{moment.unix(donation.date).format('LL')}</td>
+    <td>{moment(donation.date).format('LL')}</td>
 
     {/* <td>{moment(donation.createdAt).format('LL') }</td> */}
 
