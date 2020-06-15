@@ -4,6 +4,7 @@ import axios from 'axios'
 // import { withFirebase } from '../../Firebase';
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
+import moment from 'moment'
 
 class Issue extends React.Component {
   constructor(props) {
@@ -62,7 +63,7 @@ class Issue extends React.Component {
       console.log(lastDate)
 
       this.setState({
-        lastRead: lastDate.lastRead
+        lastRead: lastDate?.lastRead
       })
 
       axios.post('/api/updateLastRead', {
@@ -98,12 +99,12 @@ class Issue extends React.Component {
         <div className="alert alert-danger">Loading Issue - {this.props.match.params.id}</div>
         :
         <div className="container single mt-5">
-          <div className="link" onClick={() => this.props.history.goBack()}>{String.fromCharCode(11148)} Back to Home</div>
+          <div className="link badge badge-dark w-100 py-2 mb-2" onClick={() => this.props.history.goBack()}>{String.fromCharCode(11148)} Back to Issues</div>
           <div className="card ">
             <h3 className="card-header">{this.state.news_title}</h3>
             <div className="card-body">
 
-              {lastRead !== undefined ? <div>Last Opened: {lastRead}</div> : null}
+              {lastRead !== undefined ? <div className="badge badge-articles mb-4">Last Opened: {moment(lastRead).format("LL")}</div> : null}
               
 
               <div style={{whiteSpace: 'pre-wrap'}} dangerouslySetInnerHTML={{__html: this.state?.news_notes?.replace('<break>', '<div className="alert alert-danger my-3">Testing Break</div>').replace(/(\r\n|\n|\r)/gm, "")}}>
