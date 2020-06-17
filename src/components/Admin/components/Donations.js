@@ -14,7 +14,7 @@ const stripePromise = loadStripe('pk_live_VE6HtyhcU3HCa6bin4uKgFgL00jeOY6SEW');
 
 const INITIAL_CURRENT = {
   _id: moment().unix(),
-  date: moment().unix(),
+  date: moment(),
   type: 'cash',
   matched: false,
   message: "",
@@ -126,7 +126,7 @@ class Donations extends Component {
         current: {
           ...INITIAL_CURRENT,
           _id: moment().unix(),
-          date: moment().unix(),
+          date: moment(),
         }
       })
 
@@ -147,7 +147,7 @@ class Donations extends Component {
           current: {
             ...INITIAL_CURRENT,
             _id: moment().unix(),
-            date: moment().unix(),
+            date: moment(),
           }
         })
     
@@ -202,7 +202,7 @@ class Donations extends Component {
   }
 
   handleDayChange(day) {
-    this.setState({ selectedDay: day, date: moment(day, 'Y-M-D').unix() });
+    this.setState({ selectedDay: day, date: moment(day, 'Y-M-D') });
   }
 
   render() {

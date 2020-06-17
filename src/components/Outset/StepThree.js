@@ -214,6 +214,7 @@ function StepThree(props) {
       props.allIssues.map((issue) => (
         // <h1>{issue.news_title}</h1>
         <Issue 
+          key={issue._id}
           {...props}
           id={issue._id}
           title={issue.news_title}

@@ -305,6 +305,8 @@ const mapStateToProps = state => ({
   user_subscriptions: state.auth.user_details.subscriptionsFetched
 });
 
+export { GzyCard }
+
 export default connect(
   mapStateToProps,
   { toggleUserSubscriptions, filterIssuesDateType } 

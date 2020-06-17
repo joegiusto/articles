@@ -104,7 +104,7 @@ class Donations extends Component {
                   <tr>
                     <th scope="row">{expense.reason}</th>
                     <td>${expense.amount / 100}</td>
-                    <td>{moment.unix(expense.date).format("LL")}</td>
+                    <td>{moment(expense.date).format("LL")}</td>
                     <td>{expense.note}</td>
                     <td><a target="_blank" rel="noopener noreferrer" href={expense.file}><i className="far fa-file-pdf"></i></a></td>
                   </tr>

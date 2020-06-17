@@ -129,7 +129,10 @@ function connectWithRetryMongo() {
     require('./routes/getIssues')(app, db);
     require('./routes/getStories')(app, db);
     require('./routes/getMyths')(app, db);
+
     require('./routes/getSubmissions')(app, db);
+    require('./routes/getCanSubmit')(app, db);
+
     require('./routes/getDonations')(app, db);
   
     // const secureRoute = require('./routes/secure/secure-routes.js')(app, db);

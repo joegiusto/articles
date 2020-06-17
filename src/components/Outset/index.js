@@ -500,7 +500,7 @@ class OutsetBase extends React.Component {
         )
       case 3: 
         return (
-          <div className="intro-title">News Prefrences</div>
+          <div className="intro-title">News Preferences</div>
         )
       case 4: 
         return (

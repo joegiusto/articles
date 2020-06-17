@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Helmet } from "react-helmet";
 import { connect } from 'react-redux';
+import axios from 'axios'
+// import { connect } from 'react-redux';
 // import { compose } from 'recompose';
 // import { withAuthorizationHide } from '../Session';
 import { withFirebase } from '../../Firebase';
@@ -15,19 +17,57 @@ class Submissions extends Component {
     super(props);
   
     this.state = {
+      canSubmit: false,
       filter: 'top',
       scrollHeightPERCENT: 0,
       scrollHeightPX: 0,
-      filterBarLocation: 0
+      filterBarLocation: 0,
+      submission: {}
     };
+
+    this.validate = this.validate.bind(this);
   }
 
   componentDidMount() {
+    const self = this;
     // window.addEventListener('scroll', this.listenToScroll);
+    axios
+    .post("/api/getCanSubmit", {
+      user_id: this.props.user_id
+    })
+    .then( res => {
+
+      console.log(res)
+      self.setState({
+        submission: { ...res.data[0] }
+      })
+
+      if ( res.data.length === 1 || res.data.length > 1) {
+        console.log('wtf')
+        self.setState({
+          canSubmit: false
+        })
+      } else {
+        self.setState({
+          canSubmit: true
+        })
+      }
+      
+    }
+    ) 
+    .catch(err =>
+      console.log(err.response.data)
+    );
   }
 
   componentWillUnmount() {
     // window.removeEventListener('scroll', this.listenToScroll);
+  }
+
+  validate() {
+    this.setState({
+      canSubmit: true
+    })
   }
 
   listenToScroll = () => {
@@ -122,7 +162,6 @@ class Submissions extends Component {
                       </h1>
     
                       {/* <h5>Next Pick At End of Month <span className="badge badge-danger"><Countdown date={moment().startOf('month').add(1, 'months').format('YYYY-MM-DD')} /></span></h5> */}
-          
     
                       <div id="filters" className="filters d-flex justify-content-between">
   
@@ -134,7 +173,7 @@ class Submissions extends Component {
 
                           <div className="other">
                             <span className="timer badge badge-danger"><Countdown date={moment().startOf('month').add(1, 'months').format('YYYY-MM-DD')} /></span>
-                            <div className="login-notice badge badge-danger">Please login or sign up to vote</div>
+                            {this.props.isAuth ? null : <div className="login-notice badge badge-danger">Please login or sign up to vote</div>}
                           </div>
     
                       </div>
@@ -144,7 +183,9 @@ class Submissions extends Component {
                     </div>
                   } />
 
-                  <Route path={ROUTES.STORE_SUBMISSIONS_SUBMIT} component={SubmitBase} />
+                  <Route path={ROUTES.STORE_SUBMISSIONS_SUBMIT} render={() => 
+                    <SubmitBase canSubmit={this.state.canSubmit} validate={this.validate} submission={this.state.submission}/>
+                  }/>
                   
                 </Switch>
   
@@ -220,7 +261,10 @@ class SubmissionsListBase extends Component {
 const mapStateToProps = (state) => {
   // console.log(state.auth.user_details?.user?.first_name)
   return {
-    submissions: state.submissions
+    submissions: state.submissions,
+    user: state.auth?.user_details,
+    user_id: state.auth?.user?.id,
+    isAuth: state.auth.isAuthenticated
   };
 };
 
@@ -335,15 +379,21 @@ class SubmitBase extends Component {
   super(props);
 
     this.state = {
+      canSubmit: props.canSubmit,
       loading: false,
-      submissions: [],
+      submission: {},
     };
 
   }
 
-  render() {
+  render(props) {
+
+    const {submission} = this.props
+
     return(
-      <div>
+      <div className="submissions-submit-page">
+
+        {this.props.canSubmit ? 
         <div className="submit">
 
           <h1 className="month">Submit a Design</h1>
@@ -416,8 +466,48 @@ class SubmitBase extends Component {
           </div>
 
         </div>
+        :
+        <div className="view-submit">
+          <h1>You have already submitted a design</h1>
+          <div className="badge badge-articles">Submitted On: {moment().format("LL")}</div>
+          <div className="badge badge-articles ml-2">Period Ends:<Countdown date={moment().startOf('month').add(1, 'months').format('YYYY-MM-DD')} /></div>
 
-        
+          <div className="details mt-2">
+            <div className="label">Title:</div>
+            <div className="title">{submission.title}</div>
+            <div className="label">Description / Inspiraton:</div>
+            <div className="description">{submission.description}</div>
+          </div>
+
+          <div className="label">Photos:</div>
+          <div className="photos mt-2">
+            <div className="photo">
+              <img src={submission.photos?.one} alt=""/>
+            </div>
+            <div className="photo">
+              <img src={submission.photos?.two} alt=""/>
+            </div>
+            <div className="photo">
+             <img src={submission.photos?.three} alt=""/>
+            </div>
+            <div className="photo">
+              <img src={submission.photos?.four} alt=""/>
+            </div>
+            <div className="photo">
+              <img src={submission.photos?.five} alt=""/>
+            </div>
+          </div>
+          
+          <div className="mt-2">
+            <div onClick={() => this.props.validate()} className="btn btn-danger delete">Delete</div><button className="btn btn-articles-light ml-2">Request Edit</button>
+          </div>
+
+          <div className="mt-2 details">
+            You may delete your design at any time but we limit you to two post per submisison period. By deleteing this post you will only have the chance to submit one more time. If there is a error in your post request an edit and we will assist you.
+          </div>
+
+        </div>
+        }
 
         
 
@@ -429,4 +519,16 @@ class SubmitBase extends Component {
 
 const SubmissionsItem = withFirebase(SubmissionsItemBase);
 
-export default Submissions;
+// export default Submissions;
+
+
+// const mapStateToProps = (state) => {
+//   return {
+//     user: state.auth?.user_details,
+//     user_id: state.auth?.user?.id,
+//   };
+// };
+
+export default connect(
+  mapStateToProps,
+)(Submissions);

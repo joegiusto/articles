@@ -203,8 +203,8 @@ module.exports = (app, db) => {
     } else {
       db.collection("articles_donations").updateOne({_id: ObjectId(req.body.donation._id)}, {
         $set: {
-          amount: donation.amount,
-          date: donation.date,
+          amount: parseInt(donation.amount),
+          date: new Date(donation.date),
           name: donation.name,
           message: donation.message,
           createdBy: donation.createdBy,

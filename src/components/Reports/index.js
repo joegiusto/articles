@@ -652,7 +652,7 @@ class Reports extends Component {
 
             <Route path={ROUTES.REPORTS_CHARTS} render={() => 
               <div className="col-12 col-md-8 col-lg-8">
-                <ExampleChart chartTitle="Test" type="line" setChartPeriodSelector={this.setChartPeriodSelector} chartPeriodSelector={this.state.chartPeriodSelector}></ExampleChart>
+                <DataCharts setChartPeriodSelector={this.setChartPeriodSelector} chartPeriodSelector={this.state.chartPeriodSelector}></DataCharts>
               </div>
             }/>
 
@@ -685,21 +685,30 @@ class Reports extends Component {
   }
 }
 
-class ExampleChart extends Component {
+class DataCharts extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      chartTitle: this.props.chartTitle,
+      chartRevenueExpense: 'chartRevenueExpense',
+      chartPayroleExpenses: 'chartPayroleExpenses',
+      chartEmployeeAdmin: 'chartEmployeeAdmin',
+      chartNewYorkEmployeeOurEmployee: 'chartNewYorkEmployeeOurEmployee',
       type: this.props.type
     };
   }
 
   componentDidMount() {
-    var ctx = document.getElementById(this.state.chartTitle);
 
-    new Chart(ctx, {
-        type: this.state.type,
+    const years = (back) => {
+      const year = new Date().getFullYear();
+      return Array.from({length: back}, (v, i) => year - back + i + 1);
+    }
+
+    var vsReveneueExpense = document.getElementById(this.state.chartRevenueExpense);
+
+    new Chart(vsReveneueExpense, {
+        type: 'line',
         data: {
             labels: [ 'July', 'August', 'September', 'October', 'November', 'December', 'January', 'Febuary', 'March', 'April', 'May', 'June' ],
             datasets: [{
@@ -711,6 +720,8 @@ class ExampleChart extends Component {
                 borderColor: [
                   'rgba(63, 191, 127, 1)'
                 ],
+                pointBackgroundColor: 'rgba(63, 191, 127, 1)',
+                pointBorderColor: 'rgba(63, 191, 127, 1)',
                 borderWidth: 1,
                 lineTension: 0.1,
             },
@@ -723,6 +734,8 @@ class ExampleChart extends Component {
               borderColor: [
                   'rgba(255, 99, 132, 1)'
               ],
+              pointBackgroundColor: 'rgba(255, 99, 132, 0.2)',
+              pointBorderColor: 'rgba(255, 99, 132, 1)',
               borderWidth: 2,
               lineTension: 0.1,
           }]
@@ -746,6 +759,201 @@ class ExampleChart extends Component {
             }
         }
     });
+
+    var vsPayroleExpenses = document.getElementById(this.state.chartPayroleExpenses);
+
+    new Chart(vsPayroleExpenses, {
+        type: 'pie',
+        data: {
+            labels: [ 'July', 'August', 'September', 'October', 'November', 'December', 'January', 'Febuary', 'March', 'April', 'May', 'June' ],
+            datasets: [{
+                label: '$ in Donations',
+                data: [50, 0, 0, 0, 50, 0, 0, 0, 0, 100, 50, 0],
+                backgroundColor: [
+                  'rgba(63, 191, 127, 0.2)'
+                ],
+                borderColor: [
+                  'rgba(63, 191, 127, 1)'
+                ],
+                pointBackgroundColor: 'rgba(63, 191, 127, 1)',
+                pointBorderColor: 'rgba(63, 191, 127, 1)',
+                borderWidth: 1,
+                lineTension: 0.1,
+            },
+            {
+              label: '$ in Expenses',
+              data: [10.66, 0, 12.97, 0, 0, 0, 0, 0, 0, 0, 0, 7.59],
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)'
+              ],
+              pointBackgroundColor: 'rgba(255, 99, 132, 0.2)',
+              pointBorderColor: 'rgba(255, 99, 132, 1)',
+              borderWidth: 2,
+              lineTension: 0.1,
+          }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                  ticks: {
+                    fontFamily: "brandon-grotesque",
+                    beginAtZero: true
+                  }
+                }],
+                xAxes: [{
+                  gridLines: {
+                    display: false
+                  },
+                  ticks: {
+                    fontFamily: "brandon-grotesque",
+                  }
+                }]
+            }
+        }
+    });
+
+    var vsCeoEmployee = document.getElementById(this.state.chartEmployeeAdmin);
+
+    new Chart(vsCeoEmployee, {
+        type: 'line',
+        data: {
+          labels: [ 'July', 'August', 'September', 'October', 'November', 'December', 'January', 'Febuary', 'March', 'April', 'May', 'June' ],
+          datasets: [
+            {
+              label: 'CEO Pay',
+              data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              backgroundColor: [
+                'rgba(63, 191, 127, 0.2)'
+              ],
+              borderColor: [
+                'rgba(63, 191, 127, 1)'
+              ],
+              pointBackgroundColor: 'rgba(63, 191, 127, 1)',
+              pointBorderColor: 'rgba(63, 191, 127, 1)',
+              borderWidth: 1,
+              lineTension: 0.1,
+            },
+            {
+              label: 'Average Employee Pay',
+              data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              backgroundColor: [
+                  'rgba(226, 167, 89, 0.2)'
+              ],
+              borderColor: [
+                'rgba(226, 167, 89, 1)'
+              ],
+              borderWidth: 2,
+              lineTension: 0.1,
+            },
+            {
+              label: 'Lowest Paid Employee',
+              data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)'
+              ],
+              borderWidth: 2,
+              lineTension: 0.1,
+            }
+          ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                  ticks: {
+                    fontFamily: "brandon-grotesque",
+                    beginAtZero: true,
+                    min: 0,
+                    max: 100000,
+                    callback: function(value, index, values) {return  '$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  }
+                }],
+                xAxes: [{
+                  gridLines: {
+                    display: false
+                  },
+                  ticks: {
+                    fontFamily: "brandon-grotesque",
+                  }
+                }]
+            }
+        }
+    });
+
+    var chartNewYorkEmployeeOurEmployee = document.getElementById(this.state.chartNewYorkEmployeeOurEmployee);
+
+    new Chart(chartNewYorkEmployeeOurEmployee, {
+        type: 'line',
+        data: {
+          labels: [ ...years(10) ],
+          datasets: [
+            {
+              label: 'Median New York Income',
+              data: [64894, 62909, 0, 0, 0, 0, 58,878, 60,850, 62,909, 64894],
+              backgroundColor: [
+                'rgba(63, 191, 127, 0.2)'
+              ],
+              borderColor: [
+                'rgba(63, 191, 127, 1)'
+              ],
+              pointBackgroundColor: 'rgba(63, 191, 127, 1)',
+              pointBorderColor: 'rgba(63, 191, 127, 1)',
+              borderWidth: 1,
+              lineTension: 0.1,
+            },
+            {
+              label: 'Median New York Income With College',
+              data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              backgroundColor: [
+                  'rgba(226, 167, 89, 0.2)'
+              ],
+              borderColor: [
+                'rgba(226, 167, 89, 1)'
+              ],
+              borderWidth: 2,
+              lineTension: 0.1,
+            },
+            {
+              label: 'Median Articles Employee Income',
+              data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)'
+              ],
+              borderWidth: 2,
+              lineTension: 0.1,
+            }
+          ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                  ticks: {
+                    fontFamily: "brandon-grotesque",
+                    beginAtZero: true,
+                    min: 0,
+                    max: 100000,
+                    callback: function(value, index, values) {return  '$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  }
+                }],
+                xAxes: [{
+                  gridLines: {
+                    display: false
+                  },
+                  ticks: {
+                    fontFamily: "brandon-grotesque",
+                  }
+                }]
+            }
+        }
+    });
   }
 
   render(props) {
@@ -753,7 +961,7 @@ class ExampleChart extends Component {
       <div className="chart-component">
 
         <Link to={ROUTES.REPORTS}>
-          <div className="border d-inline-block mt-3">
+          <div className="border d-inline-block mt-4">
             <div className="btn btn-articles-light alt py-1">
               <i class="far fa-hand-point-left"></i>
               <span>Back to Table Reports</span>
@@ -761,33 +969,45 @@ class ExampleChart extends Component {
           </div>
         </Link>
 
+        <div className="alert alert-danger border mt-2">Warning: This section is still in development and will not be ready unitll <b>July 1st 2020</b></div>
+
         <div className="chart-block">
           <h5>Revenue vs Expenses</h5>
           <p>How much we are spending a month compared to how much we are making.</p>
 
           <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} />
 
-          <canvas className='chart mb-3 bg-white' id={this.state.chartTitle} width="100%" height="45px"></canvas>
+          <canvas className='chart mb-3 bg-white' id={this.state.chartRevenueExpense} width="100%" height="45px"></canvas>
         </div>
 
         <div className="chart-block">
           <h5>Payrole Comparison</h5>
-          <p>The amount of money being spent on payrole compared to revenues and expenses.</p>
+          <p>The amount of money being spent on payrole compared to expenses.</p>
 
           <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} />
 
-          {/* <canvas className='chart mb-3 bg-white' id={this.state.chartTitle} width="100%" height="45px"></canvas> */}
-          <div className="badge badge-info mt-3">No Chart Added Yet</div>
+          <canvas className='chart mb-3 bg-white' id={this.state.chartPayroleExpenses} width="100%" height="45px"></canvas>
+          {/* <div className="badge badge-info mt-3">No Chart Added Yet</div> */}
         </div>
 
         <div className="chart-block">
           <h5>Median USA Income vs Our Employees</h5>
           <p>The amount of money being spent on payrole compared to revenues and expenses.</p>
 
-          <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} />
+          {/* <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} /> */}
+          <span className="badge badge-dark">10 Years</span>
 
           {/* <canvas className='chart mb-3 bg-white' id={this.state.chartTitle} width="100%" height="45px"></canvas> */}
-          <div className="badge badge-info mt-3">No Chart Added Yet</div>
+          <canvas className='chart mb-3 bg-white' id={this.state.chartNewYorkEmployeeOurEmployee} width="100%" height="45px"></canvas>
+          <div className="btn btn-articles-light mb-2"><i class="fas fa-caret-square-down"></i>Expand Source Info</div>
+          <div>Information sourced from the following:</div>
+          <ul>
+            <li>LINK EXAMPLE</li>
+            <li>LINK EXAMPLE</li>
+            <li>LINK EXAMPLE</li>
+            <li>LINK EXAMPLE</li>
+          </ul>
+          {/* <div className="badge badge-info mt-3">No Chart Added Yet</div> */}
         </div>
 
         <div className="chart-block">
@@ -796,8 +1016,8 @@ class ExampleChart extends Component {
 
           <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} />
 
-          {/* <canvas className='chart mb-3 bg-white' id={this.state.chartTitle} width="100%" height="45px"></canvas> */}
-          <div className="badge badge-info mt-3">No Chart Added Yet</div>
+          <canvas className='chart mb-3 bg-white' id={this.state.chartEmployeeAdmin} width="100%" height="45px"></canvas>
+          {/* <div className="badge badge-info mt-3">No Chart Added Yet</div> */}
         </div>
       </div>
     )

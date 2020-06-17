@@ -1,6 +1,8 @@
 import React, { Component, useState } from 'react';
 import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
+import Swiper from 'react-id-swiper';
+import 'swiper/swiper.scss'
 // import playButtonLight from '../../assets/img/News/yt_logo_mono_light.png'
 import playButtonDark from '../../assets/img/News/yt_logo_mono_dark.png'
 import moment from 'moment';
@@ -16,6 +18,8 @@ import MythsDisplay from './MythsDisplay'
 import Stories from './Stories/index';
 import Issues from './Issues/index';
 import Myths from './Myths/index';
+
+import { GzyCard } from './Issues/index'
 
 import statesImage from '../../assets/img/states.jpg'
 
@@ -75,14 +79,139 @@ function SearchHead(props) {
 }
 
 function JustFrontpage(props) {
+
+  const [swiper, updateSwiper] = useState(null);
+
+  const settings = {
+    arrows: true,
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 4,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+  };
+
+  const params = {
+    pagination: {
+      el: '.swiper-pagination',
+      type: 'bullets',
+      clickable: true
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev'
+    },
+    spaceBetween: 5,
+    freeMode: true,
+    slidesPerView: 4,
+    slidesPerGroup: 4,
+    // containerClass: 'swiper-container-1'
+  }
+
+  const goNext = () => {
+    if (swiper !== null) {
+      swiper.slideNext();
+    }
+  };
+  const goPrev = () => {
+    if (swiper !== null) {
+      swiper.slidePrev();
+    }
+  };
+
+  if (swiper !== null) {
+    swiper.on('slideChange', function () {
+      console.log('slide changed');
+    });
+  }
+
+  
+
   return (
     <>
-      <div className="issue-development">
+      <div className="issue-development issues-page">
         
         <div className="d-flex justify-content-between">
           <span className="title heading-font">Issue Developments</span>
           {/* <span>Showing 4 out of {this.props.issues.issues.length}</span> */}
         </div>
+
+        {/* <Slider {...settings}>
+        <div>
+          <h3>1</h3>
+        </div>
+        <div>
+          <h3>2</h3>
+        </div>
+        <div>
+          <h3>3</h3>
+        </div>
+        <div>
+          <h3>4</h3>
+        </div>
+        <div>
+          <h3>5</h3>
+        </div>
+        <div>
+          <h3>6</h3>
+        </div>
+      </Slider> */}
+
+      {/* <div className="swiper-container">  */}
+
+        {/* <div onClick={goPrev} className="swiper-button-prev">A</div>
+        <div onClick={goNext} className="swiper-button-next">B</div> */}
+        
+        {/* <Swiper {...params}>   
+          {props.issues?.issues.map((issue, i) => (
+            <GzyCard
+            issue={issue}
+            podcast={true}
+            podcastDay=""
+            podcastLink=""
+            topText="Rising Cost"
+            dateType={props.site?.dateType}
+            // midText={issue?.news_title}
+            bottomText="The Unspoken Issues"
+            backgroundImage={issue.hero_url}
+            />
+          ))}  
+          
+        </Swiper> */}
+
+      {/* </div> */}
+
+      <div className="noselect">
+        <div className="new-button">My Subscriptions</div>
+        <div className="new-button">View All</div>
+      </div>
+      
 
         <div className="issue-development-cards">
           {props.issues.issues.map((issue) => (
