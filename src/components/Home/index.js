@@ -132,7 +132,7 @@ class HomePageFour extends Component {
                   <div className="text">Home to stories, issues and myths along with weather and video content.</div>
 
                   <div className="tile-extra">
-                    0 Subscribed Updates
+                    {this.props.user?.subscriptionsFetched.length || 0} Subscribed Updates
                   </div>
 
                 </div>

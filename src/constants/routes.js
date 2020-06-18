@@ -19,6 +19,9 @@ export const REPORTS = '/reports';
 export const REPORTS_CHARTS = '/reports/charts';
 export const REPORTS_REPORT = '/reports/report';
 export const REPORTS_MANAGE = '/reports/manage';
+// Employees
+export const EMPLOYEES = '/reports/employees'
+export const EMPLOYEES_DETAILS = '/employees/:id'
 
 // Store
 export const STORE ='/store'
@@ -56,10 +59,6 @@ export const PROPOSAL ='/party/proposals/:id'
 
 // Mesh
 export const MESH ='/mesh'
-
-// Employees
-export const EMPLOYEES = '/employees'
-export const EMPLOYEES_DETAILS = '/employees/:id'
 
 // Support
 export const SUPPORT ='/support'

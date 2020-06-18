@@ -22,8 +22,6 @@ import HomePageOld from './Home/components/HomePageThree'
 
 import MissionPage from './Mission';
 import ReportsPage from './Reports';
-import ReportsCharts from './Reports';
-import ReportsManagePage from './Reports/Manage';
 
 import StorePage from './Store'
 import StoreCheckoutPage from './Store/Checkout'
@@ -178,7 +176,9 @@ class App extends Component {
               <Route path={ROUTES.REPORTS} component={ReportsPage} exact={true}/>
               <Route path={ROUTES.REPORTS_CHARTS} component={ReportsPage} exact={true}/>
               <Route path={ROUTES.REPORTS_REPORT} component={ReportsPage} exact={true}/>
-              <Route path={ROUTES.REPORTS_MANAGE} component={ReportsManagePage} />
+
+              <Route path={ROUTES.EMPLOYEES} component={ReportsPage} exact={true}/>
+              <Route path={ROUTES.EMPLOYEES_DETAILS} component={EmployeePageDetails} />
         
               <Route exact path={ROUTES.STORE} component={StorePage} />
               <Route exact path={ROUTES.STORE_VIEW} component={StorePage} />
@@ -220,9 +220,6 @@ class App extends Component {
               <Route path={ROUTES.JOBS} component={JobsPage} />
               <Route path={ROUTES.PRESS} component={PressPage} />
               <Route path={ROUTES.TRANSLATIONS} component={TranslationsPage} />
-        
-              <Route path={ROUTES.EMPLOYEES} component={EmployeePage} exact={true}/>
-              <Route path={ROUTES.EMPLOYEES_DETAILS} component={EmployeePageDetails} />
         
               <Route path={ROUTES.ACCOUNT} component={AccountPage} />
               <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />

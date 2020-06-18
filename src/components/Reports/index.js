@@ -15,6 +15,7 @@ import moment from 'moment';
 import Chart from 'chart.js';
 import Component from 'react-live-clock/lib/Component';
 import socketIOClient from 'socket.io-client'
+import EmployeePage from '../Employees';
 const ENDPOINT = "/";
 let socket = ''
 
@@ -441,11 +442,21 @@ class Reports extends Component {
 
             <div className="reports-side-menu">
 
+              
+
               <div className="static-wrapper">
-                <div className="live">
+
+                <Route exact path={ROUTES.REPORTS} render={() => 
+                  <div className="live">
+                    <span className="recording-dot d-inline-block"></span>
+                    <span>Live</span>
+                  </div>
+                }/>
+
+                {/* <div className="live">
                   <span className="recording-dot d-inline-block"></span>
                   <span>Live</span>
-                </div>
+                </div> */}
     
                 <div id='info' className={"info " + (this.state.menuExpanded ? 'expanded' : '')}>
     
@@ -491,8 +502,19 @@ class Reports extends Component {
               </div>
 
               <div className="mt-3">
+                <Link to={ROUTES.REPORTS}>
+                  <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (this.props.location.pathname === ROUTES.REPORTS ? 'active' : null)}>
+                    <div>
+                      <i class="fas fa-paste" aria-hidden="true"></i>
+                      <span>Reports</span>
+                    </div>
+                  </button>
+                </Link>
+              </div>
+
+              <div className="mt-3">
                 <Link to={ROUTES.REPORTS_CHARTS}>
-                  <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (this.props.location.pathname === "/reports/charts" ? 'active' : null)}>
+                  <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (this.props.location.pathname === ROUTES.REPORTS_CHARTS ? 'active' : null)}>
                     <div>
                       <i className="fas fa-chart-line"></i>
                       <span>Data Charts</span>
@@ -503,7 +525,7 @@ class Reports extends Component {
   
               <div className="mt-3">
                 <Link to={ROUTES.REPORTS_REPORT}>
-                  <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (this.props.location.pathname === "/reports/report" ? 'active' : null)}>
+                  <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (this.props.location.pathname === ROUTES.REPORTS_REPORT ? 'active' : null)}>
                     <div>
                       <i className="fas fa-flag"></i>
                       <span>Report Expense</span>
@@ -512,20 +534,31 @@ class Reports extends Component {
                 </Link>
               </div>
 
+              <div className="mt-3">
+                <Link to={ROUTES.EMPLOYEES}>
+                  <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (this.props.location.pathname === ROUTES.EMPLOYEES ? 'active' : null)}>
+                    <div>
+                      <i class="fas fa-paste" aria-hidden="true"></i>
+                      <span>Employee Data</span>
+                    </div>
+                  </button>
+                </Link>
+              </div>
+
               {/* <div className="mt-3"> */}
-                <div className="badge badge-light border border-black other-tag mt-3 mx-auto d-none d-md-block">Or Check Out</div>
+                {/* <div className="badge badge-light border border-black other-tag mt-3 mx-auto d-none d-md-block">Or Check Out</div> */}
               {/* </div> */}
   
-              <div className="d-none d-md-block mt-3">
+              {/* <div className="d-none d-md-block mt-3">
                 <Link to={ROUTES.EMPLOYEES}><button className="btn btn-articles-light btn-lg w-100 report-quick-links">
                   <div>
                     <i className="fas fa-user-tie"></i>
                     <span>Employee Data</span>
                   </div>
                 </button></Link>
-              </div>
+              </div> */}
   
-              <div className="d-none d-md-block mt-3">
+              {/* <div className="d-none d-md-block mt-3">
                 <Link to={ROUTES.DONATE}>
                   <button className="btn btn-articles-light btn-lg w-100 mb-3 report-quick-links">
                     <div>
@@ -534,7 +567,7 @@ class Reports extends Component {
                     </div>
                   </button>
                 </Link>
-              </div>
+              </div> */}
 
             </div>
             
@@ -545,7 +578,7 @@ class Reports extends Component {
             <Route exact={true} path={ROUTES.REPORTS} render={() => 
               <div className="col-12 col-md-8 col-lg-8">
 
-                <div className="search">
+                <div className="search reports-shadow">
                   
                   <div className="input-wrap dual-header">
                     
@@ -571,7 +604,7 @@ class Reports extends Component {
                         this.filterByValue(this.state.firebaseData.expenses.other, this.state.searchText).map((item, i) => (
                         <div className="result">
                           <div>{item.reason} - ${(item.amount / 100).toFixed(2)}</div>
-                          <div>{moment.unix(item.date).format("LL")}</div>
+                          <div>{moment(item.date).format("LL")}</div>
                         </div>
                         ))
 
@@ -660,17 +693,68 @@ class Reports extends Component {
               <div className="col-12 col-md-8 col-lg-8">
 
                 <Link to={ROUTES.REPORTS}>
-                  <div className="border d-inline-block mt-3">
-                    <div className="btn btn-articles-light alt py-1">
+                  {/* <div className="border d-inline-block"> */}
+                    <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1">
                       <i class="far fa-hand-point-left"></i>
-                      <span>Back to Table Reports</span>
+                      <span>Back to Reports</span>
                     </div>
-                  </div>
+                  {/* </div> */}
                 </Link>
 
-                <div className="mt-3">
-                  This section is currently in development, expected release date of July 1st 2020.
+                <div className="alert alert-danger border mt-3">Warning: This section is still in development and will not be ready unitll <b>July 1st 2020</b></div>
+
+                <div className="alert alert-warning border mt-3">Warning: We are working on ways to make this section more transparent with our users, such as number of reports and ways to agree with other peoples reports. Data is saved for Admins to look at for now.</div>
+
+                <div className="reports-side reports-shadow chart-block">
+                  {/* <div className="container pt-2"> */}
+                    <div className="row">
+
+                      <div className="col-12 col-md-12">
+
+                        <h5>Report An Expense</h5>
+                        <p>If you have any concerns, recommendations, or problems with a charge feel free to voice them below.</p>
+
+                        <div className="form-group">
+                          <label for="newsType">Expense:</label>
+                          <select className="form-control" name="news_type" disabled={this.state.editLoading ? 'disabled' : ''} id="news_type" value={this.state.news_type} onChange={this.handleChange}>
+                            <option value={''}>Choose One</option>
+                            {this.state.firebaseData.expenses.other.map((expense) => (
+                              <option value={expense.reason}>{moment(expense.date).format("LL")} - {expense.reason} - ${expense.amount / 100}</option>
+                            ))}
+                          </select>
+                        </div>
+
+                        <div className="form-group">
+                          <label for="newsType">Concern, Recommendation, or Problem:</label>
+                          <textarea className="d-block w-100 p-2" name="" id="" rows="10"></textarea>
+                        </div>
+
+                        <div className="pb-3 d-flex justify-content-end"><div className="btn btn-articles-light">Submit</div></div>
+
+                      </div>
+         
+                    </div>
+                  {/* </div> */}
                 </div>
+
+              </div>
+            }/>
+
+            <Route path={ROUTES.EMPLOYEES} render={() => 
+              <div className="col-12 col-md-8 col-lg-8">
+
+                <Link to={ROUTES.REPORTS}>
+                  {/* <div className="border d-inline-block"> */}
+                    <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1">
+                      <i class="far fa-hand-point-left"></i>
+                      <span>Back to Reports</span>
+                    </div>
+                  {/* </div> */}
+                </Link>
+
+                <div className="alert alert-danger border mt-3">Warning: This section is still in development and will not be ready unitll <b>July 1st 2020</b></div>
+
+                <EmployeePage></EmployeePage>
 
               </div>
             }/>
@@ -694,7 +778,7 @@ class DataCharts extends Component {
       chartPayroleExpenses: 'chartPayroleExpenses',
       chartEmployeeAdmin: 'chartEmployeeAdmin',
       chartNewYorkEmployeeOurEmployee: 'chartNewYorkEmployeeOurEmployee',
-      type: this.props.type
+      expandSource: false
     };
   }
 
@@ -956,69 +1040,84 @@ class DataCharts extends Component {
     });
   }
 
+  changeExpandSource(state) {
+    this.setState({
+      expandSource: state
+    })
+  }
+
   render(props) {
     return (
       <div className="chart-component">
 
         <Link to={ROUTES.REPORTS}>
-          <div className="border d-inline-block mt-4">
-            <div className="btn btn-articles-light alt py-1">
+          {/* <div className="border d-inline-block"> */}
+            <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1">
               <i class="far fa-hand-point-left"></i>
-              <span>Back to Table Reports</span>
+              <span>Back to Reports</span>
             </div>
-          </div>
+          {/* </div> */}
         </Link>
 
-        <div className="alert alert-danger border mt-2">Warning: This section is still in development and will not be ready unitll <b>July 1st 2020</b></div>
+        <div className="alert alert-danger border mt-3">Warning: This section is still in development and will not be ready unitll <b>July 1st 2020</b></div>
 
-        <div className="chart-block">
-          <h5>Revenue vs Expenses</h5>
-          <p>How much we are spending a month compared to how much we are making.</p>
+        <div className="chart-blocks">
+          <div className="chart-block">
+            <h5>Revenue vs Expenses</h5>
+            <p>How much we are spending a month compared to how much we are making.</p>
+  
+            <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} />
+  
+            <canvas className='chart mb-3 bg-white' id={this.state.chartRevenueExpense} width="100%" height="45px"></canvas>
+          </div>
+  
+          <div className="chart-block">
+            <h5>Payrole Comparison</h5>
+            <p>The amount of money being spent on payrole compared to expenses.</p>
+  
+            <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} />
+  
+            <canvas className='chart mb-3 bg-white' id={this.state.chartPayroleExpenses} width="100%" height="45px"></canvas>
+            {/* <div className="badge badge-info mt-3">No Chart Added Yet</div> */}
+          </div>
+  
+          <div className="chart-block">
+            <h5>Median USA Income vs Our Employees</h5>
+            <p>The amount of money being spent on payrole compared to revenues and expenses.</p>
+  
+            {/* <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} /> */}
+            <span className="badge badge-dark">10 Years</span>
+  
+            {/* <canvas className='chart mb-3 bg-white' id={this.state.chartTitle} width="100%" height="45px"></canvas> */}
+            <canvas className='chart mb-3 bg-white' id={this.state.chartNewYorkEmployeeOurEmployee} width="100%" height="45px"></canvas>
+            <div onClick={() => this.changeExpandSource(!this.state.expandSource)} className="btn btn-articles-light mb-2"><i class="fas fa-caret-square-down"></i>Expand Source Info</div>
 
-          <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} />
+            <div className={"source-info " + (this.state.expandSource ? "show" : null)}>
+              <hr/>
+              <div>Information sourced from the following:</div>
+              <div className="sources">
+                <ul className="mb-0">
+                  <li>Link</li>
+                  <li>Link</li>
+                  <li>Static Image</li>
+                  <li>Static Image</li>
+                </ul>
+              </div>
+            </div>
 
-          <canvas className='chart mb-3 bg-white' id={this.state.chartRevenueExpense} width="100%" height="45px"></canvas>
+          </div>
+  
+          <div className="chart-block">
+            <h5>Employee to CEO Pay Diffrence</h5>
+            <p>The % of employee worth to CEO pay. (Lowest Paid Employee, Median Employee Pay, Top Employee pay)</p>
+  
+            <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} />
+  
+            <canvas className='chart mb-3 bg-white' id={this.state.chartEmployeeAdmin} width="100%" height="45px"></canvas>
+            {/* <div className="badge badge-info mt-3">No Chart Added Yet</div> */}
+          </div>
         </div>
 
-        <div className="chart-block">
-          <h5>Payrole Comparison</h5>
-          <p>The amount of money being spent on payrole compared to expenses.</p>
-
-          <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} />
-
-          <canvas className='chart mb-3 bg-white' id={this.state.chartPayroleExpenses} width="100%" height="45px"></canvas>
-          {/* <div className="badge badge-info mt-3">No Chart Added Yet</div> */}
-        </div>
-
-        <div className="chart-block">
-          <h5>Median USA Income vs Our Employees</h5>
-          <p>The amount of money being spent on payrole compared to revenues and expenses.</p>
-
-          {/* <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} /> */}
-          <span className="badge badge-dark">10 Years</span>
-
-          {/* <canvas className='chart mb-3 bg-white' id={this.state.chartTitle} width="100%" height="45px"></canvas> */}
-          <canvas className='chart mb-3 bg-white' id={this.state.chartNewYorkEmployeeOurEmployee} width="100%" height="45px"></canvas>
-          <div className="btn btn-articles-light mb-2"><i class="fas fa-caret-square-down"></i>Expand Source Info</div>
-          <div>Information sourced from the following:</div>
-          <ul>
-            <li>LINK EXAMPLE</li>
-            <li>LINK EXAMPLE</li>
-            <li>LINK EXAMPLE</li>
-            <li>LINK EXAMPLE</li>
-          </ul>
-          {/* <div className="badge badge-info mt-3">No Chart Added Yet</div> */}
-        </div>
-
-        <div className="chart-block">
-          <h5>Employee to CEO Pay Diffrence</h5>
-          <p>The % of employee worth to CEO pay. (Lowest Paid Employee, Median Employee Pay, Top Employee pay)</p>
-
-          <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} />
-
-          <canvas className='chart mb-3 bg-white' id={this.state.chartEmployeeAdmin} width="100%" height="45px"></canvas>
-          {/* <div className="badge badge-info mt-3">No Chart Added Yet</div> */}
-        </div>
       </div>
     )
   }
@@ -1146,7 +1245,11 @@ function PreorderTable () {
 
       </table>
     </div>
-    <div className="pl-2 pb-2">Preorder and unfinalized sales are not included in any reports.</div>
+
+    <div style={{paddingBottom: '0.25rem'}}>
+      <div className="alert alert-warning pl-2 pb-2 m-2">Preorder and unfinalized sales are not included in any reports.</div>
+    </div>
+
     </>
   )
 }

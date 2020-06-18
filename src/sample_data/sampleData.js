@@ -44,47 +44,47 @@ export const employeeList = [
     }
 
   },
-  {
-    id: '3',
-    redact: true,
-    nameFirst: "Secret First Name",
-    nameMiddle: "Secret Middle Name",
-    nameLast: "Secret Last Name",
-    location: {
-      city: "Hidden Valley",
-      state: 'Atlantis'
-    },
-    bio: 'Top Secret Bio',
+  // {
+  //   id: '3',
+  //   redact: true,
+  //   nameFirst: "Secret First Name",
+  //   nameMiddle: "Secret Middle Name",
+  //   nameLast: "Secret Last Name",
+  //   location: {
+  //     city: "Hidden Valley",
+  //     state: 'Atlantis'
+  //   },
+  //   bio: 'Top Secret Bio',
 
-    // Warning, A Redacted Employees Role is never a secret and will be displayed. This warning will be more useful in the employee crreation page.
-    role: "Consultant",
+  //   // Warning, A Redacted Employees Role is never a secret and will be displayed. This warning will be more useful in the employee crreation page.
+  //   role: "Consultant",
 
-    startDate: 1554091200,
-    endDate: {
-      hasHappened: false,
-      reason: '',
-      date: 0
-    },
+  //   startDate: 1554091200,
+  //   endDate: {
+  //     hasHappened: false,
+  //     reason: '',
+  //     date: 0
+  //   },
 
-    payrole: {
-      total: 203.45,
-      stubs: [
-        {
-          amount: 100
-        },
-        {
-          amount: 100
-        }
-      ]
+  //   payrole: {
+  //     total: 203.45,
+  //     stubs: [
+  //       {
+  //         amount: 100
+  //       },
+  //       {
+  //         amount: 100
+  //       }
+  //     ]
 
-    },
-    social: {
-      hasInstagram: false,
-      hasFacebook: false,
-      hasGithub: false
-    }
+  //   },
+  //   social: {
+  //     hasInstagram: false,
+  //     hasFacebook: false,
+  //     hasGithub: false
+  //   }
 
-  }
+  // }
 ];
 
 export const sales = [
