@@ -131,6 +131,12 @@
       padding: .25rem .75rem;
     }
   }
+
+  .signin-notice {
+    background-color: black;
+    color: white;
+    padding: 0.5rem;
+  }
 }
 
 .reports-page {
@@ -161,6 +167,7 @@
   .reports-side-menu {
     position: sticky;
     top: calc(100px + 2rem);
+    margin-bottom: 2rem;
 
     .other-tag {
       // display: block!important;

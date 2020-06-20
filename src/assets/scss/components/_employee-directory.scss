@@ -1,5 +1,5 @@
 .employees-page {
-  height: calc(100vh - 150px);
+  // height: calc(100vh - 150px);
 
   .search-bar {
     // padding-top: 2rem;
@@ -42,6 +42,20 @@
     }
   }
 
+  .employees-list-head {
+    padding: 2.5rem;
+  }
+
+  .employees-list {
+
+    .employee-card {
+      border: 1px solid rgba(0, 0, 0, 0.125);
+      padding: 2.5rem;
+      background-color: white;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
   
 }
 

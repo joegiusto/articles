@@ -5,30 +5,31 @@ import * as ROUTES from '../../../constants/routes';
 export default function Menu(props) {
   // const cart_items = props.cart_items
   const cart_items = [
-    {
-      product_thumbnail: 'https://media.hufworldwide.com/media/catalog/product/cache/small_image/500x500/beff4985b56e3afdbeabfc89641a4582/D/E/DELINCUENTE-L-S-TEE_WHITE_TS01007_WHITE_01.jpg'
-    },
-    {
-      product_thumbnail: 'https://media.hufworldwide.com/media/catalog/product/cache/small_image/500x500/beff4985b56e3afdbeabfc89641a4582/D/E/DELINCUENTE-L-S-TEE_WHITE_TS01007_WHITE_01.jpg'
-    },
-    {
-      product_thumbnail: 'https://media.hufworldwide.com/media/catalog/product/cache/small_image/500x500/beff4985b56e3afdbeabfc89641a4582/D/E/DELINCUENTE-L-S-TEE_WHITE_TS01007_WHITE_01.jpg'
-    },
-    {
-      product_thumbnail: 'https://media.hufworldwide.com/media/catalog/product/cache/small_image/500x500/beff4985b56e3afdbeabfc89641a4582/D/E/DELINCUENTE-L-S-TEE_WHITE_TS01007_WHITE_01.jpg'
-    },
-    {
-      product_thumbnail: 'https://media.hufworldwide.com/media/catalog/product/cache/small_image/500x500/beff4985b56e3afdbeabfc89641a4582/D/E/DELINCUENTE-L-S-TEE_WHITE_TS01007_WHITE_01.jpg'
-    },
-    {
-      product_thumbnail: 'https://media.hufworldwide.com/media/catalog/product/cache/small_image/500x500/beff4985b56e3afdbeabfc89641a4582/D/E/DELINCUENTE-L-S-TEE_WHITE_TS01007_WHITE_01.jpg'
-    },
-    {
-      product_thumbnail: 'https://media.hufworldwide.com/media/catalog/product/cache/small_image/500x500/beff4985b56e3afdbeabfc89641a4582/D/E/DELINCUENTE-L-S-TEE_WHITE_TS01007_WHITE_01.jpg'
-    },
-    {
-      product_thumbnail: 'https://media.hufworldwide.com/media/catalog/product/cache/small_image/500x500/beff4985b56e3afdbeabfc89641a4582/D/E/DELINCUENTE-L-S-TEE_WHITE_TS01007_WHITE_01.jpg'
-    }
+    // {
+    //   product_thumbnail: 'https://media.hufworldwide.com/media/catalog/product/cache/small_image/500x500/beff4985b56e3afdbeabfc89641a4582/D/E/DELINCUENTE-L-S-TEE_WHITE_TS01007_WHITE_01.jpg'
+    // },
+    // {
+    //   product_thumbnail: 'https://media.hufworldwide.com/media/catalog/product/cache/small_image/500x500/beff4985b56e3afdbeabfc89641a4582/D/E/DELINCUENTE-L-S-TEE_WHITE_TS01007_WHITE_01.jpg'
+    // },
+    // {
+    //   product_thumbnail: 'https://media.hufworldwide.com/media/catalog/product/cache/small_image/500x500/beff4985b56e3afdbeabfc89641a4582/D/E/DELINCUENTE-L-S-TEE_WHITE_TS01007_WHITE_01.jpg'
+    // },
+    // {
+    //   product_thumbnail: 'https://media.hufworldwide.com/media/catalog/product/cache/small_image/500x500/beff4985b56e3afdbeabfc89641a4582/D/E/DELINCUENTE-L-S-TEE_WHITE_TS01007_WHITE_01.jpg'
+    // },
+    // {
+    //   product_thumbnail: 'https://media.hufworldwide.com/media/catalog/product/cache/small_image/500x500/beff4985b56e3afdbeabfc89641a4582/D/E/DELINCUENTE-L-S-TEE_WHITE_TS01007_WHITE_01.jpg'
+    // },
+    // {
+    //   product_thumbnail: 'https://media.hufworldwide.com/media/catalog/product/cache/small_image/500x500/beff4985b56e3afdbeabfc89641a4582/D/E/DELINCUENTE-L-S-TEE_WHITE_TS01007_WHITE_01.jpg'
+    // },
+    // {
+    //   product_thumbnail: 'https://media.hufworldwide.com/media/catalog/product/cache/small_image/500x500/beff4985b56e3afdbeabfc89641a4582/D/E/DELINCUENTE-L-S-TEE_WHITE_TS01007_WHITE_01.jpg'
+    // },
+    // {
+    //   product_thumbnail: 'https://media.hufworldwide.com/media/catalog/product/cache/small_image/500x500/beff4985b56e3afdbeabfc89641a4582/D/E/DELINCUENTE-L-S-TEE_WHITE_TS01007_WHITE_01.jpg'
+    // }
+    ...props.cart_items
   ]
 
   return (
@@ -39,7 +40,7 @@ export default function Menu(props) {
             (i < 8 ? 
               (i < 7 ? 
                 <div className="tile">
-                  <img src={item.product_thumbnail} alt=""/>
+                  <img src={item.preview} alt=""/>
                 </div>
                 :
                 <div className="tile last">

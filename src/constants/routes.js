@@ -21,7 +21,7 @@ export const REPORTS_REPORT = '/reports/report';
 export const REPORTS_MANAGE = '/reports/manage';
 // Employees
 export const EMPLOYEES = '/reports/employees'
-export const EMPLOYEES_DETAILS = '/employees/:id'
+export const EMPLOYEES_DETAILS = '/reports/employees/:id'
 
 // Store
 export const STORE ='/store'

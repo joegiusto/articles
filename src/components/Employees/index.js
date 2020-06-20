@@ -43,22 +43,28 @@ class EmployeesPage extends Component {
 
         </div>
 
-        <div className="card card-block p-5 py-2">
+        <div className="employees-list-head card card-block">
           <h1>Employee Directory</h1>
           <p>As part of our transparency efforts we provide a directory of our employees to the public along with some details about them.</p>
         </div>
 
-        <div>
+        <div className="employees-list">
           {employeeList.map(employee => (
-            <Link className="employee-a" to={ROUTES.EMPLOYEES + '/' + employee.id}>
+            <Link to={ROUTES.EMPLOYEES + '/' + employee.id}>
 
-                <div className="bg-white p-5">
+                <div className="employee-card">
                   <div>{employee.nameLast + (employee.nameFirst !== 'Anonymous' ? ', ' + employee.nameFirst : ' Anonymous')}</div>
+                  <div>
+                    <span className="badge badge-articles">Founder</span>
+                    <span className="badge badge-articles ml-2">Developer</span>
+                  </div>
                 </div>
 
             </Link>
           ))}
         </div>
+
+        <div className="w-100 text-center mt-2"><small>Showing {employeeList.length} of {employeeList.length} Results</small></div>
 
         <div className="row justify-content-center">
 

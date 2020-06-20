@@ -33,11 +33,24 @@
     display: flex;    
 
     .photo {
+      position: relative;
       border: 1px solid #000;
       margin-right: 10px;
       width: 120px;
       height: 170px;
       background-color: #000;
+
+      .main {
+        text-align: center;
+        width: 90px;
+        font-size: 14px;
+        background-color: black;
+        color: white;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+      }
 
       img {
         width: 100%;

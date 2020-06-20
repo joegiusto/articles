@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Helmet } from "react-helmet";
 import { connect } from 'react-redux';
 // import { DateRangePicker } from 'react-dates';
-import { Link, Switch, Route } from "react-router-dom";
+import { Link, Switch, Route, matchPath } from "react-router-dom";
 import { withFirebase } from '../Firebase';
 import { employeeList, sales, donations, expenses } from "../../sample_data/sampleData";
 
@@ -16,6 +16,8 @@ import Chart from 'chart.js';
 import Component from 'react-live-clock/lib/Component';
 import socketIOClient from 'socket.io-client'
 import EmployeePage from '../Employees';
+import EmployeeDetailsPage from '../Employees/Directory'
+
 const ENDPOINT = "/";
 let socket = ''
 
@@ -536,7 +538,7 @@ class Reports extends Component {
 
               <div className="mt-3">
                 <Link to={ROUTES.EMPLOYEES}>
-                  <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (this.props.location.pathname === ROUTES.EMPLOYEES ? 'active' : null)}>
+                  <button className={"btn btn-articles-light btn-lg w-100 report-quick-links" + (this.props.location.pathname === ROUTES.EMPLOYEES ? ' active' : '') + (matchPath(this.props.location.pathname, ROUTES.EMPLOYEES_DETAILS) ? ' active' : '')}>
                     <div>
                       <i class="fas fa-paste" aria-hidden="true"></i>
                       <span>Employee Data</span>
@@ -713,23 +715,34 @@ class Reports extends Component {
 
                         <h5>Report An Expense</h5>
                         <p>If you have any concerns, recommendations, or problems with a charge feel free to voice them below.</p>
+                        
+                        {this.props.user_id !== undefined ? 
+                        <>
+                          <div className="form-group">
+                            <label for="newsType">Expense:</label>
+                            <select className="form-control" name="news_type" disabled={this.state.editLoading ? 'disabled' : ''} id="news_type" value={this.state.news_type} onChange={this.handleChange}>
+                              <option value={''}>Choose One</option>
+                              {this.state.firebaseData.expenses.other.map((expense) => (
+                                <option value={expense.reason}>{moment(expense.date).format("LL")} - {expense.reason} - ${expense.amount / 100}</option>
+                              ))}
+                            </select>
+                          </div>
 
-                        <div className="form-group">
-                          <label for="newsType">Expense:</label>
-                          <select className="form-control" name="news_type" disabled={this.state.editLoading ? 'disabled' : ''} id="news_type" value={this.state.news_type} onChange={this.handleChange}>
-                            <option value={''}>Choose One</option>
-                            {this.state.firebaseData.expenses.other.map((expense) => (
-                              <option value={expense.reason}>{moment(expense.date).format("LL")} - {expense.reason} - ${expense.amount / 100}</option>
-                            ))}
-                          </select>
-                        </div>
+                          <div className="form-group">
+                            <label for="newsType">Concern, Recommendation, or Problem:</label>
+                            <textarea className="d-block w-100 p-2" name="" id="" rows="10"></textarea>
+                          </div>
 
-                        <div className="form-group">
-                          <label for="newsType">Concern, Recommendation, or Problem:</label>
-                          <textarea className="d-block w-100 p-2" name="" id="" rows="10"></textarea>
-                        </div>
+                          <div className="pb-3 d-flex justify-content-end"><div className="btn btn-articles-light">Submit</div></div>
+                        </>
+                        :
+                        <>
+                        <div className="signin-notice">You must be signed in to report an expense.</div>
+                        <Link to={ROUTES.SIGN_IN}><div className="btn btn-articles-light mt-2 w-100 mx-auto">Sign In</div></Link>
+                        </>
+                        }
 
-                        <div className="pb-3 d-flex justify-content-end"><div className="btn btn-articles-light">Submit</div></div>
+                        
 
                       </div>
          
@@ -740,7 +753,7 @@ class Reports extends Component {
               </div>
             }/>
 
-            <Route path={ROUTES.EMPLOYEES} render={() => 
+            <Route exact path={ROUTES.EMPLOYEES} render={() => 
               <div className="col-12 col-md-8 col-lg-8">
 
                 <Link to={ROUTES.REPORTS}>
@@ -755,6 +768,25 @@ class Reports extends Component {
                 <div className="alert alert-danger border mt-3">Warning: This section is still in development and will not be ready unitll <b>July 1st 2020</b></div>
 
                 <EmployeePage></EmployeePage>
+
+              </div>
+            }/>
+
+            <Route exact path={ROUTES.EMPLOYEES_DETAILS} render={() => 
+              <div className="col-12 col-md-8 col-lg-8">
+
+                <Link to={ROUTES.REPORTS}>
+                  {/* <div className="border d-inline-block"> */}
+                    <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1">
+                      <i class="far fa-hand-point-left"></i>
+                      <span>Back to Reports</span>
+                    </div>
+                  {/* </div> */}
+                </Link>
+
+                <div className="alert alert-danger border mt-3">Warning: This section is still in development and will not be ready unitll <b>July 1st 2020</b></div>
+
+                <EmployeeDetailsPage match={this.props.match}></EmployeeDetailsPage>
 
               </div>
             }/>
@@ -849,53 +881,41 @@ class DataCharts extends Component {
     new Chart(vsPayroleExpenses, {
         type: 'pie',
         data: {
-            labels: [ 'July', 'August', 'September', 'October', 'November', 'December', 'January', 'Febuary', 'March', 'April', 'May', 'June' ],
-            datasets: [{
-                label: '$ in Donations',
-                data: [50, 0, 0, 0, 50, 0, 0, 0, 0, 100, 50, 0],
-                backgroundColor: [
-                  'rgba(63, 191, 127, 0.2)'
-                ],
-                borderColor: [
-                  'rgba(63, 191, 127, 1)'
-                ],
-                pointBackgroundColor: 'rgba(63, 191, 127, 1)',
-                pointBorderColor: 'rgba(63, 191, 127, 1)',
-                borderWidth: 1,
-                lineTension: 0.1,
-            },
+          labels: [ 'Expenses', 'Payrole' ],
+          datasets: [
             {
-              label: '$ in Expenses',
-              data: [10.66, 0, 12.97, 0, 0, 0, 0, 0, 0, 0, 0, 7.59],
+              label: '$ in Donations',
+              data: [31.22, 0],
               backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)'
+                'rgba(63, 191, 127, 0.2)',
+                'rgba(255, 99, 132, 0.2)'
               ],
               borderColor: [
-                  'rgba(255, 99, 132, 1)'
+                'rgba(63, 191, 127, 1)',
+                'rgba(255, 99, 132, 1)'
               ],
-              pointBackgroundColor: 'rgba(255, 99, 132, 0.2)',
-              pointBorderColor: 'rgba(255, 99, 132, 1)',
-              borderWidth: 2,
+              borderWidth: 1,
               lineTension: 0.1,
-          }]
+            }
+          ]
         },
         options: {
-            scales: {
-                yAxes: [{
-                  ticks: {
-                    fontFamily: "brandon-grotesque",
-                    beginAtZero: true
-                  }
-                }],
-                xAxes: [{
-                  gridLines: {
-                    display: false
-                  },
-                  ticks: {
-                    fontFamily: "brandon-grotesque",
-                  }
-                }]
-            }
+          // scales: {
+          //     yAxes: [{
+          //       ticks: {
+          //         fontFamily: "brandon-grotesque",
+          //         beginAtZero: true
+          //       }
+          //     }],
+          //     xAxes: [{
+          //       gridLines: {
+          //         display: false
+          //       },
+          //       ticks: {
+          //         fontFamily: "brandon-grotesque",
+          //       }
+          //     }]
+          // }
         }
     });
 
@@ -1090,7 +1110,15 @@ class DataCharts extends Component {
   
             {/* <canvas className='chart mb-3 bg-white' id={this.state.chartTitle} width="100%" height="45px"></canvas> */}
             <canvas className='chart mb-3 bg-white' id={this.state.chartNewYorkEmployeeOurEmployee} width="100%" height="45px"></canvas>
-            <div onClick={() => this.changeExpandSource(!this.state.expandSource)} className="btn btn-articles-light mb-2"><i class="fas fa-caret-square-down"></i>Expand Source Info</div>
+            <div onClick={() => this.changeExpandSource(!this.state.expandSource)} className="btn btn-articles-light mb-2">
+              {this.state.expandSource ? 
+              <i class="fas fa-caret-square-up"></i>
+              :
+              <i class="fas fa-caret-square-down"></i>
+              }
+              
+              Expand Source Info
+              </div>
 
             <div className={"source-info " + (this.state.expandSource ? "show" : null)}>
               <hr/>
@@ -1522,7 +1550,8 @@ const StyledDonationItem = ({fetch, donation}) => (
 const mapStateToProps = (state) => {
   return {
     expenses: state.expenses,
-    site: state.site
+    site: state.site,
+    user_id: state.auth.user.id
   };
 };
 

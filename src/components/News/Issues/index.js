@@ -254,7 +254,7 @@ function GzyCard (props) {
             </div>
           : '')}
 
-          <div className="g-card-badge date" style={props.dateType !== 'post' ? {backgroundColor: 'red'} : {backgroundColor: '#ffb7b7', color: 'black'} }>
+          <div className="g-card-badge date" style={props.dateType !== 'post' ? {backgroundColor: 'red'} : {backgroundColor: '#f9edcd', color: 'black'} }>
 
             {props.dateType !== 'post' ? <i class="fas fa-calendar-alt"></i> : <i class="fas fa-redo-alt"></i> }
             
@@ -263,7 +263,7 @@ function GzyCard (props) {
             :
             moment(issue?.last_update).format("LL")
             }
-            <div className="sub" style={ props.dateType === 'post' ? {backgroundColor: 'red', color: 'white'} : {backgroundColor: '#ffb7b7'} }>
+            <div className="sub" style={ props.dateType === 'post' ? {backgroundColor: 'red', color: 'white'} : {backgroundColor: '#f9edcd'} }>
               {/* <i class="fas fa-calendar-day"></i> */}
               {props.dateType === 'post' ?  <i class="fas fa-calendar-alt"></i> : <i class="fas fa-redo-alt"></i> }
               {/* {moment(issue?.last_update).format("LL")} */}

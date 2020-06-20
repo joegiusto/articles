@@ -482,6 +482,7 @@ class SubmitBase extends Component {
           <div className="label">Photos:</div>
           <div className="photos mt-2">
             <div className="photo">
+              <div className="main">Main Photo</div>
               <img src={submission.photos?.one} alt=""/>
             </div>
             <div className="photo">
@@ -498,7 +499,8 @@ class SubmitBase extends Component {
             </div>
           </div>
           
-          <div className="mt-2">
+          <div className="mt-4">
+            <div className="label">Actions:</div>
             <div onClick={() => this.props.validate()} className="btn btn-danger delete">Delete</div><button className="btn btn-articles-light ml-2">Request Edit</button>
           </div>
 

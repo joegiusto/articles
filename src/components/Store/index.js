@@ -1,6 +1,9 @@
 import React, { Component, useState } from 'react';
 import { Helmet } from "react-helmet";
-import StoreItem from './StoreItemAlpha';
+
+import StoreItemAlpha from './StoreItemAlpha';
+import StoreItemBeta from './Items/Beta.js';
+
 import {One, Two, Three, Four} from './SponseredItems';
 import * as ROUTES from '../../constants/routes';
 import { Link } from 'react-router-dom';
@@ -51,7 +54,8 @@ class StorePageBase extends Component {
       loadingProducts: false,
 			products: [],
 			popOutVisible: false,
-			currentPopOut: ""
+			currentPopOut: "",
+			currentPopOutPhoto: ""
 		};
 		
 		this.setPopOut = this.setPopOut.bind(this);
@@ -61,7 +65,11 @@ class StorePageBase extends Component {
 	setPopOut(state, product) {
 		this.setState({
 			popOutVisible: state,
-			currentPopOut: product || this.state.currentPopOut
+			currentPopOut: product || this.state.currentPopOut,
+		}, () => {
+			this.setState({
+				currentPopOutPhoto: this.state.currentPopOut.photos?.one
+			})
 		})
 	}
 
@@ -145,53 +153,60 @@ class StorePageBase extends Component {
 						</div>
 						<div className="viewer-body">
 							<div className="row justify-content-between">
-								<div className="col-6">
+
+								<div className="col-8">
 									<div className="row">
-										<div className="col-8">
-											<div className="selected-photo"></div>
+										<div className="col-6">
+											<div className="selected-photo">
+												<img src={this.state.currentPopOutPhoto} alt=""/>
+											</div>
 										</div>
-										<div className="col-4">
+										<div className="col-6">
 											<h5>Showcase Photos</h5>
 											<div className="thumbnails">
-												<div className="thumbnail-photo"></div>
-												<div className="thumbnail-photo"></div>
-												<div className="thumbnail-photo"></div>
-												<div className="thumbnail-photo"></div>
-												<div className="thumbnail-photo"></div>
-												<div className="thumbnail-photo"></div>
-												<div className="thumbnail-photo"></div>
-												<div className="thumbnail-photo"></div>
-											</div>
-											<h5>Artwork Photos</h5>
-											<div className="thumbnails">
-												<div className="thumbnail-photo"></div>
-												<div className="thumbnail-photo"></div>
-												<div className="thumbnail-photo"></div>
-												<div className="thumbnail-photo"></div>
-												<div className="thumbnail-photo"></div>
-												<div className="thumbnail-photo"></div>
-												<div className="thumbnail-photo"></div>
-												<div className="thumbnail-photo"></div>
+												<div onClick={() => this.setState({currentPopOutPhoto: this.state.currentPopOut.photos?.one})} className={"thumbnail-photo " + (this.state === "" ? null : null)}>
+													<img src={this.state.currentPopOut.photos?.one} alt=""/>
+												</div>
+												<div onClick={() => this.setState({currentPopOutPhoto: this.state.currentPopOut.photos?.two})} className={"thumbnail-photo " + (this.state === "" ? null : null)}>
+													<img src={this.state.currentPopOut.photos?.two} alt=""/>
+												</div>
+												<div onClick={() => this.setState({currentPopOutPhoto: this.state.currentPopOut.photos?.three})} className={"thumbnail-photo " + (this.state === "" ? null : null)}>
+													<img src={this.state.currentPopOut.photos?.three} alt=""/>
+												</div>
+												<div onClick={() => this.setState({currentPopOutPhoto: this.state.currentPopOut.photos?.four})} className={"thumbnail-photo " + (this.state === "" ? null : null)}>
+													<img src={this.state.currentPopOut.photos?.four} alt=""/>
+												</div>
+												<div onClick={() => this.setState({currentPopOutPhoto: this.state.currentPopOut.photos?.five})} className={"thumbnail-photo " + (this.state === "" ? null : null)}>
+													<img src={this.state.currentPopOut.photos?.five} alt=""/>
+												</div>
+												<div onClick={() => this.setState({currentPopOutPhoto: this.state.currentPopOut.photos?.six})} className={"thumbnail-photo " + (this.state === "" ? null : null)}>
+													<img src={this.state.currentPopOut.photos?.six} alt=""/>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
+
 								<div className="col-4 border-left">
-									<div className="detail-container">
+
+									<div className="detail-container">									
 										<h1>{this.state.currentPopOut.title}</h1>
-										<div>Realesed | 00/00/0000</div>
-										<div>Made In | United States</div>
-										<div>Material | </div>
-										{/* <div>Manufacture Cost | $20</div> */}
-										<div>Sale Price | ${this.state.currentPopOut.price / 100}</div>
-										<button className="btn btn-articles-light">Add to Cart</button>
+										<div>Realesed | {this.state.currentPopOut.realese || <div className="badge badge-dark">?</div>}</div>
+										{/* <div>Made In | United States</div> */}
+										<div>Material | {this.state.currentPopOut.material}</div>
+										<div>Price | ${(this.state.currentPopOut.price / 100).toFixed(2)}</div>
+										<button className="btn btn-articles-light mt-2">Add to Cart</button>	
 									</div>
+
 								</div>
+
 							</div>
 						</div>
+
 						<div className="viewer-footer">
 							<img src={this.state.currentPopOut.backing} alt=""/>
 						</div>
+
 					</div>
 				</div>
 
@@ -223,10 +238,23 @@ class StorePageBase extends Component {
 				</div>
 
 				<div className="hero">
+
 					<img src={hero} alt=""/>
+
+					<div className="notice">
+					
+					</div>
+
+
+					<div className="showcase">
+
+					</div>
+
+
 					<div className="hero-content d-none">
 						<div className="bottom">Testing</div>
 					</div>
+
 				</div>
 
 				<div className='container'>
@@ -255,25 +283,65 @@ class StorePageBase extends Component {
 
 					<div className='row justify-content-center'>
 
-					    <div className="featured-items">
+					  <div className="featured-items">
 
-								<h1 className="mt-2 mt-md-4 store-heading">Featured</h1>
+							<h1 className="mt-2 mt-md-4 store-heading">Featured</h1>
 
-								<div className="dual-header">
+							<div className="dual-header">
 
-										{this.state.loadingProducts && <div>Loading ...</div>}
-										<div>
-												{this.state.products.map((product, index) => (
+									{this.state.loadingProducts && <div>Loading ...</div>}
 
-														<StoreItem setPopOutVisible={this.setPopOut} product={product} catalogId={product.uid} price={product.price} title={product.title} sale="%15" banner="Original" color="articles" />
+									<div>
 
-												))}
-												
+										<div className="store-item-beta-grid mb-4">
+
+											{/* {this.state.products.map((product, index) => (
+												<StoreItemBeta
+													setPopOutVisible={this.setPopOut}
+													product={product}
+													color="articles"
+												/>
+											))} */}
+
+											<StoreItemBeta
+												setPopOutVisible={this.setPopOut}
+												product={this.state.products.find(element => element._id === "5eabc1e99b0beb3e04599717")}
+												color="articles"
+											/>
+
+											<StoreItemBeta
+												setPopOutVisible={this.setPopOut}
+												product={this.state.products.find(element => element._id === "5eabc20a38584110a044f93e")}
+												color="articles"
+											/>
+
+											<StoreItemBeta
+												setPopOutVisible={this.setPopOut}
+												product={this.state.products.find(element => element._id === "5eb3aaaba316c3077c598cc4")}
+												color="articles"
+											/>
+
+											<StoreItemBeta
+												setPopOutVisible={this.setPopOut}
+												product={this.state.products.find(element => element._id === "5eb50fdde094562238f5b910")}
+												color="articles"
+											/>
+
+											<StoreItemBeta
+												setPopOutVisible={this.setPopOut}
+												product={this.state.products.find(element => element._id === "5eec730342888643d8f5e2ce")}
+												color="articles"
+											/>
+
 										</div>
 
-										{/* <div>{this.getIndexByUid("really-a-wolf") > -1 ? this.state.firebaseClothing[this.getIndexByUid("really-a-wolf")].title : <div>Loading...</div>} </div> */}
+										{/* {this.state.products.map((product, index) => (
+												<StoreItemAlpha setPopOutVisible={this.setPopOut} product={product} catalogId={product.uid} price={product.price} title={product.title} sale="%15" banner="Original" color="articles" />
+										))} */}
 
-								</div>
+									</div>
+
+							</div>
 
 						</div>
 
@@ -282,24 +350,16 @@ class StorePageBase extends Component {
 							<h1 className="mt-2 mt-md-4 store-heading">Featured</h1>
 
 							<div className="products-wrap">
-							    <StoreItem setPopOutVisible={this.setPopOut} catalogId='1' price={3000} title="Wolf Hoodie" sale="%15" banner="Original" color="articles" />
-    				
-    							<StoreItem setPopOutVisible={this.setPopOut} catalogId='2' price={3000} title="Sheep Hoodie" sale="%15" banner="Original" color="articles"/>
-    				
-    							<StoreItem setPopOutVisible={this.setPopOut} catalogId='3' price={2500} title="Partner Item" sale="%15" banner="Partner" color="info"/>
-    				
-    							<StoreItem setPopOutVisible={this.setPopOut} catalogId='4' price={2000} title="Sponsered Item" sale="%15" banner="Sponsered" color="danger"/>
-    				
-    							<StoreItem setPopOutVisible={this.setPopOut} catalogId='5' price={2000} title="Sponsered Item" sale="%15" banner="Sponsered" color="primary"/>
+								<StoreItemAlpha setPopOutVisible={this.setPopOut} catalogId='1' price={3000} title="Wolf Hoodie" sale="%15" banner="Original" color="articles" />
+								<StoreItemAlpha setPopOutVisible={this.setPopOut} catalogId='2' price={3000} title="Sheep Hoodie" sale="%15" banner="Original" color="articles"/>
+								<StoreItemAlpha setPopOutVisible={this.setPopOut} catalogId='3' price={2500} title="Partner Item" sale="%15" banner="Partner" color="info"/>
+								<StoreItemAlpha setPopOutVisible={this.setPopOut} catalogId='4' price={2000} title="Sponsered Item" sale="%15" banner="Sponsered" color="danger"/>
+								<StoreItemAlpha setPopOutVisible={this.setPopOut} catalogId='5' price={2000} title="Sponsered Item" sale="%15" banner="Sponsered" color="primary"/>
 							</div>
 
 						</div>
-
-						<div className="grid">
-
-						</div>
 						
-						<div className="col-12 overflow-hidden">
+						<div className="d-none col-12 overflow-hidden">
 							<div className="row">
 
 								<div className="col-12">
@@ -316,8 +376,8 @@ class StorePageBase extends Component {
 											<div className="col-6 p-0">
 												<div className="store-panel store-panel-1">
 													<div className="slick-container text-center">
-														<div className="mr-5 d-inline"><StoreItem catalogId='1' price={3000} title="Wolf Sweatshirt" banner="Original" color="articles" /></div>
-														<StoreItem catalogId='2' price={3000} title="Sheep Sweatshirt" banner="Original" color="articles"/>
+														<div className="mr-5 d-inline"><StoreItemAlpha catalogId='1' price={3000} title="Wolf Sweatshirt" banner="Original" color="articles" /></div>
+														<StoreItemAlpha catalogId='2' price={3000} title="Sheep Sweatshirt" banner="Original" color="articles"/>
 													</div>
 												</div>
 											</div>
@@ -337,8 +397,8 @@ class StorePageBase extends Component {
 									<div className="col-6 p-0">
 										<div className="store-panel store-panel-2">
 											<div className="slick-container text-center">
-												<div className="mr-5 d-inline"><StoreItem catalogId='3' price={2500} title="Partner Item" banner="Partner" color="info"/></div>
-												<StoreItem catalogId='3' price={2500} title="Partner Item" banner="Partner" color="info"/>
+												<div className="mr-5 d-inline"><StoreItemAlpha catalogId='3' price={2500} title="Partner Item" banner="Partner" color="info"/></div>
+												<StoreItemAlpha catalogId='3' price={2500} title="Partner Item" banner="Partner" color="info"/>
 											</div>
 										</div>
 									</div>
@@ -394,6 +454,95 @@ class StorePageBase extends Component {
 									</div>
 								</div>
 
+							</div>
+						</div>
+
+						<div className="link-panels">
+
+							<Link>
+								<div className="panel">
+									<img src="https://cdn.articles.media/store/old_sheep_mockup_back.jpg" alt="" className="background view-all"/>
+									<div className="icon">
+										<i class="fas fa-tshirt"></i>
+									</div>
+									<div className="title">View All</div>
+								</div>
+							</Link>
+
+							<Link>
+								<div className="panel">
+									<img src="https://preview.free3d.com/img/2019/04/2154877840292579114/xqztcxft-900.jpg" alt="" className="background collections"/>
+									<div className="icon">
+										<i class="fas fa-grip-horizontal"></i>
+									</div>
+									<div className="title">Collections</div>
+								</div>
+							</Link>
+
+							<Link to={ROUTES.STORE_SUBMISSIONS}>
+								<div className="panel">
+
+									<div className="background submission"/>
+
+									<div className="voting-board">
+										<div className="board">
+											{/* <i class="fas fa-ruler-combined"></i> */}
+										</div>
+										<div className="votes">
+											<i class="fas fa-thumbs-down"></i>
+											<i class="fas fa-thumbs-up mr-0"></i>
+										</div>
+									</div>
+
+									<div className="icon">
+										<i class="fas fa-lightbulb" aria-hidden="true"></i>
+									</div>
+
+									<div className="title">Submissions</div>
+
+								</div>
+							</Link>
+							
+						</div>
+
+						<div className="extras-panels">
+
+							<div className="panel">
+								<div className="type">Originals</div>
+								<div className="description">Designed and sold by us!</div>
+								<div className="progress">
+									<div className="progress-bar original" role="progressbar" style={{width: "100%"}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+								</div>
+								<div className="profit">Net Profit: 100%</div>
+							</div>
+
+							<div className="panel">
+								<div className="type partner">Partner</div>
+								<div className="description">In collabaration with another creator or company.</div>
+								<div className="progress">
+									<div className="progress-bar partner" role="progressbar" style={{width: "30%"}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+									<div class="progress-bar progress-bar-striped progress-bar-animated partner" role="progressbar" style={{width: "40%"}} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+								</div>
+								<div className="profit">Net Profit: ~30%-70%</div>
+							</div>
+
+							<div className="panel">
+								<div className="type sponsor">Sponsor</div>
+								<div className="description">Promoted company/creator with a great cause.</div>
+								<div className="progress">
+									<div className="progress-bar sponsor" role="progressbar" style={{width: "2%"}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+									<div className="progress-bar progress-bar-striped progress-bar-animated sponsor" role="progressbar" style={{width: "5%"}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+								</div>
+								<div className="profit">Net Profit: ~1-5%</div>
+							</div>
+
+							<div className="panel">
+								<div className="type submission">Submission</div>
+								<div className="description">User design that won the Submissions event.</div>
+								<div className="progress">
+									<div className="progress-bar submission" role="progressbar" style={{width: "50%"}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+								</div>
+								<div className="profit">Net Profit: 50%</div>
 							</div>
 						</div>
 

@@ -10,6 +10,18 @@
   }
 }
 
+.btn {
+  border-radius: 0;
+  font-family: brandon-grotesque, sans-serif;
+  font-style: normal;
+  font-weight: 900;
+  // font-size: 1rem;
+}
+
+.btn-danger {
+  border-bottom: 3px solid #000;
+}
+
 .btn-articles-light {
   color: #212529;
   background-color: #fff;
