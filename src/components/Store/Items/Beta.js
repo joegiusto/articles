@@ -29,7 +29,7 @@ const StoreItem = (props) => {
 
           <div className="front menu-catalog-item">
 
-              <div className={"type btn-outline-" + (color)}>
+              <div className={"type btn-outline-" + (color + ' ' + props.product?.type)}>
                   <span>{props.product?.type || '?'}</span>
               </div>
 
@@ -37,7 +37,7 @@ const StoreItem = (props) => {
                 <span>${(props.product?.price / 100).toFixed(2)}</span>
               </div>
 
-              <h5 className="title" >{props.product?.title || <div>&nbsp;</div>}</h5>
+              <h5 className="title">{props.product?.title || <div>&nbsp;</div>}</h5>
 
               <div className="item-photos noselect">
 

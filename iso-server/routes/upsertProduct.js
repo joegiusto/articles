@@ -17,6 +17,8 @@ module.exports = (app, db) => {
         price: parseInt(product.price),
         ourCost: product.ourCost,
         material: product.material,
+        release: product.release,
+        visible: product.visible,
         photos: {
           one: product.photos.one,
           two: product.photos.two,

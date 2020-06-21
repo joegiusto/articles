@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 import axios from 'axios'
 import DataTable from 'react-data-table-component';
 
-import StoreItem from '../../Store/StoreItemAlpha'
+import StoreItemAlpha from '../../Store/StoreItemAlpha'
+import StoreItemBeta from '../../Store/Items/Beta'
 
 const inital_state = {
   title: '',
@@ -10,6 +11,7 @@ const inital_state = {
   price: 0,
   ourCost: 0,
   material: '',
+  visible: true,
   photos: {
     one: '',
     two: '',
@@ -79,6 +81,7 @@ class Products extends Component {
         product_id: this.state.currentProduct
       })
       .then(function (response) {
+        // response.data.visible = (response.data.visible === 'true' ? true : false)
 
         self.setState({ 
           activeProduct: response.data,
@@ -215,6 +218,16 @@ class Products extends Component {
         cell: row => this.renderType(row.type)
       },
       {
+        name: 'Visible',
+        selector: 'visible',
+        sortable: true,
+        cell: row => <div>{(row.visible ? 
+        <div className="badge badge-success">True</div>
+        :
+        <div className="badge badge-danger">False</div>
+        )}</div>,
+      },
+      {
         name: 'Price',
         selector: 'price',
         sortable: true,
@@ -259,7 +272,7 @@ class Products extends Component {
 
           <div className="preview d-flex justify-content-center align-items-center store-page pt-4">
 
-            <StoreItem 
+            {/* <StoreItemAlpha 
             setPopOutVisible={this.setPopOut} 
             catalogId='1' 
             price={this.state.activeProduct.price}
@@ -269,7 +282,9 @@ class Products extends Component {
             sale="%15" 
             banner={this.state.activeProduct.type} 
             color="articles" 
-            />
+            /> */}
+
+            <StoreItemBeta product={this.state.activeProduct} color="articles" />
 
           </div>
 
@@ -303,7 +318,9 @@ class Products extends Component {
             </div> */}
 
             <div className="form-group type-group">
+
               {/* <label for="exampleInputPassword1">Type</label> */}
+
               <div className="types noselect">
                 <span onClick={() => this.changeType('Original')} className={"type badge shadow-sm border type " + (this.state.activeProduct.type === 'Original' ? 'badge-dark' : 'badge-light')}>Original</span>
                 <span onClick={() => this.changeType('Partnership')} className={"type badge shadow-sm border type " + (this.state.activeProduct.type === 'Partnership' ? 'badge-primary' : 'badge-light')}>Partnership</span>
@@ -443,6 +460,22 @@ class Products extends Component {
                   </div>
 
                 </div>
+
+                <div className="mt-2">Visible</div>
+
+                <div onClick={() => (this.setState({
+                  activeProduct: {
+                    ...this.state.activeProduct,
+                    visible: true
+                  }
+                }))} className={"badge " + (this.state.activeProduct.visible ? 'badge-dark' : 'badge-light')}>Yes</div>
+
+                <div onClick={() => (this.setState({
+                  activeProduct: {
+                    ...this.state.activeProduct,
+                    visible: false
+                  }
+                }))} className={"badge " + (!this.state.activeProduct.visible ? 'badge-dark' : 'badge-light')}>No</div>
 
               </div>
 

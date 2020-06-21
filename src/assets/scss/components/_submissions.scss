@@ -1,4 +1,5 @@
 .submissions-submit-page {
+  text-align: center;
   margin-top: 1rem;
 
   h1 {
@@ -30,7 +31,8 @@
   }
 
   .photos {
-    display: flex;    
+    display: flex;
+    justify-content: center;    
 
     .photo {
       position: relative;
@@ -61,6 +63,127 @@
 }
 
 .submission-page {
+  font-family: montserrat, sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  display: flex;
+
+  .side-menu-one {
+    background-color: white;
+    background: linear-gradient(45deg, #ffb7b7, #f9edcd 80%);
+    width: 300px;
+    padding: 1rem;
+    box-shadow: 1px 0px 5px #000;
+    border-right: 2px solid #000;
+    padding-left: 0.5rem;
+    display: flex;
+    flex-direction: column;
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .label {
+        font-weight: 600;
+        font-size: 12px;
+      }
+
+      
+
+      .time {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        // justify-content: center;
+
+        .date {
+          font-size: 12px;
+          font-weight: 600;
+        }
+      }
+
+      span {
+        // background-color: red;
+        text-align: center;
+        border-radius: 0.25rem;
+        color: white;
+        padding: 0.25em 0.4em;
+        background-color: #dc3545;
+        width: 100px;
+      }
+    }
+
+    .logo {
+      width: 50px;
+      height: 50px;
+      background-color: black;
+      border-radius: 5px;
+      color: white;
+      font-size: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      i {
+        margin-right: 0;
+      }
+    }
+
+    .title {
+      font-family: brandon-grotesque, sans-serif;
+      font-style: normal;
+      font-weight: 900;
+      font-size: 2rem;
+      margin-top: 0.5rem;
+    }
+
+    p {
+      margin-bottom: 0.5rem;
+    }
+
+    .tiles {
+      display: flex;
+      flex-wrap: wrap;
+
+      border-top: 1px solid rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+
+      .info {
+        width: 100%;
+        // text-align: center;
+        margin-left: 0.25rem;
+        margin-bottom: 0.5rem;
+        font-size: 14px;
+      }
+    }
+
+    .tile {
+      font-weight: 600;
+      font-size: 12px;
+      width: 50%;
+      padding: 0rem 0.25rem;
+      margin-bottom: 0.5rem;
+
+      .square {
+        height: 50px;
+        width: 100%;
+        background-color: white;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1rem;
+      }
+    }
+
+    .grow {
+      flex-grow: 1;
+    }
+
+  }
 
   .col-side-panel {
     min-height: calc(100vh - 50px);
@@ -246,6 +369,11 @@
       margin-right: -5px;
       display: flex;
       flex-direction: row;
+
+      input {
+        font-size: 12px;
+        padding: .1rem 0.25rem; 
+      }
 
       @include media-breakpoint-down(md) {
         flex-direction: column;
@@ -436,6 +564,7 @@
       padding-top: 3rem;
       display: flex;
       flex-direction: row;
+      justify-content: center;
   
       .preview {
         max-width: 250px;
@@ -443,11 +572,12 @@
         .box {
           height: 400px;
           width: 250px;
-          background-color: black;
+          background-color: white;
+          border: 2px solid #000;
         }
   
         .thumbnails {
-          margin-top: 5px;
+          margin-top: 15px;
   
           display: grid;
           grid-template-columns: repeat(3, 1fr);
@@ -458,9 +588,18 @@
   
           .thumbnail {
             position: relative;
-            background-color: black;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;       
+            border: 2px solid #000;
             height: 75px;
             width: 100%;
+
+            i {
+              font-size: 2rem;
+              margin-right: 0;
+            }
   
             .main {
               position: absolute;

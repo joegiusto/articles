@@ -37,6 +37,21 @@
         background-color: rgb(255, 255, 255);
         text-align: right;
         font-weight: bold;
+
+        &.Partnership {
+          background-color: #007bff;
+          color: white;
+        }
+
+        &.Sponsored {
+          background-color: #ffc107;
+          // color: white;
+        }
+
+        &.Partnership {
+          background-color: #007bff;
+          color: white;
+        }
       }
 
       .title {
@@ -45,11 +60,19 @@
         font-style: normal;
         font-weight: 900;
         font-size: 1.5rem;
+
+        @media (max-width: 400px) {
+          font-size: 1rem;
+        }
       }
 
       .item-photos {
         position: relative;
         height: 300px;
+
+        @include media-breakpoint-down(md) {
+          height: 150px;
+        }
         
         img {
           width: 100%;
@@ -80,6 +103,12 @@
               transform: scale(1.2);
             }
           }
+
+          @include media-breakpoint-down(md) {
+            width: 25px;
+            height: 35px;
+            border-radius: 0px;
+          }
         }
   
         .next {
@@ -105,11 +134,11 @@
             background-color: $base-color;
             border-bottom: 3px solid #000;
           }
-        }
-      }
 
-      .dual-header {
-        position: relative;
+          @include media-breakpoint-down(md) {
+            padding: 0rem;
+          }
+        }
       }
 
       .added-notification {
@@ -135,6 +164,10 @@
           color: black;
         }
       }
+
+      .footer {
+        padding-bottom: 0;
+      }
     }
 
     .back {
@@ -157,5 +190,6 @@
 
   @include media-breakpoint-down(sm) {
     grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 25px;
   }
 }

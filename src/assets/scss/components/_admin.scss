@@ -226,10 +226,19 @@
         flex-direction: row-reverse;
         justify-content: center;
         background-color: $accent-color;
+        align-items: center;
+
+        @include media-breakpoint-down(md) {
+          flex-direction: column;
+        }
 
         .preview {
           width: 300px;
           height: 500px;
+
+          @include media-breakpoint-down(md) {
+            height: auto;
+          }
         }
 
         .details {
@@ -241,6 +250,10 @@
           max-width: 700px;
           align-self: center;
           position: relative;
+
+          @include media-breakpoint-down(md) {
+            margin-top: 3rem;
+          }
 
           .color-bar {
             position: absolute;
@@ -287,10 +300,13 @@
           }
 
           .type-group {
-            position: absolute;
-            top: 0;
-            left: 1rem;
-            transform: translateY(-50%);
+
+            @include media-breakpoint-up(md) {
+              position: absolute;
+              top: 0;
+              left: 1rem;
+              transform: translateY(-50%);
+            }
           }
 
           .upsert {

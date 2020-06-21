@@ -10,43 +10,7 @@ import { Link } from 'react-router-dom';
 import { withFirebase } from '../Firebase';
 import hero from 'assets/img/bg_home_banner.png';
 import axios from 'axios';
-
-function TypeSelect(props) {
-	// const [productSelect, changeProductSelect] = useState('Symbolic Adoptions');
-
-	return (
-	<div className={"type-select-container w-100 " + (isNaN(props.modificationType) ? ' mt-3 pt-3': ' ')}>
-
-		<Helmet>
-			<title>Store - Articles</title>
-		</Helmet>
-
-		{(props.modificationType === 1 ? <h4>Continue To...</h4> : null )}
-
-		<div className="dual-header">
-
-			<div className="selections">
-				<span className="selection home">
-					<i className="fas fa-home mr-0"></i>
-				</span>
-				<span className="selection all">All</span>
-				<span className="selection originals">Originals</span>
-				<span className="selection partnerships">Partnerships</span>
-				<span className="selection submissions">Submissions</span>
-				<span className="selection sponsered">Sponsered</span>
-			</div>
-
-			<div className="cart-container">
-				
-				<Link to={ROUTES.CHECKOUT}><div className="cart">0 Items In Cart</div></Link>
-			</div>
-
-		</div>
-
-	</div> )
-}
-
-class StorePageBase extends Component {
+class StorePage extends Component {
   constructor(props) {
   super(props);
 
@@ -154,14 +118,14 @@ class StorePageBase extends Component {
 						<div className="viewer-body">
 							<div className="row justify-content-between">
 
-								<div className="col-8">
+								<div className="col-12 col-md-8">
 									<div className="row">
-										<div className="col-6">
+										<div className="col-12 col-md-6">
 											<div className="selected-photo">
 												<img src={this.state.currentPopOutPhoto} alt=""/>
 											</div>
 										</div>
-										<div className="col-6">
+										<div className="col-12 col-md-6">
 											<h5>Showcase Photos</h5>
 											<div className="thumbnails">
 												<div onClick={() => this.setState({currentPopOutPhoto: this.state.currentPopOut.photos?.one})} className={"thumbnail-photo " + (this.state === "" ? null : null)}>
@@ -189,12 +153,13 @@ class StorePageBase extends Component {
 
 								<div className="col-4 border-left">
 
-									<div className="detail-container">									
+									<div className="detail-container">			
+															
 										<h1>{this.state.currentPopOut.title}</h1>
 										<div>Realesed | {this.state.currentPopOut.realese || <div className="badge badge-dark">?</div>}</div>
-										{/* <div>Made In | United States</div> */}
 										<div>Material | {this.state.currentPopOut.material}</div>
 										<div>Price | ${(this.state.currentPopOut.price / 100).toFixed(2)}</div>
+
 										<button className="btn btn-articles-light mt-2">Add to Cart</button>	
 									</div>
 
@@ -205,33 +170,6 @@ class StorePageBase extends Component {
 
 						<div className="viewer-footer">
 							<img src={this.state.currentPopOut.backing} alt=""/>
-						</div>
-
-					</div>
-				</div>
-
-				<div className="container-fluid d-none">
-					<div className="row feature-top mt-5">
-
-						<div className="col-6">
-							<div className="card">
-								<div className="card-header">Originals</div>
-								<div className="card-body"></div>
-							</div>
-						</div>
-
-						<div className="col-3 d-none d-lg-block">
-							<div className="card">
-								<div className="card-header">Partnerships</div>
-								<div className="card-body"></div>
-							</div>
-						</div>
-
-						<div className="col-3 d-none d-lg-block">
-							<div className="card">
-								<div className="card-header">Submissions</div>
-								<div className="card-body">Submit a design today!</div>
-							</div>
 						</div>
 
 					</div>
@@ -259,107 +197,51 @@ class StorePageBase extends Component {
 
 				<div className='container'>
 
-					<div className="row d-none">
-
-						<div className="sale-section">
-
-							<div className="image-container">
-								<img className="noselect" src="https://cdn.britannica.com/64/152164-050-BDE65ADA/Paul-Revere-Boston-British-residents-April-18-1775.jpg" alt=""/>
-							</div>
-
-							<div className="text-container">
-								<h6>LAUNCH EVENT SALE</h6>
-								<h1>Take 40% Off</h1>
-								<div>
-									<span className="badge badge-dark">LAUNCH</span>
-									<span>Valid until Jan. 15th</span>
-								</div>
-							</div>
-
-						</div>
-
-						<TypeSelect />
-					</div>
-
 					<div className='row justify-content-center'>
 
 					  <div className="featured-items">
 
 							<h1 className="mt-2 mt-md-4 store-heading">Featured</h1>
 
-							<div className="dual-header">
+							<div className="store-item-beta-grid mb-4">
 
-									{this.state.loadingProducts && <div>Loading ...</div>}
+								{this.state.loadingProducts && <div>Loading ...</div>}
 
-									<div>
+								<StoreItemBeta
+									setPopOutVisible={this.setPopOut}
+									product={this.state.products.find(element => element._id === "5eabc1e99b0beb3e04599717")}
+									color="articles"
+								/>
 
-										<div className="store-item-beta-grid mb-4">
+								<StoreItemBeta
+									setPopOutVisible={this.setPopOut}
+									product={this.state.products.find(element => element._id === "5eabc20a38584110a044f93e")}
+									color="articles"
+								/>
 
-											{/* {this.state.products.map((product, index) => (
-												<StoreItemBeta
-													setPopOutVisible={this.setPopOut}
-													product={product}
-													color="articles"
-												/>
-											))} */}
+								<StoreItemBeta
+									setPopOutVisible={this.setPopOut}
+									product={this.state.products.find(element => element._id === "5eb3aaaba316c3077c598cc4")}
+									color="articles"
+								/>
 
-											<StoreItemBeta
-												setPopOutVisible={this.setPopOut}
-												product={this.state.products.find(element => element._id === "5eabc1e99b0beb3e04599717")}
-												color="articles"
-											/>
+								<StoreItemBeta
+									setPopOutVisible={this.setPopOut}
+									product={this.state.products.find(element => element._id === "5eb50fdde094562238f5b910")}
+									color="articles"
+								/>
 
-											<StoreItemBeta
-												setPopOutVisible={this.setPopOut}
-												product={this.state.products.find(element => element._id === "5eabc20a38584110a044f93e")}
-												color="articles"
-											/>
+								<StoreItemBeta
+									setPopOutVisible={this.setPopOut}
+									product={this.state.products.find(element => element._id === "5eec730342888643d8f5e2ce")}
+									color="articles"
+								/>
 
-											<StoreItemBeta
-												setPopOutVisible={this.setPopOut}
-												product={this.state.products.find(element => element._id === "5eb3aaaba316c3077c598cc4")}
-												color="articles"
-											/>
-
-											<StoreItemBeta
-												setPopOutVisible={this.setPopOut}
-												product={this.state.products.find(element => element._id === "5eb50fdde094562238f5b910")}
-												color="articles"
-											/>
-
-											<StoreItemBeta
-												setPopOutVisible={this.setPopOut}
-												product={this.state.products.find(element => element._id === "5eec730342888643d8f5e2ce")}
-												color="articles"
-											/>
-
-										</div>
-
-										{/* {this.state.products.map((product, index) => (
-												<StoreItemAlpha setPopOutVisible={this.setPopOut} product={product} catalogId={product.uid} price={product.price} title={product.title} sale="%15" banner="Original" color="articles" />
-										))} */}
-
-									</div>
-
-							</div>
-
-						</div>
-
-						<div className="featured-items d-none">
-
-							<h1 className="mt-2 mt-md-4 store-heading">Featured</h1>
-
-							<div className="products-wrap">
-								<StoreItemAlpha setPopOutVisible={this.setPopOut} catalogId='1' price={3000} title="Wolf Hoodie" sale="%15" banner="Original" color="articles" />
-								<StoreItemAlpha setPopOutVisible={this.setPopOut} catalogId='2' price={3000} title="Sheep Hoodie" sale="%15" banner="Original" color="articles"/>
-								<StoreItemAlpha setPopOutVisible={this.setPopOut} catalogId='3' price={2500} title="Partner Item" sale="%15" banner="Partner" color="info"/>
-								<StoreItemAlpha setPopOutVisible={this.setPopOut} catalogId='4' price={2000} title="Sponsered Item" sale="%15" banner="Sponsered" color="danger"/>
-								<StoreItemAlpha setPopOutVisible={this.setPopOut} catalogId='5' price={2000} title="Sponsered Item" sale="%15" banner="Sponsered" color="primary"/>
 							</div>
 
 						</div>
 						
-						<div className="d-none col-12 overflow-hidden">
+						<div className="collection d-none col-12 overflow-hidden">
 							<div className="row">
 
 								<div className="col-12">
@@ -546,34 +428,6 @@ class StorePageBase extends Component {
 							</div>
 						</div>
 
-						<div className="d-none">
-							<h3 className="text-center mt-5 mb-4 w-100">Top Right Badge Key</h3>
-							<div className="col-12 col-md-4">
-								
-								<div className="shadow-sm mx-4 mb-4 px-4 py-2 rounded bg-white">
-									<h5>Original Item</h5>
-									<p>Items that are designed and sold by us</p>
-									<p className="text-muted">Income: Highest profit margin, with aim of being 60% of clothing sales</p>
-								</div>
-							</div>
-	
-							<div className="col-12 col-md-4">
-								<div className="shadow-sm mx-4 mb-4 px-4 py-2 rounded bg-white">
-									<h5>Partner Item</h5>
-									<p>Items that we partnered up to sell and split a part of the profit with the company/creators</p>
-									<p className="text-muted">Income: Split Profit (Give or take 5%-30%) with partner, expected to be 30% of clothing sales</p>
-								</div>
-							</div>
-	
-							<div className="col-12 col-md-4">
-								<div className="shadow-sm mx-4 mb-4 px-4 py-2 rounded bg-white">
-									<h5>Sponsered Item</h5>
-									<p>Items that we promote for a company/creator that we feel have a reasonable means to be on the platform. A small referral fee will be charged for the item.</p>
-									<p className="text-muted">Income: Lowest Profit, here we really just want to promote people that are also doing good and sending a message out. should not exceed 5%-10% of all clothing sales</p>
-								</div>
-							</div>
-						</div>
-
 					</div>
 				
 				</div>
@@ -581,7 +435,5 @@ class StorePageBase extends Component {
 		)
 	}
 }
-
-const StorePage = withFirebase(StorePageBase);
 
 export default StorePage;

@@ -91,11 +91,76 @@ class Submissions extends Component {
   render() {
     return (
       <div className="submission-page">
+
+        <div className="side-menu-one">
+
+          <div className="top">
+
+            <div className="logo">
+              <i class="fas fa-lightbulb"></i>
+            </div>
+
+            <div className="time">
+
+              <div className="label">Time Left</div>
+              <Countdown date={moment().startOf('month').add(1, 'months').format('YYYY-MM-DD')} />
+              <div className="date">{moment().startOf('month').add(1, 'months').subtract(1, 'days').format('LL')}</div>
+
+            </div>
+
+          </div>
+
+          <div className="title">Submissions</div>
+          <p>User submited content that gets voted on for a chance to win money and get sold on our store!</p>
+
+          <div className="grow"></div>
+
+          <div className="tiles">
+
+            <div className="info">Current Period Info</div>
+
+            <div className="tile">
+              <div className="label">Submited</div>
+              <div className="square">1</div>
+            </div>
+  
+            <div className="tile">
+              <div className="label">Voters</div>
+              <div className="square">1</div>
+            </div>
+  
+            <div className="tile">
+              <div className="label">Votes Cast</div>
+              <div className="square">1</div>
+            </div>
+  
+            <div className="tile">
+              <div className="label">Earned By Users</div>
+              <div className="square">$0.00</div>
+            </div>
+
+          </div>
+
+          <div className="grow"></div>
+
+          {/* <div className="btn btn-articles-light">Submit A Design</div> */}
+
+          <Switch>
+            <Route exact path={ROUTES.STORE_SUBMISSIONS} render={() =>
+              <Link to={ROUTES.STORE_SUBMISSIONS_SUBMIT}><button className="submission-side-panel_submit btn btn-dark w-100 mt-3">Submit a Design <i className="fas fa-mouse-pointer ml-2"></i></button></Link>
+            } />
+            <Route exact path={ROUTES.STORE_SUBMISSIONS_SUBMIT} render={() =>
+              <Link to={ROUTES.STORE_SUBMISSIONS}><button className="submission-side-panel_submit btn btn-dark w-100 mt-3">View Designs <i className="fas fa-mouse-pointer ml-2"></i></button></Link>
+            } />
+          </Switch>
+
+        </div>
+
         <div className='container-fluid'>
   
           <div className="row my-auto justify-content-between">
-  
-            <div className="col-12 col-md-3 pl-md-0 col-side-panel">
+
+            <div className="d-none col-12 col-md-3 pl-md-0 col-side-panel">
   
               <div className="submission-side-panel">
   
@@ -148,7 +213,7 @@ class Submissions extends Component {
   
             </div>
   
-            <div className="col-12 col-md-9">
+            <div className="col-12 col-md-12">
   
               <div>
                 
@@ -170,6 +235,8 @@ class Submissions extends Component {
                             <div className={"badge " + (this.state.filter === 'new' ? 'badge-dark' : 'badge-light')}>New</div>
                             <div className={"badge " + (this.state.filter === 'controversial' ? 'badge-dark' : 'badge-light')}>Controversial</div>
                           </div>
+
+                          <input type="text"/>
 
                           <div className="other">
                             <span className="timer badge badge-danger"><Countdown date={moment().startOf('month').add(1, 'months').format('YYYY-MM-DD')} /></span>
@@ -393,10 +460,12 @@ class SubmitBase extends Component {
     return(
       <div className="submissions-submit-page">
 
-        {this.props.canSubmit ? 
-        <div className="submit">
+        {/* {this.props.canSubmit ?  */}
+
+        <div className="submit submit-page">
 
           <h1 className="month">Submit a Design</h1>
+          <p>To get started download our template to work with when making your design</p>
           
           <div className="btn btn-articles-light">
             Download Resources
@@ -412,26 +481,27 @@ class SubmitBase extends Component {
 
                 <div className="thumbnail">
                   <div className="main badge badge-light border">Main</div>
+                  <i className="fas fa-upload"></i>
                 </div>
 
                 <div className="thumbnail">
-
+                  <i className="fas fa-upload"></i>
                 </div>
 
                 <div className="thumbnail">
-
+                  <i className="fas fa-upload"></i>
                 </div>
 
                 <div className="thumbnail">
-
+                  <i className="fas fa-upload"></i>
                 </div>
 
                 <div className="thumbnail">
-
+                  <i className="fas fa-upload"></i>
                 </div>
 
                 <div className="thumbnail">
-
+                  <i className="fas fa-upload"></i>
                 </div>
 
               </div>
@@ -440,8 +510,13 @@ class SubmitBase extends Component {
 
             <div className="form">
 
-              <div className="form-group">
+              <div className="input-group">
                 <input className="mb-1" type="text" placeholder="Title of Work"/>
+              </div>
+
+              <div class="form-group">
+                <label for="exampleInputEmail1">Title Of Work</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
               </div>
               
               <textarea name="" id="" cols="30" rows="10" placeholder="Inspiration or description of design..."></textarea>
@@ -466,7 +541,9 @@ class SubmitBase extends Component {
           </div>
 
         </div>
-        :
+
+        {/* : */}
+
         <div className="view-submit">
           <h1>You have already submitted a design</h1>
           <div className="badge badge-articles">Submitted On: {moment().format("LL")}</div>
@@ -501,7 +578,8 @@ class SubmitBase extends Component {
           
           <div className="mt-4">
             <div className="label">Actions:</div>
-            <div onClick={() => this.props.validate()} className="btn btn-danger delete">Delete</div><button className="btn btn-articles-light ml-2">Request Edit</button>
+            <div onClick={() => this.props.validate()} className="btn btn-danger delete">Delete</div>
+            <button className="btn btn-articles-light ml-2">Request Edit</button>
           </div>
 
           <div className="mt-2 details">
@@ -509,9 +587,8 @@ class SubmitBase extends Component {
           </div>
 
         </div>
-        }
 
-        
+        {/* } */}
 
       </div>
     )
