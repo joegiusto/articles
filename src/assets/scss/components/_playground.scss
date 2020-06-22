@@ -15,4 +15,16 @@
     font-weight: 900;
   }
 
+  .sorts {
+    font-size: 2rem;
+    
+    .badge {
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
+
 }

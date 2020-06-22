@@ -94,28 +94,30 @@ class Submissions extends Component {
 
         <div className="side-menu-one">
 
-          <div className="top">
+          <div className="sticky-content">
 
-            <div className="logo">
-              <i class="fas fa-lightbulb"></i>
+            <div className="top">
+
+              <div className="logo">
+                <i class="fas fa-lightbulb"></i>
+              </div>
+
+              <div className="time">
+
+                <div className="label">Time Left</div>
+                <Countdown date={moment().startOf('month').add(3, 'months').format('YYYY-MM-DD')} />
+                <div className="date">{moment().startOf('month').add(3, 'months').subtract(1, 'days').format('LL')}</div>
+
+              </div>
+
             </div>
 
-            <div className="time">
+            <div className="title">Submissions</div>
+            <p>User submited content that gets voted on for a chance to win money and get sold on our store!</p>
 
-              <div className="label">Time Left</div>
-              <Countdown date={moment().startOf('month').add(1, 'months').format('YYYY-MM-DD')} />
-              <div className="date">{moment().startOf('month').add(1, 'months').subtract(1, 'days').format('LL')}</div>
+            <div className="grow"></div>
 
-            </div>
-
-          </div>
-
-          <div className="title">Submissions</div>
-          <p>User submited content that gets voted on for a chance to win money and get sold on our store!</p>
-
-          <div className="grow"></div>
-
-          <div className="tiles">
+            <div className="tiles">
 
             <div className="info">Current Period Info</div>
 
@@ -123,37 +125,41 @@ class Submissions extends Component {
               <div className="label">Submited</div>
               <div className="square">1</div>
             </div>
-  
+
             <div className="tile">
               <div className="label">Voters</div>
               <div className="square">1</div>
             </div>
-  
+
             <div className="tile">
               <div className="label">Votes Cast</div>
               <div className="square">1</div>
             </div>
-  
+
             <div className="tile">
               <div className="label">Earned By Users</div>
               <div className="square">$0.00</div>
             </div>
 
-          </div>
+            </div>
 
-          <div className="grow"></div>
+            <div className="grow"></div>
 
-          {/* <div className="btn btn-articles-light">Submit A Design</div> */}
+            {/* <div className="btn btn-articles-light">Submit A Design</div> */}
 
-          <Switch>
+            <Switch>
             <Route exact path={ROUTES.STORE_SUBMISSIONS} render={() =>
               <Link to={ROUTES.STORE_SUBMISSIONS_SUBMIT}><button className="submission-side-panel_submit btn btn-dark w-100 mt-3">Submit a Design <i className="fas fa-mouse-pointer ml-2"></i></button></Link>
             } />
             <Route exact path={ROUTES.STORE_SUBMISSIONS_SUBMIT} render={() =>
               <Link to={ROUTES.STORE_SUBMISSIONS}><button className="submission-side-panel_submit btn btn-dark w-100 mt-3">View Designs <i className="fas fa-mouse-pointer ml-2"></i></button></Link>
             } />
-          </Switch>
+            </Switch>
 
+          {/* End of Sticky Content */}
+          </div> 
+
+        {/* End of Side Menu */}
         </div>
 
         <div className='container-fluid'>
@@ -222,8 +228,8 @@ class Submissions extends Component {
                   <Route exact path={ROUTES.STORE_SUBMISSIONS} render={() =>
                     <div className="listings">
 
-                      <h1 className="month">
-                        {moment().format('MMMM')} Submissions
+                      <h1 className="month text-center">
+                        {moment().format('MMMM')} - {moment().add(2, 'months').format('MMMM')} Submissions
                       </h1>
     
                       {/* <h5>Next Pick At End of Month <span className="badge badge-danger"><Countdown date={moment().startOf('month').add(1, 'months').format('YYYY-MM-DD')} /></span></h5> */}
@@ -231,19 +237,28 @@ class Submissions extends Component {
                       <div id="filters" className="filters d-flex justify-content-between">
   
                           <div className="sorts">
-                            <div className={"badge " + (this.state.filter === 'top' ? 'badge-dark' : 'badge-light')}>Top</div>
-                            <div className={"badge " + (this.state.filter === 'new' ? 'badge-dark' : 'badge-light')}>New</div>
-                            <div className={"badge " + (this.state.filter === 'controversial' ? 'badge-dark' : 'badge-light')}>Controversial</div>
+                            <div onClick={() => this.setState({filter: 'top'})} className={"badge " + (this.state.filter === 'top' ? 'badge-dark' : 'badge-light')}>Top</div>
+                            <div onClick={() => this.setState({filter: 'new'})} className={"badge " + (this.state.filter === 'new' ? 'badge-dark' : 'badge-light')}>New</div>
+                            <div onClick={() => this.setState({filter: 'controversial'})} className={"badge " + (this.state.filter === 'controversial' ? 'badge-dark' : 'badge-light')}>Controversial</div>
                           </div>
 
-                          <input type="text"/>
+                          <div className="search">
+                            <i className="fas fa-search"></i>
+                            <input type="text"/>
+                            <div className="btn btn-articles-light py-0">Search</div>
+                          </div>
 
-                          <div className="other">
-                            <span className="timer badge badge-danger"><Countdown date={moment().startOf('month').add(1, 'months').format('YYYY-MM-DD')} /></span>
+
+                          {/* <div className="other"> */}
+                            <span className="timer badge badge-danger"><Countdown date={moment().startOf('month').add(3, 'months').format('YYYY-MM-DD')} /></span>
                             {this.props.isAuth ? null : <div className="login-notice badge badge-danger">Please login or sign up to vote</div>}
-                          </div>
+                          {/* </div> */}
     
                       </div>
+
+                      <div className={"sort-helper-text " + (this.state.filter !== 'top' ? 'd-none' : '')}>Viewing submissions with the highest upvote count</div>
+                      <div className={"sort-helper-text " + (this.state.filter !== 'new' ? 'd-none' : '')}>Viewing submissions sorted by most recently submited</div>
+                      <div className={"sort-helper-text " + (this.state.filter !== 'controversial' ? 'd-none' : '')}>Viewing submissions with the highest like to dislike ratio</div>
     
                       <SubmissionsList/>
                       
@@ -413,22 +428,23 @@ class SubmissionsItemBase extends Component {
           </div>
 
           <div className="voting-bar">
-            <div className="count">{ this.props.submission.votes || 0 }</div>
+            <div className="count">{ this.props.submission.votes || '0 / 0' }</div>
     
             <div className="voting-buttons">
-              <button className={"vote vote-up " + (this.state.vote && this.state.vote != null ? 'active' : '')} onClick={() => {
-                this.setState({vote: true}); 
-                this.tryAdd(this.props.submission.uid, this.props.submission.votes);
-              }}>
-                <i style={{width: 'auto'}} className="far fa-thumbs-up"></i>
-              </button>
-      
               <button className={"vote vote-down " + (!this.state.vote && this.state.vote != null ? 'active' : '')} onClick={() => {
                 this.setState({vote: false});
                 this.trySubtract(this.props.submission.uid, this.props.submission.votes);
               }}>
                 <i style={{width: 'auto'}} className="far fa-thumbs-down"></i>
               </button>
+              
+              <button className={"vote vote-up " + (this.state.vote && this.state.vote != null ? 'active' : '')} onClick={() => {
+                this.setState({vote: true}); 
+                this.tryAdd(this.props.submission.uid, this.props.submission.votes);
+              }}>
+                <i style={{width: 'auto'}} className="far fa-thumbs-up"></i>
+              </button>
+              
             </div>
 
           </div>
@@ -547,7 +563,7 @@ class SubmitBase extends Component {
         <div className="view-submit">
           <h1>You have already submitted a design</h1>
           <div className="badge badge-articles">Submitted On: {moment().format("LL")}</div>
-          <div className="badge badge-articles ml-2">Period Ends:<Countdown date={moment().startOf('month').add(1, 'months').format('YYYY-MM-DD')} /></div>
+          <div className="badge badge-articles mt-2">Period Ends:<Countdown date={moment().startOf('month').add(1, 'months').format('YYYY-MM-DD')} /></div>
 
           <div className="details mt-2">
             <div className="label">Title:</div>

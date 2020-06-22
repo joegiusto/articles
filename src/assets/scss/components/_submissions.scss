@@ -67,17 +67,41 @@
   font-weight: 400;
   font-size: 15px;
   display: flex;
+  flex-direction: column;
+
+  @include media-breakpoint-up(md) {
+    flex-direction: row;
+  }
 
   .side-menu-one {
     background-color: white;
     background: linear-gradient(45deg, #ffb7b7, #f9edcd 80%);
-    width: 300px;
     padding: 1rem;
     box-shadow: 1px 0px 5px #000;
-    border-right: 2px solid #000;
     padding-left: 0.5rem;
     display: flex;
     flex-direction: column;
+    border-bottom: 2px solid #000;
+
+    .sticky-content {
+      
+
+      @include media-breakpoint-up(md) {
+        position: sticky;
+        display: flex;
+        top: calc(50px + 1rem);
+        flex-direction: column;
+        flex-grow: 1;
+        height: 100%;
+        max-height: calc(100vh - 100px);
+      }
+    }
+
+    @include media-breakpoint-up(md) {
+      width: 300px;
+      border-right: 2px solid #000;
+      border-bottom: none;
+    }
 
     .top {
       display: flex;
@@ -88,8 +112,6 @@
         font-weight: 600;
         font-size: 12px;
       }
-
-      
 
       .time {
         display: flex;
@@ -168,7 +190,7 @@
       margin-bottom: 0.5rem;
 
       .square {
-        height: 50px;
+        height: 40px;
         width: 100%;
         background-color: white;
         border-radius: 5px;
@@ -176,6 +198,10 @@
         justify-content: center;
         align-items: center;
         font-size: 1rem;
+
+        @include media-breakpoint-down(md) {
+          height: 30px;
+        }
       }
     }
 
@@ -336,6 +362,11 @@
   
   .listings {
     font-family: montserrat, sans-serif;
+    margin-top: 1rem;
+
+    @include media-breakpoint-up(md) {
+      margin-top: 0;
+    }
 
     .month {
       margin-top: 1rem;
@@ -357,7 +388,7 @@
   
     .filters {
       margin-top: 1.25rem;
-      margin-bottom: 1.25rem;
+      margin-bottom: 0rem;
       position: sticky;
       z-index: 1;
       top: 70px;
@@ -392,6 +423,13 @@
         left: 5px;
         transform: translateY(-50%);
       }
+
+      .search {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+      }
   
       .badge {
         cursor: pointer;
@@ -404,6 +442,19 @@
       .badge:not(:last-child) {
         margin-right: 0.25rem;
       }
+    }
+
+    .sort-helper-text {
+      width: auto;
+      background-color: #000;
+      color: white;
+      padding: 0.1rem 0.5rem;
+      margin-left: -5px;
+      margin-right: -5px;
+      margin-bottom: 1.25rem;
+      top: 115px;
+      position: sticky;
+      z-index: 1;
     }
   
     .filter-blur {
@@ -577,7 +628,7 @@
         }
   
         .thumbnails {
-          margin-top: 15px;
+          margin-top: 1v5px;
   
           display: grid;
           grid-template-columns: repeat(3, 1fr);
@@ -619,5 +670,17 @@
     }
   
   
+  }
+
+  .view-submit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    
+    .details {
+      max-width: 500px;
+    }
   }
 }
