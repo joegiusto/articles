@@ -474,6 +474,21 @@
     }
   }
 
+  .type-guide {
+    padding: 2rem 10rem;
+    background-color: #edeeee;
+    // height: 350px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: brandon-grotesque, sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    
+  }
+
   .extras-panels {
     overflow: hidden;
     margin-bottom: 1rem;
@@ -489,10 +504,10 @@
       border-right: 1px solid rgba(0, 0, 0, 0.3);
       width: 25%;
       // padding: 5rem 0rem;
-      border-top: 1px solid rgba(0, 0, 0, 0.3);
+      // border-top: 1px solid rgba(0, 0, 0, 0.3);
       display: flex;
       padding: 1rem 0rem;
-      height: 200px;
+      // height: 200px;
       // padding-bottom: 10rem;
       // justify-content: center;
       align-items: center;
@@ -528,6 +543,7 @@
       .progress {
         margin-top: auto;
         width: 150px;
+        display: none;
 
         .progress-bar {
 

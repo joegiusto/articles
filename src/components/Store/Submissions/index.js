@@ -43,7 +43,9 @@ class Submissions extends Component {
       })
 
       if ( res.data.length === 1 || res.data.length > 1) {
-        console.log('wtf')
+
+        // console.log('wtf')
+
         self.setState({
           canSubmit: false
         })
@@ -94,12 +96,18 @@ class Submissions extends Component {
 
         <div className="side-menu-one">
 
+          {/* <div className="background"></div> */}
+
           <div className="sticky-content">
+
+            <div className="background-container">
+              <div className="background"></div>
+            </div>
 
             <div className="top">
 
               <div className="logo">
-                <i class="fas fa-lightbulb"></i>
+                <i className="fas fa-lightbulb"></i>
               </div>
 
               <div className="time">
@@ -123,7 +131,7 @@ class Submissions extends Component {
 
             <div className="tile">
               <div className="label">Submited</div>
-              <div className="square">1</div>
+              <div className="square">{this.props.submissions?.submissions.length}</div>
             </div>
 
             <div className="tile">
@@ -321,7 +329,7 @@ class SubmissionsListBase extends Component {
           this.props.submissions?.submissions ?
           this.props.submissions?.submissions.map(submission => (
             // <div className="submission">{submission.title}</div>
-            <SubmissionsItem function={this.add} name={submission.title} state={submission.state} photo={submission.preview} submission={submission} key={'extra-' + submission.uid}/> 
+            <SubmissionsItem user_id={this.props.user_id} submission={submission} key={'extra-' + submission._id}/> 
           ))
           :
           null
@@ -352,64 +360,199 @@ const mapStateToProps = (state) => {
 
 const SubmissionsList = connect(mapStateToProps)(SubmissionsListBase);
 
+// const src = 'https://images.unsplash.com/photo-1444065381814-865dc9da92c0'
+
 class SubmissionsItemBase extends Component {
   constructor(props) {
   super(props);
 
     this.state = {
-      vote: false
+      localCountDown: props.submission.down.length || 0,
+      localCountUp: props.submission.up.length || 0,
+      vote: null,
+      backgroundImage: `url(${this.props.submission.preview})`,
+      backgroundPosition: '0% 0%',
+      src: this.props.submission.preview
     };
 
   }
 
   componentDidMount() {
+    console.log(`This is the up array ${this.props.submission.up.length}`)
+    const self = this;
 
-    this.setState({ 
-      vote: null
-    });
+    if (this.props.submission["up"] !== undefined) {
 
-    this.props.firebase.submission(0).child('likes/1kgzHcDlDJbBVppJlVXqpsgvhAa2').orderByChild('like').equalTo(true).on("value", function(snapshot) {
+      if (this.props.submission.up.indexOf(this.props.user_id) > -1) {
+        self.setState({
+          vote: true,
+          localCountUp: this.state.localCountUp + 1
+        }) 
+      }
 
-      console.log(snapshot.val());
+    } 
 
-      snapshot.forEach(function(data) {
-          console.log(data.key);
-      });
+    if (this.props.submission["down"] !== undefined) {
 
-    });
+      if (this.props.submission.down.indexOf(this.props.user_id) > -1) {
+        self.setState({
+          vote: false,
+          localCountDown: this.state.localCountDown + 1
+        }) 
+      }
+
+    }
 
   }
 
   tryAdd(uid, amount) {
+    const self = this;
 
     if (this.state.vote === true) {
-      this.setState({vote: null});
-      this.props.firebase.submission(uid).update({votes: amount - 1});
-      this.props.firebase.submission(uid + '/likes').child('1kgzHcDlDJbBVppJlVXqpsgvhAa2').set({like: null});
-    } else {
-      if (this.state.vote === false) {
-        this.props.firebase.submission(uid).update({votes: amount + 2});
-      } else {
-        this.props.firebase.submission(uid).update({votes: amount + 1});
-      }
-      this.props.firebase.submission(uid + '/likes').child('1kgzHcDlDJbBVppJlVXqpsgvhAa2').set({like: true});
-    }    
+      
+      axios
+      .post("/api/tryVote", {
+        user_id: this.props.user_id,
+        submission_id: this.props.submission._id,
+        type: 'null'
+      })
+      .then( res => {
 
+        self.setState({
+          vote: null
+        })
+        
+      }) 
+      .catch(err =>
+        console.log(err.response.data)
+      );
+      
+    } else {
+      // this.setState({vote: true});
+
+      axios
+      .post("/api/tryVote", {
+        user_id: this.props.user_id,
+        submission_id: this.props.submission._id,
+        type: 'up'
+      })
+      .then( res => {
+
+        self.setState({
+          vote: true
+        })
+        
+      }) 
+      .catch(err =>
+        console.log(err.response.data)
+      );
+
+    } 
+
+    // if (this.state.vote === true) {
+    //   this.setState({vote: null});
+    //   this.props.firebase.submission(uid).update({votes: amount - 1});
+    //   this.props.firebase.submission(uid + '/likes').child('1kgzHcDlDJbBVppJlVXqpsgvhAa2').set({like: null});
+    // } else {
+    //   if (this.state.vote === false) {
+    //     this.props.firebase.submission(uid).update({votes: amount + 2});
+    //   } else {
+    //     this.props.firebase.submission(uid).update({votes: amount + 1});
+    //   }
+    //   this.props.firebase.submission(uid + '/likes').child('1kgzHcDlDJbBVppJlVXqpsgvhAa2').set({like: true});
+    // }    
+    
   }
 
   trySubtract(uid, amount) {
+    const self = this;
+
     if (this.state.vote === false) {
-      this.setState({vote: null});
-      this.props.firebase.submission(uid).update({votes: amount + 1});
-      this.props.firebase.submission(uid + '/likes').child('1kgzHcDlDJbBVppJlVXqpsgvhAa2').set({like: null});
+      // this.setState({vote: null});
+
+      axios
+      .post("/api/tryVote", {
+        user_id: this.props.user_id,
+        submission_id: this.props.submission._id,
+        type: 'null'
+      })
+      .then( res => {
+
+        self.setState({
+          vote: null
+        })
+        
+      }) 
+      .catch(err =>
+        console.log(err.response.data)
+      );
+
     } else {
-      if (this.state.vote === true) {
-        this.props.firebase.submission(uid).update({votes: amount - 2});
-      } else {
-        this.props.firebase.submission(uid).update({votes: amount - 1});
-      }
-      this.props.firebase.submission(uid + '/likes').child('1kgzHcDlDJbBVppJlVXqpsgvhAa2').set({like: false});
-    }
+      // this.setState({vote: false});
+
+      axios
+      .post("/api/tryVote", {
+        user_id: this.props.user_id,
+        submission_id: this.props.submission._id,
+        type: 'down'
+      })
+      .then( res => {
+
+        self.setState({
+          vote: false
+        })
+        
+      }) 
+      .catch(err =>
+        console.log(err.response.data)
+      );
+
+    } 
+
+    // axios
+    // .post("/api/tryVote", {
+    //   user_id: this.props.user_id,
+    //   type: 'down'
+    // })
+    // .then( res => {
+
+    //   self.setState({
+    //     vote: false
+    //   })
+      
+    // }
+    // ) 
+    // .catch(err =>
+    //   console.log(err.response.data)
+    // );
+
+    // if (this.state.vote === false) {
+    //   this.setState({vote: null});
+    //   this.props.firebase.submission(uid).update({votes: amount + 1});
+    //   this.props.firebase.submission(uid + '/likes').child('1kgzHcDlDJbBVppJlVXqpsgvhAa2').set({like: null});
+    // } else {
+    //   if (this.state.vote === true) {
+    //     this.props.firebase.submission(uid).update({votes: amount - 2});
+    //   } else {
+    //     this.props.firebase.submission(uid).update({votes: amount - 1});
+    //   }
+    //   this.props.firebase.submission(uid + '/likes').child('1kgzHcDlDJbBVppJlVXqpsgvhAa2').set({like: false});
+    // }
+  }
+
+  handleMouseMove = e => {
+    const { left, top, width, height } = e.target.getBoundingClientRect()
+
+    console.log( e )
+
+    console.log( e.pageY )
+    console.log( top )
+    console.log(window.pageYOffset || document.documentElement.scrollTop)
+
+    const x = (e.pageX - left) / width * 100
+    const y = (e.pageY - top - (window.pageYOffset || document.documentElement.scrollTop) ) / height * 100
+
+    this.setState({ backgroundPosition: `${x}% ${y}%` })
   }
   
   render() {
@@ -417,20 +560,27 @@ class SubmissionsItemBase extends Component {
     return (
       <div className="submission">
 
-        <div className="submission-user">
+        <div className="submission-title">
           {this.props.submission.title}
         </div>
           
         <div className="submission-card">
 
-          <div className={"submission-photo"}>
+          {/* <div className={"submission-photo"}>
             <img src={this.props.submission.preview} alt=""/>
+          </div> */}
+
+          <div className="submission-photo-zoom">
+            <figure onMouseMove={this.handleMouseMove} style={this.state}>
+              <img src={this.state.src} alt=""/>
+            </figure>
           </div>
 
           <div className="voting-bar">
-            <div className="count">{ this.props.submission.votes || '0 / 0' }</div>
+            <div className="count">{ this.state.localCountDown - (this.state.vote === false ? 1 : 0) } / { this.state.localCountUp - (this.state.vote === true ? 1 : 0)} </div>
     
             <div className="voting-buttons">
+              
               <button className={"vote vote-down " + (!this.state.vote && this.state.vote != null ? 'active' : '')} onClick={() => {
                 this.setState({vote: false});
                 this.trySubtract(this.props.submission.uid, this.props.submission.votes);

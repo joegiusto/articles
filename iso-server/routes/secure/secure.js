@@ -237,4 +237,89 @@ module.exports = (app, db) => {
     return res.end();
 
   });
+
+  app.post('/api/tryVote', passport.authenticate('jwt', {session: false}), (req, res) => {
+
+    console.log(`Call to /api/tryVote made at ${new Date()}`);
+    console.log(req.body)
+
+    
+
+    switch(req.body.type) {
+      case 'null':
+        console.log("Clear up and down for user")
+
+        db.collection("articles_submissions").updateOne({_id: ObjectId(req.body.submission_id)},
+        {
+          // $set: {
+            $pull: {
+              "up": req.body.user_id,
+              "down": req.body.user_id
+            }
+          // }
+        }, 
+        function(err, res) {
+          if (err) throw err;
+          console.log("Neutral Success");
+        });
+
+        return res.end();
+        // break;
+      case 'up':
+
+        console.log("Clear down for user and check and add up");
+
+        db.collection("articles_submissions").updateOne({_id: ObjectId(req.body.submission_id)},
+        {
+          // $set: {
+            $pull: {
+              "down": req.body.user_id
+            },
+            $push: {
+              "up": req.body.user_id
+            }
+          // }
+        }, 
+        function(err, res) {
+          if (err) throw err;
+          console.log("Upvote Success");
+        });
+
+        return res.end();
+
+      case 'down':
+        console.log("Clear up for user and check and add down")
+
+        db.collection("articles_submissions").updateOne({_id: ObjectId(req.body.submission_id)},
+        {
+          // $set: {
+            $pull: {
+              "up": req.body.user_id,
+            },
+            $push: {
+              "down": req.body.user_id
+            }
+          // }
+        }, 
+        function(err, res) {
+          if (err) throw err;
+          console.log("Downvote Success");
+        });
+
+        return res.end();
+        // break;
+      default:
+        console.log("Please provide a {type: ''}");
+        return res.end();
+    }
+
+    // db.collection("articles_submissions").findOne({_id: ObjectId(req.body._id)}, function(err, res) {
+    //   // if (err) throw err;
+    //   console.log(res);
+    //   // console.log(`Call to /api/tryVote done`);
+    // });
+
+    // return res.end();
+
+  });
 } 

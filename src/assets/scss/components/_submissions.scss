@@ -74,26 +74,74 @@
   }
 
   .side-menu-one {
+    position: relative;
     background-color: white;
-    background: linear-gradient(45deg, #ffb7b7, #f9edcd 80%);
-    padding: 1rem;
+
+    // padding: 1rem;
     box-shadow: 1px 0px 5px #000;
-    padding-left: 0.5rem;
+    // padding-left: 0.5rem;
     display: flex;
     flex-direction: column;
     border-bottom: 2px solid #000;
+    // overflow: hidden;
+
+    .background-container {
+      position: absolute;
+      top: 0px;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .background {
+      z-index: -1;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      width: 100%;
+      // margin-left: -100px;
+      // margin-right: -100px;
+      height: 100%;
+      background: linear-gradient(45deg, $accent-color, $base-color 80%);
+      // animation-name: slide-around;
+      // animation-direction: alternate;
+      // animation-timing-function: linear;
+      // animation-iteration-count: infinite;
+      // animation-duration: 5s;
+      // background-size: 400% 400%;
+      // background-position: 200% 200%;
+      
+      // This could have a cool rotating linear gradient animation one day, ideal from Elivs. Rember linear gradients can't be animated so background position hack has to be used. 
+
+      @keyframes slide-around {
+        0% {
+          background-position: 0% 0%;
+        }
+        50% {
+          background-position: 100% 0%;
+        }
+        100% {
+          background-position: 50% 50%;
+        }
+      }
+
+    }
 
     .sticky-content {
-      
+      position: relative;
+      padding: 1rem;
+      z-index: 1;
 
       @include media-breakpoint-up(md) {
         position: sticky;
         display: flex;
-        top: calc(50px + 1rem);
+        top: 50px;
         flex-direction: column;
         flex-grow: 1;
         height: 100%;
-        max-height: calc(100vh - 100px);
+        max-height: calc(100vh - 50px);
       }
     }
 
@@ -482,20 +530,72 @@
         width: calc(100% / 2);
       }
 
-      .submission-user {
+      // .submission-photo-zoom {
+        
+      // }
+
+      .submission-title {
         background-color: white;
         border: 2px solid #727272;
         border-bottom: none;
         padding: 0.1rem 0.2rem;
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 18px;
       }
 
       .submission-card {
         margin-bottom: 2rem;
 
+        .submission-photo-zoom {
+          position: relative;
+          // border: 2px solid #727272;
+          // margin-top: 2rem;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100%;
+          height: 450px;
+          width: 100%;
+
+          @include media-breakpoint-down(md) {
+            height: 100%;
+          }
+
+          figure {
+            // padding: 2px;
+            position: relative;
+            // border: 2px solid #727272;
+            border: 2px solid #727272;
+            width: 100%;
+            height: 450px;
+            background-repeat: no-repeat;
+            background-size: 200% 200%;
+            margin: 0;
+            // background-size: contain;
+    
+            img {
+              display: block;
+              border: 1px solid #727272;
+              width: 100%;
+              height: 450px;
+              pointer-events: none;
+              object-fit: cover;
+            }
+          }
+          
+          figure:hover img {
+            opacity: 0;
+          } 
+        }
+
         .submission-photo {
+          background-color: white;
           border: 2px solid rgb(114, 114, 114);
           width: 100%;
           height: 100%;
+          height: 450px;
           overflow: hidden;
 
           @include media-breakpoint-down(md) {
@@ -535,8 +635,24 @@
             background-color: white;
             border-radius: 100%;
 
-            button {
+            button.vote {
               background-color: white;
+
+              &-up.active {
+                background-color: #000;
+                color: rgb(0, 102, 255);
+
+                color: #000000;
+                background: linear-gradient(45deg, #b7fff3, #f9edcd 80%);
+              }
+
+              &-down.active {
+                background-color: #000;
+                color: red;
+
+                background: linear-gradient(45deg, rgb(255, 129, 141), #fec0bb 80%);
+                color: #000;
+              }
             }
 
             button .far {
@@ -559,6 +675,9 @@
             height: calc(100% + 10px);
             width: 100px;
             border-radius: 0px;
+            font-family: brandon-grotesque, sans-serif;
+            font-style: normal;
+            font-weight: 900;
 
             @include media-breakpoint-down(md) {
               width: auto;

@@ -328,7 +328,7 @@ function Menu(props) {
           {/* Support Section */}
           <hr/>
           <p className="heading-font no-link"><b>Support</b></p>
-          <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SUPPORT}><p className="subheading-font"><i class="fas fa-hands-helping"></i>Help Us</p></Link>
+          <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SUPPORT}><p className="subheading-font"><i className="fas fa-hands-helping"></i>Help Us</p></Link>
           {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.JOBS}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Jobs</p></Link> */}
           <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PRESS}><p className="subheading-font"><i className="far fa-address-card"></i>Press</p></Link>
           {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.TRANSLATIONS}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Translations</p></Link> */}

@@ -387,50 +387,56 @@ class StorePage extends Component {
 							
 						</div>
 
-						<div className="extras-panels">
-
-							<div className="panel">
-								<div className="type">Originals</div>
-								<div className="description">Designed and sold by us!</div>
-								<div className="progress">
-									<div className="progress-bar original" role="progressbar" style={{width: "100%"}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-								</div>
-								<div className="profit">Net Profit: 100%</div>
-							</div>
-
-							<div className="panel">
-								<div className="type partner">Partner</div>
-								<div className="description">In collabaration with another creator or company.</div>
-								<div className="progress">
-									<div className="progress-bar partner" role="progressbar" style={{width: "30%"}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-									<div class="progress-bar progress-bar-striped progress-bar-animated partner" role="progressbar" style={{width: "40%"}} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-								</div>
-								<div className="profit">Net Profit: ~30%-70%</div>
-							</div>
-
-							<div className="panel">
-								<div className="type sponsor">Sponsor</div>
-								<div className="description">Promoted company/creator with a great cause.</div>
-								<div className="progress">
-									<div className="progress-bar sponsor" role="progressbar" style={{width: "2%"}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-									<div className="progress-bar progress-bar-striped progress-bar-animated sponsor" role="progressbar" style={{width: "5%"}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-								</div>
-								<div className="profit">Net Profit: ~1-5%</div>
-							</div>
-
-							<div className="panel">
-								<div className="type submission">Submission</div>
-								<div className="description">User design that won the Submissions event.</div>
-								<div className="progress">
-									<div className="progress-bar submission" role="progressbar" style={{width: "50%"}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-								</div>
-								<div className="profit">Net Profit: 50%</div>
-							</div>
-						</div>
-
 					</div>
 				
 				</div>
+
+				<div className="type-guide">
+
+					<div className="extras-panels">
+
+						<div className="panel">
+							<div className="type">Originals</div>
+							<div className="description">Designed and sold by us!</div>
+							<div className="progress">
+								<div className="progress-bar original" role="progressbar" style={{width: "100%"}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+							<div className="profit">Net Profit: 100%</div>
+						</div>
+
+						<div className="panel">
+							<div className="type partner">Partner</div>
+							<div className="description">In collabaration with another creator or company.</div>
+							<div className="progress">
+								<div className="progress-bar partner" role="progressbar" style={{width: "30%"}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+								<div class="progress-bar progress-bar-striped progress-bar-animated partner" role="progressbar" style={{width: "40%"}} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+							<div className="profit">Net Profit: ~30%-70%</div>
+						</div>
+
+						<div className="panel">
+							<div className="type sponsor">Sponsor</div>
+							<div className="description">Promoted company/creator with a great cause.</div>
+							<div className="progress">
+								<div className="progress-bar sponsor" role="progressbar" style={{width: "2%"}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+								<div className="progress-bar progress-bar-striped progress-bar-animated sponsor" role="progressbar" style={{width: "5%"}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+							<div className="profit">Net Profit: ~1-5%</div>
+						</div>
+
+						<div className="panel">
+							<div className="type submission">Submission</div>
+							<div className="description">User design that won the Submissions event.</div>
+							<div className="progress">
+								<div className="progress-bar submission" role="progressbar" style={{width: "50%"}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+							<div className="profit">Net Profit: 50%</div>
+						</div>
+
+					</div>
+					
+				</div>
+
 			</section>
 		)
 	}
