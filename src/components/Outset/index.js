@@ -53,12 +53,14 @@ class OutsetBase extends React.Component {
       shoeSize: props.user?.clothing?.shoe || '',
 
       // Step Three States
-      subscriptions: [],
+      // Hydrate the subscriptions state to have any existing subscriptions in the case we have people redo the Outset or a developer is working on the Outset and does not want to re-enter all the information everytime  
+      subscriptions: props.user.subscriptions.map((sub) => {return sub.news_id} ) || [],
       // UI Only, not to be passed to firebase object
       uiStuff: {
-        activeTab: 1, 
+        activeTab: 0, 
         viewedTabs: {
-          one: true,
+          zero: true,
+          one: false,
           two: false,
           three: false,
           four: false,
@@ -67,7 +69,7 @@ class OutsetBase extends React.Component {
       },
 
       // Step Four States
-      partyAffiliation: '',
+      partyAffiliation: this.props.user?.political?.party || '',
 
       // Step Five States
       privacyAccept: false,
@@ -79,6 +81,7 @@ class OutsetBase extends React.Component {
 
     this.changeFocus = this.changeFocus.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleChangeObjectToState = this.handleChangeObjectToState.bind(this);
     this.handleCellTwo = this.handleCellTwo.bind(this);
     this.setActiveTab = this.setActiveTab.bind(this);
     // this.submitData = this.submitData.bind(this);
@@ -156,6 +159,16 @@ class OutsetBase extends React.Component {
     const name = target.name;
     // console.log(event);
     this.setState({[name]: value});
+  }
+
+  handleChangeObjectToState(object) {
+
+    console.log(object.privacyAccept);
+
+    this.setState({
+      ...this.state,
+      ...object
+    })
   }
 
   changeCut = cut => {
@@ -342,7 +355,17 @@ class OutsetBase extends React.Component {
   };
 
   changeParty = party => {
-    this.setState({ partyAffiliation: party });
+
+    if (this.state.partyAffiliation === party) {
+      
+      this.setState({ partyAffiliation: '', focus: '' })
+
+    } else {
+
+      this.setState({ partyAffiliation: party });
+
+    }
+    
   };
 
   changeStep(step) {
@@ -424,13 +447,15 @@ class OutsetBase extends React.Component {
       case 'zip':
         return "We use this info to suggest news content and ads from your area and to get an idea of where our users base lives."
       case 'cell':
-        return (<span>By entering your cell phone number we can send you minimal updates about whats going on with Articles.<hr/><span style={{fontSize: '0.85rem'}} className="text-muted">Text messaging rates may apply - If you have unlimited text messaging then you are good 👍</span></span>)
+        return (<span>By entering your cell phone number we can send you minimal updates about whats going on with Articles.<hr/><span style={{fontSize: '0.85rem'}}>Text messaging rates may apply for those without unlimited text messaging</span></span>)
       case 'age':
-        return "Using your age we can recommend popular stories that others in your age range are subscribed to."
+        return "Using your age we can recommend popular issues that others in your age range are subscribed to. We may also use your age when decideing what ads to show you if any ads can be displayed at all."
       case 'gender':
         return "We use your gender to get insights on our user base."
       
-
+      // No 'stories-all' just use default step state when on this tab
+      // case 'stories-all':
+      //   return ( console.log("Enter content for 'stories-all'") )
       case 'stories-age':
         return ( <div className="intro-message">Using the age you provided in step one we can look up stories that are popular with users in your age group.{this.renderReasonForInformationStoriesExtra()}</div> )
       case 'stories-location':
@@ -441,6 +466,154 @@ class OutsetBase extends React.Component {
         return ( <div className="intro-message">To get you started we picked a few stories that we find interesting.{this.renderReasonForInformationStoriesExtra()}</div> )
       case 'stories-forgotten':
         return ( <div className="intro-message">With so much happening these days it is easy for people to forget major issues and even easier for corporations to silence news. Here we have issues that the news has gotten quiet on.{this.renderReasonForInformationStoriesExtra()}</div> )
+
+      case 'articles':
+        return ( 
+          <div className="party-explanation">
+            <div className="breif">What we consider ourselves, although early in our roots we strive for a place of equality and a land where all are able to achieve their own version of success.</div>
+            <div className="links">
+              <h5>Links</h5>
+              <a href="https://articles.media/mission" target="_blank" rel="noopener noreferrer" className="link">- Offical Website</a>
+            </div>
+          </div> 
+        )
+      case 'democrat':
+        return ( 
+          <div className="party-explanation">
+            <div className="breif">Founded on January 8, 1828 ({moment("January 8, 1828").fromNow()}) by supporters of Andrew Jackson, making it the world's oldest active political party. Use the following links to learn more about the Democratic Party and the history of behind them.</div>
+            <div className="links">
+              <h5>Links</h5>
+              <a href="https://en.wikipedia.org/wiki/Democratic_Party_(United_States)" className="link">- Wikipedia</a>
+              <a href="https://democrats.org/" target="_blank" rel="noopener noreferrer" className="link">- Offical Website</a>
+            </div>
+          </div> 
+        )
+      case 'republican':
+        return ( 
+          <div className="party-explanation">
+            <div className="breif">No text yet availible for the republican party, use links below to find out more.</div>
+            <div className="links">
+              <h5>Links</h5>
+              <a href="https://en.wikipedia.org/wiki/Republican_Party_(United_States)" className="link">- Wikipedia</a>
+              <a href="https://www.gop.com/" target="_blank" rel="noopener noreferrer" className="link">- Offical Website</a>
+            </div>
+          </div> 
+        )
+      case 'independent':
+        return ( 
+          <div className="party-explanation">
+            <div className="breif">Voters who votes for candidates on issues rather than on the basis of a political ideology or partisanship, a voter who does not have long-standing loyalty to, or identification with, a political party;.</div>
+            <div className="links">
+              <h5>Links</h5>
+              <a href="https://en.wikipedia.org/wiki/Independent_voter" className="link">- Wikipedia</a>
+              {/* <a href="https://democrats.org/" target="_blank" rel="noopener noreferrer" className="link">- Offical Website</a> */}
+            </div>
+          </div> 
+        )
+      case 'green':
+        return ( 
+          <div className="party-explanation">
+            <div className="breif">The Green Party of the United States is a federation of Green state political parties in the United States. The party promotes green politics, specifically environmentalism; nonviolence; social justice; participatory, grassroots democracy; gender equality; LGBTQ rights; anti-war; anti-racism and ecosocialism..</div>
+            <div className="links">
+              <h5>Links</h5>
+              <a href="https://en.wikipedia.org/wiki/Green_party" className="link">- Wikipedia</a>
+              <a href="https://www.gp.org/" target="_blank" rel="noopener noreferrer" className="link">- Offical Website</a>
+            </div>
+          </div> 
+        )
+      case 'libertarian':
+        return ( 
+          <div className="party-explanation">
+            <div className="breif">The Libertarian Party is a political party in the United States that promotes civil liberties, non-interventionism, laissez-faire capitalism, and limiting the size and scope of government.</div>
+            <div className="links">
+              <h5>Links</h5>
+              <a href="https://en.wikipedia.org/wiki/Libertarian_Party_(United_States)" className="link">- Wikipedia</a>
+              <a href="https://www.lp.org/" target="_blank" rel="noopener noreferrer" className="link">- Offical Website</a>
+            </div>
+          </div> 
+        )
+      case 'constitution':
+        return ( 
+          <div className="party-explanation">
+            <div className="breif">The Constitution Party, previously known as the U.S. Taxpayers' Party, is a national political party in the United States. The idea that the principles and intents of the U.S. Constitution remain relevant in human relations was the origin of its founding in 1991. </div>
+            <div className="links">
+              <h5>Links</h5>
+              <a href="https://en.wikipedia.org/wiki/Democratic_Party_(United_States)" className="link">- Wikipedia</a>
+              <a href="http://www.constitutionparty.com/" target="_blank" rel="noopener noreferrer" className="link">- Offical Website</a>
+            </div>
+          </div> 
+        )
+      case 'reform':
+        return ( 
+          <div className="party-explanation">
+            <div className="breif">The Reform Party of the United States of America, generally known as the Reform Party USA or the Reform Party, is a political party in the United States, founded in 1995 by Ross Perot.</div>
+            <div className="links">
+              <h5>Links</h5>
+              <a href="https://en.wikipedia.org/wiki/Reform_Party_of_the_United_States_of_America" className="link">- Wikipedia</a>
+              <a href="https://reformparty.org/" target="_blank" rel="noopener noreferrer" className="link">- Offical Website</a>
+            </div>
+          </div> 
+        )
+      case 'legal-marijuana-now':
+        return ( 
+          <div className="party-explanation">
+            <div className="breif">Legal Marijuana Now is a political third party in the United States established in 1998 to oppose drug prohibition. The party shares many of the progressive values of the Farmer-Labor Party but with an emphasis on marijuana/hemp legalization issues.</div>
+            <div className="links">
+              <h5>Links</h5>
+              <a href="https://en.wikipedia.org/wiki/Legal_Marijuana_Now_Party" className="link">- Wikipedia</a>
+              <a href="www.legalcannabisnow.org" target="_blank" rel="noopener noreferrer" className="link">- Offical Website</a>
+            </div>
+          </div> 
+        )
+      case 'socialist-equality':
+        return ( 
+          <div className="party-explanation">
+            <div className="breif">The Socialist Equality Party is a Trotskyist political party in the United States, one of several Socialist Equality parties around the world affiliated with the International Committee of the Fourth International.</div>
+            <div className="links">
+              <h5>Links</h5>
+              <a href="https://en.wikipedia.org/wiki/Socialist_Equality_Party_(United_States)" className="link">- Wikipedia</a>
+              <a href="https://socialequality.com/" target="_blank" rel="noopener noreferrer" className="link">- Offical Website</a>
+            </div>
+          </div> 
+        )
+      case 'justice':
+        return ( 
+          <div className="party-explanation">
+            <div className="breif">The Justice Party USA is a political party in the United States. It was organized in November 2011 by a group of political activists including former mayor of Salt Lake City Rocky Anderson as an alternative to what he saw as a duopoly of the two major political parties.</div>
+            <div className="links">
+              <h5>Links</h5>
+              <a href="https://en.wikipedia.org/wiki/Justice_Party_(United_States)" className="link">- Wikipedia</a>
+              <a href="http://justicepartyusa.org/" target="_blank" rel="noopener noreferrer" className="link">- Offical Website</a>
+            </div>
+          </div> 
+        )
+      case 'other':
+        return ( 
+          <div className="party-explanation">
+            <div className="breif">If you do not side with any of the above political parties or choose not to share select this info. If we are missing the party you side with email us at <b>help@articles.media</b> with the subject <b>"Missing Political Party"</b> so we can get that added.</div>
+            {/* <div className="links">
+              <h5>Links</h5>
+              <a href="https://en.wikipedia.org/wiki/Democratic_Party_(United_States)" className="link">- Wikipedia</a>
+              <a href="https://democrats.org/" target="_blank" rel="noopener noreferrer" className="link">- Offical Website</a>
+            </div> */}
+          </div> 
+        )
+      default:
+        return ""
+    }
+  }
+
+  renderReasonForInformationTitle(step) {
+    // So... when you change the focus of Step Three (NEWS PREFRENCES) we let users know how many stories they have selected, only once they change the focus once on the step so we can explain the step they are on first.
+    switch(step) {
+      case 1:
+        return <div className="title"><i className="fas fa-user-shield"></i>Privacy Notice</div>
+      case 2:
+        return <div className="title"><i className="fas fa-info-circle"></i>Privacy Notice</div>
+      case 3 :
+        return <div className="title"><i className="fas fa-info-circle"></i>Our Findings</div>
+      case 4:
+        return <div className="title"><i className="fas fa-info-circle"></i>Party Info</div>
       default:
         return ""
     }
@@ -508,13 +681,13 @@ class OutsetBase extends React.Component {
         )
       case 5: 
         return (
-          <div className="intro-title">Terms and All That...</div>
+          <div className="intro-title">Legal</div>
         )
       default:
        return (
         <div className="done-image-container" style={{height: '100%', position: 'relative'}}>
           <img className="img-fluid" alt="GIF of DMV worker from Zootopia taking forever to stamp" src="https://media0.giphy.com/media/l2JHVUriDGEtWOx0c/giphy.gif"></img>
-          {/* <div className="done-image-credit">Property of Walt Disney Studios Motion Pictures</div> */}
+          <div className="done-image-credit">From the movie Zootopia - property of Walt Disney Animation Studios</div>
         </div>
       )
     }
@@ -528,7 +701,7 @@ class OutsetBase extends React.Component {
         )
       case 1:
         return (
-          <div className="intro-message"><b>{this.state.first_name}</b>, that's a nice name! We just want to collect a little more information on you. Click an input to learn what we will do with that info.</div>
+          <div className="intro-message"><b>{this.state.first_name}</b>, that's a nice name! We need to collect some information, click an input to learn what we'll do with it.</div>
         )
       case 2: 
         return (
@@ -537,7 +710,7 @@ class OutsetBase extends React.Component {
       case 3: 
         return (
           // This one is a little tricky because one of the tabs are visbile at start so we have to show the explanation with the step message.
-          <div className="intro-message">We think it's a problem when the news decides what the people see. Pick at least three stories to subscribe to from the categories provided.<hr/>{this.renderReasonForInformation(this.tabToFocus(this.state.uiStuff.activeTab))}</div>
+          <div className="intro-message">We think it's a problem when the news decides what the people see. Pick at least three stories to subscribe to from the categories provided. Subscribe to stories you care about to be kept to date with the latest news. This is also the first example of us using the address information you provided for us to suggest content relavent to the place you live.</div>
         )
       case 4: 
         return (
@@ -545,7 +718,7 @@ class OutsetBase extends React.Component {
         )
       case 5: 
         return (
-          <div className="intro-message">Every site has them, if you could just accept the following you will be on your way!</div>
+          <div className="intro-message">Every site has them, take your time to read over the following to continue on.</div>
         )
       default:
         // Should always be case 0
@@ -561,36 +734,116 @@ class OutsetBase extends React.Component {
       case 1: 
         // General Information
         return (
-          <StepOne {...this.state} onZipBlur={this.onZipBlur} handleCellTwo={this.handleCellTwo} setCell={this.setCell} handleChange={this.handleChange} onChange={this.onChange} changeFocus={this.changeFocus} user={this.props.user} authUser={authUser}/>
+          <StepOne {...this.state} onZipBlur={this.onZipBlur} renderReasonForInformationTitle={this.renderReasonForInformationTitle} handleCellTwo={this.handleCellTwo} setCell={this.setCell} handleChange={this.handleChange} onChange={this.onChange} changeFocus={this.changeFocus} user={this.props.user} authUser={authUser}/>
         )
       case 2:
         // Clothing Information
         return (
-          <StepTwo canShow={this.canShow(this.state.shirtSize)} totalSteps={this.state.totalSteps} log={this.log} clothingCut={this.state.clothingCut} shoeSize={this.state.shoeSize} shirtSize={this.state.shirtSize} changeCut={this.changeCut} changeShoeSize={this.changeShoeSize} changeShirtSize={this.changeShirtSize} action={this.onChange}/>
+          <StepTwo canShow={this.canShow(this.state.shirtSize)} renderReasonForInformationTitle={this.renderReasonForInformationTitle} totalSteps={this.state.totalSteps} log={this.log} clothingCut={this.state.clothingCut} shoeSize={this.state.shoeSize} shirtSize={this.state.shirtSize} changeCut={this.changeCut} changeShoeSize={this.changeShoeSize} changeShirtSize={this.changeShirtSize} action={this.onChange}/>
         )
       case 3:
         // News Information
         return (
-          <StepThree {...this.state} setViewedTabs={this.setViewedTabs} setActiveTab={this.setActiveTab} toggleSubscriptions={this.toggleSubscriptions} changeFocus={this.changeFocus} changeStep={this.changeStep} highlightElement={this.highlightElement} getStorySuggestionLocation={this.getStorySuggestionLocation} getStorySuggestionLocationOther={this.getStorySuggestionLocationOther} test={this.test}/>
+          <StepThree {...this.state} setViewedTabs={this.setViewedTabs} renderReasonForInformationTitle={this.renderReasonForInformationTitle} setActiveTab={this.setActiveTab} toggleSubscriptions={this.toggleSubscriptions} changeFocus={this.changeFocus} changeStep={this.changeStep} highlightElement={this.highlightElement} getStorySuggestionLocation={this.getStorySuggestionLocation} getStorySuggestionLocationOther={this.getStorySuggestionLocationOther} test={this.test}/>
         )
       case 4:
         // Party Information
         return (
-          <StepFour totalSteps={this.state.totalSteps} currentParty={this.state.partyAffiliation} changeParty={this.changeParty}/>
+          <StepFour changeFocus={this.changeFocus} totalSteps={this.state.totalSteps} renderReasonForInformationTitle={this.renderReasonForInformationTitle} currentParty={this.state.partyAffiliation} changeParty={this.changeParty}/>
         )
       case 5:
         // Privacy Information
         return (
-          <StepFive log={this.log} privacyChecked={this.state.privacyAccept} cookieChecked={this.state.cookieAccept} termsChecked={this.state.termsAccept} handleChange={this.handleChange} totalSteps={this.state.totalSteps}/>
+          <StepFive log={this.log} nameFirst={this.state.first_name} nameLast={this.state.last_name} privacyAccept={this.state.privacyAccept} cookieAccept={this.state.cookieAccept} termsAccept={this.state.termsAccept} handleChangeObjectToState={this.handleChangeObjectToState} handleChange={this.handleChange} totalSteps={this.state.totalSteps}/>
         )
       default:
         return (
-        <div className="intro-message text-center">
-          {/* 0%<br/>Submitting
-          <button onClick={() => (this.submitData())} className="btn btn-articles-light">Test</button> */}
-          <div>Review the information below and make sure everything looks correct, if you wish to go back and fix anything now is the time to do so.</div>
-          <div>Name: {this.state.first_name} {this.state.last_name}</div>
-          <div>Address: </div>
+        <div className="confirm-message">
+
+          <div className="text">Review the information below and make sure everything looks correct, if you wish to go back and fix anything now is the time to do so.</div>
+
+          <div className="step">
+            <h5>Step One:</h5>
+
+            <div className="detail">
+              <div className="label">Name</div>
+              <div className="info">{this.state.first_name} {this.state.last_name}</div>
+            </div>
+
+            <div className="detail">
+              <div className="label">Address</div>
+              <div className="info">{this.state.city}, {this.state.state}. {this.state.zip} </div>
+            </div>
+
+            <div className="detail">
+              <div className="label">Cell</div>
+              <div className="info">{this.state.cell}</div>
+            </div>
+
+            <div className="detail">
+              <div className="label">Birthday</div>
+              <div className="info">{this.state.age}</div>
+            </div>
+
+            <div className="detail">
+              <div className="label">Gender</div>
+              <div className="info">{this.state.gender}</div>
+            </div>
+          </div>
+
+          <div className="step">
+            <h5>Step Two:</h5>
+
+            <div className="detail">
+              <div className="label">Clothing Cut</div>
+              <div className="info">{this.state.clothingCut}</div>
+            </div>
+
+            <div className="detail">
+              <div className="label">Shirt Size</div>
+              <div className="info">{this.state.shirtSize}</div>
+            </div>
+
+            <div className="detail">
+              <div className="label">Shoe Size</div>
+              <div className="info">{this.state.shoeSize}</div>
+            </div>
+
+          </div>
+
+          <div className="step">
+            
+            <h5>Step Three:</h5>
+
+            <div className="detail">
+              <div className="label">Subscriptions</div>
+              <div className="info">{moment().format("LL")}</div>
+            </div>
+
+          </div>
+
+          <div className="step">
+            
+            <h5>Step Four:</h5>
+
+            <div className="detail">
+              <div className="label">Party</div>
+              <div className="info">{this.state.partyAffiliation}</div>
+            </div>
+
+          </div>
+
+          <div className="step">
+
+            <h5>Step Five:</h5>
+
+            <div className="detail">
+              <div className="label">Accepted</div>
+              <div className="info">{moment().format("LL")}</div>
+            </div>
+
+          </div>
+
         </div>
         )
     }
@@ -607,6 +860,7 @@ class OutsetBase extends React.Component {
       subscriptions,
       partyAffiliation,
       cookieAccept,
+      uiStuff,
       termsAccept,
       privacyAccept,
     } = this.state;
@@ -685,8 +939,23 @@ class OutsetBase extends React.Component {
                   ''
                 }
 
-                <div className="intro-message">{this.renderReasonForInformation(this.state.focus)}</div>
-              </div>
+                
+                  {this.state.focus === '' ? 
+                    ' '
+                  :
+                  <div className="privacy-notice party-information">
+                    {this.renderReasonForInformationTitle(this.state.step)}
+                    {/* <div className="title"><i class="fas fa-user-shield"></i>Privacy Notice</div> */}
+                    <div className="text">
+                      {this.renderReasonForInformation(this.state.focus)}
+                    </div>
+                  </div>
+  }
+                  
+                  
+                  </div>
+      
+
 
               <div className="col-12 col-md-6 m-auto">
 
@@ -694,9 +963,6 @@ class OutsetBase extends React.Component {
                   <div className="done-image-container" style={{height: '100%', position: 'relative'}}>
                     <img alt="GIF of man riding horse into sunset holding American Flag" className="img-fluid" src="https://media2.giphy.com/media/C1L8yq5ZEz0cg/source.gif"></img>
                   </div>
-                  // <div className="intro-placeholder-container">
-                  //   <span className="intro-placeholder-text">Questions will appear here</span>
-                  // </div>
                   :
                   this.renderStep(this.state.step)
                 }
@@ -718,7 +984,7 @@ class OutsetBase extends React.Component {
                   {/* TODO Easiest think I could think of here is putting all logic into whether a user cna go to next step into a function then letting that function do the logic via a if statement, will this need to be fixed? Most likley but works for now :) */}
                   {/* <button className={"btn btn-lg btn-articles-light step-controls-next" + (this.state.step === 0 ? ' d-none' : this.state.step >= 5 ? ' d-none' : ' d-inline-block')} onClick={() => (this.increment() + this.changeFocus(''))}>Next</button> */}
                   {/* <button className={"btn mr-0 btn-lg btn-articles-light step-controls-done" + (this.state.step === 5 ? ' d-inline-block' : ' d-none' )} onClick={() => (this.increment())}>Done</button> */}
-                  <CanGoToNextStep step={this.state.step} increment={() => (this.increment(), window.scroll(0, 0))} changeFocus={() => (this.changeFocus(''))} stepOneIsInvalid={stepOneIsInvalid} stepTwoIsInvalid={stepTwoIsInvalid} stepFiveIsInvalid={stepFiveIsInvalid} stepFourIsInvalid={stepFourIsInvalid} stepThreeIsInvalid={stepThreeIsInvalid}></CanGoToNextStep>
+                  <CanGoToNextStep step={this.state.step} increment={() => (this.increment(), window.scroll(0, 0))} decrement={() => (this.decrement(), window.scroll(0, 0))} changeFocus={() => (this.changeFocus(''))} stepOneIsInvalid={stepOneIsInvalid} stepTwoIsInvalid={stepTwoIsInvalid} stepFiveIsInvalid={stepFiveIsInvalid} stepFourIsInvalid={stepFourIsInvalid} stepThreeIsInvalid={stepThreeIsInvalid}></CanGoToNextStep>
                   
                   <button className={"btn btn-lg btn-articles-light step-controls-back" + (this.state.step === 6 ? '' : ' d-none')} onClick={() => (this.submitData())}>Finish</button>
                 </div>
@@ -786,15 +1052,26 @@ function CanGoToNextStep(props) {
     stepFourIsInvalid,
     stepFiveIsInvalid,
     increment,
+    decrement,
     changeFocus
    } = props
 
    // New way
 
    if ((step === 1 && !stepOneIsInvalid) || (step === 2 && !stepTwoIsInvalid) || (step === 3 && !stepThreeIsInvalid) || (step === 4 && !stepFourIsInvalid) || (step === 5 && !stepFiveIsInvalid)) {
-    return <button className={"btn btn-lg btn-articles-light step-controls-next" + (step === 0 ? ' d-none' : step >= 5 ? ' ' : ' d-inline-block')} onClick={() => (increment() + changeFocus(''))}>{step === 5 ? 'Finish' : 'Next'}</button>
+
+    return <button className={"btn btn-lg btn-articles-light step-controls-next" + (step === 0 ? ' d-none' : step >= 6 ? ' ' : ' d-inline-block')} onClick={() => (increment() + changeFocus(''))}>{step === 6 ? 'Finish' : 'Next'}</button>
+
   } else {
-    return <button disabled className={"btn btn-lg btn-articles-light step-controls-next" + (step === 0 ? ' d-none' : step >= 5 ? ' ' : ' d-inline-block')} onClick={() => (increment() + changeFocus(''))}>{step === 5 ? 'Finish' : 'Next'}</button>
+    // return <button disabled={step === 6 ? false : false} className={"btn btn-lg btn-articles-light step-controls-next" + (step === 0 ? ' d-none' : step >= 6 ? ' ' : ' d-inline-block')} onClick={() => (increment() + changeFocus(''))}>{step === 6 ? 'Back' : 'Next'}</button>
+    return (
+      // <button disabled={step === 6 ? false : false} className={"btn btn-lg btn-articles-light step-controls-next" + (step === 0 ? ' d-none' : step >= 6 ? ' ' : ' d-inline-block')} onClick={() => (increment() + changeFocus(''))}>{step === 6 ? 'Back' : 'Next'}</button>
+      step === 6 ? 
+      <button disabled={step === 6 ? false : false} className={"btn btn-lg btn-articles-light step-controls-next" + (step === 0 ? ' d-none' : step >= 6 ? ' ' : ' d-inline-block')} onClick={() => (decrement() + changeFocus(''))}>Back</button>
+      :
+      <button disabled={step === 6 ? false : true} className={"btn btn-lg btn-articles-light step-controls-next" + (step === 0 ? ' d-none' : step >= 6 ? ' ' : ' d-inline-block')} onClick={() => (increment() + changeFocus(''))}>Next</button>
+      )
+    
   }
 }
 

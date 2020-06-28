@@ -82,7 +82,7 @@ const StepTwo = (props) => (
         </div>
       </div>
 
-      <div className={"mt-1 oddball-explanation intro-message" + (props.clothingCut === '' ? '' : props.clothingCut === 'skip' ? '' : ' d-none')}>
+      <div className={"mt-3 oddball-explanation intro-message" + (props.clothingCut === '' ? '' : props.clothingCut === 'skip' ? '' : ' d-none')}>
         You can always change this later in your settings!
       </div>
 
@@ -105,7 +105,7 @@ const StepTwo = (props) => (
         <ClothingTag changeShirtSize={props.changeShirtSize} stateSize={props.shirtSize} size={"OTHER"} isMore={true} canShow={props.canShow} isInput={true}></ClothingTag>
       </div>
   
-      <div className="row pt-2 d-none">
+      {/* <div className="row pt-2 d-none">
         <Tag changeShirtSize={() => props.changeShirtSize('XS')} propsSize={props.shirtSize} size="XS"/>
         <Tag changeShirtSize={() => props.changeShirtSize('S')} propsSize={props.shirtSize} size="S"/>
         <Tag changeShirtSize={() => props.changeShirtSize('M')} propsSize={props.shirtSize} size="M"/>
@@ -119,7 +119,7 @@ const StepTwo = (props) => (
           <SmallTag changeShirtSize={() => props.changeShirtSize('4XL')} propsSize={props.shirtSize} size="4XL"/>
           <SmallTag changeShirtSize={() => props.changeShirtSize('SKIP')} propsSize={props.shirtSize} size="SKIP"/>
         </div>
-      </div>
+      </div> */}
 
     </div>
 
@@ -127,11 +127,13 @@ const StepTwo = (props) => (
       <h5 className="intro-title mt-4" style={{fontSize: '1rem', lineHeight: '1rem'}}>Shoe Size (US)</h5>
   
       <div className={"shoe-size-container" + (props.clothingCut === 'male' ? '' : props.clothingCut === 'female' ? '' : ' d-none')}>
+
         <ShoeTag show={props.clothingCut === "male" ? true : false} changeShoeSize={props.changeShoeSize} propsSize={props.shoeSize} shoeSize="50px" size="M-9"/>
         <ShoeTag show={props.clothingCut === "male" ? true : false} changeShoeSize={props.changeShoeSize} propsSize={props.shoeSize} shoeSize="60px" size="M-10"/>
         <ShoeTag show={props.clothingCut === "male" ? true : false} changeShoeSize={props.changeShoeSize} propsSize={props.shoeSize} shoeSize="70px" size="M-11"/>
         <ShoeTag show={props.clothingCut === "male" ? true : false} changeShoeSize={props.changeShoeSize} propsSize={props.shoeSize} shoeSize="80px" size="M-12"/>
         <ShoeTag show={props.clothingCut === "male" ? true : false} changeShoeSize={props.changeShoeSize} propsSize={props.shoeSize} shoeSize="90px" size="M-13"/>
+
         <ShoeTag show={props.clothingCut === "female" ? true : false} changeShoeSize={props.changeShoeSize} propsSize={props.shoeSize} shoeSize="50px" size="F-6"/>
         <ShoeTag show={props.clothingCut === "female" ? true : false} changeShoeSize={props.changeShoeSize} propsSize={props.shoeSize} shoeSize="60px" size="F-7"/>
         <ShoeTag show={props.clothingCut === "female" ? true : false} changeShoeSize={props.changeShoeSize} propsSize={props.shoeSize} shoeSize="70px" size="F-8"/>
@@ -139,6 +141,7 @@ const StepTwo = (props) => (
         <ShoeTag show={props.clothingCut === "female" ? true : false} changeShoeSize={props.changeShoeSize} propsSize={props.shoeSize} shoeSize="90px" size="F-10"/>
 
         <ShoeTag show={true} gender={"both"} changeShoeSize={props.changeShoeSize} propsSize={props.shoeSize} shoeSize="90px" size="OTHER"/>
+        
       </div>
 
       <div className={"shoe-size-container" + (props.clothingCut === 'female' ? '' : ' d-none')}>

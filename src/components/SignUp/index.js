@@ -29,11 +29,13 @@ const SignUpPage = () => (
 );
 
 const INITIAL_STATE = {
-  username: '',
+
   email: '',
+  nameFirst: '',
+  nameLast: '',
   passwordOne: '',
   passwordTwo: '',
-  isAdmin: true,
+
   outsetOverride: true,
   error: null,
   serverUp: false,
@@ -66,13 +68,14 @@ class SignUpFormBase extends Component {
   };
 
   onChange = event => {
+    console.log(this.state.nameFirst.indexOf(' ') === -1);
     this.setState({ [event.target.name]: event.target.value });
   };
 
   onSubmit = event => {
     event.preventDefault();
 
-    const { username, nameFirst , nameLast, email, passwordOne, passwordTwo, isAdmin, outsetOverride } = this.state;
+    const { nameFirst , nameLast, email, passwordOne, passwordTwo } = this.state;
     
     const newUser = {
       first_name: nameFirst,
@@ -88,13 +91,11 @@ class SignUpFormBase extends Component {
 
   render() {
     const {
-      username,
       nameFirst,
       nameLast,
       email,
       passwordOne,
       passwordTwo,
-      isAdmin,
       error,
     } = this.state;
 
@@ -102,9 +103,10 @@ class SignUpFormBase extends Component {
       passwordOne !== passwordTwo ||
       passwordOne === '' ||
       email === '' ||
-      // username === '';
       nameFirst === '' ||
-      nameLast === '';
+      this.state.nameFirst.indexOf(' ') !== -1;
+      // !this.state.nameFirst.match(/^( |1)$/);
+      // nameLast === '';
 
     return (
       <form onSubmit={this.onSubmit}>
@@ -264,7 +266,7 @@ class SignUpFormBase extends Component {
         </label> */}
 
         <button disabled={isInvalid} type="submit" className="btn btn-articles-light">
-          Sign Up
+          Sign Up {(this.state.nameFirst?.indexOf(' ') >= 0) === true ? 'yes' : 'no'}
         </button>
 
         {error && <p>{error.message}</p>}
