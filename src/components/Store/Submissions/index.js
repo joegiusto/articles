@@ -22,7 +22,8 @@ class Submissions extends Component {
       scrollHeightPERCENT: 0,
       scrollHeightPX: 0,
       filterBarLocation: 0,
-      submission: {}
+      submission: {},
+      showSortHelperText: false
     };
 
     this.validate = this.validate.bind(this);
@@ -64,6 +65,22 @@ class Submissions extends Component {
 
   componentWillUnmount() {
     // window.removeEventListener('scroll', this.listenToScroll);
+  }
+
+  showSortHelperText() {
+    const self = this;
+
+    console.log("This ran");
+
+    this.setState({
+      showSortHelperText: true
+    })
+
+    setTimeout(function(){ 
+      self.setState({
+        showSortHelperText: false
+      }) 
+    }, 1500);
   }
 
   validate() {
@@ -245,9 +262,9 @@ class Submissions extends Component {
                       <div id="filters" className="filters d-flex justify-content-between">
   
                           <div className="sorts">
-                            <div onClick={() => this.setState({filter: 'top'})} className={"badge " + (this.state.filter === 'top' ? 'badge-dark' : 'badge-light')}>Top</div>
-                            <div onClick={() => this.setState({filter: 'new'})} className={"badge " + (this.state.filter === 'new' ? 'badge-dark' : 'badge-light')}>New</div>
-                            <div onClick={() => this.setState({filter: 'controversial'})} className={"badge " + (this.state.filter === 'controversial' ? 'badge-dark' : 'badge-light')}>Controversial</div>
+                            <div onClick={() => this.showSortHelperText() + this.setState({filter: 'top'})} className={"badge " + (this.state.filter === 'top' ? 'badge-dark' : 'badge-light')}>Top</div>
+                            <div onClick={() => this.showSortHelperText() + this.setState({filter: 'new'})} className={"badge " + (this.state.filter === 'new' ? 'badge-dark' : 'badge-light')}>New</div>
+                            <div onClick={() => this.showSortHelperText() + this.setState({filter: 'controversial'})} className={"badge " + (this.state.filter === 'controversial' ? 'badge-dark' : 'badge-light')}>Controversial</div>
                           </div>
 
                           <div className="search">
@@ -261,12 +278,16 @@ class Submissions extends Component {
                             <span className="timer badge badge-danger"><Countdown date={moment().startOf('month').add(3, 'months').format('YYYY-MM-DD')} /></span>
                             {this.props.isAuth ? null : <div className="login-notice badge badge-danger">Please login or sign up to vote</div>}
                           {/* </div> */}
+
+                          {/* <div className="helper-text"> */}
+                            <div className={"sort-helper-text " + (this.state.showSortHelperText && this.state.filter === 'top' ? 'fade ' : '') + (this.state.filter !== 'top' ? '' : '')}>{this.state.filter === 'top' ? 'Viewing submissions with the most likes' : ''}</div>
+                            <div className={"sort-helper-text " + (this.state.showSortHelperText && this.state.filter === 'new' ? 'fade ' : '') + (this.state.filter !== 'new' ? '' : '')}>{this.state.filter === 'new' ? 'Viewing submissions newest to oldest' : ''}</div>
+                            <div className={"sort-helper-text " + (this.state.showSortHelperText && this.state.filter === 'controversial' ? 'fade ' : '') + (this.state.filter !== 'controversial' ? '' : '')}>{this.state.filter === 'controversial' ? 'Viewing submissions with similar like to dislike ratios' : ''}</div>
+                          {/* </div> */}
     
                       </div>
 
-                      <div className={"sort-helper-text " + (this.state.filter !== 'top' ? 'd-none' : '')}>Viewing submissions with the highest upvote count</div>
-                      <div className={"sort-helper-text " + (this.state.filter !== 'new' ? 'd-none' : '')}>Viewing submissions sorted by most recently submited</div>
-                      <div className={"sort-helper-text " + (this.state.filter !== 'controversial' ? 'd-none' : '')}>Viewing submissions with the highest like to dislike ratio</div>
+                      
     
                       <SubmissionsList/>
                       

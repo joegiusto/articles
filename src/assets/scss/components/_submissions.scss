@@ -32,6 +32,7 @@
 
   .photos {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;    
 
     .photo {
@@ -41,6 +42,12 @@
       width: 120px;
       height: 170px;
       background-color: #000;
+
+      @include media-breakpoint-down(md) {
+        width: 100px;
+        height: auto;
+        margin-bottom: 0.5rem;
+      }
 
       .main {
         text-align: center;
@@ -90,6 +97,7 @@
       top: 0px;
       left: 0;
       height: 100%;
+      z-index: -1;
       width: 100%;
       overflow: hidden;
     }
@@ -432,11 +440,16 @@
     .submissions {
       display: flex;
       flex-wrap: wrap;
+
+      @include media-breakpoint-down(md) {
+        justify-content: space-between;
+      }
     }
   
     .filters {
       margin-top: 1.25rem;
       margin-bottom: 0rem;
+      margin-bottom: 1.25rem;
       position: sticky;
       z-index: 1;
       top: 70px;
@@ -451,11 +464,22 @@
 
       input {
         font-size: 12px;
-        padding: .1rem 0.25rem; 
+        padding: .1rem 0.25rem;
+
+        @include media-breakpoint-down(md) {
+          display: none;
+        }
+      }
+
+      .btn-articles-light {
+        
+        @include media-breakpoint-down(md) {
+          display: none;
+        }
       }
 
       @include media-breakpoint-down(md) {
-        flex-direction: column;
+        // flex-direction: column;
       }
 
       .login-notice {
@@ -473,10 +497,15 @@
       }
 
       .search {
+        // width: 100%;
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
+
+        @include media-breakpoint-down(md) {
+          // margin-top: 0.5rem;
+        }
       }
   
       .badge {
@@ -490,21 +519,64 @@
       .badge:not(:last-child) {
         margin-right: 0.25rem;
       }
+
+      .helper-text {
+
+      }
+
+      .sort-helper-text {
+        font-size: 1rem;
+        position: absolute;
+        bottom: 0;
+        transform: translateY(100%);
+        left: -1px;
+        // width: auto;
+        width: max-content;
+        background-color: rgb(255, 255, 255);
+        border: 1px solid #000;
+        // margin-left: -1px;
+        margin-right: -1px;
+        color: #000;
+        padding: 0.25rem 0.5rem;
+        width: calc(100% + 2px);
+        transition-duration: 500ms;
+        opacity: 0;
+        box-shadow:  0px 5px 6px -2px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+        // transform: translateY(0px);
+        // margin-left: -.1rem;
+        // margin-right: -.1rem;
+        // margin-bottom: 1.25rem;
+        // top: 115px;
+        // position: sticky;
+        // z-index: 1;
+
+        &:after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          transform: translateX(-100%);
+          transition-duration: 1.5s;
+          transition-timing-function: linear;
+          height: 2px;
+          background-color: $accent-color;
+          
+        }
+
+        &.fade {
+          opacity: 1;
+          transition-duration: 0s;
+
+          &:after {
+            transform: translateX(0%);
+            
+          }
+        }
+      }
     }
 
-    .sort-helper-text {
-      width: auto;
-      background-color: #000;
-      color: white;
-      padding: 0.1rem 0.5rem;
-      margin-left: -5px;
-      margin-right: -5px;
-      margin-bottom: 1.25rem;
-      top: 115px;
-      position: sticky;
-      z-index: 1;
-    }
-  
     .filter-blur {
       position: fixed;
       top: 50px;
@@ -527,7 +599,8 @@
       margin-right: 0.5rem;
 
       @include media-breakpoint-down(md) {
-        width: calc(100% / 2);
+        width: calc(100% / 2 - 0.5rem);
+        margin-right: 0rem;
       }
 
       // .submission-photo-zoom {
@@ -560,7 +633,7 @@
           width: 100%;
 
           @include media-breakpoint-down(md) {
-            height: 100%;
+            height: 250px;
           }
 
           figure {
@@ -574,6 +647,9 @@
             background-size: 200% 200%;
             margin: 0;
             // background-size: contain;
+            @include media-breakpoint-down(md) {
+              height: 250px;
+            }
     
             img {
               display: block;
@@ -582,6 +658,10 @@
               height: 450px;
               pointer-events: none;
               object-fit: cover;
+
+              @include media-breakpoint-down(md) {
+                height: 250px;
+              }
             }
           }
           
@@ -735,6 +815,11 @@
       display: flex;
       flex-direction: row;
       justify-content: center;
+
+      @include media-breakpoint-down(md) {
+        flex-direction: column;
+        align-items: center;
+      }
   
       .preview {
         max-width: 250px;
@@ -783,7 +868,10 @@
       }
   
       .form {
-        padding-left: 2rem;
+        
+        @include media-breakpoint-up(md) {
+          padding-left: 2rem;
+        }
       }
   
     }

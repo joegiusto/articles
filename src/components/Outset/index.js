@@ -133,7 +133,7 @@ class OutsetBase extends React.Component {
       return obj;
     }, {});
 
-    console.log(newobj)
+    // console.log(newobj)
 
     axios.post('/api/outsetUpdate', {
       user: this.props.user._id,
@@ -320,7 +320,7 @@ class OutsetBase extends React.Component {
     .then(function (response) {
 
       // handle success
-      console.log(response.data);
+      // console.log(response.data);
 
       self.setState({
         allIssues: response.data,
@@ -538,7 +538,7 @@ class OutsetBase extends React.Component {
             <div className="breif">The Constitution Party, previously known as the U.S. Taxpayers' Party, is a national political party in the United States. The idea that the principles and intents of the U.S. Constitution remain relevant in human relations was the origin of its founding in 1991. </div>
             <div className="links">
               <h5>Links</h5>
-              <a href="https://en.wikipedia.org/wiki/Democratic_Party_(United_States)" className="link">- Wikipedia</a>
+              <a href="https://en.wikipedia.org/wiki/Constitution_Party_(United_States)" className="link">- Wikipedia</a>
               <a href="http://www.constitutionparty.com/" target="_blank" rel="noopener noreferrer" className="link">- Offical Website</a>
             </div>
           </div> 
@@ -923,7 +923,7 @@ class OutsetBase extends React.Component {
           <div className="outset-form">
             <div className="row">
               
-              <div className="col-12 col-md-6">
+              <div className="col-12 col-md-6 pb-4 pb-md-0">
                 {this.renderTitle(this.state.step)}
 
                 {/* NOTE Was for debug purposes, just gonna leave for now

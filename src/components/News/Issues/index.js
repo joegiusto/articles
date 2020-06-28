@@ -67,6 +67,7 @@ const Issues = (props) => {
       props.user_subscriptions ?
       (props.user_subscriptions.map((issue, i) => (
         <GzyCard
+        key={issue._id}
         issue={issue}
         podcast={false}
         podcastDay=""
@@ -84,6 +85,7 @@ const Issues = (props) => {
 
         filterByValue(props.issues?.issues, props.searchText).map((issue, i) => (
           <GzyCard
+          key={issue._id}
           issue={issue}
           podcast={true}
           podcastDay=""
@@ -101,6 +103,7 @@ const Issues = (props) => {
         props.issues?.issues ?
         (props.issues?.issues.map((issue, i) => (
           <GzyCard
+          key={issue._id}
           issue={issue}
           podcast={true}
           podcastDay=""
@@ -256,7 +259,7 @@ function GzyCard (props) {
 
           <div className="g-card-badge date" style={props.dateType !== 'post' ? {backgroundColor: 'red'} : {backgroundColor: '#f9edcd', color: 'black'} }>
 
-            {props.dateType !== 'post' ? <i class="fas fa-calendar-alt"></i> : <i class="fas fa-redo-alt"></i> }
+            {props.dateType !== 'post' ? <i className="fas fa-calendar-alt"></i> : <i className="fas fa-redo-alt"></i> }
             
             {props.dateType !== 'post' ?
             moment(issue?.news_date).format("LL")
@@ -265,7 +268,7 @@ function GzyCard (props) {
             }
             <div className="sub" style={ props.dateType === 'post' ? {backgroundColor: 'red', color: 'white'} : {backgroundColor: '#f9edcd'} }>
               {/* <i class="fas fa-calendar-day"></i> */}
-              {props.dateType === 'post' ?  <i class="fas fa-calendar-alt"></i> : <i class="fas fa-redo-alt"></i> }
+              {props.dateType === 'post' ?  <i className="fas fa-calendar-alt"></i> : <i className="fas fa-redo-alt"></i> }
               {/* {moment(issue?.last_update).format("LL")} */}
               {props.dateType === 'post' ?
                 moment(issue?.news_date).format("LL")

@@ -20,7 +20,7 @@ export const setIssues = () => dispatch => {
     .get("/api/getIssues")
     .then( res => {
       console.log("Got Issues");
-      console.log(res.data)
+      // console.log(res.data)
       dispatch({
         type: 'SET_ISSUES',
         payload: res.data,

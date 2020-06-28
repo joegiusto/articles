@@ -6,7 +6,7 @@ function Issue(props) {
       <div className="title">{props.issueObject?.news_title}</div>
 
         <p className="description"> {props.issueObject?.news_tagline}</p>
-        <div className="tags">{props.issueObject?.news_tags.map(tag => {return tag.tag_name})}</div>
+        <div className="tags">{props.issueObject?.news_tags.map(tag => {return <span className="badge badge-articles mr-2 mb-1">{tag.tag_name}</span>})}</div>
 
         <div className={"subscribe" + (props.subscriptions.indexOf(props.issueObject._id) > -1 ? ' active' : '')}>
           <i className="fas fa-bookmark"></i>
@@ -264,7 +264,7 @@ function StepThree(props) {
                 <i className="fas fa-bookmark"></i>
               </div>
             </div> */}
-            
+
           </>
         )
       default:

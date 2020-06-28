@@ -297,28 +297,28 @@ class Frontpage extends Component {
   
             <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS}>
               <div className={"link " + (this.props.location.pathname === "/news" ? 'active' : null)}>
-                <i class="fas fa-newspaper"></i>
+                <i className="fas fa-newspaper"></i>
                 <div className="text">Frontpage</div>
               </div>
             </Link>
 
             <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.STORIES}>
               <div className={"link " + (this.props.location.pathname === "/news/stories" ? 'active' : null)}>
-                <i class="fas fa-bullhorn"></i>
+                <i className="fas fa-bullhorn"></i>
                 <div className="text">Stories</div>
               </div>
             </Link>
 
             <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.ISSUES}>
               <div className={"link " + (this.props.location.pathname === "/news/issues" ? 'active' : null)}>
-                <i class="fas fa-balance-scale"></i>
+                <i className="fas fa-balance-scale"></i>
                 <div className="text">Issues</div>
               </div>
             </Link>
             
             <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.MYTHS}>
               <div className={"link " + (this.props.location.pathname === "/news/myths" ? 'active' : null)}>
-                <i class="fas fa-ghost"></i>
+                <i className="fas fa-ghost"></i>
                 <div className="text">Myths</div>
               </div>
             </Link>
@@ -327,7 +327,7 @@ class Frontpage extends Component {
 
             <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS}>
               <div className={"link " + (this.props.location.pathname === "/news/coronavirus" ? 'active' : null)}>
-                <i class="fas fa-lungs-virus"></i>
+                <i className="fas fa-lungs-virus"></i>
                 <div className="text">Coronavirus</div>
               </div>
             </Link>
@@ -349,22 +349,22 @@ class Frontpage extends Component {
             <div className="top-bar">
 
               <div className="link active">
-                <i class="fas fa-newspaper"></i>
+                <i className="fas fa-newspaper"></i>
                 <div className="text">Frontpage</div>
               </div>
 
               <div className="link">
-                <i class="fas fa-bullhorn"></i>
+                <i className="fas fa-bullhorn"></i>
                 <div className="text">Stories</div>
               </div>
 
               <div className="link">
-                <i class="fas fa-balance-scale"></i>
+                <i className="fas fa-balance-scale"></i>
                 <div className="text">Issues</div>
               </div>
 
               <div className="link">
-                <i class="fas fa-ghost"></i>
+                <i className="fas fa-ghost"></i>
                 <div className="text">Myths</div>
               </div>
 

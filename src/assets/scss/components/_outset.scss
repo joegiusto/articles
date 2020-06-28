@@ -177,11 +177,12 @@
 
   .party-information {
 
+    @include media-breakpoint-down(md) {
+      position: sticky!important;
+      top: 50px;
+    }
+
     .party-explanation {
-
-      .text {
-
-      }
 
       .links {
 
@@ -719,7 +720,7 @@
     cursor: pointer;
     background-color: white;
     padding: 1rem;
-    margin-bottom: 5px;
+    margin-bottom: 0.5rem;
     position: relative;
     overflow: hidden;
 
@@ -1150,9 +1151,9 @@
       font-size: 1.5rem;
     }
 
-    .intro-message {
-      font-size: 1.5rem;
-    }
+    // .intro-message {
+    //   font-size: 1.5rem;
+    // }
 
     .outset-details-scroll {
       overflow-y: visible;
