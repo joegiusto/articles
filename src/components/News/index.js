@@ -128,10 +128,10 @@ function JustFrontpage(props) {
       prevEl: '.swiper-button-prev'
     },
     spaceBetween: 5,
-    freeMode: true,
-    slidesPerView: 4,
-    slidesPerGroup: 4,
-    // containerClass: 'swiper-container-1'
+    // freeMode: true,
+    slidesPerView: 1,
+    slidesPerGroup: 1,
+    containerClass: 'swiper-container',
   }
 
   const goNext = () => {
@@ -150,8 +150,6 @@ function JustFrontpage(props) {
       console.log('slide changed');
     });
   }
-
-  
 
   return (
     <>
@@ -183,29 +181,29 @@ function JustFrontpage(props) {
         </div>
       </Slider> */}
 
-      {/* <div className="swiper-container">  */}
+      <div className="swiper-container"> 
 
-        {/* <div onClick={goPrev} className="swiper-button-prev">A</div>
-        <div onClick={goNext} className="swiper-button-next">B</div> */}
+        <div onClick={goPrev} className="swiper-button-prev">A</div>
+        <div onClick={goNext} className="swiper-button-next">B</div>
         
-        {/* <Swiper {...params}>   
+        <Swiper {...params}>   
           {props.issues?.issues.map((issue, i) => (
             <GzyCard
+            key={i}
             issue={issue}
             podcast={true}
             podcastDay=""
             podcastLink=""
             topText="Rising Cost"
             dateType={props.site?.dateType}
-            // midText={issue?.news_title}
             bottomText="The Unspoken Issues"
             backgroundImage={issue.hero_url}
             />
           ))}  
           
-        </Swiper> */}
+        </Swiper>
 
-      {/* </div> */}
+      </div>
 
       <div className="noselect">
         <div className="new-button">My Subscriptions</div>

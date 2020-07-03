@@ -59,8 +59,6 @@ class Reports extends Component {
   componentDidMount() {
     const self = this;
     
-    // this.onListenForDonations();
-    
     socket = socketIOClient(ENDPOINT);
 
     socket.on('online', function(msg){
@@ -231,103 +229,6 @@ class Reports extends Component {
     socket.disconnect();
     this.props.firebase.donations().off();
     this.props.firebase.expenses().off();
-  }
-
-  onListenForDonations() {
-    this.setState({ loading: true });
-
-    this.props.firebase.donations().orderByChild('createdAt').on('value', snapshot => {
-      const donationObject = snapshot.val();
-
-      if (donationObject) {
-
-        const donationList = Object.keys(donationObject).map(key => ({
-          ...donationObject[key],
-          uid: key,
-        }
-        ));
-
-        // this.setState({
-
-        //   firebaseData: {
-        //     revenue: {
-        //       ...this.state.firebaseData.revenue,
-        //       donations: donationList,
-        //     },
-        //   },
-          
-        //   loading: false,
-
-        // });
-
-        // var total = 0;
-
-        // for (var i=0; i<this.state.firebaseData.revenue.donations.length; i++) {
-        //   total += this.state.firebaseData.revenue.donations[i].amount;
-        // }
-
-        // this.setState({totals: {
-        //   ...this.state.totals,
-        //   donations: total
-        // }})
-
-
-      } else {
-        this.setState({ donationsFirebase: null, loading: false });
-      }
-    }); 
-
-    this.props.firebase.expenses().orderByChild('createdAt').on('value', snapshot => {
-      const expenseObject = snapshot.val();
-
-      if (expenseObject) {
-
-        const expenseList = Object.keys(expenseObject).map(key => ({
-          ...expenseObject[key],
-          uid: key,
-        }
-        ));
-
-        expenseList.sort(function(a, b){
-          var keyA = new Date(a.date),
-              keyB = new Date(b.date);
-          // Compare the 2 dates
-          if(keyA < keyB) return -1;
-          if(keyA > keyB) return 1;
-          return 0;
-        });
-
-        // this.setState({
-          // expensesFirebase: expenseList,
-
-        //   firebaseData: {
-        //     ...this.state.firebaseData,
-        //     expenses: {
-        //       ...this.state.firebaseData.expenses,
-        //       other: expenseList,
-        //     },
-        //   },
-
-        //   loading: false,
-        // });
-
-        // var total = 0;
-
-        // for (var i=0; i<this.state.firebaseData.expenses.other.length; i++) {
-        //   total += this.state.firebaseData.expenses.other[i].amount;
-        // }
-
-        // this.setState({totals: {
-        //   ...this.state.totals,
-        //   expenses: total
-        // }})
-
-      } else {
-        this.setState({ donationsFirebase: null, loading: false });
-      }
-
-    }); 
-
   }
 
   setChartPeriodSelector(newChartPeriod) {
@@ -1363,52 +1264,6 @@ class DonationTableBase extends Component {
       this.changePage = this.changePage.bind(this);
    }
 
-  componentDidMount() {
-    this.onListenForDonations();
-  }
-
-  onListenForDonations() {
-    this.setState({ loading: true });
-
-    this.props.firebase.donations().orderByChild('createdAt').on('value', snapshot => {
-      const donationObject = snapshot.val();
-
-      if (donationObject) {
-        const donationList = Object.keys(donationObject).map(key => ({
-          ...donationObject[key],
-          uid: key,
-        }
-        ));
-        this.setState({
-          donationsFirebase: donationList,
-          loading: false,
-        });
-      } else {
-        this.setState({ donationsFirebase: null, loading: false });
-      }
-    }); 
-
-    this.props.firebase.expenses().orderByChild('date').startAt(0).on('value', snapshot => {
-      const expenseObject = snapshot.val();
-
-      if (expenseObject) {
-
-        const expenseList = Object.keys(expenseObject).map(key => ({
-          ...expenseObject[key],
-          uid: key,
-        }
-        ));
-        this.setState({
-          expensesFirebase: expenseList,
-          loading: false,
-        });
-      } else {
-        this.setState({ donationsFirebase: null, loading: false });
-      }
-    }); 
-
-  }
-
   componentWillUnmount() {
     this.props.firebase.donations().off();
   }
@@ -1474,7 +1329,9 @@ const StyledDonationList = (props) => (
         </tr>
       </thead>
       <tbody>
-        {props.donationsFirebase.map(donation => (
+        {props.donationsFirebase
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .map(donation => (
           <StyledDonationItem
             key={donation.uid}
             donation={donation}

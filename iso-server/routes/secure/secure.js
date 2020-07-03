@@ -165,8 +165,9 @@ module.exports = (app, db) => {
 
     console.log(`Call to /api/upsertDonation made at ${new Date()}`);
     const donation = req.body.donation;
+    const idClean = (req.body.donation._id === '' ? ObjectId() : ObjectId(req.body.donation._id))
 
-    if (donation.type === 'card') {
+    if (donation.type === 'Card') {
       stripe.charges.create({
         amount: donation.amount,
         currency: 'usd',
@@ -174,14 +175,15 @@ module.exports = (app, db) => {
         source: 'tok_visa'
       })
       .then((charge) => {
-        db.collection("articles_donations").updateOne({_id: ObjectId(req.body.donation._id)}, {
+        db.collection("articles_donations").updateOne({ _id: idClean }, {
           $set: {
             amount: donation.amount,
+            type: donation.type,
             date: donation.date,
             name: donation.name,
             message: donation.message,
             createdBy: donation.createdBy,
-            wasMatched: donation.wasMatched,
+            matched: donation.matched,
             matchedBy: donation.matchedBy
           }
         },
@@ -201,35 +203,38 @@ module.exports = (app, db) => {
         console.log(err)
       });
     } else {
-      db.collection("articles_donations").updateOne({_id: ObjectId(req.body.donation._id)}, {
+      db.collection("articles_donations").updateOne({ _id: idClean }, {
         $set: {
           amount: parseInt(donation.amount),
+          type: donation.type,
           date: new Date(donation.date),
           name: donation.name,
           message: donation.message,
           createdBy: donation.createdBy,
-          wasMatched: donation.wasMatched,
+          matched: donation.matched,
           matchedBy: donation.matchedBy
         }
       },
       {
         upsert: true
       }, 
-      function(err, res) {
+      function(err, result) {
         if (err) throw err;
         console.log(`Call to /api/upsertDonation done`);
+        return res.send(result);
       });
-
-      return res.end();
+      
     }
   });
 
   app.post('/api/deleteDonation', passport.authenticate('jwt', {session: false}), (req, res) => {
 
     console.log(`Call to /api/deleteDonation made at ${new Date()}`);
-    const donation = req.body.donation;
 
-    db.collection("articles_donations").deleteOne({_id: ObjectId(req.body._id)}, function(err, res) {
+    // const donation = req.body.donation;
+    // const idClean = (req.body._id === '' ? null : ObjectId(req.body._id))
+
+    db.collection("articles_donations").deleteOne({_id:  ObjectId(req.body._id)}, function(err, res) {
       if (err) throw err;
       console.log(`Call to /api/deleteDonation done`);
     });

@@ -1,0 +1,45 @@
+.notification-area {
+  // This will be moved, testing in admin first
+  position: fixed;
+  z-index: 250;
+  top: 25px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  display: flex;
+  flex-direction: row;
+
+  .timer {
+    // flex-grow: 1;
+    // height: 30px;
+    width: 30px;
+    background-color: $accent-color;
+    border-bottom: 2px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .notification {
+    display: inline-block;
+    padding: 0.3rem 0.4rem;
+    // font-size: 75%;
+    // font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    // border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    border-bottom: 2px solid white;
+
+    &.success {
+      color: #fff;
+      background-color: #28a745;
+    }
+
+    &.danger {
+      color: #fff;
+      background-color: #dc3545;
+    }
+  }
+}

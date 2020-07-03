@@ -14,6 +14,7 @@ import moment from 'moment';
 import Clock from 'react-live-clock';
 
 import CartPreview from './components/CartPreview'
+import NotificationArea from './components/NotificationArea'
 
 import { toggleSideMenuFixed, toggleColorMode } from '../../actions/siteActions'
 
@@ -71,9 +72,12 @@ function Menu(props) {
 
   return (
     <div className={'menu-wrap noselect' + (props.site?.sideMenuFixed ? ' fixed' : '') + (props.site?.colorModeDark ? ' dark-mode' : '')}>
+
         <section onClick={() => {setMenuOpen(false)}} className={'side-menu-overlay' + (menuOpen || pinOpen ? " show" : "")}></section>
 
         <section className="menu-spacer"></section>
+
+        <NotificationArea/>
 
         <section>
           <div className="nav-tab">

@@ -325,11 +325,20 @@
     }
 
     .admin-donations {
+      .submit {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
 
-    }
+        .btn {
+          max-width: 50%;
+        }
 
-    .admin-donations {
-
+        @include media-breakpoint-down(md) {
+          flex-direction: column;
+        }
+      }
     }
 
     .admin-expenses {

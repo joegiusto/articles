@@ -31,7 +31,7 @@ class Admin extends Component {
   }
 
   componentDidMount() {
-    if (!this.props.user.roles.isAdmin === true) {
+    if (!this.props.user?.roles?.isAdmin === true) {
       this.props.history.push("/home");
     }
   }

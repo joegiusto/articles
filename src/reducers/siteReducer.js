@@ -2,7 +2,10 @@ const initialState = {
   colorModeDark: false,
   sideMenuFixed: false,
   userSubscriptions: false,
-  dateType: 'post'
+  dateType: 'post',
+  notification: {
+    text: 'Test'
+  }
 };
 export default function(state = initialState, action) {
   switch (action.type) {

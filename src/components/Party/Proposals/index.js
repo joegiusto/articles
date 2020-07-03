@@ -74,6 +74,11 @@ const proposals = {
       title: 'Purto Rico Statehood',
       url: 'purto-rico-statehood',
       description: 'Allow Purto Rico to join the union'
+    },
+    {
+      title: 'Create Secure Mail/Online Voting',
+      url: 'vote-by-mail',
+      description: 'Allow citizens to vote online and by mail'
     }
   ]
 }

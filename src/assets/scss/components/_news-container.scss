@@ -15,10 +15,10 @@
 .content-wrap.fixed {
 
   section.frontpage-section {
+
     .top-bar {
       display: flex;
       margin-bottom: 0.5rem;
-  
       display: none;
     }
   
@@ -404,6 +404,11 @@ section.frontpage-section {
       margin-bottom: 0.5rem;
       padding: 0 0;
       // overflow-x: visible;
+
+      a {
+        display: block;
+        width: 100%;
+      }
 
       .swiper-slide {
         background-color: $accent-color;

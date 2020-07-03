@@ -13,7 +13,7 @@ import issuesReducer from "../reducers/issues";
 import mythsReducer from "../reducers/mythsReducer";
 import submissionsReducer from "../reducers/submissionsReducer";
 import siteReducer from "../reducers/siteReducer";
-
+import notificationAreaReducer from "../reducers/notificationAreaReducer";
 import errorReducer from "../reducers/errorReducer";
 // import filtersReducer from '../reducers/filters';
 // import siteReducer from '../reducers/site';
@@ -24,7 +24,7 @@ import { logoutUser } from "../actions/authActions";
 const persistConfig = {
   // transforms: [immutableTransform()],
   key: 'root',
-  blacklist: ['stories', 'user.subscriptionsBulk'],
+  blacklist: ['stories', 'user.subscriptionsBulk', 'notificationArea'],
   storage,
 }
 
@@ -34,7 +34,7 @@ const persistedReducer = persistReducer(
     expenses: expensesReducer,
     auth: authReducer,
     errors: errorReducer,
-
+    notificationArea: notificationAreaReducer,
     stories: storiesReducer,
     issues: issuesReducer,
     myths: mythsReducer,
