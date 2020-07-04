@@ -82,15 +82,15 @@ class IssuesClass extends Component {
             </span>
 
           </div>
-          
+
         </div>
 
-        <div className="issues-body row mb-4">
+        <div className="issues-body my-4">
 
           {this.props.site.userSubscriptions ? 
           this.props.user_subscriptions ?
           (this.props.user_subscriptions.map((issue, i) => (
-            <div className="col-md-4 mt-3">
+            // <div className="col-md-4 mt-3">
             <GzyCard
             key={issue._id}
             issue={issue}
@@ -102,7 +102,7 @@ class IssuesClass extends Component {
             bottomText="The Unspoken Issues"
             backgroundImage={issue.hero_url}
             />
-            </div>
+            // </div>
           )))
           : 
           <div>Issues Loading...</div>
@@ -110,7 +110,7 @@ class IssuesClass extends Component {
           this.props.searchText !== "" ? 
 
             filterByValue(this.props.issues?.issues, this.props.searchText).map((issue, i) => (
-              <div className="col-md-4 mt-3">
+              // <div className="col-md-4 mt-3">
               <GzyCard
               key={issue._id}
               issue={issue}
@@ -123,14 +123,14 @@ class IssuesClass extends Component {
               bottomText="The Unspoken Issues"
               backgroundImage={issue.hero_url}
               />
-              </div>
+              // </div>
             ))
 
           :
 
             this.props.issues?.issues ?
             (this.props.issues?.issues.map((issue, i) => (
-              <div className="col-md-4 mt-3">
+              // <div className="col-md-4 mt-3">
               <GzyCard
               key={issue._id}
               issue={issue}
@@ -143,7 +143,7 @@ class IssuesClass extends Component {
               bottomText="The Unspoken Issues"
               backgroundImage={issue.hero_url}
               />
-              </div>
+              // </div>
             )))
             : 
             <div>Issues Loading...</div>
@@ -198,8 +198,6 @@ class IssuesClass extends Component {
           <div>Issues Loading...</div>
             
           } */}
-
-          
 
           <div className="d-none">
             <GzyCard
@@ -282,7 +280,7 @@ function GzyCard (props) {
   const issue = props.issue
 
   return (
-    <Link className="swiper-slide" to={`${ROUTES.ISSUES}/${props.issue?._id}`}>
+    <Link to={`${ROUTES.ISSUES}/${props.issue?._id}`}>
       <div className="g-card">
 
         {(podcast ? 

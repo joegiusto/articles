@@ -1,4 +1,6 @@
 .issues-section {
+  font-family: montserrat, sans-serif;
+  font-weight: 400;
 
   .issues-head {
     position: relative;
@@ -8,6 +10,7 @@
     text-align: left;
     padding: 1rem;
     box-shadow: 2px 2px 2px $accent-color, -4px -4px 2px $base-color;
+    padding-bottom: 4rem;
 
     @include media-breakpoint-down(md) {
       padding-bottom: 5rem;
@@ -28,12 +31,19 @@
     }
 
     .filters {
-      position: sticky;
+      // position: sticky;
       z-index: 5;
       background-color: white;
       border: solid 1px #000;
+      
+      position: absolute;
+      top: unset;
+      bottom: 0;
+      left: 0;
       width: 100%;
-      top: 55px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
   
       @include media-breakpoint-down(md) {
         position: absolute;
@@ -97,6 +107,17 @@
     }
   }
 
+  .issues-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10px 10px;
+    // gap: 0px 10px;
+
+    @include media-breakpoint-down(md) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
   .issues-footer {
     background-color: white;
     border: solid 5px #000;
@@ -118,11 +139,16 @@
 
   .g-card {
     $border: 15px;
+    $borderMd: 5px;
     background-color: rgb(255, 255, 255);
     width: 100%;
     height: 377px;
     position: relative;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+
+    @include media-breakpoint-down(md) {
+      height: 220px;
+    }
 
     .g-card-badge {
       transition-duration: .5s;
@@ -145,12 +171,18 @@
         position: absolute;
         background-color: red;
         color: white;
+        font-size: .9rem;
+        white-space: nowrap;
         top: 0px;
         left: 0px;
-        padding: 0.2rem 1rem;
+        padding: 0.2rem 0.5rem;
         backface-visibility: hidden;
         transform: translateZ(0);
         -webkit-font-smoothing: subpixel-antialiased;
+
+        @include media-breakpoint-down(md) {
+          font-size: .8rem;
+        }
       }
 
       &.update {
@@ -171,13 +203,22 @@
         top: 100%;
         height: 100%;
         width: 100%;
-        right: 0px;
-        padding: 0.2rem 0.8rem;
+        left: 0;
+        display: block;
+        white-space: nowrap;
+        // right: 0px;
+        // line-break: strict;
+        font-size: .9rem;
+        padding: 0.2rem 0.4rem;
         transform: translateY(-100%);
         transition-duration: 200ms;
         backface-visibility: hidden;
         // transform: translateZ(0);
         -webkit-font-smoothing: subpixel-antialiased;
+
+        @include media-breakpoint-down(md) {
+          font-size: .8rem;
+        }
       }
 
     }
@@ -202,6 +243,14 @@
       background-repeat: no-repeat;
       background-position: 46% 0%;
       filter: contrast(90%) sepia(80%) saturate(20%);
+
+      @include media-breakpoint-down(md) {
+        width: calc(100% - #{$borderMd} * 2);
+        top: calc(0px + #{$borderMd});
+        left: calc(0px + #{$borderMd});
+        padding-bottom: calc(#{$borderMd} * 2);
+        padding-right: calc(#{$borderMd} * 2);
+      }
     }
 
     &-text-card {
@@ -215,6 +264,11 @@
       text-transform: uppercase;
       font-family: 'Oswald', sans-serif;
 
+      @include media-breakpoint-down(md) {
+        background-color: rgba(255, 255, 255, 0.7);
+
+      }
+
       .top-text {
         color: gray;
         padding-top: 1rem;
@@ -226,6 +280,12 @@
         font-size: 2rem;
         line-height: 2rem;
         letter-spacing: 3px;
+
+        @include media-breakpoint-down(md) {
+          font-size: 1.5rem;
+          line-height: 1.5rem;
+          letter-spacing: 2px;
+        }
       }
       
       .bottom-text {
