@@ -944,7 +944,7 @@ class OutsetBase extends React.Component {
                   :
                   <div className="privacy-notice party-information">
 
-                    <div onClick={() => this.set} className="close-privacy">
+                    <div onClick={() => this.changeFocus('')} className="close-privacy">
                       <i class="fas fa-window-close"></i>
                     </div>
 
@@ -980,13 +980,13 @@ class OutsetBase extends React.Component {
 
             <div className="step-controls">
                 <div className="buttons">
-                  <button className={"btn btn-lg btn-articles-light step-controls-start" + (this.state.step === 0 ? '' : ' d-none')} onClick={() => (this.increment())}>Start</button>
-                  <button className={"btn btn-lg btn-articles-light step-controls-back" + (this.state.step === 0 ? ' d-none' : this.state.step >= 6 ? ' d-none' : ' d-inline-block')} onClick={() => (this.decrement() + this.changeFocus(''))}>Back</button>
+                  <button className={"btn btn-lg btn-articles-light step-controls-start" + (this.state.step === 0 ? '' : ' d-none')} onClick={() => (this.increment() + window.scroll(0, 0))}>Start</button>
+                  <button className={"btn btn-lg btn-articles-light step-controls-back" + (this.state.step === 0 ? ' d-none' : this.state.step >= 6 ? ' d-none' : ' d-inline-block')} onClick={() => (this.decrement() + this.changeFocus('') + window.scroll(0, 0))}>Back</button>
   
                   {/* TODO Easiest think I could think of here is putting all logic into whether a user can go to next step into a function then letting that function do the logic via a if statement, will this need to be fixed? Most likley but works for now :) */}
                   {/* <button className={"btn btn-lg btn-articles-light step-controls-next" + (this.state.step === 0 ? ' d-none' : this.state.step >= 5 ? ' d-none' : ' d-inline-block')} onClick={() => (this.increment() + this.changeFocus(''))}>Next</button> */}
                   {/* <button className={"btn mr-0 btn-lg btn-articles-light step-controls-done" + (this.state.step === 5 ? ' d-inline-block' : ' d-none' )} onClick={() => (this.increment())}>Done</button> */}
-                  <CanGoToNextStep step={this.state.step} increment={() => (this.increment(), window.scroll(0, 0))} decrement={() => (this.decrement(), window.scroll(0, 0))} changeFocus={() => (this.changeFocus(''))} stepOneIsInvalid={stepOneIsInvalid} stepTwoIsInvalid={stepTwoIsInvalid} stepFiveIsInvalid={stepFiveIsInvalid} stepFourIsInvalid={stepFourIsInvalid} stepThreeIsInvalid={stepThreeIsInvalid}></CanGoToNextStep>
+                  <CanGoToNextStep step={this.state.step} increment={() => (this.increment(), window.scroll(0, 0))} decrement={() => (this.decrement() + window.scroll(0, 0))} changeFocus={() => (this.changeFocus(''))} stepOneIsInvalid={stepOneIsInvalid} stepTwoIsInvalid={stepTwoIsInvalid} stepFiveIsInvalid={stepFiveIsInvalid} stepFourIsInvalid={stepFourIsInvalid} stepThreeIsInvalid={stepThreeIsInvalid}></CanGoToNextStep>
                   
                   <button className={"btn btn-lg btn-articles-light step-controls-back" + (this.state.step === 6 ? '' : ' d-none')} onClick={() => (this.submitData())}>Finish</button>
                 </div>

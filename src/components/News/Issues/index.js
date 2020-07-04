@@ -67,20 +67,22 @@ class IssuesClass extends Component {
           <h1 className="title">Issues</h1>
           <p className="body">Overview of the most pressing issues and status updates on them.</p>
 
-          <div className="filters noselect mt-3 mb-1">
+          <div className="filters noselect">
+
             <span className="subscription-badges">
-              <span className="bold">Type: </span>
+              <span className="bold"><i class="fas fa-th"></i></span>
               <div onClick={() => this.props.toggleUserSubscriptions()} className={"badge border " + (this.props.site?.userSubscriptions === true ? 'badge-dark ' : 'badge-light ') + (this.props.user_subscriptions?.length > 0 ? '' : 'd-none')}>Subscribed</div>
               <div onClick={() => this.props.toggleUserSubscriptions()} className={"ml-1 badge border " + (this.props.site?.userSubscriptions === false ? 'badge-dark' : 'badge-light')}>All</div>
             </span>
 
-            <span className="subscription-badges ml-md-5">
-              <span className="bold">Date: </span>
+            <span className="subscription-badges">
+              <span className="bold"><i class="fas fa-calendar"></i></span>
               <div onClick={() => this.props.filterIssuesDateType()} className={"badge border " + (this.props.site?.dateType === 'post' ? 'badge-dark ' : 'badge-light ')}>Posted</div>
               <div onClick={() => this.props.filterIssuesDateType()} className={"ml-1 badge border " + (this.props.site?.dateType === 'update' ? 'badge-dark' : 'badge-light')}>Updated</div>
             </span>
 
           </div>
+          
         </div>
 
         <div className="issues-body row mb-4">
