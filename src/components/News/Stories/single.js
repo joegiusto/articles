@@ -74,8 +74,8 @@ class Issue extends React.Component {
 
               <span className="date-badge">
                 <div className="date-badge-inner">
-                  <span className="front">{moment(Date.Now).format("LL")}</span>
-                  <span className="back">Updated {moment('05-05-1998').format("LL")}</span>
+                  <span className="front">{moment(this.state?.news_date).format("LL")}</span>
+                  <span className="back">Updated {moment(this.state?.last_update).format("LL")}</span>
                 </div>
               </span>
 

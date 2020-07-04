@@ -106,7 +106,7 @@ const StepOne = (props) => (
       </div>
     </div>
 
-    <div className="col-1">
+    <div className="col-1 d-none d-md-block">
       <label htmlFor="validationTooltip03">&nbsp;</label>
       <div style={{
         padding: '0.375rem 0',

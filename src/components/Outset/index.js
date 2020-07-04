@@ -697,7 +697,7 @@ class OutsetBase extends React.Component {
     switch(step) {
       case 0: 
         return (
-          <div className="intro-message">During the outset we ask some questions to better understand you. We share none of this data with other companies. <hr/> <span style={{fontWeight: 'bold'}}>We will explain each piece of info we collect on you and how we use it.</span></div>
+          <div className="intro-message">During the outset we ask some questions to better understand you. <hr/> <span style={{fontWeight: 'bold'}}>We will explain what we do with each piece of info we collect on you.</span></div>
         )
       case 1:
         return (
@@ -939,23 +939,25 @@ class OutsetBase extends React.Component {
                   ''
                 }
 
-                
                   {this.state.focus === '' ? 
                     ' '
                   :
                   <div className="privacy-notice party-information">
+
+                    <div onClick={() => this.set} className="close-privacy">
+                      <i class="fas fa-window-close"></i>
+                    </div>
+
                     {this.renderReasonForInformationTitle(this.state.step)}
-                    {/* <div className="title"><i class="fas fa-user-shield"></i>Privacy Notice</div> */}
+
                     <div className="text">
                       {this.renderReasonForInformation(this.state.focus)}
                     </div>
-                  </div>
-  }
-                  
-                  
-                  </div>
-      
 
+                  </div>
+                }
+                  
+              </div>
 
               <div className="col-12 col-md-6 m-auto">
 
@@ -981,7 +983,7 @@ class OutsetBase extends React.Component {
                   <button className={"btn btn-lg btn-articles-light step-controls-start" + (this.state.step === 0 ? '' : ' d-none')} onClick={() => (this.increment())}>Start</button>
                   <button className={"btn btn-lg btn-articles-light step-controls-back" + (this.state.step === 0 ? ' d-none' : this.state.step >= 6 ? ' d-none' : ' d-inline-block')} onClick={() => (this.decrement() + this.changeFocus(''))}>Back</button>
   
-                  {/* TODO Easiest think I could think of here is putting all logic into whether a user cna go to next step into a function then letting that function do the logic via a if statement, will this need to be fixed? Most likley but works for now :) */}
+                  {/* TODO Easiest think I could think of here is putting all logic into whether a user can go to next step into a function then letting that function do the logic via a if statement, will this need to be fixed? Most likley but works for now :) */}
                   {/* <button className={"btn btn-lg btn-articles-light step-controls-next" + (this.state.step === 0 ? ' d-none' : this.state.step >= 5 ? ' d-none' : ' d-inline-block')} onClick={() => (this.increment() + this.changeFocus(''))}>Next</button> */}
                   {/* <button className={"btn mr-0 btn-lg btn-articles-light step-controls-done" + (this.state.step === 5 ? ' d-inline-block' : ' d-none' )} onClick={() => (this.increment())}>Done</button> */}
                   <CanGoToNextStep step={this.state.step} increment={() => (this.increment(), window.scroll(0, 0))} decrement={() => (this.decrement(), window.scroll(0, 0))} changeFocus={() => (this.changeFocus(''))} stepOneIsInvalid={stepOneIsInvalid} stepTwoIsInvalid={stepTwoIsInvalid} stepFiveIsInvalid={stepFiveIsInvalid} stepFourIsInvalid={stepFourIsInvalid} stepThreeIsInvalid={stepThreeIsInvalid}></CanGoToNextStep>
