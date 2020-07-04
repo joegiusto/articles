@@ -13,7 +13,13 @@ class Ad extends React.Component {
   }
 
   componentDidMount() {
+    const width = window.innerWidth
+    || document.documentElement.clientWidth
+    || document.body.clientWidth;
 
+    if (width < 768) {
+      this.setState({adDetailsExpanded: true})
+    }
   }
 
   adDetailsExpandedToggle() {
@@ -28,6 +34,7 @@ class Ad extends React.Component {
       <div className="ad">
 
         <div className={"details-slide-out " + (this.state.adDetailsExpanded ? 'expand' : '')}>
+
           <div>This ad is being shown to you for the following reasons</div>
           <hr/>
           <div className="badge badge-light">Bank Square</div>
@@ -39,8 +46,13 @@ class Ad extends React.Component {
           <span><div className="badge badge-light">12524</div></span>
           <div>is</div>
           <div className="badge badge-light">1.7 miles away</div>
+
           <hr/>
-          <div className="mt-5 pt-5">As always all ads we display to you will be completly transparent and follow our privacy policy.To change your Zip code settings click here (Note to testers this is hard edited in so this page is not working yet)</div>
+
+          <div className="grow"></div>
+
+          <div className="reason">As always all ads we display to you will be completly transparent and follow our privacy policy.To change your Zip code settings click here (Note to testers this is hard edited in so this page is not working yet)</div>
+
         </div>
 
         <div className="photo-banner">

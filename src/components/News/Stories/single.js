@@ -64,7 +64,7 @@ class Issue extends React.Component {
         {loading ?
         <div className="alert alert-danger">Loading Issue - {this.props.match.params.id}</div>
         :
-        <div className="container-fluid single mt-4 mt-lg-5">
+        <div className="container-fluid single">
 
           <div className="content-wrapper">
 

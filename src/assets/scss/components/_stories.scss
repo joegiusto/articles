@@ -30,13 +30,19 @@
 .stories-page {
   position: relative;
 
+  // .container-fluid
+
   .single {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin-top: 1.5rem;
 
     @include media-breakpoint-down(md) {
       flex-direction: column;
+      padding-left: 5px;
+      padding-right: 5px;
+      margin-top: 0.5rem;
     }
   }
 
@@ -51,7 +57,7 @@
     margin-bottom: 5rem;
 
     @include media-breakpoint-down(md) {
-      margin-bottom: 2rem;
+      margin-bottom: .5rem;
       margin-left: 0;
       margin-right: 0;
       width: 50%;
@@ -80,14 +86,32 @@
       font-family: brandon-grotesque, sans-serif;
       font-style: normal;
       font-weight: 400;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
 
       &.expand {
         transform: translateX(-100%);
       }
 
       @include media-breakpoint-down(md) {
+        font-size: 0.9rem;
+        border-right: 3px solid #955408;
+        width: calc(100% + 5px);
+
         &.expand {
           transform: translateX(100%);
+        }
+      }
+
+      .grow {
+        flex-grow: 1;
+      }
+
+      .reason {
+
+        @include media-breakpoint-up(md) {
+          padding-bottom: 1rem;
         }
       }
     }
@@ -158,7 +182,7 @@
       // align-items: center;
 
       @include media-breakpoint-down(md) {
-        padding-top: 40px;
+        padding-top: 80px;
       }
 
       .detail {
@@ -228,18 +252,22 @@
     font-style: normal;
 
     @include media-breakpoint-down(md) {
-      margin-bottom: 2rem;
+      margin-bottom: .5rem;
     }
 
     .news-one-head {
       background-color: $accent-color;
       padding: 0.3rem;
       border: 3px solid #000;
-      border-bottom: 0px solid #000;
-      box-shadow: 0px 7.5px 4px 0px #000;
+      box-shadow: 0px 2.5px 4px 0px rgba(255, 183, 183, 0.5);
       position: relative;
       display: flex;
       justify-content: space-between;
+
+      @include media-breakpoint-up(md) {
+        // border-bottom: 0px solid #000;
+        // box-shadow: 0px 7.5px 4px 0px #000;
+      }
   
       .back-link {
         background-color: white;
@@ -329,7 +357,7 @@
       z-index: -1;
 
       .image {
-        width: calc(100% - 2rem);
+        width: calc(100% - 0.5rem);
         max-height: 600px;
         object-fit: cover;
         margin-left: auto;
@@ -337,27 +365,34 @@
         display: block;
         border-right: 1px solid #000;
         border-left: 1px solid #000;
+
+        @include media-breakpoint-up(md) {
+          width: calc(100% - 2rem);
+        }
       }
 
       .title {
-        position: absolute;
-        left: 50%;
-        width: 100%;
-        max-width: 800px;
-        text-align: center;
-        transform: translateX(-50%);
-        bottom: 0;
         padding: 0.5rem;
         border: 3px solid #000;
-        border-bottom: 0px solid #000;
-        background-color: rgba(0, 0, 0, 0.75);
+        background-color: rgba(0, 0, 0, 1);
         color: white;
-
         font-family: brandon-grotesque, sans-serif;
         font-style: normal;
         font-weight: 900;
         font-size: 2.5rem;
-        line-height: 2.4rem;
+        // line-height: 2.4rem;
+
+        @include media-breakpoint-up(md) {
+          position: absolute;
+          left: 50%;
+          bottom: 0;
+          width: 100%;
+          max-width: 800px;
+          transform: translateX(-50%);
+          text-align: center;
+          background-color: rgba(0, 0, 0, 0.75);
+          border-bottom: 0px solid #000;
+        }
       }
 
     }
@@ -367,11 +402,18 @@
       box-shadow: 0px -7.5px 4px 0px #000;
       border: 3px solid #000;
       border-top: 0px solid #000;
-      padding-top: 3rem;
-      padding-bottom: 3rem;
-      padding-left: 15%;
-      padding-right: 15%;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      padding-left: 15px;
+      padding-right: 15px;
       white-space: break-spaces;
+
+      @include media-breakpoint-up(md) {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+        padding-left: 15%;
+        padding-right: 15%;
+      }
 
       // Font looks bad
       // font-family: brandon-grotesque, sans-serif;
