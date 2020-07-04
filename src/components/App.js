@@ -51,9 +51,8 @@ import TownHallPage from './Party/TownHall'
 
 import MeshPage from './Mesh'
 
-
-
 import SupportPage from './Support'
+import FaqPage from './Support/FAQ'
 import Privacy from './Support/Privacy'
 import UpdatesPage from './Support/Updates'
 import JobsPage from './Support/Jobs'
@@ -217,6 +216,7 @@ class App extends Component {
         
               <Route exact path={ROUTES.SUPPORT} component={SupportPage} />
               <Route exact path={ROUTES.UPDATES} component={UpdatesPage} />
+              <Route path={ROUTES.FAQ} component={FaqPage} />
               <Route path={ROUTES.JOBS} component={JobsPage} />
               <Route path={ROUTES.PRESS} component={PressPage} />
               <Route path={ROUTES.TRANSLATIONS} component={TranslationsPage} />

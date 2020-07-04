@@ -59,7 +59,7 @@ const proposals = {
       description: 'Provide patches to common abused loopholes'
     },
   ],
-  fundemental: [
+  fundamental: [
     {
       title: 'Mental Health Equality In Healthcare',
       url: 'mental-health-equality',
@@ -88,6 +88,8 @@ class Proposals extends Component {
     super(props)
 
     this.state = {
+      filter: 'All',
+
       senateSeats: 100,
       ourSenateSeats: 0,
 
@@ -158,8 +160,16 @@ class Proposals extends Component {
 
           </div>
 
+          <div className="badges noselect">
+            <div onClick={() => this.setState({filter: 'All'})} className={"badge " + (this.state.filter === "All" ? 'badge-dark' : 'badge-light')}>All</div>
+            <div onClick={() => this.setState({filter: 'Fundamental'})} className={"badge " + (this.state.filter === "Fundamental" ? 'badge-dark' : 'badge-light')}>Fundamental</div>
+            <div onClick={() => this.setState({filter: 'Social'})} className={"badge " + (this.state.filter === "Social" ? 'badge-dark' : 'badge-light')}>Social</div>
+            <div onClick={() => this.setState({filter: 'Financial'})} className={"badge " + (this.state.filter === "Financial" ? 'badge-dark' : 'badge-light')}>Financial</div>
+            <div onClick={() => this.setState({filter: 'Eduacation'})} className={"badge " + (this.state.filter === "Eduacation" ? 'badge-dark' : 'badge-light')}>Eduacation</div>
+          </div>
+
           {/* Social */}
-          <div className="proposals">
+          <div className={"proposals " + (this.state.filter === "All" || this.state.filter === "Social" ? '' : 'd-none')}>
 
             <div className="after-text noselect">
               Social
@@ -174,7 +184,7 @@ class Proposals extends Component {
           </div>
 
           {/* Financial */}
-          <div className="proposals">
+          <div className={"proposals " + (this.state.filter === "All" || this.state.filter === "Financial" ? '' : 'd-none')}>
 
             <div className="after-text noselect">
               Financial
@@ -188,14 +198,14 @@ class Proposals extends Component {
 
           </div>
 
-          {/* Fundemental */}
-          <div className="proposals">
+          {/* Fundamental */}
+          <div className={"proposals " + (this.state.filter === "All" || this.state.filter === "Fundamental" ? '' : 'd-none')}>
 
             <div className="after-text noselect">
-              Fundemental
+              Fundamental
             </div>
 
-            {proposals.fundemental.map((proposal, i) => (
+            {proposals.fundamental.map((proposal, i) => (
               <Proposal
                 proposal={proposal}
               />
@@ -204,7 +214,7 @@ class Proposals extends Component {
           </div>
 
           {/* Eduacation */}
-          <div className="proposals">
+          <div className={"proposals " + (this.state.filter === "All" || this.state.filter === "Eduacation" ? '' : 'd-none')}>
 
             <div className="after-text noselect">
               Eduacation

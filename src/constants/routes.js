@@ -62,6 +62,7 @@ export const MESH ='/mesh'
 
 // Support
 export const SUPPORT ='/support'
+export const FAQ ='/support/FAQ'
 export const PRIVACY ='/support/privacy'
 export const UPDATES ='/support/updates'
 export const JOBS ='/support/jobs'

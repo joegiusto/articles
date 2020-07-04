@@ -36,6 +36,10 @@ section.frontpage-section {
   display: flex;
   flex-grow: 1;
 
+  @include media-breakpoint-down(md) {
+    flex-direction: column;
+  }
+
   .search-head {
     position: relative;
     background-color: rgba(255, 255, 255, 0.75);
@@ -184,7 +188,8 @@ section.frontpage-section {
     padding-left: 0.5rem;
 
     @include media-breakpoint-down(md) {
-      display: none;
+      padding-left: 1rem;
+      width: 100%;
     }
 
     .content {
@@ -196,8 +201,21 @@ section.frontpage-section {
       left: 0px;
       padding-right: 1rem;
 
+      @include media-breakpoint-down(md) {
+        padding-right: 0rem;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+      }
+
       .states-heatmap {
         position: relative;
+
+        @include media-breakpoint-down(md) {
+          width: 30%;
+          align-self: start;
+        }
 
         .live-dots {
           position: absolute;
@@ -250,6 +268,52 @@ section.frontpage-section {
               }
             }
           }
+        }
+      }
+      
+      .trending {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1rem;
+
+        @include media-breakpoint-down(md) {
+          padding-left: 2rem;
+          width: 70%;
+        }
+
+        .title {
+
+        }
+
+        .badges-scroll-container {
+          width: 100%;
+
+          @include media-breakpoint-down(md) {
+            overflow-x: scroll;
+          }
+
+          .badges {
+            width: 100%;
+
+            @include media-breakpoint-down(md) {
+              width: 500px;
+            }
+  
+            .badge{
+              cursor: pointer;
+              font-size: 0.8rem;
+              margin-right: 5px;
+              margin-bottom: 5px;
+            }
+          }
+        }
+      }
+
+      .menu {
+        
+        @include media-breakpoint-down(md) {
+          display: none;
         }
       }
 

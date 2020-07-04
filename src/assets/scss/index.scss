@@ -41,6 +41,8 @@ $grid-breakpoints: (
 @import 'components/news-manage';
 @import 'components/subscribe';
 
+@import 'components/faq';
+
 @import 'components/reports';
 @import 'components/mission';
 @import 'components/myths';
@@ -50,6 +52,7 @@ $grid-breakpoints: (
 @import 'components/home';
 @import 'components/proposals';
 @import 'components/privacy';
+@import 'components/loading_block';
 @import 'components/issues';
 @import 'components/stories';
 @import 'components/donate';

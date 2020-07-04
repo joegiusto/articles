@@ -4,7 +4,7 @@ import * as ROUTES from '../../../constants/routes'
 
 const Page = () => (
   <div className="press-page">
-    <div style={{height: '100vh', marginTop: '-50px'}} className="container">
+    <div className="container">
       <div className="row h-100 justify-content-center">
         <div className="col-sm-6 my-auto">
           <div className="card shadow-sm">
@@ -42,7 +42,7 @@ const Page = () => (
             </div>
 
             <div className="card-body">
-              <button className="btn btn-articles-light">Frequent Questions</button>
+              <Link to={ROUTES.FAQ}><button className="btn btn-articles-light">Frequent Questions</button></Link>
             </div>
 
           </div>

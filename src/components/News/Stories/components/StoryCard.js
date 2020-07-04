@@ -22,7 +22,7 @@ export default function MythCard(props) {
           <div className="item-photo"/>
           <div className='myth-item-title'>{myth.news_title}</div>
           <div className='myth-item-date'>{moment(myth.news_date).format("LL")}</div>
-          <div className='myth-item-desc'>{myth.news_notes.substring(0, 150)}</div>
+          <div className='myth-item-desc'>{myth.news_tagline}</div>
 
         </div>
       </Link>

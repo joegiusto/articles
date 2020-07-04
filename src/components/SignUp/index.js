@@ -266,7 +266,7 @@ class SignUpFormBase extends Component {
         </label> */}
 
         <button disabled={isInvalid} type="submit" className="btn btn-articles-light">
-          Sign Up {(this.state.nameFirst?.indexOf(' ') >= 0) === true ? 'yes' : 'no'}
+          Sign Up
         </button>
 
         {error && <p>{error.message}</p>}

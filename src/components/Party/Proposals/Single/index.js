@@ -4,6 +4,31 @@ import { Route } from 'react-router-dom'
 import NotFound from '../../../Navigation/NotFoundPage';
 import axios from 'axios'
 
+class LoadingBlock extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+
+    }
+  }
+
+  componentDidMount() {
+
+  }
+
+  render() {
+    return (
+      <div className="loading-block">
+        <div>
+          <i class="fas fa-spinner fa-spin"></i>
+          Loading
+        </div>
+      </div>
+    )
+  }
+}
+
 class Proposal extends Component {
   constructor(props) {
     super(props)
@@ -100,78 +125,81 @@ class Proposal extends Component {
             </div>
 
             :
-            
-            this.props.match.params.id === "revise-the-pledge-of-alligence" ? 
+
             <div className="proposal-body mt-3 mb-5">
 
-              <h5 className="title">
-                August 1892
-              </h5>
+              {proposalLoading ? <LoadingBlock></LoadingBlock> : null}
 
-              <p className="text">
-                Socialist minister Francis Bellamy (1855-1931) wrote the The Pledge of Allegiance. It was originally published in The Youth's Companion on September 8, 1892. Bellamy had hoped that the pledge would be used by citizens in any country.
-              </p>
+              {this.props.match.params.id === "revise-the-pledge-of-alligence" ? 
+                <>
 
-              <p>In its original form it read:</p>
+                  <h5 className="title">
+                    August 1892
+                  </h5>
 
-              <div className="quote-wrap">
-                <div className="icon">
-                  {/* <i class="fas fa-quote-right"></i> */}
-                </div>
-                <div className="quote">
-                  "I pledge allegiance to my Flag and the Republic for which it stands, one nation, indivisible, with liberty and justice for all."
-                </div>
-              </div>
+                  <p className="text">
+                    Socialist minister Francis Bellamy (1855-1931) wrote the The Pledge of Allegiance. It was originally published in The Youth's Companion on September 8, 1892. Bellamy had hoped that the pledge would be used by citizens in any country.
+                  </p>
 
-              <h5 className="title">
-                1923
-              </h5>
+                  <p>In its original form it read:</p>
 
-              <p>The words, "the Flag of the United States of America" were added. At this time it read:</p>
+                  <div className="quote-wrap">
+                    <div className="icon">
+                      {/* <i class="fas fa-quote-right"></i> */}
+                    </div>
+                    <div className="quote">
+                      "I pledge allegiance to my Flag and the Republic for which it stands, one nation, indivisible, with liberty and justice for all."
+                    </div>
+                  </div>
 
-              <div className="quote-wrap">
-                <div className="icon">
-                  {/* <i class="fas fa-quote-right"></i> */}
-                </div>
-                <div className="quote">
-                  "I pledge allegiance to the Flag of the United States of America and to the Republic for which it stands, one nation, indivisible, with liberty and justice for all."
-                </div>
-              </div>
+                  <h5 className="title">
+                    1923
+                  </h5>
 
-              <h5 className="title">
-                1954
-              </h5>
+                  <p>The words, "the Flag of the United States of America" were added. At this time it read:</p>
 
-              <p>
-                In response to the Communist threat of the times, President Eisenhower encouraged Congress to add the words "under God," creating the 31-word pledge we say today. Bellamy's daughter objected to this alteration. Today it reads:
-              </p>
+                  <div className="quote-wrap">
+                    <div className="icon">
+                      {/* <i class="fas fa-quote-right"></i> */}
+                    </div>
+                    <div className="quote">
+                      "I pledge allegiance to the Flag of the United States of America and to the Republic for which it stands, one nation, indivisible, with liberty and justice for all."
+                    </div>
+                  </div>
 
-              <div className="quote-wrap">
-                <div className="icon">
-                  {/* <i class="fas fa-quote-right"></i> */}
-                </div>
-                <div className="quote">
-                "I pledge allegiance to the flag of the United States of America, and to the republic for which it stands, one nation under God, indivisible, with liberty and justice for all."
-                </div>
-              </div> 
+                  <h5 className="title">
+                    1954
+                  </h5>
 
-              <h5 className="title">
-                Today
-              </h5>
+                  <p>
+                    In response to the Communist threat of the times, President Eisenhower encouraged Congress to add the words "under God," creating the 31-word pledge we say today. Bellamy's daughter objected to this alteration. Today it reads:
+                  </p>
 
-              <p>
-                People raise concerns for the removal of the 1954 "under God," addition. 
-              </p>   
+                  <div className="quote-wrap">
+                    <div className="icon">
+                      {/* <i class="fas fa-quote-right"></i> */}
+                    </div>
+                    <div className="quote">
+                    "I pledge allegiance to the flag of the United States of America, and to the republic for which it stands, one nation under God, indivisible, with liberty and justice for all."
+                    </div>
+                  </div> 
 
-              <small><a href="https://www.ushistory.org/documents/pledge.htm" target="_blank" rel="noopener noreferrer">https://www.ushistory.org/documents/pledge.htm</a></small>
+                  <h5 className="title">
+                    Today
+                  </h5>
 
+                  <p>
+                    People raise concerns for the removal of the 1954 "under God," addition. 
+                  </p>   
+
+                  <small><a href="https://www.ushistory.org/documents/pledge.htm" target="_blank" rel="noopener noreferrer">https://www.ushistory.org/documents/pledge.htm</a></small>
+
+                </>
+              :
+                null
+              }
             </div>
-            :
-            null
           }
-
-          
-
         </div>
       </section>
     )

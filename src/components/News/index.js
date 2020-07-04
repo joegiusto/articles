@@ -181,7 +181,7 @@ function JustFrontpage(props) {
         </div>
       </Slider> */}
 
-      <div className="swiper-container"> 
+      {/* <div className="swiper-container"> 
 
         <div onClick={goPrev} className="swiper-button-prev">A</div>
         <div onClick={goNext} className="swiper-button-next">B</div>
@@ -203,7 +203,7 @@ function JustFrontpage(props) {
           
         </Swiper>
 
-      </div>
+      </div> */}
 
       <div className="noselect">
         <div className="new-button">My Subscriptions</div>
@@ -291,51 +291,78 @@ class Frontpage extends Component {
               </div>
             </div>
 
-            <h5 className="title">Discover</h5>
+            <div className="trending">
+
+              <div className="title">Trending</div>
+
+              <div className="badges-scroll-container">
+                <div className="badges">
+                  <div className="badge badge-articles-light">Example Story</div>
+                  <div className="badge badge-articles-light">Example Issue</div>
+                  <div className="badge badge-articles-light">Example Myth</div>
+                  <div className="badge badge-articles-light">Example Story</div>
+                  <div className="badge badge-articles-light">Example Issue</div>
+                  <div className="badge badge-articles-light">Example Myth</div>
+                  <div className="badge badge-articles-light">Example Story</div>
+                  <div className="badge badge-articles-light">Example Issue</div>
+                  <div className="badge badge-articles-light">Example Myth</div>
+                  <div className="badge badge-articles-light">Example Story</div>
+                </div>
+              </div>
+              
+            </div>
+
+            <div className="menu">
+
+              <h5 className="title">Discover</h5>
   
-            <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS}>
-              <div className={"link " + (this.props.location.pathname === "/news" ? 'active' : null)}>
-                <i className="fas fa-newspaper"></i>
-                <div className="text">Frontpage</div>
-              </div>
-            </Link>
+              <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS}>
+                <div className={"link " + (this.props.location.pathname === "/news" ? 'active' : null)}>
+                  <i className="fas fa-newspaper"></i>
+                  <div className="text">Frontpage</div>
+                </div>
+              </Link>
 
-            <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.STORIES}>
-              <div className={"link " + (this.props.location.pathname === "/news/stories" ? 'active' : null)}>
-                <i className="fas fa-bullhorn"></i>
-                <div className="text">Stories</div>
-              </div>
-            </Link>
+              <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.STORIES}>
+                <div className={"link " + (this.props.location.pathname === "/news/stories" ? 'active' : null)}>
+                  <i className="fas fa-bullhorn"></i>
+                  <div className="text">Stories</div>
+                </div>
+              </Link>
 
-            <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.ISSUES}>
-              <div className={"link " + (this.props.location.pathname === "/news/issues" ? 'active' : null)}>
-                <i className="fas fa-balance-scale"></i>
-                <div className="text">Issues</div>
-              </div>
-            </Link>
-            
-            <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.MYTHS}>
-              <div className={"link " + (this.props.location.pathname === "/news/myths" ? 'active' : null)}>
-                <i className="fas fa-ghost"></i>
-                <div className="text">Myths</div>
-              </div>
-            </Link>
+              <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.ISSUES}>
+                <div className={"link " + (this.props.location.pathname === "/news/issues" ? 'active' : null)}>
+                  <i className="fas fa-balance-scale"></i>
+                  <div className="text">Issues</div>
+                </div>
+              </Link>
+              
+              <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.MYTHS}>
+                <div className={"link " + (this.props.location.pathname === "/news/myths" ? 'active' : null)}>
+                  <i className="fas fa-ghost"></i>
+                  <div className="text">Myths</div>
+                </div>
+              </Link>
 
-            <h5 className="title mt-3">Feature</h5>
+              <h5 className="title mt-3">Feature</h5>
 
-            <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS}>
+              <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS}>
+                <div className={"link " + (this.props.location.pathname === "/news/coronavirus" ? 'active' : null)}>
+                  <i className="fas fa-lungs-virus"></i>
+                  <div className="text">Coronavirus</div>
+                </div>
+              </Link>
+
+              <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS}>
               <div className={"link " + (this.props.location.pathname === "/news/coronavirus" ? 'active' : null)}>
-                <i className="fas fa-lungs-virus"></i>
-                <div className="text">Coronavirus</div>
-              </div>
-            </Link>
-
-            {/* <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS}>
-              <div className={"link " + (this.props.location.pathname === "/news/coronavirus" ? 'active' : null)}>
-                <i class="fas fa-lungs-virus"></i>
+                <i className="fas fa-fist-raised"></i>
                 <div className="text">Black Lives Matter</div>
               </div>
-            </Link> */}
+            </Link>
+
+            </div>
+
+            
 
           </div>
 

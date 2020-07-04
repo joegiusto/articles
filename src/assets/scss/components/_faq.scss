@@ -1,0 +1,22 @@
+.faq-page {
+  margin-top: 2rem;
+  font-family: montserrat, sans-serif;
+  font-weight: 400;
+
+  @include media-breakpoint-up(md) {
+    margin-top: 4rem;
+  }
+
+  h1 {
+    font-size: 3rem;
+    font-family: brandon-grotesque, sans-serif;
+    font-style: normal;
+    font-weight: 900;
+  }
+
+  .lead {
+    font-size: 2rem;
+    font-weight: 300;
+    margin-bottom: 2rem;
+  }
+}

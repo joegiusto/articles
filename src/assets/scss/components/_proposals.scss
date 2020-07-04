@@ -45,6 +45,29 @@ section.proposals-page {
     }
   }
 
+  .badges {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-direction: row;
+
+    @include media-breakpoint-down(md) {
+      overflow-x: scroll;
+      margin-top: 1.5rem;
+      margin-right: -15px;
+      padding-top: 1.5rem;
+      border-top: 2px solid #000;
+    }
+
+    .badge {
+      cursor: pointer;
+      font-size: 1.2rem;
+      padding: 0.4rem 0.6rem;
+      margin-right: 0.25rem;
+      margin-bottom: 0.25rem;
+      border: 1px solid #000;
+    }
+  }
+
   .proposals {
     position: relative;
     display: grid;
@@ -55,12 +78,13 @@ section.proposals-page {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: max-content;
     margin: 1rem 0rem;
-    margin-top: 3rem;
+    margin-top: calc(2rem - 0.75rem);
     min-height: 260px;
 
     @include media-breakpoint-down(md) {
       grid-template-columns: repeat(1, 1fr);
       min-height: 0px;
+      margin-top: calc(1rem - 0.25rem);
     }
 
     .after-text {
