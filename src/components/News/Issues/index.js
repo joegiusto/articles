@@ -280,7 +280,7 @@ function GzyCard (props) {
   const issue = props.issue
 
   return (
-    <Link to={`${ROUTES.ISSUES}/${props.issue?._id}`}>
+    <Link to={`${ROUTES.ISSUES}/${props.issue?.url}`}>
       <div className="g-card">
 
         {(podcast ? 

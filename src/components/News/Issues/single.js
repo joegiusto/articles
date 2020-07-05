@@ -12,7 +12,8 @@ class Issue extends React.Component {
 
     this.state = {
       loading: false,
-      issues: []
+      issues: [],
+      news_tags: []
     };
 
   }
@@ -21,14 +22,18 @@ class Issue extends React.Component {
     const self = this;
     this.setState({ loading: true });
 
-    const stored = this.props.issues.issues?.find(x => x._id === this.props.match.params.id)
+    const stored = this.props.issues.issues?.find(x => x.url === this.props.match.params.id)
 
     if (stored !== undefined) {
+
       // Try to pull from local storage and if not there then do server call
       self.setState({
         ...stored,
         loading: false
       });
+
+      // this.loadLastRead();
+
     } else {
       // Was not local, we make a server call!
       axios.post('/api/getNewsDocument', {
@@ -42,6 +47,8 @@ class Issue extends React.Component {
           loading: false
         });
 
+        // this.loadLastRead();
+
       })
       .catch(function (error) {
         console.log(error);
@@ -52,13 +59,17 @@ class Issue extends React.Component {
       });
     }
 
+  }
+
+  loadLastRead() {
     // Set the date that the user was last lookign at this story
     if ( this.props.user._id ) {
       console.log("Is a user")
 
       console.log(this.props.user?.subscriptions)
+      console.log(this.state._id)
 
-      const lastDate = this.props.user?.subscriptions.find(x => x.news_id === this.props.match.params.id)
+      const lastDate = this.props.user?.subscriptions.find(x => x.news_id === this.state._id)
 
       console.log(lastDate)
 
@@ -67,7 +78,7 @@ class Issue extends React.Component {
       })
 
       axios.post('/api/updateLastRead', {
-        news_id: this.props.match.params.id,
+        news_id: this.state._id,
         user: this.props.user._id
       })
       .then(function (response) {
@@ -82,9 +93,6 @@ class Issue extends React.Component {
       });
 
     } 
-
-    // console.log(`Is not a user ${this.props.user._id}`)
-    
   }
 
   render() {
@@ -98,28 +106,61 @@ class Issue extends React.Component {
         {loading ?
         <div className="alert alert-danger">Loading Issue - {this.props.match.params.id}</div>
         :
-        <div className="container single mt-5">
-          <div className="link badge badge-dark w-100 py-2 mb-2" onClick={() => this.props.history.goBack()}>{String.fromCharCode(11148)} Back to Issues</div>
-          <div className="card ">
-            <h3 className="card-header">{this.state.news_title}</h3>
-            <div className="card-body">
+        <div className="container single">
 
-              {lastRead !== undefined ? <div className="badge badge-articles mb-4">Last Opened: {moment(lastRead).format("LL")}</div> : null}
+          {/* <div className="link badge badge-dark w-100 py-2 mb-3" onClick={() => this.props.history.goBack()}>{String.fromCharCode(11148)} Back to Issues</div> */}
+
+          <div className="back-button" onClick={() => this.props.history.goBack()}>
+            <i class="far fa-caret-square-left"></i>
+            <i class="far fa-caret-square-left stacked"></i>
+            <div className="text">Back to Issues</div>
+          </div>
+
+          <div className="card ">
+
+            <div className="card-header">
+
+              <h1>{this.state.news_title}</h1>
+
+              <small className="d-block">Issue Stats</small>
+              {lastRead !== undefined ? <div className="stat">Last Viewed By You: {moment(lastRead).format("LL")}</div> : null}
+              <div className="stat">500 People Subscribed</div>
               
 
-              <div style={{whiteSpace: 'pre-wrap'}} dangerouslySetInnerHTML={{__html: this.state?.news_notes?.replace('<break>', '<div className="alert alert-danger my-3">Testing Break</div>').replace(/(\r\n|\n|\r)/gm, "")}}>
-                {/* { dangerouslySetInnerHTML={{__html: this.state?.news_notes?} } */}
-                {/* {this.state?.news_notes?.replace('<break>', '<div className="alert alert-danger">Test</div>')} */}
+              <div className="dates">
+                <div className="badge badge-articles">First Published: {moment(this.state.news_date).format("LL")}</div>
+                <div className="badge badge-dark ml-1">Last Updated: {moment(this.state.last_updated).format("LL")}</div>
+              </div>
+              
+            </div>
+
+            <div className="card-tags">
+              <small className="pl-4">Tags:</small>
+              {this.state.news_tags.length > 0 ? 
+                this.state.news_tags?.map((tag) => (
+                  <div className="badge badge-light ml-1">{tag.tag_name}</div>
+                ))
+              :
+                <div className="badge badge-light ml-1">None</div>
+              }
+            </div>
+
+            <div className="card-body">
+
+              {/* <div style={{whiteSpace: 'pre-wrap'}} dangerouslySetInnerHTML={{__html: news_notes?.replace('<break>', '<div className="alert alert-danger my-3">Testing Break</div>').replace(/(\r\n|\n|\r)/gm, "")}}></div> */}
+              <div style={{whiteSpace: 'pre-wrap'}} dangerouslySetInnerHTML={{__html: news_notes}}></div>
+
+              <h5 className="mt-4">Related Proposals</h5>
+              <div className="proposals">
+                <div className="proposal"></div>
+                <div className="proposal"></div>
+                <div className="proposal"></div>
               </div>
 
-              {/* <div className="w-100" style={{background: this.state.data.photoExtra}}>
-                <img src={this.state.data.photo} className="img-fluid" alt=""/>
-              </div> */}
-              {/* <small className="d-block">Photo Extra Info: {this.state.data.photoExtra}</small> */}
-              {/* <button onClick={() => this.props.history.goBack()} className="btn btn-articles-light">Go Back</button> */}
-
             </div>
+
           </div>
+
         </div>
         }
       </div>

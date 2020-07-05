@@ -23,6 +23,7 @@ const initial_state = {
   news_notes: "",
   news_date: new Date(),
   news_tags: [],
+  url: '',
   hero_url: "",
   last_update: new Date(),
 
@@ -323,6 +324,23 @@ class newsAdd extends Component {
             </div>
           </div>
 
+          <div className="col-12 col-md-6">
+            <div className="form-group">
+              <label for="news_title">Fancy URL:</label>
+              <input 
+                type="text" 
+                className="form-control" 
+                id="url"
+                name="url" 
+                aria-describedby=""
+                value={this.state.url}
+                onChange={this.handleChange}
+                placeholder=""
+                disabled={this.state.editLoading ? 'disabled' : ''}
+              />
+            </div>
+          </div>
+
           {/* <div className="col-12 col-md-6">
             <div className="form-group">
               <label for="news_date">{this.state.news_type === '' ? 'News' : this.state.news_type} Date:</label>
@@ -416,7 +434,7 @@ class newsAdd extends Component {
                 style={{display: 'block'}}
                 onDayChange={this.handleDateChange}
                 inputProps={{className: 'form-control'}}
-                placeholder={`${formatDate(new Date(this.state.news_date))}`}
+                value={`${formatDate(new Date(this.state.news_date))}`}
                 formatDate={formatDate}
                 parseDate={parseDate}
                 dayPickerProps={{
@@ -434,7 +452,7 @@ class newsAdd extends Component {
                 style={{display: 'block'}}
                 onDayChange={this.handleUpdateDayChange}
                 inputProps={{className: 'form-control'}}
-                placeholder={`${formatDate(new Date(this.state.last_update))}`}
+                value={`${formatDate(new Date(this.state.last_update))}`}
                 formatDate={formatDate}
                 parseDate={parseDate}
                 dayPickerProps={{
