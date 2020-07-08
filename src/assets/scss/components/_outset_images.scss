@@ -6,20 +6,50 @@
   width: 100vw;
   height: 100vh;
   transition-duration: 1s;
+  transition-property: transform;
+  transition-timing-function: ease-in-out;
+  transform: translateY(50px);
+  $jumpOffset: 40px;
+
+  &.bob {
+    transform: translateY(calc(0vh + #{$jumpOffset}));
+  }
+
   &.step-1{
     transform: translateY(calc(-100vh + 50px));
+
+    &.bob {
+      transform: translateY(calc(-100vh + #{$jumpOffset}));
+    }
   }
+
   &.step-2{
     transform: translateY(calc(-200vh + 50px));
+
+    &.bob {
+      transform: translateY(calc(-200vh + #{$jumpOffset}));
+    }
   }
   &.step-3{
     transform: translateY(calc(-300vh + 50px));
+
+    &.bob {
+      transform: translateY(calc(-300vh + #{$jumpOffset}));
+    }
   }
   &.step-4{
     transform: translateY(calc(-400vh + 50px));
+
+    &.bob {
+      transform: translateY(calc(-400vh + #{$jumpOffset}));
+    }
   }
   &.step-5{
     transform: translateY(calc(-500vh + 50px));
+
+    &.bob {
+      transform: translateY(calc(-500vh + #{$jumpOffset}));
+    }
   }
 
   .join, .liberty, .voice, .sam, .power, .tread, .occupy, .george, .martin, .fingers, .mistletoe, .saw, .yinyang, .peace, .technocrat, .eagle, .think, .wallStreet, .flappers, .styleMain, .styleHat, .styleShoe, .fatCats, .jerkAndCreeps, .shitParty, .slowingDown {

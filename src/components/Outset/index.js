@@ -54,7 +54,7 @@ class OutsetBase extends React.Component {
 
       // Step Three States
       // Hydrate the subscriptions state to have any existing subscriptions in the case we have people redo the Outset or a developer is working on the Outset and does not want to re-enter all the information everytime  
-      subscriptions: props.user.subscriptions.map((sub) => {return sub.news_id} ) || [],
+      subscriptions: props.user?.subscriptions?.map((sub) => {return sub.news_id} ) || [],
       // UI Only, not to be passed to firebase object
       uiStuff: {
         activeTab: 0, 
@@ -76,7 +76,9 @@ class OutsetBase extends React.Component {
       termsAccept: false,
       cookieAccept: false,
 
-      error: ''
+      error: '',
+      bob: false,
+      bopTiming: 2000
     };
 
     this.changeFocus = this.changeFocus.bind(this);
@@ -312,9 +314,10 @@ class OutsetBase extends React.Component {
     });
   }
   
-
   componentDidMount() {
     const self = this;
+
+    this.interval = setInterval(this.bobBackground, 1000);
 
     axios.get('/api/getIssues')
     .then(function (response) {
@@ -335,6 +338,33 @@ class OutsetBase extends React.Component {
       console.log(error);
     });
 
+  }
+
+  componentWillUnmount() {
+    // Clear the interval right before component unmount
+    clearInterval(this.interval);
+  }
+
+  pauseBobBackground = (time) => {
+    const self = this;
+
+    clearInterval(self.interval);
+    self.setState({
+      bob: false
+    });
+
+    setTimeout( function() {
+
+      console.log(`Called after ${time}`);
+      self.interval = setInterval(self.bobBackground, 1000);
+
+    }, time);
+  }
+
+  bobBackground = () => {
+    this.setState({
+      bob: !this.state.bob
+    })
   }
 
   toggleSubscriptions = id => {
@@ -872,174 +902,169 @@ class OutsetBase extends React.Component {
     const stepFiveIsInvalid = (cookieAccept && termsAccept && privacyAccept) === false;
 
     return (
+      <div className="outset-page">
+
+        {/* <div className="what-i-need"></div> */}
+
+        <div className={"background-images d-none d-md-block  step-" + this.state.step + ' ' + (this.state.bob ? 'bob' : '')}>
+
+          {/* Step Zero */}
+          <img className="join" src={outsetPhotos.join} alt=""/>
+          <img className="liberty" src={outsetPhotos.liberty} alt=""/>
+          <img className="voice" src={outsetPhotos.voice} alt=""/>
+          <img className="sam" src={outsetPhotos.sam} alt=""/>
+          <img className="power" src={outsetPhotos.power} alt=""/>
+          <img className="tread" src={outsetPhotos.tread} alt=""/>
+          <img className="occupy" src={outsetPhotos.occupy} alt=""/>
+          <img className="george" src={outsetPhotos.george} alt=""/>
+          <img className="martin" src={outsetPhotos.martin} alt=""/>
+
+          {/* Step One */}
+          <img className="fingers" src={outsetPhotos.fingers} alt=""/>
+          <img className="mistletoe" src={outsetPhotos.mistletoe} alt=""/>
+          <img className="saw" src={outsetPhotos.saw} alt=""/>
+          <img className="yinyang" src={outsetPhotos.yinyang} alt=""/>
+          <img className="peace" src={outsetPhotos.peace} alt=""/>
+          <img className="technocrat" src={outsetPhotos.technocrat} alt=""/>
+          <img className="eagle" src={outsetPhotos.eagle} alt=""/>
+          <img className="think" src={outsetPhotos.think} alt=""/>
+          <img className="wallStreet" src={outsetPhotos.wallStreet} alt=""/>
+
+          {/* Step Two */}
+          <img className="flappers" src={outsetPhotos.flappers} alt=""/>
+          <img className="styleMain" src={outsetPhotos.styleMain} alt=""/>
+          <img className="styleHat" src={outsetPhotos.styleHat} alt=""/>
+          <img className="styleShoe" src={outsetPhotos.styleShoe} alt=""/>
+
+          {/* Step Three */}
 
 
-
-        <div className="larger-container">
-
-          {/* <div className="what-i-need"></div> */}
-
-          <div className={"background-images d-none d-md-block  step-" + this.state.step}>
-
-            {/* Step Zero */}
-            <img className="join" src={outsetPhotos.join} alt=""/>
-            <img className="liberty" src={outsetPhotos.liberty} alt=""/>
-            <img className="voice" src={outsetPhotos.voice} alt=""/>
-            <img className="sam" src={outsetPhotos.sam} alt=""/>
-            <img className="power" src={outsetPhotos.power} alt=""/>
-            <img className="tread" src={outsetPhotos.tread} alt=""/>
-            <img className="occupy" src={outsetPhotos.occupy} alt=""/>
-            <img className="george" src={outsetPhotos.george} alt=""/>
-            <img className="martin" src={outsetPhotos.martin} alt=""/>
-
-            {/* Step One */}
-            <img className="fingers" src={outsetPhotos.fingers} alt=""/>
-            <img className="mistletoe" src={outsetPhotos.mistletoe} alt=""/>
-            <img className="saw" src={outsetPhotos.saw} alt=""/>
-            <img className="yinyang" src={outsetPhotos.yinyang} alt=""/>
-            <img className="peace" src={outsetPhotos.peace} alt=""/>
-            <img className="technocrat" src={outsetPhotos.technocrat} alt=""/>
-            <img className="eagle" src={outsetPhotos.eagle} alt=""/>
-            <img className="think" src={outsetPhotos.think} alt=""/>
-            <img className="wallStreet" src={outsetPhotos.wallStreet} alt=""/>
-
-            {/* Step Two */}
-            <img className="flappers" src={outsetPhotos.flappers} alt=""/>
-            <img className="styleMain" src={outsetPhotos.styleMain} alt=""/>
-            <img className="styleHat" src={outsetPhotos.styleHat} alt=""/>
-            <img className="styleShoe" src={outsetPhotos.styleShoe} alt=""/>
-
-            {/* Step Three */}
-
-
-            {/* Step Four */}
-            <img className="fatCats" src={outsetPhotos.fatCats} alt=""/>
-            <img className="jerkAndCreeps" src={outsetPhotos.jerkAndCreeps} alt=""/>
-            <img className="shitParty" src={outsetPhotos.shitParty} alt=""/>
-            <img className="slowingDown" src={outsetPhotos.slowingDown} alt=""/>
-
-          </div>
-
-          <div className="outset-form">
-            <div className="row">
-              
-              <div className="col-12 col-md-6 pb-4 pb-md-0">
-                {this.renderTitle(this.state.step)}
-
-                {/* NOTE Was for debug purposes, just gonna leave for now
-                <div><span>Step One:</span> {stepOneIsInvalid ? ' No' : ' Yes'}</div>
-                <div><span>Step Two:</span> {stepTwoIsInvalid ? ' No' : ' Yes'}</div>
-                <div><span>Step Three:</span> {stepThreeIsInvalid ? ' No' : ' Yes'}</div>
-                <div><span>Step Four:</span> {stepFourIsInvalid ? ' No' : ' Yes'}</div>
-                <div><span>Step Five:</span> {stepFiveIsInvalid ? ' No' : ' Yes'}</div> */}
-
-                {this.state.focus === '' ? 
-                  this.renderMessage(this.state.step)
-                : 
-                  ''
-                }
-
-                  {this.state.focus === '' ? 
-                    ' '
-                  :
-                  <div className="privacy-notice party-information">
-
-                    <div onClick={() => this.changeFocus('')} className="close-privacy">
-                      <i class="fas fa-window-close"></i>
-                    </div>
-
-                    {this.renderReasonForInformationTitle(this.state.step)}
-
-                    <div className="text">
-                      {this.renderReasonForInformation(this.state.focus)}
-                    </div>
-
-                  </div>
-                }
-                  
-              </div>
-
-              <div className="col-12 col-md-6 m-auto">
-
-                {this.state.step === 0 ?
-                  <div className="done-image-container" style={{height: '100%', position: 'relative'}}>
-                    <img alt="GIF of man riding horse into sunset holding American Flag" className="img-fluid" src="https://media2.giphy.com/media/C1L8yq5ZEz0cg/source.gif"></img>
-                  </div>
-                  :
-                  this.renderStep(this.state.step)
-                }
-
-              </div>
-
-            </div>
-
-            <div className={"step-count" + (this.state.step === 0 ? ' d-none' : this.state.step === 6 ? ' d-none' : '')}>
-              <span>Step </span>
-              <span>{this.state.step + '/' + this.state.totalSteps}</span>
-            </div>
-
-            <div className="step-controls">
-                <div className="buttons">
-                  <button className={"btn btn-lg btn-articles-light step-controls-start" + (this.state.step === 0 ? '' : ' d-none')} onClick={() => (this.increment() + window.scroll(0, 0))}>Start</button>
-                  <button className={"btn btn-lg btn-articles-light step-controls-back" + (this.state.step === 0 ? ' d-none' : this.state.step >= 6 ? ' d-none' : ' d-inline-block')} onClick={() => (this.decrement() + this.changeFocus('') + window.scroll(0, 0))}>Back</button>
-  
-                  {/* TODO Easiest think I could think of here is putting all logic into whether a user can go to next step into a function then letting that function do the logic via a if statement, will this need to be fixed? Most likley but works for now :) */}
-                  {/* <button className={"btn btn-lg btn-articles-light step-controls-next" + (this.state.step === 0 ? ' d-none' : this.state.step >= 5 ? ' d-none' : ' d-inline-block')} onClick={() => (this.increment() + this.changeFocus(''))}>Next</button> */}
-                  {/* <button className={"btn mr-0 btn-lg btn-articles-light step-controls-done" + (this.state.step === 5 ? ' d-inline-block' : ' d-none' )} onClick={() => (this.increment())}>Done</button> */}
-                  <CanGoToNextStep step={this.state.step} increment={() => (this.increment(), window.scroll(0, 0))} decrement={() => (this.decrement() + window.scroll(0, 0))} changeFocus={() => (this.changeFocus(''))} stepOneIsInvalid={stepOneIsInvalid} stepTwoIsInvalid={stepTwoIsInvalid} stepFiveIsInvalid={stepFiveIsInvalid} stepFourIsInvalid={stepFourIsInvalid} stepThreeIsInvalid={stepThreeIsInvalid}></CanGoToNextStep>
-                  
-                  <button className={"btn btn-lg btn-articles-light step-controls-back" + (this.state.step === 6 ? '' : ' d-none')} onClick={() => (this.submitData())}>Finish</button>
-                </div>
-
-                <div className="dots">
-                  <div className={"dot" + (this.state.step === 1 ? ' active' : '') + (this.state.step > 1 ? ' complete' : '')}></div>
-                  <div className={"dot" + (this.state.step === 2 ? ' active' : '') + (this.state.step > 2 ? ' complete' : '')}></div>
-                  <div className={"dot" + (this.state.step === 3 ? ' active' : '') + (this.state.step > 3 ? ' complete' : '')}></div>
-                  <div className={"dot" + (this.state.step === 4 ? ' active' : '') + (this.state.step > 4 ? ' complete' : '')}></div>
-                  <div className={"dot" + (this.state.step === 5 ? ' active' : '') + (this.state.step > 5 ? ' complete' : '')}></div>
-                </div>
-
-              </div>
-
-          </div>
-  
-          <div className="outset-wrapper d-none">
-            <div className="container container-custom mx-auto">
-  
-              <div className={"walkthrough-box-clip-path-hides-box-shadow-work-around " + (this.state.step > 0 ? 'to-top' : '')}>
-                <div className={"walkthrough-box " + (this.state.step > 0 ? 'to-top' : '')}>
-    
-                  <h1 className={(this.state.step > 0 ? 'shrink' : '')}>FILL IN, that's a nice name.</h1>
-    
-                  <h5 className="focus-explanation">{this.renderReasonForInformation(this.state.focus)}</h5>
-    
-                  <button id="goFull" className={"btn btn-lg btn-custom-white " + (this.state.step === 0 ? '' : ' d-none')} onClick={() => (this.increment())}>Start</button>
-    
-                  <div className="debug-id">ID: FILL IN</div>
-                </div>
-              </div>
-  
-              <div className={"steps-box mx-auto" + (this.state.step === 0 ? '' : ' show')}>{this.renderStep(this.state.step)}</div>
-
-            </div>
-
-            <div className="bottom-walthrough-container">
-                <div className={"bottom-walthrough mx-auto" + (this.state.step === 0 ? '' : ' show')}>
-                  <div className="dual-header">
-                    
-                      <button className={"btn btn-lg btn-custom-white w-100" + (this.state.step > 0 ? '' : ' d-none ') + (this.state.step === 5 ? ' shorten' : '')} disabled={this.state.step === 0} onClick={() => (this.decrement())}> <span>&#8612;</span> </button>
-                      <button className={"btn btn-lg btn-custom-white w-100" + (this.state.step > 0 ? '' : ' d-none ') + (this.state.step === 5 ? ' shorten' : '')} disabled={this.state.step === this.state.totalSteps} onClick={() => (this.increment())}> <span>&#8614;</span> </button>
-
-                      <button className={"btn btn-lg btn-custom-white" + (this.state.step === 5 ? '' : ' d-none')} disabled={this.state.step === this.state.totalSteps} onClick={() => (this.increment())}> <span>Finish</span> </button>
-                  </div>
-                </div>
-              </div>
-
-          </div>
+          {/* Step Four */}
+          <img className="fatCats" src={outsetPhotos.fatCats} alt=""/>
+          <img className="jerkAndCreeps" src={outsetPhotos.jerkAndCreeps} alt=""/>
+          <img className="shitParty" src={outsetPhotos.shitParty} alt=""/>
+          <img className="slowingDown" src={outsetPhotos.slowingDown} alt=""/>
 
         </div>
 
+        <div className="outset-form">
+          <div className="row">
+            
+            <div className="col-12 col-md-6 pb-4 pb-md-0">
+              {this.renderTitle(this.state.step)}
 
+              {/* NOTE Was for debug purposes, just gonna leave for now
+              <div><span>Step One:</span> {stepOneIsInvalid ? ' No' : ' Yes'}</div>
+              <div><span>Step Two:</span> {stepTwoIsInvalid ? ' No' : ' Yes'}</div>
+              <div><span>Step Three:</span> {stepThreeIsInvalid ? ' No' : ' Yes'}</div>
+              <div><span>Step Four:</span> {stepFourIsInvalid ? ' No' : ' Yes'}</div>
+              <div><span>Step Five:</span> {stepFiveIsInvalid ? ' No' : ' Yes'}</div> */}
+
+              {this.state.focus === '' ? 
+                this.renderMessage(this.state.step)
+              : 
+                ''
+              }
+
+                {this.state.focus === '' ? 
+                  ' '
+                :
+                <div className="privacy-notice party-information">
+
+                  <div onClick={() => this.changeFocus('')} className="close-privacy">
+                    <i class="fas fa-window-close"></i>
+                  </div>
+
+                  {this.renderReasonForInformationTitle(this.state.step)}
+
+                  <div className="text">
+                    {this.renderReasonForInformation(this.state.focus)}
+                  </div>
+
+                </div>
+              }
+                
+            </div>
+
+            <div className="col-12 col-md-6 m-auto">
+
+              {this.state.step === 0 ?
+                <div className="done-image-container" style={{height: '100%', position: 'relative'}}>
+                  <img alt="GIF of man riding horse into sunset holding American Flag" className="img-fluid" src="https://media2.giphy.com/media/C1L8yq5ZEz0cg/source.gif"></img>
+                </div>
+                :
+                this.renderStep(this.state.step)
+              }
+
+            </div>
+
+          </div>
+
+          <div className={"step-count" + (this.state.step === 0 ? ' d-none' : this.state.step === 6 ? ' d-none' : '')}>
+            <span>Step </span>
+            <span>{this.state.step + '/' + this.state.totalSteps}</span>
+          </div>
+
+          <div className="step-controls">
+              <div className="buttons">
+                <button className={"btn btn-lg btn-articles-light step-controls-start" + (this.state.step === 0 ? '' : ' d-none')} onClick={() => (this.increment() + window.scroll(0, 0) + this.pauseBobBackground(1000))}>Start</button>
+                <button className={"btn btn-lg btn-articles-light step-controls-back" + (this.state.step === 0 ? ' d-none' : this.state.step >= 6 ? ' d-none' : ' d-inline-block')} onClick={() => (this.decrement() + this.changeFocus('') + window.scroll(0, 0) + this.pauseBobBackground(1000))}>Back</button>
+
+                {/* TODO Easiest think I could think of here is putting all logic into whether a user can go to next step into a function then letting that function do the logic via a if statement, will this need to be fixed? Most likley but works for now :) */}
+                {/* <button className={"btn btn-lg btn-articles-light step-controls-next" + (this.state.step === 0 ? ' d-none' : this.state.step >= 5 ? ' d-none' : ' d-inline-block')} onClick={() => (this.increment() + this.changeFocus(''))}>Next</button> */}
+                {/* <button className={"btn mr-0 btn-lg btn-articles-light step-controls-done" + (this.state.step === 5 ? ' d-inline-block' : ' d-none' )} onClick={() => (this.increment())}>Done</button> */}
+                <CanGoToNextStep step={this.state.step} increment={() => (this.increment(), window.scroll(0, 0))} pauseBobBackground={this.pauseBobBackground} decrement={() => (this.decrement() + window.scroll(0, 0))} changeFocus={() => (this.changeFocus(''))} stepOneIsInvalid={stepOneIsInvalid} stepTwoIsInvalid={stepTwoIsInvalid} stepFiveIsInvalid={stepFiveIsInvalid} stepFourIsInvalid={stepFourIsInvalid} stepThreeIsInvalid={stepThreeIsInvalid}></CanGoToNextStep>
+                
+                <button className={"btn btn-lg btn-articles-light step-controls-back" + (this.state.step === 6 ? '' : ' d-none')} onClick={() => (this.submitData())}>Finish</button>
+              </div>
+
+              <div className="dots">
+                <div className={"dot" + (this.state.step === 1 ? ' active' : '') + (this.state.step > 1 ? ' complete' : '')}></div>
+                <div className={"dot" + (this.state.step === 2 ? ' active' : '') + (this.state.step > 2 ? ' complete' : '')}></div>
+                <div className={"dot" + (this.state.step === 3 ? ' active' : '') + (this.state.step > 3 ? ' complete' : '')}></div>
+                <div className={"dot" + (this.state.step === 4 ? ' active' : '') + (this.state.step > 4 ? ' complete' : '')}></div>
+                <div className={"dot" + (this.state.step === 5 ? ' active' : '') + (this.state.step > 5 ? ' complete' : '')}></div>
+              </div>
+
+            </div>
+
+        </div>
+
+        <div className="outset-wrapper d-none">
+          <div className="container container-custom mx-auto">
+
+            <div className={"walkthrough-box-clip-path-hides-box-shadow-work-around " + (this.state.step > 0 ? 'to-top' : '')}>
+              <div className={"walkthrough-box " + (this.state.step > 0 ? 'to-top' : '')}>
+  
+                <h1 className={(this.state.step > 0 ? 'shrink' : '')}>FILL IN, that's a nice name.</h1>
+  
+                <h5 className="focus-explanation">{this.renderReasonForInformation(this.state.focus)}</h5>
+  
+                <button id="goFull" className={"btn btn-lg btn-custom-white " + (this.state.step === 0 ? '' : ' d-none')} onClick={() => (this.increment())}>Start</button>
+  
+                <div className="debug-id">ID: FILL IN</div>
+              </div>
+            </div>
+
+            <div className={"steps-box mx-auto" + (this.state.step === 0 ? '' : ' show')}>{this.renderStep(this.state.step)}</div>
+
+          </div>
+
+          <div className="bottom-walthrough-container">
+              <div className={"bottom-walthrough mx-auto" + (this.state.step === 0 ? '' : ' show')}>
+                <div className="dual-header">
+                  
+                    <button className={"btn btn-lg btn-custom-white w-100" + (this.state.step > 0 ? '' : ' d-none ') + (this.state.step === 5 ? ' shorten' : '')} disabled={this.state.step === 0} onClick={() => (this.decrement())}> <span>&#8612;</span> </button>
+                    <button className={"btn btn-lg btn-custom-white w-100" + (this.state.step > 0 ? '' : ' d-none ') + (this.state.step === 5 ? ' shorten' : '')} disabled={this.state.step === this.state.totalSteps} onClick={() => (this.increment())}> <span>&#8614;</span> </button>
+
+                    <button className={"btn btn-lg btn-custom-white" + (this.state.step === 5 ? '' : ' d-none')} disabled={this.state.step === this.state.totalSteps} onClick={() => (this.increment())}> <span>Finish</span> </button>
+                </div>
+              </div>
+            </div>
+
+        </div>
+
+      </div>
     )
   }
 }
@@ -1055,14 +1080,14 @@ function CanGoToNextStep(props) {
     stepFiveIsInvalid,
     increment,
     decrement,
-    changeFocus
+    changeFocus,
    } = props
 
    // New way
 
    if ((step === 1 && !stepOneIsInvalid) || (step === 2 && !stepTwoIsInvalid) || (step === 3 && !stepThreeIsInvalid) || (step === 4 && !stepFourIsInvalid) || (step === 5 && !stepFiveIsInvalid)) {
 
-    return <button className={"btn btn-lg btn-articles-light step-controls-next" + (step === 0 ? ' d-none' : step >= 6 ? ' ' : ' d-inline-block')} onClick={() => (increment() + changeFocus(''))}>{step === 6 ? 'Finish' : 'Next'}</button>
+    return <button className={"btn btn-lg btn-articles-light step-controls-next" + (step === 0 ? ' d-none' : step >= 6 ? ' ' : ' d-inline-block')} onClick={() => (increment() + changeFocus('') + props.pauseBobBackground(1000) + console.log("Click"))}>{step === 6 ? 'Finish' : 'Next'}</button>
 
   } else {
     // return <button disabled={step === 6 ? false : false} className={"btn btn-lg btn-articles-light step-controls-next" + (step === 0 ? ' d-none' : step >= 6 ? ' ' : ' d-inline-block')} onClick={() => (increment() + changeFocus(''))}>{step === 6 ? 'Back' : 'Next'}</button>
@@ -1071,7 +1096,7 @@ function CanGoToNextStep(props) {
       step === 6 ? 
       <button disabled={step === 6 ? false : false} className={"btn btn-lg btn-articles-light step-controls-next" + (step === 0 ? ' d-none' : step >= 6 ? ' ' : ' d-inline-block')} onClick={() => (decrement() + changeFocus(''))}>Back</button>
       :
-      <button disabled={step === 6 ? false : true} className={"btn btn-lg btn-articles-light step-controls-next" + (step === 0 ? ' d-none' : step >= 6 ? ' ' : ' d-inline-block')} onClick={() => (increment() + changeFocus(''))}>Next</button>
+      <button disabled={step === 6 ? false : true} className={"btn btn-lg btn-articles-light step-controls-next" + (step === 0 ? ' d-none' : step >= 6 ? ' ' : ' d-inline-block')} onClick={() => (increment() + changeFocus('') + props.pauseBobBackground(1000) + console.log("Click"))}>Next</button>
       )
     
   }

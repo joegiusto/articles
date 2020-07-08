@@ -1,15 +1,19 @@
 import React, { Component, useState } from 'react';
+import axios from 'axios';
 import { Helmet } from "react-helmet";
 
 import StoreItemAlpha from './StoreItemAlpha';
 import StoreItemBeta from './Items/Beta.js';
 
-import {One, Two, Three, Four} from './SponseredItems';
 import * as ROUTES from '../../constants/routes';
 import { Link } from 'react-router-dom';
-import { withFirebase } from '../Firebase';
-import hero from 'assets/img/bg_home_banner.png';
-import axios from 'axios';
+
+// import { withFirebase } from '../Firebase';
+// import {One, Two, Three, Four} from './SponseredItems';
+
+import hero from 'assets/img/Store/head.jpg';
+import block from 'assets/img/Store/block.jpg';
+
 class StorePage extends Component {
   constructor(props) {
   super(props);
@@ -106,6 +110,10 @@ class StorePage extends Component {
 		
 		return(
 			<section className="store-page">
+
+			<Helmet>
+        <title>Store - Articles</title>
+      </Helmet>
 				
 				<div className={"pop-out-viewer-container " + (this.props.match.params.id ? ' active' : '')}>
 					<Link to={ROUTES.STORE} onClick={() => this.setPopOut(false)}>
@@ -184,13 +192,16 @@ class StorePage extends Component {
 					</div>
 
 
-					<div className="showcase">
+					{/* <div className="showcase">
 
-					</div>
+					</div> */}
 
 
-					<div className="hero-content d-none">
-						<div className="bottom">Testing</div>
+					<div className="hero-content">
+						<div className="title">Founders Collection</div>
+						<div className="text">Our first clothing drop</div>
+						<div className="btn btn-articles-light mt-2">Shop</div>
+						<div className="bottom"></div>
 					</div>
 
 				</div>
@@ -201,7 +212,12 @@ class StorePage extends Component {
 
 					  <div className="featured-items">
 
-							<h1 className="mt-2 mt-md-4 store-heading">Featured</h1>
+							<div className="my-2 d-inline-flex my-md-4 store-heading">
+								<img src={block} alt=""/>
+								<div className="text px-3">Featured</div>
+							</div>
+
+							{/* <h1 className="mt-2 mt-md-4 store-heading">Featured</h1> */}
 
 							<div className="store-item-beta-grid mb-4">
 

@@ -199,6 +199,9 @@
       font-style: normal;
       font-weight: 900;
       margin-bottom: 2rem;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
 
       transition-duration: 200ms;
       cursor: pointer;
@@ -213,10 +216,10 @@
       }
 
       i {
-        font-size: 3rem;
+        font-size: 2rem;
         background-color: white;
         margin-bottom: 0.25rem;
-        transition-duration: 200ms;
+        // transition-duration: 200ms;
 
         @include media-breakpoint-down(md) {
           font-size: 1.5rem;
