@@ -23,6 +23,9 @@ class SubscribeListBase extends Component {
       newsUser: [],
       newsUserMySQL: [],
 
+      nameExpanded: false,
+      genderExpanded: false,
+
       mongoDBuser: {
         first_name: this.props.user_details?.first_name || '',
         last_name: this.props.user_details?.last_name || '',
@@ -52,6 +55,7 @@ class SubscribeListBase extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleUserChange = this.handleUserChange.bind(this);
     this.handleAddressChange = this.handleAddressChange.bind(this);
+    this.onChangeProfile = this.onChangeProfile.bind(this);
 
     this.updateUser = this.updateUser.bind(this);
   }
@@ -65,48 +69,6 @@ class SubscribeListBase extends Component {
 
     // Refresh for the newest info!
     this.props.setUserDetails(self.props.auth.user.id);
-
-    // axios.get('/api/getNews')
-    // .then(function (response) {
-
-    //   // handle success
-    //   console.log(response.data);
-
-    //   self.setState({
-    //     newsAll: response.data,
-    //   });
-
-    //   this.setState({ newsAllLoading: false });
-
-    // })
-    // .catch(function (error) {
-    //   // handle error
-    //   console.log(error);
-
-    //   self.setState({ resultsLoading: true });
-    //   self.setState({ resultsLoadingError: error });
-    // });
-
-    // TODO - This needs to get taken out and replaced with the details of the global Redux state that gets set when user loads in.
-    // axios.post('/api/secure/getUserDetails', {
-    //   user: self.props.auth.user.id
-    // })
-    // .then(function (response) {
-    //   console.log(response);
-
-    //   self.setState({
-    //     mongoDBuser: response.data.user,
-    //     mongoDBsubmissions: response.data.submissions,
-    //     mongoDBorders: response.data.orders,
-    //     mongoDBsubscriptionsBulk: response.data.subscriptionsBulk,
-    //   }, () => {
-    //     // self.mergeStuff()
-    //   })
-    // })
-    // .catch(function (error) {
-    //   console.log("Get User Details Secure Failed");
-    //   console.log(error);
-    // });
 
     axios.get('/api/getIssues')
     .then(function (response) {
@@ -307,24 +269,341 @@ class SubscribeListBase extends Component {
 
   }
 
+  onChangeProfile(e) {
+    console.log(e.target.files);
+    const data = new FormData();
+
+    this.setState({
+      file: e.target.files[0],
+      newProfilePhotoLoading: true,
+    }, 
+      () => {
+        data.append('file', this.state.file);
+        data.append('user', this.props.user_id);
+        
+        axios.post("/api/addProfilePhoto", data, { // receive two parameter endpoint url ,form data 
+        
+        })
+        .then(res => { // then print response status
+          console.log(res.statusText)
+          this.setState({
+            newProfilePhotoLoading: false,
+            // photos: [...this.state.photos, 'profile_photos/' + this.props.user_id + '.' + this.state.file.name.split('.')[1]],
+            fakeImageHash: this.state.fakeImageHash + 1
+          })
+        })
+      }
+    )
+
+  }
+
   render() {
     const {mongoDBuser, mongoDBsubmissions, mongoDBorders, allIssues, mongoDBsubscriptionsBulk, merge} = this.state;
 
     return(
       <div className="subscriptions-page">
 
-      <Helmet>
-        <title>Settings - Articles</title>
-      </Helmet>
+        <Helmet>
+          <title>Settings - Articles</title>
+        </Helmet>
+
+        {/* <div className="background-image">
+          <img src="https://cdn.cheapism.com/images/Where_You_Live_or_Work.2e16d0ba.fill-1440x605.png" alt=""/>
+        </div> */}
 
         <div className="container">
+
+          <div className="top">
+            <div className="title">Personal Info</div>
+            <div className="text">Basic info, like your name and photo, that you use on Articles</div>
+          </div>
+
+          <div className="card settings-card mt-5">
+
+            <div className="card-header">
+              <h5>Profile</h5>
+              <p>Some info may be visible to others</p>
+            </div>
+
+            <div className="card-body">
+
+              <div className="info-snippet">
+                <div className="label">EMAIL</div>
+                <div className="info">
+                  {this.props.user_details.email}
+                  <div className="email-note">
+                    Submit a request to get your email changed
+                  </div>
+                </div>
+                <div className="arrow"><i class="far fa-hand-point-right"></i></div>
+              </div>
+
+              <div className="info-snippet">
+
+                <div className="label">PHOTO</div>
+
+                <div className="info">
+                  <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${this.props.auth.user.id}.jpg`} alt=""/>
+                </div>
+
+                <div className="arrow"><i class="far fa-hand-point-right"></i></div>
+
+                <input className="profile-photo" onChange={this.onChangeProfile} accept=".jpg" type="file" name="myfile" />
+
+              </div>
+
+              <div className="info-snippet noselect" onClick={() => 
+                this.state.nameExpanded ?
+                null
+                :
+                this.setState({
+                  nameExpanded: !this.state.nameExpanded
+                })
+              }>
+                <div className="label">NAME</div>
+
+                <div className={"info"}>
+
+                  <div className={"detail-view " + (this.state.nameExpanded ? 'd-none' : '')}>
+                    {this.props.user_details.first_name} {this.props.user_details.last_name}
+                  </div>
+
+                  <div className={"expand-view " + (this.state.nameExpanded ? '' : 'd-none')}>
+  
+
+                    <div>CHANGE NAME</div>
+                    <p>Anyone can see this info when they communicate with you or view content you create</p>
+
+                    <input className="d-block" value={mongoDBuser.first_name} type="text"/>
+
+                    <input className="d-block mt-2" value={mongoDBuser.last_name} type="text"/>
+
+                    <div className="actions mt-2">
+                      <div onClick={() => this.setState({
+                        nameExpanded: false
+                      })} className="btn btn-articles-light">Cancel</div>
+                      <div onClick={() => this.setState({
+                        nameExpanded: false
+                      })} className="btn btn-articles-light ml-2">Save</div>
+                    </div>
+ 
+                  </div>
+
+                </div>
+
+                <div className="arrow"><i className={"far fa-hand-point-right " + (this.state.nameExpanded? 'fa-rotate-90' : '')}></i></div>
+
+              </div>
+
+              <div className="info-snippet">
+                <div className="label">BIRTHDAY</div>
+                <div className="info">
+                {moment(this.props.user_details.birth_date).format("LL")}
+                </div>
+                <div className="arrow"><i class="far fa-hand-point-right"></i></div>
+              </div>
+
+              <div className="info-snippet">
+                <div className="label">ADDRESS</div>
+                <div className="info">{`
+                ${this.props.user_details.address.city},  
+                ${this.props.user_details.address.state} | 
+                ${this.props.user_details.address.zip}
+                `}
+                </div>
+                <div className="arrow"><i class="far fa-hand-point-right"></i></div>
+              </div>
+
+              <div className="info-snippet" onClick={() => 
+                this.state.genderExpanded ?
+                null
+                :
+                this.setState({
+                  genderExpanded: !this.state.genderExpanded
+                })
+              }>
+                <div className="label">GENDER</div>
+
+                <div className="info">
+
+                  <div className={"detail-view " + (this.state.genderExpanded ? 'd-none' : '')}>
+                    {this.props.user_details.gender}
+                  </div>
+
+                  <div className={"expand-view " + (this.state.genderExpanded ? '' : 'd-none')}>
+
+                    <div>CHANGE GENDER</div>
+                    <p>Anyone can see this info when they communicate with you or view content you create</p>
+
+                    <input className="d-block" value={mongoDBuser.gender} type="text"/>
+                    <div className="badge badge-lg badge-articles mr-2">Male</div>
+                    <div className="badge badge-lg badge-light border mr-2">Female</div>
+                    <div className="badge badge-lg badge-light border mr-2">Non</div>
+
+                    <div className="actions mt-2">
+                      <div onClick={() => this.setState({
+                        genderExpanded: false
+                      })} className="btn btn-articles-light">Cancel</div>
+                      <div onClick={() => this.setState({
+                        genderExpanded: false
+                      })} className="btn btn-articles-light ml-2">Save</div>
+                    </div>
+
+                  </div>
+
+                </div>
+
+                
+
+                <div className="arrow"><i class="far fa-hand-point-right"></i></div>
+
+              </div>
+
+              <div className="info-snippet" onClick={() => 
+                this.state.passwordExpanded ?
+                null
+                :
+                this.setState({
+                  passwordExpanded: !this.state.passwordExpanded
+                })
+              }>
+
+                <div className="label">PASSWORD</div>
+
+                <div className="info">
+                  
+
+                  <div className={"detail-view " + (this.state.passwordExpanded ? 'd-none' : '')}>
+                    ***********
+                    <div className="last-changed">Last Changed {moment(this.props.user_details.password_last_change).format("LLL") || 'Never'}</div>
+                  </div>
+
+                  <div className={"expand-view " + (this.state.passwordExpanded ? '' : 'd-none')}>
+  
+                    <div>CHANGE PASSWORD</div>
+                    <p>Anyone can see this info when they communicate with you or view content you create</p>
+
+                    <input className="d-block" value={mongoDBuser.passwordExpanded} type="text"/>
+
+                    <div className="actions mt-2">
+                      <div onClick={() => this.setState({
+                    passwordExpanded: false
+                      })} className="btn btn-articles-light">Cancel</div>
+                      <div onClick={() => this.setState({
+                    passwordExpanded: false
+                      })} className="btn btn-articles-light ml-2">Save</div>
+                    </div>
+ 
+                  </div>
+
+                </div>
+
+                <div className="arrow"><i class="far fa-hand-point-right"></i></div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div className="card settings-card mt-4">
+
+            <div className="card-header">
+              <h5>Subscriptions</h5>
+              <p>Some info may be visible to others</p>
+            </div>
+
+            <div className="card-body">
+
+              <div className="info-snippet">
+
+                <div className="label">ISSUES</div>
+
+                <div className="info">
+                  {this.props.user_details.subscriptionsFetched.length} Subscriptions
+                </div>
+
+                <div className="arrow"><i class="far fa-hand-point-right"></i></div>
+
+              </div>
+
+              <div className="info-snippet">
+
+                <div className="label">TAGS</div>
+
+                <div className="info">
+                  0 Followed
+                </div>
+
+                <div className="arrow"><i class="far fa-hand-point-right"></i></div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div className="card settings-card mt-4">
+
+            <div className="card-header">
+              <h5>Experimental Features</h5>
+              <p>Try out and help us test features that are not released to the public yet.</p>
+            </div>
+
+            <div className="card-body">
+
+              <div className="info-snippet">
+
+                <div className="label">NIGHT MODE</div>
+
+                <div className="info">
+                  <div className="enabled-dot"></div>Enabled
+                </div>
+
+                <div className="arrow"><i class="far fa-hand-point-right"></i></div>
+
+              </div>
+
+              <div className="info-snippet">
+
+                <div className="label">MESSAGES / MAIL</div>
+
+                <div className="info">
+                  <div className="enabled-dot"></div>Enabled
+                </div>
+
+                <div className="arrow"><i class="far fa-hand-point-right"></i></div>
+
+              </div>
+
+              <div className="info-snippet">
+
+                <div className="label">MESH</div>
+
+                <div className="info">
+                  <div className="disabled-dot"></div>Disabled
+                </div>
+
+                <div className="arrow"><i class="far fa-hand-point-right"></i></div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div className="links">
+            <Link to={ROUTES.SETTINGS}><div className="btn btn-articles-light">Request Data</div></Link>
+            <Link to={ROUTES.SETTINGS}><div className="btn btn-danger">Delete Account</div></Link>
+          </div>
 
           <div className="row">
 
             <div className="col-12 col-md-8">
 
               <div className="d-flex justify-content-between border-bottom align-items-md-center mb-2 pb-1 flex-column flex-md-row">
-                <h1 className="store-heading mb-0">User Data</h1>
+
+                <h1 className="mb-0">Personal Info</h1>
 
                 <div>
 
@@ -696,6 +975,7 @@ const condition = authUser => !!authUser;
 
 const mapStateToProps = state => ({
   auth: state.auth,
+  user_id: state.auth.user.id,
   user_details: state.auth.user_details,
   errors: state.errors
 });

@@ -35,7 +35,10 @@ class OutsetBase extends React.Component {
       focus: '',
 
       // Step One States
-      // nameFirst: props.user.first_name,
+      fakeImageHash: 0,
+      newProfilePhotoLoading: false,
+      cacheBust: moment(),
+
       first_name: props.user?.first_name || '',
       last_name: props.user?.last_name || '',
       
@@ -349,11 +352,12 @@ class OutsetBase extends React.Component {
     const self = this;
 
     clearInterval(self.interval);
+    clearTimeout(self.timeout);
     self.setState({
       bob: false
     });
 
-    setTimeout( function() {
+    self.timeout = setTimeout( function() {
 
       console.log(`Called after ${time}`);
       self.interval = setInterval(self.bobBackground, 1000);
@@ -466,6 +470,8 @@ class OutsetBase extends React.Component {
 
   renderReasonForInformation(focus) {
     switch(focus) {
+      case 'photo':
+        return "Your photo will only be used for presentational puporses across the site such as comments and on your profile."
       case 'first_name':
         return "We use your first name to address you on the site and in emails. Only your first name is visble to other users if you decide to post or submit any content."
       case 'last_name':
@@ -764,7 +770,7 @@ class OutsetBase extends React.Component {
       case 1: 
         // General Information
         return (
-          <StepOne {...this.state} onZipBlur={this.onZipBlur} renderReasonForInformationTitle={this.renderReasonForInformationTitle} handleCellTwo={this.handleCellTwo} setCell={this.setCell} handleChange={this.handleChange} onChange={this.onChange} changeFocus={this.changeFocus} user={this.props.user} authUser={authUser}/>
+          <StepOne {...this.state} user_id={this.props.user_id} onZipBlur={this.onZipBlur} renderReasonForInformationTitle={this.renderReasonForInformationTitle} handleCellTwo={this.handleCellTwo} setCell={this.setCell} handleChange={this.handleChange} onChange={this.onChange} changeFocus={this.changeFocus} user={this.props.user} authUser={authUser}/>
         )
       case 2:
         // Clothing Information

@@ -134,6 +134,9 @@ function connectWithRetryMongo() {
     require('./routes/getCanSubmit')(app, db);
 
     require('./routes/getDonations')(app, db);
+
+    // Deleted
+    // require('./routes/jsonNews')(app, db);
   
     // const secureRoute = require('./routes/secure/secure-routes.js')(app, db);
     // app.use('/api/secure', passport.authenticate('jwt', {session: false}), secureRoute);
@@ -302,6 +305,13 @@ app.post('/api/addPhoto', function (req, res) {
   // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
   let sampleFile = req.files.file;
 
+  var explodedSampleFileName = sampleFile.name.split('.');
+
+  explodedSampleFileName[1] = explodedSampleFileName[1].toLowerCase();
+
+  var strictFileName = explodedSampleFileName[0] + explodedSampleFileName[1]
+  
+
   // Use the mv() method to place the file somewhere on your server
   // sampleFile.mv(__dirname + '/photos/' + req.files.file.name, function(err) {
   //   if (err)
@@ -393,9 +403,13 @@ app.post('/api/addProfilePhoto', function (req, res) {
 
   console.log(`${req.body.user} Is trying to change their profile photo`);
 
-  if (!req.files || Object.keys(req.files).length === 0) {
+  if (!req.files || Object.keys(req.files).length === 0 || req.body.user === undefined || req.body.user === 'undefined') {
+    console.log("Upload failed");
     return res.status(400).send('No files were uploaded.');
   }
+
+  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+  // let sampleFile = req.files.file;
 
   // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
   let sampleFile = req.files.file;
@@ -404,10 +418,11 @@ app.post('/api/addProfilePhoto', function (req, res) {
 
   sharp(sampleFile.data)
   .resize(200, 200)
+  .withMetadata()
   .toBuffer()
   .then( data => {
 
-    var params = {Bucket: 'articles-website/profile_photos', Prefix: 'profile_photos', Key: req.body.user + '.' + sampleFile.name.split('.')[1], ContentType: "image/jpeg", Body: data, ACL: "public-read"};
+    var params = {Bucket: 'articles-website/profile_photos', Prefix: 'profile_photos', Key: req.body.user + '.' + sampleFile.name.split('.')[1].toLowerCase(), ContentType: "image/jpeg", Body: data, ACL: "public-read"};
     s3.upload(params, function(err, data) {
       console.log(err, data);
       if (err) {

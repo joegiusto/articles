@@ -1,3 +1,21 @@
+.content-wrap.dark-mode {
+
+  .employees-page {
+
+    .employees-list-head {
+      background-color: $dark-mode-card-color;
+    }
+  
+    .employees-list {
+      background-color: $dark-mode-card-color;
+    }
+
+    .employee-card {
+      background-color: $dark-mode-element-color;
+    }
+  }
+}
+
 .employees-page {
   // height: calc(100vh - 150px);
 
@@ -43,6 +61,7 @@
   }
 
   .employees-list-head {
+    background-color: white;
     padding: 2.5rem;
   }
 
@@ -73,9 +92,11 @@
   background: #fff;
   margin: 30px auto 20px;
   border-radius: 5px;
+
   &-traits {
     font-size: 1.2rem;
     height: 100%;
+
     &-title {
       text-transform: lowercase;
       color: #666666;
@@ -83,6 +104,7 @@
       font-weight: 800;
       margin-bottom: 2px;
     }
+
     &-details {
       color: #0a0a0a;
       font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
@@ -149,6 +171,7 @@
     width: 70px;
     // margin: 0px auto;
     position: relative;
+
     &-zoom {
       position: absolute;
       // bottom: 0px;
@@ -187,7 +210,7 @@
   }
   &-name {
     font-weight: bold;
-    font-size: 60px;
+    font-size: 1.5rem;
     color: #111111 !important;
   }
   &-action-button {

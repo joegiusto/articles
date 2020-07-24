@@ -210,7 +210,7 @@ class Users extends Component {
   render() {
 
     return (
-      <div className="admin-users container-fluid mt-3">
+      <div className="admin-users mt-3">
 
         <div className="row">
 

@@ -1,5 +1,164 @@
 .subscriptions-page {
-  padding: 3rem 0;
+  padding: 0rem 0;
+  font-family: montserrat, sans-serif;
+  font-weight: 400;
+
+  .background-image {
+    width: 100%;
+    height: 300px;
+    margin-bottom: 3rem;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+    }
+  }
+
+  .top {
+    margin-top: 2rem;
+    text-align: center;
+
+    .title {
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 1.75rem;
+    }
+
+    .text {
+
+    }
+  }
+
+  .settings-card {
+    box-shadow: 0px 1.5px 2px 2px rgba(0, 0, 0, 0.5);
+
+    .card-header {
+      border: none;
+      background-color: $accent-color;
+      border-radius: 0px;
+
+      h5 {
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 900;
+      }
+    }
+
+    .card-body {
+      padding: 0;
+    }
+
+    .info-snippet {
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      flex-direction: row;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+
+      @include media-breakpoint-down(md) {
+        flex-direction: column;
+      }
+
+      &:hover {
+        background-color: whitesmoke;
+      }
+
+      input[type=file].profile-photo {
+        z-index: 10;
+        font-size: 100px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+      }
+
+      input[type=file]::-webkit-file-upload-button {
+        cursor: pointer;
+      }
+
+      .label {
+        width: 200px;
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 900;
+        border-right: 1px solid rgba(0, 0, 0, 0.1);
+        margin-right: 0.5rem;
+
+        @include media-breakpoint-down(md) {
+          width: 100%;
+        }
+      }
+
+      .info {
+        z-index: 11;
+
+        img {
+          height: 100px;
+          width: 100px;
+        }
+
+        .last-changed, .email-note {
+          font-size: 0.8rem;
+        }
+
+        .enabled-dot {
+          display: inline-block;
+          height: 10px;
+          width: 10px;
+          margin-right: 0.5rem;
+          border-radius: 100px;
+          background-color: green;
+        }
+
+        .disabled-dot {
+          display: inline-block;
+          height: 10px;
+          width: 10px;
+          margin-right: 0.5rem;
+          border-radius: 100px;
+          background-color: red;
+        }
+      }
+
+      .arrow {
+        position: absolute;
+        top: 50%;
+        right: 30px;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform: translateY(-50%);
+        border: 1px solid rgba(0, 0, 0, 0.5);
+        border-radius: 100px;
+        padding: 0.5rem;
+
+        i {
+          margin-right: 0;
+        }
+      }
+
+    }
+
+  }
+
+  .links {
+    margin-top: 1rem;
+    text-align: center;
+    margin-bottom: 3rem;
+
+    a {
+      margin-right: 0.5rem;
+    }
+  }
 
   .sub-item {
     margin-top: 0.25rem;

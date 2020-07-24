@@ -8,6 +8,8 @@ import { connect } from "react-redux";
 
 import Ad from './Ad'
 
+import * as ROUTES from '../../../constants/routes'
+
 class Issue extends React.Component {
   constructor(props) {
     super(props);
@@ -23,7 +25,8 @@ class Issue extends React.Component {
     this.setState({ loading: true });
 
     // Returns undefined if the id of news is not in local storage
-    const storedStories = this.props.stories.stories.find(x => x._id === this.props.match.params.id)
+    let storedStories = this.props.stories.stories.find(x => x._id === this.props.match.params.id)
+    storedStories = undefined
 
     if (storedStories !== undefined ) {
       // Try to pull from local storage and if not there then do server call
@@ -34,7 +37,7 @@ class Issue extends React.Component {
     } else {
       // Was not local, we make a server call!
       axios.post('/api/getNewsDocument', {
-        news_id: this.props.match.params.id
+        news_url: this.props.match.params.id
       })
       .then(function (response) {
         console.log(response);
@@ -70,7 +73,18 @@ class Issue extends React.Component {
 
             <div className="news-one-head">
 
-              <span className="back-link" onClick={() => this.props.history.goBack()}>{String.fromCharCode(11148)}</span>
+              <div className="back-button-container">
+                <i className="back-button fas fa-chevron-circle-left mr-0" aria-hidden="true"></i>
+                <div className="back-button-dropdown">
+                  <div className="subheading">Recent</div>
+                  <div onClick={() => this.props.history.goBack()} className="link"><i className="fas fa-chevron-circle-left" aria-hidden="true"></i>Previous Page</div>
+                  <div className="subheading">Associated</div>
+                  <Link to={ROUTES.STORIES}><i className="fas fa-bullhorn" aria-hidden="true"></i>Stories</Link>
+                  <Link to={ROUTES.NEWS}><i className="fas fa-newspaper" aria-hidden="true"></i>News</Link>
+                </div>
+              </div>
+              
+              {/* <span className="back-link" onClick={() => this.props.history.goBack()}>{String.fromCharCode(11148)}</span> */}
 
               <span className="date-badge">
                 <div className="date-badge-inner">

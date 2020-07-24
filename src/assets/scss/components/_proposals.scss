@@ -12,6 +12,24 @@
   }
 }
 
+.content-wrap.dark-mode {
+
+  section.proposals-page {
+
+    .party-stat {
+      background-color: $dark-mode-card-color;
+    }
+
+    .proposal {
+      background-color: $dark-mode-card-color;
+    }
+
+    // .progress {
+    //   background-color: $dark-mode-element-color;
+    // }
+  }
+}
+
 section.proposals-page {
   padding-top: 3rem;
   font-family: montserrat, sans-serif;

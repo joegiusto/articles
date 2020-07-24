@@ -14,7 +14,9 @@ export const setMyths = () => dispatch => {
   axios
   .get("/api/getMyths")
   .then( res => {
+
     console.log("Got Myths")
+    
     dispatch({
       type: 'SET_MYTHS',
       payload: res.data

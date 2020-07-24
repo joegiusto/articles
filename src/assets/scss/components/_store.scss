@@ -147,10 +147,46 @@
   right: 1rem;
 }
 
+.content-wrap.dark-mode {
+
+  .store-page {
+
+    .extra-nav-bar, .type-guide {
+      background-color: $dark-mode-card-color;
+    }
+
+    .hero {
+      color: black;
+    }
+
+    .link-panels {
+
+      .panel {
+        background-color: #000;
+      }
+    }
+  }
+}
+
 .store-page {
   position: relative;
   font-family: montserrat, sans-serif;
   font-weight: 400;
+
+  .extra-nav-bar {
+    border-bottom: 1px solid #dbd9d7;
+    border: 1px solid #edebe9;
+    background-color: #f7f7f7;
+    padding-left: 100px;
+    font-size: 13px;
+
+    a {
+      display: inline-block;
+      padding-bottom: 1rem;
+      padding-top: 1rem;
+      margin-right: 1rem;
+    }
+  }
 
   .container {
     max-width: 80%;
@@ -626,16 +662,3 @@
   }
 }
 
-.feature-top {
-  // color: white;
-  .card {
-    height: 400px;
-    .card-header {
-      background-color: white;
-    }
-    .card-body {
-      background-color: #000000;
-      color: white;
-    }
-  }
-}

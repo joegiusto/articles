@@ -59,7 +59,7 @@
     "slick-carousel": "^1.8.1",
     "socket.io": "^2.3.0",
     "styled-components": "^5.1.0",
-    "swiper": "^5.4.5",
+    "swiper": "^6.0.4",
     "validator": "^13.0.0"
   },
   "scripts": {

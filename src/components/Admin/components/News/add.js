@@ -26,6 +26,7 @@ const initial_state = {
   url: '',
   hero_url: "",
   last_update: new Date(),
+  visible: true,
 
   tagSelectOpen: false,
 
@@ -239,7 +240,7 @@ class newsAdd extends Component {
 
     return(
       <div className="news-manage-plate bottom-add">
-        <h1>Document Details</h1>
+        {/* <h1>Document Details</h1> */}
         
         {
         this.props.news_id === undefined ? 
@@ -460,6 +461,16 @@ class newsAdd extends Component {
                   todayButton: 'Today',
                 }}
               />
+            </div>
+          </div>
+
+          <div className="col-12 col-md-6">
+            <div className="form-group">
+              <label for="visible">Visible:</label>
+              <select className="form-control" name="visible" disabled={this.state.editLoading ? 'disabled' : ''} id="visible" value={this.state.visible} onChange={this.handleChange}>
+                <option value={true}>True</option>
+                <option value={false}>False</option>
+              </select>
             </div>
           </div>
           

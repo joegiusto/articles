@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment'
+import axios from 'axios'
 
 class Outset extends React.Component {
   constructor(props) {
@@ -65,11 +66,14 @@ class Outset extends React.Component {
           date: new Date('May 12 2020')
         }
       ],
+      news: [],
+      newsType: 'all'
     };
 
   }
 
   componentDidMount() {
+    const self = this
     const fakeSubmissions = [
 
     ]
@@ -90,6 +94,20 @@ class Outset extends React.Component {
       })
 
     })
+
+    axios.get('/api/getNews')
+    .then(function (response) {
+
+      self.setState({
+				news: response.data.news,
+				// loadingProducts: false
+      });
+
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+		});
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -135,6 +153,27 @@ class Outset extends React.Component {
         </div>
     );
 
+    const sortedNews = [].concat(this.state.news)
+
+      .filter((item) => this.state.newsType === 'all' ? item : (item.news_type === this.state.newsType ? item : null ) )
+
+      // .filter((item) => item.news_type === this.state.newsType ? item : null )
+
+      // .sort( this.state.sort )
+      
+      .map((object, i) => 
+        // <div key={i}> {item.matchID} {item.timeM}{item.description}</div>
+        <div key={object._id} style={{border: '2px solid #000'}} className="mt-2 p-2">
+
+          <div className="d-flex justify-content-between">
+            <div className="title">{object.news_title}</div>
+            <div className="tags">{object.news_tags.length > 0 ? object.news_tags.map((tag) => <span className="badge badge-articles mr-1">{tag.tag_name}</span>) : 'None'}</div>
+          </div>
+
+
+        </div>
+    );
+
     return (
       <div className="playground-page">
         <div className="container mt-5 mb-5">
@@ -149,6 +188,42 @@ class Outset extends React.Component {
 
           <button className="btn btn-articles-light mr-2">Articles Light</button>
           <button className="btn btn-articles-light alt">Articles Light Alt</button>
+
+          <div className="news mt-5">
+            {/* {this.state.news.map((document) => (
+              <div>{document.news_title} - {document.news_type}</div>
+            ))} */}
+            <div onClick={() => {
+              this.setState({
+                newsType: 'all',
+                // sort: (a, b) => b.total - a.total
+              })
+              }} className={"badge " + (this.state.newsType === "all" ? 'badge-dark' : '')}>All</div>
+            
+            <div onClick={() => {
+              this.setState({
+                newsType: 'story',
+                // sort: (a, b) => b.total - a.total
+              })
+              }} className={"badge " + (this.state.newsType === "story" ? 'badge-dark' : '')}>Stories</div>
+
+            <div onClick={() => {
+              this.setState({
+                newsType: 'issue',
+                // sort: (a, b) => b.total - a.total
+              })
+              }} className={"badge " + (this.state.newsType === "issue" ? 'badge-dark' : '')}>Issues</div>
+
+            <div onClick={() => {
+              this.setState({
+                newsType: 'myth',
+                // sort: (a, b) => b.total - a.total
+              })
+              }} className={"badge " + (this.state.newsType === "myth" ? 'badge-dark' : '')}>Myths</div>
+
+            {sortedNews}
+
+          </div>
 
           <div className="sorts mt-5">
 

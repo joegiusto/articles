@@ -47,9 +47,18 @@ module.exports = (app, db) => {
 
             if (justNews_Id.length > 0) {
               
-              db.collection("articles_news").find({ _id: {$in: justNews_Id} }).toArray(function(err, result) {
+              db.collection("articles_news").find({ _id: {$in: justNews_Id}, news_type: 'issue' }).toArray(function(err, result) {
                 if (err) throw err;
                 console.log(`Call to /api/getUserDetails done`)
+
+                // Meaning the user subscriptions fetched against all issues 
+                if  ( result.length > 0 ) {
+                  for (let i = 0; i < result.length; i++) {
+                    let match = data.user.subscriptions.find(subscription => subscription.news_id === result[i]._id.toString() )
+                    result[i].lastRead = match.lastRead;
+                  }
+                }
+
                 data.user.subscriptionsFetched = result;
                 return res.send(data);
               });

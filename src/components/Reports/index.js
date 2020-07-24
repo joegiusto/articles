@@ -526,7 +526,7 @@ class Reports extends Component {
 
                 </div>
 
-                <div className="reports-side reports-shadow">
+                <div className="reports-table reports-shadow">
                   <div className="table-selector">
           
                     <div className="main">
@@ -588,7 +588,7 @@ class Reports extends Component {
 
             <Route path={ROUTES.REPORTS_CHARTS} render={() => 
               <div className="col-12 col-md-8 col-lg-8">
-                <DataCharts setChartPeriodSelector={this.setChartPeriodSelector} chartPeriodSelector={this.state.chartPeriodSelector}></DataCharts>
+                <DataCharts data={this.state.firebaseData.revenue.donations} setChartPeriodSelector={this.setChartPeriodSelector} chartPeriodSelector={this.state.chartPeriodSelector}></DataCharts>
               </div>
             }/>
 
@@ -608,7 +608,7 @@ class Reports extends Component {
 
                 <div className="alert alert-warning border mt-3">Warning: We are working on ways to make this section more transparent with our users, such as number of reports and ways to agree with other peoples reports. Data is saved for Admins to look at for now.</div>
 
-                <div className="reports-side reports-shadow chart-block">
+                <div className="reports-table reports-shadow chart-block">
                   {/* <div className="container pt-2"> */}
                     <div className="row">
 
@@ -711,7 +711,8 @@ class DataCharts extends Component {
       chartPayroleExpenses: 'chartPayroleExpenses',
       chartEmployeeAdmin: 'chartEmployeeAdmin',
       chartNewYorkEmployeeOurEmployee: 'chartNewYorkEmployeeOurEmployee',
-      expandSource: false
+      expandSource: false,
+      julyTotal: 0
     };
   }
 
@@ -721,61 +722,6 @@ class DataCharts extends Component {
       const year = new Date().getFullYear();
       return Array.from({length: back}, (v, i) => year - back + i + 1);
     }
-
-    var vsReveneueExpense = document.getElementById(this.state.chartRevenueExpense);
-
-    new Chart(vsReveneueExpense, {
-        type: 'line',
-        data: {
-            labels: [ 'July', 'August', 'September', 'October', 'November', 'December', 'January', 'Febuary', 'March', 'April', 'May', 'June' ],
-            datasets: [{
-                label: '$ in Donations',
-                data: [50, 0, 0, 0, 50, 0, 0, 0, 0, 100, 50, 0],
-                backgroundColor: [
-                  'rgba(63, 191, 127, 0.2)'
-                ],
-                borderColor: [
-                  'rgba(63, 191, 127, 1)'
-                ],
-                pointBackgroundColor: 'rgba(63, 191, 127, 1)',
-                pointBorderColor: 'rgba(63, 191, 127, 1)',
-                borderWidth: 1,
-                lineTension: 0.1,
-            },
-            {
-              label: '$ in Expenses',
-              data: [10.66, 0, 12.97, 0, 0, 0, 0, 0, 0, 0, 0, 7.59],
-              backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)'
-              ],
-              borderColor: [
-                  'rgba(255, 99, 132, 1)'
-              ],
-              pointBackgroundColor: 'rgba(255, 99, 132, 0.2)',
-              pointBorderColor: 'rgba(255, 99, 132, 1)',
-              borderWidth: 2,
-              lineTension: 0.1,
-          }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                  ticks: {
-                    fontFamily: "brandon-grotesque",
-                    beginAtZero: true
-                  }
-                }],
-                xAxes: [{
-                  gridLines: {
-                    display: false
-                  },
-                  ticks: {
-                    fontFamily: "brandon-grotesque",
-                  }
-                }]
-            }
-        }
-    });
 
     var vsPayroleExpenses = document.getElementById(this.state.chartPayroleExpenses);
 
@@ -959,6 +905,108 @@ class DataCharts extends Component {
             }
         }
     });
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+
+    console.log("Update");
+
+    // function sum(key) {
+    //   return this.reduce((a, b) => a + (b[key] || 0), 0);
+    // }
+
+    if (prevProps.data !== this.props.data) {
+
+      var months = [];
+      var totals = [];
+      var realTotals = [];
+
+      // let i;
+
+      for (let i = 0; i < 12; i++) {
+        months.push(moment().subtract(i, 'months').format('MMM'))
+
+        var temp = this.props.data.filter((item) => {
+          return moment(item.date).isSame(moment().subtract(i, 'months'), 'month');
+        })
+
+        // temp = temp.map((item) => {
+        //   return item / 100
+        // })
+
+        totals.push(temp.reduce((a, b) => a + (b['amount'] || 0), 0))
+
+        realTotals = totals.map(function(item) {return item / 100})
+
+      }
+
+      this.setState({
+        monthTotals: realTotals,
+      }, () => {
+
+        if (this.state.monthTotals.length !== 0) {
+
+          // console.log(`Not equal to zero at ${this.state.julyTotal}`)
+
+          var vsReveneueExpense = document.getElementById(this.state.chartRevenueExpense);
+
+          new Chart(vsReveneueExpense, {
+              type: 'line',
+              data: {
+                  labels: [ ...months.reverse() ],
+                  datasets: [{
+                      label: 'Donations',
+                      data: [...this.state.monthTotals.reverse()],
+                      backgroundColor: [
+                        'rgba(63, 191, 127, 0.2)'
+                      ],
+                      borderColor: [
+                        'rgba(63, 191, 127, 1)'
+                      ],
+                      pointBackgroundColor: 'rgba(63, 191, 127, 1)',
+                      pointBorderColor: 'rgba(63, 191, 127, 1)',
+                      borderWidth: 1,
+                      lineTension: 0.1,
+                  },
+                  {
+                    label: 'Expenses',
+                    data: [10.66, 0, 12.97, 0, 0, 0, 0, 0, 0, 0, 0, 7.59],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    pointBackgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    pointBorderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 2,
+                    lineTension: 0.1,
+                }]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                        ticks: {
+                          fontFamily: "brandon-grotesque",
+                          beginAtZero: true,
+                        }
+                      }],
+                      xAxes: [{
+                        gridLines: {
+                          display: false
+                        },
+                        ticks: {
+                          fontFamily: "brandon-grotesque",
+                        }
+                      }]
+                  }
+              }
+          });
+        }
+
+      })
+
+    }
   }
 
   changeExpandSource(state) {

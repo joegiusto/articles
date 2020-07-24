@@ -1,15 +1,59 @@
-.content-wrap.fixed {
+.content-wrap.dark-mode {
 
-  .container {
-    max-width: 100%!important;
+  .reports-page {
+
+    .search {
+      background-color: $dark-mode-card-color;
+    }
+
+    .dropdown-wrap {
+      input {
+        background-color: $dark-mode-element-color;
+      }
+    }
+
+    .reports-table {
+      background-color: $dark-mode-element-color;
+      color: white;
+
+      .table-selector {
+
+        .main {
+
+          .selection {
+            color: white;
+
+            &.selection-active {
+              color: #212529;
+            }
+          }
+        }
+      }
+    }
+
+    .chart-block {
+      background-color: $dark-mode-card-color;
+
+      canvas {
+        background-color: $dark-mode-element-color!important;
+      }
+    }
+
   }
 }
+
+// .content-wrap.fixed {
+
+//   .container {
+//     max-width: 100%!important;
+//   }
+// }
 
 .fixed-componsation-50 {
   height: 50px;
 }
 
-.reports-side {
+.reports-table {
   margin-top: 1rem;
   margin-bottom: 1rem;
   border-top: 5px solid $accent-color;
@@ -166,6 +210,7 @@
     position: sticky;
     top: calc(100px + 2rem);
     margin-bottom: 2rem;
+    max-width: 600px;
 
     .other-tag {
       // display: block!important;
@@ -186,6 +231,10 @@
   .chart-blocks {
 
     .chart-block {
+
+      canvas {
+        background-color: white;
+      }
 
       &:first-child {
         margin-top: calc(1rem + 3px);
@@ -357,6 +406,7 @@
   .info {
     // height: 200px;
     background-color: $accent-color;
+    color: #212529;
     border: solid 3px #000;
     // border-bottom-width: 1px;
     // border-radius: 5px;

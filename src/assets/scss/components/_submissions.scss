@@ -69,6 +69,27 @@
   }
 }
 
+.dark-mode {
+  .submission-page {
+
+    .side-menu-one {
+      background-color: rgba(0, 0, 0, 0.5);
+
+      .background {
+        background-image: none;
+      }
+
+      .square {
+        color: black;
+      }
+    }
+
+    .filters {
+      background-color: $dark-mode-color!important;
+    }
+  }
+}
+
 .submission-page {
   font-family: montserrat, sans-serif;
   font-weight: 400;

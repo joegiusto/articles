@@ -1,4 +1,5 @@
 .content-wrap.fixed {
+
   .ad {
     margin-right: 2.5rem;
     margin-left: 2.5rem;
@@ -36,7 +37,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin-top: 1.5rem;
+    margin-top: 3.0rem;
 
     @include media-breakpoint-down(md) {
       flex-direction: column;
@@ -50,7 +51,7 @@
     position: sticky;
     top: calc(3rem + 50px);
     align-self: start;
-    width: 200px;
+    width: 250px;
     border: 3px solid #955408;
     z-index: 2;
     margin: 0rem 5rem;
@@ -255,6 +256,10 @@
       margin-bottom: .5rem;
     }
 
+    @include media-breakpoint-up(md) {
+      width: 50%;
+    }
+
     .news-one-head {
       background-color: $accent-color;
       padding: 0.3rem;
@@ -280,7 +285,63 @@
           box-shadow: inset 0px 0px 2px 1px #000;
         }
       }
+
+      .back-button-container {
+        position: relative;
+        $button-height: 1rem;
+
+        &:hover {
+          .back-button-dropdown {
+            opacity: 1;
+          }
+        }
+
+        .back-button {
+          background-color: white;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: $button-height;
+          border-radius: 100px;
+          padding: 0.3rem 0.3rem;
+          cursor: pointer;
+        }
   
+        .back-button-dropdown {
+          position: absolute;
+          top: $button-height;
+          z-index: 5;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 200px;
+          // height: 100px;
+          border-radius: 5px;
+          box-shadow: 2px 2px 2px 2px rgba(255, 255, 255, 0.5);
+          background-color: rgba($dark-mode-card-color, 0.9);
+          opacity: 0;
+          padding: 0.5rem;
+          color: white;
+          font-size: 1rem;
+
+          .subheading {
+            font-family: brandon-grotesque, sans-serif;
+            font-style: normal;
+            font-size: 1.25rem;
+            text-decoration: underline;
+
+            &:not(:first-child) {
+              margin-top: 0.5rem;
+            }
+          }
+
+          a, .link {
+            font-size: 0.9rem;
+            display: block;
+            color: white;
+          }
+        }
+      }
+
       .date-badge {
         position: absolute;
         left: 50%;
@@ -354,10 +415,11 @@
 
     .hero {
       position: relative;
-      z-index: -1;
+      z-index: 1;
 
       .image {
-        width: calc(100% - 0.5rem);
+        // width: calc(100% - 0.5rem);
+        width: 100%;
         max-height: 600px;
         object-fit: cover;
         margin-left: auto;
@@ -367,7 +429,7 @@
         border-left: 1px solid #000;
 
         @include media-breakpoint-up(md) {
-          width: calc(100% - 2rem);
+          // width: calc(100% - 2rem);
         }
       }
 
@@ -411,8 +473,8 @@
       @include media-breakpoint-up(md) {
         padding-top: 3rem;
         padding-bottom: 3rem;
-        padding-left: 15%;
-        padding-right: 15%;
+        padding-left: 1rem;
+        padding-right: 1rem;
       }
 
       // Font looks bad

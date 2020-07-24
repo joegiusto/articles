@@ -1,22 +1,78 @@
 
+.content-wrap.dark-mode {
+
+  .news-manage-plate {
+    background-color: $dark-mode-card-color;
+  }
+
+  .catagories {
+
+    .catagory {
+      background-color: $dark-mode-element-color;
+      color: white;
+
+      &.active {
+        background-color: $dark-mode-card-color;
+      }
+    }
+    
+  }
+
+  .search-controls {
+    .controls {
+      background-color: $dark-mode-card-color;
+    }
+
+    .assist {
+      background-color: $dark-mode-element-color;
+    }
+  }
+
+  .results {
+    background-color: $dark-mode-element-color;
+
+    .result {
+      margin: 0.5rem;
+      margin-bottom: 1rem!important;
+      background-color: $dark-mode-element-color;
+      border: 1px solid #fff;
+    }
+  }
+
+  .controls {
+    input {
+      background-color: black;
+      color: white;
+    }
+  }
+
+}
+
+.admin-news {
+  .col {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}
+
 .news-manage-plate {
   background-color: black;
   background-color: #fff;
-  box-shadow: -3px -2px 6px 0px #000;
+  box-shadow: 0px 0px 3px 0px #000;
   width: 100%;
   color: rgb(0, 0, 0);
   padding: 1rem;
-  padding-top: 2rem;
-  margin-top: 4rem;
+  padding-top: 1rem;
+  margin-top: 2rem;
   margin-bottom: 1rem;
   position: relative;
 
   @include media-breakpoint-down(md) {
-    margin-top: 2rem;
+    margin-top: 1rem;
   }
 
   h1 {
-    font-family: forte;
+    // font-family: forte;
     top: 0;
     transform: translateY(-50%);
     position: absolute;
@@ -25,6 +81,7 @@
 
     @include media-breakpoint-down(md) {
       font-size: 1.75rem;
+      position: relative;
     }
   }
 
@@ -52,6 +109,13 @@
       font-weight: bold;
       border-bottom: solid 5px transparent;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      @include media-breakpoint-down(md) {
+        padding: 0.5rem 1rem;
+      }
 
       &.active {
         background-color: white;
@@ -68,6 +132,7 @@
     .controls {
       align-items: center;
       display: flex;
+      flex-wrap: wrap;
       background-color: #f2f2f2;
       color: black;
       padding: 0.5rem 1rem;
@@ -141,11 +206,24 @@
         margin-bottom: .5rem;
       }
 
-      .date {
-        position: absolute;
+      .dates {
+        // position: absolute;
+        // width: 100%;
+        border-radius: 5px;
+        background-color: rgb(158, 158, 158);
+        padding: 0.25rem 0.5rem;
+        margin-top: -0.5rem;
+        margin-bottom: .5rem;
+        margin-left: -0.5rem;
+        margin-right: -0.5rem;
         top: -12px;
-        // left: -10px;
       }
+
+      // .date {
+      //   position: absolute;
+      //   top: -12px;
+      //   // left: -10px;
+      // }
 
       .title {
         font-size: 1rem;

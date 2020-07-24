@@ -11,7 +11,7 @@ export default function MythCard(props) {
   return (
     <>
     <div className="col-12 col-md-6">
-      <Link to={`${ROUTES.MYTHS}/${myth._id}`}>
+      <Link to={`${ROUTES.MYTHS}/${myth.url}`}>
         <div className="myth-item">
 
           <div className="myth-item-banner btn-outline-danger">

@@ -2,6 +2,7 @@ import React from 'react';
 // import { Link } from 'react-router-dom'
 import axios from 'axios'
 // import { withFirebase } from '../../Firebase';
+import { updateSubscriptionToIssue } from '../../../actions/siteActions'
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import moment from 'moment'
@@ -24,20 +25,23 @@ class Issue extends React.Component {
 
     const stored = this.props.issues.issues?.find(x => x.url === this.props.match.params.id)
 
-    if (stored !== undefined) {
+    // Swap the comments to reactivate pulling from local cache
+    // TODO - For this to work we would need to update the local cached issues 
+    // if (stored !== undefined) {
+    if (stored === "Won't be") {
 
       // Try to pull from local storage and if not there then do server call
       self.setState({
         ...stored,
         loading: false
-      });
-
-      // this.loadLastRead();
+      }, (() => {
+        self.loadLastRead();
+      }));
 
     } else {
       // Was not local, we make a server call!
       axios.post('/api/getNewsDocument', {
-        news_id: this.props.match.params.id
+        news_url: this.props.match.params.id
       })
       .then(function (response) {
         console.log(response);
@@ -45,9 +49,9 @@ class Issue extends React.Component {
         self.setState({
           ...response.data.document,
           loading: false
-        });
-
-        // this.loadLastRead();
+        }, (() => {
+          self.loadLastRead();
+        }));
 
       })
       .catch(function (error) {
@@ -71,7 +75,7 @@ class Issue extends React.Component {
 
       const lastDate = this.props.user?.subscriptions.find(x => x.news_id === this.state._id)
 
-      console.log(lastDate)
+      // console.log(lastDate)
 
       this.setState({
         lastRead: lastDate?.lastRead
@@ -85,12 +89,26 @@ class Issue extends React.Component {
 
         console.log(response);
 
+        if (response.data !== "Was not subscribed to issues") {
+          this.props.updateSubscriptionToIssue({
+            news_id: this.state._id,
+            // lastRead: moment('July 30 2020')
+          })
+        }
+
       })
       .catch(function (error) {
 
         console.log(error);
 
       });
+
+      // if ( moment(this.state.lastRead).isBefore( moment(this.state.last_update) ) ) {
+        
+        // console.log("Needs updating client side")
+
+      
+      // }
 
     } 
   }
@@ -122,14 +140,13 @@ class Issue extends React.Component {
 
               <h1>{this.state.news_title}</h1>
 
-              <small className="d-block">Issue Stats</small>
-              {lastRead !== undefined ? <div className="stat">Last Viewed By You: {moment(lastRead).format("LL")}</div> : null}
-              <div className="stat">500 People Subscribed</div>
+              {/* <small className="d-block">Issue Stats</small> */}
+              {<div className="stat">Last Viewed: {lastRead !== undefined ? moment(lastRead).format("LLL") : 'Never' }</div> }
+              <div className="stat">People Subscribed: 1</div>
               
-
               <div className="dates">
                 <div className="badge badge-articles">First Published: {moment(this.state.news_date).format("LL")}</div>
-                <div className="badge badge-dark ml-1">Last Updated: {moment(this.state.last_updated).format("LL")}</div>
+                <div className="badge badge-dark ml-1">Last Updated: {moment(this.state.last_update).format("LLL")}</div>
               </div>
               
             </div>
@@ -179,5 +196,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  // { logoutUser, setUserDetails }
+  { updateSubscriptionToIssue }
 )(withRouter(Issue));

@@ -13,17 +13,37 @@ module.exports = (app, db) => {
 
       // if (err) throw err;
       // var dbo = db.db("articles_data");
-      var o_id = new ObjectId(req.body.news_id);
+      //  || null);
+      console.log(req.body);
+      
+      var o_id;
+      if (req.body.news_id !== undefined ) {
+        o_id = new ObjectId(req.body.news_id)
+      } 
 
-      // console.log(req.body.news_id);
+      var url = req.body.news_url
 
-      db.collection("articles_news").findOne( o_id, function(err, result) {
-        if (err) throw err;
-        data.document = result
-        console.log("Call to /api/getNewsDocument done");
-        // db.close();
-        return res.send(data);
-      });
+      console.log(req.body);
+
+      if (url === undefined) {
+        db.collection("articles_news").findOne( o_id, function(err, result) {
+          if (err) throw err;
+          data.document = result
+          console.log("Call to /api/getNewsDocument done");
+          // db.close();
+          return res.send(data);
+        });
+      } else {
+        db.collection("articles_news").findOne( {url: url}, function(err, result) {
+          if (err) throw err;
+          data.document = result
+          console.log("Call to /api/getNewsDocument done");
+          // db.close();
+          return res.send(data);
+        });
+      }
+
+      
 
     // });
     

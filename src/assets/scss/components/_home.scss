@@ -1,12 +1,21 @@
 @import '../components/old_home';
 
 .dark-mode {
+
   .tile {
+
     .tile-content {
       background-color: $dark-mode-card-color!important;
 
       .sub-icons {
         -webkit-text-stroke: 2px black!important;
+      }
+
+      &.instagram {
+
+        .text {
+          color: white!important;
+        }
       }
     }
   }
@@ -387,9 +396,9 @@
         }
 
         &.instagram {
-          position: relative;
-          border: 3px solid rgba(0, 0, 0, 0.3);
-          border-radius: 5px;
+          // position: relative;
+          // border: 3px solid rgba(0, 0, 0, 0.3);
+          // border-radius: 5px;
 
           .photo {
             position: absolute;

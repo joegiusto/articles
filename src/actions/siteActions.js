@@ -29,3 +29,15 @@ export const filterIssuesDateType = () => dispatch => {
     type: 'FILTER_ISSUE_DATE_TYPE',
   });
 };
+
+export const updateSubscriptionToIssue = subscription => dispatch => {
+
+  console.log("Update Issue Called");
+  console.log(subscription);
+
+  dispatch({
+    type: 'UPDATE_SUBSCRIPTION',
+    subscription
+  })
+  
+};

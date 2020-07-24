@@ -13,6 +13,16 @@ function Myths(props) {
       <div className="myths-head ">
         <h1 className="title">Myths</h1>
         <p className="body">You ever hear someone say windmills cause cancer? Maybe, you had someone tell you that electric cars actually have a larger carbon footprint then gasoline and diesel vehicles. Explore the many topics of common confusion here.</p>
+
+        <div className="filters noselect">
+
+            <span className="subscription-badges">
+              <span className="bold"><i class="fas fa-calendar"></i></span>
+              <div className={"badge border badge-light"}>Posted</div>
+              <div className={"ml-1 badge border badge-light"}>Updated</div>
+            </span>
+
+          </div>
       </div>
   
       {/* <p>Myths - example - See reddit saved post, "<a href="https://www.reddit.com/r/technology/comments/bj2h83/enough_with_the_actually_electric_cars_pollute/">Actually Electric Cars Pollute More</a>" Take the top common myths in this country at the moment and debunk them. Everything from electric cars to global warming and just explain them in a deteiled fact based/source-cited way that eveyone can easily reference and understand.</p> */}

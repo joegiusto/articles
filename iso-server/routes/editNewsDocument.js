@@ -14,7 +14,14 @@ module.exports = (app, db) => {
     myobj.news_date = new Date(myobj.news_date);
     myobj.last_update = new Date(myobj.last_update);
 
-    const allowedKeys = ['news_type', 'news_title', 'news_notes', 'news_date', 'news_tags', "url", "hero_url", "last_update", "news_tagline"];
+    if (myobj.visible === true || myobj.visible === "true") {
+      myobj.visible = true
+    } else {
+      myobj.visible = false
+    }
+
+    const allowedKeys = ['news_type', 'news_title', 'news_notes', 'news_date', 'news_tags', "url", "hero_url", "last_update", "news_tagline", "visible"];
+
     myobj = Object.keys(myobj)
     .filter(key => allowedKeys.includes(key))
     .reduce((obj, key) => {

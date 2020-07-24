@@ -1,8 +1,15 @@
 import React, { Component, useState } from 'react';
 import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
-import Swiper from 'react-id-swiper';
+
+// import Swiper from 'react-id-swiper';
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.scss'
+import 'swiper/components/navigation/navigation.scss';
+import 'swiper/components/pagination/pagination.scss';
+import 'swiper/components/scrollbar/scrollbar.scss';
+
 // import playButtonLight from '../../assets/img/News/yt_logo_mono_light.png'
 import playButtonDark from '../../assets/img/News/yt_logo_mono_dark.png'
 import moment from 'moment';
@@ -28,6 +35,8 @@ import background from '../../assets/img/card-1.png'
 import * as ROUTES from '../../constants/routes';
 import { Link, Switch, Route } from 'react-router-dom';
 
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
+
 function FlintCounter() {
   // Declare a new state variable, which we'll call "count"
   const [display, setDisplay] = useState(true);
@@ -42,38 +51,50 @@ function FlintCounter() {
 
 function SearchHead(props) {
   return(
-    <div className={"search-head"}>
+    <div className={"search-extras-head " + (props.homeLayout ? 'home' : '')}>
 
-      <img src={background} alt="" className="background"/>
-
-      <h1 className="title">Search</h1>
-
-      <input 
-      id="search" 
-      name="search" 
-      value={props.searchText} 
-      onChange={props.onChange} 
-      type="text" 
-      className="form-control"
-      placeholder={props.userSubscriptions ? "Only works on 'All Issues' sort" : ""}
-      />
-
-      <div className="my-2">
-        <Link to={ROUTES.STORIES}><button className={"search-button mr-1 " + (props.pathname === "/news/stories" ? 'active' : '')}>Stories</button></Link>
-        <Link to={ROUTES.ISSUES}><button className={"search-button mr-1 " + (props.pathname === "/news/issues" ? 'active' : '')}>Issues</button></Link>
-        <Link to={ROUTES.MYTHS}><button className={"search-button mr-1 " + (props.pathname === "/news/myths" ? 'active' : '')}>Myths</button></Link>
+      <div className={"search-head " + (props.homeLayout ? 'home' : '')}>
+  
+        <img src={background} alt="" className="background"/>
+  
+        <h1 className="title">Search</h1>
+  
+        <div className="filter"></div>
+  
+        <input 
+        id="search" 
+        name="search" 
+        value={props.searchText} 
+        onChange={props.onChange} 
+        type="text" 
+        className="form-control"
+        placeholder={props.userSubscriptions ? "Only works on 'All Issues' sort" : ""}
+        />
+  
+        <div className="my-2">
+          <Link to={ROUTES.STORIES}><button className={"search-button mr-1 " + (props.pathname === "/news/stories" ? 'active' : '')}>Stories</button></Link>
+          <Link to={ROUTES.ISSUES}><button className={"search-button mr-1 " + (props.pathname === "/news/issues" ? 'active' : '')}>Issues</button></Link>
+          <Link to={ROUTES.MYTHS}><button className={"search-button mr-1 " + (props.pathname === "/news/myths" ? 'active' : '')}>Myths</button></Link>
+        </div>
+  
+        <p className="body">Easily access content across all of our news content and publications.</p>
+  
+        <div className="tags">
+          <div className="type">Trending</div>
+          <div className="badge badge-articles">Coronavirus</div>
+          <div className="badge badge-articles">United Nations</div>
+          <div className="badge badge-articles">2020 Elections</div>
+          <div className="badge badge-articles">Global Warming</div>
+          <div className="badge badge-articles">Flint Michigan</div>
+        </div>
+  
       </div>
 
-      <p className="body">Easily access content across all of our news content and publications.</p>
-
-      <div className="tags">
-        <div className="type">Trending</div>
-        <div className="badge badge-articles">Coronavirus</div>
-        <div className="badge badge-articles">United Nations</div>
-        <div className="badge badge-articles">2020 Elections</div>
-        <div className="badge badge-articles">Global Warming</div>
-        <div className="badge badge-articles">Flint Michigan</div>
+      <div className="extras-head">
+        <div className="extras-panel weather">Weather</div>
+        <div className="extras-panel youtube">Youtube</div>
       </div>
+
     </div>
   )
 }
@@ -153,7 +174,7 @@ function JustFrontpage(props) {
 
   return (
     <>
-      <div className="issue-development issues-page">
+      <div className="issue-development issues-page d-none">
         
         <div className="d-flex justify-content-between">
           <span className="title heading-font">Issue Developments</span>
@@ -243,6 +264,176 @@ function JustFrontpage(props) {
   )
 }
 
+class NewsCard extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+
+    }
+  }
+
+  componentDidMount() {
+    
+  }
+
+  renderRoute(type) {
+    switch(type) {
+      case 'story':
+        return ROUTES.STORIES
+        // break;
+      case 'issue':
+        return ROUTES.ISSUES
+        // break;
+      case 'myth':
+        return ROUTES.MYTHS
+        // break;
+      default:
+        // code block
+    }
+  }
+
+  render() {
+    return (
+      <Link to={this.renderRoute(this.props.document.news_type) + '/' + this.props.document.url}>
+        <div className="content">
+          <div className="title">{this.props.document.news_title}</div>
+          <img src={this.props.document.hero_url} alt="" className="background"/>
+          <div className="filter"></div>
+          <div className="shadow"></div>
+          <div className="bar"></div>
+          <div className="tagline">
+            {this.props.document.news_tagline}
+          </div>
+        </div>
+      </Link>
+    )
+  }
+}
+
+class RecentSliders extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+
+    }
+  }
+
+  componentDidMount() {
+
+  }
+
+  render() {
+
+    const swiper_settings = {
+      spaceBetween: 10,
+      slidesPerView: 'auto',
+      slidesPerGroup: 1,
+      // navigation: true,
+      scrollbar: { draggable: true },
+      navigation: {
+        nextEl: '.fa-forward',
+        prevEl: '.fa-backward',
+      },
+
+      onSlideChange: () => console.log('slide change'),
+      onSwiper: (swiper) => console.log(swiper),
+
+
+    }
+
+    return (
+      <div className="news-sliders">
+        {/* Recent Stories */}
+        <div className="news-preview-container story">
+  
+        <Swiper
+          {...swiper_settings}
+        >
+
+          {/* See slots https://swiperjs.com/react/ */}
+          <span slot="container-start">
+            <div className="header">
+              <h5>Recent Stories</h5>
+
+              <div className="controls ">
+                <i class="fas fa-backward"></i>
+                <i class="fas fa-forward"></i>
+              </div>
+            </div>
+          </span>
+
+          {this.props.stories.stories.map((story) => (
+            <SwiperSlide>
+              <NewsCard document={story}/>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+  
+        </div>
+  
+        {/* Recent Issues */}
+        <div className="news-preview-container issue">
+  
+        <Swiper
+          {...swiper_settings}
+          
+        >
+
+          {/* See slots https://swiperjs.com/react/ */}
+          <span slot="container-start">
+            <div className="header">
+              <h5>Recent Issues</h5>
+
+              <div className="controls">
+                <i class="fas fa-backward"></i>
+                <i class="fas fa-forward"></i>
+              </div>
+            </div>
+          </span>
+
+          {this.props.issues.issues.map((story) => (
+            <SwiperSlide>
+              <NewsCard document={story}/>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+  
+        </div>
+  
+        {/* Recent Myths */}
+        <div className="news-preview-container myth">
+  
+        <Swiper
+          {...swiper_settings}
+        >
+
+          {/* See slots https://swiperjs.com/react/ */}
+          <span slot="container-start">
+            <div className="header">
+              <h5>Recent Myths</h5>
+
+              <div className="controls">
+                <i class="fas fa-backward"></i>
+                <i class="fas fa-forward"></i>
+              </div>
+            </div>
+          </span>
+
+          {this.props.myths.myths.map((story) => (
+            <SwiperSlide>
+              <NewsCard document={story}/>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+  
+        </div>
+      </div>
+    )
+  }
+}
+
 class Frontpage extends Component {
   constructor(props) {
     super(props);
@@ -270,6 +461,16 @@ class Frontpage extends Component {
       slidesToShow: 4,
       slidesToScroll: 4
     };
+
+    const swiper_settings = {
+      spaceBetween: 10,
+      slidesPerView: 'auto',
+      slidesPerGroup: 1,
+      navigation: true,
+      scrollbar: { draggable: true },
+      onSlideChange: () => console.log('slide change'),
+      onSwiper: (swiper) => console.log(swiper)
+    }
     
     return(
       <section className="frontpage-section">
@@ -285,9 +486,27 @@ class Frontpage extends Component {
             <div className="states-heatmap">
               <img src={statesImage} className="head-image" alt=""/>
               <div className="live-dots">
-                <div className="dot"></div>
-                <div className="dot"></div>
-                <div className="dot"></div>
+                <div className="dot">
+                  <div className="expanded">
+                    <div>News Info</div>
+                    <div>Date</div>
+                    <div>View</div>
+                  </div>
+                </div>
+                <div className="dot">
+                  <div className="expanded">
+                    <div>News Info</div>
+                    <div>Date</div>
+                    <div>View</div>
+                  </div>
+                </div>
+                <div className="dot">
+                  <div className="expanded">
+                    <div>News Info</div>
+                    <div>Date</div>
+                    <div>View</div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -395,21 +614,46 @@ class Frontpage extends Component {
 
             </div>
 
-            {this.props.location.pathname === "/news" ?
-            <SearchHead userSubscriptions={this.props.site?.userSubscriptions} onChange={this.onChange} searchText={this.state.search} pathname={this.props.location.pathname}></SearchHead>
+            {/* {this.props.location.pathname === "/news" ?
+            <>
+              <SearchHead/>
+              <RecentSliders
+              stories={this.props.stories}
+              issues={this.props.issues}
+              myths={this.props.myths}
+              />
+            </>
             :
             null
-            }
-            
-  
+            } */}
+
             <div className="row mb-4 justify-content-between">
   
               {/* Left Side */}
-              <div className="col-12 col-md-8 pr-md-0">
+              <div className="col-12 col-md-12 pr-md-0">
 
                 <Switch>
                   {/* <Route exact path={ROUTES.NEWS} render={() => <h1>Front</h1>}/> */}
-                  <Route exact path={ROUTES.NEWS} render={() => <JustFrontpage stories={this.props.stories} issues={this.props.issues} myths={this.props.myths}></JustFrontpage>}/>
+                  {/* <Route exact path={ROUTES.NEWS} render={() => <JustFrontpage stories={this.props.stories} issues={this.props.issues} myths={this.props.myths}></JustFrontpage>}/> */}
+                  <Route exact path={ROUTES.NEWS} render={() => 
+                    <>
+                      <SearchHead homeLayout={true}/>
+
+                      <RecentSliders
+                      stories={this.props.stories}
+                      issues={this.props.issues}
+                      myths={this.props.myths}
+                      />
+
+                      <div className="my-4 mx-auto">
+                        <span>{this.props.stories.stories.length} Stories</span>
+                        <span className="mx-2">-</span>
+                        <span>{this.props.issues.issues.length} Issues</span>
+                        <span className="mx-2">-</span>
+                        <span>{this.props.myths.myths.length} Myths</span>
+                      </div>
+                    </>
+                  }/>
                   <Route exact path={ROUTES.STORIES} render={() => <Stories searchText={this.state.search}></Stories>}/>
                   <Route exact path={ROUTES.ISSUES} render={() => <Issues searchText={this.state.search}></Issues> }/>
                   <Route exact path={ROUTES.MYTHS} render={() => <Myths searchText={this.state.search}></Myths> }/>
@@ -418,9 +662,9 @@ class Frontpage extends Component {
               </div>
   
               {/* Right Side */}
-              <div className="col-12 col-md-4 pl-md-0">
+              <div className="col-12 col-md-12 pl-md-0">
   
-                <div className="side-panel">
+                <div className="side-panel mx-auto">
 
                   {this.props.location.pathname === "/news" ?
                   null

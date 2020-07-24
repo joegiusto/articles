@@ -71,7 +71,7 @@ class IssuesClass extends Component {
 
             <span className="subscription-badges">
               <span className="bold"><i class="fas fa-th"></i></span>
-              <div onClick={() => this.props.toggleUserSubscriptions()} className={"badge border " + (this.props.site?.userSubscriptions === true ? 'badge-dark ' : 'badge-light ') + (this.props.user_subscriptions?.length > 0 ? '' : 'd-none')}>Subscribed</div>
+              <div onClick={() => this.props.toggleUserSubscriptions()} className={"badge border " + (this.props.site?.userSubscriptions === true ? 'badge-dark ' : 'badge-light ')}>Subscribed</div>
               <div onClick={() => this.props.toggleUserSubscriptions()} className={"ml-1 badge border " + (this.props.site?.userSubscriptions === false ? 'badge-dark' : 'badge-light')}>All</div>
             </span>
 
@@ -93,6 +93,7 @@ class IssuesClass extends Component {
             // <div className="col-md-4 mt-3">
             <GzyCard
             key={issue._id}
+            isAuth={this.props.isAuth}
             issue={issue}
             podcast={false}
             podcastDay=""
@@ -105,7 +106,22 @@ class IssuesClass extends Component {
             // </div>
           )))
           : 
-          <div>Issues Loading...</div>
+          <>
+          {/* <div>Issues Loading...</div> */}
+          {this.props.isAuth ? 
+            null
+            :
+            <div className="sign-in-benifit">
+              <i class="d-block fa-5x fas fa-balance-scale mt-3" aria-hidden="true"></i>
+              <h5 className="mt-3">Sign in or make an account to access your subscriptions</h5>
+              <div className="buttons my-3">
+                <div className="btn btn-articles-light">Sign In</div>
+                <div className="btn btn-articles-light">Sign Up</div>
+                <div onClick={() => this.props.toggleUserSubscriptions()} className="btn btn-articles-light alt ml-3">See All Issues</div>
+              </div>
+            </div>
+            }
+            </>
           :
           this.props.searchText !== "" ? 
 
@@ -113,6 +129,7 @@ class IssuesClass extends Component {
               // <div className="col-md-4 mt-3">
               <GzyCard
               key={issue._id}
+              isAuth={this.props.isAuth}
               issue={issue}
               podcast={true}
               podcastDay=""
@@ -133,6 +150,7 @@ class IssuesClass extends Component {
               // <div className="col-md-4 mt-3">
               <GzyCard
               key={issue._id}
+              isAuth={this.props.isAuth}
               issue={issue}
               podcast={true}
               podcastDay=""
@@ -263,7 +281,7 @@ class IssuesClass extends Component {
         </div>
 
         <div className="issues-footer">
-          <div>Showing <span className="badge badge-articles">{this.props.site.userSubscriptions ? this.props.user_subscriptions.length : this.props.issues?.issues.length}</span> of <span className="badge badge-dark">{this.props.site.userSubscriptions ? this.props.user_subscriptions.length : this.props.issues?.issues.length}</span> Results</div>
+          <div>Showing <span className="badge badge-articles">{this.props.site.userSubscriptions ? this.props.user_subscriptions?.length || 0 : this.props.issues?.issues?.length || 0}</span> of <span className="badge badge-dark">{this.props.site.userSubscriptions ? this.props.user_subscriptions?.length || 0 : this.props.issues?.issues?.length || 0}</span> Results</div>
           <div><button className="btn btn-articles-light">1</button></div>
         </div>
 
@@ -322,11 +340,17 @@ function GzyCard (props) {
         }
 
         <div style={{backgroundImage: image}} className="g-card-background"></div>
+
         <div className="g-card-text-card">
           <div className="top-text"></div>
           <div className="mid-text">{issue?.news_title}</div>
           <div className="bottom-text">{issue?.bottomText}</div>
         </div>
+
+        {/* TODO - Merge into one */}
+        { moment(issue?.lastRead).isBefore( moment(issue?.last_update) ) ? <div className="new-update"><i className="fas fa-exclamation"></i>Update</div> : null }
+        { issue?.lastRead === undefined && props.isAuth ? <div className="new-update"><i className="fas fa-exclamation"></i>Update</div> : null }
+
       </div>
     </Link>
   )
@@ -335,6 +359,7 @@ function GzyCard (props) {
 const mapStateToProps = state => ({
   issues: state.issues,
   site: state.site,
+  isAuth: state.auth.isAuthenticated,
   user_subscriptions: state.auth.user_details.subscriptionsFetched
 });
 

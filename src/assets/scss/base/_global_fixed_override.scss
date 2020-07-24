@@ -1,0 +1,9 @@
+.content-wrap.fixed {
+
+  .container {
+    
+    @include media-breakpoint-up(md) {
+      max-width: 80%!important;
+    }
+  }
+}

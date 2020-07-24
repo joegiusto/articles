@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
-// import { compose } from 'recompose';
-
-// import { withFirebase } from '../../Firebase';
-// import { withAuthorization, withEmailVerification } from '../../Session';
-// import * as ROLES from '../../../constants/roles';
-import * as ROUTES from '../../../../constants/routes';
-
+import { Link } from 'react-router-dom';
+import moment from 'moment'
 import axios from 'axios';
 
+import * as ROUTES from '../../../../constants/routes';
 import NewsAdd from './add';
 
 class AdminPage extends Component {
@@ -16,8 +11,6 @@ class AdminPage extends Component {
   super(props);
 
     this.state = {
-      contentServer: 'MongoDB',
-
       catagory: 'All',
       searchAlert: false,
       searchFilter: 'Tags',
@@ -219,12 +212,12 @@ class AdminPage extends Component {
     }
 
     return (
-      <div className="container-fluid">
+      <div className="admin-news">
         <div className="row">
 
-          <div className="col-12 col-md-7">
+          <div className="col col-12 col-md-7">
             <div className="news-manage-plate">
-              <h1>News Management</h1>
+              {/* <h1>News Management</h1> */}
   
               <div className="catagories">
                 <NewsTypeSelector catagory={this.state.catagory} changeCatagory={this.changeCatagory} changeCatagoryTo="All" displayCatagoryAs="All" />
@@ -239,8 +232,9 @@ class AdminPage extends Component {
                   {/* <span onClick={() => this.changeSearchFilter(catagory)} className={"badge " + (searchFilter === catagory ? 'badge-primary' : 'badge-secondary')}>{catagory} Title</span> */}
                   <span onClick={() => this.changeSearchFilter('Tags')} className={"badge " + (searchFilter === "Tags" ? 'badge-primary' : 'badge-secondary')}>Tags</span>
                   
-                  <input className="" name="searchText" type="text" value={searchText} onChange={this.handleChange}/>
-                  <div onClick={() => this.searchText()} className="btn btn-articles-light">Go</div>
+                  {/* TODO Add search function to sort by title */}
+                  {/* <input className="" name="searchText" type="text" value={searchText} onChange={this.handleChange}/> */}
+                  {/* <div onClick={() => this.searchText()} className="btn btn-articles-light">Go</div> */}
   
                 </div>
   
@@ -297,16 +291,21 @@ class AdminPage extends Component {
                 }
                 {results.map((result) => {
   
-                  const d = new Date(result.news_date);
+                  // const d = new Date(result.news_date);
   
                   return (
                   <div className="result" key={result.issue_id}>
   
-                    <span className="date badge badge-dark border ml-2">{d.toLocaleString().split(',')[0]} </span>
+                    <div className="dates">
+                      {result.visible ? null : <span><i class="fas fa-low-vision"></i></span>}
+
+                      <span className="date badge badge-dark border ml-2">{moment(result.news_date).format("LL")} </span>
+                      <span className="date badge badge-warning border ml-2">{moment(result.last_update).format("LL")} </span>
+                    </div>
                     
                     <Link onClick={() => this.setState({isEdit: true})} to={ROUTES.ADMIN_NEWS + '/' + result._id}><span className="title ml-2">{result.news_title} <small>({result.news_type})</small></span></Link>
   
-                    <div className={"tags " + (catagory === "All" ? '' : '')}>
+                    <div className={"tags pl-3" + (catagory === "All" ? '' : '')}>
   
                       {result.news_tags?.length > 0 ?
                         result.news_tags?.map(tag => (
@@ -327,7 +326,7 @@ class AdminPage extends Component {
             </div>
           </div>
 
-          <div className="col-12 col-md-5">
+          <div className="col col-12 col-md-5">
             <NewsAdd tags={this.state.tags} isEdit={this.state.isEdit} news_id={this.props.match.params.id} isExact={this.props.match.isExact} changeIsEdit={this.changeIsEdit}/>
           </div>
 

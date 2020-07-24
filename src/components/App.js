@@ -34,7 +34,8 @@ import StoreSubmissionsSubmitPage from './Store/Submissions'
 import StoreManage from './Store/Manage'
 
 import NewsPage from './News'
-import NewsManagePage from './News/Manage'
+// Moved to Admin
+// import NewsManagePage from './News/Manage'
 
 import IssuesPage from './News/Issues'
 import IssuePage from './News/Issues/single.js'
@@ -203,8 +204,9 @@ class App extends Component {
               <Route path={ROUTES.MYTHS} component={NewsPage} exact={true}/>
               <Route path={ROUTES.MYTH} component={MythPage}/>
               
-              <Route exact path={ROUTES.MANAGE} component={NewsManagePage} />
-              <Route path={ROUTES.MANAGE_DETAILS} component={NewsManagePage} />
+              {/* Moved to admin page */}
+              {/* <Route exact path={ROUTES.MANAGE} component={NewsManagePage} /> */}
+              {/* <Route path={ROUTES.MANAGE_DETAILS} component={NewsManagePage} /> */}
   
               <Route path={ROUTES.TOWN_HALL} component={TownHallPage} />
         

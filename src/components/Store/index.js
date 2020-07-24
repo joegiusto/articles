@@ -183,6 +183,13 @@ class StorePage extends Component {
 					</div>
 				</div>
 
+				<div className="extra-nav-bar">
+					<Link>Featured</Link>
+					<Link>All Products</Link>
+					<Link to={ROUTES.STORE_ORDERS}>Previous Orders</Link>
+					<Link>Favorite Products</Link>
+				</div>
+
 				<div className="hero">
 
 					<img src={hero} alt=""/>

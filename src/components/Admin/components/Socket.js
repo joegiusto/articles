@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
 import { connect } from "react-redux";
 import axios from 'axios'
+import moment from 'moment'
 import socketIOClient from 'socket.io-client'
+
 const ENDPOINT = "/";
 let socket = undefined;
 
@@ -13,7 +15,9 @@ class Sockets extends Component {
       sockets: [],
       socketMessage: '',
       photos: [],
-      fakeImageHash: 0
+      fakeImageHash: 0,
+      newProfilePhotoLoading: false,
+      cacheBust: moment()
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -142,6 +146,7 @@ class Sockets extends Component {
 
     this.setState({
       file: e.target.files[0],
+      newProfilePhotoLoading: true,
     }, 
       () => {
         data.append('file', this.state.file);
@@ -153,6 +158,7 @@ class Sockets extends Component {
         .then(res => { // then print response status
           console.log(res.statusText)
           this.setState({
+            newProfilePhotoLoading: false,
             // photos: [...this.state.photos, 'profile_photos/' + this.props.user_id + '.' + this.state.file.name.split('.')[1]],
             fakeImageHash: this.state.fakeImageHash + 1
           })
@@ -189,18 +195,22 @@ class Sockets extends Component {
           <button onClick={() => this.pushSocket()} className="btn btn-articles-light">Send</button>
         </div>
 
-        <button onClick={() => this.pushTestDonation()} className="btn btn-articles-light">Fake Donation</button>
-        <button onClick={() => this.pushTestExpense()} className="btn btn-articles-light">Fake Expense</button>
+        <div class="mt-3">
+          <button onClick={() => this.pushTestDonation()} className="btn btn-articles-light">Fake Donation</button>
+          <button onClick={() => this.pushTestExpense()} className="btn btn-articles-light">Fake Expense</button>
+        </div>
 
         <div className="aws-profile-photo-test">
 
-          <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${this.props.user_id}.JPG?${this.state.fakeImageHash}`} height="150" width="150" alt=""/>
+          <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${this.props.user_id}.jpg?h=${this.state.fakeImageHash}&b=${this.state.cacheBust}`} height="150" width="150" alt=""/>
 
           <div className="upload-photo-wrap mr-1">
             <div className="upload-photo noselect">+</div>
             <input onChange={this.onChangeProfile} accept=".jpg" type="file" name="myfile" />
           </div>
         </div>
+
+        <div>{this.state.newProfilePhotoLoading ? 'Uploading' : ''}</div>
 
         <div className="aws-photo-test">
 
