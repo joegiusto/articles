@@ -50,6 +50,18 @@ function FlintCounter() {
 }
 
 function SearchHead(props) {
+
+  const days = [];
+
+  for (let i = 0;  i <= 6; i++ ) {
+    days.push(
+      <div className="day">
+        <div>{moment().add(i, 'day').format('ddd')} - {moment().add(i, 'day').format('DD')}</div>
+        <div><i className="fas fa-cloud-sun"></i></div>
+      </div>
+    )
+  }
+
   return(
     <div className={"search-extras-head " + (props.homeLayout ? 'home' : '')}>
 
@@ -77,8 +89,6 @@ function SearchHead(props) {
           <Link to={ROUTES.MYTHS}><button className={"search-button mr-1 " + (props.pathname === "/news/myths" ? 'active' : '')}>Myths</button></Link>
         </div>
   
-        <p className="body">Easily access content across all of our news content and publications.</p>
-  
         <div className="tags">
           <div className="type">Trending</div>
           <div className="badge badge-articles">Coronavirus</div>
@@ -91,8 +101,52 @@ function SearchHead(props) {
       </div>
 
       <div className="extras-head">
-        <div className="extras-panel weather">Weather</div>
-        <div className="extras-panel youtube">Youtube</div>
+
+        <div onClick={() => props.toggleWeatherOverlay()} className="extras-panel weather">
+
+          {/* <div className="info">Zip: </div> */}
+          <div className="info">Zip: <span className="badge badge-light">{props.zip}</span></div>
+
+          <div className="background">
+            <img src="https://s7d2.scene7.com/is/image/TWCNews/partly_cloudy_jpg-4" alt=""/>
+          </div>
+
+          <div className="content text-center">
+            <div><i className="fas fa-thermometer-empty"></i>80°F</div>
+            <div>Partly Cloudy</div>
+          </div>
+
+          <div className="slideup">
+            <div className="days">
+
+              {days}
+
+              {/* <div className="day">
+                <div>{moment().add(0, 'day').format('ddd')} - {moment().add(0, 'day').format('DD')}</div>
+                <div><i className="fas fa-cloud-sun"></i></div>
+              </div>
+
+              <div className="day">{moment().add(1, 'day').format('ddd')} - {moment().add(1, 'day').format('DD')}</div>
+              <div className="day">{moment().add(2, 'day').format('ddd')} - {moment().add(2, 'day').format('DD')}</div>
+              <div className="day">{moment().add(3, 'day').format('ddd')} - {moment().add(3, 'day').format('DD')}</div>
+              <div className="day">{moment().add(4, 'day').format('ddd')} - {moment().add(4, 'day').format('DD')}</div>
+              <div className="day">{moment().add(5, 'day').format('ddd')} - {moment().add(5, 'day').format('DD')}</div>
+              <div className="day">{moment().add(6, 'day').format('ddd')} - {moment().add(6, 'day').format('DD')}</div> */}
+
+            </div>
+          </div>
+          
+          <div></div>
+
+        </div>
+
+        <a href="https://www.youtube.com/channel/UCeftkiTtcniDx87GqoEmFAg" target="_blank" rel="noopener noreferrer" className="extras-panel youtube">
+          <div className="info">Last Upload: <span className="badge badge-light">Never</span></div>
+          <div className="background">
+            <img src="https://turbologo.com/articles/wp-content/uploads/2019/10/youtube-logo-illustration-1280x720.jpg" alt=""/>
+          </div>
+        </a>
+
       </div>
 
     </div>
@@ -439,8 +493,11 @@ class Frontpage extends Component {
     super(props);
 
     this.state = {
-      search: ''
+      search: '',
+      weatherOverlay: false
     }
+
+    this.toggleWeatherOverlay = this.toggleWeatherOverlay.bind(this);
   }
 
   componentDidMount() {
@@ -451,6 +508,14 @@ class Frontpage extends Component {
     console.log("Fired")
     this.setState({ [event.target.name]: event.target.value });
   };
+
+  toggleWeatherOverlay(bool) {
+    if (bool === true || bool === false) {
+      this.setState({weatherOverlay: bool})
+    } else {
+      this.setState({weatherOverlay: !this.state.weatherOverlay})
+    }
+  }
 
   render() {
     const settings = {
@@ -486,27 +551,19 @@ class Frontpage extends Component {
             <div className="states-heatmap">
               <img src={statesImage} className="head-image" alt=""/>
               <div className="live-dots">
+
                 <div className="dot">
                   <div className="expanded">
-                    <div>News Info</div>
-                    <div>Date</div>
-                    <div>View</div>
+                    
+                    <div className="location">Austin, TX</div>
+                    <div className="date">{moment().format("MM/DD")}</div>
+
+                    <div className="news">Tesla will build its next Gigafactory near Austin, Texas</div>
+                    
+                    <div className="btn btn-articles-light">View</div>
                   </div>
                 </div>
-                <div className="dot">
-                  <div className="expanded">
-                    <div>News Info</div>
-                    <div>Date</div>
-                    <div>View</div>
-                  </div>
-                </div>
-                <div className="dot">
-                  <div className="expanded">
-                    <div>News Info</div>
-                    <div>Date</div>
-                    <div>View</div>
-                  </div>
-                </div>
+
               </div>
             </div>
 
@@ -514,19 +571,12 @@ class Frontpage extends Component {
 
               <div className="title">Trending</div>
 
-              <div className="badges-scroll-container">
-                <div className="badges">
-                  <div className="badge badge-articles-light">Example Story</div>
-                  <div className="badge badge-articles-light">Example Issue</div>
-                  <div className="badge badge-articles-light">Example Myth</div>
-                  <div className="badge badge-articles-light">Example Story</div>
-                  <div className="badge badge-articles-light">Example Issue</div>
-                  <div className="badge badge-articles-light">Example Myth</div>
-                  <div className="badge badge-articles-light">Example Story</div>
-                  <div className="badge badge-articles-light">Example Issue</div>
-                  <div className="badge badge-articles-light">Example Myth</div>
-                  <div className="badge badge-articles-light">Example Story</div>
-                </div>
+              <div className="trending-card">Tesla will build its next Gigafactory near Austin, Texas</div>
+
+              <div className="dots">
+                <div className="dot active"></div>
+                <div className="dot"></div>
+                <div className="dot"></div>
               </div>
               
             </div>
@@ -587,6 +637,22 @@ class Frontpage extends Component {
 
         </div>
 
+        <div onClick={() => this.setState({weatherOverlay: !this.state.weatherOverlay})} className={"weather-overlay " + (this.state.weatherOverlay ? 'show' : '')}>
+          
+          <div className="content">
+
+            <div>Weather Overlay</div>
+
+            <div className="close">
+              <div className="btn btn-articles-light">
+                Close
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
         <div className="content">
           <div className='container-fluid'>
 
@@ -627,17 +693,17 @@ class Frontpage extends Component {
             null
             } */}
 
-            <div className="row mb-4 justify-content-between">
+            <div className="row mb-3 justify-content-between">
   
               {/* Left Side */}
-              <div className="col-12 col-md-12 pr-md-0">
+              <div className="col-12 col-md-12 px-md-0">
 
                 <Switch>
                   {/* <Route exact path={ROUTES.NEWS} render={() => <h1>Front</h1>}/> */}
                   {/* <Route exact path={ROUTES.NEWS} render={() => <JustFrontpage stories={this.props.stories} issues={this.props.issues} myths={this.props.myths}></JustFrontpage>}/> */}
                   <Route exact path={ROUTES.NEWS} render={() => 
                     <>
-                      <SearchHead homeLayout={true}/>
+                      <SearchHead zip={this.props.user_details.address?.zip || 'None'} toggleWeatherOverlay={this.toggleWeatherOverlay} homeLayout={true}/>
 
                       <RecentSliders
                       stories={this.props.stories}
@@ -645,12 +711,20 @@ class Frontpage extends Component {
                       myths={this.props.myths}
                       />
 
-                      <div className="my-4 mx-auto">
-                        <span>{this.props.stories.stories.length} Stories</span>
-                        <span className="mx-2">-</span>
-                        <span>{this.props.issues.issues.length} Issues</span>
-                        <span className="mx-2">-</span>
-                        <span>{this.props.myths.myths.length} Myths</span>
+                      <div className="mt-3 mx-auto ongoing-counts d-none">
+
+                        Serving 
+
+                        <div className="counts">
+                          <span>{this.props.stories.stories.length} Stories</span>
+                          <span className="mx-2">-</span>
+                          <span>{this.props.issues.issues.length} Issues</span>
+                          <span className="mx-2">-</span>
+                          <span>{this.props.myths.myths.length} Myths</span>
+                        </div>
+
+                        Thank you to everyone that supports.
+
                       </div>
                     </>
                   }/>
@@ -662,7 +736,7 @@ class Frontpage extends Component {
               </div>
   
               {/* Right Side */}
-              <div className="col-12 col-md-12 pl-md-0">
+              <div className="col-12 col-md-12 pl-md-0 ">
   
                 <div className="side-panel mx-auto">
 
@@ -672,7 +746,7 @@ class Frontpage extends Component {
                   <SearchHead userSubscriptions={this.props.site?.userSubscriptions} onChange={this.onChange} searchText={this.state.search} pathname={this.props.location.pathname}></SearchHead>
                   }
   
-                  <div className="the-recap">
+                  <div className="the-recap d-none">
     
                     <div className="the-recap-embed"></div>
                     <div className="the-recap-embed-overlay">
@@ -687,7 +761,7 @@ class Frontpage extends Component {
     
                   </div>
     
-                  <div className="weather-panel">
+                  <div className="weather-panel d-none">
           
                     <div className="header"></div>
           
@@ -807,7 +881,8 @@ const mapStateToProps = state => ({
   issues: state.issues,
   stories: state.stories,
   myths: state.myths,
-  site: state.site
+  site: state.site,
+  user_details: state.auth.user_details
 });
 
 export default connect(
