@@ -63,7 +63,7 @@ class IssuesClass extends Component {
     return (
       <section className="issues-section issues-page text-center">
 
-        <div className="issues-head">
+        <div className="issues-head d-none">
           <h1 className="title">Issues</h1>
           <p className="body">Overview of the most pressing issues and status updates on them.</p>
 

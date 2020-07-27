@@ -14,19 +14,21 @@ import 'swiper/components/scrollbar/scrollbar.scss';
 import playButtonDark from '../../assets/img/News/yt_logo_mono_dark.png'
 import moment from 'moment';
 
-import Slider from "react-slick";
+// import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import IssueDevelopmentCard from './IssueDevelopmentCard'
-import StoriesDisplay from './StoriesDisplay'
-import MythsDisplay from './MythsDisplay'
+// import IssueDevelopmentCard from './IssueDevelopmentCard'
+// import StoriesDisplay from './StoriesDisplay'
+// import MythsDisplay from './MythsDisplay'
+
+// import { GzyCard } from './Issues/index'
+
+import { toggleUserSubscriptions, filterIssuesDateType } from '../../actions/siteActions'
 
 import Stories from './Stories/index';
 import Issues from './Issues/index';
 import Myths from './Myths/index';
-
-import { GzyCard } from './Issues/index'
 
 import statesImage from '../../assets/img/states.jpg'
 
@@ -62,10 +64,66 @@ function SearchHead(props) {
     )
   }
 
-  return(
-    <div className={"search-extras-head " + (props.homeLayout ? 'home' : '')}>
+  const isHome = props.path === "/news"
 
-      <div className={"search-head " + (props.homeLayout ? 'home' : '')}>
+  let activePage = {
+
+  }
+
+  switch(props.path) {
+    case "/news":
+      // code block
+      break;
+    case "/news/stories":
+      activePage = {
+        title: "Stories",
+        desc: "Everday news from around the country."
+      }
+      // code block
+      break;
+    case "/news/issues":
+      activePage = {
+        title: "Issues",
+        desc: "Overview of the most pressing issues and status updates on them."
+      }
+      // code block
+      break;
+    case "/news/myths":
+      activePage = {
+        title: "Myths",
+        desc: "Explore common misconceptions and debunked myths."
+      }
+      // code block
+      break;
+    default:
+      // code block
+  }
+
+  return(
+    <div className={"news-head " + (isHome ? 'home' : 'focus')}>
+
+      <div className={"active-page-panel " + (isHome ? 'home' : 'focus')}>
+
+        <h1 className="title">{activePage.title}</h1>
+        <p className="body">{activePage.desc}</p>
+
+        <div className="filters noselect">
+          <span className="subscription-badges">
+            <span className="bold"><i class="fas fa-th"></i></span>
+            <div onClick={() => props.toggleUserSubscriptions()} className={"badge border " + (props.site?.userSubscriptions === true ? 'badge-dark ' : 'badge-light ')}>Subscribed</div>
+            <div onClick={() => props.toggleUserSubscriptions()} className={"ml-1 badge border " + (props.site?.userSubscriptions === false ? 'badge-dark' : 'badge-light')}>All</div>
+          </span>
+
+          <span className="subscription-badges">
+            <span className="bold"><i class="fas fa-calendar"></i></span>
+            <div onClick={() => props.filterIssuesDateType()} className={"badge border " + (props.site?.dateType === 'post' ? 'badge-dark ' : 'badge-light ')}>Posted</div>
+            <div onClick={() => props.filterIssuesDateType()} className={"ml-1 badge border " + (props.site?.dateType === 'update' ? 'badge-dark' : 'badge-light')}>Updated</div>
+          </span>
+        </div>
+        
+      </div>
+
+      <div className={"search-panel " + (isHome ? 'home' : 'focus')}>
   
         <img src={background} alt="" className="background"/>
   
@@ -73,21 +131,41 @@ function SearchHead(props) {
   
         <div className="filter"></div>
   
-        <input 
-        id="search" 
-        name="search" 
-        value={props.searchText} 
-        onChange={props.onChange} 
-        type="text" 
-        className="form-control"
-        placeholder={props.userSubscriptions ? "Only works on 'All Issues' sort" : ""}
-        />
-  
-        <div className="my-2">
-          <Link to={ROUTES.STORIES}><button className={"search-button mr-1 " + (props.pathname === "/news/stories" ? 'active' : '')}>Stories</button></Link>
-          <Link to={ROUTES.ISSUES}><button className={"search-button mr-1 " + (props.pathname === "/news/issues" ? 'active' : '')}>Issues</button></Link>
-          <Link to={ROUTES.MYTHS}><button className={"search-button mr-1 " + (props.pathname === "/news/myths" ? 'active' : '')}>Myths</button></Link>
+        <div className="search">
+
+          <input 
+          id="search" 
+          name="search" 
+          value={props.searchText} 
+          onChange={props.onChange} 
+          type="text" 
+          className="form-control"
+          placeholder={props.userSubscriptions ? "Only works on 'All Issues' sort" : ""}
+          />
+
+          <select name="" id="">
+            <option value="all">All</option>
+            <option value="stories">Stories</option>
+            <option value="issues">Issues</option>
+            <option value="myths">Myths</option>
+          </select>
+
+          <div className="btn btn-articles-light">
+            <i className="fas fa-search mr-0"></i>
+          </div>
+
         </div>
+  
+        {/* <div className="my-2 d-flex justify-content-between">
+
+          <div>
+            <Link to={ROUTES.NEWS}><button className={"search-button mr-1 " + (props.path === "/news" ? 'active' : '')}>All</button></Link>
+            <Link to={ROUTES.STORIES}><button className={"search-button mr-1 " + (props.path === "/news/stories" ? 'active' : '')}>Stories</button></Link>
+            <Link to={ROUTES.ISSUES}><button className={"search-button mr-1 " + (props.path === "/news/issues" ? 'active' : '')}>Issues</button></Link>
+            <Link to={ROUTES.MYTHS}><button className={"search-button mr-1 " + (props.path === "/news/myths" ? 'active' : '')}>Myths</button></Link>
+          </div>
+
+        </div> */}
   
         <div className="tags">
           <div className="type">Trending</div>
@@ -100,9 +178,9 @@ function SearchHead(props) {
   
       </div>
 
-      <div className="extras-head">
+      <div className="extra-panels">
 
-        <div onClick={() => props.toggleWeatherOverlay()} className="extras-panel weather">
+        <div onClick={() => props.toggleWeatherOverlay()} className="extra-panel weather">
 
           {/* <div className="info">Zip: </div> */}
           <div className="info">Zip: <span className="badge badge-light">{props.zip}</span></div>
@@ -140,7 +218,7 @@ function SearchHead(props) {
 
         </div>
 
-        <a href="https://www.youtube.com/channel/UCeftkiTtcniDx87GqoEmFAg" target="_blank" rel="noopener noreferrer" className="extras-panel youtube">
+        <a href="https://www.youtube.com/channel/UCeftkiTtcniDx87GqoEmFAg" target="_blank" rel="noopener noreferrer" className="extra-panel youtube">
           <div className="info">Last Upload: <span className="badge badge-light">Never</span></div>
           <div className="background">
             <img src="https://turbologo.com/articles/wp-content/uploads/2019/10/youtube-logo-illustration-1280x720.jpg" alt=""/>
@@ -149,172 +227,9 @@ function SearchHead(props) {
 
       </div>
 
+      <div className="spacer"></div>
+
     </div>
-  )
-}
-
-function JustFrontpage(props) {
-
-  const [swiper, updateSwiper] = useState(null);
-
-  const settings = {
-    arrows: true,
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
-          dots: true
-        }
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2
-        }
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      }
-    ]
-  };
-
-  const params = {
-    pagination: {
-      el: '.swiper-pagination',
-      type: 'bullets',
-      clickable: true
-    },
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev'
-    },
-    spaceBetween: 5,
-    // freeMode: true,
-    slidesPerView: 1,
-    slidesPerGroup: 1,
-    containerClass: 'swiper-container',
-  }
-
-  const goNext = () => {
-    if (swiper !== null) {
-      swiper.slideNext();
-    }
-  };
-  const goPrev = () => {
-    if (swiper !== null) {
-      swiper.slidePrev();
-    }
-  };
-
-  if (swiper !== null) {
-    swiper.on('slideChange', function () {
-      console.log('slide changed');
-    });
-  }
-
-  return (
-    <>
-      <div className="issue-development issues-page d-none">
-        
-        <div className="d-flex justify-content-between">
-          <span className="title heading-font">Issue Developments</span>
-          {/* <span>Showing 4 out of {this.props.issues.issues.length}</span> */}
-        </div>
-
-        {/* <Slider {...settings}>
-        <div>
-          <h3>1</h3>
-        </div>
-        <div>
-          <h3>2</h3>
-        </div>
-        <div>
-          <h3>3</h3>
-        </div>
-        <div>
-          <h3>4</h3>
-        </div>
-        <div>
-          <h3>5</h3>
-        </div>
-        <div>
-          <h3>6</h3>
-        </div>
-      </Slider> */}
-
-      {/* <div className="swiper-container"> 
-
-        <div onClick={goPrev} className="swiper-button-prev">A</div>
-        <div onClick={goNext} className="swiper-button-next">B</div>
-        
-        <Swiper {...params}>   
-          {props.issues?.issues.map((issue, i) => (
-            <GzyCard
-            key={i}
-            issue={issue}
-            podcast={true}
-            podcastDay=""
-            podcastLink=""
-            topText="Rising Cost"
-            dateType={props.site?.dateType}
-            bottomText="The Unspoken Issues"
-            backgroundImage={issue.hero_url}
-            />
-          ))}  
-          
-        </Swiper>
-
-      </div> */}
-
-      <div className="noselect">
-        <div className="new-button">My Subscriptions</div>
-        <div className="new-button">View All</div>
-      </div>
-      
-
-        <div className="issue-development-cards">
-          {props.issues.issues.map((issue) => (
-            <IssueDevelopmentCard issue={issue}/>
-          ))}
-
-          <IssueDevelopmentCard issue={{news_title: "Subscribe to More"}}/>
-          <IssueDevelopmentCard issue={{news_title: "Manage Subscriptions"}}/>
-        </div>
-
-        {/* <Slider {...settings}>
-          {this.props.issues.issues.map((issue) => (
-            <IssueDevelopmentCard issue={issue}/>
-          ))}
-        </Slider> */}
-
-        {/* <div className="manage-subscriptions small">Manage Issue Subscriptions</div> */}
-
-      </div>
-
-      <div className="stories">
-        <span className="title heading-font">News Stories</span>
-        <StoriesDisplay stories={props.stories.stories}/>
-      </div>
-
-      <div className="myths">
-        <span className="title heading-font">Myths Collection</span>
-        <MythsDisplay myths={props.myths.myths}/>
-      </div>
-    </>
   )
 }
 
@@ -351,6 +266,7 @@ class NewsCard extends Component {
     return (
       <Link to={this.renderRoute(this.props.document.news_type) + '/' + this.props.document.url}>
         <div className="content">
+          <div className="date">{moment(this.props.document.news_date).format("L")}</div>
           <div className="title">{this.props.document.news_title}</div>
           <img src={this.props.document.hero_url} alt="" className="background"/>
           <div className="filter"></div>
@@ -393,94 +309,92 @@ class RecentSliders extends Component {
 
       onSlideChange: () => console.log('slide change'),
       onSwiper: (swiper) => console.log(swiper),
-
-
     }
 
     return (
       <div className="news-sliders">
+
         {/* Recent Stories */}
         <div className="news-preview-container story">
-  
-        <Swiper
-          {...swiper_settings}
-        >
+    
+          <Swiper
+            {...swiper_settings}
+          >
 
-          {/* See slots https://swiperjs.com/react/ */}
-          <span slot="container-start">
-            <div className="header">
-              <h5>Recent Stories</h5>
+            {/* See slots https://swiperjs.com/react/ */}
+            <span slot="container-start">
+              <div className="header">
+                <h5>Recent Stories</h5>
 
-              <div className="controls ">
-                <i class="fas fa-backward"></i>
-                <i class="fas fa-forward"></i>
+                <div className="controls ">
+                  <i class="fas fa-backward"></i>
+                  <i class="fas fa-forward"></i>
+                </div>
               </div>
-            </div>
-          </span>
+            </span>
 
-          {this.props.stories.stories.map((story) => (
-            <SwiperSlide>
-              <NewsCard document={story}/>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+            {this.props.stories.stories.map((story) => (
+              <SwiperSlide>
+                <NewsCard document={story}/>
+              </SwiperSlide>
+            ))}
+          </Swiper>
   
         </div>
   
         {/* Recent Issues */}
         <div className="news-preview-container issue">
   
-        <Swiper
-          {...swiper_settings}
-          
-        >
+          <Swiper
+            {...swiper_settings} 
+          >
 
-          {/* See slots https://swiperjs.com/react/ */}
-          <span slot="container-start">
-            <div className="header">
-              <h5>Recent Issues</h5>
+            {/* See slots https://swiperjs.com/react/ */}
+            <span slot="container-start">
+              <div className="header">
+                <h5>Recent Issues</h5>
 
-              <div className="controls">
-                <i class="fas fa-backward"></i>
-                <i class="fas fa-forward"></i>
+                <div className="controls">
+                  <i class="fas fa-backward"></i>
+                  <i class="fas fa-forward"></i>
+                </div>
               </div>
-            </div>
-          </span>
+            </span>
 
-          {this.props.issues.issues.map((story) => (
-            <SwiperSlide>
-              <NewsCard document={story}/>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+            {this.props.issues.issues.map((story) => (
+              <SwiperSlide>
+                <NewsCard document={story}/>
+              </SwiperSlide>
+            ))}
+          </Swiper>
   
         </div>
   
         {/* Recent Myths */}
         <div className="news-preview-container myth">
   
-        <Swiper
-          {...swiper_settings}
-        >
+          <Swiper
+            {...swiper_settings}
+          >
 
-          {/* See slots https://swiperjs.com/react/ */}
-          <span slot="container-start">
-            <div className="header">
-              <h5>Recent Myths</h5>
+            {/* See slots https://swiperjs.com/react/ */}
+            <span slot="container-start">
+              <div className="header">
+                <h5>Recent Myths</h5>
 
-              <div className="controls">
-                <i class="fas fa-backward"></i>
-                <i class="fas fa-forward"></i>
+                <div className="controls">
+                  <i class="fas fa-backward"></i>
+                  <i class="fas fa-forward"></i>
+                </div>
               </div>
-            </div>
-          </span>
+            </span>
 
-          {this.props.myths.myths.map((story) => (
-            <SwiperSlide>
-              <NewsCard document={story}/>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+            {this.props.myths.myths.map((story) => (
+              <SwiperSlide>
+                <NewsCard document={story}/>
+              </SwiperSlide>
+            ))}
+          </Swiper>
   
         </div>
       </div>
@@ -494,7 +408,12 @@ class Frontpage extends Component {
 
     this.state = {
       search: '',
-      weatherOverlay: false
+      weatherOverlay: false,
+
+      trending: {
+        items: ['5f1b2e1c5846204edc02a49a', '5e9c27cdfeb48937d0e54975', '5f173f4210bb9231f0eb7f02'],
+        slide: 0
+      }
     }
 
     this.toggleWeatherOverlay = this.toggleWeatherOverlay.bind(this);
@@ -518,23 +437,20 @@ class Frontpage extends Component {
   }
 
   render() {
-    const settings = {
-      arrows: true,
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 4,
-      slidesToScroll: 4
-    };
 
     const swiper_settings = {
       spaceBetween: 10,
-      slidesPerView: 'auto',
-      slidesPerGroup: 1,
-      navigation: true,
-      scrollbar: { draggable: true },
-      onSlideChange: () => console.log('slide change'),
-      onSwiper: (swiper) => console.log(swiper)
+      slidesPerView: 1,
+      // slidesPerGroup: 1,
+      // navigation: true,
+      loop: true,
+      pagination: true,
+
+      onSlideChange: (swiper) => {
+        console.log(`slide change ${swiper.realIndex}`)
+        this.setState({trending: {...this.state.trending, slide: swiper.realIndex}})
+      },
+      onSwiper: (swiper) => console.log(swiper),
     }
     
     return(
@@ -552,7 +468,7 @@ class Frontpage extends Component {
               <img src={statesImage} className="head-image" alt=""/>
               <div className="live-dots">
 
-                <div className="dot">
+                <div className={"dot dot-" + this.state.trending.slide}>
                   <div className="expanded">
                     
                     <div className="location">Austin, TX</div>
@@ -571,13 +487,45 @@ class Frontpage extends Component {
 
               <div className="title">Trending</div>
 
-              <div className="trending-card">Tesla will build its next Gigafactory near Austin, Texas</div>
+              <Swiper
+                {...swiper_settings}
+              >
 
+                {/* See slots https://swiperjs.com/react/ */}
+                <span slot="container-start">
+
+                </span>
+
+                <SwiperSlide>
+                  <div className="trending-card">
+                    Tesla will build its next Gigafactory near Austin, Texas
+                    <div className="progress"></div>
+                  </div>
+                </SwiperSlide>
+
+                <SwiperSlide>
+                  <div className="trending-card">
+                    Meet Cybertruck
+                    <div className="progress"></div>
+                  </div>
+                </SwiperSlide>
+
+                <SwiperSlide>
+                  <div className="trending-card">
+                    Jeffery Epstein Arrested
+                    <div className="progress"></div>
+                  </div>
+                </SwiperSlide>
+
+              </Swiper>
+
+              {/* <div className="trending-card">Tesla will build its next Gigafactory near Austin, Texas</div>
+ 
               <div className="dots">
                 <div className="dot active"></div>
                 <div className="dot"></div>
                 <div className="dot"></div>
-              </div>
+              </div> */}
               
             </div>
 
@@ -613,7 +561,7 @@ class Frontpage extends Component {
                 </div>
               </Link>
 
-              <h5 className="title mt-3">Feature</h5>
+              {/* <h5 className="title mt-3">Feature</h5>
 
               <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS}>
                 <div className={"link " + (this.props.location.pathname === "/news/coronavirus" ? 'active' : null)}>
@@ -623,15 +571,13 @@ class Frontpage extends Component {
               </Link>
 
               <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS}>
-              <div className={"link " + (this.props.location.pathname === "/news/coronavirus" ? 'active' : null)}>
-                <i className="fas fa-fist-raised"></i>
-                <div className="text">Black Lives Matter</div>
-              </div>
-            </Link>
+                <div className={"link " + (this.props.location.pathname === "/news/coronavirus" ? 'active' : null)}>
+                  <i className="fas fa-fist-raised"></i>
+                  <div className="text">Black Lives Matter</div>
+                </div>
+              </Link> */}
 
             </div>
-
-            
 
           </div>
 
@@ -641,10 +587,47 @@ class Frontpage extends Component {
           
           <div className="content">
 
+            <div className="header">
+
+              <div className="background">
+                <img src="https://s7d2.scene7.com/is/image/TWCNews/partly_cloudy_jpg-4" alt=""/>
+              </div>
+
+              <div className="content text-center">
+
+                <div>
+                  <div>{moment().format("dddd")}</div>
+                  <div>{moment().format("MMMM, DD")}</div>
+                  <div>{moment().format("Y")}</div>
+                </div>
+
+                <div>
+                  <div><i className="fas fa-thermometer-empty"></i>80°F</div>
+                  <div>Partly Cloudy</div>
+                  <div>
+                    <span>H 80°F</span>
+                    <span> / </span>
+                    <span>L 80°F</span>
+                  </div>
+                </div>
+
+                <div className="chart">
+
+                </div>
+
+              </div>
+
+            </div>
+
             <div>Weather Overlay</div>
 
-            <div className="close">
+            <div className="bottom-controls">
               <div className="btn btn-articles-light">
+                <i class="fas fa-map-pin"></i>
+                Pin to Header
+              </div>
+              <div className="btn btn-articles-light">
+                <i class="far fa-window-close"></i>
                 Close
               </div>
             </div>
@@ -680,30 +663,18 @@ class Frontpage extends Component {
 
             </div>
 
-            {/* {this.props.location.pathname === "/news" ?
-            <>
-              <SearchHead/>
-              <RecentSliders
-              stories={this.props.stories}
-              issues={this.props.issues}
-              myths={this.props.myths}
-              />
-            </>
-            :
-            null
-            } */}
-
             <div className="row mb-3 justify-content-between">
   
               {/* Left Side */}
               <div className="col-12 col-md-12 px-md-0">
+
+              <SearchHead zip={this.props.user_details.address?.zip || 'None'} toggleWeatherOverlay={this.toggleWeatherOverlay} homeLayout={true} path={this.props.match.path}/>
 
                 <Switch>
                   {/* <Route exact path={ROUTES.NEWS} render={() => <h1>Front</h1>}/> */}
                   {/* <Route exact path={ROUTES.NEWS} render={() => <JustFrontpage stories={this.props.stories} issues={this.props.issues} myths={this.props.myths}></JustFrontpage>}/> */}
                   <Route exact path={ROUTES.NEWS} render={() => 
                     <>
-                      <SearchHead zip={this.props.user_details.address?.zip || 'None'} toggleWeatherOverlay={this.toggleWeatherOverlay} homeLayout={true}/>
 
                       <RecentSliders
                       stories={this.props.stories}
@@ -711,21 +682,6 @@ class Frontpage extends Component {
                       myths={this.props.myths}
                       />
 
-                      <div className="mt-3 mx-auto ongoing-counts d-none">
-
-                        Serving 
-
-                        <div className="counts">
-                          <span>{this.props.stories.stories.length} Stories</span>
-                          <span className="mx-2">-</span>
-                          <span>{this.props.issues.issues.length} Issues</span>
-                          <span className="mx-2">-</span>
-                          <span>{this.props.myths.myths.length} Myths</span>
-                        </div>
-
-                        Thank you to everyone that supports.
-
-                      </div>
                     </>
                   }/>
                   <Route exact path={ROUTES.STORIES} render={() => <Stories searchText={this.state.search}></Stories>}/>
@@ -735,8 +691,8 @@ class Frontpage extends Component {
   
               </div>
   
-              {/* Right Side */}
-              <div className="col-12 col-md-12 pl-md-0 ">
+              {/* TODO - Get rid of all this after taking screenshots or something */}
+              <div className="col-12 col-md-12 pl-md-0 d-none">
   
                 <div className="side-panel mx-auto">
 
@@ -746,7 +702,7 @@ class Frontpage extends Component {
                   <SearchHead userSubscriptions={this.props.site?.userSubscriptions} onChange={this.onChange} searchText={this.state.search} pathname={this.props.location.pathname}></SearchHead>
                   }
   
-                  <div className="the-recap d-none">
+                  <div className="the-recap">
     
                     <div className="the-recap-embed"></div>
                     <div className="the-recap-embed-overlay">
@@ -761,7 +717,7 @@ class Frontpage extends Component {
     
                   </div>
     
-                  <div className="weather-panel d-none">
+                  <div className="weather-panel">
           
                     <div className="header"></div>
           
@@ -871,12 +827,6 @@ class Frontpage extends Component {
   }
 }
 
-// const Page = () => (
-  
-// );
-
-// export default Page;
-
 const mapStateToProps = state => ({
   issues: state.issues,
   stories: state.stories,
@@ -886,5 +836,8 @@ const mapStateToProps = state => ({
 });
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  { toggleUserSubscriptions, filterIssuesDateType } 
 )(Frontpage);
+
+export { NewsCard };

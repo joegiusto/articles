@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { connect } from "react-redux";
 
 import StoryCard from './components/StoryCard';
+import { NewsCard } from '../index'
 
 function Myths(props) {
   const [search, changeSearch] = useState("");
@@ -10,13 +11,25 @@ function Myths(props) {
  <section className="myths-section">
     {/* <div className='container'> */}
   
-      <div className="myths-head">
+      {/* <div className="myths-head">
         <h1 className="title">Stories</h1>
         <p className="body">Stories from around the country.</p>
-      </div>
+      </div> */}
   
       {/* <p>Myths - example - See reddit saved post, "<a href="https://www.reddit.com/r/technology/comments/bj2h83/enough_with_the_actually_electric_cars_pollute/">Actually Electric Cars Pollute More</a>" Take the top common myths in this country at the moment and debunk them. Everything from electric cars to global warming and just explain them in a deteiled fact based/source-cited way that eveyone can easily reference and understand.</p> */}
   
+      <div className="news-static">
+        <div className="news-preview-container story">
+          {props.stories?.stories ?
+          (props.stories?.stories.map((document, i) => (
+            <NewsCard key={i} document={document}/>
+          )))
+          : 
+          <div>Myths Loading...</div>
+          }
+        </div>
+      </div>
+
       <div className="row mt-4">
       
         <div className="col-12">
@@ -51,19 +64,18 @@ function Myths(props) {
                 <span onClick={() => changeSearch("Health")} className="badge badge-pill border btn-outline-dark alert-primary myth-topic">Health</span>
               </div>
             </div>
-           
 
           </div>
   
         </div>
-  
-        {props.stories?.stories ?
+
+        {/* {props.stories?.stories ?
         (props.stories?.stories.map((myth, i) => (
           <StoryCard key={i} index={i} length={props.stories.stories.length} myth={myth}/>
         )))
         : 
         <div>Myths Loading...</div>
-        }
+        } */}
   
       </div>
   
