@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import moment from 'moment';
 
 function Issue(props) {
   return (
@@ -86,17 +87,23 @@ function StepThree(props) {
           <>
             <h5 className="title">Age Related Stories</h5>
 
-            {
-              (props.age === '' ? 
-                <span>No age was given so we can't recommend any stories for this tab, if you want to go back and add an age <span className="articles-inline-link" onClick={() => (props.changeStep(1) + props.highlightElement('age'))}>click here.</span> (No progress will be lost!)</span>
-              :
-                (props.storySuggestionAge.length > 0 ? 
-                  '' 
-                  :
-                <div>We can't find any stories that might be of interest to you based on your age.</div>
+            <div className="age-related">
+              {
+                (props.age === '' ? 
+                  <span>No age was given so we can't recommend any stories for this tab, if you want to go back and add an age <span className="articles-inline-link" onClick={() => (props.changeStep(1) + props.highlightElement('age'))}>click here.</span> (No progress will be lost!)</span>
+                :
+                  (props.storySuggestionAge.length > 0 ? 
+                    '' 
+                    :
+                    <div>
+                      <div>
+                        We can't find any stories that might be of interest to you based on your given age of <span className="badge badge-dark">{moment().diff(props.age, 'years')}</span>
+                      </div>
+                    </div>
+                  )
                 )
-              )
-            }
+              }
+            </div>
 
             {/* <h3>Stories relavent based on your age.</h3> */}
             

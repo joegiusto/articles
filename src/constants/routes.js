@@ -99,7 +99,7 @@ export const DONATE = '/donate';
 export const DONATE_DETAILS = '/donate/:id';
 
 // Mail PROTOTYPE
-export const MAIL = '/mail';
+export const MESSAGES = '/messages';
 
 // Playground
 export const PLAYGROUND = '/playground';

@@ -2,7 +2,7 @@
 
 .outset-page {
   overflow-y: hidden;
-  height: calc(100vh - 50px - 175px);
+  height: calc(100vh - 50px);
   position: relative;
 
   @include media-breakpoint-down(md) {
@@ -77,13 +77,38 @@
     }
   
     .left {
-  
+      
     }
   
     .right {
       
     }
   
+  }
+
+  input, .input-group-text {
+    border: none;
+    border-bottom: 2px solid #000;
+    border-radius: 0;
+    background-color: lighten($accent-color, 5%);
+    background-color: lighten($base-color, 5%);
+    background-color: rgb(235, 235, 235);
+  }
+  
+  .input-group-text {
+    border-right: 2px solid #000;
+  }
+
+  input#email {
+    background-color: rgb(199, 199, 199);
+    color: black!important;
+  }
+
+  label {
+    font-family: brandon-grotesque, sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    margin-bottom: 0.25rem;
   }
   
   .outset-form {
@@ -97,6 +122,36 @@
     padding: 2rem;
     border-top: solid 5px $accent-color;
     box-shadow: 0 0.5px 0 0 #ffffff inset, 0 1px 2px 0 #B3B3B3;
+
+    font-family: montserrat, sans-serif;
+    font-weight: 400;
+
+    .step-focus-panel {
+      height: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .intro-title {
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 2rem;
+        text-transform: uppercase;
+        color: rgb(0, 0, 0);
+        margin-bottom: 0.5rem;
+      }
+
+      .intro-message {
+        max-width: 500px;
+      }
+    }
+
+    @include media-breakpoint-up(md) {
+      // height: 550px;
+    }
     
     @include media-breakpoint-down(md) {
       padding: 1rem;
@@ -111,7 +166,7 @@
       height: 100%;
   
       .col-12 {
-        height: 100%;
+        // height: 100%;
       }
     }
   
@@ -124,14 +179,7 @@
       box-shadow: 0px 0px 5px #ffb7b7;
     }
   
-    .intro-title {
-      font-family: brandon-grotesque, sans-serif;
-      font-style: normal;
-      font-weight: 900;
-      font-size: 2rem;
-      text-transform: uppercase;
-      color: rgb(0, 0, 0);
-    }
+    
   
     .confirm-message {
       overflow-y: scroll;
@@ -193,12 +241,27 @@
       }
     }
 
+    .outset-step-one {
+      .top {
+        display: flex;
+        align-items: center;
+        margin-right: 1rem;
+        margin-bottom: 1rem;
+
+        .grow {
+          margin-left: 1rem;
+          display: flex;
+          flex-grow: 1;
+        }
+      }
+    }
+
     .aws-profile-photo-test {
-      width: 100%;
+      // width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-bottom: 1rem;
+      
 
       .upload-photo-wrap {
         position: relative;
@@ -208,6 +271,12 @@
         height: 150px;
         background-color: black;
         border: solid 3px #000;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
 
         &:hover {
           .upload-photo-button {
@@ -357,6 +426,11 @@
       font-family: montserrat, sans-serif;
       font-weight: 400;
       padding: 0.5rem;
+
+      &.party-information {
+        background-color: rgb(207, 207, 207);
+        // color: white;
+      }
   
       @include media-breakpoint-down(md) {
         // position: fixed;
@@ -479,7 +553,8 @@
       color: white;
       right: 0px;
       padding: 0.5rem 3rem;
-      clip-path: polygon(100% 0, 100% 100%, 10% 100%, 0 70%, 0 0);
+      transform: translateY(calc(-100% - 5px));
+      // clip-path: polygon(100% 0, 100% 100%, 10% 100%, 0 70%, 0 0);
     }
     
     .step-controls {
@@ -639,7 +714,7 @@
     // Step Two
     .outset-details-scroll {
         overflow-y: scroll;
-        height: 360px;
+        height: 100%;
         // padding-right: 1rem;
     }
   
@@ -861,6 +936,13 @@
       @include media-breakpoint-down(md) {
         padding: 0.5rem;
       }
+
+      .age-related {
+        background-color: white;
+        border-bottom: 3px solid #000;
+        margin-bottom: 0.25rem;
+        padding: 0.5rem 1rem;
+      }
   
       .pick-count {
         font-family: montserrat, sans-serif;
@@ -1006,39 +1088,38 @@
   
     .party-group {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      // grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       grid-gap: 0px 10px;
       gap: 0px 10px;
+
+      @include media-breakpoint-down(lg) {
+        grid-template-columns: repeat(2, 1fr);
+      }
   
       @include media-breakpoint-down(md) {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(2, 1fr);
       }
     }
   
     .politcal-party-card {
       border: solid 1px rgb(70, 70, 70);
       cursor: pointer;
-      margin: 0.2rem;
+      margin: 0.2rem auto;
       height: auto;
       width: 150px;
       display: inline-block;
-      margin-left: 0.75rem;
       margin-bottom: 1rem;
       position: relative;
       $color: rgb(0, 0, 0);
       z-index: 0;
       box-shadow: 5px 5px rgba($color, 0.4),
-                10px 10px rgba($color, 0.3),
-                15px 15px rgba($color, 0.2),
-                20px 20px rgba($color, 0.1),
-                25px 25px rgba($color, 0.05);
+                10px 10px rgba($color, 0.3);
   
       &.active {
         box-shadow: 5px 5px rgba($accent-color, 0.4),
         10px 10px rgba($accent-color, 0.3),
-        15px 15px rgba($color, 0.2),
-        20px 20px rgba($accent-color, 0.1),
-        25px 25px rgba($color, 0.05);
+        15px 15px rgba($color, 0.2);
         transform: scale(0.95);
       }
   

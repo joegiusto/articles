@@ -66,7 +66,7 @@ import EmployeePageDetails from './Employees/Directory'
 import AccountPage from './Account';
 import PasswordForgetPage from './PasswordForget';
 
-import MailPage from './Mail';
+import MessagesPage from './Messages';
 
 import AdminPage from './Admin';
 import DonatePage from './Donate';
@@ -246,7 +246,7 @@ class App extends Component {
 
               <Route path={ROUTES.DONATE} component={DonatePage} />
   
-              <Route path={ROUTES.MAIL} component={MailPage} />
+              <Route path={ROUTES.MESSAGES} component={MessagesPage} />
               <Route path={ROUTES.MESH} component={MeshPage} />
               <Route path={ROUTES.PLAYGROUND} component={PlaygroundPage} />
               <Route path={ROUTES.CHAT} component={Chat} />

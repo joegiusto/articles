@@ -366,7 +366,7 @@ function Menu(props) {
                 <p className="heading-font no-link"><b>Dev &nbsp;</b><span className="badge badge-warning">Role</span></p>
                 <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PLAYGROUND}><p className="subheading-font"><i className="fas fa-code"></i>Playground</p></Link>
                 <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MESH}><p className="subheading-font"><i className="fas fa-chess-board"></i>Mesh</p></Link>
-                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MAIL}><p className="subheading-font"><i className="fas fa-envelope-square"></i>Mail</p></Link>
+                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MESSAGES}><p className="subheading-font"><i className="fas fa-envelope-square"></i>Messages</p></Link>
                 <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.OUTSET}><p className="subheading-font"><i className="fas fa-road"></i>Outset</p></Link>
                 <div className="app-links">
                   <img className="app-badge" src="https://bibibop.com/data/sites/1/media/rewards/Download_badge-apple-white.png" alt=""/>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from "react-helmet";
 import { isValidPhoneNumber } from 'react-phone-number-input'
 import axios from 'axios';
 import { connect } from 'react-redux';
@@ -47,7 +48,7 @@ class OutsetBase extends React.Component {
       state:  props.user?.address?.state ||'',
       
       cell: props.user?.cell || '',
-      age: moment.unix(props.user?.birth_date).format('MM-DD-YYYY') || '',
+      age: moment(props.user?.birth_date).format('MM/DD/YYYY') || '',
       gender: props.user?.gender || '',
 
       // Step Two States
@@ -733,11 +734,11 @@ class OutsetBase extends React.Component {
     switch(step) {
       case 0: 
         return (
-          <div className="intro-message">During the outset we ask some questions to better understand you. <hr/> <span style={{fontWeight: 'bold'}}>We will explain what we do with each piece of info we collect on you.</span></div>
+          <div className="intro-message">During the outset we ask some questions to better understand you. Each piece of info we collect on you will be explained to you.<hr/> <span style={{fontWeight: 'bold', display: 'none'}}>We will explain what we do with each piece of info we collect on you.</span></div>
         )
       case 1:
         return (
-          <div className="intro-message"><b>{this.state.first_name}</b>, that's a nice name! We need to collect some information, click an input to learn what we'll do with it.</div>
+          <div className="intro-message"><b>{this.state.first_name}</b>, that's a nice name! We need to collect some information, click an input to learn what we do with it.</div>
         )
       case 2: 
         return (
@@ -910,6 +911,10 @@ class OutsetBase extends React.Component {
     return (
       <div className="outset-page">
 
+      <Helmet>
+        <title>Outset - Articles</title>
+      </Helmet>
+
         {/* <div className="what-i-need"></div> */}
 
         <div className={"background-images d-none d-md-block  step-" + this.state.step + ' ' + (this.state.bob ? 'bob' : '')}>
@@ -957,42 +962,45 @@ class OutsetBase extends React.Component {
           <div className="row">
             
             <div className="col-12 col-md-6 pb-4 pb-md-0">
-              {this.renderTitle(this.state.step)}
 
-              {/* NOTE Was for debug purposes, just gonna leave for now
-              <div><span>Step One:</span> {stepOneIsInvalid ? ' No' : ' Yes'}</div>
-              <div><span>Step Two:</span> {stepTwoIsInvalid ? ' No' : ' Yes'}</div>
-              <div><span>Step Three:</span> {stepThreeIsInvalid ? ' No' : ' Yes'}</div>
-              <div><span>Step Four:</span> {stepFourIsInvalid ? ' No' : ' Yes'}</div>
-              <div><span>Step Five:</span> {stepFiveIsInvalid ? ' No' : ' Yes'}</div> */}
-
-              {this.state.focus === '' ? 
-                this.renderMessage(this.state.step)
-              : 
-                ''
-              }
-
+              <div className="step-focus-panel">
+                {this.renderTitle(this.state.step)}
+  
+                {/* NOTE Was for debug purposes, just gonna leave for now
+                <div><span>Step One:</span> {stepOneIsInvalid ? ' No' : ' Yes'}</div>
+                <div><span>Step Two:</span> {stepTwoIsInvalid ? ' No' : ' Yes'}</div>
+                <div><span>Step Three:</span> {stepThreeIsInvalid ? ' No' : ' Yes'}</div>
+                <div><span>Step Four:</span> {stepFourIsInvalid ? ' No' : ' Yes'}</div>
+                <div><span>Step Five:</span> {stepFiveIsInvalid ? ' No' : ' Yes'}</div> */}
+  
                 {this.state.focus === '' ? 
-                  ' '
-                :
-                <div className="privacy-notice party-information">
-
-                  <div onClick={() => this.changeFocus('')} className="close-privacy">
-                    <i class="fas fa-window-close"></i>
+                  this.renderMessage(this.state.step)
+                : 
+                  ''
+                }
+  
+                  {this.state.focus === '' ? 
+                    ' '
+                  :
+                  <div className="privacy-notice party-information">
+  
+                    <div onClick={() => this.changeFocus('')} className="close-privacy">
+                      <i class="fas fa-window-close"></i>
+                    </div>
+  
+                    {this.renderReasonForInformationTitle(this.state.step)}
+  
+                    <div className="text">
+                      {this.renderReasonForInformation(this.state.focus)}
+                    </div>
+  
                   </div>
-
-                  {this.renderReasonForInformationTitle(this.state.step)}
-
-                  <div className="text">
-                    {this.renderReasonForInformation(this.state.focus)}
-                  </div>
-
-                </div>
-              }
+                }
+              </div>
                 
             </div>
 
-            <div className="col-12 col-md-6 m-auto">
+            <div className="col-12 col-md-6 m-auto h-100">
 
               {this.state.step === 0 ?
                 <div className="done-image-container" style={{height: '100%', position: 'relative'}}>

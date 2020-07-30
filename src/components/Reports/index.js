@@ -49,7 +49,7 @@ class Reports extends Component {
          expenses: 0,
          clothing: 0,
          donations: 0,
-       }
+       },
 
      };
 
@@ -120,29 +120,29 @@ class Reports extends Component {
       console.log(`Admin Message: ${msg}`);
     });
 
-    axios.get('/api/getOrders')
-    .then(function (response) {
+    // axios.get('/api/getOrders')
+    // .then(function (response) {
 
-      console.log(response);
+    //   console.log(response);
 
-      self.setState({
-        firebaseData: {
-          ...self.state.firebaseData,
-          revenue: {
-            ...self.state.firebaseData.revenue,
-            orders: response.data.orders
-          },
-        },
-      });
+    //   self.setState({
+    //     firebaseData: {
+    //       ...self.state.firebaseData,
+    //       revenue: {
+    //         ...self.state.firebaseData.revenue,
+    //         orders: response.data.orders
+    //       },
+    //     },
+    //   });
 
-    })
-    .catch(function (error) {
-      console.log(error);
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
 
-      self.setState({
-        products: [],
-      })
-    });
+    //   self.setState({
+    //     products: [],
+    //   })
+    // });
 
     axios.get('/api/getExpenses')
     .then(function (response) {
@@ -604,7 +604,7 @@ class Reports extends Component {
                   {/* </div> */}
                 </Link>
 
-                <div className="alert alert-danger border mt-3">Warning: This section is still in development and will not be ready unitll <b>July 1st 2020</b></div>
+                <div className="alert alert-danger border mt-3">Warning: This section is still in development and will not be ready unitll <b>August 8th 2020</b></div>
 
                 <div className="alert alert-warning border mt-3">Warning: We are working on ways to make this section more transparent with our users, such as number of reports and ways to agree with other peoples reports. Data is saved for Admins to look at for now.</div>
 
@@ -643,8 +643,6 @@ class Reports extends Component {
                         </>
                         }
 
-                        
-
                       </div>
          
                     </div>
@@ -658,15 +656,13 @@ class Reports extends Component {
               <div className="col-12 col-md-8 col-lg-8">
 
                 <Link to={ROUTES.REPORTS}>
-                  {/* <div className="border d-inline-block"> */}
-                    <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1">
-                      <i class="far fa-hand-point-left"></i>
-                      <span>Back to Reports</span>
-                    </div>
-                  {/* </div> */}
+                  <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1">
+                    <i class="far fa-hand-point-left"></i>
+                    <span>Back to Reports</span>
+                  </div>
                 </Link>
 
-                <div className="alert alert-danger border mt-3">Warning: This section is still in development and will not be ready unitll <b>July 1st 2020</b></div>
+                <div className="alert alert-danger border mt-3">Warning: This section is still in development and will not be ready unitll <b>August 8th 2020</b></div>
 
                 <EmployeePage></EmployeePage>
 
@@ -684,8 +680,6 @@ class Reports extends Component {
                     </div>
                   {/* </div> */}
                 </Link>
-
-                <div className="alert alert-danger border mt-3">Warning: This section is still in development and will not be ready unitll <b>July 1st 2020</b></div>
 
                 <EmployeeDetailsPage match={this.props.match}></EmployeeDetailsPage>
 
@@ -1028,7 +1022,7 @@ class DataCharts extends Component {
           {/* </div> */}
         </Link>
 
-        <div className="alert alert-danger border mt-3">Warning: This section is still in development and will not be ready unitll <b>July 1st 2020</b></div>
+        <div className="alert alert-danger border mt-3">Warning: This section is still in development and will not be ready unitll <b>August 8th 2020</b></div>
 
         <div className="chart-blocks">
           <div className="chart-block">

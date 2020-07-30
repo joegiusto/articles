@@ -194,6 +194,9 @@
     }
 
     .result {
+      margin: 0rem 0.25rem;
+      display: inline-block;
+      width: calc( 33% - (0.25rem * 3) );
       background-color: darken(#fff, 10%);
       padding: .5rem;
       border-radius: 10px;

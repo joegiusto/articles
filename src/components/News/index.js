@@ -413,7 +413,11 @@ class Frontpage extends Component {
       trending: {
         items: ['5f1b2e1c5846204edc02a49a', '5e9c27cdfeb48937d0e54975', '5f173f4210bb9231f0eb7f02'],
         slide: 0
-      }
+      },
+
+      
+
+      focusViewLoadingMore: false,
     }
 
     this.toggleWeatherOverlay = this.toggleWeatherOverlay.bind(this);
@@ -534,28 +538,28 @@ class Frontpage extends Component {
               <h5 className="title">Discover</h5>
   
               <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS}>
-                <div className={"link " + (this.props.location.pathname === "/news" ? 'active' : null)}>
+                <div className={"link frontpage " + (this.props.location.pathname === "/news" ? 'active' : null)}>
                   <i className="fas fa-newspaper"></i>
                   <div className="text">Frontpage</div>
                 </div>
               </Link>
 
               <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.STORIES}>
-                <div className={"link " + (this.props.location.pathname === "/news/stories" ? 'active' : null)}>
+                <div className={"link stories " + (this.props.location.pathname === "/news/stories" ? 'active' : null)}>
                   <i className="fas fa-bullhorn"></i>
                   <div className="text">Stories</div>
                 </div>
               </Link>
 
               <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.ISSUES}>
-                <div className={"link " + (this.props.location.pathname === "/news/issues" ? 'active' : null)}>
+                <div className={"link issues " + (this.props.location.pathname === "/news/issues" ? 'active' : null)}>
                   <i className="fas fa-balance-scale"></i>
                   <div className="text">Issues</div>
                 </div>
               </Link>
               
               <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.MYTHS}>
-                <div className={"link " + (this.props.location.pathname === "/news/myths" ? 'active' : null)}>
+                <div className={"link myths " + (this.props.location.pathname === "/news/myths" ? 'active' : null)}>
                   <i className="fas fa-ghost"></i>
                   <div className="text">Myths</div>
                 </div>
@@ -688,6 +692,16 @@ class Frontpage extends Component {
                   <Route exact path={ROUTES.ISSUES} render={() => <Issues searchText={this.state.search}></Issues> }/>
                   <Route exact path={ROUTES.MYTHS} render={() => <Myths searchText={this.state.search}></Myths> }/>
                 </Switch>
+
+              <div className="load-more-button my-5 d-none">
+                <div onClick={() => this.setState({focusViewLoadingMore: !this.state.focusViewLoadingMore})} className="btn btn-articles-light">
+
+                  <i className={"fas fa-pulse fa-spinner " + (this.state.focusViewLoadingMore ? '' : 'd-none')}></i>
+                  <i className={"fas fa-mouse-pointer " + (this.state.focusViewLoadingMore ? 'd-none' : '')}></i>
+
+                  Load More
+                </div>
+              </div>
   
               </div>
   

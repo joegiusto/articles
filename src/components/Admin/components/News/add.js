@@ -50,6 +50,7 @@ class newsAdd extends Component {
     this.pushNews = this.pushNews.bind(this);
     this.handleUpdateDayChange = this.handleUpdateDayChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
+    this.tryUrlFromTitle = this.tryUrlFromTitle.bind(this);
   }
 
   componentDidMount() {
@@ -72,6 +73,14 @@ class newsAdd extends Component {
     if (prevProps.news_id !== this.props.news_id && this.props.news_id !== undefined) {
       console.log("New ID has changed and we need to reload the box");
       this.loadNews(this.props.news_id);
+    }
+  }
+
+  tryUrlFromTitle() {
+    if (this.state.url === '') {
+      this.setState({
+        url: this.state.news_title.toLowerCase().replace(/ /g, '_')
+      })
     }
   }
 
@@ -160,7 +169,7 @@ class newsAdd extends Component {
 
   handleDateChange(day) {
     this.setState({ 
-      last_update: day,
+      news_date: day,
       // date: moment(day, 'Y-M-D').unix() 
     });
   }
@@ -302,6 +311,7 @@ class newsAdd extends Component {
                 aria-describedby=""
                 value={this.state.news_title}
                 onChange={this.handleChange}
+                onBlur={this.tryUrlFromTitle}
                 placeholder=""
                 disabled={this.state.editLoading ? 'disabled' : ''}
               />

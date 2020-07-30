@@ -336,4 +336,56 @@ module.exports = (app, db) => {
     // return res.end();
 
   });
+
+  app.post('/api/getUserMessages', passport.authenticate('jwt', {session: false}), (req, res) => {
+
+    console.log(`Call to /api/getUserMessages made at ${new Date()}`);
+
+    // Get the users Mail
+    db.collection("articles_users").find( {_id: ObjectId(req.body._id)}, {mail:1} ).toArray(function(err, result) {
+      if (err) throw err;
+
+      // console.log(`Call to /api/getUserMessages done`);
+
+      // Get the senders names of mail messages
+      for (let i = 0; i < result[0].mail.length; i++) {
+        console.log(result[0].mail[i].sender)
+
+        db.collection("articles_users").findOne( {_id: ObjectId(result[0].mail[i].sender)}, function(subErr, subResult) {
+          if (err) throw subErr;
+          // console.log(subResult)
+          result[0].mail[i].fetchedSender = subResult.first_name + ' ' + subResult.last_name
+        });
+
+        console.log(i)
+        console.log(result[0].mail.length)
+
+        if (i === result[0].mail.length - 1) {
+          console.log("Last sender")
+
+          // Delay return res so Mongo can finish, THIS NEEDS TO BE IN A CALLBACK
+          delaySubmit()
+        }
+
+      }
+
+      function delaySubmit() {
+        setTimeout(function(){ return res.send(result[0].mail) }, 500);
+      }
+       
+      // return res.send(result[0].mail)
+      
+    });
+
+    // return res.end();
+
+    // db.collection("articles_submissions").findOne({_id: ObjectId(req.body._id)}, function(err, res) {
+    //   // if (err) throw err;
+    //   console.log(res);
+    //   // console.log(`Call to /api/tryVote done`);
+    // });
+
+    // return res.end();
+
+  });
 } 

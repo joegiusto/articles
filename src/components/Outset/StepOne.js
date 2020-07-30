@@ -6,7 +6,7 @@ import moment from 'moment';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
 
-function Example(props) {
+function Email (props) {
   const [shouldShowElement, setShouldShowElement] = useState(false);
 
   return (
@@ -22,8 +22,8 @@ function Example(props) {
         // onMouseEnter={() => {setShouldShowElement(true)}} 
         // onMouseLeave={() => {setShouldShowElement(false)}}
         >
-          <label htmlFor="validationTooltip02">Email</label>
-          <input disabled onFocus={() => (props.changeFocus('email'))} type="text" className="form-control" id="validationTooltip03" placeholder={props.user?.email}/>
+          <label htmlFor="email">Email</label>
+          <input disabled onFocus={() => (props.changeFocus('email'))} type="text" className="form-control" id="email" placeholder={props.user?.email}/>
           <div className="valid-tooltip">
             Looks good!
           </div>
@@ -112,33 +112,64 @@ class StepOneProfilePhoto extends Component {
 }
 
 const StepOne = (props) => (
-  <div className="outset-details-scroll" style={{paddingLeft: '5px', paddingRight: '5px'}}>
+  <div className="outset-step-one outset-details-scroll" style={{paddingLeft: '5px', paddingRight: '5px'}}>
 
     <div className="form-row">
 
-      <StepOneProfilePhoto changeFocus={props.changeFocus} user_id={props.user_id}/>
+      <div className="top">
 
-      <div className="col-12 col-md-auto w-100 mb-3">
-        <Example {...props}></Example>
+        <StepOneProfilePhoto changeFocus={props.changeFocus} user_id={props.user_id}/>
+
+        <div className="grow">
+          <div className="form-row">
+
+            <div className="col-12 col-md-auto w-100 mb-3">
+              <Email {...props}></Email>
+            </div>
+
+            <div className="col-md-6 mb-3">
+              <label htmlFor="validationTooltip01">First Name</label>
+              <input onFocus={() => (props.changeFocus('first_name'))} type="text" className="form-control" id="validationTooltip01" onChange={(e) => props.handleChange(e)} name="first_name" value={props.first_name} required/>
+              <div className="valid-tooltip">
+                Looks good!
+              </div>
+            </div>
+
+            <div className="col-md-6 mb-3">
+              <label htmlFor="validationTooltip02">Last Name</label>
+              <input onFocus={() => (props.changeFocus('last_name'))} type="text" className="form-control" id="validationTooltip02" onChange={(e) => props.handleChange(e)} name="last_name" value={props.last_name} placeholder={""}/>
+              <div className="valid-tooltip">
+                Looks good!
+              </div>
+            </div>
+
+          </div>
+        </div>
       </div>
+
+      {/* <StepOneProfilePhoto changeFocus={props.changeFocus} user_id={props.user_id}/> */}
+
+      {/* <div className="col-12 col-md-auto w-100 mb-3">
+        <Example {...props}></Example>
+      </div> */}
 
       <div className="div w-100"></div>
 
-      <div className="col-md-6 mb-3">
+      {/* <div className="col-md-6 mb-3">
         <label htmlFor="validationTooltip01">First name</label>
         <input onFocus={() => (props.changeFocus('first_name'))} type="text" className="form-control" id="validationTooltip01" onChange={(e) => props.handleChange(e)} name="first_name" value={props.first_name} required/>
         <div className="valid-tooltip">
           Looks good!
         </div>
-      </div>
+      </div> */}
 
-      <div className="col-md-6 mb-3">
+      {/* <div className="col-md-6 mb-3">
         <label htmlFor="validationTooltip02">Last name</label>
         <input onFocus={() => (props.changeFocus('last_name'))} type="text" className="form-control" id="validationTooltip02" onChange={(e) => props.handleChange(e)} name="last_name" value={props.last_name} placeholder={""}/>
         <div className="valid-tooltip">
           Looks good!
         </div>
-      </div>
+      </div> */}
 
     </div>
 
@@ -216,7 +247,7 @@ const StepOne = (props) => (
           value={props.age}
           name="age"
         />
-        <small className="pl-2" style={{fontSize: '10px'}}>DD-MM-YYYY</small>
+        <small className="pl-2" style={{fontSize: '10px'}}>DD/MM/YYYY</small>
       </div>
 
       {/* <div className="col-md-3 mb-3">

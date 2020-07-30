@@ -2,6 +2,8 @@ import React,  {Component } from 'react';
 import { connect } from "react-redux";
 import moment from 'moment'
 import { Link } from 'react-router-dom';
+
+import { NewsCard } from '../index'
 import * as ROUTES from '../../../constants/routes'
 import { toggleUserSubscriptions, filterIssuesDateType } from '../../../actions/siteActions'
 
@@ -83,6 +85,18 @@ class IssuesClass extends Component {
 
           </div>
 
+        </div>
+
+        <div className="news-static">
+          <div className="news-preview-container issue">
+            {this.props.issues.issues ?
+            (this.props.issues.issues.map((document, i) => (
+              <NewsCard key={i} document={document}/>
+            )))
+            : 
+            <div>Myths Loading...</div>
+            }
+          </div>
         </div>
 
         <div className="issues-body my-4">

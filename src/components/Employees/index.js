@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import { BrowserRouter as Route, Switch } from 'react-router-dom';
-import Tilt from 'react-tilt';
+// import Tilt from 'react-tilt';
 import { Link } from "react-router-dom";
+import axios from 'axios';
 
 import * as ROUTES from '../../constants/routes';
 import { employeeList } from "../../sample_data/sampleData";
@@ -17,12 +18,29 @@ class EmployeesPage extends Component {
     super(props);
 
     this.state = {
-      searchTerm: ''
+      searchTerm: 'all',
+      employees: []
     }
   }
 
   componentDidMount() {
+    const self = this;
     console.log("Mounted!")
+
+    axios.get('/api/getEmployees')
+    .then(function (response) {
+
+      console.log(response);
+
+      self.setState({
+        employees: response.data
+      })
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    
   }
 
   render() {
@@ -32,6 +50,10 @@ class EmployeesPage extends Component {
       <div className="employees-page">
 
         <div className="search-bar">
+
+          <span className={"search-letter" + (this.state.searchTerm === "all" ? ' active' : '')} onClick={() => (this.setState({searchTerm: "all"}))}>
+            <span>All</span>
+          </span>
 
           <span className={"search-letter" + (this.state.searchTerm === "anonymous" ? ' active' : '')} onClick={() => (this.setState({searchTerm: "anonymous"}))}>
             <i class="fas fa-eye-slash" aria-hidden="true"></i>
@@ -49,39 +71,37 @@ class EmployeesPage extends Component {
         </div>
 
         <div className="employees-list">
-          {employeeList.map(employee => (
-            <Link to={ROUTES.EMPLOYEES + '/' + employee.id}>
+          {this.state.employees
+          .filter(
+            employee => {
+              console.log( employee?.last_name.charAt(0) );
+              console.log( this.state.searchTerm.charAt(0).toLowerCase() );
 
-                <div className="employee-card">
-                  <div>{employee.nameLast + (employee.nameFirst !== 'Anonymous' ? ', ' + employee.nameFirst : ' Anonymous')}</div>
-                  <div>
-                    <span className="badge badge-articles">Founder</span>
-                    <span className="badge badge-articles ml-2">Developer</span>
-                  </div>
+              if (employee.last_name.charAt(0).toLowerCase() === this.state.searchTerm.charAt(0).toLowerCase()) {
+                return employee
+              } else if (this.state.searchTerm === 'all') {
+                return employee
+              } else {
+                return null
+              }
+            }
+          )
+          .map(employee => (
+            <Link to={ROUTES.EMPLOYEES + '/' + employee._id}>
+
+              <div className="employee-card">
+                <div>{employee.last_name + (employee.first_name !== 'Anonymous' ? ', ' + employee.first_name : ' Anonymous')}</div>
+                <div>
+                  <span className="badge badge-articles">Founder</span>
+                  <span className="badge badge-articles ml-2">Developer</span>
                 </div>
+              </div>
 
             </Link>
           ))}
         </div>
 
         <div className="w-100 text-center mt-2"><small>Showing {employeeList.length} of {employeeList.length} Results</small></div>
-
-        <div className="row justify-content-center">
-
-          <div className="col-sm-7 mt-3">
-            
-          </div>
-
-          <Switch>
-            <Route exact path={ROUTES.EMPLOYEES} component={Test}/>
-            <Route path={ROUTES.EMPLOYEES_DETAILS} component={Test}/>
-          </Switch>
-
-          <div className="col-12">
-            
-          </div>
-
-        </div>
 
       </div>
     )

@@ -374,9 +374,9 @@ class SubscribeListBase extends Component {
                     <div>CHANGE NAME</div>
                     <p>Anyone can see this info when they communicate with you or view content you create</p>
 
-                    <input className="d-block" value={mongoDBuser.first_name} type="text"/>
+                    <input className="d-block" value={mongoDBuser.first_name} type="text"/><span className="badge badge-dark">Visible To All</span>
 
-                    <input className="d-block mt-2" value={mongoDBuser.last_name} type="text"/>
+                    <input className="d-block mt-2" value={mongoDBuser.last_name} type="text"/><span className="badge badge-dark">First Lettter Visible</span><span className="badge badge-light border ml-2">Last</span>
 
                     <div className="actions mt-2">
                       <div onClick={() => this.setState({

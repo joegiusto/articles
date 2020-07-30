@@ -1,4 +1,6 @@
 .email-page {
+  font-family: montserrat, sans-serif;
+  font-weight: 400;
 
   @import 'landing_background';
 
@@ -45,16 +47,21 @@
   }
 
   .dashboard {
-    background-color: $base-color;
+    background-color: whitesmoke;
     height: calc(100vh - 50px);
     display: flex;
     flex-wrap: wrap;
 
     .messages {
-      width: 0;
-      flex-grow: 5;
+      width: 400px;
+      // flex-grow: 5;
       max-height: 100%;
       overflow-y: scroll;
+
+      .loading-block {
+        display: block;
+        margin: auto auto;
+      }
       
       .current-spotlight {
         background-color: rgba(0, 0, 0, 0.35);
@@ -69,35 +76,58 @@
         flex-direction: row;
         align-items: center;
         // padding: 1rem;
+
         .message-photo {
           margin: 1rem;
           width: 50px;
           height: 50px;
           border-radius: 10px;
           background-color: black;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+          }
         }
+
         .message-content {
+
           .message-sender {
-            font-weight: bold;
+            // font-weight: bold;
+            font-family: brandon-grotesque, sans-serif;
+            font-style: normal;
+            font-weight: 900;
           }
         }
       }
     }
+
     .content {
       flex-grow: 8;
-      background-color: $accent-color;
+      background-color: rgb(199, 199, 199);
 
       .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         background-color: white;
         width: 100%;
+        
         .subject {
           font-weight: bold;
           font-size: 1.25rem;
         }
       }
     }
-    .ad {
-      flex-grow: 2;
+
+    > .ad {
+      width: 300px;
+
+      @include media-breakpoint-down(md) {
+        display: none;
+      }
     }
+
   }
 }

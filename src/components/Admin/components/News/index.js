@@ -289,7 +289,10 @@ class AdminPage extends Component {
                 :
                 ''
                 }
-                {results.map((result) => {
+
+                {results.sort(function(a,b){
+                  return new Date(b.news_date) - new Date(a.news_date)
+                }).map((result) => {
   
                   // const d = new Date(result.news_date);
   
