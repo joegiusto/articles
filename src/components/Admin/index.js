@@ -19,6 +19,7 @@ import Submissions from './components/Submissions'
 import Donations from './components/Donations'
 import Expenses from './components/Expenses'
 import Sockets from './components/Socket'
+import Reports from './components/Reports'
 
 class Admin extends Component {
   constructor(props) {
@@ -50,38 +51,6 @@ class Admin extends Component {
     })
   }
 
-  // Has to be done by React Router
-  // activeContent(currentTab) {
-  //   switch(currentTab) {
-  //     case 'users':
-  //       return (
-  //         <Users></Users>
-  //       )
-  //     case 'news':
-  //       return (
-  //         <News match={this.props.match}></News>
-  //       )
-  //     case 'products':
-  //       return (
-  //         <Products match={this.props.match}></Products>
-  //       )
-  //     case 'submissions':
-  //       return (
-  //         <Submissions match={this.props.match}></Submissions>
-  //       )
-  //     case 'donations':
-  //       return (
-  //         <div className="mt-5 alert alert-danger">This data is still located on Firebase</div>
-  //       )
-  //     case 'expenses':
-  //       return (
-  //         <div className="mt-5 alert alert-danger">This data is still located on Firebase</div>
-  //       )
-  //     default:
-  //       // code block
-  //   }
-  // }
-
   render() {
 
     return (
@@ -104,6 +73,7 @@ class Admin extends Component {
             <Link to={ROUTES.ADMIN_DONATIONS}><span className={"tab" + (this.state.tab === 'donations' ? ' active' : '')}>Donations</span></Link>
             <Link to={ROUTES.ADMIN_EXPENSES}><span className={"tab" + (this.state.tab === 'expenses' ? ' active' : '')}>Expenses</span></Link>
             <Link to={ROUTES.ADMIN_SOCKET}><span className={"tab" + (this.state.tab === 'sockets' ? ' active' : '')}>Sockets</span></Link>
+            <Link to={ROUTES.ADMIN_REPORTS}><span className={"tab" + (this.state.tab === 'reports' ? ' active' : '')}>Reports</span></Link>
 
           </div>
         </div>
@@ -148,6 +118,13 @@ class Admin extends Component {
                 tabLocation='sockets'
                 setLoaction={this.setLoaction}
                 ></Sockets> 
+              }/>
+
+              <Route exact path={ROUTES.ADMIN_REPORTS} render={() => <Reports 
+                match={this.props.match}
+                tabLocation='reports'
+                setLoaction={this.setLoaction}
+                ></Reports> 
               }/>
 
             </Switch>

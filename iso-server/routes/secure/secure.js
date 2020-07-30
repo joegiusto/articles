@@ -1,8 +1,7 @@
-// const moment = require('moment');
+const moment = require('moment');
 var ObjectId = require('mongodb').ObjectId; 
 const passport = require("passport");
 const stripe = require('stripe')(process.env.STRIPE_TEST_PASSWORD);
-
 
 module.exports = (app, db) => {
 
@@ -255,9 +254,6 @@ module.exports = (app, db) => {
   app.post('/api/tryVote', passport.authenticate('jwt', {session: false}), (req, res) => {
 
     console.log(`Call to /api/tryVote made at ${new Date()}`);
-    console.log(req.body)
-
-    
 
     switch(req.body.type) {
       case 'null':
@@ -388,4 +384,55 @@ module.exports = (app, db) => {
     // return res.end();
 
   });
+
+  app.post('/api/upsertExpenseReport', (req, res) => {
+    console.log(`Call to /api/upsertProduct made at ${new Date()}`);
+
+    let report = req.body.report;
+
+    const allowedKeys = ['expense_id', 'user_id', 'reason'];
+
+    report = Object.keys(report)
+    .filter(key => allowedKeys.includes(key))
+    .reduce((obj, key) => {
+      obj[key] = report[key];
+      return obj;
+    }, {});
+
+    console.log(report)
+
+    db.collection("articles_expense_reports").updateOne({_id: ObjectId(report._id)}, {
+      $set: {
+        date: moment()._d,
+        user_id: report.user_id,
+        expense_id: report.expense_id,
+        reason: report.reason
+      }
+    },
+    {
+      upsert: true
+    }, 
+    function(err, res) {
+      if (err) throw err;
+      console.log(`Call to /api/upsertProduct done`);
+    });
+
+    return res.end();
+
+  });
+  
+  app.post('/api/deleteExpenseReport', (req, res) => {
+
+    console.log(`/api/deleteExpenseReport ${new Date()}`);
+
+    db.collection("articles_expense_reports").deleteOne({_id: ObjectId(req.body._id)}, 
+    function(err, res) {
+      if (err) throw err;
+      console.log(`Call to /api/deleteExpenseReport done`);
+    });
+
+    return res.end();
+
+  });
+
 } 

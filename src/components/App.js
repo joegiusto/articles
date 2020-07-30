@@ -243,6 +243,7 @@ class App extends Component {
               <Route exact path={ROUTES.ADMIN_DONATIONS} component={AdminPage} />
               <Route exact path={ROUTES.ADMIN_EXPENSES} component={AdminPage} />
               <Route exact path={ROUTES.ADMIN_SOCKET} component={AdminPage} />
+              <Route exact path={ROUTES.ADMIN_REPORTS} component={AdminPage} />
 
               <Route path={ROUTES.DONATE} component={DonatePage} />
   

@@ -126,6 +126,8 @@ function connectWithRetryMongo() {
 
     require('./routes/getEmployees')(app, db);
 
+    require('./routes/getExpenseReports')(app, db);
+
     require('./routes/getProposal')(app, db);
   
     require('./routes/getIssues')(app, db);

@@ -53,33 +53,45 @@ class EmployeePageDetails extends Component {
 
         <div className="employee-header mt-3">
 
-          <div className="employee-header-image-and-socials">
+         <div className="d-flex flex-column flex-grow-1">
 
-            <div className="employee-image">
-
-              <div data-toggle="modal" data-target="#employeePhoto" className="employee-image-zoom">
-
-                <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${employee._id}.jpg`} alt=""/>
-
-                <div className="employee-image-zoom-icon">
-                  <i className="fas fa-search-plus"></i>
+            <div className="top d-flex flex-row">
+              <div className="employee-header-image-and-socials">
+    
+                <div className="employee-image">
+    
+                  <div data-toggle="modal" data-target="#employeePhoto" className="employee-image-zoom">
+    
+                    <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${employee._id}.jpg`} alt=""/>
+    
+                    <div className="employee-image-zoom-icon">
+                      <i className="fas fa-search-plus"></i>
+                    </div>
+    
+                  </div>
+    
                 </div>
-
+    
               </div>
-
+    
+              <div className="employee-header-info">
+    
+                <div className='employee-name'>{employee.first_name + ' ' + employee.last_name}</div>
+    
+                <div className='employee-action-button btn'>+ MESSAGE</div>
+    
+                <div className='employee-social'>
+                  <SharedSocials socials={employee.employee.socials}/>
+                </div>
+                
+              </div>
             </div>
 
-            <div className='employee-social'>
-              <SharedSocials socials={employee.employee.socials}/>
+            <div className="bio">
+              <div className='employee-bio'>{employee.employee?.bio.replace('<age></age>', moment().from(employee.birth_date, 'years') )}</div>
             </div>
 
-          </div>
-
-          <div className="employee-header-info">
-            <div className='employee-name'>{employee.first_name + ' ' + employee.last_name}</div>
-            <div className='employee-action-button btn'>+ MESSAGE</div>
-            <div className='employee-bio'>{employee.employee?.bio}</div>
-          </div>
+         </div>
 
 
           <div className='employee-header-traits'>

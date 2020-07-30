@@ -27,24 +27,29 @@
   background-color: #fff;
   border-color: #ced4da;
   border-bottom: 3px solid #ffc8c8;
+
   &.alt {
     background-color: rgb(0, 0, 0);
     border-bottom: 3px solid #F5F5DC;
     color: white;
   }
+
   &:hover {
     color: #212529;
     background-color: #e2e6ea;
     border-color: #dae0e5;
     border-bottom: 3px solid #F5F5DC;
   }
+
   &:active {
     border-bottom: 3px solid #000;
   }
+
   &:disabled {
     filter: grayscale(1);
     color: darkgray!important;
     opacity: 1;
+
     &:hover {
       cursor: not-allowed;
       filter: grayscale(1);

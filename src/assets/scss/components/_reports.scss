@@ -170,12 +170,17 @@
           z-index: 0;
           margin-top: -3px;
           // border: 2px solid #000;
-          background-color: $base-color;
+          background-color: #ffffff;
+          border: 1px solid #000;
           border-radius: 5px;
+          border-top-left-radius: 0px!important;
+          border-top-right-radius: 0px!important;
           
           .result {
+            border-bottom: 1px solid #000;
             cursor: pointer;
-            padding-top: 0.5rem;
+            padding-top: 0.25rem;
+            padding-bottom: 0.25rem;
             display: flex;
             justify-content: space-between;
             padding-left: calc(.5rem);
@@ -184,11 +189,19 @@
             &:hover {
               background-color: $accent-color;
             }
+
+            &:first-child {
+              padding-top: 7px;
+              // border-top-left-radius: 0px!important;
+              // border-top-right-radius: 0px!important;
+              border-top: none;
+            }
   
             &:last-child {
-              padding-bottom: 0.5rem;
+              // padding-bottom: 0.25rem;
               border-bottom-left-radius: 5px;
               border-bottom-right-radius: 5px;
+              border-bottom: 0px solid #000;
             }
           }
         }

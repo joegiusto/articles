@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 import { connect } from 'react-redux';
 // import { DateRangePicker } from 'react-dates';
 import { Link, Switch, Route, matchPath } from "react-router-dom";
-import { withFirebase } from '../Firebase';
+import { withFirebase } from '../Firebase'; 
 import { employeeList, sales, donations, expenses } from "../../sample_data/sampleData";
 
 import * as ROUTES from '../../constants/routes';
@@ -345,8 +345,6 @@ class Reports extends Component {
 
             <div className="reports-side-menu">
 
-              
-
               <div className="static-wrapper">
 
                 <Route exact path={ROUTES.REPORTS} render={() => 
@@ -355,11 +353,6 @@ class Reports extends Component {
                     <span>Live</span>
                   </div>
                 }/>
-
-                {/* <div className="live">
-                  <span className="recording-dot d-inline-block"></span>
-                  <span>Live</span>
-                </div> */}
     
                 <div id='info' className={"info " + (this.state.menuExpanded ? 'expanded' : '')}>
     
@@ -494,7 +487,7 @@ class Reports extends Component {
                       <input 
                       className="search-input d-flex align-content-center pl-2" 
                       type="text" 
-                      placeholder="Search service is currently offline"
+                      placeholder="Search service is currently limited"
                       value={this.state.searchText}
                       name="searchText"
                       onChange={this.onChange} 
@@ -533,7 +526,6 @@ class Reports extends Component {
                       {this.tableSelectorChoice('donations')}
                       {this.tableSelectorChoice('clothing')}
                       {this.tableSelectorChoice('payroll')}
-                      {/* <div className="d-inline-block main-seperation"><div className="wall"></div></div> */}
                       {this.tableSelectorChoice('revenue')}
                       {this.tableSelectorChoice('expenses')}
                     </div>
@@ -596,58 +588,18 @@ class Reports extends Component {
               <div className="col-12 col-md-8 col-lg-8">
 
                 <Link to={ROUTES.REPORTS}>
-                  {/* <div className="border d-inline-block"> */}
-                    <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1">
-                      <i class="far fa-hand-point-left"></i>
-                      <span>Back to Reports</span>
-                    </div>
-                  {/* </div> */}
+                  <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1">
+                    <i class="far fa-hand-point-left"></i>
+                    <span>Back to Reports</span>
+                  </div>
                 </Link>
-
-                <div className="alert alert-danger border mt-3">Warning: This section is still in development and will not be ready unitll <b>August 8th 2020</b></div>
 
                 <div className="alert alert-warning border mt-3">Warning: We are working on ways to make this section more transparent with our users, such as number of reports and ways to agree with other peoples reports. Data is saved for Admins to look at for now.</div>
 
-                <div className="reports-table reports-shadow chart-block">
-                  {/* <div className="container pt-2"> */}
-                    <div className="row">
-
-                      <div className="col-12 col-md-12">
-
-                        <h5>Report An Expense</h5>
-                        <p>If you have any concerns, recommendations, or problems with a charge feel free to voice them below.</p>
-                        
-                        {this.props.user_id !== undefined ? 
-                        <>
-                          <div className="form-group">
-                            <label for="newsType">Expense:</label>
-                            <select className="form-control" name="news_type" disabled={this.state.editLoading ? 'disabled' : ''} id="news_type" value={this.state.news_type} onChange={this.handleChange}>
-                              <option value={''}>Choose One</option>
-                              {this.state.firebaseData.expenses.other.map((expense) => (
-                                <option value={expense.reason}>{moment(expense.date).format("LL")} - {expense.reason} - ${expense.amount / 100}</option>
-                              ))}
-                            </select>
-                          </div>
-
-                          <div className="form-group">
-                            <label for="newsType">Concern, Recommendation, or Problem:</label>
-                            <textarea className="d-block w-100 p-2" name="" id="" rows="10"></textarea>
-                          </div>
-
-                          <div className="pb-3 d-flex justify-content-end"><div className="btn btn-articles-light">Submit</div></div>
-                        </>
-                        :
-                        <>
-                        <div className="signin-notice">You must be signed in to report an expense.</div>
-                        <Link to={ROUTES.SIGN_IN}><div className="btn btn-articles-light mt-2 w-100 mx-auto">Sign In</div></Link>
-                        </>
-                        }
-
-                      </div>
-         
-                    </div>
-                  {/* </div> */}
-                </div>
+                <ReportExpenseCards 
+                  expenses={this.state.firebaseData.expenses.other}
+                  user_id={this.props.user_id}
+                />
 
               </div>
             }/>
@@ -693,6 +645,234 @@ class Reports extends Component {
       </div>
     </div>
    )
+  }
+}
+
+class ReportExpenseCards extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      previousReports: [],
+      expenses: [],
+      expense_id: '',
+      reason: '',
+      user_id: this.props.user_id
+    }
+
+    this.handleChange = this.handleChange.bind(this);
+    this.submitReport = this.submitReport.bind(this)
+  }
+
+  componentDidMount() {
+    const self = this;
+
+    axios.get('/api/getExpenseReports', {
+      params: {
+        user_id: this.props.user_id
+      }
+    })
+    .then(function (response) {
+
+      console.log(response)
+
+      self.setState({ 
+        previousReports: response.data,
+      });
+
+    })
+    .catch(function (error) {
+      console.log(error);
+
+      self.setState({
+        loading: false
+      })
+    });
+
+  }
+
+  handleChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
+  submitReport() {
+    const self = this;
+
+    axios.post('/api/upsertExpenseReport', {
+      report: {
+        ...this.state
+      }
+    })
+    .then(function (response) {
+
+      console.log(response)
+
+      self.setState({ 
+        previousReports: [
+          ...self.state.previousReports,
+          {
+            expense_id: self.state.expense_id,
+            reason: self.state.reason,
+            date: moment()._d
+          }
+        ]
+      }, () => (
+        self.setState({
+          _id: '',
+          reason: ''
+        })
+      ));
+
+    })
+    .catch(function (error) {
+      console.log(error);
+
+      self.setState({
+        error: true
+      })
+    });
+
+  }
+
+  render() {
+    return(
+      <>
+      {this.props.user_id !== undefined ?
+        <div className="reports-table reports-shadow chart-block">
+          <div className="row">
+
+            <div className="col-12 col-md-12">
+
+              <h5>Previous Reports</h5>
+              <p>Any updates to reported items you may have reported will apprear here.</p>
+
+              <hr/>
+
+              {this.state.previousReports.length < 1 ? 
+              <p className="mb-0"><b>No reported items to display</b></p>
+              :
+              <table className="table articles-table table-sm table-hover table-bordered">
+                <thead>
+                  <tr className="table-articles-head">
+                    <th>DATE</th>
+                    <th>ID</th>
+                    <th>ACTIONS</th>
+                  </tr>
+                </thead>
+                {
+                  this.state.previousReports.map((report) => (
+                    <ReportExpenseRow 
+                      key={report._id || report.date}
+                      report={report}
+                    />
+                  ))
+                }
+              </table>
+              }
+
+            </div>
+ 
+          </div>
+
+        </div>
+        :
+        null
+        }
+
+        <div className="reports-table reports-shadow chart-block">
+
+          <div className="row">
+
+            <div className="col-12 col-md-12">
+
+              <h5>Report An Expense</h5>
+              <p>If you have any concerns, recommendations, or problems with a charge feel free to voice them below.</p>
+              
+              {this.props.user_id !== undefined ? 
+              <>
+
+                <div className="form-group">
+                  <label for="newsType">Expense:</label>
+
+                  <select className="form-control" name="expense_id" disabled={this.state.editLoading ? 'disabled' : ''} id="expense_id" value={this.state.expense_id} onChange={this.handleChange}>
+                    <option value={''}>Choose One</option>
+                    {this.props.expenses.map((expense) => (
+                      <option key={expense._id} value={expense._id}>{moment(expense.date).format("LL")} - {expense.reason} - ${expense.amount / 100}</option>
+                    ))}
+                  </select>
+
+                </div>
+
+                <div className="form-group">
+                  <label for="newsType">Concern, Recommendation, or Problem:</label>
+                  <textarea className="d-block w-100 p-2" name="reason" id="reason" onChange={this.handleChange} rows="10"></textarea>
+                </div>
+
+                <div className="pb-3 d-flex justify-content-end">
+                  <button onClick={() => this.submitReport()} className="btn btn-articles-light" disabled={this.state.reason === '' || this.state.expense_id === '' ? true : false}>Submit</button>
+                </div>
+
+              </>
+              :
+              <>
+              <div className="signin-notice">You must be signed in to report an expense.</div>
+              <Link to={ROUTES.SIGN_IN}><div className="btn btn-articles-light mt-2 w-100 mx-auto">Sign In</div></Link>
+              </>
+              }
+
+            </div>
+
+          </div>
+
+        </div>
+      </>
+    )
+  }
+}
+
+class ReportExpenseRow extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      expanded: false
+    }
+
+  }
+
+  componentDidMount() {
+
+  }
+
+  render() {
+    return(
+      <>
+        <tr>
+          <td>{moment(this.props.report.date).format("LL")}</td>
+          <td>{this.props.report.expense_id}</td>
+
+          {this.state.expanded !== true ? 
+          <td onClick={() => this.setState({expanded: !this.state.expanded})} className="link badge badge-dark noselect" style={{cursor: 'pointer'}}>Click to Expand</td>
+          :
+          <td onClick={() => this.setState({expanded: !this.state.expanded})} className="link badge badge-light border noselect" style={{cursor: 'pointer'}}>Click to Collapse</td>
+          }
+
+        </tr>
+
+        <tr className={(this.state.expanded ? '' : 'd-none')}>
+          <td colSpan="3">
+            <div>Reason:</div>
+            <div>{this.props.report.reason}</div>
+          </td>
+        </tr>
+      </>
+    )
   }
 }
 
@@ -1251,7 +1431,7 @@ function PayrollTable () {
           )} */}
 
           <tr>
-            <th scope="row"><Link to={'employees/42'}>Joey Giusto</Link></th>
+            <th scope="row"><Link to={ROUTES.EMPLOYEES + '/5e90cc96579a17440c5d7d52'}>Joey Giusto</Link></th>
             <td>Admin</td>
             <td>$0.00</td>
           </tr>
