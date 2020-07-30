@@ -12,7 +12,10 @@ class EmployeePageDetails extends Component {
     super(props);
 
     this.state = {
-      employee: {}
+      employee: {},
+
+      // Can be 'stubs' or 'charts' 
+      filter: 'stubs'
     }
   }
 
@@ -81,17 +84,33 @@ class EmployeePageDetails extends Component {
 
           <div className='employee-header-traits'>
             <p className="employee-header-traits-title">Location</p>
-            <p className="employee-header-traits-details">{'Fishkill' + ', ' + 'NY'}</p>
+            <p className="employee-header-traits-details">{employee.address.city + ', ' + employee.address.state}</p>
             <p className="employee-header-traits-title">Role</p>
-            <p className="employee-header-traits-details">{employee.employee?.role.map((role) => <span className="badge badge-dark mr-1">{role}</span>) || 'TEMP'}</p>
+            <p className="employee-header-traits-details">{employee.employee?.role.map((role) => <span className="badge badge-dark mr-1">{role}</span>) || 'NONE'}</p>
             <p className="employee-header-traits-title">Joined</p>
-            <p className="employee-header-traits-details">{moment.unix(employee.sign_up_date).format('LL') || 'TEMP'}</p>
-            {/* {employeeList[employeeNumber].endDate.hasHappened ? <EndDate></EndDate> : ''} */}
+            <p className="employee-header-traits-details">{moment.unix(employee.sign_up_date).format('LL') || 'ERROR'}</p>
           </div>
 
         </div>
 
-        <div className="mt-3">Pay Stubs will appear here</div>
+        <div className="employee-details">
+
+          <div className="filters noselect">
+            <div onClick={() => this.setState({filter: 'stubs'})} className={"filter " + ( this.state.filter === 'stubs' ? 'active' : '' ) }>Pay Stubs</div>
+            <div onClick={() => this.setState({filter: 'charts'})} className={"filter " + ( this.state.filter === 'charts' ? 'active' : '' ) }>Data Charts</div>
+          </div>
+
+          <div className="details">
+            {this.state.filter === 'stubs' ? 
+            <div className="">Pay Stubs will appear here once this employee recieves a paycheck.</div>
+            :
+            <div className="">Data Charts will appear here once this feature is done.</div>
+            }
+          </div>
+
+        </div>
+
+        
 
       </div>
 

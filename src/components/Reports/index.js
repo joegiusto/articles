@@ -381,13 +381,13 @@ class Reports extends Component {
       
                           <div className="row">
       
-                            <div className="col-12 col-xl-6">
+                            <div className="col-12 col-xl-6 pr-xl-1">
                               <div className="snippet positive">
                               Revenue: ${this.state.totals.donations / 100}
                               </div>
                             </div>
       
-                            <div className="col-12 col-xl-6">
+                            <div className="col-12 col-xl-6 pl-xl-1">
                               <div className="snippet negative">
                               Expenses: -${this.state.totals.expenses / 100}
                               </div>
