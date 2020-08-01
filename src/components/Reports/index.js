@@ -614,8 +614,6 @@ class Reports extends Component {
                   </div>
                 </Link>
 
-                <div className="alert alert-danger border mt-3">Warning: This section is still in development and will not be ready unitll <b>August 8th 2020</b></div>
-
                 <EmployeePage></EmployeePage>
 
               </div>

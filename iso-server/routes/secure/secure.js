@@ -338,35 +338,65 @@ module.exports = (app, db) => {
     console.log(`Call to /api/getUserMessages made at ${new Date()}`);
 
     // Get the users Mail
-    db.collection("articles_users").find( {_id: ObjectId(req.body._id)}, {mail:1} ).toArray(function(err, result) {
+    db.collection("articles_messages").find( { users: { $in: [req.body._id] } } ).toArray(function(err, result) {
       if (err) throw err;
 
-      // console.log(`Call to /api/getUserMessages done`);
+      for (let i = 0; i < result.length; i++) {
 
-      // Get the senders names of mail messages
-      for (let i = 0; i < result[0].mail.length; i++) {
-        console.log(result[0].mail[i].sender)
+        if ( result[i].users.length > 2 ) {
+          // console.log("Is a group message");
+          result[i].group_message = true;
+        }
 
-        db.collection("articles_users").findOne( {_id: ObjectId(result[0].mail[i].sender)}, function(subErr, subResult) {
-          if (err) throw subErr;
-          // console.log(subResult)
-          result[0].mail[i].fetchedSender = subResult.first_name + ' ' + subResult.last_name
-        });
+      }
 
-        console.log(i)
-        console.log(result[0].mail.length)
+      // result | message = [{}, {}]
+      for (let i = 0; i < result.length; i++) {
 
-        if (i === result[0].mail.length - 1) {
-          console.log("Last sender")
+        let fetchedUsers = []
 
-          // Delay return res so Mongo can finish, THIS NEEDS TO BE IN A CALLBACK
+        // users = [userID, userID]
+        result[i].users.map((user) => {
+
+          db.collection("articles_users").findOne( { _id: ObjectId( user ) }, { projection: {first_name: 1, last_name: 1 } }, function(subErr, subResult) {
+            if (err) throw subErr;
+
+            // console.log(subResult)
+
+            let fetchedName = ''
+
+            if (subResult === null) {
+              fetchedName = "Deleted User"
+            } else {
+              fetchedName = subResult.first_name + ' ' + subResult.last_name
+            }
+
+            // console.log(fetchedName)
+            // console.log(fetchedUsers)
+            
+            fetchedUsers.push(fetchedName);
+            fetchedName = ''
+          });
+        })
+
+        // console.log("Final List Real")
+        // console.log(fetchedUsers)
+
+        result[i].fetchedUsers = fetchedUsers;
+        // result[i].userMatch = fetchedUsers;
+
+        if (i === result.length - 1 ) {
+          // console.log("Final List")
+          // console.log(fetchedUsers)
+
           delaySubmit()
         }
 
       }
 
       function delaySubmit() {
-        setTimeout(function(){ return res.send(result[0].mail) }, 500);
+        // setTimeout(function(){ return res.send(result[0].mail) }, 500);
+        setTimeout(function(){ return res.send(result) }, 250);
       }
        
       // return res.send(result[0].mail)
@@ -433,6 +463,47 @@ module.exports = (app, db) => {
 
     return res.end();
 
+  });
+
+  app.post('/api/chatMessage', (req, res) => {
+
+    if (req.body.chat_id === '' || req.body.user_id === '' || req.body.user_id === undefined || req.body.message === '') {
+
+      console.log("should End Here")
+
+      res.status(500)
+      res.json({
+        message: 'err.message',
+        error: 'err'
+      });
+
+      // res.render('error', { error: '{chat_id: string, user_id: string, message: string }' })
+      // res.send("{chat_id: string, user_id: string, message: string }")
+
+    } else {
+
+      db.collection("articles_messages").updateOne( {_id: ObjectId(req.body.chat_id) }, 
+      {
+        $push: {
+          messages: {
+            sender: req.body.user_id,
+            message: req.body.message,
+            date: moment()._d
+          }
+        }
+      },
+      function(err, res) {
+        if (err) throw err;
+        console.log(`Call to /api/chatMessage done`);
+      });
+  
+      return res.send('Message Saved');
+
+    }
+
+    console.log(`Chat ID: ${req.body.chat_id}`)
+    console.log(`User ID: ${req.body.user_id}`)
+    console.log(`Message: ${req.body.message}`)
   });
 
 } 

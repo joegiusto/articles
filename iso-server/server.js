@@ -19,8 +19,8 @@ const url = `mongodb+srv://joegiusto:${encodeURIComponent(process.env.MONGODB_PA
 const stripe = require('stripe')(process.env.STRIPE_TEST_PASSWORD);
 const sharp = require('sharp');
 
-var React = require('react');
-var ReactDOMServer = require('react-dom/server');
+// var React = require('react');
+// var ReactDOMServer = require('react-dom/server');
 
 let mongooseConnectionAttempts = 1
 const mongooseConnectionAttemptsMax = 5
@@ -275,6 +275,82 @@ io.on('connection', (socket) => {
     });
 
   });
+
+  let roomListeners = []
+
+  function createRoomListeners() {
+
+    for (let i = 0; i < roomListeners.length; i++) {
+
+      // roomListeners[i]
+
+      const room = roomListeners[i];
+
+      console.log('creating the room listener for ' + roomListeners[i]);
+
+      socket.on(roomListeners[i], function(data){
+
+        // socket.to(room).emit(data);
+        
+        // socket.broadcast.to( room ).emit( 'send', 'send' );
+        // socket.broadcast.to('game').emit('message', 'nice game');
+        // io.emit( room, data );
+
+        socket.broadcast.to( room ).emit( room, data );
+        // io.to(  room ).emit( data );
+
+        console.log('I should be sending out a message for ' + data + ' to the room ' + room)
+
+      });
+
+      // setInterval(function(){ 
+
+      //   console.log("Sending auto message out every five seconds to every active channel")
+      //   io.emit('You are a connected client, thank you.');
+
+      // }, 5000);
+
+    }
+  }
+
+  // setInterval(function(){ 
+
+  //   io.emit('You are a connected client, thank you.');
+
+  // }, 5000);
+
+  socket.on('join-room', function(data){
+
+    // console.log('Creating a room named')
+    // console.log(data)
+
+    if (socket.id === data) {
+      // This user is in main lobby
+    } else {
+      socket.join(data);
+  
+      console.log("Someone has joined a message-room")
+  
+      console.log(socket.adapter.rooms)
+  
+      // let bannedRooms = ['undefined'];
+  
+      roomListeners = Object.keys(socket.adapter.rooms);
+  
+      // roomListeners.forEach((word, index) => {
+      //   if(bannedRooms.indexOf(word) !== -1){
+      //     roomListeners.splice(index, 1);
+      //     // roomListeners[index] = null;
+      //   }
+      // });
+  
+      console.log("room listenres to open listeners on");
+      console.log(roomListeners);
+  
+      createRoomListeners();
+    }
+    
+  }); 
 
   socket.on('disconnect', () => {
     console.log('user disconnected');

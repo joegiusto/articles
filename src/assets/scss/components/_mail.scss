@@ -52,11 +52,10 @@
     display: flex;
     flex-wrap: wrap;
 
-    .messages {
+    .inbox-messages {
+      height: 100%;
       width: 400px;
-      // flex-grow: 5;
-      max-height: 100%;
-      overflow-y: scroll;
+      margin: auto;
 
       .loading-block {
         display: block;
@@ -70,19 +69,60 @@
         font-weight: bold;
       }
 
-      .message {
+      .inbox-message {
+        position: relative;
+        cursor: pointer;
         border-bottom: solid 2px #000;
         display: flex;
         flex-direction: row;
-        align-items: center;
-        // padding: 1rem;
+        padding: 0.25rem 0rem;
+
+        &.active {
+          border-right: 5px solid #000;
+        }
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .active-bullet {
+          position: absolute;
+          right: 0;
+          top: 50%;
+          transform: translateY(-50%) translateX(50%);
+          
+          .bullet {
+            height: 20px;
+            width: 20px;
+            border-radius: 20px;
+            background-color: $accent-color;
+            border: 1px solid #000;
+
+            animation-name: shrink_n_grow;
+            animation-duration: 1s;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+          }
+
+          @keyframes shrink_n_grow {
+            from {
+              transform: scale(1);
+            }
+            to {
+              transform: scale(0.5);
+            }
+          }
+        }
 
         .message-photo {
-          margin: 1rem;
-          width: 50px;
+          margin: 0 1rem;
           height: 50px;
-          border-radius: 10px;
+          border: 2px solid #000;
           background-color: black;
+
+          flex-basis: 50px;
+          flex-grow: 0;
+          flex-shrink: 0;
 
           img {
             width: 100%;
@@ -94,11 +134,69 @@
         .message-content {
 
           .message-sender {
-            // font-weight: bold;
+            font-weight: bold;
             font-family: brandon-grotesque, sans-serif;
             font-style: normal;
             font-weight: 900;
           }
+        }
+      }
+
+      .rooms {
+        padding: 1rem;
+      }
+    }
+
+    .chat-messages {
+      height: 100%;
+      width: 400px;
+      margin: auto;
+
+      .chat-message {
+        position: relative;
+        border: solid 2px #000;
+        background-color: white;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        padding: 0.5rem;
+        margin-top: 2rem;
+        padding-top: 0.5rem;
+        border-top-left-radius: 0px;
+
+        &.personal {
+          text-align: right;
+          border-top-left-radius: 10px;
+          border-top-right-radius: 0px;
+
+          .sender {
+            left: unset;
+            right: -2px;
+          }
+        }
+
+        .sender {
+          font-size: 14px;
+          position: absolute;
+          top: 0;
+          background-color: black;
+          color: white;
+          padding: 0.1rem 0.25rem;
+          left: -2px;
+          transform: translateY(-50%);
+        }
+
+        .message {
+          padding-top: 0.5rem;
+        }
+
+        .date {
+          font-weight: 900;
+          font-size: 14px;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          transform: translateY(100%);
         }
       }
     }
@@ -119,6 +217,110 @@
           font-size: 1.25rem;
         }
       }
+
+      .response {
+        position: relative;
+        background: $accent-color;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, $base-color, $accent-color);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, $base-color, $accent-color); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+        padding: 0.25rem;
+
+        .label {
+          font-family: brandon-grotesque, sans-serif;
+          font-style: normal;
+          font-weight: 900;
+        }
+
+        .input-wrap {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          textarea {
+            display: flex;
+            flex-grow: 1;
+            width: 100%;
+          }
+
+          .icon-wrap {
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            padding: 0.25rem;
+            background-color: white;
+            margin: 0.5rem;
+            border-radius: 50px;
+
+            i {
+
+            }
+          }
+        }
+
+        .security-status {
+          position: absolute;
+          bottom: 0;
+          transform: translateY( calc( 100% + 0.25rem ) );
+          font-size: 14px;
+          font-weight: 900;
+        }
+        
+      }
+
+      .color-options {
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 900;
+        position: absolute;
+        bottom: 1rem;
+        width: 400px;
+        border-radius: 5px;
+        padding: 1rem 0.5rem;
+        background-color: rgb(255, 255, 255);
+        border: 1px solid rgba(0, 0, 0, 0.15);
+
+        .option {
+          cursor: pointer;
+          display: inline-block;
+          width: 25px;
+          height: 25px;
+          margin-right: 5px;
+          border: 1px solid rgba(0, 0, 0, 0.15);
+        }
+      }
+    }
+
+    .gradientBlue {
+      background: #6190E8;  /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #A7BFE8, #6190E8);  /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #A7BFE8, #6190E8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      
+    }
+
+    .gradientGreen {
+      background: #43C6AC;  /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #F8FFAE, #43C6AC);  /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #F8FFAE, #43C6AC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    }
+
+    .gradientRed {
+      background: #FF5F6D;  /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #FFC371, #FF5F6D);  /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #FFC371, #FF5F6D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+
+    .gradientYellow {
+      background: #fffc00;  /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #ffffff, #fffc00);  /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #ffffff, #fffc00); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+
+    .gradientPurple {
+      background: #f4c4f3;  /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #fc67fa, #f4c4f3);  /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #fc67fa, #f4c4f3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     }
 
     > .ad {

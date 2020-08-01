@@ -429,9 +429,12 @@
     transition-duration: 1s;
     // overflow-y: hidden;
     padding-bottom: 3rem;
+
     .bg-rev {
       background-color: $base-color;
+      background-color: #4bba6f;
     }
+
     .snippet {
       background-color: black;
       color: white;
@@ -440,10 +443,11 @@
       text-align: center;
       border-radius: 5px;
       
-      
       &.positive {
         border-bottom: solid 2px $base-color;
+        border-bottom: solid 2px #4bba6f;
       }
+      
       &.negative {
         border-bottom: solid 2px rgb(255, 0, 0);
       }
