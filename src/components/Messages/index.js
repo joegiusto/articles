@@ -18,10 +18,13 @@ class Messages extends Component {
 
       focus: {},
 
+      scrollPosition: 0,
       isTyping: false,
       chatMessage: '',
       colorOption: '',
     }
+
+    this.myScrollRef = React.createRef()
   }
 
   randomIntFromInterval(min, max) { // min and max included 
@@ -40,6 +43,7 @@ class Messages extends Component {
 
   componentDidMount() {
     const self = this;
+    // window.addEventListener('scroll', this.listenToScroll)
     socket = io(ENDPOINT);
 
     self.setState({
@@ -89,6 +93,27 @@ class Messages extends Component {
 
   componentWillUnmount() {
     socket.disconnect()
+    // window.removeEventListener('scroll', this.listenToScroll)
+  }
+
+  listenToScroll = (e) => {
+
+    // console.log(e.currentTarget)
+
+    const winScroll =
+      e.currentTarget.scrollTop
+  
+    const height =
+      e.currentTarget.scrollHeight -
+      e.currentTarget.clientHeight
+  
+    const scrolled = winScroll / height
+  
+    this.setState({
+      scrollPosition: scrolled,
+      // theheight: winScroll
+    })
+
   }
 
   setFocus(message) {
@@ -99,7 +124,14 @@ class Messages extends Component {
         socket.emit( 'join-room', self.state.focus._id )
 
         socket.on(self.state.focus._id, function(msg){
+
           console.log('incoming message');
+
+          let willScroll = false;
+
+          if ( self.state.scrollPosition === 1 ) {
+            willScroll = true
+          }
 
           self.setState({
             focus: {
@@ -113,12 +145,19 @@ class Messages extends Component {
                 }
               ]
             }
-          })
+          },
+          () => { 
+
+            if ( willScroll === true ) {
+              // console.log('willScroll was true')
+              self.myScrollRef.current.scrollTop = self.myScrollRef.current.scrollHeight;
+            }
+
+           }
+          )
         });
       }
     )
-
-    // socket.emit('join', this.state.focus._id);
 
   }
 
@@ -157,6 +196,12 @@ class Messages extends Component {
 
         socket.emit(self.state.focus._id, self.state.chatMessage);
 
+        let willScroll = false;
+
+        if ( self.state.scrollPosition === 1 ) {
+          willScroll = true
+        }
+
         self.setState({
           focus: {
             ...self.state.focus,
@@ -170,6 +215,10 @@ class Messages extends Component {
             ]
           },
           chatMessage: ''
+        }, () => {
+          if ( willScroll === true ) {
+            self.myScrollRef.current.scrollTop = self.myScrollRef.current.scrollHeight;
+          }
         })
 
       })
@@ -284,16 +333,15 @@ class Messages extends Component {
               }
             </div>
 
-            <div className={"chat-messages p-3"}>
+            <div ref={this.myScrollRef} onScroll={(e) => this.listenToScroll(e)} className={"chat-messages p-3"}>
 
               {focus._id === undefined ?
 
               <div className="welcome-page">
                 <div>Hello {this.props.user_details.first_name}</div>
                 <div className="card">
-                  <div>2 New Messages!</div>
+                  <div>0 New Messages!</div>
                 </div>
-                <small>Last m</small>
               </div>
 
               :
@@ -313,10 +361,20 @@ class Messages extends Component {
                   </div>
               ))}
 
-              {Object.keys(focus).length === 0 || focus.promotional === true ?
+            </div>
+
+            {Object.keys(focus).length === 0 || focus.promotional === true ?
                 null
                 :
-                <div className="response mt-5">
+                <div className="response">
+
+                  {this.state.scrollPosition === 1 ? 
+                    <div className="scroll-lock">
+                      Auto Scroll
+                    </div>  
+                    :
+                    null
+                  }
 
                   <div className="label">Reply:</div>
 
@@ -338,7 +396,7 @@ class Messages extends Component {
                 </div>
               }
 
-              <div className="color-options d-flex justify-content-between align-items-center">
+              <div className="color-options">
                 <span className="label">Chat Color</span>
                 <div>
                   <ColorOption realThis={this} name="gradientBlue"/>
@@ -347,13 +405,11 @@ class Messages extends Component {
                   <ColorOption realThis={this} name="gradientYellow"/>
                   <ColorOption realThis={this} name="gradientPurple"/>
                 </div>
-              </div>
-
-            </div>            
+              </div>       
 
           </div>
 
-          <div className="ad"></div>
+          <div className="ad-panel"></div>
         </div>
 
       </div>

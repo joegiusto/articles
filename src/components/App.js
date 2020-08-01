@@ -1,4 +1,4 @@
-import React, {Component, useEffect} from 'react';
+import React, {Component, useEffect, withRouter} from 'react';
 import { Helmet } from "react-helmet";
 
 import { BrowserRouter as Router, Route, Switch, } from 'react-router-dom';
@@ -99,7 +99,7 @@ function ScrollToTop() {
   return null;
 }
 
-class App extends Component {
+class AppBase extends Component {
   constructor(props) {
     super(props);
 
@@ -255,7 +255,11 @@ class App extends Component {
               <Route component={NotFoundPage} />
             </Switch>
 
-            <Footer />
+            
+            {
+              // props.location.pathname!=='/messages' ? null : <Footer />
+            }
+
           </div>
 
         </div>
@@ -271,7 +275,9 @@ const mapStateToProps = state => ({
   site: state.site
 });
 
-export default connect(
+const App = connect(
   mapStateToProps,
   { setUserDetails }
-)(App);
+)(AppBase);
+
+export default App;

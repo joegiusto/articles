@@ -291,7 +291,6 @@ io.on('connection', (socket) => {
       socket.on(roomListeners[i], function(data){
 
         // socket.to(room).emit(data);
-        
         // socket.broadcast.to( room ).emit( 'send', 'send' );
         // socket.broadcast.to('game').emit('message', 'nice game');
         // io.emit( room, data );
@@ -300,6 +299,9 @@ io.on('connection', (socket) => {
         // io.to(  room ).emit( data );
 
         console.log('I should be sending out a message for ' + data + ' to the room ' + room)
+
+        // console.log("roomListeners");
+        // console.log(roomListeners);
 
       });
 

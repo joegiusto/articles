@@ -1,3 +1,28 @@
+.dark-mode {
+  .email-page {
+
+    .inbox-messages, .ad-panel, .page-note, .scroll-lock {
+      background-color: $dark-mode-card-color!important;
+    }
+
+    .header, .color-options, .chat-message, textarea, .icon-wrap{
+      background-color: $dark-mode-element-color!important;
+    }
+
+    .response {
+      background: #0F2027!important;  /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027)!important;  /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #2C5364, #203A43, #0F2027)!important; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+
+    .badge-primary {
+      background-color: $accent-color;
+      color: black;
+    }
+
+  }
+}
+
 .email-page {
   font-family: montserrat, sans-serif;
   font-weight: 400;
@@ -47,12 +72,13 @@
   }
 
   .dashboard {
-    background-color: whitesmoke;
+    // background-color: whitesmoke;
     height: calc(100vh - 50px);
     display: flex;
     flex-wrap: wrap;
 
     .inbox-messages {
+      background-color: whitesmoke;
       height: 100%;
       width: 400px;
       margin: auto;
@@ -148,9 +174,13 @@
     }
 
     .chat-messages {
+      position: relative;
       height: 100%;
       width: 400px;
       margin: auto;
+      max-height: calc(calc(80vh - 50px));
+      overflow-y: auto;
+      margin-top: 1rem;
 
       .chat-message {
         position: relative;
@@ -160,7 +190,7 @@
         display: flex;
         flex-direction: column;
         padding: 0.5rem;
-        margin-top: 2rem;
+        // margin-top: 1rem;
         padding-top: 0.5rem;
         border-top-left-radius: 0px;
 
@@ -203,13 +233,17 @@
 
     .content {
       flex-grow: 8;
-      background-color: rgb(199, 199, 199);
+
+      .welcome-page {
+        font-size: 2rem;
+      }
 
       .header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         background-color: white;
+        border-bottom: 1px solid #000;
         width: 100%;
         
         .subject {
@@ -219,17 +253,35 @@
       }
 
       .response {
+        width: 400px;
+        margin: 0 auto;
         position: relative;
         background: $accent-color;  /* fallback for old browsers */
         background: -webkit-linear-gradient(to right, $base-color, $accent-color);  /* Chrome 10-25, Safari 5.1-6 */
         background: linear-gradient(to right, $base-color, $accent-color); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
         padding: 0.25rem;
 
         .label {
           font-family: brandon-grotesque, sans-serif;
           font-style: normal;
           font-weight: 900;
+        }
+
+        .scroll-lock {
+          position: absolute;
+          left: 50%;
+          top: 0rem;
+          // width: 20px;
+          // height: 20px;
+          display: flex;
+          justify-content: center;
+          padding: 0.1rem 0.25rem;
+          align-items: center;
+          background-color: rgb(255, 255, 255);
+          // color: white;
+          border: 2px solid #000;
+          // border-radius: 30px;
+          transform: translateY(-50%) translateX(-50%);
         }
 
         .input-wrap {
@@ -273,8 +325,9 @@
         font-style: normal;
         font-weight: 900;
         position: absolute;
+        left: 1rem;
         bottom: 1rem;
-        width: 400px;
+        // width: 400px;
         border-radius: 5px;
         padding: 1rem 0.5rem;
         background-color: rgb(255, 255, 255);
@@ -323,8 +376,9 @@
       background: linear-gradient(to right, #fc67fa, #f4c4f3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     }
 
-    > .ad {
+    .ad-panel {
       width: 300px;
+      background-color: whitesmoke;
 
       @include media-breakpoint-down(md) {
         display: none;
