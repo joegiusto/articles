@@ -1,6 +1,76 @@
 import React from 'react';
+import GoogleMapReact from 'google-map-react';
 import moment from 'moment'
 import axios from 'axios'
+
+const AnyReactComponent = ({ text }) => (
+  <div style={{
+    color: 'white', 
+    background: 'white',
+    // padding: '5px 5px',
+    border: '5px solid #fff',
+    display: 'inline-flex',
+    textAlign: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderLeftColor: '#ffc8c8',
+    borderTopColor: '#ffc8c8',
+    borderBottomColor: '#F5F5DC',
+    borderRightColor: '#F5F5DC',
+    // borderRadius: '100%',
+    transform: 'translate(-50%, -50%)',
+    boxShadow: '0px 0px 1px 3px rgba(0, 0, 0, 0.5)'
+    // borderRadius: '10px'
+  }}>
+    <img src="https://www.logodesignlove.com/images/monograms/tesla-symbol.jpg" height="30px" alt=""/>
+  </div>
+);
+
+class SimpleMap extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      active: 0,
+      
+      places: [
+        {
+          text: 'Tesla',
+          lat: 37.090240, 
+          lng: -95.712891 
+        },
+        {
+          text: 'Protest',
+          lat: 37.090240, 
+          lng: -95.712891 
+        }
+      ]
+    }
+  }
+
+  static defaultProps = {
+    center: {lat: 37.09, lng: -95.71},
+    zoom: 5
+    ,
+    // bootstrapURLKeys: { key: '565403139080-i42ucf0miotmvqobitbsd35f92pek539.apps.googleusercontent.com' }
+  };
+
+  render() {
+    return (
+      <GoogleMapReact
+      bootstrapURLKeys={{ key: 'AIzaSyAKmyGIU1IJo_54kahuds7huxuoEyZF-68' }}
+      defaultCenter={this.props.center}
+      defaultZoom={this.props.zoom}
+    >
+      <AnyReactComponent 
+        lat={37.090240} 
+        lng={-95.712891} 
+        text={'Tesla'} 
+      />
+    </GoogleMapReact>
+    );
+  }
+}
 
 class Outset extends React.Component {
   constructor(props) {
@@ -177,17 +247,23 @@ class Outset extends React.Component {
     return (
       <div className="playground-page">
         <div className="container mt-5 mb-5">
+
+          <div style={{width: '100%', height: '400px'}}>
+            <SimpleMap/>
+          </div>
   
-          <h1>Heading One</h1>
-          <h2>Heading Two</h2>
-          <h3>Heading Three</h3>
-          <h4>Heading Four</h4>
-          <h5>Heading Five</h5>
-
-          <p>This is an example of a text block on the page.</p>
-
-          <button className="btn btn-articles-light mr-2">Articles Light</button>
-          <button className="btn btn-articles-light alt">Articles Light Alt</button>
+          <div className="type mt-5">
+            <h1>Heading One</h1>
+            <h2>Heading Two</h2>
+            <h3>Heading Three</h3>
+            <h4>Heading Four</h4>
+            <h5>Heading Five</h5>
+  
+            <p>This is an example of a text block on the page.</p>
+  
+            <button className="btn btn-articles-light mr-2">Articles Light</button>
+            <button className="btn btn-articles-light alt">Articles Light Alt</button>
+          </div>
 
           <div className="news mt-5">
             {/* {this.state.news.map((document) => (

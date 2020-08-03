@@ -16,7 +16,10 @@ class Messages extends Component {
       messagesLoading: false,
       messages: [],
 
+      inboxFilter: 'people',
       focus: {},
+
+      createChatOverlay: false,
 
       scrollPosition: 0,
       isTyping: false,
@@ -98,8 +101,6 @@ class Messages extends Component {
 
   listenToScroll = (e) => {
 
-    // console.log(e.currentTarget)
-
     const winScroll =
       e.currentTarget.scrollTop
   
@@ -121,6 +122,8 @@ class Messages extends Component {
 
     this.setState({focus: message}, 
       () => {
+        self.myScrollRef.current.scrollTop = self.myScrollRef.current.scrollHeight;
+
         socket.emit( 'join-room', self.state.focus._id )
 
         socket.on(self.state.focus._id, function(msg){
@@ -176,6 +179,70 @@ class Messages extends Component {
   //   }
 
   // }
+
+  renderInboxMessages() {
+    if (this.state.inboxFilter === 'people') {
+      return (
+        this.state.messages.map(message => 
+          (
+            <div onClick={() => this.setFocus(message)} className={"inbox-message " + (message.promotional ? 'ad ' : '') + (message._id === this.state.focus._id ? 'active ' : '')} >
+  
+              <div className="message-photo">
+                <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${message.sender}.jpg`} alt=""/>
+              </div>
+  
+              <div className="message-content">
+  
+                {message._id === this.state.focus._id ? 
+                  <div className="active-bullet">
+                    <div className="bullet"></div>
+                  </div>
+                  :
+                  null
+                }
+  
+                <div className="message-sender">
+                  {message.group_message ? 
+                  <div>
+                    <div>Group</div>
+                    <span>
+                      {/* { message.users.map( (user) => <span className="badge badge-articles mr-1">{user}</span> ) } */}
+                      { message.fetchedUsers.map( (user) => <span className={ "badge mr-1 " + ( user === "Deleted User" ? 'badge-danger' : 'badge-dark' ) }>{user}</span> ) }
+                    </span>
+                  </div> 
+                  :
+                  <div>
+                    <div>Person</div>
+                    <span>
+                      {/* { message.users.map( (user) => <span className="badge badge-articles mr-1">{user}</span> ) } */}
+                      { message.fetchedUsers.map( (user) => <span className="badge badge-dark mr-1">{user}</span> ) }
+                    </span>
+                  </div> 
+                  }
+                </div>
+  
+                <div className="message-subject">{message.subject}</div>
+              </div>
+            </div>
+          )
+        )
+      ) 
+      
+    } else {
+      return(
+        <div className="rooms">
+          <div className="rooms-card">
+            You are not a part of any rooms yet.
+          </div>
+          {/* <h5>Your Rooms</h5>
+          <div className="badge badge-primary">Real ID</div>
+          <div className="badge badge-primary ml-1">Developers</div>
+          <div className="badge badge-primary ml-1">Writers</div>
+          <div className="badge badge-primary ml-1">Designers</div> */}
+        </div>
+      )
+    }
+  }
 
   sendMessage() {
     const self = this;
@@ -236,6 +303,16 @@ class Messages extends Component {
 
     return (
       <div className="email-page background">
+
+        <div onClick={() => this.setState({createChatOverlay: false})} className={"create-chat-overlay " + (this.state.createChatOverlay ? 'active' : '')}>
+
+          <div className="create-chat active">
+            <h5>Please type the ID of the user you would like to chat with.</h5>
+            <input type="text"/>
+
+            <button className="btn btn-articles-light">Start</button>
+          </div>
+        </div>
         
         <div className="nav-bar-sticker">
           <div className="bg"></div>
@@ -243,82 +320,53 @@ class Messages extends Component {
           <div className="bg bg3"></div>
         </div>
 
-        <div onClick={() => this.setFocus({})} className="page-note">Mesh - BETA</div>
+        <div onClick={() => this.setFocus({})} className="page-note">
+          <div className="branding-badge">
+            <span>Mesh</span>
+            <span className="beta">BETA</span>
+          </div>
+        </div>
 
         <div className="dashboard">
-          <div className="inbox-messages">
+          <div className={"inbox-messages " + (this.state.focus._id === undefined ? '' : 'active')}>
 
             <div className="current-spotlight px-4 py-2 d-flex justify-content-between align-items-center">
-              <div>Inbox - {this.state.messages.length}</div>
-              <div><i className="far fa-plus-square"></i></div>
+
+              <div>
+                <button onClick={() => this.setState({inboxFilter: 'people'})} className={"badge ml-1 " + (this.state.inboxFilter === 'people' ? 'badge-dark' : 'badge-light border')}>
+                  People
+                </button>
+                <button onClick={() => this.setState({inboxFilter: 'rooms'})} className={"badge ml-1 " + (this.state.inboxFilter === 'rooms' ? 'badge-dark' : 'badge-light border')}>
+                  Rooms
+                </button>
+                {/* <p>Inbox - {this.state.messages.length}</p> */}
+              </div>
+
+              {this.state.inboxFilter === 'people' ? 
+              <div onClick={() => this.setState({createChatOverlay: true})} className="create"><i className="far fa-plus-square"></i></div>
+              : 
+              null
+              }
+
             </div>
 
             {this.state.messagesLoading ? 
-              <div className="loading-block">
-                <div>
-                  <i class="fas fa-spinner fa-spin"></i>
-                  Loading
-                </div>
+            <div className="loading-block">
+              <div>
+                <i class="fas fa-spinner fa-spin"></i>
+                Loading
               </div>
-              :
-              this.state.messages.map(message => 
-                (
-                  <div onClick={() => this.setFocus(message)} className={"inbox-message " + (message.promotional ? 'ad ' : '') + (message._id === focus._id ? 'active ' : '')} >
-
-                    <div className="message-photo">
-                      <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${message.sender}.jpg`} alt=""/>
-                    </div>
-
-                    <div className="message-content">
-
-                      {message._id === focus._id ? 
-                        <div className="active-bullet">
-                          <div className="bullet"></div>
-                        </div>
-                        :
-                        null
-                      }
-
-                      <div className="message-sender">
-                        {message.group_message ? 
-                        <div>
-                          <div>Group</div>
-                          <span>
-                            {/* { message.users.map( (user) => <span className="badge badge-articles mr-1">{user}</span> ) } */}
-                            { message.fetchedUsers.map( (user) => <span className={ "badge mr-1 " + ( user === "Deleted User" ? 'badge-danger' : 'badge-dark' ) }>{user}</span> ) }
-                          </span>
-                        </div> 
-                        :
-                        <div>
-                          <div>Person</div>
-                          <span>
-                            {/* { message.users.map( (user) => <span className="badge badge-articles mr-1">{user}</span> ) } */}
-                            { message.fetchedUsers.map( (user) => <span className="badge badge-dark mr-1">{user}</span> ) }
-                          </span>
-                        </div> 
-                        }
-                      </div>
-
-                      <div className="message-subject">{message.subject}</div>
-                    </div>
-                  </div>
-                )
-              )
-            }
-
-            <div className="rooms">
-              <h5>Your Rooms</h5>
-              <div className="badge badge-primary">Real ID</div>
-              <div className="badge badge-primary ml-1">Developers</div>
-              <div className="badge badge-primary ml-1">Writers</div>
-              <div className="badge badge-primary ml-1">Designers</div>
             </div>
-            
+
+            :
+
+            this.renderInboxMessages()}
+   
           </div>
 
-          <div className={"content " + this.state.colorOption}>
+          <div className={"content " + this.state.colorOption + (this.state.focus._id === undefined ? '' : ' active')}>
 
-            <div className="header px-4 py-2">
+            <div className={"header px-2 py-2 " + (focus._id === undefined ? 'd-none' : '')}>
 
               {focus.group_message ? 
               <div className="subject">Group Chat: {focus._id}</div>
@@ -345,19 +393,19 @@ class Messages extends Component {
               </div>
 
               :
-              // <div dangerouslySetInnerHTML={{__html: focus.message}}></div>
+
               focus.messages.map((message) => (
                 message.sender === this.props.user_id ? 
                   <div className="chat-message mb-3 personal">
                     <div className="sender">You</div>
                     <div className="message">{message.message}</div>
-                    <div className="date">{message.date}</div>
+                    <div className="date">{moment(message.date).format("LLL")}</div>
                   </div>
                   :
                   <div className="chat-message mb-3">
                     <div className="sender">{message.sender}</div>
                     <div className="message">{message.message}</div>
-                    <div className="date">{message.date}</div>
+                    <div className="date">{moment(message.date).format("LLL")}</div>
                   </div>
               ))}
 
@@ -368,13 +416,17 @@ class Messages extends Component {
                 :
                 <div className="response">
 
-                  {this.state.scrollPosition === 1 ? 
+                  {/* {this.state.scrollPosition === 1 ? 
                     <div className="scroll-lock">
                       Auto Scroll
                     </div>  
                     :
                     null
-                  }
+                  } */}
+
+                  <div className={"scroll-lock " + (this.state.scrollPosition === 1 ? 'active' : '')}>
+                    Auto Scroll
+                  </div> 
 
                   <div className="label">Reply:</div>
 
@@ -399,6 +451,7 @@ class Messages extends Component {
               <div className="color-options">
                 <span className="label">Chat Color</span>
                 <div>
+                  <ColorOption realThis={this} name=""/>
                   <ColorOption realThis={this} name="gradientBlue"/>
                   <ColorOption realThis={this} name="gradientGreen"/>
                   <ColorOption realThis={this} name="gradientRed"/>

@@ -26,6 +26,7 @@
     "firebase": "^7.14.4",
     "firebase-tools": "^7.1.0",
     "formik": "^2.1.4",
+    "google-map-react": "^2.0.4",
     "is-empty": "^1.2.0",
     "jwt-decode": "^2.2.0",
     "moment": "^2.24.0",
