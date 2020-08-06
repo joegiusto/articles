@@ -701,9 +701,9 @@ class SubmitBase extends Component {
                 <input className="mb-1" type="text" placeholder="Title of Work"/>
               </div>
 
-              <div class="form-group">
+              <div className="form-group">
                 <label for="exampleInputEmail1">Title Of Work</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+                <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
               </div>
               
               <textarea name="" id="" cols="30" rows="10" placeholder="Inspiration or description of design..."></textarea>

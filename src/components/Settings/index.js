@@ -335,7 +335,7 @@ class SubscribeListBase extends Component {
                     Submit a request to get your email changed
                   </div>
                 </div>
-                <div className="arrow"><i class="far fa-hand-point-right"></i></div>
+                <div className="arrow"><i className="far fa-hand-point-right"></i></div>
               </div>
 
               <div className="info-snippet">
@@ -346,7 +346,7 @@ class SubscribeListBase extends Component {
                   <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${this.props.auth.user.id}.jpg`} alt=""/>
                 </div>
 
-                <div className="arrow"><i class="far fa-hand-point-right"></i></div>
+                <div className="arrow"><i className="far fa-hand-point-right"></i></div>
 
                 <input className="profile-photo" onChange={this.onChangeProfile} accept=".jpg" type="file" name="myfile" />
 
@@ -400,7 +400,7 @@ class SubscribeListBase extends Component {
                 <div className="info">
                 {moment(this.props.user_details.birth_date).format("LL")}
                 </div>
-                <div className="arrow"><i class="far fa-hand-point-right"></i></div>
+                <div className="arrow"><i className="far fa-hand-point-right"></i></div>
               </div>
 
               <div className="info-snippet">
@@ -411,7 +411,7 @@ class SubscribeListBase extends Component {
                 ${this.props.user_details.address.zip}
                 `}
                 </div>
-                <div className="arrow"><i class="far fa-hand-point-right"></i></div>
+                <div className="arrow"><i className="far fa-hand-point-right"></i></div>
               </div>
 
               <div className="info-snippet" onClick={() => 
@@ -455,7 +455,7 @@ class SubscribeListBase extends Component {
 
                 
 
-                <div className="arrow"><i class="far fa-hand-point-right"></i></div>
+                <div className="arrow"><i className="far fa-hand-point-right"></i></div>
 
               </div>
 
@@ -498,7 +498,7 @@ class SubscribeListBase extends Component {
 
                 </div>
 
-                <div className="arrow"><i class="far fa-hand-point-right"></i></div>
+                <div className="arrow"><i className="far fa-hand-point-right"></i></div>
 
               </div>
 
@@ -523,7 +523,7 @@ class SubscribeListBase extends Component {
                   {this.props.user_details.subscriptionsFetched.length} Subscriptions
                 </div>
 
-                <div className="arrow"><i class="far fa-hand-point-right"></i></div>
+                <div className="arrow"><i className="far fa-hand-point-right"></i></div>
 
               </div>
 
@@ -535,7 +535,7 @@ class SubscribeListBase extends Component {
                   0 Followed
                 </div>
 
-                <div className="arrow"><i class="far fa-hand-point-right"></i></div>
+                <div className="arrow"><i className="far fa-hand-point-right"></i></div>
 
               </div>
 
@@ -560,7 +560,7 @@ class SubscribeListBase extends Component {
                   <div className="enabled-dot"></div>Enabled
                 </div>
 
-                <div className="arrow"><i class="far fa-hand-point-right"></i></div>
+                <div className="arrow"><i className="far fa-hand-point-right"></i></div>
 
               </div>
 
@@ -572,7 +572,7 @@ class SubscribeListBase extends Component {
                   <div className="enabled-dot"></div>Enabled
                 </div>
 
-                <div className="arrow"><i class="far fa-hand-point-right"></i></div>
+                <div className="arrow"><i className="far fa-hand-point-right"></i></div>
 
               </div>
 
@@ -584,7 +584,7 @@ class SubscribeListBase extends Component {
                   <div className="disabled-dot"></div>Disabled
                 </div>
 
-                <div className="arrow"><i class="far fa-hand-point-right"></i></div>
+                <div className="arrow"><i className="far fa-hand-point-right"></i></div>
 
               </div>
 

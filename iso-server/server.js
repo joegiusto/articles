@@ -139,6 +139,8 @@ function connectWithRetryMongo() {
 
     require('./routes/getDonations')(app, db);
 
+    require('./routes/getMonthlyExpense')(app, db);
+
     // Deleted
     // require('./routes/jsonNews')(app, db);
   

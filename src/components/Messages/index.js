@@ -353,7 +353,7 @@ class Messages extends Component {
             {this.state.messagesLoading ? 
             <div className="loading-block">
               <div>
-                <i class="fas fa-spinner fa-spin"></i>
+                <i className="fas fa-spinner fa-spin"></i>
                 Loading
               </div>
             </div>
@@ -377,7 +377,7 @@ class Messages extends Component {
               {focus.sender === undefined ?
                 null
                 :
-                <i class="far fa-trash-alt fa-2x mr-0"></i>
+                <i className="far fa-trash-alt fa-2x mr-0"></i>
               }
             </div>
 
@@ -432,13 +432,13 @@ class Messages extends Component {
 
                   <div className="input-wrap">
                     <textarea className="" id="chatMessage" name="chatMessage" value={this.state.chatMessage} onChange={(e) => this.handleChange(e)} type="text"/>
-                    <div onClick={() => this.sendMessage()} className="icon-wrap"><i class="far fa-paper-plane mr-0"></i></div>
+                    <div onClick={() => this.sendMessage()} className="icon-wrap"><i className="far fa-paper-plane mr-0"></i></div>
                   </div>
 
                   <div className="security-status w-100 d-flex justify-content-between align-items-center">
 
                     <div>
-                      <i class="fas fa-lock-open"></i>
+                      <i className="fas fa-lock-open"></i>
                       <span>This chat is not encrypted</span>
                     </div>
 

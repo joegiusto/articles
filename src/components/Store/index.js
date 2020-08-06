@@ -368,7 +368,7 @@ class StorePage extends Component {
 								<div className="panel">
 									<img src="https://cdn.articles.media/store/old_sheep_mockup_back.jpg" alt="" className="background view-all"/>
 									<div className="icon">
-										<i class="fas fa-tshirt"></i>
+										<i className="fas fa-tshirt"></i>
 									</div>
 									<div className="title">View All</div>
 								</div>
@@ -378,7 +378,7 @@ class StorePage extends Component {
 								<div className="panel">
 									<img src="https://preview.free3d.com/img/2019/04/2154877840292579114/xqztcxft-900.jpg" alt="" className="background collections"/>
 									<div className="icon">
-										<i class="fas fa-grip-horizontal"></i>
+										<i className="fas fa-grip-horizontal"></i>
 									</div>
 									<div className="title">Collections</div>
 								</div>
@@ -391,16 +391,16 @@ class StorePage extends Component {
 
 									<div className="voting-board">
 										<div className="board">
-											{/* <i class="fas fa-ruler-combined"></i> */}
+											{/* <i className="fas fa-ruler-combined"></i> */}
 										</div>
 										<div className="votes">
-											<i class="fas fa-thumbs-down"></i>
-											<i class="fas fa-thumbs-up mr-0"></i>
+											<i className="fas fa-thumbs-down"></i>
+											<i className="fas fa-thumbs-up mr-0"></i>
 										</div>
 									</div>
 
 									<div className="icon">
-										<i class="fas fa-lightbulb" aria-hidden="true"></i>
+										<i className="fas fa-lightbulb" aria-hidden="true"></i>
 									</div>
 
 									<div className="title">Submissions</div>
@@ -432,7 +432,7 @@ class StorePage extends Component {
 							<div className="description">In collabaration with another creator or company.</div>
 							<div className="progress">
 								<div className="progress-bar partner" role="progressbar" style={{width: "30%"}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-								<div class="progress-bar progress-bar-striped progress-bar-animated partner" role="progressbar" style={{width: "40%"}} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+								<div className="progress-bar progress-bar-striped progress-bar-animated partner" role="progressbar" style={{width: "40%"}} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
 							</div>
 							<div className="profit">Net Profit: ~30%-70%</div>
 						</div>

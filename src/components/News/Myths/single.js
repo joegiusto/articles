@@ -103,7 +103,7 @@ class Issue extends React.Component {
                 </span>
               </Link>
 
-              <span className="icon"><i class="fas fa-angle-right"></i></span>
+              <span className="icon"><i className="fas fa-angle-right"></i></span>
 
               <Link to={ROUTES.MYTHS}>
                 <span className="articles-breadcrumb active">

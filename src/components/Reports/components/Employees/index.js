@@ -1,17 +1,11 @@
 import React, {Component} from 'react';
-import { BrowserRouter as Route, Switch } from 'react-router-dom';
+// import { BrowserRouter as Route, Switch } from 'react-router-dom';
 // import Tilt from 'react-tilt';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 
-import * as ROUTES from '../../constants/routes';
-import { employeeList } from "../../sample_data/sampleData";
-
-const Test = () => {
-  return (
-    <div>Hello</div>
-  )
-}
+import * as ROUTES from '../../../../constants/routes';
+import { employeeList } from "../../../../sample_data/sampleData";
 
 class EmployeesPage extends Component {
   constructor(props) {

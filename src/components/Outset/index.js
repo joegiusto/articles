@@ -985,7 +985,7 @@ class OutsetBase extends React.Component {
                   <div className="privacy-notice party-information">
   
                     <div onClick={() => this.changeFocus('')} className="close-privacy">
-                      <i class="fas fa-window-close"></i>
+                      <i className="fas fa-window-close"></i>
                     </div>
   
                     {this.renderReasonForInformationTitle(this.state.step)}

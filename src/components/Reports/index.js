@@ -1,22 +1,20 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import { Helmet } from "react-helmet";
 import { connect } from 'react-redux';
-// import { DateRangePicker } from 'react-dates';
-import { Link, Switch, Route, matchPath } from "react-router-dom";
-import { withFirebase } from '../Firebase'; 
-import { employeeList, sales, donations, expenses } from "../../sample_data/sampleData";
-
-import * as ROUTES from '../../constants/routes';
-
 import axios from 'axios';
-
-import {ClothingTable} from "./table.js"
+import { Link, Switch, Route, matchPath } from "react-router-dom";
 import moment from 'moment';
 import Chart from 'chart.js';
-import Component from 'react-live-clock/lib/Component';
 import socketIOClient from 'socket.io-client'
-import EmployeePage from '../Employees';
-import EmployeeDetailsPage from '../Employees/Directory'
+ 
+import { sales } from "../../sample_data/sampleData";
+import * as ROUTES from '../../constants/routes';
+import {ClothingTable} from "./table.js"
+
+// import DataCharts from './components/Charts'
+import EmployeePage from './components/Employees';
+import EmployeeDetailsPage from './components/Employees/Directory';
+import ReportExpenseCards from './components/Reporting';
 
 const ENDPOINT = "/";
 let socket = ''
@@ -26,30 +24,35 @@ class Reports extends Component {
     super(props);
 
      this.state = {
-       searchText: '',
-       loading: false,
-       limit: 5,
-       menuExpanded: false,
-       tableSelector: 'donations',
-       subtableSelector: '',
-       chartPeriodSelector: '1y',
+        searchText: '',
+        loading: false,
+        limit: 5,
+        menuExpanded: false,
+        tableSelector: 'donations',
+        subtableSelector: '',
+        chartPeriodSelector: '1y',
 
-       firebaseData: {
-        expenses: {
-          other: [],
-          payroll: [],
+        firebaseData: {
+
+          expenses: {
+            other: [],
+            payroll: [],
+          },
+
+          revenue: {
+            clothing: [],
+            donations: [],
+          },
+
         },
-        revenue: {
-          clothing: [],
-          donations: [],
-        },
-       },
 
        totals: {
          expenses: 0,
          clothing: 0,
          donations: 0,
        },
+
+       monthBreakdown: []
 
      };
 
@@ -227,8 +230,6 @@ class Reports extends Component {
 
   componentWillUnmount() {
     socket.disconnect();
-    this.props.firebase.donations().off();
-    this.props.firebase.expenses().off();
   }
 
   setChartPeriodSelector(newChartPeriod) {
@@ -238,32 +239,31 @@ class Reports extends Component {
   }
 
   setTableSelector(newSelector) {
-  this.setState({
-    tableSelector: newSelector,
-    subtableSelector: ''
-  });
+    this.setState({
+      tableSelector: newSelector,
+      subtableSelector: ''
+    });
 
-  switch(newSelector) {
-    case 'clothing':
-      this.setState({
-        subtableSelector: 'clothing-all'
-      });
-      break;
-    case 'expenses':
-      this.setState({
-        subtableSelector: 'expenses-all'
-      });
-      break;
-    case 'revenue':
-      this.setState({
-        subtableSelector: 'revenue-all'
-      });
-      break;
-    default:
-      // code block
-  };
-
- }
+    switch(newSelector) {
+      case 'clothing':
+        this.setState({
+          subtableSelector: 'clothing-all'
+        });
+        break;
+      case 'expenses':
+        this.setState({
+          subtableSelector: 'expenses-all'
+        });
+        break;
+      case 'revenue':
+        this.setState({
+          subtableSelector: 'revenue-all'
+        });
+        break;
+      default:
+        // code block
+    };
+  }
 
   getTableComponent(tableSelector, subtableSelector) {
     switch(tableSelector) {
@@ -283,11 +283,17 @@ class Reports extends Component {
       case 'payroll':
         return(<PayrollTable/>)
       case 'revenue':
-        return(<DonationTable firebaseData={this.state.firebaseData} fetch="expenses"/>)
+        return(<DonationTable firebaseData={this.state.firebaseData} fetch="revenue"/>)
       default:
         // Useless because tableSelector state always starts at something
     };
   }
+
+  // TODO
+  // this.state.firebaseData -> reportsData
+
+  // DonationTable -> expenseTable
+  // DonationTable -> revenueTable
 
   setSubTableSelector(newSelector, redirect, location) {
     if ( redirect === true ) {
@@ -322,966 +328,302 @@ class Reports extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
  
- render(props) {
-   return (
-    <div className="reports-page">
-
-      <Helmet>
-        <title>Reports - Articles</title>
-      </Helmet>
-
-      <div className="fixed-total dual-header">
-        <span className="help">Help <i className="far fa-question-circle"></i></span>
-        <span className="total">+${((this.state.totals.donations - this.state.totals.expenses) / 100 ).toFixed(2)}</span>
-      </div>
-
-      <div className="fixed-componsation-50"></div>
-
-      <div className="container home-container">
-
-        <div className="row justify-content-center">
-
-          <div className="col-12 col-md-4 col-lg-4">
-
-            <div className="reports-side-menu">
-
-              <div className="static-wrapper">
-
-                <Route exact path={ROUTES.REPORTS} render={() => 
-                  <div className="live">
-                    <span className="recording-dot d-inline-block"></span>
-                    <span>Live</span>
-                  </div>
-                }/>
-    
-                <div id='info' className={"info " + (this.state.menuExpanded ? 'expanded' : '')}>
-    
-                  <div className="normal">
-                    <div className="px-2 pt-4">
-    
-                      <div>Current Balance:</div>
-                      <h2>${((this.state.totals.donations - this.state.totals.expenses) / 100 ).toFixed(2)}</h2>
-    
-                      <div className="time-container">
-                        <div className="progress">
-                          <div className="progress-bar bg-rev" role="progressbar" style={{width: (this.state.totals.donations / ((this.state.totals.donations + this.state.totals.expenses) / 100) ).toFixed(0) +"%"}} aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">{( this.state.totals.donations / ((this.state.totals.donations + this.state.totals.expenses) / 100) ).toFixed(0)}%</div>
-                          <div className="progress-bar bg-danger" role="progressbar" style={{width: (this.state.totals.expenses / ((this.state.totals.donations + this.state.totals.expenses) / 100) ).toFixed(0) + "%"}} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">{( this.state.totals.expenses / ((this.state.totals.donations + this.state.totals.expenses) / 100) ).toFixed(0)}%</div>
-                        </div>
-      
-                        <div className="text-muted">Revenue | Expenses</div>
-      
-                        <div className="mt-4">
-      
-                          <div className="row">
-      
-                            <div className="col-12 col-xl-6 pr-xl-1">
-                              <div className="snippet positive">
-                              Revenue: ${this.state.totals.donations / 100}
-                              </div>
-                            </div>
-      
-                            <div className="col-12 col-xl-6 pl-xl-1">
-                              <div className="snippet negative">
-                              Expenses: -${this.state.totals.expenses / 100}
-                              </div>
-                            </div>
-      
-                          </div>
-      
-                        </div>
-                      </div>
-    
-                    </div>
-                  </div>
-    
-                </div>
-              </div>
-
-              <div className="mt-3">
-                <Link to={ROUTES.REPORTS}>
-                  <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (this.props.location.pathname === ROUTES.REPORTS ? 'active' : null)}>
-                    <div>
-                      <i class="fas fa-paste" aria-hidden="true"></i>
-                      <span>Reports</span>
-                    </div>
-                  </button>
-                </Link>
-              </div>
-
-              <div className="mt-3">
-                <Link to={ROUTES.REPORTS_CHARTS}>
-                  <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (this.props.location.pathname === ROUTES.REPORTS_CHARTS ? 'active' : null)}>
-                    <div>
-                      <i className="fas fa-chart-line"></i>
-                      <span>Data Charts</span>
-                    </div>
-                  </button>
-                </Link>
-              </div>
-  
-              <div className="mt-3">
-                <Link to={ROUTES.REPORTS_REPORT}>
-                  <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (this.props.location.pathname === ROUTES.REPORTS_REPORT ? 'active' : null)}>
-                    <div>
-                      <i className="fas fa-flag"></i>
-                      <span>Report Expense</span>
-                    </div>
-                  </button>
-                </Link>
-              </div>
-
-              <div className="mt-3">
-                <Link to={ROUTES.EMPLOYEES}>
-                  <button className={"btn btn-articles-light btn-lg w-100 report-quick-links" + (this.props.location.pathname === ROUTES.EMPLOYEES ? ' active' : '') + (matchPath(this.props.location.pathname, ROUTES.EMPLOYEES_DETAILS) ? ' active' : '')}>
-                    <div>
-                      <i class="fas fa-paste" aria-hidden="true"></i>
-                      <span>Employee Data</span>
-                    </div>
-                  </button>
-                </Link>
-              </div>
-
-              {/* <div className="mt-3"> */}
-                {/* <div className="badge badge-light border border-black other-tag mt-3 mx-auto d-none d-md-block">Or Check Out</div> */}
-              {/* </div> */}
-  
-              {/* <div className="d-none d-md-block mt-3">
-                <Link to={ROUTES.EMPLOYEES}><button className="btn btn-articles-light btn-lg w-100 report-quick-links">
-                  <div>
-                    <i className="fas fa-user-tie"></i>
-                    <span>Employee Data</span>
-                  </div>
-                </button></Link>
-              </div> */}
-  
-              {/* <div className="d-none d-md-block mt-3">
-                <Link to={ROUTES.DONATE}>
-                  <button className="btn btn-articles-light btn-lg w-100 mb-3 report-quick-links">
-                    <div>
-                      <i className="fas fa-money-bill"></i>
-                      <span>Donate</span>
-                    </div>
-                  </button>
-                </Link>
-              </div> */}
-
-            </div>
-            
-          </div>
-  
-          <Switch>
-
-            <Route exact={true} path={ROUTES.REPORTS} render={() => 
-              <div className="col-12 col-md-8 col-lg-8">
-
-                <div className="search reports-shadow">
-                  
-                  <div className="input-wrap dual-header">
-                    
-                    <div className="icon">
-                      <i className="fas fa-search-dollar d-flex align-items-center fa-2x h-100 "></i>
-                    </div>
-
-                    <div className="dropdown-wrap">
-
-                      <input 
-                      className="search-input d-flex align-content-center pl-2" 
-                      type="text" 
-                      placeholder="Search service is currently limited"
-                      value={this.state.searchText}
-                      name="searchText"
-                      onChange={this.onChange} 
-                      />
-
-                      <div className="results-wrap">
-                      {
-                        this.state.searchText !== '' ?
-
-                        this.filterByValue(this.state.firebaseData.expenses.other, this.state.searchText).map((item, i) => (
-                        <div className="result">
-                          <div>{item.reason} - ${(item.amount / 100).toFixed(2)}</div>
-                          <div>{moment(item.date).format("LL")}</div>
-                        </div>
-                        ))
-
-                        :
-
-                        null
-
-                      }
-                      </div>
-
-                    </div>
-
-                  </div>
-
-                  
-
-                </div>
-
-                <div className="reports-table reports-shadow">
-                  <div className="table-selector">
-          
-                    <div className="main">
-                      {this.tableSelectorChoice('donations')}
-                      {this.tableSelectorChoice('clothing')}
-                      {this.tableSelectorChoice('payroll')}
-                      {this.tableSelectorChoice('revenue')}
-                      {this.tableSelectorChoice('expenses')}
-                    </div>
-      
-                    <div className={"sub sub-donations " + (this.state.tableSelector === 'donations' ? '' : 'd-none')}>
-                      {/* For the future */}
-                    </div>
-      
-                    <div className={"sub sub-clothing dual-header " + (this.state.tableSelector === 'clothing' ? '' : 'd-none')}>
-                      <div>
-                        {this.subTableSelectorChoice('clothing-all', 'all')}
-                        {this.subTableSelectorChoice('clothing-originals', 'originals')}
-                        {this.subTableSelectorChoice('clothing-partnerships', 'partnerships')}
-                        {this.subTableSelectorChoice('clothing-submissions', 'submissions')}
-                        {this.subTableSelectorChoice('clothing-sponsored', 'sponsored')}
-                      </div>
-                      <div>
-                        {this.subTableSelectorChoice('clothing-preorders', 'preorders')}
-                      </div>
-                    </div>
-          
-                    <div className={"sub sub-expenses " + (this.state.tableSelector === 'expenses' ? '' : 'd-none')}>
-                      {this.subTableSelectorChoice('expenses-all', 'all')}
-                      {this.subTableSelectorChoice('expenses-payroll', 'payroll', true, {tableSelector: 'payroll'})}
-                      {this.subTableSelectorChoice('expenses-production-inventory', 'inventory')}
-                      {this.subTableSelectorChoice('expenses-reoccuring', 'reoccuring')}
-                      {this.subTableSelectorChoice('expenses-utilities', 'utilities')}
-                      {this.subTableSelectorChoice('expenses-other', 'other')}
-                    </div>
-          
-                    <div className={"sub sub-payroll " + (this.state.tableSelector === 'payroll' ? '' : 'd-none')}>
-                      {/* For the future */}
-                    </div>
-          
-                    <div className={"sub sub-revenue " + (this.state.tableSelector === 'revenue' ? '' : 'd-none')}>
-                      {this.subTableSelectorChoice('revenue-all', 'all')}
-                      {this.subTableSelectorChoice('revenue-donations', 'donations', true, {tableSelector: 'donations'})}
-                      {this.subTableSelectorChoice('revenue-clothing', 'clothing', true, {tableSelector: 'clothing'})}
-                      {this.subTableSelectorChoice('revenue-grants', 'grants')}
-                      {this.subTableSelectorChoice('revenue-ads', 'ads')}
-                      {this.subTableSelectorChoice('revenue-sponsorships', 'sponsorships')}
-                    </div>
-          
-                  </div>
-          
-                  {this.getTableComponent(this.state.tableSelector, this.state.subtableSelector)}
-
-                </div>
-
-              </div>
-            }/>
-
-            <Route path={ROUTES.REPORTS_CHARTS} render={() => 
-              <div className="col-12 col-md-8 col-lg-8">
-                <DataCharts data={this.state.firebaseData.revenue.donations} setChartPeriodSelector={this.setChartPeriodSelector} chartPeriodSelector={this.state.chartPeriodSelector}></DataCharts>
-              </div>
-            }/>
-
-            <Route path={ROUTES.REPORTS_REPORT} render={() => 
-              <div className="col-12 col-md-8 col-lg-8">
-
-                <Link to={ROUTES.REPORTS}>
-                  <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1">
-                    <i class="far fa-hand-point-left"></i>
-                    <span>Back to Reports</span>
-                  </div>
-                </Link>
-
-                <div className="alert alert-warning border mt-3">Warning: We are working on ways to make this section more transparent with our users, such as number of reports and ways to agree with other peoples reports. Data is saved for Admins to look at for now.</div>
-
-                <ReportExpenseCards 
-                  expenses={this.state.firebaseData.expenses.other}
-                  user_id={this.props.user_id}
-                />
-
-              </div>
-            }/>
-
-            <Route exact path={ROUTES.EMPLOYEES} render={() => 
-              <div className="col-12 col-md-8 col-lg-8">
-
-                <Link to={ROUTES.REPORTS}>
-                  <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1">
-                    <i class="far fa-hand-point-left"></i>
-                    <span>Back to Reports</span>
-                  </div>
-                </Link>
-
-                <EmployeePage></EmployeePage>
-
-              </div>
-            }/>
-
-            <Route exact path={ROUTES.EMPLOYEES_DETAILS} render={() => 
-              <div className="col-12 col-md-8 col-lg-8">
-
-                <Link to={ROUTES.REPORTS}>
-                  {/* <div className="border d-inline-block"> */}
-                    <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1">
-                      <i class="far fa-hand-point-left"></i>
-                      <span>Back to Reports</span>
-                    </div>
-                  {/* </div> */}
-                </Link>
-
-                <EmployeeDetailsPage match={this.props.match}></EmployeeDetailsPage>
-
-              </div>
-            }/>
-
-          </Switch>
-
-        </div>
-
-      </div>
-    </div>
-   )
-  }
-}
-
-class ReportExpenseCards extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      previousReports: [],
-      expenses: [],
-      expense_id: '',
-      reason: '',
-      user_id: this.props.user_id
-    }
-
-    this.handleChange = this.handleChange.bind(this);
-    this.submitReport = this.submitReport.bind(this)
-  }
-
-  componentDidMount() {
-    const self = this;
-
-    axios.get('/api/getExpenseReports', {
-      params: {
-        user_id: this.props.user_id
-      }
-    })
-    .then(function (response) {
-
-      console.log(response)
-
-      self.setState({ 
-        previousReports: response.data,
-      });
-
-    })
-    .catch(function (error) {
-      console.log(error);
-
-      self.setState({
-        loading: false
-      })
-    });
-
-  }
-
-  handleChange(event) {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-
-    this.setState({
-      [name]: value
-    });
-  }
-
-  submitReport() {
-    const self = this;
-
-    axios.post('/api/upsertExpenseReport', {
-      report: {
-        ...this.state
-      }
-    })
-    .then(function (response) {
-
-      console.log(response)
-
-      self.setState({ 
-        previousReports: [
-          ...self.state.previousReports,
-          {
-            expense_id: self.state.expense_id,
-            reason: self.state.reason,
-            date: moment()._d
-          }
-        ]
-      }, () => (
-        self.setState({
-          _id: '',
-          reason: ''
-        })
-      ));
-
-    })
-    .catch(function (error) {
-      console.log(error);
-
-      self.setState({
-        error: true
-      })
-    });
-
-  }
-
-  render() {
-    return(
-      <>
-      {this.props.user_id !== undefined ?
-        <div className="reports-table reports-shadow chart-block">
-          <div className="row">
-
-            <div className="col-12 col-md-12">
-
-              <h5>Previous Reports</h5>
-              <p>Any updates to reported items you may have reported will apprear here.</p>
-
-              <hr/>
-
-              {this.state.previousReports.length < 1 ? 
-              <p className="mb-0"><b>No reported items to display</b></p>
-              :
-              <table className="table articles-table table-sm table-hover table-bordered">
-                <thead>
-                  <tr className="table-articles-head">
-                    <th>DATE</th>
-                    <th>ID</th>
-                    <th>ACTIONS</th>
-                  </tr>
-                </thead>
-                {
-                  this.state.previousReports.map((report) => (
-                    <ReportExpenseRow 
-                      key={report._id || report.date}
-                      report={report}
-                    />
-                  ))
-                }
-              </table>
-              }
-
-            </div>
- 
-          </div>
-
-        </div>
-        :
-        null
-        }
-
-        <div className="reports-table reports-shadow chart-block">
-
-          <div className="row">
-
-            <div className="col-12 col-md-12">
-
-              <h5>Report An Expense</h5>
-              <p>If you have any concerns, recommendations, or problems with a charge feel free to voice them below.</p>
-              
-              {this.props.user_id !== undefined ? 
-              <>
-
-                <div className="form-group">
-                  <label for="newsType">Expense:</label>
-
-                  <select className="form-control" name="expense_id" disabled={this.state.editLoading ? 'disabled' : ''} id="expense_id" value={this.state.expense_id} onChange={this.handleChange}>
-                    <option value={''}>Choose One</option>
-                    {this.props.expenses.map((expense) => (
-                      <option key={expense._id} value={expense._id}>{moment(expense.date).format("LL")} - {expense.reason} - ${expense.amount / 100}</option>
-                    ))}
-                  </select>
-
-                </div>
-
-                <div className="form-group">
-                  <label for="newsType">Concern, Recommendation, or Problem:</label>
-                  <textarea className="d-block w-100 p-2" name="reason" id="reason" onChange={this.handleChange} rows="10"></textarea>
-                </div>
-
-                <div className="pb-3 d-flex justify-content-end">
-                  <button onClick={() => this.submitReport()} className="btn btn-articles-light" disabled={this.state.reason === '' || this.state.expense_id === '' ? true : false}>Submit</button>
-                </div>
-
-              </>
-              :
-              <>
-              <div className="signin-notice">You must be signed in to report an expense.</div>
-              <Link to={ROUTES.SIGN_IN}><div className="btn btn-articles-light mt-2 w-100 mx-auto">Sign In</div></Link>
-              </>
-              }
-
-            </div>
-
-          </div>
-
-        </div>
-      </>
-    )
-  }
-}
-
-class ReportExpenseRow extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      expanded: false
-    }
-
-  }
-
-  componentDidMount() {
-
-  }
-
-  render() {
-    return(
-      <>
-        <tr>
-          <td>{moment(this.props.report.date).format("LL")}</td>
-          <td>{this.props.report.expense_id}</td>
-
-          {this.state.expanded !== true ? 
-          <td onClick={() => this.setState({expanded: !this.state.expanded})} className="link badge badge-dark noselect" style={{cursor: 'pointer'}}>Click to Expand</td>
-          :
-          <td onClick={() => this.setState({expanded: !this.state.expanded})} className="link badge badge-light border noselect" style={{cursor: 'pointer'}}>Click to Collapse</td>
-          }
-
-        </tr>
-
-        <tr className={(this.state.expanded ? '' : 'd-none')}>
-          <td colSpan="3">
-            <div>Reason:</div>
-            <div>{this.props.report.reason}</div>
-          </td>
-        </tr>
-      </>
-    )
-  }
-}
-
-class DataCharts extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      chartRevenueExpense: 'chartRevenueExpense',
-      chartPayroleExpenses: 'chartPayroleExpenses',
-      chartEmployeeAdmin: 'chartEmployeeAdmin',
-      chartNewYorkEmployeeOurEmployee: 'chartNewYorkEmployeeOurEmployee',
-      expandSource: false,
-      julyTotal: 0
-    };
-  }
-
-  componentDidMount() {
-
-    const years = (back) => {
-      const year = new Date().getFullYear();
-      return Array.from({length: back}, (v, i) => year - back + i + 1);
-    }
-
-    var vsPayroleExpenses = document.getElementById(this.state.chartPayroleExpenses);
-
-    new Chart(vsPayroleExpenses, {
-        type: 'pie',
-        data: {
-          labels: [ 'Expenses', 'Payrole' ],
-          datasets: [
-            {
-              label: '$ in Donations',
-              data: [31.22, 0],
-              backgroundColor: [
-                'rgba(63, 191, 127, 0.2)',
-                'rgba(255, 99, 132, 0.2)'
-              ],
-              borderColor: [
-                'rgba(63, 191, 127, 1)',
-                'rgba(255, 99, 132, 1)'
-              ],
-              borderWidth: 1,
-              lineTension: 0.1,
-            }
-          ]
-        },
-        options: {
-          // scales: {
-          //     yAxes: [{
-          //       ticks: {
-          //         fontFamily: "brandon-grotesque",
-          //         beginAtZero: true
-          //       }
-          //     }],
-          //     xAxes: [{
-          //       gridLines: {
-          //         display: false
-          //       },
-          //       ticks: {
-          //         fontFamily: "brandon-grotesque",
-          //       }
-          //     }]
-          // }
-        }
-    });
-
-    var vsCeoEmployee = document.getElementById(this.state.chartEmployeeAdmin);
-
-    new Chart(vsCeoEmployee, {
-        type: 'line',
-        data: {
-          labels: [ 'July', 'August', 'September', 'October', 'November', 'December', 'January', 'Febuary', 'March', 'April', 'May', 'June' ],
-          datasets: [
-            {
-              label: 'CEO Pay',
-              data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              backgroundColor: [
-                'rgba(63, 191, 127, 0.2)'
-              ],
-              borderColor: [
-                'rgba(63, 191, 127, 1)'
-              ],
-              pointBackgroundColor: 'rgba(63, 191, 127, 1)',
-              pointBorderColor: 'rgba(63, 191, 127, 1)',
-              borderWidth: 1,
-              lineTension: 0.1,
-            },
-            {
-              label: 'Average Employee Pay',
-              data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              backgroundColor: [
-                  'rgba(226, 167, 89, 0.2)'
-              ],
-              borderColor: [
-                'rgba(226, 167, 89, 1)'
-              ],
-              borderWidth: 2,
-              lineTension: 0.1,
-            },
-            {
-              label: 'Lowest Paid Employee',
-              data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)'
-              ],
-              borderColor: [
-                  'rgba(255, 99, 132, 1)'
-              ],
-              borderWidth: 2,
-              lineTension: 0.1,
-            }
-          ]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                  ticks: {
-                    fontFamily: "brandon-grotesque",
-                    beginAtZero: true,
-                    min: 0,
-                    max: 100000,
-                    callback: function(value, index, values) {return  '$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                  }
-                }],
-                xAxes: [{
-                  gridLines: {
-                    display: false
-                  },
-                  ticks: {
-                    fontFamily: "brandon-grotesque",
-                  }
-                }]
-            }
-        }
-    });
-
-    var chartNewYorkEmployeeOurEmployee = document.getElementById(this.state.chartNewYorkEmployeeOurEmployee);
-
-    new Chart(chartNewYorkEmployeeOurEmployee, {
-        type: 'line',
-        data: {
-          labels: [ ...years(10) ],
-          datasets: [
-            {
-              label: 'Median New York Income',
-              data: [64894, 62909, 0, 0, 0, 0, 58,878, 60,850, 62,909, 64894],
-              backgroundColor: [
-                'rgba(63, 191, 127, 0.2)'
-              ],
-              borderColor: [
-                'rgba(63, 191, 127, 1)'
-              ],
-              pointBackgroundColor: 'rgba(63, 191, 127, 1)',
-              pointBorderColor: 'rgba(63, 191, 127, 1)',
-              borderWidth: 1,
-              lineTension: 0.1,
-            },
-            {
-              label: 'Median New York Income With College',
-              data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              backgroundColor: [
-                  'rgba(226, 167, 89, 0.2)'
-              ],
-              borderColor: [
-                'rgba(226, 167, 89, 1)'
-              ],
-              borderWidth: 2,
-              lineTension: 0.1,
-            },
-            {
-              label: 'Median Articles Employee Income',
-              data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)'
-              ],
-              borderColor: [
-                  'rgba(255, 99, 132, 1)'
-              ],
-              borderWidth: 2,
-              lineTension: 0.1,
-            }
-          ]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                  ticks: {
-                    fontFamily: "brandon-grotesque",
-                    beginAtZero: true,
-                    min: 0,
-                    max: 100000,
-                    callback: function(value, index, values) {return  '$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                  }
-                }],
-                xAxes: [{
-                  gridLines: {
-                    display: false
-                  },
-                  ticks: {
-                    fontFamily: "brandon-grotesque",
-                  }
-                }]
-            }
-        }
-    });
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-
-    console.log("Update");
-
-    // function sum(key) {
-    //   return this.reduce((a, b) => a + (b[key] || 0), 0);
-    // }
-
-    if (prevProps.data !== this.props.data) {
-
-      var months = [];
-      var totals = [];
-      var realTotals = [];
-
-      // let i;
-
-      for (let i = 0; i < 12; i++) {
-        months.push(moment().subtract(i, 'months').format('MMM'))
-
-        var temp = this.props.data.filter((item) => {
-          return moment(item.date).isSame(moment().subtract(i, 'months'), 'month');
-        })
-
-        // temp = temp.map((item) => {
-        //   return item / 100
-        // })
-
-        totals.push(temp.reduce((a, b) => a + (b['amount'] || 0), 0))
-
-        realTotals = totals.map(function(item) {return item / 100})
-
-      }
-
-      this.setState({
-        monthTotals: realTotals,
-      }, () => {
-
-        if (this.state.monthTotals.length !== 0) {
-
-          // console.log(`Not equal to zero at ${this.state.julyTotal}`)
-
-          var vsReveneueExpense = document.getElementById(this.state.chartRevenueExpense);
-
-          new Chart(vsReveneueExpense, {
-              type: 'line',
-              data: {
-                  labels: [ ...months.reverse() ],
-                  datasets: [{
-                      label: 'Donations',
-                      data: [...this.state.monthTotals.reverse()],
-                      backgroundColor: [
-                        'rgba(63, 191, 127, 0.2)'
-                      ],
-                      borderColor: [
-                        'rgba(63, 191, 127, 1)'
-                      ],
-                      pointBackgroundColor: 'rgba(63, 191, 127, 1)',
-                      pointBorderColor: 'rgba(63, 191, 127, 1)',
-                      borderWidth: 1,
-                      lineTension: 0.1,
-                  },
-                  {
-                    label: 'Expenses',
-                    data: [10.66, 0, 12.97, 0, 0, 0, 0, 0, 0, 0, 0, 7.59],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)'
-                    ],
-                    pointBackgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    pointBorderColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth: 2,
-                    lineTension: 0.1,
-                }]
-              },
-              options: {
-                  scales: {
-                      yAxes: [{
-                        ticks: {
-                          fontFamily: "brandon-grotesque",
-                          beginAtZero: true,
-                        }
-                      }],
-                      xAxes: [{
-                        gridLines: {
-                          display: false
-                        },
-                        ticks: {
-                          fontFamily: "brandon-grotesque",
-                        }
-                      }]
-                  }
-              }
-          });
-        }
-
-      })
-
-    }
-  }
-
-  changeExpandSource(state) {
-    this.setState({
-      expandSource: state
-    })
-  }
-
   render(props) {
     return (
-      <div className="chart-component">
+      <div className="reports-page">
 
-        <Link to={ROUTES.REPORTS}>
-          {/* <div className="border d-inline-block"> */}
-            <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1">
-              <i class="far fa-hand-point-left"></i>
-              <span>Back to Reports</span>
-            </div>
-          {/* </div> */}
-        </Link>
+        <Helmet>
+          <title>Reports - Articles</title>
+        </Helmet>
 
-        <div className="alert alert-danger border mt-3">Warning: This section is still in development and will not be ready unitll <b>August 8th 2020</b></div>
-
-        <div className="chart-blocks">
-          <div className="chart-block">
-            <h5>Revenue vs Expenses</h5>
-            <p>How much we are spending a month compared to how much we are making.</p>
-  
-            <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} />
-  
-            <canvas className='chart mb-3 bg-white' id={this.state.chartRevenueExpense} width="100%" height="45px"></canvas>
-          </div>
-  
-          <div className="chart-block">
-            <h5>Payrole Comparison</h5>
-            <p>The amount of money being spent on payrole compared to expenses.</p>
-  
-            <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} />
-  
-            <canvas className='chart mb-3 bg-white' id={this.state.chartPayroleExpenses} width="100%" height="45px"></canvas>
-            {/* <div className="badge badge-info mt-3">No Chart Added Yet</div> */}
-          </div>
-  
-          <div className="chart-block">
-            <h5>Median USA Income vs Our Employees</h5>
-            <p>The amount of money being spent on payrole compared to revenues and expenses.</p>
-  
-            {/* <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} /> */}
-            <span className="badge badge-dark">10 Years</span>
-  
-            {/* <canvas className='chart mb-3 bg-white' id={this.state.chartTitle} width="100%" height="45px"></canvas> */}
-            <canvas className='chart mb-3 bg-white' id={this.state.chartNewYorkEmployeeOurEmployee} width="100%" height="45px"></canvas>
-            <div onClick={() => this.changeExpandSource(!this.state.expandSource)} className="btn btn-articles-light mb-2">
-              {this.state.expandSource ? 
-              <i class="fas fa-caret-square-up"></i>
-              :
-              <i class="fas fa-caret-square-down"></i>
-              }
-              
-              Expand Source Info
-              </div>
-
-            <div className={"source-info " + (this.state.expandSource ? "show" : null)}>
-              <hr/>
-              <div>Information sourced from the following:</div>
-              <div className="sources">
-                <ul className="mb-0">
-                  <li>Link</li>
-                  <li>Link</li>
-                  <li>Static Image</li>
-                  <li>Static Image</li>
-                </ul>
-              </div>
-            </div>
-
-          </div>
-  
-          <div className="chart-block">
-            <h5>Employee to CEO Pay Diffrence</h5>
-            <p>The % of employee worth to CEO pay. (Lowest Paid Employee, Median Employee Pay, Top Employee pay)</p>
-  
-            <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} />
-  
-            <canvas className='chart mb-3 bg-white' id={this.state.chartEmployeeAdmin} width="100%" height="45px"></canvas>
-            {/* <div className="badge badge-info mt-3">No Chart Added Yet</div> */}
-          </div>
+        <div className="fixed-total dual-header">
+          <span className="help">Help <i className="far fa-question-circle"></i></span>
+          <span className="total">+${((this.state.totals.donations - this.state.totals.expenses) / 100 ).toFixed(2)}</span>
         </div>
 
+        <div className="fixed-componsation-50"></div>
+
+        <div className="container home-container">
+
+          <div className="row justify-content-center">
+
+            <div className="col-12 col-md-4 col-lg-4">
+
+              <div className="reports-side-menu">
+
+                <div className="static-wrapper">
+
+                  <Route exact path={ROUTES.REPORTS} render={() => 
+                    <div className="live">
+                      <span className="recording-dot d-inline-block"></span>
+                      <span>Live</span>
+                    </div>
+                  }/>
+      
+                  <div id='info' className={"info " + (this.state.menuExpanded ? 'expanded' : '')}>
+      
+                    <div className="normal">
+                      <div className="px-2 pt-4">
+      
+                        <div>Current Balance:</div>
+                        <h2>${((this.state.totals.donations - this.state.totals.expenses) / 100 ).toFixed(2)}</h2>
+      
+                        <div className="time-container">
+                          <div className="progress">
+                            <div className="progress-bar bg-rev" role="progressbar" style={{width: (this.state.totals.donations / ((this.state.totals.donations + this.state.totals.expenses) / 100) ).toFixed(0) +"%"}} aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">{( this.state.totals.donations / ((this.state.totals.donations + this.state.totals.expenses) / 100) ).toFixed(0)}%</div>
+                            <div className="progress-bar bg-danger" role="progressbar" style={{width: (this.state.totals.expenses / ((this.state.totals.donations + this.state.totals.expenses) / 100) ).toFixed(0) + "%"}} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">{( this.state.totals.expenses / ((this.state.totals.donations + this.state.totals.expenses) / 100) ).toFixed(0)}%</div>
+                          </div>
+        
+                          <div className="text-muted">Revenue | Expenses</div>
+        
+                          <div className="mt-4">
+        
+                            <div className="row">
+        
+                              <div className="col-12 col-xl-6 pr-xl-1">
+                                <div className="snippet positive">
+                                Revenue: ${this.state.totals.donations / 100}
+                                </div>
+                              </div>
+        
+                              <div className="col-12 col-xl-6 pl-xl-1">
+                                <div className="snippet negative">
+                                Expenses: -${this.state.totals.expenses / 100}
+                                </div>
+                              </div>
+        
+                            </div>
+        
+                          </div>
+                        </div>
+      
+                      </div>
+                    </div>
+      
+                  </div>
+                </div>
+
+                <div className="mt-3">
+                  <Link to={ROUTES.REPORTS}>
+                    <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (this.props.location.pathname === ROUTES.REPORTS ? 'active' : null)}>
+                      <div>
+                        <i className="fas fa-paste" aria-hidden="true"></i>
+                        <span>Reports</span>
+                      </div>
+                    </button>
+                  </Link>
+                </div>
+
+                <div className="mt-3">
+                  <Link to={ROUTES.REPORTS_CHARTS}>
+                    <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (this.props.location.pathname === ROUTES.REPORTS_CHARTS ? 'active' : null)}>
+                      <div>
+                        <i className="fas fa-chart-line"></i>
+                        <span>Data Charts</span>
+                      </div>
+                    </button>
+                  </Link>
+                </div>
+    
+                <div className="mt-3">
+                  <Link to={ROUTES.REPORTS_REPORT}>
+                    <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (this.props.location.pathname === ROUTES.REPORTS_REPORT ? 'active' : null)}>
+                      <div>
+                        <i className="fas fa-flag"></i>
+                        <span>Report Expense</span>
+                      </div>
+                    </button>
+                  </Link>
+                </div>
+
+                <div className="mt-3">
+                  <Link to={ROUTES.EMPLOYEES}>
+                    <button className={"btn btn-articles-light btn-lg w-100 report-quick-links" + (this.props.location.pathname === ROUTES.EMPLOYEES ? ' active' : '') + (matchPath(this.props.location.pathname, ROUTES.EMPLOYEES_DETAILS) ? ' active' : '')}>
+                      <div>
+                        <i className="fas fa-paste" aria-hidden="true"></i>
+                        <span>Employee Data</span>
+                      </div>
+                    </button>
+                  </Link>
+                </div>
+
+              </div>
+              
+            </div>
+    
+            <Switch>
+
+              <Route exact={true} path={ROUTES.REPORTS} render={() => 
+                <div className="col-12 col-md-8 col-lg-8">
+
+                  <div className="search reports-shadow">
+                    
+                    <div className="input-wrap dual-header">
+                      
+                      <div className="icon">
+                        <i className="fas fa-search-dollar d-flex align-items-center fa-2x h-100 "></i>
+                      </div>
+
+                      <div className="dropdown-wrap">
+
+                        <input 
+                        className="search-input d-flex align-content-center pl-2" 
+                        type="text" 
+                        placeholder="Search service is currently limited"
+                        value={this.state.searchText}
+                        name="searchText"
+                        onChange={this.onChange} 
+                        />
+
+                        <div className="results-wrap">
+                        {
+                          this.state.searchText !== '' ?
+
+                          this.filterByValue(this.state.firebaseData.expenses.other, this.state.searchText).map((item, i) => (
+                          <div className="result">
+                            <div>{item.reason} - ${(item.amount / 100).toFixed(2)}</div>
+                            <div>{moment(item.date).format("LL")}</div>
+                          </div>
+                          ))
+
+                          :
+
+                          null
+
+                        }
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                  <div className="reports-table reports-shadow">
+                    <div className="table-selector">
+            
+                      <div className="main">
+                        {this.tableSelectorChoice('donations')}
+                        {this.tableSelectorChoice('clothing')}
+                        {this.tableSelectorChoice('payroll')}
+                        {this.tableSelectorChoice('revenue')}
+                        {this.tableSelectorChoice('expenses')}
+                      </div>
+        
+                      <div className={"sub sub-donations " + (this.state.tableSelector === 'donations' ? '' : 'd-none')}>
+                        {/* For the future */}
+                      </div>
+        
+                      <div className={"sub sub-clothing dual-header " + (this.state.tableSelector === 'clothing' ? '' : 'd-none')}>
+                        <div>
+                          {this.subTableSelectorChoice('clothing-all', 'all')}
+                          {this.subTableSelectorChoice('clothing-originals', 'originals')}
+                          {this.subTableSelectorChoice('clothing-partnerships', 'partnerships')}
+                          {this.subTableSelectorChoice('clothing-submissions', 'submissions')}
+                          {this.subTableSelectorChoice('clothing-sponsored', 'sponsored')}
+                        </div>
+                        <div>
+                          {this.subTableSelectorChoice('clothing-preorders', 'preorders')}
+                        </div>
+                      </div>
+            
+                      <div className={"sub sub-expenses " + (this.state.tableSelector === 'expenses' ? '' : 'd-none')}>
+                        {this.subTableSelectorChoice('expenses-all', 'all')}
+                        {this.subTableSelectorChoice('expenses-payroll', 'payroll', true, {tableSelector: 'payroll'})}
+                        {this.subTableSelectorChoice('expenses-production-inventory', 'inventory')}
+                        {this.subTableSelectorChoice('expenses-reoccuring', 'reoccuring')}
+                        {this.subTableSelectorChoice('expenses-utilities', 'utilities')}
+                        {this.subTableSelectorChoice('expenses-other', 'other')}
+                      </div>
+            
+                      <div className={"sub sub-payroll " + (this.state.tableSelector === 'payroll' ? '' : 'd-none')}>
+                        {/* For the future */}
+                      </div>
+            
+                      <div className={"sub sub-revenue " + (this.state.tableSelector === 'revenue' ? '' : 'd-none')}>
+                        {this.subTableSelectorChoice('revenue-all', 'all')}
+                        {this.subTableSelectorChoice('revenue-donations', 'donations', true, {tableSelector: 'donations'})}
+                        {this.subTableSelectorChoice('revenue-clothing', 'clothing', true, {tableSelector: 'clothing'})}
+                        {this.subTableSelectorChoice('revenue-grants', 'grants')}
+                        {this.subTableSelectorChoice('revenue-ads', 'ads')}
+                        {this.subTableSelectorChoice('revenue-sponsorships', 'sponsorships')}
+                      </div>
+            
+                    </div>
+            
+                    {this.getTableComponent(this.state.tableSelector, this.state.subtableSelector)}
+
+                  </div>
+
+                </div>
+              }/>
+
+              <Route path={ROUTES.REPORTS_CHARTS} render={() => 
+                <div className="col-12 col-md-8 col-lg-8">
+                  <DataCharts data={this.state.firebaseData.revenue.donations} setChartPeriodSelector={this.setChartPeriodSelector} chartPeriodSelector={this.state.chartPeriodSelector}></DataCharts>
+                </div>
+              }/>
+
+              <Route path={ROUTES.REPORTS_REPORT} render={() => 
+                <div className="col-12 col-md-8 col-lg-8">
+
+                  <Link to={ROUTES.REPORTS}>
+                    <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1">
+                      <i className="far fa-hand-point-left"></i>
+                      <span>Back to Reports</span>
+                    </div>
+                  </Link>
+
+                  <div className="alert alert-warning border mt-3">Warning: We are working on ways to make this section more transparent with our users, such as number of reports and ways to agree with other peoples reports. Data is saved for Admins to look at for now.</div>
+
+                  <ReportExpenseCards 
+                    expenses={this.state.firebaseData.expenses.other}
+                    user_id={this.props.user_id}
+                  />
+
+                </div>
+              }/>
+
+              <Route exact path={ROUTES.EMPLOYEES} render={() => 
+                <div className="col-12 col-md-8 col-lg-8">
+
+                  <Link to={ROUTES.REPORTS}>
+                    <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1">
+                      <i className="far fa-hand-point-left"></i>
+                      <span>Back to Reports</span>
+                    </div>
+                  </Link>
+
+                  <EmployeePage></EmployeePage>
+
+                </div>
+              }/>
+
+              <Route exact path={ROUTES.EMPLOYEES_DETAILS} render={() => 
+                <div className="col-12 col-md-8 col-lg-8">
+
+                  <Link to={ROUTES.REPORTS}>
+                    {/* <div className="border d-inline-block"> */}
+                      <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1">
+                        <i className="far fa-hand-point-left"></i>
+                        <span>Back to Reports</span>
+                      </div>
+                    {/* </div> */}
+                  </Link>
+
+                  <EmployeeDetailsPage match={this.props.match}></EmployeeDetailsPage>
+
+                </div>
+              }/>
+
+            </Switch>
+
+          </div>
+
+        </div>
       </div>
     )
   }
-
-}
-
-function ChartBlockTimeFrame (props) {
-  return (
-    <div className="scale">
-      <span onClick={() => props.setChartPeriodSelector('1y')} className={"badge border mr-1 " + (props.chartPeriodSelector === "1y" ? 'badge-dark' : 'badge-light')}>1 Year</span>
-      <span onClick={() => props.setChartPeriodSelector('6m')} className={"badge border mr-1 " + (props.chartPeriodSelector === "6m" ? 'badge-dark' : 'badge-light')}>6 Months</span>
-      <span onClick={() => props.setChartPeriodSelector('1m')} className={"badge border mr-1 " + (props.chartPeriodSelector === "1m" ? 'badge-dark' : 'badge-light')}>1 Month</span>
-      <span onClick={() => props.setChartPeriodSelector('1w')} className={"badge border " + (props.chartPeriodSelector === "1w" ? 'badge-dark' : 'badge-light')}>1 Week</span>
-    </div>
-  )
 }
 
 function RevenueTable () {
@@ -1468,7 +810,7 @@ function PayrollTable () {
   )
 }
 
-class DonationTableBase extends Component {
+class DonationTable extends Component {
    constructor(props) {
      super(props);
 
@@ -1483,10 +825,6 @@ class DonationTableBase extends Component {
       this.changeLimit = this.changeLimit.bind(this);
       this.changePage = this.changePage.bind(this);
    }
-
-  componentWillUnmount() {
-    this.props.firebase.donations().off();
-  }
 
   changeLimit(limit) {
     this.setState({
@@ -1552,11 +890,24 @@ const StyledDonationList = (props) => (
         {props.donationsFirebase
         .sort((a, b) => new Date(b.date) - new Date(a.date))
         .map(donation => (
+          
+          (donation.department === 'payrole' ? 
           <StyledDonationItem
             key={donation.uid}
             donation={donation}
             fetch={props.fetch}
+            isPayrole={true}
           />
+           : 
+           <StyledDonationItem
+            key={donation.uid}
+            donation={donation}
+            fetch={props.fetch}
+          />
+          )
+
+          
+
         ))}
         <tr>
           <td colSpan={props.fetch === 'expenses' ? '2' : '2'} className="border-right-0 table-articles-head">
@@ -1590,11 +941,11 @@ const StyledDonationList = (props) => (
   </div>
 )
 
-const StyledDonationItem = ({fetch, donation}) => (
+const StyledDonationItem = ({fetch, donation, isPayrole}) => (
   <tr>
     {/* <th scope="row">{donation.uid}</th> */}
 
-    {fetch === 'expenses' ? <td><a rel="noopener noreferrer" target="_blank" href={donation.file}><i className="fas fa-file-invoice"></i></a></td> : undefined}
+    {isPayrole ? 'True' : fetch === 'expenses' ? <td><a rel="noopener noreferrer" target="_blank" href={donation.file}><i className="fas fa-file-invoice"></i></a></td> : undefined}
 
     {/* <td>{fetch === 'donations' ? moment(donation.createdAt).format('LL') : moment.unix(donation.date).format('LL')}</td> */}
     <td>{moment(donation.date).format('LL')}</td>
@@ -1624,6 +975,497 @@ const StyledDonationItem = ({fetch, donation}) => (
   </tr>
 )
 
+class DataCharts extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      chartRevenueExpense: 'chartRevenueExpense',
+      chartPayroleExpenses: 'chartPayroleExpenses',
+      chartEmployeeAdmin: 'chartEmployeeAdmin',
+      chartNewYorkEmployeeOurEmployee: 'chartNewYorkEmployeeOurEmployee',
+      expandSource: false,
+      julyTotal: 0
+    };
+  }
+
+  componentDidMount() {
+    const self = this
+
+    axios.get('/api/getMonthlyExpense')
+    .then(function (response) {
+
+      console.log(response);
+
+      self.setState({
+        monthBreakdown: response.data
+      }, () => {
+        console.log('done')
+        // self.getBreakdownTotal('expenses', 8, 2020);
+        self.renderCharts();
+      })
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  // componentDidUpdate(prevProps, prevState, snapshot) {
+
+  //   console.log("Update");
+
+  //   if (prevProps.data !== this.props.data) {
+
+  //     // this.renderCharts();
+
+  //   }
+  // }
+
+  getBreakdownTotal(type, month, year) {
+    if (type === "expenses") {
+      console.log(`Trying to return ${type} that occured in ${month} of ${year}`);
+
+      console.log("This will be the result")
+
+      let result = this.state.monthBreakdown.filter(singleMonth => {
+        return singleMonth._id.month === month && singleMonth._id.year === year;
+        // month._id ===  {month: 8, year: 2020} 
+        // let menu = month._id.some(({dish_has_categories}) => dish_has_categories.some(({CategoryId}) => CategoryId === '8'))
+        // return menu
+      } );
+
+      console.log(result[0])
+      return result[0]
+
+    } else {
+      return "We can only handle expenses at this time"
+    }
+  }
+
+  renderCharts() {
+    const years = (back) => {
+      const year = new Date().getFullYear();
+      return Array.from({length: back}, (v, i) => year - back + i + 1);
+    }
+
+    var expenseMonths = [];
+    var lastExpenses = []
+
+    var months = [];
+    var totals = [];
+    var realTotals = [];
+    ;
+
+    for (let i = 0; i < 12; i++) {
+      expenseMonths.push({
+        month: parseInt(moment().subtract(i, 'months').format('MM')),
+        year: parseInt(moment().subtract(i, 'months').format('Y'))
+      });
+      
+      lastExpenses.push(this.getBreakdownTotal(
+        'expenses', 
+        parseInt(moment().subtract(i, 'months').format('MM')),  
+        parseInt(moment().subtract(i, 'months').format('Y')) 
+      ));
+
+    }
+
+    console.log(expenseMonths)
+    console.log(lastExpenses)
+
+    for (let i = 0; i < 12; i++) {
+      months.push(moment().subtract(i, 'months').format('MMM'))
+
+      var temp = this.props.data.filter((item) => {
+        return moment(item.date).isSame(moment().subtract(i, 'months'), 'month');
+      })
+
+      totals.push(temp.reduce((a, b) => a + (b['amount'] || 0), 0))
+
+      realTotals = totals.map(function(item) {return item / 100})
+
+    }
+
+    this.setState({
+      monthTotals: realTotals,
+    }, () => {
+
+      if (this.state.monthTotals.length !== 0) {
+
+        var vsReveneueExpense = document.getElementById(this.state.chartRevenueExpense);
+
+        new Chart(vsReveneueExpense, {
+            type: 'line',
+            data: {
+                labels: [ ...months.reverse() ],
+                datasets: [{
+                    label: 'Donations',
+                    data: [...this.state.monthTotals.reverse()],
+                    backgroundColor: [
+                      'rgba(63, 191, 127, 0.2)'
+                    ],
+                    borderColor: [
+                      'rgba(63, 191, 127, 1)'
+                    ],
+                    pointBackgroundColor: 'rgba(63, 191, 127, 1)',
+                    pointBorderColor: 'rgba(63, 191, 127, 1)',
+                    borderWidth: 1,
+                    lineTension: 0.1,
+                },
+                {
+                  label: 'Expenses',
+                  data: [ 
+                    ( (lastExpenses[11]?.total / 100) || 0 ), 
+                    ( (lastExpenses[10]?.total / 100) || 0 ), 
+                    ( (lastExpenses[9]?.total / 100) || 0 ),
+                    ( (lastExpenses[8]?.total / 100) || 0 ), 
+                    ( (lastExpenses[7]?.total / 100) || 0 ), 
+                    ( (lastExpenses[6]?.total / 100) || 0 ), 
+                    ( (lastExpenses[5]?.total / 100) || 0 ), 
+                    ( (lastExpenses[4]?.total / 100) || 0 ), 
+                    ( (lastExpenses[3]?.total / 100) || 0 ), 
+                    ( (lastExpenses[2]?.total / 100) || 0 ), 
+                    ( (lastExpenses[1]?.total / 100) || 0 ), 
+                    ( (lastExpenses[0]?.total / 100) || 0 ) 
+                  ],
+                  backgroundColor: [
+                      'rgba(255, 99, 132, 0.2)'
+                  ],
+                  borderColor: [
+                      'rgba(255, 99, 132, 1)'
+                  ],
+                  pointBackgroundColor: 'rgba(255, 99, 132, 0.2)',
+                  pointBorderColor: 'rgba(255, 99, 132, 1)',
+                  borderWidth: 2,
+                  lineTension: 0.1,
+              }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                      ticks: {
+                        fontFamily: "brandon-grotesque",
+                        beginAtZero: true,
+                      }
+                    }],
+                    xAxes: [{
+                      gridLines: {
+                        display: false
+                      },
+                      ticks: {
+                        fontFamily: "brandon-grotesque",
+                      }
+                    }]
+                }
+            }
+        });
+
+      }
+
+    })
+
+    var vsPayroleExpenses = document.getElementById(this.state.chartPayroleExpenses);
+
+    new Chart(vsPayroleExpenses, {
+        type: 'pie',
+        data: {
+          labels: [ 'Expenses', 'Payrole' ],
+          datasets: [
+            {
+              label: '$ in Donations',
+              data: [76.42, 4.00],
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(249, 237, 205, 0.2)'
+              ],
+              borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(249, 237, 205, 1)'
+              ],
+              borderWidth: 1,
+              lineTension: 0.1,
+            }
+          ]
+        },
+        options: {
+          // scales: {
+          //     yAxes: [{
+          //       ticks: {
+          //         fontFamily: "brandon-grotesque",
+          //         beginAtZero: true
+          //       }
+          //     }],
+          //     xAxes: [{
+          //       gridLines: {
+          //         display: false
+          //       },
+          //       ticks: {
+          //         fontFamily: "brandon-grotesque",
+          //       }
+          //     }]
+          // }
+        }
+    });
+
+    var vsCeoEmployee = document.getElementById(this.state.chartEmployeeAdmin);
+
+    new Chart(vsCeoEmployee, {
+        type: 'line',
+        data: {
+          labels: [ 'July', 'August', 'September', 'October', 'November', 'December', 'January', 'Febuary', 'March', 'April', 'May', 'June' ],
+          datasets: [
+            {
+              label: 'CEO Pay',
+              data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              backgroundColor: [
+                'rgba(63, 191, 127, 0.2)'
+              ],
+              borderColor: [
+                'rgba(63, 191, 127, 1)'
+              ],
+              pointBackgroundColor: 'rgba(63, 191, 127, 1)',
+              pointBorderColor: 'rgba(63, 191, 127, 1)',
+              borderWidth: 1,
+              lineTension: 0.1,
+            },
+            {
+              label: 'Average Employee Pay',
+              data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              backgroundColor: [
+                  'rgba(226, 167, 89, 0.2)'
+              ],
+              borderColor: [
+                'rgba(226, 167, 89, 1)'
+              ],
+              borderWidth: 2,
+              lineTension: 0.1,
+            },
+            {
+              label: 'Lowest Paid Employee',
+              data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)'
+              ],
+              borderWidth: 2,
+              lineTension: 0.1,
+            }
+          ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                  ticks: {
+                    fontFamily: "brandon-grotesque",
+                    beginAtZero: true,
+                    min: 0,
+                    max: 100000,
+                    callback: function(value, index, values) {return  '$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  }
+                }],
+                xAxes: [{
+                  gridLines: {
+                    display: false
+                  },
+                  ticks: {
+                    fontFamily: "brandon-grotesque",
+                  }
+                }]
+            }
+        }
+    });
+
+    var chartNewYorkEmployeeOurEmployee = document.getElementById(this.state.chartNewYorkEmployeeOurEmployee);
+
+    new Chart(chartNewYorkEmployeeOurEmployee, {
+        type: 'line',
+        data: {
+          labels: [ ...years(10) ],
+          datasets: [
+            {
+              label: 'USA Per Capita Income',
+              data: [30830, 30988, 31127, 32420, 32039, 33549, 34746, 35330, 35902, 36080],
+              backgroundColor: [
+                'rgba(51, 51, 255, 0.2)'
+              ],
+              borderColor: [
+                'rgba(51, 51, 255, 1)'
+              ],
+              pointBackgroundColor: 'rgba(51, 51, 255, 1)',
+              pointBorderColor: 'rgba(51, 51, 255, 1)',
+              borderWidth: 1,
+              lineTension: 0.1,
+            },
+            {
+              label: 'NY Per Capita Income',
+              data: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 37470 ],
+              backgroundColor: [
+                'rgba(63, 191, 127, 0.2)'
+              ],
+              borderColor: [
+                'rgba(63, 191, 127, 1)'
+              ],
+              pointBackgroundColor: 'rgba(63, 191, 127, 1)',
+              pointBorderColor: 'rgba(63, 191, 127, 1)',
+              borderWidth: 1,
+              lineTension: 0.1,
+            },
+            {
+              label: "NY Per Capita Income With Bachelor's",
+              data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              backgroundColor: [
+                  'rgba(226, 167, 89, 0.2)'
+              ],
+              borderColor: [
+                'rgba(226, 167, 89, 1)'
+              ],
+              borderWidth: 2,
+              lineTension: 0.1,
+            },
+            {
+              label: 'Articles Per Capita Income',
+              data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 4],
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)'
+              ],
+              borderWidth: 2,
+              lineTension: 0.1,
+            }
+          ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                  ticks: {
+                    fontFamily: "brandon-grotesque",
+                    beginAtZero: true,
+                    min: 0,
+                    // max: 100000,
+                    callback: function(value, index, values) {return  '$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  }
+                }],
+                xAxes: [{
+                  gridLines: {
+                    display: false
+                  },
+                  ticks: {
+                    fontFamily: "brandon-grotesque",
+                  }
+                }]
+            }
+        }
+    });
+  }
+
+  changeExpandSource(state) {
+    this.setState({
+      expandSource: state
+    })
+  }
+
+  render(props) {
+    return (
+      <div className="chart-component">
+
+        <Link to={ROUTES.REPORTS}>
+          <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1">
+            <i className="far fa-hand-point-left"></i>
+            <span>Back to Reports</span>
+          </div>
+        </Link>
+
+        {/* <div className="alert alert-danger border mt-3">Warning: This section is still in development and will not be ready unitll <b>August 8th 2020</b></div> */}
+
+        <div className="chart-blocks">
+          <div className="chart-block">
+            <h5>Revenue vs Expenses</h5>
+            <p>How much we are spending a month compared to how much we are making.</p>
+  
+            <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} />
+            <canvas className='chart mb-3 bg-white' id={this.state.chartRevenueExpense} width="100%" height="45px"></canvas>
+          </div>
+  
+          <div className="chart-block">
+            <h5>Payrole Comparison</h5>
+            <p>The amount of money being spent on payrole compared to expenses.</p>
+  
+            <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} />
+            <canvas className='chart mb-3 bg-white' id={this.state.chartPayroleExpenses} width="100%" height="45px"></canvas>
+          </div>
+  
+          <div className="chart-block">
+            <h5>Median USA Income vs Our Employees</h5>
+            <p>The amount of money being spent on payrole compared to revenues and expenses.</p>
+  
+            {/* <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} /> */}
+            <span className="badge badge-dark">10 Years</span>
+  
+            <canvas className='chart mb-3 bg-white' id={this.state.chartNewYorkEmployeeOurEmployee} width="100%" height="45px"></canvas>
+
+            <div onClick={() => this.changeExpandSource(!this.state.expandSource)} className="btn btn-articles-light mb-2">
+              {this.state.expandSource ? 
+              <i className="fas fa-caret-square-up"></i>
+              :
+              <i className="fas fa-caret-square-down"></i>
+              }
+              
+              Expand Source Info
+            </div>
+
+            <div className={"source-info " + (this.state.expandSource ? "show" : null)}>
+              <hr/>
+              <div>Information sourced from the following:</div>
+              <div className="sources">
+                <ul className="mb-0">
+
+                  <li>
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.census.gov/quickfacts/fact/table/NY,US/PST045219">https://www.census.gov/quickfacts/fact/table/NY,US/PST045219</a>
+                  </li>
+
+                  <li>Link</li>
+
+                  <li>Static Image</li>
+
+                  <li>Static Image</li>
+
+                </ul>
+              </div>
+            </div>
+
+          </div>
+  
+          <div className="chart-block">
+            <h5>Employee to CEO Pay Diffrence</h5>
+            <p>The % of employee worth to CEO pay. (Lowest Paid Employee, Median Employee Pay, Top Employee pay)</p>
+  
+            <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} />
+            <canvas className='chart mb-3 bg-white' id={this.state.chartEmployeeAdmin} width="100%" height="45px"></canvas>
+          </div>
+        </div>
+
+      </div>
+    )
+  }
+
+}
+
+function ChartBlockTimeFrame (props) {
+  return (
+    <div className="scale">
+      <span onClick={() => props.setChartPeriodSelector('1y')} className={"badge border mr-1 " + (props.chartPeriodSelector === "1y" ? 'badge-dark' : 'badge-light')}>1 Year</span>
+      <span onClick={() => props.setChartPeriodSelector('6m')} className={"badge border mr-1 " + (props.chartPeriodSelector === "6m" ? 'badge-dark' : 'badge-light')}>6 Months</span>
+      <span onClick={() => props.setChartPeriodSelector('1m')} className={"badge border mr-1 " + (props.chartPeriodSelector === "1m" ? 'badge-dark' : 'badge-light')}>1 Month</span>
+      <span onClick={() => props.setChartPeriodSelector('1w')} className={"badge border " + (props.chartPeriodSelector === "1w" ? 'badge-dark' : 'badge-light')}>1 Week</span>
+    </div>
+  )
+}
+
 const mapStateToProps = (state) => {
   return {
     expenses: state.expenses,
@@ -1632,8 +1474,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const DonationTable = withFirebase(DonationTableBase);
-
-const ImprovedReports = withFirebase(Reports)
-
-export default connect(mapStateToProps)(ImprovedReports);
+export default connect(mapStateToProps)(Reports);

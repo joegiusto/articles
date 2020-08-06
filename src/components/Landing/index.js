@@ -625,7 +625,7 @@ class LandingPage extends Component {
 
 					<div className="background"></div>
 
-					<div className="content link-panels">
+					<div className="content link-panels-wrap">
 						<div className="container">
 
 							<div className="mission-snippet">
@@ -634,71 +634,55 @@ class LandingPage extends Component {
 								<Link to={ROUTES.MISSION}><div className="btn btn-articles-light">Mission</div></Link>
 							</div>
 
-							<div className="row">
+							<div className="link-panels">
 
-								<div className="col-link-panel col-12 col-md-6">
-
-									<Link to={ROUTES.STORE}>
-										{/* <Tilt options={{ max: "10", scale: '1.025' }}> */}
-											<div className="link-panel">
-												<div className="title">Store</div>
-												<div className="text">Shop our collection of clothing, as well as products made in collaboration with other brands.</div>
-												<div className="arrow">></div>
-											</div>
-										{/* </Tilt> */}
-									</Link>
-									
-								</div>
-
-								<div className="col-link-panel col-12 col-md-6">
-									<Link to={ROUTES.NEWS}>
-										<div className="link-panel">
-											<div className="title">News</div>
-											<div className="text">Our take on the truth, source based facts, clear stated opinions.</div>
-											<div className="arrow">></div>
-										</div>
-									</Link>
-								</div>
-
-								<div className="col-link-panel col-12 col-md-6">
-									<Link to={ROUTES.STORE_SUBMISSIONS}>
-										<div className="link-panel">
-											<div className="title">Submissions</div>
-											<div className="text">Submit designs you have for a chance to get them printed and make some money.</div>
-											<div className="arrow">></div>
-										</div>
-									</Link>
-								</div>
-
-								<div className="col-link-panel col-12 col-md-6">
-									<Link to={ROUTES.REPORTS}>
-										<div className="link-panel">
-											<div className="title">Reports</div>
-											<div className="text">An inside look into our finances. We believe transparency is key to ending corruption.</div>
-											<div className="arrow">></div>
-										</div>
-									</Link>
-								</div>
-
-								<div className="col-link-panel col-12 col-md-6">
-									<Link to={ROUTES.SIGN_UP}>
-										<div className="link-panel">
-											<div className="title">Sign Up</div>
-											<div className="text">Create an account for all sorts of benifits and access to the entire site.</div>
-											<div className="arrow">></div>
-										</div>
-									</Link>
-								</div>
-
-								<div className="col-link-panel col-12 col-md-6">
-									<Link to={ROUTES.PRESS}>
-										<div className="link-panel">
-											<div className="title">Press and Buisness</div>
-											<div className="text">To reach out with questions or any other inquires</div>
-											<div className="arrow">></div>
-										</div>
-									</Link>
-								</div>
+								<Link to={ROUTES.STORE}>
+									<div className="link-panel">
+										<div className="title">Store</div>
+										<div className="text">Shop our collection of clothing, as well as products made in collaboration with other brands.</div>
+										<div className="arrow">></div>
+									</div>
+								</Link>
+				
+								<Link to={ROUTES.NEWS}>
+									<div className="link-panel">
+										<div className="title">News</div>
+										<div className="text">Our take on the truth, source based facts, clear stated opinions.</div>
+										<div className="arrow">></div>
+									</div>
+								</Link>
+					
+								<Link to={ROUTES.STORE_SUBMISSIONS}>
+									<div className="link-panel">
+										<div className="title">Submissions</div>
+										<div className="text">Submit designs you have for a chance to get them printed and make some money.</div>
+										<div className="arrow">></div>
+									</div>
+								</Link>
+					
+								<Link to={ROUTES.REPORTS}>
+									<div className="link-panel">
+										<div className="title">Reports</div>
+										<div className="text">An inside look into our finances. We believe transparency is key to ending corruption.</div>
+										<div className="arrow">></div>
+									</div>
+								</Link>
+						
+								<Link to={ROUTES.SIGN_UP}>
+									<div className="link-panel">
+										<div className="title">Sign Up</div>
+										<div className="text">Create an account for all sorts of benifits and access to the entire site.</div>
+										<div className="arrow">></div>
+									</div>
+								</Link>
+						
+								<Link to={ROUTES.PRESS}>
+									<div className="link-panel">
+										<div className="title">Press and Buisness</div>
+										<div className="text">To reach out with questions or any other inquires</div>
+										<div className="arrow">></div>
+									</div>
+								</Link>				
 
 							</div>
 

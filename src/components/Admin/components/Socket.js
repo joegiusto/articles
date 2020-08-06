@@ -195,7 +195,7 @@ class Sockets extends Component {
           <button onClick={() => this.pushSocket()} className="btn btn-articles-light">Send</button>
         </div>
 
-        <div class="mt-3">
+        <div className="mt-3">
           <button onClick={() => this.pushTestDonation()} className="btn btn-articles-light">Fake Donation</button>
           <button onClick={() => this.pushTestExpense()} className="btn btn-articles-light">Fake Expense</button>
         </div>

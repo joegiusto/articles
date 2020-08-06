@@ -21,7 +21,7 @@ class LoadingBlock extends Component {
     return (
       <div className="loading-block">
         <div>
-          <i class="fas fa-spinner fa-spin"></i>
+          <i className="fas fa-spinner fa-spin"></i>
           Loading
         </div>
       </div>
@@ -145,7 +145,7 @@ class Proposal extends Component {
 
                   <div className="quote-wrap">
                     <div className="icon">
-                      {/* <i class="fas fa-quote-right"></i> */}
+                      {/* <i className="fas fa-quote-right"></i> */}
                     </div>
                     <div className="quote">
                       "I pledge allegiance to my Flag and the Republic for which it stands, one nation, indivisible, with liberty and justice for all."
@@ -160,7 +160,7 @@ class Proposal extends Component {
 
                   <div className="quote-wrap">
                     <div className="icon">
-                      {/* <i class="fas fa-quote-right"></i> */}
+                      {/* <i className="fas fa-quote-right"></i> */}
                     </div>
                     <div className="quote">
                       "I pledge allegiance to the Flag of the United States of America and to the Republic for which it stands, one nation, indivisible, with liberty and justice for all."
@@ -177,7 +177,7 @@ class Proposal extends Component {
 
                   <div className="quote-wrap">
                     <div className="icon">
-                      {/* <i class="fas fa-quote-right"></i> */}
+                      {/* <i className="fas fa-quote-right"></i> */}
                     </div>
                     <div className="quote">
                     "I pledge allegiance to the flag of the United States of America, and to the republic for which it stands, one nation under God, indivisible, with liberty and justice for all."

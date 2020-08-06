@@ -1,6 +1,6 @@
 var ObjectId = require('mongodb').ObjectId;
 
-function safeSendUser(user) {
+function safeSendUserDocument(user) {
 
   console.log("safeSendUser called");
 
@@ -24,7 +24,7 @@ module.exports = (app, db) => {
       if (err) throw err;
       // db.close();
       console.log("Call to /api/getEmployees done")
-      return res.send(result) 
+      return res.send(safeSendUserDocument(result)) 
     });
   
   });
@@ -39,10 +39,67 @@ module.exports = (app, db) => {
       console.log("Call to /api/getEmployee done")
 
       // TODO - Build this into a universal functions file for all routes to use
-      const safeResult = safeSendUser(result);
+      const safeResult = safeSendUserDocument(result);
    
       return res.send( safeResult ) ;
     });
+  
+  });
+
+  app.get('/api/getEmployeeAgr', function (req, res) {
+    console.log(`Call to /api/getEmployeeAgr made at ${new Date()}`);
+
+    var o_id = new ObjectId(req.query._id);
+
+    const agg = [
+      {
+        '$match': {
+          '_id': new ObjectId('5e90cc96579a17440c5d7d52')
+        }
+      }, {
+        '$project': {
+          'employee.payrole.stubs': 1
+        }
+      }, {
+        '$unwind': {
+          'path': '$employee.payrole.stubs'
+        }
+      }, {
+        '$addFields': {
+          'employee.payrole.total': {
+            '$sum': '$employee.payrole.stubs.amount'
+          }
+        }
+      }, {
+        '$group': {
+          '_id': 'aggrResult', 
+          'total': {
+            '$sum': '$employee.payrole.stubs.amount'
+          }, 
+          'results': {
+            '$addToSet': '$employee.payrole.stubs'
+          }
+        }
+      }
+    ];
+  
+    db.collection("articles_users")
+    .aggregate(agg)
+    .toArray( function(err, result) {
+      if (err) throw err;
+      console.log("Call to /api/getEmployeeAgr done")
+      // const safeResult = safeSendUserDocument(result);
+      return res.send( result ) ;
+    })
+    // .findOne( o_id,
+    //   function(err, result) {
+    //     if (err) throw err;
+    //     console.log("Call to /api/getEmployeeAgr done")
+    //     const safeResult = safeSendUserDocument(result);
+    //     return res.send( safeResult ) ;
+    //   }
+    // )
+    ;
   
   });
 

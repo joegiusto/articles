@@ -500,10 +500,6 @@ module.exports = (app, db) => {
       return res.send('Message Saved');
 
     }
-
-    console.log(`Chat ID: ${req.body.chat_id}`)
-    console.log(`User ID: ${req.body.user_id}`)
-    console.log(`Message: ${req.body.message}`)
   });
 
 } 

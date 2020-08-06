@@ -300,7 +300,7 @@ class AdminPage extends Component {
                   <div className="result" key={result.issue_id}>
   
                     <div className="dates">
-                      {result.visible ? null : <span><i class="fas fa-low-vision"></i></span>}
+                      {result.visible ? null : <span><i className="fas fa-low-vision"></i></span>}
 
                       <span className="date badge badge-dark border ml-2">{moment(result.news_date).format("LL")} </span>
                       <span className="date badge badge-warning border ml-2">{moment(result.last_update).format("LL")} </span>

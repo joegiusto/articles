@@ -72,13 +72,13 @@ class IssuesClass extends Component {
           <div className="filters noselect">
 
             <span className="subscription-badges">
-              <span className="bold"><i class="fas fa-th"></i></span>
+              <span className="bold"><i className="fas fa-th"></i></span>
               <div onClick={() => this.props.toggleUserSubscriptions()} className={"badge border " + (this.props.site?.userSubscriptions === true ? 'badge-dark ' : 'badge-light ')}>Subscribed</div>
               <div onClick={() => this.props.toggleUserSubscriptions()} className={"ml-1 badge border " + (this.props.site?.userSubscriptions === false ? 'badge-dark' : 'badge-light')}>All</div>
             </span>
 
             <span className="subscription-badges">
-              <span className="bold"><i class="fas fa-calendar"></i></span>
+              <span className="bold"><i className="fas fa-calendar"></i></span>
               <div onClick={() => this.props.filterIssuesDateType()} className={"badge border " + (this.props.site?.dateType === 'post' ? 'badge-dark ' : 'badge-light ')}>Posted</div>
               <div onClick={() => this.props.filterIssuesDateType()} className={"ml-1 badge border " + (this.props.site?.dateType === 'update' ? 'badge-dark' : 'badge-light')}>Updated</div>
             </span>
@@ -126,7 +126,7 @@ class IssuesClass extends Component {
             null
             :
             <div className="sign-in-benifit">
-              <i class="d-block fa-5x fas fa-balance-scale mt-3" aria-hidden="true"></i>
+              <i className="d-block fa-5x fas fa-balance-scale mt-3" aria-hidden="true"></i>
               <h5 className="mt-3">Sign in or make an account to access your subscriptions</h5>
               <div className="buttons my-3">
                 <div className="btn btn-articles-light">Sign In</div>
@@ -331,7 +331,7 @@ function GzyCard (props) {
           moment(issue?.last_update).format("LL")
           }
           <div className="sub" style={ props.dateType === 'post' ? {backgroundColor: 'red', color: 'white'} : {backgroundColor: '#f9edcd'} }>
-            {/* <i class="fas fa-calendar-day"></i> */}
+            {/* <i className="fas fa-calendar-day"></i> */}
             {props.dateType === 'post' ?  <i className="fas fa-calendar-alt"></i> : <i className="fas fa-redo-alt"></i> }
             {/* {moment(issue?.last_update).format("LL")} */}
             {props.dateType === 'post' ?
@@ -348,7 +348,7 @@ function GzyCard (props) {
         :
         null
         // <div className="g-card-badge update">
-        //   <i class="fas fa-calendar-day"></i>
+        //   <i className="fas fa-calendar-day"></i>
         //   {moment(issue?.last_update).format("LL")}
         // </div>
         }

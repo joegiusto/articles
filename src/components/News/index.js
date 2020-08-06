@@ -109,13 +109,13 @@ function SearchHead(props) {
 
         <div className="filters noselect">
           <span className="subscription-badges">
-            <span className="bold"><i class="fas fa-th"></i></span>
+            <span className="bold"><i className="fas fa-th"></i></span>
             <div onClick={() => props.toggleUserSubscriptions()} className={"badge border " + (props.site?.userSubscriptions === true ? 'badge-dark ' : 'badge-light ')}>Subscribed</div>
             <div onClick={() => props.toggleUserSubscriptions()} className={"ml-1 badge border " + (props.site?.userSubscriptions === false ? 'badge-dark' : 'badge-light')}>All</div>
           </span>
 
           <span className="subscription-badges">
-            <span className="bold"><i class="fas fa-calendar"></i></span>
+            <span className="bold"><i className="fas fa-calendar"></i></span>
             <div onClick={() => props.filterIssuesDateType()} className={"badge border " + (props.site?.dateType === 'post' ? 'badge-dark ' : 'badge-light ')}>Posted</div>
             <div onClick={() => props.filterIssuesDateType()} className={"ml-1 badge border " + (props.site?.dateType === 'update' ? 'badge-dark' : 'badge-light')}>Updated</div>
           </span>
@@ -327,8 +327,8 @@ class RecentSliders extends Component {
                 <h5>Recent Stories</h5>
 
                 <div className="controls ">
-                  <i class="fas fa-backward"></i>
-                  <i class="fas fa-forward"></i>
+                  <i className="fas fa-backward"></i>
+                  <i className="fas fa-forward"></i>
                 </div>
               </div>
             </span>
@@ -355,8 +355,8 @@ class RecentSliders extends Component {
                 <h5>Recent Issues</h5>
 
                 <div className="controls">
-                  <i class="fas fa-backward"></i>
-                  <i class="fas fa-forward"></i>
+                  <i className="fas fa-backward"></i>
+                  <i className="fas fa-forward"></i>
                 </div>
               </div>
             </span>
@@ -383,8 +383,8 @@ class RecentSliders extends Component {
                 <h5>Recent Myths</h5>
 
                 <div className="controls">
-                  <i class="fas fa-backward"></i>
-                  <i class="fas fa-forward"></i>
+                  <i className="fas fa-backward"></i>
+                  <i className="fas fa-forward"></i>
                 </div>
               </div>
             </span>
@@ -627,11 +627,11 @@ class Frontpage extends Component {
 
             <div className="bottom-controls">
               <div className="btn btn-articles-light">
-                <i class="fas fa-map-pin"></i>
+                <i className="fas fa-map-pin"></i>
                 Pin to Header
               </div>
               <div className="btn btn-articles-light">
-                <i class="far fa-window-close"></i>
+                <i className="far fa-window-close"></i>
                 Close
               </div>
             </div>

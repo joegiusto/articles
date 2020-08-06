@@ -167,6 +167,30 @@
     }
   }
 
+  .payrole-stubs {
+
+    .stub {
+      display: flex;
+      background-color: rgb(235, 235, 235);
+      border-radius: 5px;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 0.2rem 0.5rem;
+
+      .bold {
+        font-weight: 900;
+      }
+
+      &:not(:first-child) {
+        margin-top: 0.5rem;
+      }
+
+      .btn {
+        align-self: center;
+      }
+    }
+  }
+
   .details {
     padding: 1rem 2rem;
   }
