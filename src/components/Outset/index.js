@@ -734,7 +734,7 @@ class OutsetBase extends React.Component {
     switch(step) {
       case 0: 
         return (
-          <div className="intro-message">During the outset we ask some questions to better understand you. Each piece of info we collect on you will be explained to you.<hr/> <span style={{fontWeight: 'bold', display: 'none'}}>We will explain what we do with each piece of info we collect on you.</span></div>
+          <div className="intro-message">During the outset we ask some questions to better understand you. Each piece of info we collect on you will be explained to you.</div>
         )
       case 1:
         return (

@@ -6,6 +6,22 @@ export const toggleColorMode = () => dispatch => {
   });
 };
 
+export const toggleWeatherPin = () => dispatch => {
+  console.log(`Toggling weather pin to nav!`);
+
+  dispatch({
+    type: 'TOGGLE_WEATHER_PIN',
+  });
+};
+
+export const toggleSideMenuOpen = () => dispatch => {
+  console.log(`Toggling the side menu open option!`);
+
+  dispatch({
+    type: 'TOGGLE_SIDE_MENU_OPEN',
+  });
+};
+
 export const toggleSideMenuFixed = () => dispatch => {
   console.log(`Toggling the side menu fixed option!`);
 

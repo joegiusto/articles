@@ -32,7 +32,7 @@ class Reports extends Component {
         subtableSelector: '',
         chartPeriodSelector: '1y',
 
-        firebaseData: {
+        reportsData: {
 
           expenses: {
             other: [],
@@ -74,12 +74,12 @@ class Reports extends Component {
       // msg.amount = parseInt(msg.amount);
 
       self.setState({
-        firebaseData: {
-          ...self.state.firebaseData,
+        reportsData: {
+          ...self.state.reportsData,
           revenue: {
-            ...self.state.firebaseData.revenue,
+            ...self.state.reportsData.revenue,
             donations: [
-              ...self.state.firebaseData.revenue.donations,
+              ...self.state.reportsData.revenue.donations,
               msg
             ]
           }
@@ -90,11 +90,11 @@ class Reports extends Component {
     socket.on('deleteDonation', function(id){
 
       self.setState({
-        firebaseData: {
-          ...self.state.firebaseData,
+        reportsData: {
+          ...self.state.reportsData,
           revenue: {
-            ...self.state.firebaseData.revenue,
-            donations: self.state.firebaseData.revenue.donations.filter(function( obj ) {
+            ...self.state.reportsData.revenue,
+            donations: self.state.reportsData.revenue.donations.filter(function( obj ) {
               return obj._id !== id;
             })
           }
@@ -106,12 +106,12 @@ class Reports extends Component {
       console.log(JSON.stringify(msg));
 
       self.setState({
-        firebaseData: {
-          ...self.state.firebaseData,
+        reportsData: {
+          ...self.state.reportsData,
           expenses: {
-            ...self.state.firebaseData.expenses,
+            ...self.state.reportsData.expenses,
             other: [
-              ...self.state.firebaseData.expenses.other,
+              ...self.state.reportsData.expenses.other,
               msg
             ]
           }
@@ -129,10 +129,10 @@ class Reports extends Component {
     //   console.log(response);
 
     //   self.setState({
-    //     firebaseData: {
-    //       ...self.state.firebaseData,
+    //     reportsData: {
+    //       ...self.state.reportsData,
     //       revenue: {
-    //         ...self.state.firebaseData.revenue,
+    //         ...self.state.reportsData.revenue,
     //         orders: response.data.orders
     //       },
     //     },
@@ -153,10 +153,10 @@ class Reports extends Component {
       console.log(response);
 
       self.setState({
-        firebaseData: {
-          ...self.state.firebaseData,
+        reportsData: {
+          ...self.state.reportsData,
           expenses: {
-            ...self.state.firebaseData.expenses,
+            ...self.state.reportsData.expenses,
             other: response.data
           },
         },
@@ -175,10 +175,10 @@ class Reports extends Component {
     .then(function (response) {
 
       self.setState({
-        firebaseData: {
-          ...self.state.firebaseData,
+        reportsData: {
+          ...self.state.reportsData,
           revenue: {
-            ...self.state.firebaseData.revenue,
+            ...self.state.reportsData.revenue,
             donations: response.data.donations
           },
         },
@@ -196,13 +196,13 @@ class Reports extends Component {
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
 
-    if (prevState.firebaseData.revenue.donations !== this.state.firebaseData.revenue.donations ) {
+    if (prevState.reportsData.revenue.donations !== this.state.reportsData.revenue.donations ) {
       console.log("New math needed!");
 
       var total = 0;
 
-      for (var i=0; i<this.state.firebaseData.revenue.donations.length; i++) {
-        total += parseInt(this.state.firebaseData.revenue.donations[i].amount);
+      for (var i=0; i<this.state.reportsData.revenue.donations.length; i++) {
+        total += parseInt(this.state.reportsData.revenue.donations[i].amount);
       }
 
       this.setState({totals: {
@@ -212,12 +212,12 @@ class Reports extends Component {
 
     }
 
-    if (prevState.firebaseData.expenses.other !== this.state.firebaseData.expenses.other ) {
+    if (prevState.reportsData.expenses.other !== this.state.reportsData.expenses.other ) {
 
       var total = 0;
 
-      for (var i=0; i<this.state.firebaseData.expenses.other.length; i++) {
-        total += this.state.firebaseData.expenses.other[i].amount;
+      for (var i=0; i<this.state.reportsData.expenses.other.length; i++) {
+        total += this.state.reportsData.expenses.other[i].amount;
       }
 
       this.setState({totals: {
@@ -268,7 +268,7 @@ class Reports extends Component {
   getTableComponent(tableSelector, subtableSelector) {
     switch(tableSelector) {
       case 'donations':
-        return(<DonationTable firebaseData={this.state.firebaseData} fetch="donations"/>)
+        return(<DonationTable reportsData={this.state.reportsData} fetch="donations"/>)
       case 'clothing':
         switch (subtableSelector) {
           case 'clothing-all':
@@ -279,18 +279,18 @@ class Reports extends Component {
             return(<ClothingTable/>)
         }
       case 'expenses':
-        return(<DonationTable firebaseData={this.state.firebaseData} fetch="expenses"/>)
+        return(<DonationTable reportsData={this.state.reportsData} fetch="expenses"/>)
       case 'payroll':
         return(<PayrollTable/>)
       case 'revenue':
-        return(<DonationTable firebaseData={this.state.firebaseData} fetch="revenue"/>)
+        return(<DonationTable reportsData={this.state.reportsData} fetch="revenue"/>)
       default:
         // Useless because tableSelector state always starts at something
     };
   }
 
   // TODO
-  // this.state.firebaseData -> reportsData
+  // this.state.reportsData -> reportsData
 
   // DonationTable -> expenseTable
   // DonationTable -> revenueTable
@@ -337,7 +337,7 @@ class Reports extends Component {
         </Helmet>
 
         <div className="fixed-total dual-header">
-          <span className="help">Help <i className="far fa-question-circle"></i></span>
+          {/* <span className="help">Help <i className="far fa-question-circle"></i></span> */}
           <span className="total">+${((this.state.totals.donations - this.state.totals.expenses) / 100 ).toFixed(2)}</span>
         </div>
 
@@ -403,48 +403,52 @@ class Reports extends Component {
                   </div>
                 </div>
 
-                <div className="mt-3">
-                  <Link to={ROUTES.REPORTS}>
-                    <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (this.props.location.pathname === ROUTES.REPORTS ? 'active' : null)}>
-                      <div>
-                        <i className="fas fa-paste" aria-hidden="true"></i>
-                        <span>Reports</span>
-                      </div>
-                    </button>
-                  </Link>
-                </div>
+                <div className="quick-links">
 
-                <div className="mt-3">
-                  <Link to={ROUTES.REPORTS_CHARTS}>
-                    <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (this.props.location.pathname === ROUTES.REPORTS_CHARTS ? 'active' : null)}>
-                      <div>
-                        <i className="fas fa-chart-line"></i>
-                        <span>Data Charts</span>
-                      </div>
-                    </button>
-                  </Link>
-                </div>
-    
-                <div className="mt-3">
-                  <Link to={ROUTES.REPORTS_REPORT}>
-                    <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (this.props.location.pathname === ROUTES.REPORTS_REPORT ? 'active' : null)}>
-                      <div>
-                        <i className="fas fa-flag"></i>
-                        <span>Report Expense</span>
-                      </div>
-                    </button>
-                  </Link>
-                </div>
+                  <div className="report-link mt-3">
+                    <Link to={ROUTES.REPORTS}>
+                      <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (this.props.location.pathname === ROUTES.REPORTS ? 'active' : null)}>
+                        <div>
+                          <i className="fas fa-paste" aria-hidden="true"></i>
+                          <span className="text">Reports</span>
+                        </div>
+                      </button>
+                    </Link>
+                  </div>
 
-                <div className="mt-3">
-                  <Link to={ROUTES.EMPLOYEES}>
-                    <button className={"btn btn-articles-light btn-lg w-100 report-quick-links" + (this.props.location.pathname === ROUTES.EMPLOYEES ? ' active' : '') + (matchPath(this.props.location.pathname, ROUTES.EMPLOYEES_DETAILS) ? ' active' : '')}>
-                      <div>
-                        <i className="fas fa-paste" aria-hidden="true"></i>
-                        <span>Employee Data</span>
-                      </div>
-                    </button>
-                  </Link>
+                  <div className="report-link mt-3">
+                    <Link to={ROUTES.REPORTS_CHARTS}>
+                      <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (this.props.location.pathname === ROUTES.REPORTS_CHARTS ? 'active' : null)}>
+                        <div>
+                          <i className="fas fa-chart-line"></i>
+                          <span className="text">Data Charts</span>
+                        </div>
+                      </button>
+                    </Link>
+                  </div>
+      
+                  <div className="report-link mt-3">
+                    <Link to={ROUTES.REPORTS_REPORT}>
+                      <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (this.props.location.pathname === ROUTES.REPORTS_REPORT ? 'active' : null)}>
+                        <div>
+                          <i className="fas fa-flag"></i>
+                          <span className="text">Report Expense</span>
+                        </div>
+                      </button>
+                    </Link>
+                  </div>
+
+                  <div className="report-link mt-3">
+                    <Link to={ROUTES.EMPLOYEES}>
+                      <button className={"btn btn-articles-light btn-lg w-100 report-quick-links" + (this.props.location.pathname === ROUTES.EMPLOYEES ? ' active' : '') + (matchPath(this.props.location.pathname, ROUTES.EMPLOYEES_DETAILS) ? ' active' : '')}>
+                        <div>
+                          <i className="fas fa-paste" aria-hidden="true"></i>
+                          <span className="text">Employee Data</span>
+                        </div>
+                      </button>
+                    </Link>
+                  </div>
+
                 </div>
 
               </div>
@@ -479,7 +483,7 @@ class Reports extends Component {
                         {
                           this.state.searchText !== '' ?
 
-                          this.filterByValue(this.state.firebaseData.expenses.other, this.state.searchText).map((item, i) => (
+                          this.filterByValue(this.state.reportsData.expenses.other, this.state.searchText).map((item, i) => (
                           <div className="result">
                             <div>{item.reason} - ${(item.amount / 100).toFixed(2)}</div>
                             <div>{moment(item.date).format("LL")}</div>
@@ -560,7 +564,7 @@ class Reports extends Component {
 
               <Route path={ROUTES.REPORTS_CHARTS} render={() => 
                 <div className="col-12 col-md-8 col-lg-8">
-                  <DataCharts data={this.state.firebaseData.revenue.donations} setChartPeriodSelector={this.setChartPeriodSelector} chartPeriodSelector={this.state.chartPeriodSelector}></DataCharts>
+                  <DataCharts data={this.state.reportsData.revenue.donations} setChartPeriodSelector={this.setChartPeriodSelector} chartPeriodSelector={this.state.chartPeriodSelector}></DataCharts>
                 </div>
               }/>
 
@@ -568,16 +572,16 @@ class Reports extends Component {
                 <div className="col-12 col-md-8 col-lg-8">
 
                   <Link to={ROUTES.REPORTS}>
-                    <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1">
+                    <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1 d-none d-md-inline-block">
                       <i className="far fa-hand-point-left"></i>
                       <span>Back to Reports</span>
                     </div>
                   </Link>
 
-                  <div className="alert alert-warning border mt-3">Warning: We are working on ways to make this section more transparent with our users, such as number of reports and ways to agree with other peoples reports. Data is saved for Admins to look at for now.</div>
+                  <div className="alert alert-warning border mt-3 d-none d-md-block">Warning: We are working on ways to make this section more transparent with our users, such as number of reports and ways to agree with other peoples reports. Data is saved for Admins to look at for now.</div>
 
                   <ReportExpenseCards 
-                    expenses={this.state.firebaseData.expenses.other}
+                    expenses={this.state.reportsData.expenses.other}
                     user_id={this.props.user_id}
                   />
 
@@ -585,10 +589,10 @@ class Reports extends Component {
               }/>
 
               <Route exact path={ROUTES.EMPLOYEES} render={() => 
-                <div className="col-12 col-md-8 col-lg-8">
+                <div className="col-12 col-md-8 col-lg-8 mb-3">
 
                   <Link to={ROUTES.REPORTS}>
-                    <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1">
+                    <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1 d-none d-md-inline-block">
                       <i className="far fa-hand-point-left"></i>
                       <span>Back to Reports</span>
                     </div>
@@ -600,11 +604,11 @@ class Reports extends Component {
               }/>
 
               <Route exact path={ROUTES.EMPLOYEES_DETAILS} render={() => 
-                <div className="col-12 col-md-8 col-lg-8">
+                <div className="col-12 col-md-8 col-lg-8 mb-3">
 
                   <Link to={ROUTES.REPORTS}>
                     {/* <div className="border d-inline-block"> */}
-                      <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1">
+                      <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1 d-none d-md-inline-block">
                         <i className="far fa-hand-point-left"></i>
                         <span>Back to Reports</span>
                       </div>
@@ -844,9 +848,9 @@ class DonationTable extends Component {
     var render = undefined
 
     if (this.props.fetch === 'donations') {
-      render = this.props.firebaseData.revenue.donations
+      render = this.props.reportsData.revenue.donations
     } else if (this.props.fetch === 'expenses') {
-      render = this.props.firebaseData.expenses.other
+      render = this.props.reportsData.expenses.other
     }
 
     return (
@@ -1009,6 +1013,25 @@ class DataCharts extends Component {
     .catch(function (error) {
       console.log(error);
     });
+
+    axios.get('/api/getMonthlyPayrole')
+    .then(function (response) {
+
+      console.log(response);
+
+      self.setState({
+        payroleBreakdown: response.data
+      }, () => {
+        // console.log('done')
+        // self.getBreakdownTotal('expenses', 8, 2020);
+        // self.renderCharts();
+      })
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
   }
 
   // componentDidUpdate(prevProps, prevState, snapshot) {
@@ -1374,7 +1397,7 @@ class DataCharts extends Component {
       <div className="chart-component">
 
         <Link to={ROUTES.REPORTS}>
-          <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1">
+          <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1 d-none d-md-inline-block">
             <i className="far fa-hand-point-left"></i>
             <span>Back to Reports</span>
           </div>

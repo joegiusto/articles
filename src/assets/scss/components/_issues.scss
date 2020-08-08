@@ -206,8 +206,212 @@
   }
 
   .single {
-    margin-top: 2rem;
+    // margin-top: 2rem;
     margin-bottom: 2rem;
+
+    .header {
+      background-color: #e9ecef;
+      padding: 1rem 0;
+
+      @include media-breakpoint-up(md) {
+        padding: 2rem 0;
+      }
+  
+      .container {
+        display: flex;
+        flex-direction: column;
+        
+        @include media-breakpoint-up(md) {
+          flex-direction: row;
+        }
+  
+        @include media-breakpoint-up(xl) {
+          max-width: 1600px;
+          padding: 0 10%;
+        }
+      }
+  
+      .info {
+        width: 50%;
+  
+        .breadcrumb {
+  
+        }
+  
+        .title {
+          font-size: 2rem;
+
+          @include media-breakpoint-up(md) {
+            font-size: 4rem;
+          }
+        }
+  
+        .details {
+          margin-top: 1rem;
+          display: flex;
+          flex-direction: row;
+
+          @include media-breakpoint-up(md) {
+            margin-top: 2rem;
+          }
+  
+          img {
+            width: 80px;
+            height: 80px;
+            border-radius: 30px;
+
+            &:hover {
+              box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.2);
+            }
+          }
+  
+          .label {
+            font-size: 13px;
+            font-weight: bold;
+          }
+  
+          .date {
+            font-size: 15px;
+          }
+  
+          .author {
+            margin-left: 1rem;
+          }
+  
+          .published {
+            margin-left: 1rem;
+          }
+  
+          .updated {
+            margin-left: 1rem;
+          }
+  
+        }
+
+        .tags-container {
+          margin-top: 1rem;
+
+          @include media-breakpoint-up(md) {
+            margin-top: 4rem;
+          }
+
+          .tags {
+            display: flex;
+            flex-direction: row;
+          }
+        }
+  
+        
+      }
+  
+      img.hero {
+        margin-top: 1rem;
+        width: 50%;
+        object-fit: cover;
+        max-height: 325px;
+        object-fit: cover;
+        box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.5);
+
+        @include media-breakpoint-up(md) {
+          margin-top: 0rem;
+        }
+      }
+    }
+  
+    .divider {
+      background: linear-gradient(45deg, #ff818d, #fec0bb 80%);
+      height: 50px;
+    }
+  
+    .content {
+      position: relative;
+      margin-top: -25px;
+      padding: 2rem 1rem;
+      background-color: white;
+      box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.2);
+      max-width: 1000px;
+      min-height: 1000px;
+
+      @include media-breakpoint-up(md) {
+        padding: 4rem 4rem;
+      }
+
+      .ads {
+        position: absolute;
+        right: 15px;
+        top: 100px;
+        width: 300px;
+        transform: translateX(100%);
+
+        .ad-wrap {
+
+          .ad {
+            position: relative;
+            overflow: hidden;
+
+            img {
+              z-index: 10;
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+
+            &.microsoft {
+              background: #243a5e!important;
+              padding: 4rem 0;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+
+              img {
+                position: relative;
+                width: 175px;
+                height: auto;
+                object-fit: contain;
+              }
+            }
+          }
+
+          .details {
+            padding-top: 0.5rem;
+            padding-left: 2rem;
+            // position: absolute;
+            // width: 300px;
+
+            .label {
+              font-size: 15px;
+              font-weight: bold;
+            }
+            
+            .text {
+              font-size: 13px;
+              padding-top: 0.25rem;
+              padding-bottom: 3rem;
+            }
+          }
+        }
+
+        .ad {
+          width: 300px;
+          height: 300px;
+          background: linear-gradient(45deg, #ff818d, #fec0bb 80%);
+          // transform: translateX(100%);
+          border-radius: 5px;
+          box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.4);
+
+          &:nth-child(2) {
+            background: linear-gradient(45deg, $base-color, #fec0bb 80%);
+            top: 600px;
+          }
+        }
+
+      }
+
+      
+    }
 
     .back-button {
       position: relative;

@@ -16,7 +16,7 @@ import Clock from 'react-live-clock';
 import CartPreview from './components/CartPreview'
 import NotificationArea from './components/NotificationArea'
 
-import { toggleSideMenuFixed, toggleColorMode } from '../../actions/siteActions'
+import { toggleSideMenuFixed, toggleColorMode, toggleSideMenuOpen } from '../../actions/siteActions'
 
 // import gunIcon from '../../assets/img/icons/gun.svg'
 
@@ -73,7 +73,7 @@ function Menu(props) {
   return (
     <div className={'menu-wrap noselect' + (props.site?.sideMenuFixed ? ' fixed' : '') + (props.site?.colorModeDark ? ' dark-mode' : '')}>
 
-        <section onClick={() => {setMenuOpen(false)}} className={'side-menu-overlay' + (menuOpen || pinOpen ? " show" : "")}></section>
+        <section onClick={() => ( setMenuOpen(false) + props.toggleSideMenuOpen() )} className={'side-menu-overlay' + (menuOpen || pinOpen ? " show" : "")}></section>
 
         <section className="menu-spacer"></section>
 
@@ -81,7 +81,7 @@ function Menu(props) {
 
         <section>
           <div className="nav-tab">
-            <button className={'hamburger hamburger--spin' + (props.site?.sideMenuFixed ? ' is-active' : menuOpen ? " is-active" : "")} type="button" onClick={() => props.site?.sideMenuFixed ? (props.toggleSideMenuFixed(), setMenuOpen(!menuOpen)) : setMenuOpen(!menuOpen) }>
+            <button className={'hamburger hamburger--spin' + (props.site?.sideMenuFixed ? ' is-active' : menuOpen ? " is-active" : "")} type="button" onClick={() => props.site?.sideMenuFixed ? (props.toggleSideMenuFixed(), setMenuOpen(!menuOpen), props.toggleSideMenuOpen() ) : ( setMenuOpen(!menuOpen), props.toggleSideMenuOpen() ) }>
                 <span className="hamburger-box">
                 <span className="hamburger-inner"></span>
                 </span>
@@ -98,99 +98,103 @@ function Menu(props) {
         </section> */}
 
         <section className={"side-menu-notch-top " + (menuOpen ? "show" : "")}>
-            <div className="side-menu-notch-top-end"></div>
+
+            <div className={"side-menu-notch-top-end " + (menuOpen ? "show" : "")}></div>
+
+            
+
         </section>
 
         <section>
+          <div className={'side-menu-notch-top-end-custom ' + (menuOpen ? 'show' : '')}>
 
-            <div className={'side-menu-notch-top-end-custom ' + (menuOpen ? 'show' : '')}>
+            {/* {console.log(props.isAuth)} */}
 
-                {/* {console.log(props.isAuth)} */}
+            {!props.isAuth ? 
+            null
+            :
+            !props.user?.outset ? (
+              <Link className="menu-bar-link mr-3" to={ROUTES.OUTSET}>
+              <span className="badge badge-articles-light">
+                <i className="fas fa-file-signature"/>Please Complete Outset 
+              </span>
+              </Link>
+            ) : (
+              <>
+                {/* A call to get menu bar notifications will go here so they will only show after we are sure outset is done */}
+                {/* <h3 style ={{cursor: 'pointer'}} data-toggle="modal" data-target="#pin" className="top-headline mx-1 d-inline"><span className="badge badge-articles"><i className="fas fa-file-signature"/>Terms and Privacy<span className="badge badge-danger ml-2">!</span></span></h3> */}
 
-                {!props.isAuth ? 
-                null
-                :
-                !props.user?.outset ? (
-                  <Link className="menu-bar-link mr-3" to={ROUTES.OUTSET}>
+                {/* Not Complete */}
+                {/* <h3 style ={{cursor: 'pointer'}} data-toggle="modal" data-target="#pin" className="top-headline mx-1 d-inline"><span className="badge badge-articles-light"><i className="fas fa-tint" style={{color: '#9494ff', fontSize: '1rem', marginLeft: '10px'}}></i>Flint Water Cleanup<span className="badge badge-danger ml-2">7</span></span></h3> */}
+                {/* <h3 style ={{cursor: 'pointer'}} data-toggle="modal" data-target="#pin" className="top-headline mx-1 d-inline"><span className="badge badge-articles-light"><img className="gun-icon-img" src={gunIcon} alt=""/>Gun Laws<span className="badge badge-danger ml-1">4</span></span></h3> */}
+                {/* <h3 style ={{cursor: 'pointer'}} data-toggle="modal" data-target="#pin" className="top-headline mx-1 d-inline"><span className="badge badge-articles-light">+ <span className="badge badge-danger">23</span></span></h3> */}
+              </>
+            )
+            }
+
+
+            {/* <>
+
+              <div className="full h-100 d-flex" ref={setReferenceElement}>
+                <Link className="menu-bar-link mr-3" to={ROUTES.OUTSET} onMouseEnter={() => {setShouldShowElement(true)}} onMouseLeave={() => {setShouldShowElement(false)}}>
                   <span className="badge badge-articles-light">
                     <i className="fas fa-file-signature"/>Please Complete Outset 
                   </span>
+                </Link>
+              </div>
+
+              {shouldShowElement ? 
+              <div ref={setPopperElement} style={{width: '200px', backgroundColor: 'gray', padding: '0.5rem', color: 'white', ...styles.popper}} {...attributes.popper}>
+                To continue into the site we just need to ask you a few questions.
+              <div ref={setArrowElement} style={styles.arrow} />
+              </div>
+              :
+              null
+              }
+
+              
+            </> */}
+
+            {/* <Manager>
+              <Reference>
+                {({ ref }) => (
+                  
+                  // <button className="btn btn-primary" type="button" ref={ref} onMouseEnter={() => {setShouldShowElement(true)}} onMouseLeave={() => {setShouldShowElement(false)}}>
+                  //   Reference element
+                  // </button>
+
+                  <Link className="menu-bar-link mr-3" to={ROUTES.OUTSET} ref={ref} onMouseEnter={() => {setShouldShowElement(true)}} onMouseLeave={() => {setShouldShowElement(false)}}>
+                    <span className="badge badge-articles-light">
+                      <i className="fas fa-file-signature"/>Please Complete Outset 
+                    </span>
                   </Link>
-                ) : (
-                  <>
-                    {/* A call to get menu bar notifications will go here so they will only show after we are sure outset is done */}
-                    {/* <h3 style ={{cursor: 'pointer'}} data-toggle="modal" data-target="#pin" className="top-headline mx-1 d-inline"><span className="badge badge-articles"><i className="fas fa-file-signature"/>Terms and Privacy<span className="badge badge-danger ml-2">!</span></span></h3> */}
 
-                    {/* Not Complete */}
-                    {/* <h3 style ={{cursor: 'pointer'}} data-toggle="modal" data-target="#pin" className="top-headline mx-1 d-inline"><span className="badge badge-articles-light"><i className="fas fa-tint" style={{color: '#9494ff', fontSize: '1rem', marginLeft: '10px'}}></i>Flint Water Cleanup<span className="badge badge-danger ml-2">7</span></span></h3> */}
-                    {/* <h3 style ={{cursor: 'pointer'}} data-toggle="modal" data-target="#pin" className="top-headline mx-1 d-inline"><span className="badge badge-articles-light"><img className="gun-icon-img" src={gunIcon} alt=""/>Gun Laws<span className="badge badge-danger ml-1">4</span></span></h3> */}
-                    {/* <h3 style ={{cursor: 'pointer'}} data-toggle="modal" data-target="#pin" className="top-headline mx-1 d-inline"><span className="badge badge-articles-light">+ <span className="badge badge-danger">23</span></span></h3> */}
-                  </>
-                )
-                }
+                  // <div ref={ref} onMouseEnter={() => {setShouldShowElement(true)}} onMouseLeave={() => {setShouldShowElement(false)}}>
+                  //   <input disabled onFocus={() => (props.changeFocus('email'))} type="text" className="form-control" id="validationTooltip03" placeholder={props.user.email}/>
+                  //   <div className="valid-tooltip">
+                  //     Looks good!
+                  //   </div>
+                  // </div>
 
-
-                {/* <>
-
-                  <div className="full h-100 d-flex" ref={setReferenceElement}>
-                    <Link className="menu-bar-link mr-3" to={ROUTES.OUTSET} onMouseEnter={() => {setShouldShowElement(true)}} onMouseLeave={() => {setShouldShowElement(false)}}>
-                      <span className="badge badge-articles-light">
-                        <i className="fas fa-file-signature"/>Please Complete Outset 
-                      </span>
-                    </Link>
+                )}
+              </Reference>
+              {shouldShowElement ? (
+                <Popper placement="bottom">
+                {({ ref, style, placement, arrowProps }) => (
+                  <div className="popper-help-wrap1" ref={ref} style={style} data-placement={placement}>
+                    <div className="popper-help1">
+                      Completing the outset allows us to collect information about you if you allow us.
+                    </div>
+                    <div ref={arrowProps.ref} style={arrowProps.style} />
                   </div>
+                )}
+              </Popper>
+              ) : null}
+              
+            </Manager> */}
 
-                  {shouldShowElement ? 
-                  <div ref={setPopperElement} style={{width: '200px', backgroundColor: 'gray', padding: '0.5rem', color: 'white', ...styles.popper}} {...attributes.popper}>
-                    To continue into the site we just need to ask you a few questions.
-                  <div ref={setArrowElement} style={styles.arrow} />
-                  </div>
-                  :
-                  null
-                  }
+          </div>
             
-                  
-                </> */}
-
-                {/* <Manager>
-                  <Reference>
-                    {({ ref }) => (
-                      
-                      // <button className="btn btn-primary" type="button" ref={ref} onMouseEnter={() => {setShouldShowElement(true)}} onMouseLeave={() => {setShouldShowElement(false)}}>
-                      //   Reference element
-                      // </button>
-
-                      <Link className="menu-bar-link mr-3" to={ROUTES.OUTSET} ref={ref} onMouseEnter={() => {setShouldShowElement(true)}} onMouseLeave={() => {setShouldShowElement(false)}}>
-                        <span className="badge badge-articles-light">
-                          <i className="fas fa-file-signature"/>Please Complete Outset 
-                        </span>
-                      </Link>
-
-                      // <div ref={ref} onMouseEnter={() => {setShouldShowElement(true)}} onMouseLeave={() => {setShouldShowElement(false)}}>
-                      //   <input disabled onFocus={() => (props.changeFocus('email'))} type="text" className="form-control" id="validationTooltip03" placeholder={props.user.email}/>
-                      //   <div className="valid-tooltip">
-                      //     Looks good!
-                      //   </div>
-                      // </div>
-
-                    )}
-                  </Reference>
-                  {shouldShowElement ? (
-                    <Popper placement="bottom">
-                    {({ ref, style, placement, arrowProps }) => (
-                      <div className="popper-help-wrap1" ref={ref} style={style} data-placement={placement}>
-                        <div className="popper-help1">
-                          Completing the outset allows us to collect information about you if you allow us.
-                        </div>
-                        <div ref={arrowProps.ref} style={arrowProps.style} />
-                      </div>
-                    )}
-                  </Popper>
-                  ) : null}
-                  
-                </Manager> */}
-
-            </div>
         </section>
 
         {/* Pinned storys for mobile users, get desktop site working first */}
@@ -403,5 +407,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps, 
-  { toggleSideMenuFixed, toggleColorMode } 
+  { toggleSideMenuFixed, toggleColorMode, toggleSideMenuOpen } 
 )(Menu);

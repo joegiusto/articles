@@ -376,29 +376,9 @@ class HomePageFour extends Component {
             </div>
 
             {this.props.user?.roles?.isAdmin === true ?
-            <div className="tile old-home">
-
-              <div className="tile-header">
-                <div className="tile-title">Admin Only</div>
-                <div className="tile-update"></div>
-              </div>
-
-              <div style={{height: 'auto', display: 'flex', flexDirection: 'column', padding: '3rem 0'}} className="tile-content old-home">
-
-                <div>
-                  <Link to={ROUTES.LANDING}><button className="btn btn-articles-light my-2">Landing Page</button></Link>
-                  <Link to={ROUTES.HOME_OLD}><button className="btn btn-articles-light my-2 ml-2">Old Home Page</button></Link>
-                </div>
-
-                {/* <div className="introduce-badge">
-                  <span className="brand">Articles</span><span className="product"> <span className="seperator">-</span> Themes</span>
-                </div>
-
-                <input type="text" placeholder="#000-000 Theme code" className="form-control"/> */}
-
-              </div>
-
-            </div>
+            <Link className="w-100" to={ROUTES.HOME_OLD}>
+              <button className="btn btn-articles-light my-2 ml-2 mx-auto d-block">Old Home Page</button>
+            </Link>
             :
             null
             }

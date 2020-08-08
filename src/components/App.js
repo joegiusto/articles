@@ -89,7 +89,7 @@ function ScrollToTop() {
   const parts = pathname.split('/');
 
   useEffect(() => {
-    if (parts[1] === 'admin' || parts[1] === 'news' || parts[1] === 'store') {
+    if (parts[1] === 'admin' || parts[1] === 'news' || parts[1] === 'store' || parts[1] === 'reports') {
       // Was a page where router changes within like admin lookups
     } else {
       window.scrollTo(0, 0);
@@ -255,6 +255,7 @@ class AppBase extends Component {
               <Route component={NotFoundPage} />
             </Switch>
 
+            <Footer />
             
             {
               // props.location.pathname!=='/messages' ? null : <Footer />

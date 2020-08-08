@@ -41,7 +41,7 @@ $grid-breakpoints: (
 
 @import 'components/news-container';
 @import 'components/news-manage';
-@import 'components/subscribe';
+@import 'components/settings';
 
 @import 'components/faq';
 
@@ -59,7 +59,7 @@ $grid-breakpoints: (
 @import 'components/issues';
 @import 'components/stories';
 @import 'components/donate';
-@import 'components/mail';
+@import 'components/messages';
 @import 'components/not-found';
 @import 'components/press';
 @import 'components/footer';
@@ -216,4 +216,8 @@ code {
   input {
     margin-left: .3rem;
   }
+}
+
+.badge-lg {
+  font-size: 100%;
 }

@@ -85,13 +85,13 @@ section.frontpage-section {
     &.focus {
 
       .active-page-panel {
-        
         max-width: 1000px;
         // padding: 1rem;
         transition-duration: 500ms;
         // opacity: 1;
         border: solid 5px #000;
         margin-bottom: 1rem;
+        padding-bottom: 3rem;
 
         @include media-breakpoint-up(md) {
           width: 50%;
@@ -136,7 +136,10 @@ section.frontpage-section {
           }
 
           @include media-breakpoint-down(md) {
-            display: none;
+            // position: relative;
+            justify-content: space-between;
+            flex-direction: row;
+            flex-wrap: wrap;
           }
           
         }
@@ -197,6 +200,11 @@ section.frontpage-section {
       box-shadow: 2px 2px 2px $accent-color, -4px -4px 2px $base-color;
       transition-duration: 500ms;
 
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      // align-items: center;
+
       @include media-breakpoint-down(md) {
         margin: 0!important;
         width: 100%!important;
@@ -224,7 +232,6 @@ section.frontpage-section {
 
       .search {
         display: flex;
-
       }
   
       .search-button {
@@ -904,7 +911,6 @@ section.frontpage-section {
   .weather-overlay {
     opacity: 0;
     position: fixed;
-    z-index: -10;
     width: 100%;
     height: calc(100% - 50px);
     display: flex;
@@ -915,10 +921,10 @@ section.frontpage-section {
     
     &.show {
       opacity: 1;
-      z-index: 10;
+      z-index: 100;
     }
 
-    > .content {
+    .weather-content {
       position: relative;
       width: 80%;
       height: 70%;
@@ -928,6 +934,9 @@ section.frontpage-section {
       margin-right: 5px;
       margin-left: 5px;
       max-width: 800px;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
 
       .header {
         position: relative;
@@ -947,21 +956,28 @@ section.frontpage-section {
           top: 50%;
           left: 50%;
           transform: translateX(-50%) translateY(-50%);
+          display: flex;
+          background-color: black;
+          color: white;
+          padding: 1rem;
+  
+          .chart {
+            height: 100px;
+            width: 100px;
+            background-color: $accent-color;
+  
+            @include media-breakpoint-up(md) {
+              margin-left: 1rem;
+            }
+          }
         }
       }
 
-      .content {
+      .body {
         display: flex;
-
-        .chart {
-          height: 100px;
-          width: 100px;
-          background-color: black;
-
-          @include media-breakpoint-up(md) {
-            margin-left: 1rem;
-          }
-        }
+        flex-grow: 1;
+        justify-content: center;
+        align-items: center;
       }
 
       .bottom-controls {

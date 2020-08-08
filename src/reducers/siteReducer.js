@@ -1,5 +1,7 @@
 const initialState = {
   colorModeDark: false,
+  weatherPin: false,
+  sideMenuOpen: false,
   sideMenuFixed: false,
   userSubscriptions: false,
   dateType: 'post',
@@ -9,6 +11,11 @@ const initialState = {
 };
 export default function(state = initialState, action) {
   switch (action.type) {
+    case 'TOGGLE_SIDE_MENU_OPEN':
+      return {
+        ...state,
+        sideMenuOpen: !state.sideMenuOpen
+      };
     case 'TOGGLE_SIDE_MENU_FIXED':
       return {
         ...state,
@@ -18,6 +25,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         colorModeDark: !state.colorModeDark
+      };
+    case 'TOGGLE_WEATHER_PIN':
+      return {
+        ...state,
+        weatherPin: !state.weatherPin
       };
     case 'TOGGLE_USER_SUBSCRIPTIONS':
       return {

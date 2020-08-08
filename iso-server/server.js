@@ -139,7 +139,9 @@ function connectWithRetryMongo() {
 
     require('./routes/getDonations')(app, db);
 
+    // This grouping is used in Reports
     require('./routes/getMonthlyExpense')(app, db);
+    require('./routes/getMonthlyPayrole')(app, db);
 
     // Deleted
     // require('./routes/jsonNews')(app, db);

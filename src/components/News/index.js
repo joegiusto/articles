@@ -190,7 +190,7 @@ function SearchHead(props) {
           </div>
 
           <div className="content text-center">
-            <div><i className="fas fa-thermometer-empty"></i>80°F</div>
+            <div><i className="fas fa-thermometer-empty"></i>0°F</div>
             <div>Partly Cloudy</div>
           </div>
 
@@ -589,7 +589,7 @@ class Frontpage extends Component {
 
         <div onClick={() => this.setState({weatherOverlay: !this.state.weatherOverlay})} className={"weather-overlay " + (this.state.weatherOverlay ? 'show' : '')}>
           
-          <div className="content">
+          <div className="weather-content">
 
             <div className="header">
 
@@ -623,14 +623,14 @@ class Frontpage extends Component {
 
             </div>
 
-            <div>Weather Overlay</div>
+            <div className="body">Weather is still being worked on and will not be available until September.</div>
 
             <div className="bottom-controls">
               <div className="btn btn-articles-light">
                 <i className="fas fa-map-pin"></i>
                 Pin to Header
               </div>
-              <div className="btn btn-articles-light">
+              <div className="btn btn-articles-light ml-2">
                 <i className="far fa-window-close"></i>
                 Close
               </div>

@@ -120,47 +120,60 @@ class Messages extends Component {
   setFocus(message) {
     const self = this;
 
-    this.setState({focus: message}, 
-      () => {
-        self.myScrollRef.current.scrollTop = self.myScrollRef.current.scrollHeight;
+    if ( message === {} ) {
 
-        socket.emit( 'join-room', self.state.focus._id )
+      console.log("Ignore this one")
+      this.setState({
+        focus: message
+      })
 
-        socket.on(self.state.focus._id, function(msg){
-
-          console.log('incoming message');
-
-          let willScroll = false;
-
-          if ( self.state.scrollPosition === 1 ) {
-            willScroll = true
-          }
-
-          self.setState({
-            focus: {
-              ...self.state.focus,
-              messages: [
-                ...self.state.focus.messages,
-                {
-                 date: moment._d,
-                 message: msg,
-                 sender: 'TBD'
-                }
-              ]
+    } else {
+      
+      this.setState({focus: message}, 
+        () => {
+          self.myScrollRef.current.scrollTop = self.myScrollRef.current.scrollHeight;
+  
+          socket.emit( 'join-room', self.state.focus._id )
+  
+          socket.on(self.state.focus._id, function(msg){
+  
+            console.log('incoming message');
+  
+            let willScroll = false;
+  
+            if ( self.state.scrollPosition === 1 ) {
+              willScroll = true
             }
-          },
-          () => { 
+  
+            self.setState({
+              focus: {
+                ...self.state.focus,
+                messages: [
+                  ...self.state.focus.messages,
+                  {
+                   date: moment._d,
+                   message: msg,
+                   sender: 'TBD'
+                  }
+                ]
+              }
+            },
+            () => { 
+  
+              if ( willScroll === true ) {
+                // console.log('willScroll was true')
+                self.myScrollRef.current.scrollTop = self.myScrollRef.current.scrollHeight;
+              }
+  
+             }
+            )
+          });
+        }
+      )
 
-            if ( willScroll === true ) {
-              // console.log('willScroll was true')
-              self.myScrollRef.current.scrollTop = self.myScrollRef.current.scrollHeight;
-            }
+    }
 
-           }
-          )
-        });
-      }
-    )
+    
 
   }
 
@@ -307,25 +320,31 @@ class Messages extends Component {
         <div onClick={() => this.setState({createChatOverlay: false})} className={"create-chat-overlay " + (this.state.createChatOverlay ? 'active' : '')}>
 
           <div className="create-chat active">
-            <h5>Please type the ID of the user you would like to chat with.</h5>
-            <input type="text"/>
-
+            <h5>Start Chat</h5>
+            
+            <input className="" type="text"/>
             <button className="btn btn-articles-light">Start</button>
+
+            <h5 className="mt-3">Quick Chatt</h5>
+            <div className="quick-chat-cards">
+              <div className="quick-chat-card">Joey Giusto (Founder)</div>
+            </div>
+
           </div>
         </div>
         
-        <div className="nav-bar-sticker">
+        <div className={"nav-bar-sticker " + (this.props.sideMenuOpen ? 'show' : '')}>
           <div className="bg"></div>
           <div className="bg bg2"></div>
           <div className="bg bg3"></div>
         </div>
 
-        <div onClick={() => this.setFocus({})} className="page-note">
+        {/* <div onClick={() => this.setFocus({})} className="page-note">
           <div className="branding-badge">
             <span>Mesh</span>
             <span className="beta">BETA</span>
           </div>
-        </div>
+        </div> */}
 
         <div className="dashboard">
           <div className={"inbox-messages " + (this.state.focus._id === undefined ? '' : 'active')}>
@@ -479,7 +498,8 @@ const ColorOption = (props) => {
 const mapStateToProps = (state) => {
   return {
     user_id: state.auth.user.id,
-    user_details: state.auth.user_details
+    user_details: state.auth.user_details,
+    sideMenuOpen: state.site.sideMenuOpen
   };
 };
 

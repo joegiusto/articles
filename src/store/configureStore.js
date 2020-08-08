@@ -28,6 +28,13 @@ const persistConfig = {
   storage,
 }
 
+// const persistConfigSite = {
+//   // transforms: [immutableTransform()],
+//   key: 'root',
+//   blacklist: ['stories', 'user.subscriptionsBulk', 'notificationArea'],
+//   storage,
+// }
+
 const persistedReducer = persistReducer(
   persistConfig, 
   combineReducers({
@@ -39,6 +46,7 @@ const persistedReducer = persistReducer(
     issues: issuesReducer,
     myths: mythsReducer,
     submissions: submissionsReducer,
+    // site: siteReducer,
     site: siteReducer,
     // filters: filtersReducer,
     // site: siteReducer,

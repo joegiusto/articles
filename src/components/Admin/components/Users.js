@@ -278,6 +278,7 @@ class Users extends Component {
                   <tr>
                     {/* <th scope="col">User ID</th> */}
                     <th scope="col">Name</th>
+                    <th scope="col">Membership</th>
                     <th scope="col">State</th>
                     <th scope="col">Party</th>
                     <th scope="col">Outset</th>
@@ -294,6 +295,12 @@ class Users extends Component {
                       {/* <th scope="row">{user._id}</th> */}
                       {/* <td>{`${user.first_name} ${user.last_name}`}</td> */}
                       <td><span style={{width: '150px', display: 'inline-block'}}>{user.first_name} {user.last_name}</span> <span className="badge badge-light">{user._id}</span></td>
+
+                      <td>
+                        <span className="badge badge-danger">No</span>
+                        <span className="badge badge-dark ml-2">Edit</span>
+                      </td>
+
                       <td>{user.address.state}</td>
                       <td>{user.political?.party || 'None'}</td>
                       <td>{user.outset === true ? 'True' : 'False'}</td>

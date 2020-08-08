@@ -49,6 +49,7 @@
     right: 0;
     width: calc(100vw);
     height: 50px;
+
     &:after {
       z-index: 10000;
       position: absolute;
@@ -59,6 +60,13 @@
       width: 20px;
       height: 100%;
       clip-path: polygon(0 0, 100% 0, 50% 100%, 0% 100%);
+      transition-duration: 200ms;
+    }
+
+    &.show {
+      &:after {
+        transform: translateX(240px);
+      }
     }
   }
 
@@ -115,6 +123,32 @@
       background-color: $accent-color;
       padding: 1rem;
       width: 500px;
+
+      h5 {
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 900;
+      }
+
+      .btn {
+        padding: 0.175rem 0.75rem;
+      }
+
+      .quick-chat-cards {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        .quick-chat-card {
+          width: 50%;
+          text-align: center;
+          border-bottom: 2px solid #000;
+          box-shadow: 0px -1px 2px 1px rgba(0, 0, 0, 0.25);
+          padding: 0.25rem 1rem;
+          background-color: whitesmoke;
+          border-radius: 3px;
+        }
+      }
     }
 
     &.active {

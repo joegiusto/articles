@@ -1,11 +1,11 @@
 import React from 'react';
-// import { Link } from 'react-router-dom'
 import axios from 'axios'
-// import { withFirebase } from '../../Firebase';
-import { updateSubscriptionToIssue } from '../../../actions/siteActions'
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from "react-redux";
 import moment from 'moment'
+
+import { updateSubscriptionToIssue } from '../../../actions/siteActions'
+import * as ROUTES from '../../../constants/routes'
 
 class Issue extends React.Component {
   constructor(props) {
@@ -115,7 +115,7 @@ class Issue extends React.Component {
 
   render() {
 
-    const {loading, news_notes, lastRead} = this.state;
+    const {loading, news_notes, lastRead, hero_url} = this.state;
 
     // news_notes.replace(/(\r\n|\n|\r)/gm, "")
 
@@ -124,7 +124,102 @@ class Issue extends React.Component {
         {loading ?
         <div className="alert alert-danger">Loading Issue - {this.props.match.params.id}</div>
         :
-        <div className="container single">
+        <div className="single">
+
+          <div className="header">
+
+            <div className="container">
+
+              <div className="info">
+  
+                <div className="issues-breadcrumb">
+                  <Link to={ROUTES.NEWS}><span>News</span></Link>
+                  <span className="px-1">/</span>
+                  <Link to={ROUTES.ISSUES}><span>Issues</span></Link>
+                </div>
+  
+                <h5 className="title">{this.state.news_title}</h5>
+  
+                <div className="details">
+  
+                  <Link to={ROUTES.EMPLOYEES + '/5e90cc96579a17440c5d7d52'}><img src="https://articles-website.s3.amazonaws.com/profile_photos/5e90cc96579a17440c5d7d52.jpg" alt=""/></Link>
+  
+                  <div className="author">
+                    <div className="label">Author</div>
+                    <Link to={ROUTES.EMPLOYEES + '/5e90cc96579a17440c5d7d52'}><div>Joey Giusto</div></Link>
+                  </div>
+  
+                  <div className="published">
+                    <div className="label">Published</div>
+                    <div className="date">{moment(this.state.news_date).format("LL")}</div>
+                  </div>
+  
+                  <div className="updated">
+                    <div className="label">Updated</div>
+                    <div className="date">{moment(this.state.last_update).format("LL")}</div>
+                  </div>
+                </div>
+
+                <div className="subscribe">
+                  
+                </div>
+  
+                <div className="tags-container">
+                  <small className="pl-0 d-block">Tags:</small>
+                  <div className="tags">
+                    {this.state.news_tags.length > 0 ? 
+                      this.state.news_tags?.map((tag, i) => (
+                        <span className={"badge badge-articles " + (i === 0 ? '' : 'ml-1')}>{tag.tag_name}</span>
+                      ))
+                    :
+                      <div className="badge badge-light ml-1">None</div>
+                    }
+                  </div>
+                </div>
+  
+              </div>
+  
+              <img className="hero" src={hero_url} alt=""/>
+
+            </div>
+            
+          </div>
+
+          <div className="divider">
+
+          </div>
+
+          <div className="container">
+            <div className="content ">
+  
+              <div style={{whiteSpace: 'pre-wrap'}} dangerouslySetInnerHTML={{__html: news_notes}}></div>
+  
+              <div className="ads">
+
+                <div className="ad-wrap">
+                  <div className="ad">
+                    <img src="https://media-cdn.tripadvisor.com/media/photo-s/0c/8b/a7/c7/photo0jpg.jpg" alt=""/>
+                  </div>
+                  <div className="details">
+                    <div className="label">Advertisement</div>
+                    <div className="text">Come check out the many activities Beacon has to offer and enjoy a drink at Bank Square Coffeehouse!</div>
+                  </div>
+                </div>
+
+                <div className="ad-wrap">
+                  <div className="ad microsoft">
+                    <img src="https://res.cloudinary.com/css-tricks/image/fetch/w_250,q_auto,f_auto/https://cdn4.buysellads.net/uu/1/63492/1593196185-Microsoft-logo_rgb_c-wht-250x100.png" alt="Ad for Microsoft"/>
+                  </div>
+                  <div className="details">
+                    <div className="label">Advertisement</div>
+                    <div className="text">Build and develop apps with Azure. Free until you say otherwise.</div>
+                  </div>
+                </div>
+
+              </div>
+  
+            </div>
+          </div>
 
           {/* <div className="link badge badge-dark w-100 py-2 mb-3" onClick={() => this.props.history.goBack()}>{String.fromCharCode(11148)} Back to Issues</div> */}
 

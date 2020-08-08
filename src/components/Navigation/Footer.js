@@ -1,9 +1,9 @@
 import React from 'react'
 import * as ROUTES from '../../constants/routes'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
 const Footer = (props) => (
-  <footer className="site-footer">
+  <footer className={"site-footer " + (props.location.pathname === '/messages' ? 'd-none' : '')}>
     <div className="container-fluid">
       <div className="row">
 
@@ -64,4 +64,4 @@ const Footer = (props) => (
   </footer>
 )
 
-export default Footer;
+export default withRouter(Footer);
