@@ -374,7 +374,7 @@ class Reports extends Component {
                             <div className="progress-bar bg-danger" role="progressbar" style={{width: (this.state.totals.expenses / ((this.state.totals.donations + this.state.totals.expenses) / 100) ).toFixed(0) + "%"}} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">{( this.state.totals.expenses / ((this.state.totals.donations + this.state.totals.expenses) / 100) ).toFixed(0)}%</div>
                           </div>
         
-                          <div className="text-muted">Revenue | Expenses</div>
+                          {/* <div className="text-muted">Revenue | Expenses</div> */}
         
                           <div className="mt-4">
         

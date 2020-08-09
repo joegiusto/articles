@@ -34,7 +34,10 @@ $grid-breakpoints: (
 
 @import 'components/section-showcase';
 @import 'components/landing';
+
+// Clothing Related
 @import 'components/store';
+@import 'components/submissions';
 @import 'components/store_item';
 @import 'components/order-details';
 @import 'components/checkout';
@@ -43,25 +46,35 @@ $grid-breakpoints: (
 @import 'components/news-manage';
 @import 'components/settings';
 
-@import 'components/faq';
 
+// Reports Related
 @import 'components/reports';
+@import 'components/employee-directory';
+
 @import 'components/mission';
 @import 'components/myths';
 @import 'components/party';
-@import 'components/employee-directory';
-@import 'components/submissions';
+
+
 @import 'components/outset';
 @import 'components/home';
 @import 'components/proposals';
+
+// Support Related
+@import 'components/support';
+@import 'components/press';
 @import 'components/privacy';
+@import 'components/translations';
+@import 'components/faq';
+@import 'components/roadmap';
+
 @import 'components/loading_block';
 @import 'components/issues';
 @import 'components/stories';
 @import 'components/donate';
 @import 'components/messages';
 @import 'components/not-found';
-@import 'components/press';
+
 @import 'components/footer';
 @import 'components/playground';
 

@@ -64,6 +64,7 @@ class HomePageFour extends Component {
               <div>
                 <div className="name">{this.props.user?.first_name} {this.props.user?.last_name}</div>
                 <div className="email">{this.props.user?.email}</div>
+                <Link to={ROUTES.MESSAGES}><div className="badge badge-light mt-3">0 Messages</div></Link>
               </div>
 
             </div>

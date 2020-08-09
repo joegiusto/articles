@@ -68,6 +68,7 @@ export const UPDATES ='/support/updates'
 export const JOBS ='/support/jobs'
 export const PRESS ='/support/press'
 export const TRANSLATIONS ='/support/translations'
+export const ROADMAP ='/support/roadmap'
 
 // Account
 export const ACCOUNT = '/account';

@@ -1,0 +1,46 @@
+.support-page {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+
+  @include media-breakpoint-up(md) {
+    padding-top: 4rem;
+  }
+
+  h1 {
+    width: 100%;
+    text-align: center;
+    font-family: brandon-grotesque, sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 2rem;
+  }
+
+  .hub-items {
+    padding-top: 0rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    @include media-breakpoint-up(md) {
+      padding-top: 2rem;
+    }
+
+    .item {
+      text-align: center;
+      font-weight: bold;
+      margin-top: 1rem;
+      margin-right: 0.5rem;
+      margin-left: 0.5rem;
+      width: calc(100%);
+      padding: 1rem;
+      border: solid 2px #000;
+      box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.25);
+      border-radius: 5px;
+      background-color: white;
+
+      @include media-breakpoint-up(md) {
+        width: calc(33% - 1rem);
+      }
+    }
+  }
+}

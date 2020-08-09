@@ -6,7 +6,7 @@ const Page = () => (
     <div className="col-sm-6 my-auto">
       <div className="card card-block p-5">
         <h1>Jobs</h1>
-        <p>Fill out a description.</p>
+        <p>This will be the place we will put any future job postings.</p>
       </div>
     </div>
   </div>
