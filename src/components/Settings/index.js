@@ -126,6 +126,8 @@ class Settings extends Component {
           zip: this.props.user_details?.address?.zip || '',
           city: this.props.user_details?.address?.city || '',
           state: this.props.user_details?.address?.state || '',
+          lat: this.props.user_details?.address?.lat || '',
+          lng: this.props.user_details?.address?.lng || '',
         },
 
         submissions: this.props.user_details?.submissions || [],
@@ -383,8 +385,13 @@ class Settings extends Component {
         first_name: this.state.mongoDBuser.first_name,
         last_name: this.state.mongoDBuser.last_name,
         photo_url: this.state.mongoDBuser.photo_url,
+        birth_date: new Date(this.state.mongoDBuser.age),
         address: {
+          city: this.state.mongoDBuser.address.city,
+          state: this.state.mongoDBuser.address.state,
           zip: this.state.mongoDBuser.address.zip,
+          lat: this.state.mongoDBuser.address.lat,
+          lng: this.state.mongoDBuser.address.lng,
         },
         subscriptions: this.state.mongoDBuser.subscriptions,
       }
