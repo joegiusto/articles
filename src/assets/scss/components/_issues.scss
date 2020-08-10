@@ -1,6 +1,8 @@
 .issues-page {
   font-family: montserrat, sans-serif;
   font-weight: 400;
+  max-width: 100%;
+  overflow-x: hidden;
 
   .g-card {
     $border: 15px;
@@ -288,12 +290,22 @@
   
         }
 
-        .tags-container {
+        .last-viewed-tag-wrap-container {
           margin-top: 1rem;
+          display: flex;
+          flex-direction: column;
+          flex-wrap: wrap;
 
           @include media-breakpoint-up(md) {
             margin-top: 4rem;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-right: 3rem;
           }
+        }
+
+        .tags-wrap {
+          
 
           .tags {
             display: flex;
@@ -306,7 +318,7 @@
   
       img.hero {
         margin-top: 1rem;
-        width: 50%;
+        width: 100%;
         object-fit: cover;
         max-height: 325px;
         object-fit: cover;
@@ -314,12 +326,15 @@
 
         @include media-breakpoint-up(md) {
           margin-top: 0rem;
+          width: 50%;
         }
       }
     }
   
     .divider {
       background: linear-gradient(45deg, #ff818d, #fec0bb 80%);
+      background: linear-gradient(45deg, #ffb7b7, #f9edcd 80%);
+      background: $issue-color;
       height: 50px;
     }
   
@@ -337,19 +352,26 @@
       }
 
       .ads {
-        position: absolute;
-        right: 15px;
-        top: 100px;
-        width: 300px;
-        transform: translateX(100%);
+        margin-top: 2rem;
+
+        @include media-breakpoint-up(md) {
+          position: absolute;
+          right: 15px;
+          top: 100px;
+          width: 300px;
+          transform: translateX(100%);
+          margin-top: 0rem;
+        }
 
         .ad-wrap {
 
           .ad {
             position: relative;
-            overflow: hidden;
+            // overflow: hidden;
+            margin: 0 auto;
 
             img {
+              border-radius: 5px;
               z-index: 10;
               position: absolute;
               left: 0;
@@ -357,6 +379,22 @@
               width: 100%;
               height: 100%;
               object-fit: cover;
+            }
+
+            .btn-why {
+              position: absolute;
+              z-index: 100;
+              width: 70px;
+              height: 70px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+              right: -10px;
+              bottom: -10px;
+              background: linear-gradient(45deg, #ffb7b7, #f9edcd 80%);
+              // background: linear-gradient(45deg, #b7fff3, #f9edcd 80%);
+              // transform: translateX(50%) translateY(50%);
             }
 
             &.microsoft {
@@ -378,12 +416,21 @@
           .details {
             padding-top: 0.5rem;
             padding-left: 2rem;
+            padding-right: 2rem;
             // position: absolute;
             // width: 300px;
+
+            @include media-breakpoint-up(md) {
+              padding-right: 0rem;
+            }
 
             .label {
               font-size: 15px;
               font-weight: bold;
+              display: flex;
+              justify-content: space-between;
+              
+
             }
             
             .text {

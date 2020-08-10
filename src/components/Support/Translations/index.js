@@ -17,11 +17,20 @@ const Page = () => (
       <div className="row h-100 justify-content-center">
         <div className="col-12 col-md-8 col-xl-6 my-auto">
           <div className="card card-block">
+            
             <h1>Translations</h1>
-            <p>Articles is an American focused company, which means we want any American to be able to use our site and gather news and information at ease. During this time in development, translations have very limited support if any at all. Based on the data from the US Census Bureau, we will roll out translations to Spanish speakers and work from there into Chinese translations and so on. In the mean time we reccomend this extension for Chrome users to help you.</p>
-            <path fill="url(#e)" d="M8 20v140c0 6.6 5.4 12 12 12h152c6.6 0 12-5.4 12-12V20H8zm108 32H76c-4.42 0-8-3.58-8-8s3.58-8 8-8h40c4.42 0 8 3.58 8 8s-3.58 8-8 8z"></path>
 
-            <a href="https://chrome.google.com/webstore/detail/google-translate/aapbdbdomjkkjkaonfhkkikfgjllcleb/RK%3D2/RS%3DBBFW_pnWkPY0xPMYsAZI5xOgQEE-">Google Translate Extension (Chrome)</a>
+            <p className="mt-2">We currently do not have a language setting on our site but this is something we have in mind for the near future. Articles is an American focused company, which means we want any American to be able to use our site and gather news and information at ease.</p>
+            <p>In the meantime we recommend a browser extension like this one (Chrome users)</p>
+
+            <div>
+              <i class="fab fa-chrome"></i>
+              <a href="https://chrome.google.com/webstore/detail/google-translate/aapbdbdomjkkjkaonfhkkikfgjllcleb/RK%3D2/RS%3DBBFW_pnWkPY0xPMYsAZI5xOgQEE-">Google Translate</a>
+            </div>
+
+            <hr className="mt-4"/>
+
+            <p className="mt-3">Below is a chart to remind people of just how diverse this country is.</p>
 
             <h3 className="info-title">US Census Bureau Data</h3>
 
@@ -39,7 +48,11 @@ const Page = () => (
                 )}
                 
               </div>
+
+              <div className="text-muted text-small">Data from 2017</div>
             </div>
+
+            <p className="mt-4">To keep up with our transparency efforts we plan to show the percent of what languages people are using on our site when we have this feature added.</p>
 
             <h3 className="info-title">Articles User Data</h3>
 

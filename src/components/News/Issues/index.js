@@ -60,12 +60,13 @@ class IssuesClass extends Component {
     :
     this.props.user_subscriptions.sort((a, b) => new Date(b.last_update) - new Date(a.last_update))
     )
+    
     }
 
     return (
       <section className="issues-section issues-page text-center">
 
-        <div className="issues-head d-none">
+        <div className="issues-head">
           <h1 className="title">Issues</h1>
           <p className="body">Overview of the most pressing issues and status updates on them.</p>
 
@@ -73,8 +74,8 @@ class IssuesClass extends Component {
 
             <span className="subscription-badges">
               <span className="bold"><i className="fas fa-th"></i></span>
-              <div onClick={() => this.props.toggleUserSubscriptions()} className={"badge border " + (this.props.site?.userSubscriptions === true ? 'badge-dark ' : 'badge-light ')}>Subscribed</div>
-              <div onClick={() => this.props.toggleUserSubscriptions()} className={"ml-1 badge border " + (this.props.site?.userSubscriptions === false ? 'badge-dark' : 'badge-light')}>All</div>
+              <div onClick={() => this.props.toggleUserSubscriptions()} className={"badge border " + (this.props.site.userSubscriptions === true ? 'badge-dark ' : 'badge-light ')}>Subscribed</div>
+              <div onClick={() => this.props.toggleUserSubscriptions()} className={"ml-1 badge border " + (this.props.site.userSubscriptions === false ? 'badge-dark' : 'badge-light')}>All</div>
             </span>
 
             <span className="subscription-badges">

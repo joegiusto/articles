@@ -14,14 +14,9 @@ const Page = () => (
               <p>An overview of whats to come.</p>
             </div>
 
-            <div className="card-footer p-0 px-2 pt-3">
-  
-              {/* <div className="d-flex justify-content-between">
-                <p className="text-muted mb-0 badge">Return To <Link to={ROUTES.HOME}>Home Page</Link></p>
-                <p className="text-muted mb-0 badge">Return To <Link to={ROUTES.LANDING}>Landing Page</Link></p>
-              </div> */}
+            <div className="roadmap-cards">
 
-              <div className="alert alert-light">
+              <div className="roadmap-card">
                 <div className="title">August 2020</div>
                 <div className="text">
                   <ul>
@@ -33,7 +28,7 @@ const Page = () => (
                 </div>
               </div>
 
-              <div className="alert alert-light">
+              <div className="roadmap-card">
                 <div className="title">September 2020</div>
                 <div className="text">
                   <ul>
@@ -44,7 +39,7 @@ const Page = () => (
                 </div>
               </div>
 
-              <div className="alert alert-light">
+              <div className="roadmap-card">
                 <div className="title">October 2020</div>
                 <div className="text">
                   <ul>
@@ -55,7 +50,7 @@ const Page = () => (
                 </div>
               </div>
   
-              <div className="alert alert-light">
+              <div className="roadmap-card">
                 <div className="title">2020</div>
                 <div className="text">
                   <ul>
@@ -65,7 +60,7 @@ const Page = () => (
                 </div>
               </div>
 
-              <div className="alert alert-light">
+              <div className="roadmap-card">
                 <div className="title">2021</div>
                 <div className="text">
                   <ul>
@@ -74,7 +69,7 @@ const Page = () => (
                 </div>
               </div>
 
-              <div className="alert alert-light">
+              <div className="roadmap-card">
                 <div className="title">2022</div>
                 <div className="text">
                   <ul>

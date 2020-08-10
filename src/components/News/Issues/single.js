@@ -66,6 +66,8 @@ class Issue extends React.Component {
   }
 
   loadLastRead() {
+    const self = this;
+
     // Set the date that the user was last lookign at this story
     if ( this.props.user._id ) {
       console.log("Is a user")
@@ -90,8 +92,8 @@ class Issue extends React.Component {
         console.log(response);
 
         if (response.data !== "Was not subscribed to issues") {
-          this.props.updateSubscriptionToIssue({
-            news_id: this.state._id,
+          self.props.updateSubscriptionToIssue({
+            news_id: self.state._id,
             // lastRead: moment('July 30 2020')
           })
         }
@@ -163,18 +165,29 @@ class Issue extends React.Component {
                 <div className="subscribe">
                   
                 </div>
-  
-                <div className="tags-container">
-                  <small className="pl-0 d-block">Tags:</small>
-                  <div className="tags">
-                    {this.state.news_tags.length > 0 ? 
-                      this.state.news_tags?.map((tag, i) => (
-                        <span className={"badge badge-articles " + (i === 0 ? '' : 'ml-1')}>{tag.tag_name}</span>
-                      ))
-                    :
-                      <div className="badge badge-light ml-1">None</div>
-                    }
+
+                <div className="last-viewed-tag-wrap-container">
+
+                  <div className="last-viewed">
+                    <small className="pl-0 d-block">Last Viewed:</small>
+                    <div className="date">
+                      {lastRead !== undefined ? moment(lastRead).format("LLL") : 'Never' }
+                    </div>
                   </div>
+    
+                  <div className="tags-wrap">
+                    <small className="pl-0 d-block">Tags:</small>
+                    <div className="tags">
+                      {this.state.news_tags.length > 0 ? 
+                        this.state.news_tags?.map((tag, i) => (
+                          <span className={"badge badge-articles " + (i === 0 ? '' : 'ml-1')}>{tag.tag_name}</span>
+                        ))
+                      :
+                        <div className="badge badge-light ml-1">None</div>
+                      }
+                    </div>
+                  </div>
+
                 </div>
   
               </div>
@@ -199,9 +212,13 @@ class Issue extends React.Component {
                 <div className="ad-wrap">
                   <div className="ad">
                     <img src="https://media-cdn.tripadvisor.com/media/photo-s/0c/8b/a7/c7/photo0jpg.jpg" alt=""/>
+                    <button className="btn btn-sm btn-why">Why<i class="far fa-question-circle mr-0 ml-0"></i></button>
                   </div>
                   <div className="details">
-                    <div className="label">Advertisement</div>
+                    <div className="label">
+                      <span>Advertisement</span>
+
+                    </div>
                     <div className="text">Come check out the many activities Beacon has to offer and enjoy a drink at Bank Square Coffeehouse!</div>
                   </div>
                 </div>
@@ -209,9 +226,13 @@ class Issue extends React.Component {
                 <div className="ad-wrap">
                   <div className="ad microsoft">
                     <img src="https://res.cloudinary.com/css-tricks/image/fetch/w_250,q_auto,f_auto/https://cdn4.buysellads.net/uu/1/63492/1593196185-Microsoft-logo_rgb_c-wht-250x100.png" alt="Ad for Microsoft"/>
+                    <button className="btn btn-sm btn-why">Why<i class="far fa-question-circle mr-0 ml-0"></i></button>
                   </div>
                   <div className="details">
-                    <div className="label">Advertisement</div>
+                    <div className="label">
+                      <span>Advertisement</span>
+
+                    </div>
                     <div className="text">Build and develop apps with Azure. Free until you say otherwise.</div>
                   </div>
                 </div>

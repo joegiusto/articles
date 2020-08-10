@@ -48,8 +48,7 @@ export const filterIssuesDateType = () => dispatch => {
 
 export const updateSubscriptionToIssue = subscription => dispatch => {
 
-  console.log("Update Issue Called");
-  console.log(subscription);
+  console.log("Update to Issue last viewed date");
 
   dispatch({
     type: 'UPDATE_SUBSCRIPTION',

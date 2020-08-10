@@ -918,8 +918,10 @@ section.frontpage-section {
     align-items: center;
     background-color: rgba(0, 0, 0, 0.5);
     transition-duration: 200ms;
+    pointer-events: none;
     
     &.show {
+      pointer-events: visible;
       opacity: 1;
       z-index: 100;
     }
