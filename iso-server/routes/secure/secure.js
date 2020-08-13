@@ -100,6 +100,7 @@ module.exports = (app, db) => {
             lat: myobj.address.lat,
             lng: myobj.address.lng,
           },
+          gender: myobj.gender,
           subscriptions: myobj.subscriptions
         }
       }, function(err, res) {

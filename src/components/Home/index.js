@@ -58,7 +58,8 @@ class HomePageFour extends Component {
             <div className="photo-section">
 
               <div className="photo">
-                <img src={this.props.user?.photo_url ? this.props.user?.photo_url : 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Black_colour.jpg/1200px-Black_colour.jpg'} alt=""/>
+                <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${this.props?.user?._id}.jpg` || ''} alt=""/>
+                <div className="blank"></div>
               </div>
 
               <div>

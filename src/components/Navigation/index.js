@@ -226,7 +226,11 @@ function Menu(props) {
               </div>
 
               <div className="profile-photo" >
-                  <img alt="" className="" style={{borderRadius: '100px'}} width="100%" height="100%" src={props?.user?.photo_url || ''}/>
+                  {props?.user?.photo_url === undefined ? 
+                  null
+                  :
+                  <img alt="" className="" style={{borderRadius: '100px'}} width="100%" height="100%" src={`https://articles-website.s3.amazonaws.com/profile_photos/${props?.user?._id}.jpg` || ''}/>
+                  }
                   <i className={props?.user?.photo_url ? '':'fas fa-question'}></i>
               </div> 
 
@@ -247,7 +251,7 @@ function Menu(props) {
                     <span></span>
                   ) : (
                     // <span>Member Since{moment.unix(props.user?.sign_up_date).format("MMMM Y")}</span>
-                    <span>Member Since {moment.unix(props.user?.sign_up_date).format("MMMM Y") || "Loading..."}</span>
+                    <span>Member Since {moment(props.user?.sign_up_date).format("MMMM Y") || "Loading..."}</span>
                   )
                   }
                   
@@ -342,6 +346,10 @@ function Menu(props) {
           {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.TRANSLATIONS}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Translations</p></Link> */}
           {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.LANDING}><p className="subheading-font"><i className="fas fa-map-pin"></i>Landing</p></Link> */}
           {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.OUTSET}><p className="subheading-font"><i className="fas fa-horse"></i>Outset</p></Link> */}
+
+          {/* Donate Section */}
+          <hr/>
+          <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.DONATE}><div className="btn btn-articles-light w-100 ml-4" style={{maxWidth: '90%'}}>Donate</div></Link>
           
           {!props.isAuth ? (
             null

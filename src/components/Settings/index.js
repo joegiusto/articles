@@ -114,6 +114,10 @@ class Settings extends Component {
         first_name: this.props.user_details?.first_name || '',
         last_name: this.props.user_details?.last_name || '',
 
+        password: '',
+        newPassword: '',
+        newPasswordConfirm: '',
+
         birth_date: this.props.user_details?.birth_date || '',
         age: moment(this.props.user_details?.birth_date).format('MM/DD/YYYY') || '',
         
@@ -129,6 +133,8 @@ class Settings extends Component {
           lat: this.props.user_details?.address?.lat || '',
           lng: this.props.user_details?.address?.lng || '',
         },
+
+        gender: this.props.user_details?.gender || '',
 
         submissions: this.props.user_details?.submissions || [],
         submissionsFetched: this.props.user_details?.submissionsFetched || [],
@@ -393,7 +399,40 @@ class Settings extends Component {
           lat: this.state.mongoDBuser.address.lat,
           lng: this.state.mongoDBuser.address.lng,
         },
+        gender: this.state.mongoDBuser.gender,
         subscriptions: this.state.mongoDBuser.subscriptions,
+      }
+    })
+    .then(function (response) {
+      console.log(response);
+
+      self.setState({
+        updatingUserDetails: false,
+      }, () => {
+        // self.mergeStuff()
+      })
+
+      self.props.setUserDetails(self.props.auth.user.id);
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  updatePassword() {
+    const self = this;
+    console.log("PASSWORD UPDATE!");
+
+    this.setState({
+      updatingUserDetails: true
+    })
+
+    axios.post('/api/secure/updateUserPassword', {
+      user: self.props.auth.user.id,
+      user_details: {
+        password: self.state.mongoDBuser.password,
+        newPassword: self.state.mongoDBuser.newPassword
       }
     })
     .then(function (response) {
@@ -511,15 +550,18 @@ class Settings extends Component {
 
         <div className="container">
 
-          <div className="top">
-            <div className="title">Account Settings</div>
-            <div className="text"></div>
-          </div>
-
-          <div className="text-center">
+          <div className="top d-flex justify-content-between align-items-start" style={{maxWidth: '800px', marginRight: 'auto', marginLeft: 'auto'}}>
+            <div>
+              <div className="title">Account Settings</div>
+              <p className="mb-0">User since {moment(mongoDBuser?.sign_up_date).format('LL')}</p>
+            </div>
             <div onClick={this.props.logoutUser} className="btn btn-articles-light">
               Sign Out
             </div>
+          </div>
+
+          <div className="text-center">
+            
           </div>
 
           <div className="card settings-card mt-4">
@@ -539,7 +581,7 @@ class Settings extends Component {
                   <div className={"detail-view " + (this.state.emailExpanded ? 'd-none' : '')}>
                     {this.props.user_details.email}
                     <div className="email-note">
-                      Email can not be changed at this time.
+                      Email can not be changed at this time. Coming Soon.
                     </div>
                   </div>
 
@@ -626,7 +668,7 @@ class Settings extends Component {
               }>
                 <div className="label">BIRTHDAY</div>
 
-                <div className="info">
+                <div className="info mr-5">
                   
                   <div className={"detail-view " + (this.state.birthDateExpanded ? 'd-none' : '')}>
                     {moment(this.props.user_details.birth_date).format("LL")}
@@ -644,6 +686,7 @@ class Settings extends Component {
                       value={mongoDBuser.age}
                       name="age"
                     />
+                    
                     <small className="pl-2" style={{fontSize: '10px'}}>DD/MM/YYYY</small>
 
                     <div className="actions mt-2">
@@ -655,7 +698,7 @@ class Settings extends Component {
 
                 </div>
 
-                <div className="arrow"><i className="far fa-hand-point-right"></i></div>
+                <div className="arrow"><i className={"far fa-hand-point-right " + (this.state.birthDateExpanded? 'fa-rotate-90' : '')}></i></div>
               </div>
 
               <div className="info-snippet" onClick={() => 
@@ -778,18 +821,18 @@ class Settings extends Component {
                     <p>Anyone can see this info when they communicate with you or view content you create</p>
 
                     <div className="last-changed">Current Password</div>
-                    <input className="d-block" value={mongoDBuser.passwordExpanded} type="text"/>
+                    <input className="d-block" name="password" value={mongoDBuser.password} onChange={this.handleUserChange} type="text"/>
 
                     <hr style={{maxWidth: '200px', marginLeft: '0'}}/>
 
                     <div className="last-changed">New Password</div>
-                    <input className="d-block" value={mongoDBuser.passwordExpanded} type="text"/>
+                    <input className="d-block" name="newPassword" value={mongoDBuser.newPassword} onChange={this.handleUserChange} type="text"/>
                     <div className="last-changed">Retype Password</div>
-                    <input className="d-block" value={mongoDBuser.passwordExpanded} type="text"/>
+                    <input className="d-block" name="newPasswordConfirm" value={mongoDBuser.newPasswordConfirm} onChange={this.handleUserChange} type="text"/>
 
                     <div className="actions mt-2">
                       <div onClick={ () => this.setState( { passwordExpanded: false } ) } className="btn btn-articles-light">Cancel</div>
-                      <div className="btn btn-articles-light ml-2">Save</div>
+                      <div onClick={ () => this.updatePassword } className="btn btn-articles-light ml-2">Save</div>
                     </div>
  
                   </div>
@@ -859,7 +902,7 @@ class Settings extends Component {
                           {(mongoDBuser?.subscriptionsFetched.filter(sub => sub._id === issue._id.toString() )).length > 0
                           ? 
                           // <button onClick={() => this.removeSubscription(issue._id)} className="btn btn-articles-light un">Unsubscribe</button>
-                          <div className={"sub-item unsubscribe"} onClick={() => this.removeSubscriptionNew(issue._id)}>{issue.news_title}</div>
+                          <div className={"sub-item unsubscribe d-none"} onClick={() => this.removeSubscriptionNew(issue._id)}>{issue.news_title}</div>
                           : 
                           // <button onClick={() => this.addSubscription(issue._id)} className="btn btn-articles-light">Subscribe</button>
                           <div className={"sub-item subscribe"} onClick={() => this.addSubscriptionNew(issue)}>{issue.news_title}</div>
@@ -959,26 +1002,19 @@ class Settings extends Component {
 
           </div>
 
-          <div className="links">
-            <Link to={ROUTES.SETTINGS}><div className="btn btn-articles-light">Request Data</div></Link>
-            <Link to={ROUTES.SETTINGS}><div className="btn btn-danger">Delete Account</div></Link>
+          <div className="links d-flex justify-content-between " style={{maxWidth: '800px', marginRight: 'auto', marginLeft: 'auto'}}>
+
+            <div>
+              <div className="btn btn-danger">Delete Account</div>
+              <div className="btn btn-articles-light">Request Data</div>
+            </div>
+
+            <div onClick={this.updateUser} className="btn btn-articles-light">Update</div>
           </div>
 
-          <div className="row">
+          <div className="row d-none">
 
             <div className="col-12 col-md-8">
-
-              <div className="d-flex justify-content-between border-bottom align-items-md-center mb-2 pb-1 flex-column flex-md-row">
-
-                <h1 className="mb-0">Personal Info</h1>
-
-                <div>
-
-                  <div onClick={this.updateUser} style={{height: 'fit-content'}} className="btn btn-articles-light mt-md-0 ml-2">Update</div>
-
-                </div>
-
-              </div>
 
               <div className="name-tag">
 

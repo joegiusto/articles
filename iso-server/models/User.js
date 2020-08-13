@@ -20,8 +20,8 @@ const UserSchema = new Schema({
     required: true
   },
   sign_up_date: {
-    type: Number,
-    default: moment().unix()
+    type: Date,
+    default: moment()
   },
   address: {
     zip: {
@@ -49,7 +49,21 @@ const UserSchema = new Schema({
     isWriter: {
       type: Boolean,
       default: false
+    },
+    employee: {
+      bool: {
+        type: Boolean,
+        default: false
+      },
+      privacy: {
+        type: Boolean,
+        default: false
+      }
     }
+  },
+  mail: {
+    type: Array,
+    default: []
   }
 });
 

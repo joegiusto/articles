@@ -23,6 +23,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border-bottom: solid 5px #000;
 
     img {
       position: absolute;
@@ -31,12 +32,52 @@
       object-fit: cover;
       height: 100%;
       width: 100%;
+      opacity: 0.15;
     }
   }
 
   .other-ways-section {
     padding: 5rem 0;
     background-color: white;
+    border-bottom: solid 5px #000;
+  }
+
+  .join-others-section {
+    padding: 5rem 0;
+    background-color: lighten($base-color, 0%);
+    border-bottom: solid 5px #000;
+
+    .small {
+      margin-top: 2rem;
+    }
+
+    .others {
+      display: flex;
+      flex-wrap: wrap;
+      margin-left: -0.25rem;
+      margin-right: -0.25rem;
+
+      .other {
+        font-size: 14px;
+        display: flex;
+        margin-top: 0.5rem;
+        background-color: black;
+        margin-left: 0.25rem;
+        margin-right: 0.25rem;
+        padding: 0.2rem 0.2rem;
+
+        .money {
+          background-color: white;
+          padding: 0.05rem 0.2rem;
+        }
+
+        .name {
+          margin-left: 0.25rem;
+          background-color: white;
+          padding: 0.05rem 0.2rem;
+        }
+      }
+    }
   }
 
   .amount-group {
@@ -44,7 +85,7 @@
   }
 
   .info {
-    padding: 0.5rem;
+    padding: 2rem 0.5rem;
 
     .blur {
       position: absolute;
@@ -53,10 +94,8 @@
       width: 100%;
       height: 100%;
       background-color: rgba(255, 255, 255, 0.8);
-      filter: blur(5px);
+      // filter: blur(5px);
     }
-
-    
 
     .text {
       position: relative;
@@ -69,7 +108,8 @@
     right: 20%;
     z-index: 1;
     height: calc(100% - 100px);
-    width: 30%;
+    width: 100%;
+    max-width: 400px;
     
     @include media-breakpoint-down(md) {
       position: relative;
@@ -96,13 +136,47 @@
       position: sticky;
       top: 100px;
       padding: 16px 32px;
-      border-radius: 2rem;
+      box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.65);
       margin-bottom: 1rem;
       overflow-x: hidden;
 
       @include media-breakpoint-down(md) {
         position: relative;
         top: 0;
+      }
+
+      .name-plate {
+        background-color: white;
+        padding: 0.5rem 1rem;
+        border-bottom: 3px solid #000;
+        margin-bottom: 1rem;
+
+        .date {
+          font-size: 14px;
+        }
+
+        .name {
+          font-family: brandon-grotesque, sans-serif;
+          font-style: normal;
+          font-weight: 900;
+          font-size: 2rem;
+        }
+
+        .privacy-pick {
+          cursor: pointer;
+          margin-top: 0.5rem;
+          background-color: rgb(255, 255, 255);
+          // box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.65);
+          border: solid 1px #000;
+          font-size: 12px;
+          padding: 0.05rem 0.5rem;
+          font-weight: bold;
+
+          &.active {
+            box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.35);
+            background-color: lighten($accent-color, 10%);
+          }
+        }
       }
     }
 
@@ -123,7 +197,7 @@
         position: absolute;
         top: 0;
         left: -30%;
-        border-radius: 1rem;
+        // border-radius: 1rem;
         background-color: black;
         width: 300px;
         height: 100%;
