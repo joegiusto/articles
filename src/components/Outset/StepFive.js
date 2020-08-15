@@ -52,7 +52,7 @@ class StepFive extends React.Component {
               <h5>Terms Of Use</h5>
   
               <div className="text">
-                You agree that you are using a service by private company that at any time can refuse you of posting or uploading content to our site. Any original content or media you upload to the site that was created by you is yours and can not be used in any advertising or monitization purposes by us without permission from you the user.
+                The service you are using is by a private company that at any time can refuse you of posting or uploading content to our site. Any original content or media you upload to the site that was created by you is yours and can not be used in any advertising or monitization purposes by us without permission from you the user.
               </div>
   
               <div className="accept-row">

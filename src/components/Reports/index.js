@@ -956,8 +956,10 @@ const StyledDonationItem = ({fetch, donation, isPayrole}) => (
 
     {/* <td>{moment(donation.createdAt).format('LL') }</td> */}
 
-    {fetch === 'donations' ? 
-      <td>{fetch === 'donations' ? donation.name.split(" ")[0] + " " + ( (donation.name.split(' ')[1]) ? 
+    <td>{`${donation.first_name || 'Private'} ${donation.last_name || ''}`}</td>
+
+    {/* {fetch === 'donations' ? 
+      <td>{fetch === 'donations' ? ( donation.name.split(" ")[0] ) + " " + ( (donation.name.split(' ')[1]) ? 
         donation.name.split(' ')[1].charAt(0) 
         : 
         ' '
@@ -966,7 +968,7 @@ const StyledDonationItem = ({fetch, donation, isPayrole}) => (
       donation.name}</td> 
       : 
       undefined 
-    }
+    } */}
 
     {/* <td>{donation.name.split(" ")[0] + " " + (donation.name.split(' ')[1]).charAt(0)}</td> */}
     {fetch === 'donations' ?

@@ -135,6 +135,18 @@
         }
       }
 
+      .donations {
+        width: 100%;
+
+        .donation {
+          // display: flex;
+
+          .donation-id {
+            font-size: 13px;
+          }
+        }
+      }
+
       .arrow {
         position: absolute;
         top: 50%;

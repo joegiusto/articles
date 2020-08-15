@@ -472,21 +472,21 @@ class OutsetBase extends React.Component {
   renderReasonForInformation(focus) {
     switch(focus) {
       case 'photo':
-        return "Your photo will only be used for presentational puporses across the site such as comments and on your profile."
+        return "Your photo will only be used in association with your profile and your user generated content such as comments, posts, messages, etc."
       case 'first_name':
-        return "We use your first name to address you on the site and in emails. Only your first name is visble to other users if you decide to post or submit any content."
+        return "We use your first name to address you on the site and in emails. Your first name is visble to other users whenever you post or submit content of any type."
       case 'last_name':
-        return (<div>This will <b>not</b> be visble to other users. We just use your last name to address you on the site and in emails.</div>)
+        return (<div>Your full last name will <b>not</b> be visble to other users, just the first letter unless stated otherwise. We also use your last name to address you on the site and in emails.</div>)
       case 'city' :
-        return "We use this info to suggest news content and ads from your area and to get an idea of where our users base lives."
+        return "We use this info to show news, weather and ads from your area and to get an idea of where our users base lives."
       case 'state':
-        return "We use this info to suggest news content and ads from your area and to get an idea of where our users base lives."
+        return "We use this info to show news, weather and ads from your area and to get an idea of where our users base lives."
       case 'zip':
-        return "We use this info to suggest news content and ads from your area and to get an idea of where our users base lives."
+        return "We use this info to show news, weather and ads from your area and to get an idea of where our users base lives."
       case 'cell':
-        return (<span>By entering your cell phone number we can send you minimal updates about whats going on with Articles.<hr/><span style={{fontSize: '0.85rem'}}>Text messaging rates may apply for those without unlimited text messaging</span></span>)
+        return (<span>By entering your cell phone number we can send you minimal updates about whats going on with Articles, cancel anytime.<hr/><span style={{fontSize: '0.85rem'}}>Text messaging rates may apply for those without unlimited text messaging</span></span>)
       case 'age':
-        return "Using your age we can recommend popular issues that others in your age range are subscribed to. We may also use your age when decideing what ads to show you if any ads can be displayed at all."
+        return "Using your age we can recommend popular issues that others in your age range are subscribed to. We also use age as a factor when showing you ads."
       case 'gender':
         return "We use your gender to get insights on our user base."
       
@@ -510,7 +510,8 @@ class OutsetBase extends React.Component {
             <div className="breif">What we consider ourselves, although early in our roots we strive for a place of equality and a land where all are able to achieve their own version of success.</div>
             <div className="links">
               <h5>Links</h5>
-              <a href="https://articles.media/mission" target="_blank" rel="noopener noreferrer" className="link">- Offical Website</a>
+              <a href="https://articles.media/mission" target="_blank" rel="noopener noreferrer" className="link">- Mission Statement</a>
+              <a href="https://articles.media/reports" target="_blank" rel="noopener noreferrer" className="link">- Transparency Reports</a>
             </div>
           </div> 
         )
@@ -636,21 +637,23 @@ class OutsetBase extends React.Component {
           </div> 
         )
       default:
-        return ""
+        return "We will explain how we use the information we are asking of here."
     }
   }
 
   renderReasonForInformationTitle(step) {
     // So... when you change the focus of Step Three (NEWS PREFRENCES) we let users know how many stories they have selected, only once they change the focus once on the step so we can explain the step they are on first.
     switch(step) {
+      case 0:
+        return <div className="title shadow-sm"><i className="fas fa-user-shield"></i>Privacy Notice</div>
       case 1:
-        return <div className="title"><i className="fas fa-user-shield"></i>Privacy Notice</div>
+        return <div className="title shadow-sm"><i className="fas fa-user-shield"></i>Privacy Notice</div>
       case 2:
-        return <div className="title"><i className="fas fa-info-circle"></i>Privacy Notice</div>
+        return <div className="title shadow-sm"><i className="fas fa-info-circle"></i>Privacy Notice</div>
       case 3 :
-        return <div className="title"><i className="fas fa-info-circle"></i>Our Findings</div>
+        return <div className="title shadow-sm"><i className="fas fa-info-circle"></i>Our Findings</div>
       case 4:
-        return <div className="title"><i className="fas fa-info-circle"></i>Party Info</div>
+        return <div className="title shadow-sm"><i className="fas fa-info-circle"></i>Party Info</div>
       default:
         return ""
     }
@@ -965,37 +968,45 @@ class OutsetBase extends React.Component {
 
               <div className="step-focus-panel">
                 {this.renderTitle(this.state.step)}
+                {this.renderMessage(this.state.step)}
   
-                {/* NOTE Was for debug purposes, just gonna leave for now
-                <div><span>Step One:</span> {stepOneIsInvalid ? ' No' : ' Yes'}</div>
-                <div><span>Step Two:</span> {stepTwoIsInvalid ? ' No' : ' Yes'}</div>
-                <div><span>Step Three:</span> {stepThreeIsInvalid ? ' No' : ' Yes'}</div>
-                <div><span>Step Four:</span> {stepFourIsInvalid ? ' No' : ' Yes'}</div>
-                <div><span>Step Five:</span> {stepFiveIsInvalid ? ' No' : ' Yes'}</div> */}
+                <div className="grow"></div>
   
                 {this.state.focus === '' ? 
-                  this.renderMessage(this.state.step)
+                  // this.renderMessage(this.state.step)
+                  null
                 : 
                   ''
                 }
   
-                  {this.state.focus === '' ? 
-                    ' '
-                  :
-                  <div className="privacy-notice party-information">
-  
-                    <div onClick={() => this.changeFocus('')} className="close-privacy">
-                      <i className="fas fa-window-close"></i>
-                    </div>
-  
-                    {this.renderReasonForInformationTitle(this.state.step)}
-  
-                    <div className="text">
-                      {this.renderReasonForInformation(this.state.focus)}
-                    </div>
-  
+                {this.state.focus === '' ? 
+                ''
+                :
+                <div className="privacy-notice party-information shadow-sm d-none">
+
+                  {/* <div onClick={() => this.changeFocus('')} className="close-privacy">
+                    <i className="fas fa-window-close"></i>
+                  </div> */}
+
+                  {this.renderReasonForInformationTitle(this.state.step)}
+
+                  <div className="text">
+                    {this.renderReasonForInformation(this.state.focus)}
                   </div>
+
+                </div>
                 }
+
+                <div className="privacy-notice party-information shadow-sm">
+
+                  {this.renderReasonForInformationTitle(this.state.step)}
+
+                  <div className="text">
+                    {this.renderReasonForInformation(this.state.focus)}
+                  </div>
+
+                </div>
+
               </div>
                 
             </div>

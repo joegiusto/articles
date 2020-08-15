@@ -102,8 +102,9 @@ class Settings extends Component {
       newsAllLoading: false,
       updatingUserDetails: false,
 
-      newsUser: [],
-      newsUserMySQL: [],
+      previousUserDonationsLoading: false,
+      previousUserDonationsError: false,
+      previousUserDonations: [],
 
       nameExpanded: false,
       genderExpanded: false,
@@ -183,6 +184,30 @@ class Settings extends Component {
     })
     .catch(function (error) {
       console.log(error);
+    });
+
+    this.setState({previousUserDonationsLoading: true})
+
+    axios.post('/api/getUserDonations', {
+      _id: this.props.user_id
+    })
+    .then(function (response) {
+
+      console.log(response.data);
+
+      self.setState({
+        previousUserDonations: response.data,
+        previousUserDonationsLoading: false
+      }, () => {
+        // self.mergeStuff()
+      });
+
+    })
+    .catch(function (error) {
+      console.log(error);
+      self.setState({
+        previousUserDonationsLoading: false
+      })
     });
 
   }
@@ -946,6 +971,55 @@ class Settings extends Component {
                 </div>
 
                 {/* <div className="arrow"><i className="far fa-hand-point-right"></i></div> */}
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div className="card settings-card mt-4">
+
+            <div className="card-header">
+              <h5>Donation History</h5>
+              <p>Overview of recent donations made</p>
+            </div>
+
+            <div className="card-body">
+
+              <div className="info-snippet p-0">
+
+                {/* <div className="label">ISSUES</div> */}
+
+                <div className="info donations w-100">
+                  <table className="table mb-0">
+                    <thead className="">
+                      <tr>
+                        <th scope="col">Order #</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Amount</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {this.state.previousUserDonations.map(donation => 
+                        <tr className="donation">
+                          <th scope="row" className="donation-id">{donation._id}</th>
+                          <td className="date">{moment(donation.date).format('LLL')}</td>
+                          <td className="type">Donation</td>
+                          <td className="amount">${(donation.amount / 100).toFixed(2)}</td>
+                        </tr>  
+                      )}
+                    </tbody>
+
+                    {this.state.previousUserDonationsLoading ? null : this.state.previousUserDonations.length < 1 ? <div className="pl-3 pt-3">No donations to display</div> : ''}
+                    
+                  </table>
+
+                  
+
+                </div>
 
               </div>
 

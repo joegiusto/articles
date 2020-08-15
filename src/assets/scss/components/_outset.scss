@@ -86,6 +86,12 @@
   
   }
 
+  .oddball-explanation {     
+    width: 100%;
+    text-align: center;
+    font-size: 0.8rem;
+  }
+
   input, .input-group-text {
     border: none;
     border-bottom: 2px solid #000;
@@ -114,6 +120,7 @@
   .outset-form {
     background-color: #FFFFFF;
     width: 70%;
+    max-width: 1500px;
     height: 450px;
     position: absolute;
     left: 50%;
@@ -142,6 +149,10 @@
         text-transform: uppercase;
         color: rgb(0, 0, 0);
         margin-bottom: 0.5rem;
+      }
+
+      .grow {
+        flex-grow: 1;
       }
 
       .intro-message {
@@ -420,25 +431,19 @@
     }
   
     .privacy-notice, .party-information {
-      margin-top: 1.25rem;
+      margin-top: 2rem;
       position: relative;
       background-color: $base-color;
       font-family: montserrat, sans-serif;
       font-weight: 400;
       padding: 0.5rem;
 
-      &.party-information {
-        background-color: rgb(207, 207, 207);
-        // color: white;
-      }
+      background-color: #fff;
+      background-clip: border-box;
+      border: 1px solid rgba(0,0,0,.125);
+      border-radius: .25rem;
   
       @include media-breakpoint-down(md) {
-        // position: fixed;
-        // top: 0;
-        // left: 0;
-        // width: 100%;
-        // z-index: 100%;
-        // margin-top: 50px;
         z-index: 100;
   
         @media screen and ( max-height: 600px ) {
@@ -492,12 +497,14 @@
         position: absolute;
         background-color: $accent-color;
         padding: 0.1rem 0.5rem;
-        border-bottom: 3px solid #000;
+        
         transform: translateY(-50%);
         font-family: brandon-grotesque, sans-serif;
         font-style: normal;
         font-weight: 900;
         font-size: 1.25rem;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        border-bottom: 3px solid #000;
   
         @include media-breakpoint-down(md) {
           // position: fixed;
@@ -628,15 +635,47 @@
   
       .cut-container {
         display: flex;
+        flex-wrap: wrap;
         justify-content: space-between;
-        // margin-right: -15px;
+      }
+
+      .sign-container {
+        display: flex;
+        width: 100%;
+        justify-content: space-evenly;
+      }
+
+      .skip-sign {
+        cursor: pointer;
+        margin-left: auto;
+        margin-right: 1rem;
+        margin-top: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        width: 100px;
+        // border: solid 1px #dfdfdf;
+        border-radius: 5px;
+        // box-shadow: 0 1px 3px 1px #000000;
+        text-align: center;
+
+        i {
+          margin-left: 0.5rem;
+        }
+
+        &.active {
+          background-color: #000;
+          color: white;
+          box-shadow: 0 1px 3px 1px #000000;
+          border: solid 0px #dfdfdf;
+        }
       }
   
-      .male-sign, .female-sign, .other-sign, .skip-sign {
-        background-color: #000;
+      .male-sign, .female-sign, .other-sign {
+        background-color: rgba(0, 0, 0, 0.5);
         color: white;
         height: 70px;
-        width: 180px;
+        width: calc(50% - 30px);
         display: inline-block;
         position: relative;
         margin-right: 15px;
@@ -648,18 +687,26 @@
         // I like the collapsed look better for now so just gonna throw these in there
         font-size: 0.75rem;
         height: 60px;
-        width: 185px;
-        
+
+
+        @include media-breakpoint-up(md) {
+          width: 100%;
+        }
+
         &.active {
-          border-top: solid 5px #ffb7b7;
+          border-top: solid 5px #000;
+          background-color: #000;
           box-shadow: 0 1px 3px 1px #000000;
         }
+        
         &.collapsed {
           font-size: 0.75rem;
           height: 60px;
-          width: 185px;
+          // width: 185px;
+
           .shape {
             width: 40px;
+
             .icon {
               font-size: 1.5rem;
             }
@@ -878,46 +925,33 @@
   
       
     }
-  
-    .shoe-size-container {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-  
-      .shoe-size-item {
-        cursor: pointer;
-        flex-direction: column;
-        align-items: center;
-        display: flex;
-        background: $base-color;
-        height: 110px;
-        margin-top: 10px;
-        margin-right: 15px;
-        width: 85px;
-        border: solid 1px #000;
-        box-shadow: inset 0 0 0px 5px #ffffff;
-        text-align: center;
-        &.active {
-          box-shadow: inset 0 0 0px 5px $accent-color;
-        }
-        &:last-child {
-          // margin-right: 0px;
-        }
-        .image {
-          flex-grow: 1;
-          position: relative;
+
+    .shoe-section {
+
+      .sizes {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 7px;
+        margin-left: 5px;
+        margin-right: 1rem;
+
+        .size {
+          cursor: pointer;
           display: flex;
-          img {
-            position: absolute;
-            bottom: 50%;
-            transform: translateY(50%)
+          height: 48px;
+          flex-grow: 1;
+          justify-content: center;
+          align-items: center;
+          color: rgb(17, 17, 17);
+          box-shadow: rgb(229, 229, 229) 0px 0px 0px 1px;
+          background: rgb(255, 255, 255);
+          border-radius: 5px;
+
+          &.active, &:hover {
+            box-shadow: rgb(17, 17, 17) 0px 0px 0px 1px inset;
           }
         }
-        .size {
-          font-weight: bold;
-          font-family: Forte;
-          margin-bottom: 0.5rem;
-        }
+        
       }
     }
     // End Step Two
@@ -1474,9 +1508,7 @@
         // padding-right: 1rem;
       }
   
-      .oddball-explanation {
-        font-size: 0.8rem;
-      }
+      
   
       .row > .col-md-6:first-child {
         border-right: none;
@@ -1489,7 +1521,7 @@
         flex-direction: column;
         justify-content: center;
   
-        .female-sign, .skip-sign {
+        .male-sign, .female-sign {
           margin-top: 0.75rem;
         }
       }

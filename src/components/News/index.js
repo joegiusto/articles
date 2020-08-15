@@ -107,19 +107,23 @@ function SearchHead(props) {
         <h1 className="title">{activePage.title}</h1>
         <p className="body">{activePage.desc}</p>
 
+        {activePage.title === "Issues" ? 
         <div className="filters noselect">
           <span className="subscription-badges">
             <span className="bold"><i className="fas fa-th"></i></span>
-            <div onClick={() => props.toggleUserSubscriptions()} className={"badge border " + (props.site?.userSubscriptions === true ? 'badge-dark ' : 'badge-light ')}>Subscribed</div>
-            <div onClick={() => props.toggleUserSubscriptions()} className={"ml-1 badge border " + (props.site?.userSubscriptions === false ? 'badge-dark' : 'badge-light')}>All</div>
+            <div onClick={() => props.toggleUserSubscriptions()} className={"badge border " + (props.userSubscriptions === true ? 'badge-dark ' : 'badge-light ')}>Subscribed</div>
+            <div onClick={() => props.toggleUserSubscriptions()} className={"ml-1 badge border " + (props.userSubscriptions === false ? 'badge-dark' : 'badge-light')}>All</div>
           </span>
 
           <span className="subscription-badges">
             <span className="bold"><i className="fas fa-calendar"></i></span>
-            <div onClick={() => props.filterIssuesDateType()} className={"badge border " + (props.site?.dateType === 'post' ? 'badge-dark ' : 'badge-light ')}>Posted</div>
-            <div onClick={() => props.filterIssuesDateType()} className={"ml-1 badge border " + (props.site?.dateType === 'update' ? 'badge-dark' : 'badge-light')}>Updated</div>
+            <div onClick={() => props.filterIssuesDateType()} className={"badge border " + (props.dateType === 'post' ? 'badge-dark ' : 'badge-light ')}>Posted</div>
+            <div onClick={() => props.filterIssuesDateType()} className={"ml-1 badge border " + (props.dateType === 'update' ? 'badge-dark' : 'badge-light')}>Updated</div>
           </span>
         </div>
+        :
+        null
+        }
         
       </div>
 
@@ -672,7 +676,16 @@ class Frontpage extends Component {
               {/* Left Side */}
               <div className="col-12 col-md-12 px-md-0">
 
-              <SearchHead zip={this.props.user_details.address?.zip || 'None'} toggleWeatherOverlay={this.toggleWeatherOverlay} homeLayout={true} path={this.props.match.path}/>
+              <SearchHead 
+              zip={this.props.user_details.address?.zip || 'None'} 
+              toggleWeatherOverlay={this.toggleWeatherOverlay} 
+              toggleUserSubscriptions={this.props.toggleUserSubscriptions}
+              userSubscriptions={this.props.site?.userSubscriptions}
+              filterIssuesDateType={this.props.filterIssuesDateType}
+              dateType={this.props.site.dateType}
+              homeLayout={true} 
+              path={this.props.match.path}
+              />
 
                 <Switch>
                   {/* <Route exact path={ROUTES.NEWS} render={() => <h1>Front</h1>}/> */}
@@ -702,132 +715,6 @@ class Frontpage extends Component {
                   Load More
                 </div>
               </div>
-  
-              </div>
-  
-              {/* TODO - Get rid of all this after taking screenshots or something */}
-              <div className="col-12 col-md-12 pl-md-0 d-none">
-  
-                <div className="side-panel mx-auto">
-
-                  {this.props.location.pathname === "/news" ?
-                  null
-                  :
-                  <SearchHead userSubscriptions={this.props.site?.userSubscriptions} onChange={this.onChange} searchText={this.state.search} pathname={this.props.location.pathname}></SearchHead>
-                  }
-  
-                  <div className="the-recap">
-    
-                    <div className="the-recap-embed"></div>
-                    <div className="the-recap-embed-overlay">
-                      <div className="background"></div>
-                      <img src={playButtonDark} alt=""/>
-                      <span className="text">Coming Soon</span>
-                    </div>
-    
-                    <div className="content">
-                      {/* In this video */}
-                    </div>
-    
-                  </div>
-    
-                  <div className="weather-panel">
-          
-                    <div className="header"></div>
-          
-                    <div className="dual-header">
-          
-                      <div className="title">Weekly Weather <span className="highlight">Fishkill, NY</span></div>
-          
-                      <div className="toggle-switch mr-3">
-                        <i className="fas active fa-home mr-0"></i>
-                        <span className="divide">/</span>
-                        <i className="fas fa-search-location mr-0"></i>
-                      </div>
-          
-                    </div>
-          
-                    <div className="content mt-1">
-
-                      <div className="container-fluid">
-                        <div className="row justify-content-center">
-                          <div className="col-auto">
-                            <div className={'day-tile ' + (moment().format('d') === 0 ? 'active' : '')}>
-                              <div className="day">Sun.</div>
-                              <div className="date">{moment().add(-2, 'day').format('MM/DD')}</div>
-                              <div className="icon">
-                                <i className="fas fa-sun"></i>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-auto">
-                            <div className={'day-tile ' + (moment().format('d') === 1 ? 'active' : '')}>
-                              <div className="day">Mon.</div>
-                              <div className="date">{moment().add(-1, 'day').format('MM/DD')}</div>
-                              <div className="icon">
-                                <i className="fas fa-cloud-sun"></i>
-                              </div>
-                            </div>
-                          </div>
-            
-                          <div className="col-auto">
-                            <div className={'day-tile ' + (moment().format('d') === 2 ? 'active' : '')}>
-                              
-                              <div className="day">Tues.</div>
-            
-                              <div className="date">{moment().add(0, 'day').format('MM/DD')}</div>
-            
-                              <div className="icon">
-                                <i className="fas fa-cloud-sun"></i>
-                              </div>
-            
-                            </div>
-                          </div>
-            
-                          <div className="col-auto">
-                            <div className={'day-tile ' + (moment().format('d') === 3 ? 'active' : '')}>
-                              <div className="day">Wed.</div>
-                              <div className="date">{moment().add(1, 'day').format('MM/DD')}</div>
-                              <div className="icon">
-                                <i className="fas fa-cloud-showers-heavy"></i>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-auto">
-                            <div className={'day-tile ' + (moment().format('d') === 4 ? 'active' : '')}>
-                              <div className="day">Thur.</div>
-                              <div className="date">{moment().add(2, 'day').format('MM/DD')}</div>
-                              <div className="icon">
-                                <i className="fas fa-cloud-showers-heavy"></i>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-auto">
-                            <div className={'day-tile ' + (moment().format('d') === 5 ? 'active' : '')}>
-                              <div className="day">Fri.</div>
-                              <div className="date">{moment().add(3, 'day').format('MM/DD')}</div>
-                              <div className="icon">
-                                <i className="fas fa-cloud-sun"></i>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-auto">
-                            <div className={'day-tile ' + (moment().format('d') === 6 ? 'active' : '')}>
-                              <div className="day">Sat.</div>
-                              <div className="date">{moment().add(4, 'day').format('MM/DD')}</div>
-                              <div className="icon">
-                                <i className="fas fa-sun"></i>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                    </div>
-          
-                  </div>
-  
-                </div>
   
               </div>
   

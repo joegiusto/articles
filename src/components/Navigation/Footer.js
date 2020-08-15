@@ -3,7 +3,7 @@ import * as ROUTES from '../../constants/routes'
 import { Link, withRouter } from 'react-router-dom'
 
 const Footer = (props) => (
-  <footer className={"site-footer " + (props.location.pathname === '/messages' ? 'd-none' : '')}>
+  <footer className={"site-footer " + (props.location.pathname === '/messages' || props.location.pathname === '/outset' ? 'd-none' : '')}>
     <div className="container-fluid">
       <div className="row">
 

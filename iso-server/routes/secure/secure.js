@@ -1,7 +1,7 @@
 const moment = require('moment');
 var ObjectId = require('mongodb').ObjectId; 
 const passport = require("passport");
-const stripe = require('stripe')(process.env.STRIPE_TEST_PASSWORD);
+const stripe = require('stripe')(process.env.STRIPE_NEW);
 
 module.exports = (app, db) => {
 
@@ -176,6 +176,85 @@ module.exports = (app, db) => {
 
   });
 
+  app.post("/api/create-payment-intent", async (req, res) => {
+    const { items } = req.body;
+    // Create a PaymentIntent with the order amount and currency
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: req.body.amount,
+      currency: "usd",
+      // customer: req.body._id,
+      metadata: {
+        user_id: req.body._id
+      },
+      description: 'User donation to the site',
+    });
+    res.send({
+      clientSecret: paymentIntent.client_secret
+    });
+  });
+
+  app.post("/api/userMadeDonation", async (req, res) => {
+    const { items } = req.body;
+
+    // const idClean = (req.body.donation._id === '' ? ObjectId() : ObjectId(req.body.donation._id))
+
+    // console.log(items)
+    // console.log(items._id)
+
+    // Create a PaymentIntent with the order amount and currency
+    // const paymentIntent = await stripe.paymentIntents.create({
+    //   amount: 1000,
+    //   currency: "usd",
+    //   customer: items._id,
+    //   description: 'User donation to the site',
+    // });
+
+    const intent = await stripe.paymentIntents.retrieve(
+      req.body.payment.paymentIntent.id
+    );
+
+    // console.log(intent)
+
+    const charges = intent.charges.data;
+    const charge = charges[0];
+
+    console.log(charge)
+
+    // const order = await stripe.orders.retrieve(
+    //   req.body.payment.paymentIntent.id
+    // );
+
+    db.collection("articles_donations").updateOne({ _id: ObjectId() }, {
+      $set: {
+        amount: parseInt(charge.amount),
+        type: 'card',
+        date: moment()._d,
+        // name: donation.name,
+        first_name: req.body.first_name || 'Private Donor',
+        last_name: req.body.last_name || '',
+        // message: donation.message,
+        stripeCharge: charge.id,
+        createdBy: req.body._id,
+        // matched: donation.matched,
+        // matchedBy: donation.matchedBy
+      }
+    },
+    {
+      upsert: true
+    }, 
+    function(err, result) {
+      if (err) throw err;
+      // console.log(`Call to /api/upsertDonation done`);
+      // return res.send(result);
+
+      res.send({
+        order: result
+      });
+    });
+
+    
+  });
+
   app.post('/api/upsertDonation', passport.authenticate('jwt', {session: false}), (req, res) => {
 
     console.log(`Call to /api/upsertDonation made at ${new Date()}`);
@@ -337,6 +416,18 @@ module.exports = (app, db) => {
     // });
 
     // return res.end();
+
+  });
+
+  app.post('/api/getUserDonations', passport.authenticate('jwt', {session: false}), (req, res) => {
+
+    console.log(`Call to /api/getUserDonations made at ${new Date()}`);
+  
+    db.collection("articles_donations").find({createdBy: req.body._id}).toArray(function(err, result) {
+      if (err) throw err;
+      console.log(`Call to /api/getUserDonations done`);
+      return res.send(result) 
+    });
 
   });
 

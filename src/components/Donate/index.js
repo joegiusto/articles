@@ -1,58 +1,306 @@
-import React, { Component } from 'react';
-import { compose } from 'recompose';
-import { withAuthorizationHide } from '../Session';
-import { withFirebase } from '../Firebase';
-
+import React, { useState, useEffect, Component } from "react";
+import axios from 'axios';
 import { connect } from "react-redux";
-
-import * as ROUTES from '../../constants/routes';
 import { Link } from 'react-router-dom'
 import moment from 'moment';
 
-import {CardElement, Elements, ElementsConsumer} from '@stripe/react-stripe-js';
-import {loadStripe} from '@stripe/stripe-js';
+import { CardElement, useStripe, useElements, Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
+
+import * as ROUTES from '../../constants/routes';
 import ArticlesBackground from '../../assets/img/banner.jpg'
 import power from '../../assets/img/Store/power.png'
   
-const STRIPE_PUBLIC_KEY = 'pk_live_VE6HtyhcU3HCa6bin4uKgFgL00jeOY6SEW'; // TODO: PUT YOUR STRIPE PUBLISHABLE KEY HERE
-// const FIREBASE_FUNCTION = 'https://us-central1-articles-1776.cloudfunctions.net/charge/'; // TODO: PUT YOUR FIREBASE FUNCTIONS URL HERE
+
+const STRIPE_PUBLIC_KEY = 'pk_test_gTKVWvKf5GGQXxl6oUELsI1X008BFf6xST';
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
 
-const stripe = window.Stripe(STRIPE_PUBLIC_KEY);
-const elements = stripe.elements();
 
-const charge_amount = 1000;
-const charge_currency = 'usd';
+function CheckoutForm(props) {
+  const [succeeded, setSucceeded] = useState(false);
+  const [privacy, setPrivacy] = useState(false);
+  const [amount, setAmount] = useState(1000);
+  const [error, setError] = useState(null);
+  const [processing, setProcessing] = useState('');
+  const [disabled, setDisabled] = useState(true);
+  const [clientSecret, setClientSecret] = useState('');
+  const stripe = useStripe();
+  const elements = useElements();
 
-const CARD_OPTIONS = {
-  iconStyle: 'solid',
-  style: {
-    base: {
-      iconColor: '#c4f0ff',
-      color: '#fff',
-      fontWeight: 500,
-      fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
-      fontSize: '16px',
-      fontSmoothing: 'antialiased',
-      ':-webkit-autofill': {color: '#fce883'},
-      '::placeholder': {color: '#87bbfd'},
-    },
-    invalid: {
-      iconColor: '#ffc7ee',
-      color: '#ffc7ee',
-    },
-  },
-};
+  // useEffect(() => {
+  //   // Create PaymentIntent as soon as the page loads
+  //   window
+  //     .fetch("/api/create-payment-intent", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json"
+  //       },
+  //       body: JSON.stringify({
+  //         items: [{ id: "xl-tshirt" }],
+  //         _id: props._id,
+  //         first_name: props.first_name,
+  //         last_name: props.last_name,
+  //         amount: amount
+  //       })
+  //     })
+  //     .then(res => {
+  //       return res.json();
+  //     })
+  //     .then(data => {
+  //       setClientSecret(data.clientSecret);
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //       setError('Could not get valid intent')
+  //     });
+  // }, []);
 
-const CardField = ({onChange}) => (
-  <fieldset className="FormGroup">
-    <div className="FormRow">
-      <CardElement options={CARD_OPTIONS} onChange={onChange} />
+  const cardStyle = {
+    style: {
+      base: {
+        color: "#32325d",
+        fontFamily: 'Arial, sans-serif',
+        fontSmoothing: "antialiased",
+        fontSize: "16px",
+        "::placeholder": {
+          color: "#32325d"
+        }
+      },
+      invalid: {
+        color: "#fa755a",
+        iconColor: "#fa755a"
+      }
+    }
+  };
+
+  const tryIntent = async stuff => {
+    window
+      .fetch("/api/create-payment-intent", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          items: [{ id: "xl-tshirt" }],
+          _id: props._id,
+          first_name: props.first_name,
+          last_name: props.last_name,
+          amount: amount
+        })
+      })
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
+        setClientSecret(data.clientSecret);
+        return data.clientSecret
+      })
+      .then(secret => {
+        // console.log(secret)
+        handleSubmit(secret) 
+        
+      })
+      .catch(function (error) {
+        console.log(error);
+        setError('Could not get valid intent')
+      });
+  }
+
+  const handleChange = async (event) => {
+    // Listen for changes in the CardElement
+    // and display any errors as the customer types their card details
+    setDisabled(event.empty);
+    setError(event.error ? event.error.message : "");
+  };
+
+  const tryUpdateAmount = async (amount) => {
+    // Listen for changes in the CardElement
+    // and display any errors as the customer types their card details
+    console.log("Detect")
+  };
+
+  const handleSubmit = async secret => {
+    console.log("handleSubmit called!")
+    // ev.preventDefault();
+    setProcessing(true);
+    const payload = await stripe.confirmCardPayment(secret, {
+      payment_method: {
+        card: elements.getElement(CardElement),
+        billing_details: {
+          name: `${props.first_name} ${props.last_name}`,
+          email: props.email
+        }
+      }
+    });
+    if (payload.error) {
+      setError(`Payment failed ${payload.error.message}`);
+      setProcessing(false);
+    } else {
+      console.log(payload);
+      setError(null);
+      setProcessing(false);
+      setSucceeded(true);
+
+      axios.post('/api/userMadeDonation', {
+        payment: payload,
+        _id: props._id,
+        first_name: props.first_name,
+        last_name: props.last_name
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    }
+  };
+  return (
+    <div className="donate-form">
+      <div className="inner">
+
+        <div className="title">Name</div>
+
+        {props.isAuthenticated ? 
+        <div className="name-plate">
+
+          <div className="date">
+            {moment().format("LL")}
+          </div>
+
+          <div className="name">
+            {privacy === false ? `${props.first_name} ${props.last_name}` : `Private Donor`}
+          </div>
+
+          <div className="d-flex">
+            <div onClick={() => setPrivacy(false)} className={"privacy-pick " + (privacy === false ? 'active' : '')}>Show Name</div>
+            <div onClick={() => setPrivacy(true)} className={"ml-2 privacy-pick " + (privacy === true ? 'active' : '')}>Hide Name</div>
+          </div>
+
+        </div>
+          : 
+        <div className="name-plate">
+
+          <div className="name">
+            {`Sign In`}
+          </div>
+
+          <div className="date">We need you to sign in or create an account before we can accept your donation. You can choose to stay anonymous once you are signed in.</div>
+
+          <div className="buttons mt-4">
+            <Link to={ROUTES.SIGN_UP}><div className="btn btn-articles-light">Sign Up</div></Link>
+            <Link to={ROUTES.SIGN_IN}><div className="btn btn-articles-light ml-2">Sign In</div></Link>
+          </div>
+
+        </div>
+        }
+
+        <div className={props.isAuthenticated ? '' : 'd-none'}>
+
+          <div className="title">Amount: ${(amount / 100).toFixed(2)}</div>
+
+          <div className="amount-group">
+            <input className="form-control" type="text" value={amount} onChange={e => setAmount(e.target.value)} placeholder="$0.00"/>
+            <button onClick={() => setAmount(100) } className={"btn btn-articles-light " + (amount === 100 ? 'btn-articles-light alt' : 'btn-articles-light') }>$1</button>
+            <button onClick={() => setAmount(500) } className={"btn btn-articles-light " + (amount === 500 ? 'btn-articles-light alt' : 'btn-articles-light') }>$5</button>
+            <button onClick={() => setAmount(1000) } className={"btn btn-articles-light " + (amount === 1000 ? 'btn-articles-light alt' : 'btn-articles-light') }>$10</button>
+            <button onClick={() => setAmount(2000) } className={"btn btn-articles-light " + (amount === 2000 ? 'btn-articles-light alt' : 'btn-articles-light') }>$20</button>
+            <button onClick={() => setAmount(5000) } className={"btn btn-articles-light " + (amount === 5000 ? 'btn-articles-light alt' : 'btn-articles-light') }>$50</button>
+          </div>
+
+          <div style={{fontSize: '0.8rem'}}>${( (amount / 100).toFixed(2) - ( ( 0.029 * (amount) + 30) / 100 ).toFixed(2) ).toFixed(2) } (${( ( 0.029 * (amount) + 30) / 100 ).toFixed(2)} Stripe Fee | 2.9% + ¢30)</div>
+          <div className="mt-2" style={{fontSize: '0.8rem'}}>Want to make the most of your donation and avoid fees? We accept Bitcoin and Checks!</div>
+
+        </div>
+
+        <div className={props.isAuthenticated ? '' : 'd-none'}>
+          <div className="title">Card Info:</div>
+          {clientSecret === '' ? 
+          <CardElement id="card-element" options={cardStyle} onChange={handleChange}/>
+          :
+          <CardElement id="card-element" options={cardStyle} onChange={handleChange}/>
+          }
+        </div>
+
+        <img src={power} alt="" className="power mt-4"/>
+
+        <button
+        disabled={processing || disabled || succeeded}
+        id="submit"
+        // onClick={() => handleSubmit()}
+        onClick={() => tryIntent()}
+        className={"pay w-100 btn btn-articles-light alt mx-auto mt-4 " + (props.isAuthenticated ? 'd-block' : 'd-none')}
+        >
+          <span id="button-text">
+            {processing ? (
+              <div className="spinner" id="spinner"></div>
+            ) : (
+              "Pay"
+            )}
+        </span>
+        </button>
+
+        {/* <div onClick={() => handleSubmit} className={"btn btn-articles-light alt mx-auto mt-4 " + (this.props.auth.isAuthenticated ? 'd-block' : 'd-none')}>Donate</div> */}
+
+        {/* Show any error that happens when processing the payment */}
+        {error && (
+          <div className="card-error" role="alert">
+            {error}
+          </div>
+        )}
+        {/* Show a success message upon completion */}
+        <p className={succeeded ? "result-message" : "result-message d-none"}>
+          Payment succeeded, see the result in your
+          <Link to={ROUTES.SETTINGS}>{" "}Account</Link>
+          {/* <a
+            href={`https://dashboard.stripe.com/test/payments`}
+          >
+            {" "}
+            Stripe dashboard.
+          </a>  */}
+          {/* Refresh the page to pay again. */}
+        </p>
+
+      </div>
     </div>
-  </fieldset>
-);
+
+    // <form id="payment-form" onSubmit={handleSubmit}>
+    //   <CardElement id="card-element" options={cardStyle} onChange={handleChange} />
+    //   <button
+    //     disabled={processing || disabled || succeeded}
+    //     id="submit"
+    //   >
+    //     <span id="button-text">
+    //       {processing ? (
+    //         <div className="spinner" id="spinner"></div>
+    //       ) : (
+    //         "Pay"
+    //       )}
+    //     </span>
+    //   </button>
+    //   {/* Show any error that happens when processing the payment */}
+    //   {error && (
+    //     <div className="card-error" role="alert">
+    //       {error}
+    //     </div>
+    //   )}
+    //   {/* Show a success message upon completion */}
+    //   <p className={succeeded ? "result-message" : "result-message hidden"}>
+    //     Payment succeeded, see the result in your
+    //     <a
+    //       href={`https://dashboard.stripe.com/test/payments`}
+    //     >
+    //       {" "}
+    //       Stripe dashboard.
+    //     </a> Refresh the page to pay again.
+    //   </p>
+    // </form>
+
+  );
+}
 
 class DonateBase extends Component {
   constructor (props) {
@@ -60,7 +308,8 @@ class DonateBase extends Component {
 
     this.state = {
       amount: 1000,
-      privacy: false
+      privacy: false,
+      donations: []
     };
 
   }
@@ -74,102 +323,38 @@ class DonateBase extends Component {
   };
 
   componentDidMount() {
+    const self = this;
 
+    axios.get('/api/getDonations')
+    .then(function (response) {
+
+      console.log(response.data);
+
+      self.setState({
+        donations: response.data,
+      }, () => {
+        // self.mergeStuff()
+      });
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
   
   render(props) {
+
     return (
       <div className="donate-page">
 
         <Elements stripe={stripePromise}>
-          <div className="donate-form">
-            <div className="inner">
-
-              <div className="title">Name</div>
-
-              {/* <div className="name-plate"> */}
-
-                {this.props.auth.isAuthenticated ? 
-                <div className="name-plate">
-
-                  <div className="date">
-                    {moment().format("LL")}
-                  </div>
-
-                  <div className="name">
-                    {this.state.privacy === false ? `${this.props.user?.first_name} ${this.props.user?.last_name}` : `Private Donor`}
-                  </div>
-
-                  <div className="d-flex">
-                    <div onClick={() => this.setState({privacy: false})} className={"privacy-pick " + (this.state.privacy === false ? 'active' : '')}>Show Name</div>
-                    <div onClick={() => this.setState({privacy: true})} className={"ml-2 privacy-pick " + (this.state.privacy === true ? 'active' : '')}>Hide Name</div>
-                  </div>
-
-                </div>
-                 : 
-                 <div className="name-plate">
-
-                  {/* <div className="date">
-                    {moment().format("LL")}
-                  </div> */}
-
-                  <div className="name">
-                    {`Sign In`}
-                  </div>
-
-                  <div className="date">We need you to sign in or create an account before we can accept your donation</div>
-
-                  <div className="buttons mt-4">
-                    <Link to={ROUTES.SIGN_UP}><div className="btn btn-articles-light">Sign Up</div></Link>
-                    <Link to={ROUTES.SIGN_IN}><div className="btn btn-articles-light ml-2">Sign In</div></Link>
-                  </div>
-
-                 </div>
-                }
-
-                
-              
-              {/* </div> */}
-
-              {/* <input className="form-control" type="text" value={`${this.props.user?.first_name} ${this.props.user?.last_name}` || ''}/> */}
-
-              <div className={this.props.auth.isAuthenticated ? '' : 'd-none'}>
-                <div className="title">Amount:</div>
-                <div className="amount-group">
-                  <input className="form-control" type="text" value={this.state.amount} placeholder="$0.00"/>
-                  <button onClick={() => this.setState({amount: 100})} className={"btn btn-articles-light " + (this.state.amount === 100 ? 'btn-articles-light alt' : 'btn-articles-light') }>$1</button>
-                  <button onClick={() => this.setState({amount: 500})} className={"btn btn-articles-light " + (this.state.amount === 500 ? 'btn-articles-light alt' : 'btn-articles-light') }>$5</button>
-                  <button onClick={() => this.setState({amount: 1000})} className={"btn btn-articles-light " + (this.state.amount === 1000 ? 'btn-articles-light alt' : 'btn-articles-light') }>$10</button>
-                  <button onClick={() => this.setState({amount: 2000})} className={"btn btn-articles-light " + (this.state.amount === 2000 ? 'btn-articles-light alt' : 'btn-articles-light') }>$20</button>
-                  <button onClick={() => this.setState({amount: 5000})} className={"btn btn-articles-light " + (this.state.amount === 5000 ? 'btn-articles-light alt' : 'btn-articles-light') }>$50</button>
-                </div>
-              </div>
-
-              <div className={this.props.auth.isAuthenticated ? '' : 'd-none'}>
-                <div className="title">Card Info:</div>
-                <CardElement
-                  options={{
-                    style: {
-                      base: {
-                        fontSize: '16px',
-                        color: '#424770',
-                        '::placeholder': {
-                          color: '#aab7c4',
-                        },
-                      },
-                      invalid: {
-                        color: '#9e2146',
-                      },
-                    },
-                  }}
-                />
-              </div>
-
-              <img src={power} alt="" className="power mt-4"/>
-              <div className={"btn btn-articles-light alt mx-auto mt-4 " + (this.props.auth.isAuthenticated ? 'd-block' : 'd-none')}>Donate</div>
-
-            </div>
-          </div>
+          <CheckoutForm 
+            isAuthenticated={this.props.auth.isAuthenticated}
+            _id={this.props.auth.user_details._id}
+            first_name={this.props.user.first_name}
+            last_name={this.props.user.last_name}
+            email={this.props.user.email}
+          />
         </Elements>
 
         <div className="intro-section">
@@ -229,11 +414,11 @@ class DonateBase extends Component {
                   We can not do it alone! It is the people that give this platform it's power.
                 </div>
 
-                <div className="small">Last 30 Donations (Live)</div>
+                <div className="small">Last 30 Donations</div>
                 <div className="others">
-                  {[...Array(30)].map((e, i) => <span className="other" key={i}>
-                    <div className="money">$2.00</div>
-                    <div className="name">Joey Giusto</div>
+                  {[...this.state.donations].map((e, i) => <span className="other" key={i}>
+                    <div className="money">${(e.amount / 100).toFixed(2)}</div>
+                    <div className="name">{`${e.first_name || "Private Donor"} ${e.last_name || ''}`}</div>
                   </span>)}            
                 </div>
     
