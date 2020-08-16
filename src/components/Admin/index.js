@@ -20,6 +20,7 @@ import Donations from './components/Donations'
 import Expenses from './components/Expenses'
 import Sockets from './components/Socket'
 import Reports from './components/Reports'
+import Orders from './components/Orders'
 
 class Admin extends Component {
   constructor(props) {
@@ -74,6 +75,7 @@ class Admin extends Component {
             <Link to={ROUTES.ADMIN_EXPENSES}><span className={"tab" + (this.state.tab === 'expenses' ? ' active' : '')}>Expenses</span></Link>
             <Link to={ROUTES.ADMIN_SOCKET}><span className={"tab" + (this.state.tab === 'sockets' ? ' active' : '')}>Sockets</span></Link>
             <Link to={ROUTES.ADMIN_REPORTS}><span className={"tab" + (this.state.tab === 'reports' ? ' active' : '')}>Reports</span></Link>
+            <Link to={ROUTES.ADMIN_ORDERS}><span className={"tab" + (this.state.tab === 'orders' ? ' active' : '')}>Orders</span></Link>
 
           </div>
         </div>
@@ -125,6 +127,13 @@ class Admin extends Component {
                 tabLocation='reports'
                 setLoaction={this.setLoaction}
                 ></Reports> 
+              }/>
+
+              <Route exact path={ROUTES.ADMIN_ORDERS} render={() => <Orders 
+                match={this.props.match}
+                tabLocation='orders'
+                setLoaction={this.setLoaction}
+                ></Orders> 
               }/>
 
             </Switch>

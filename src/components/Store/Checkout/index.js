@@ -1,271 +1,252 @@
-import React from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { removeExpense } from '../../../actions/expenses';
+
+import { CardElement, PaymentRequestButtonElement, useStripe, useElements, Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+
 import scrollLogo from '../../../assets/img/logo.png';
+import stripePower from '../../../assets/img/stripe.png'
 import CheckoutPageItem from './CheckoutPageItem';
 import * as ROUTES from '../../../constants/routes';
+import * as KEYS from '../../../constants/public_keys';
 
-const traveler = [
-  {  description: 'Senior', Amount: 50},
-  {  description: 'Senior', Amount: 50},
-  {  description: 'Adult', Amount: 75},
-  {  description: 'Child', Amount: 35},
-  {  description: 'Infant', Amount: 25 },
-];
+const stripePromise = loadStripe(KEYS.STRIPE_PUBLIC_KEY);
 
-let discount = 0;
-  
-Array.prototype.sum = function (prop) {
-  var total = 0
-  for ( var i = 0, _len = this.length; i < _len; i++ ) {
-      total += this[i][prop]
+const CheckoutForm = (props) => {
+  const [returnedProducts, setReturnedProducts] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [error, setError] = useState(null);
+  const [tax, setTax] = useState(0);
+
+  const stripe = useStripe();
+  // const [paymentRequest, setPaymentRequest] = useState(null);
+  const [clientSecret, setClientSecret] = useState('');
+
+  const tryIntent = () => {
+    axios.post('/api/create-payment-intent', {
+      amount: 599
+    })
+    .then(res => {
+      console.log(res)
+      return res;
+    })
+    .then(data => {
+      setClientSecret(data.clientSecret);
+      // return data.clientSecret
+    })
+    .catch(function (error) {
+      console.log(error);
+      setError('Could not get valid intent')
+    });
   }
-  return total
+
+  const userProductsToServer = () => {
+    const productsUserToServer = props.productsUser.map( (product) => { return {
+      _id: product.note,
+      size: product.size
+    } } )
+
+    axios.post('/api/getTotalFromProducts', {
+      products: [
+        ...productsUserToServer
+      ]
+    })
+    .then(function (response) {
+      setReturnedProducts(response.data.retrivedProducts)
+      setTotal(response.data.total)
+      setTax(response.data.tax)
+      tryIntent();
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  useEffect(() => {
+
+    userProductsToServer()
+
+  }, []);
+
+  const letterToSize = {
+    XS: 'Extra Small',
+    S: 'Small',
+    M: 'Medium',
+    L: 'Large',
+    XL: 'Extra Large'
+   };
+
+  // Use a traditional checkout form.
+  return (
+    <div className="checkout-page new mb-5">
+
+        <div className="details card shadow-sm">
+
+          <div className="card-body">
+
+            <h1 className="d-flex justify-content-between">
+              <span>Checkout Process</span>
+              <a href="https://stripe.com/pricing" target="_blank" rel="noopener noreferrer">
+                <img src={stripePower} height="35px" alt=""/>
+              </a>
+            </h1>
+
+          </div>
+          
+          <div className="d-flex">
+
+            <div className="card mx-3 mb-3 w-100">
+  
+              <div className="shiping-info card-body">
+                <h3 className="mb-4">Shipping Info</h3>
+  
+                <div className="form-group">
+                  <label htmlFor="address">Address</label>
+                  <input className="form-control with-label" name="address" id="address" type="text"/>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="city">City</label>
+                  <div className="prefilled">
+                    Prefilled
+                  </div>
+                  <input className="form-control with-label" value={props.user_details?.address?.city} name="city" id="city" type="text"/>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="state">State</label>
+                  <div className="prefilled">
+                    Prefilled
+                  </div>
+                  <input className="form-control with-label" value={props.user_details?.address?.state} name="state" id="state" type="text"/>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="zip">Zip</label>
+                  <div className="prefilled">
+                    Prefilled
+                  </div>
+                  <input className="form-control with-label" value={props.user_details?.address?.zip} name="zip" id="zip" type="text"/>
+                </div>
+  
+              </div>
+  
+            </div>
+  
+            <div className="card mx-3 mb-3 w-100">
+  
+              <div className="card-body">
+                <h3 className="mb-4">Payment</h3>
+                <div className='shadow'>
+                  <CardElement/>
+                </div>
+              </div>
+  
+            </div>
+
+          </div>
+          
+        </div>
+
+        <div className="cart">
+
+          <div className="card shadow-sm">
+
+            <div className="card-body">
+              <h1 className="d-flex justify-content-between">
+                <span>Cart</span>
+                <span>{returnedProducts.length} Items</span>
+              </h1>
+            </div>
+
+            <div className="card-body border-top border-dark p-2">
+
+              {returnedProducts.map(item => 
+                <li onClick={() => {
+                  console.log(item._id)
+                  props.dispatch(removeExpense({
+                    id: item._id
+                  }));
+                  // props.history.push('/');
+                }} className="cart-item list-group-item d-flex justify-content-between lh-condensed shadow-sm">
+                  <div>
+                    <h6 className="my-0">{item.title}</h6>
+                    <small className="text-muted">{ letterToSize[item.size] || '' }</small>
+                  </div>
+                  <span className="text-muted">${(item.price / 100).toFixed(2) || ''}</span>
+                </li>
+              )}
+
+            </div>
+
+            <div className="card-body p-2">
+
+              <li className="subtotal list-group-item py-1 d-flex justify-content-between">
+                <span>Subtotal (USD)</span>
+                <strong>${total.toFixed(2)}</strong>
+              </li>
+
+              <li className="tax list-group-item py-1 d-flex justify-content-between">
+                <span>Tax (USD)</span>
+                <strong>${tax.toFixed(2)}</strong>
+              </li>
+
+              <li className="total list-group-item py-1 d-flex justify-content-between">
+                <span>Total</span>
+                <strong>${(total + tax).toFixed(2)}</strong>
+              </li>
+
+            </div>
+
+            <div className="card-body p-2">
+
+              <li className="stripe list-group-item py-1 d-flex justify-content-between">
+                <span>Stripe Cut</span>
+                <strong>${ total === 0 ? 0.00 : (0.029 * (total + tax + .30 ) ).toFixed(2)}</strong>
+              </li>
+
+              <li className="articles-profit list-group-item py-1 d-flex justify-content-between">
+                <span>Articles Profit</span>
+                <strong>${ total === 0 ? 0.00 : ( total + tax ) - ( 0.029 * (total + tax + .30 ) ).toFixed(2) }</strong>
+              </li>
+
+            </div>
+
+            <div className="card-body border-top border-dark p-2">
+              <button className="btn btn-articles-light w-100">Checkout</button>
+              <div className="small text-center pt-2 w-100">You will be charged when you click the button</div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+  );
 }
   
 const CheckoutPage = (props) => (
 
-  <div className='mt-5 checkout-page container'>
+  <div className='checkout-page container'>
 
-    {/* {(props.expenses.length === 0 ? props.history.push('/store') : '')} */}
-
-    <div className="row mb-5 justify-content-center">
-
-      <div className="col-md-4 order-md-2 mb-4">
-        <h4 className="d-flex justify-content-between align-items-center mb-3">
-          <span className="text-muted">Your cart</span>
-          <span className="badge badge-secondary badge-pill">{props.expenses.length}</span>
-        </h4>
-        
-        <ul className="list-group mb-3">
-
-          {props.expenses.map((expense) => {
-            return <CheckoutPageItem key={expense.id} {...expense} />;
-          })}
-
-          <li className={"list-group-item justify-content-between lh-condensed " + (props.expenses.length === 0 ? 'd-flex' : 'd-none')}>
-            <div>
-              <h6 className="my-0">Cart Empty</h6>
-            </div>
-          </li>
-
-          <li className={"list-group-item justify-content-between bg-light " + (props.expenses.length === 0 ? 'd-none' : 'd-flex')}>
-            <div className="text-success">
-              <h6 className="my-0">Promo code</h6>
-              {/* <small>15PERCENTSALE</small> */}
-            </div>
-            <span className="text-success">-${discount = ((props.expenses.sum("amount") * .15 / 100).toFixed(2))}</span>
-          </li>
-
-          <li className="list-group-item d-flex justify-content-between">
-            <span>Total (USD)</span>
-
-            <strong>${(props.expenses.sum("amount") / 100 - discount)}</strong>
-          </li>
-        </ul>
-
-        <form className={"card p-2 mb-3" + (props.expenses.length === 0 ? 'd-none' : '')}>
-          <div className="input-group">
-            <input type="text" className="form-control" placeholder="Promo code"/>
-            <div className="input-group-append">
-              <button type="submit" className="btn btn-secondary">Redeem</button>
-            </div>
-          </div>
-        </form>
-
-        <div className="card p-2">
-          <button className="btn btn-articles-light">Checkout</button>
-          <div className="small ml-auto pt-2">You will be charged by clicking the button</div>
-        </div>
-
-      </div>
-
-      <div className={"col-md-8 order-md-1 " + (props.expenses.length === 0 ? 'd-none' : '')}>
-
-        <div className="pb-1">
-
-          <div className="">
-            <img className="d-inline-block mb-4" src={scrollLogo} alt="" height="72"/>
-            <img className="d-inline-block mb-4" src="https://couragetoresist.org/wp-content/uploads/2018/09/stripe-logo.png" alt="" height="40"/>
-          </div>
-
-          <div className="d-none">
-            <h2>Checkout form</h2>
-            <p className="lead">Below is an example form built entirely with Bootstrap’s form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
-            {props.expenses.length === 0 ? <Link to={ROUTES.STORE}><button className="btn btn-lg btn-articles-light">Back To Store</button></Link> : <Link to={ROUTES.STORE}><button className="btn btn-lg btn-articles-light">Back To Store</button></Link>}
-          </div>
-        </div>
-
-        <div className="card p-2">
-          <h4 className="mb-3">Billing address</h4>
-          <form className="needs-validation" novalidate="">
-            <div className="row">
-              <div className="col-md-6 mb-3">
-                <label for="firstName">First name</label>
-                <input type="text" className="form-control" id="firstName" placeholder="" value="" required=""/>
-                <div className="invalid-feedback">
-                  Valid first name is required.
-                </div>
-              </div>
-              <div className="col-md-6 mb-3">
-                <label for="lastName">Last name</label>
-                <input type="text" className="form-control" id="lastName" placeholder="" value="" required=""/>
-                <div className="invalid-feedback">
-                  Valid last name is required.
-                </div>
-              </div>
-            </div>
-  
-            {/* <div className="mb-3">
-              <label for="username">Username</label>
-              <div className="input-group">
-                <div className="input-group-prepend">
-                  <span className="input-group-text">@</span>
-                </div>
-                <input type="text" className="form-control" id="username" placeholder="Username" required=""/>
-                <div className="invalid-feedback" style={{width: "100%;"}}>
-                  Your username is required.
-                </div>
-              </div>
-            </div> */}
-  
-            <div className="mb-3">
-              <label for="email">Email <span className="text-muted"></span></label>
-              <input type="email" className="form-control" id="email" placeholder="you@example.com"/>
-              <div className="invalid-feedback">
-                Please enter a valid email address for shipping updates.
-              </div>
-            </div>
-  
-            <div className="mb-3">
-              <label for="address">Address</label>
-              <input type="text" className="form-control" id="address" placeholder="1234 Main St" required=""/>
-              <div className="invalid-feedback">
-                Please enter your shipping address.
-              </div>
-            </div>
-  
-            <div className="mb-3">
-              <label for="address2">Address 2 <span className="text-muted">(Optional)</span></label>
-              <input type="text" className="form-control" id="address2" placeholder="Apartment or suite"/>
-            </div>
-  
-            <div className="row">
-              <div className="col-md-5 mb-3">
-                <label for="country">Country</label>
-                <select className="custom-select d-block w-100" id="country" required="">
-                  <option value="">Choose...</option>
-                  <option>United States</option>
-                </select>
-                <div className="invalid-feedback">
-                  Please select a valid country.
-                </div>
-              </div>
-              <div className="col-md-4 mb-3">
-                <label for="state">State</label>
-                <select className="custom-select d-block w-100" id="state" required="">
-                  <option value="">Choose...</option>
-                  <option>California</option>
-                </select>
-                <div className="invalid-feedback">
-                  Please provide a valid state.
-                </div>
-              </div>
-              <div className="col-md-3 mb-3">
-                <label for="zip">Zip</label>
-                <input type="text" className="form-control" id="zip" placeholder="" required=""/>
-                <div className="invalid-feedback">
-                  Zip code required.
-                </div>
-              </div>
-            </div>
-  
-            <hr className="mb-4"/>
-  
-            {/* <div className="custom-control custom-checkbox">
-              <input type="checkbox" className="custom-control-input" id="same-address"/>
-              <label className="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
-            </div>
-            <div className="custom-control custom-checkbox">
-              <input type="checkbox" className="custom-control-input" id="save-info"/>
-              <label className="custom-control-label" for="save-info">Save this information for next time</label>
-            </div> */}
-  
-            {/* <hr className="mb-4"/> */}
-
-          </form>
-          </div>
-
-          <div className="card p-2 mt-3">
-            <form >
-    
-              <h4 className="mb-3">Payment</h4>
-    
-              {/* <div className="d-block my-3">
-                <div className="custom-control custom-radio">
-                  <input id="credit" name="paymentMethod" type="radio" className="custom-control-input" checked="" required=""/>
-                  <label className="custom-control-label" for="credit">Credit card</label>
-                </div>
-                <div className="custom-control custom-radio">
-                  <input id="debit" name="paymentMethod" type="radio" className="custom-control-input" required=""/>
-                  <label className="custom-control-label" for="debit">Debit card</label>
-                </div>
-                <div className="custom-control custom-radio">
-                  <input id="paypal" name="paymentMethod" type="radio" className="custom-control-input" required=""/>
-                  <label className="custom-control-label" for="paypal">PayPal</label>
-                </div>
-              </div> */}
-    
-              <div className="row">
-                <div className="col-md-6 mb-3">
-                  <label for="cc-name">Name on card</label>
-                  <input type="text" className="form-control" id="cc-name" placeholder="" required=""/>
-                  <small className="text-muted">Full name as displayed on card</small>
-                  <div className="invalid-feedback">
-                    Name on card is required
-                  </div>
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label for="cc-number">Credit card number</label>
-                  <input type="text" className="form-control" id="cc-number" placeholder="" required=""/>
-                  <div className="invalid-feedback">
-                    Credit card number is required
-                  </div>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-3 mb-3">
-                  <label for="cc-expiration">Expiration</label>
-                  <input type="text" className="form-control" id="cc-expiration" placeholder="" required=""/>
-                  <div className="invalid-feedback">
-                    Expiration date required
-                  </div>
-                </div>
-                <div className="col-md-3 mb-3">
-                  <label for="cc-cvv">CVV</label>
-                  <input type="text" className="form-control" id="cc-cvv" placeholder="" required=""/>
-                  <div className="invalid-feedback">
-                    Security code required
-                  </div>
-                </div>
-              </div>
-              {/* <hr className="mb-4"/> */}
-              <div></div>
-            </form>
-          </div>
-        
-      </div>
-      
-    </div>
+    <Elements stripe={stripePromise}>
+      <CheckoutForm {...props}></CheckoutForm>
+    </Elements>
 
   </div>
 );
 
 const mapStateToProps = (state) => {
   return {
-    expenses: state.expenses
+    productsUser: state.expenses,
+    user_details: state.auth.user_details
   };
 };
+
+// const CheckoutPageNewConnected = connect(mapStateToProps)(CheckoutForm);
 
 // export default CheckoutPage;
 export default connect(mapStateToProps)(CheckoutPage);

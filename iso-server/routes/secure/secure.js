@@ -193,6 +193,64 @@ module.exports = (app, db) => {
     });
   });
 
+  app.post("/api/getTotalFromProducts", async (req, res) => {
+
+    console.log(req.body)
+
+    const products = req.body.products;
+    // Create a PaymentIntent with the order amount and currency
+
+    const retrivedProducts = []
+    let total = 0;
+
+    for (let i = 0; i < products.length; i++) {
+      console.log(products[i]);
+
+      db.collection("articles_products").findOne( {_id: ObjectId(products[i]._id) }, { projection: {title: 1, price: 1} }, function(err, result) {
+        console.log(result)
+        retrivedProducts[i] = result || {};
+        retrivedProducts[i].size = products[i].size;
+        total = total + result.price || 0
+        setTimeout( () => onceDone(), 2000)
+      });
+
+      function onceDone() {
+        console.log("Once done called!")
+
+        if (i === products.length - 1) {
+          console.log(i)
+
+          res.send({
+            total: parseFloat( 
+              (total / 100).toFixed(2) 
+            ),
+            tax:  parseFloat( 
+              ((total / 100 ) * 0.08125 ).toFixed(2)
+            ),
+            retrivedProducts: retrivedProducts
+          });
+        }
+
+      }
+    
+    }
+
+    // const paymentIntent = await stripe.paymentIntents.create({
+    //   amount: req.body.amount,
+    //   currency: "usd",
+    //   // customer: req.body._id,
+    //   metadata: {
+    //     user_id: req.body._id
+    //   },
+    //   description: 'User donation to the site',
+    // });
+
+    // res.send({
+    //   clientSecret: paymentIntent.client_secret
+    // });
+
+  });
+
   app.post("/api/userMadeDonation", async (req, res) => {
     const { items } = req.body;
 

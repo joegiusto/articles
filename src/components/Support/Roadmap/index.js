@@ -54,6 +54,7 @@ const Page = () => (
                 <div className="title">2020</div>
                 <div className="text">
                   <ul>
+                    <li>Github commit from someone besides Joe...</li>
                     <li>Grow advertiser count to 5</li>
                     <li>Implement "Real ID" system to allow access to a seperate comment channel for users that have verified they are a human and have citizenship in the United States.</li>
                   </ul>
@@ -80,8 +81,8 @@ const Page = () => (
               
             </div>
 
-            <div className="card-body">
-              <Link to={ROUTES.FAQ}><button className="btn btn-articles-light">Frequent Questions</button></Link>
+            <div className="card-footer py-2 text-center">
+              <Link to={ROUTES.SUPPORT}><button className="btn btn-articles-light alt">Support Hub</button></Link>
             </div>
 
           </div>

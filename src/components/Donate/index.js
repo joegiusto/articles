@@ -9,14 +9,11 @@ import { loadStripe } from '@stripe/stripe-js';
 
 
 import * as ROUTES from '../../constants/routes';
+import * as KEYS from '../../constants/public_keys';
 import ArticlesBackground from '../../assets/img/banner.jpg'
 import power from '../../assets/img/Store/power.png'
-  
 
-const STRIPE_PUBLIC_KEY = 'pk_test_gTKVWvKf5GGQXxl6oUELsI1X008BFf6xST';
-
-const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
-
+const stripePromise = loadStripe(KEYS.STRIPE_PUBLIC_KEY);
 
 function CheckoutForm(props) {
   const [succeeded, setSucceeded] = useState(false);
@@ -115,15 +112,7 @@ function CheckoutForm(props) {
     setError(event.error ? event.error.message : "");
   };
 
-  const tryUpdateAmount = async (amount) => {
-    // Listen for changes in the CardElement
-    // and display any errors as the customer types their card details
-    console.log("Detect")
-  };
-
   const handleSubmit = async secret => {
-    console.log("handleSubmit called!")
-    // ev.preventDefault();
     setProcessing(true);
     const payload = await stripe.confirmCardPayment(secret, {
       payment_method: {

@@ -1,8 +1,130 @@
 .checkout-page {
+  font-family: montserrat, sans-serif;
+  font-weight: 400;
+  
+  &.new {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    margin-top: 1rem;
+
+    @include media-breakpoint-up(md) {
+      margin-top: 3rem;
+    }
+
+    @include media-breakpoint-up(md) {
+      flex-direction: row;
+    }
+
+    .details {
+      flex-grow: 1;
+      margin-top: 1rem;
+
+      @include media-breakpoint-up(md) {
+        margin-top: 0rem;
+      }
+
+      .shiping-info {
+
+        .form-group {
+          position: relative;
+
+          label {
+            display: block;
+            background-color: $base-color;
+            // border: 0.5px solid #000;
+            box-shadow: 0px 0px ;
+            border-radius: 0.25rem;
+            border: 1px solid #ced4da;
+            // position: absolute;
+            margin-bottom: 0;
+            top: -0.75rem;
+            left: 0rem;
+            width: 100%;
+            // color: white;
+            padding: 0.0rem 0.25rem;
+            font-size: 0.7rem;
+            // box-shadow: 0 2px 5px rgba( $base-color , 0.7);
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+          }
+
+          input.with-label {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+          }
+
+          .prefilled {
+            background-color: white;
+            border: 0.5px solid #000;
+            border-radius: 0.25rem;
+            position: absolute;
+            top: -0.75rem;
+            left: 3.5rem;
+            padding: 0.05rem 0.25rem;
+            font-size: 0.7rem;
+          }
+        }
+      }
+    }
+
+    .cart {
+      flex-basis: 350px;
+
+      .card {
+        background-color: $accent-color;
+      }
+
+      @include media-breakpoint-up(md) {
+        margin-left: 2rem;
+      }
+
+      .total {
+        background-color: lighten(green, 70%);
+      }
+
+      .stripe {
+        background-color: lighten(#6772e5, 30%);
+      }
+
+      .articles-profit {
+        background-color: lighten($base-color, 7.5%);
+      }
+    }
+  }
+
+  .card {
+    // margin: 3rem auto;
+
+    @include media-breakpoint-up(md) {
+      // margin: auto auto;
+    }
+  }
+
+  h1 {
+    font-family: brandon-grotesque, sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-family: brandon-grotesque, sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 1.25rem;
+  }
+
+  p, .alert {
+    font-family: montserrat, sans-serif;
+    font-weight: 400;
+  }
+
   li.lh-condensed {
     &:hover {
       background-color: rgba(255, 195, 195, 0.507)!important;
       color: black;
     }
   }
+
 }

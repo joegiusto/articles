@@ -194,6 +194,7 @@ class Messages extends Component {
   // }
 
   renderInboxMessages() {
+
     if (this.state.inboxFilter === 'people') {
       return (
         this.state.messages.map(message => 
@@ -240,8 +241,34 @@ class Messages extends Component {
           )
         )
       ) 
-      
-    } else {
+    } 
+
+    if (this.state.inboxFilter === 'newsletters') {
+      return (
+        <div className="newsletters">
+          <div className="newsletters-card">
+            You have not subscribed to any newsletters yet.
+          </div>
+        </div>
+      ) 
+    } 
+
+    if (this.state.inboxFilter === 'rooms') {
+      return (
+        <div className="rooms">
+          <div className="rooms-card">
+            You are not a part of any rooms yet.
+          </div>
+          {/* <h5>Your Rooms</h5>
+          <div className="badge badge-primary">Real ID</div>
+          <div className="badge badge-primary ml-1">Developers</div>
+          <div className="badge badge-primary ml-1">Writers</div>
+          <div className="badge badge-primary ml-1">Designers</div> */}
+        </div>
+      ) 
+    } 
+
+    else {
       return(
         <div className="rooms">
           <div className="rooms-card">
@@ -354,6 +381,9 @@ class Messages extends Component {
               <div>
                 <button onClick={() => this.setState({inboxFilter: 'people'})} className={"badge ml-1 " + (this.state.inboxFilter === 'people' ? 'badge-dark' : 'badge-light border')}>
                   People
+                </button>
+                <button onClick={() => this.setState({inboxFilter: 'newsletters'})} className={"badge ml-1 " + (this.state.inboxFilter === 'newsletters' ? 'badge-dark' : 'badge-light border')}>
+                  Newsletters
                 </button>
                 <button onClick={() => this.setState({inboxFilter: 'rooms'})} className={"badge ml-1 " + (this.state.inboxFilter === 'rooms' ? 'badge-dark' : 'badge-light border')}>
                   Rooms
