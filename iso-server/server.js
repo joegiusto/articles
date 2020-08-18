@@ -140,6 +140,10 @@ function connectWithRetryMongo() {
     require('./routes/getDonations')(app, db);
 
     // This grouping is used in Reports
+    require('./routes/getExpensesRecurring')(app, db);
+    require('./routes/getRevenuesDonations')(app, db);
+    require('./routes/getRevenuesClothing')(app, db);
+
     require('./routes/getMonthlyExpense')(app, db);
     require('./routes/getMonthlyPayrole')(app, db);
 

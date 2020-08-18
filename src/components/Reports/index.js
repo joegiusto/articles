@@ -32,6 +32,16 @@ class Reports extends Component {
         subtableSelector: '',
         chartPeriodSelector: '1y',
 
+        expenses_inventory: [],
+        expenses_payrole: [],
+        expenses_recurring: [],
+
+        revenues_ads: [],
+        revenues_clothing: [],
+        revenues_clothing_total: 0,
+        revenues_donations: [],
+        revenues_memberships: [],
+
         reportsData: {
 
           expenses: {
@@ -47,9 +57,14 @@ class Reports extends Component {
         },
 
        totals: {
-         expenses: 0,
-         clothing: 0,
-         donations: 0,
+        clothing: 0,
+        donations: 0,
+        memberships: 0,
+        
+        ads: 0,
+        inventory: 0,
+        payrole: 0,
+        recurring: 0
        },
 
        monthBreakdown: []
@@ -147,6 +162,127 @@ class Reports extends Component {
     //   })
     // });
 
+    axios.get('/api/getRevenuesDonations', {
+      params: {
+        fromDate: '',
+        toDate: '',
+        limit: '100',
+        page: '1',
+        user_id: self.props.user_id || ''
+      }
+    })
+    .then(function (response) {
+      console.log(response);
+
+      self.setState({
+        revenues_donations: response.data
+      }, () => {
+        console.log("Done")
+
+        let total = 0
+
+        var val = self.state.revenues_donations.map(function(item) {
+          return total += item.amount
+        });
+
+        console.log(val);
+
+        self.setState({
+
+          totals: {
+            ...self.state.totals,
+            donations: total
+          } 
+
+        })
+
+      })
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+    axios.get('/api/getRevenuesClothing', {
+      params: {
+        fromDate: '',
+        toDate: '',
+        limit: '100',
+        page: '1',
+        user_id: self.props.user_id || ''
+      }
+    })
+    .then(function (response) {
+      console.log(response);
+
+      self.setState({
+        revenues_clothing: response.data
+      }, () => {
+        console.log("Done")
+
+        let total = 0
+
+        var val = self.state.revenues_clothing.map(function(item) {
+          return total += item.payment.trueTotal
+        });
+
+        // console.log(val);
+
+        self.setState({
+
+          totals: {
+            ...self.state.totals,
+            // clothing: self.state.revenues_clothing.reduce(function(previousValue, currentValue) {
+            //   return previousValue.payment.trueTotal + currentValue.payment.trueTotal
+            // })
+            clothing: total
+          } 
+
+        })
+
+      })
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+    axios.get('/api/getExpensesRecurring', {
+      params: {
+        fromDate: '',
+        toDate: '',
+        limit: '100',
+        page: '1',
+        user_id: self.props.user_id || ''
+      }
+    })
+    .then(function (response) {
+      console.log(response);
+
+      self.setState({
+        expenses_recurring: response.data
+      }, () => {
+        let total = 0
+
+        self.state.expenses_recurring.map(function(item) {
+          return total += item.amount
+        });
+
+        self.setState({
+
+          totals: {
+            ...self.state.totals,
+            recurring: total
+          } 
+
+        })
+
+      })
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
     axios.get('/api/getExpenses')
     .then(function (response) {
 
@@ -196,36 +332,36 @@ class Reports extends Component {
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
 
-    if (prevState.reportsData.revenue.donations !== this.state.reportsData.revenue.donations ) {
-      console.log("New math needed!");
+    // if (prevState.reportsData.revenue.donations !== this.state.reportsData.revenue.donations ) {
+    //   console.log("New math needed!");
 
-      var total = 0;
+    //   var total = 0;
 
-      for (var i=0; i<this.state.reportsData.revenue.donations.length; i++) {
-        total += parseInt(this.state.reportsData.revenue.donations[i].amount);
-      }
+    //   for (var i=0; i<this.state.reportsData.revenue.donations.length; i++) {
+    //     total += parseInt(this.state.reportsData.revenue.donations[i].amount);
+    //   }
 
-      this.setState({totals: {
-        ...this.state.totals,
-        donations: total
-      }});
+    //   this.setState({totals: {
+    //     ...this.state.totals,
+    //     donations: total
+    //   }});
 
-    }
+    // }
 
-    if (prevState.reportsData.expenses.other !== this.state.reportsData.expenses.other ) {
+  //   if (prevState.reportsData.expenses.other !== this.state.reportsData.expenses.other ) {
 
-      var total = 0;
+  //     var total = 0;
 
-      for (var i=0; i<this.state.reportsData.expenses.other.length; i++) {
-        total += this.state.reportsData.expenses.other[i].amount;
-      }
+  //     for (var i=0; i<this.state.reportsData.expenses.other.length; i++) {
+  //       total += this.state.reportsData.expenses.other[i].amount;
+  //     }
 
-      this.setState({totals: {
-        ...this.state.totals,
-        expenses: total
-      }})
+  //     this.setState({totals: {
+  //       ...this.state.totals,
+  //       expenses: total
+  //     }})
 
-    }
+  //   }
   }
 
   componentWillUnmount() {
@@ -265,6 +401,10 @@ class Reports extends Component {
     };
   }
 
+  sum(key) {
+    return this.reduce((a, b) => a + (b[key] || 0), 0);
+  }
+
   getTableComponent(tableSelector, subtableSelector) {
     switch(tableSelector) {
       case 'donations':
@@ -272,18 +412,90 @@ class Reports extends Component {
       case 'clothing':
         switch (subtableSelector) {
           case 'clothing-all':
-            return(<ClothingTable/>)
+
+            // console.log(val)
+
+            return (
+              <table className='table articles-table table-sm table-hover table-bordered'>
+
+                <thead>
+                  <tr className="table-articles-head">
+                    <th scope="col">Date</th>
+                    {/* <th scope="col">Name</th> */}
+                    <th scope="col">Order Summary</th>
+                    <th className='text-right' scope="col">Total</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  
+                  {this.state.revenues_clothing.map(sale => 
+                    <tr>
+                      <td colSpan="1" className="border-right-0 ">{moment(sale.date).format("LLL")}</td>
+                      <td colSpan="1" className="border-right-0 ">{sale.for}</td>
+                      <td colSpan="1" className="">${(sale.payment.trueTotal / 100).toFixed(2)}</td>
+                    </tr> 
+                  )}
+
+                  <tr>
+                    <td colSpan="1" className="border-right-0 table-articles-head"></td>
+                    <td colSpan="1" className="border-right-0 text-right table-articles-head">Total:</td>
+                    <td colSpan="1" className="border-left-0 table-articles-head">${(this.state.totals.clothing / 100).toFixed(2)}</td>
+                  </tr>
+
+                </tbody>
+              </table>
+            )
           case 'clothing-preorders':
             return(<PreorderTable/>)
           default:
             return(<ClothingTable/>)
         }
       case 'expenses':
-        return(<DonationTable reportsData={this.state.reportsData} fetch="expenses"/>)
+        return(<ExpenseTable reportsData={this.state.reportsData} fetch="expenses"/>)
       case 'payroll':
         return(<PayrollTable/>)
       case 'revenue':
-        return(<DonationTable reportsData={this.state.reportsData} fetch="revenue"/>)
+
+        const megaGroup = [...this.state.revenues_clothing, ...this.state.reportsData.revenue.donations]
+
+        return(
+          <table className='table articles-table table-sm table-hover table-bordered'>
+            <thead>
+              <tr className="table-articles-head">
+                {/* <th scope="col">Order #</th> */}
+                <th scope="col">Date</th>
+                <th scope="col">Name</th>
+                <th scope="col">Order Summary</th>
+                <th className='text-right' scope="col">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              {megaGroup.map(sale => 
+                // <div className="sale">
+                //   {sale.date}
+                // </div>
+                <tr>
+                  <td colSpan="1" className="border-right-0 ">{moment(sale.date).format("LLL")}</td>
+                  <td colSpan="1" className="border-right-0 "></td>
+                  <td colSpan="1" className="border-right-0 "></td>
+                  <td colSpan="1" className="border-right-0 "></td>
+                </tr>
+              )}
+
+              <tr>
+                <td colSpan="2" className="border-right-0 table-articles-head">
+
+                </td>
+
+                <td colSpan="1" className="border-right-0 text-right table-articles-head">Total:</td>
+                <td colSpan="1" className="border-left-0 table-articles-head">$00.00</td>
+              </tr>
+
+            </tbody>
+          </table>
+        )
       default:
         // Useless because tableSelector state always starts at something
     };
@@ -338,7 +550,7 @@ class Reports extends Component {
 
         <div className="fixed-total dual-header">
           {/* <span className="help">Help <i className="far fa-question-circle"></i></span> */}
-          <span className="total">+${((this.state.totals.donations - this.state.totals.expenses) / 100 ).toFixed(2)}</span>
+          <span className="total">+${((this.state.totals.donations - this.state.totals.recurring + this.state.totals.clothing) / 100 ).toFixed(2)}</span>
         </div>
 
         <div className="fixed-componsation-50"></div>
@@ -366,12 +578,22 @@ class Reports extends Component {
                       <div className="px-2 pt-4">
       
                         <div>Current Balance:</div>
-                        <h2>${((this.state.totals.donations - this.state.totals.expenses) / 100 ).toFixed(2)}</h2>
+                        <h2>${((this.state.totals.donations - this.state.totals.recurring + this.state.totals.clothing) / 100 ).toFixed(2)}</h2>
       
                         <div className="time-container">
                           <div className="progress">
-                            <div className="progress-bar bg-rev" role="progressbar" style={{width: (this.state.totals.donations / ((this.state.totals.donations + this.state.totals.expenses) / 100) ).toFixed(0) +"%"}} aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">{( this.state.totals.donations / ((this.state.totals.donations + this.state.totals.expenses) / 100) ).toFixed(0)}%</div>
-                            <div className="progress-bar bg-danger" role="progressbar" style={{width: (this.state.totals.expenses / ((this.state.totals.donations + this.state.totals.expenses) / 100) ).toFixed(0) + "%"}} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">{( this.state.totals.expenses / ((this.state.totals.donations + this.state.totals.expenses) / 100) ).toFixed(0)}%</div>
+                            <div className="progress-bar bg-rev" role="progressbar" 
+                            style={{
+                              width: ((this.state.totals.donations + this.state.totals.clothing) / ((this.state.totals.donations + this.state.totals.recurring + this.state.totals.clothing) / 100) ).toFixed(0) +"%"
+                            }}
+                            aria-valuenow="15" 
+                            aria-valuemin="0" 
+                            aria-valuemax="100"
+                            >
+                              {( (this.state.totals.donations + this.state.totals.clothing) / ((this.state.totals.donations + this.state.totals.recurring + this.state.totals.clothing) / 100) ).toFixed(0)}%
+                            </div>
+
+                            <div className="progress-bar bg-danger" role="progressbar" style={{width: (this.state.totals.recurring / ((this.state.totals.donations + this.state.totals.recurring + this.state.totals.clothing) / 100) ).toFixed(0) + "%"}} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">{( this.state.totals.recurring / ((this.state.totals.donations + this.state.totals.recurring + this.state.totals.clothing) / 100) ).toFixed(0)}%</div>
                           </div>
         
                           {/* <div className="text-muted">Revenue | Expenses</div> */}
@@ -382,13 +604,13 @@ class Reports extends Component {
         
                               <div className="col-12 col-xl-6 pr-xl-1">
                                 <div className="snippet positive">
-                                Revenue: ${this.state.totals.donations / 100}
+                                Revenue: ${ ( this.state.totals.donations + this.state.totals.clothing ) / 100}
                                 </div>
                               </div>
         
                               <div className="col-12 col-xl-6 pl-xl-1">
                                 <div className="snippet negative">
-                                Expenses: -${this.state.totals.expenses / 100}
+                                Expenses: -${this.state.totals.recurring / 100}
                                 </div>
                               </div>
         
@@ -630,59 +852,6 @@ class Reports extends Component {
   }
 }
 
-function RevenueTable () {
-  return (
-    <table className="table table-sm table-hover mt-2">
-      <thead className="thead-dark">
-        <tr>
-          <th scope='col'>Type</th>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Handle</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">Donation</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">Donation</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">Clothing</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr>
-        <tr>
-          <th scope="row">Clothing</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr>
-        <tr>
-          <th scope="row">Clothing</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr>
-        <tr>
-          <th scope="row">Grant</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr>
-      </tbody>
-    </table>
-  )
-}
-
 function PreorderTable () {
   return (
     <>
@@ -815,6 +984,123 @@ function PayrollTable () {
 }
 
 class DonationTable extends Component {
+  constructor(props) {
+    super(props);
+
+     this.state = {
+       text: '',
+       loading: false,
+       donationsFirebase: [],
+       expensesFirebase: [],
+       limit: 10,
+       page: 1,
+     };
+     this.changeLimit = this.changeLimit.bind(this);
+     this.changePage = this.changePage.bind(this);
+  }
+
+ changeLimit(limit) {
+   this.setState({
+     limit: limit
+   });
+ }
+
+ changePage(page) {
+   this.setState({
+     page: page
+   });
+ }
+
+ render () {
+   const { donationsFirebase, loading, limit, page } = this.state;
+
+  //  var render = undefined
+
+   const render = this.props.reportsData.revenue.donations;
+
+   return (
+     <div>
+       {loading && <div className="p-2">Loading data...</div>}
+
+       {donationsFirebase ? (
+       <div>
+         <StyledDonationList
+           donationsFirebase={render}
+           changeLimit={this.changeLimit}
+           changePage={this.changePage}
+           limit={limit}
+           page={page}
+           fetch={this.props.fetch}
+         />
+       </div>
+       ) : (
+       <div>There are no {this.props.fetch} yet ...</div>
+       )}
+
+     </div>
+   )
+ }
+}
+
+class RevenueTable extends Component {
+  constructor(props) {
+    super(props);
+
+     this.state = {
+       text: '',
+       loading: false,
+       donationsFirebase: [],
+       expensesFirebase: [],
+       limit: 10,
+       page: 1,
+     };
+     this.changeLimit = this.changeLimit.bind(this);
+     this.changePage = this.changePage.bind(this);
+  }
+
+ changeLimit(limit) {
+   this.setState({
+     limit: limit
+   });
+ }
+
+ changePage(page) {
+   this.setState({
+     page: page
+   });
+ }
+
+ render () {
+   const { donationsFirebase, loading, limit, page } = this.state;
+
+  //  var render = undefined
+
+   const render = this.props.reportsData.revenue.donations;
+
+   return (
+     <div>
+       {loading && <div className="p-2">Loading data...</div>}
+       {donationsFirebase ? (
+       <div>
+         <StyledDonationList
+           donationsFirebase={render}
+           changeLimit={this.changeLimit}
+           changePage={this.changePage}
+           limit={limit}
+           page={page}
+           fetch={this.props.fetch}
+         />
+       </div>
+       ) : (
+       <div>There are no {this.props.fetch} yet ...</div>
+       )}
+
+     </div>
+   )
+ }
+}
+
+class ExpenseTable extends Component {
    constructor(props) {
      super(props);
 
@@ -822,7 +1108,7 @@ class DonationTable extends Component {
         text: '',
         loading: false,
         donationsFirebase: [],
-        expensesFirebase: [],
+        expenses: [],
         limit: 10,
         page: 1,
       };
@@ -847,11 +1133,13 @@ class DonationTable extends Component {
 
     var render = undefined
 
-    if (this.props.fetch === 'donations') {
-      render = this.props.reportsData.revenue.donations
-    } else if (this.props.fetch === 'expenses') {
-      render = this.props.reportsData.expenses.other
-    }
+    render = this.props.reportsData.expenses.other
+
+    // if (this.props.fetch === 'donations') {
+    //   render = this.props.reportsData.revenue.donations
+    // } else if (this.props.fetch === 'expenses') {
+    //   render = this.props.reportsData.expenses.other
+    // }
 
     return (
       <div>
@@ -952,7 +1240,7 @@ const StyledDonationItem = ({fetch, donation, isPayrole}) => (
     {isPayrole ? 'True' : fetch === 'expenses' ? <td><a rel="noopener noreferrer" target="_blank" href={donation.file}><i className="fas fa-file-invoice"></i></a></td> : undefined}
 
     {/* <td>{fetch === 'donations' ? moment(donation.createdAt).format('LL') : moment.unix(donation.date).format('LL')}</td> */}
-    <td>{moment(donation.date).format('LL')}</td>
+    <td>{moment(donation.date).format('LLL')}</td>
 
     {/* <td>{moment(donation.createdAt).format('LL') }</td> */}
 

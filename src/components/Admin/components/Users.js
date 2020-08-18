@@ -1,6 +1,36 @@
 import React, {Component} from 'react'
 import axios from 'axios'
 
+class ConfirmDelete extends Component {
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      confirm: false
+    };
+
+  }
+
+  handleClick() {
+
+    if (this.state.confirm) {
+      this.props.afterConfirm()
+    } else {
+      this.setState({confirm: true})
+    }
+
+  }
+
+  render() {
+    return (
+      this.state.confirm ? 
+      <div style={{cursor: 'pointer'}} onClick={() => this.handleClick()} className="badge badge-danger noselect">Confirm</div>
+      :
+      <div style={{cursor: 'pointer'}} onClick={() => this.handleClick()} className="badge badge-danger noselect">Delete</div>
+    )
+  }
+}
+
 class Users extends Component {
   constructor(props) {
   super(props);
@@ -184,13 +214,7 @@ class Users extends Component {
     // console.log(`Changing the role for user ${user_id} of ${role} to ${permission}`);
     // const index = this.state.users.findIndex((user) => user._id === user_id)
 
-    this.setState(prevState => ({
-
-      users: prevState.users.map(
-        el => el._id === user_id ? { ...el, roles: { ...el.roles, [role]: permission} } : el
-      )
-
-    }));
+    
 
     axios.post('/api/secure/toggleRole', {
       user: user_id,
@@ -200,6 +224,36 @@ class Users extends Component {
     .then(function (response) {
 
       console.log(response);
+
+      self.setState(prevState => ({
+
+        users: prevState.users.map(
+          el => el._id === user_id ? { ...el, roles: { ...el.roles, [role]: permission} } : el
+        )
+  
+      }));
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  removeUser(id) {
+    const self = this;
+
+    axios.post('/api/deleteUser', {
+      _id: id 
+    })
+    .then(function (response) {
+
+      // socket.emit('deleteUser', id);
+
+      self.setState({
+        users: self.state.users.filter(function( obj ) {
+          return obj._id !== id;
+        })
+      });
 
     })
     .catch(function (error) {
@@ -285,6 +339,7 @@ class Users extends Component {
                     <th scope="col">Admin</th>
                     <th scope="col">Dev</th>
                     <th scope="col">Writer</th>
+                    <th scope="col">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -307,6 +362,7 @@ class Users extends Component {
                       <td>{user.roles?.isAdmin === true ? <div onClick={() => this.toggleRole(user._id, 'isAdmin', false )} className="badge badge-danger">True</div> : <div onClick={() => this.toggleRole(user._id, 'isAdmin', true )} className="badge badge-success">False</div>}</td>
                       <td>{user.roles?.isDev === true ? <div onClick={() => this.toggleRole(user._id, 'isDev', false )} className="badge badge-danger">True</div> : <div onClick={() => this.toggleRole(user._id, 'isDev', true )} className="badge badge-success">False</div>}</td>
                       <td>{user.roles?.isWriter === true ? <div onClick={() => this.toggleRole(user._id, 'isWriter', false )} className="badge badge-danger">True</div> : <div onClick={() => this.toggleRole(user._id, 'isWriter', true )} className="badge badge-success">False</div>}</td>
+                      <td><ConfirmDelete afterConfirm={() => this.removeUser(user._id)}></ConfirmDelete></td>
                     </tr>
                     
                   ))}

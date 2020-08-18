@@ -94,6 +94,7 @@ export const ADMIN_EXPENSES = '/admin/expenses';
 export const ADMIN_SOCKET = '/admin/socket';
 export const ADMIN_REPORTS = '/admin/reports';
 export const ADMIN_ORDERS = '/admin/orders';
+export const ADMIN_ADS = '/admin/ads';
 
 // export const ADMIN_DETAILS = '/admin/:id';
 

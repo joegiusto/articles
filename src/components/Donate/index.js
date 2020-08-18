@@ -147,6 +147,7 @@ function CheckoutForm(props) {
 
     }
   };
+  
   return (
     <div className="donate-form">
       <div className="inner">
@@ -240,12 +241,15 @@ function CheckoutForm(props) {
             {error}
           </div>
         )}
+        
         {/* Show a success message upon completion */}
         <p className={succeeded ? "result-message" : "result-message d-none"}>
           Payment succeeded, see the result in your
           <Link to={ROUTES.SETTINGS}>{" "}Account</Link>
           {/* <a
             href={`https://dashboard.stripe.com/test/payments`}
+            target="_"
+            rel="noopener noreferrer"
           >
             {" "}
             Stripe dashboard.

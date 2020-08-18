@@ -3,7 +3,7 @@ module.exports = (app, db) => {
 
     console.log(`Call to /api/getDonations made at ${new Date()}`);
   
-    db.collection("articles_donations").find().toArray(function(err, result) {
+    db.collection("revenues_donations").find().toArray(function(err, result) {
       if (err) throw err;
       console.log(`Call to /api/getDonations done`);
       return res.send(result) 

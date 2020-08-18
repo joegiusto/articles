@@ -102,6 +102,9 @@ class Settings extends Component {
       newsAllLoading: false,
       updatingUserDetails: false,
 
+      previousUserOrders: [],
+      previousUserOrdersLoading: false,
+
       previousUserDonationsLoading: false,
       previousUserDonationsError: false,
       previousUserDonations: [],
@@ -158,10 +161,10 @@ class Settings extends Component {
   }
 
   componentDidMount() {
-    console.log("Subscribe Mounted");
+    // console.log("Subscribe Mounted");
 
     let self = this;
-    console.log('Making changes to subscriptions');
+    // console.log('Making changes to subscriptions');
     // this.setState({ newsAllLoading: true });
 
     // Refresh for the newest info!
@@ -170,8 +173,7 @@ class Settings extends Component {
     axios.get('/api/getIssues')
     .then(function (response) {
 
-      // handle success
-      console.log(response.data);
+      // console.log(response.data);
 
       self.setState({
         allIssues: response.data,
@@ -193,7 +195,7 @@ class Settings extends Component {
     })
     .then(function (response) {
 
-      console.log(response.data);
+      // console.log(response.data);
 
       self.setState({
         previousUserDonations: response.data,
@@ -207,6 +209,39 @@ class Settings extends Component {
       console.log(error);
       self.setState({
         previousUserDonationsLoading: false
+      })
+    });
+
+    this.setState({previousUserOrdersLoading: true})
+
+    axios.post('/api/getUserOrders', {
+      _id: this.props.user_id
+    })
+    .then(function (response) {
+
+      console.log(response.data);
+
+      self.setState({
+        previousUserOrders: response.data,
+        // previousUserOrdersLoading: false
+      }, () => {
+        // self.mergeStuff()
+      });
+
+    })
+    .catch(function (error) {
+
+      console.log(error.response);
+      // if (error.response.data) {
+      //   console.log(error.response.data)
+      // } else {
+      //   console.log(error.response)
+      // }
+      
+
+      self.setState({
+        // previousUserOrders: [],
+        // previousUserOrdersLoading: false
       })
     });
 
@@ -572,6 +607,10 @@ class Settings extends Component {
         {/* <div className="background-image">
           <img src="https://cdn.cheapism.com/images/Where_You_Live_or_Work.2e16d0ba.fill-1440x605.png" alt=""/>
         </div> */}
+
+        <div className="banner">
+          {/* <img src="https://cdn.vox-cdn.com/thumbor/eWyJSxmd-K42xArXNwPbb_tEj2s=/0x0:2000x1333/1200x800/filters:focal(840x507:1160x827)/cdn.vox-cdn.com/uploads/chorus_image/image/65996321/190921_07_40_09_5DS27847.0.jpg" alt=""/> */}
+        </div>
 
         <div className="container">
 
@@ -1027,6 +1066,53 @@ class Settings extends Component {
 
           </div>
 
+          <div className="card settings-card mt-4">
+
+            <div className="card-header">
+              <h5>Order History</h5>
+              <p>Overview of recent orders made</p>
+            </div>
+
+            <div className="card-body">
+
+              <div className="info-snippet p-0">
+
+                <div className="info donations w-100">
+                  <table className="table mb-0">
+                    <thead className="">
+                      <tr>
+                        <th scope="col">Order #</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">For</th>
+                        <th scope="col">Amount</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {this.state.previousUserOrders.map(order => 
+                        <tr className="order">
+                          <th scope="row" className="order-id">{order._id}</th>
+                          <td className="date">{moment(order.date).format('LLL')}</td>
+                          <td className="type">{order.for}</td>
+                          <td className="amount">${(order.payment.total / 100).toFixed(2)}</td>
+                        </tr>  
+                      )}
+                    </tbody>
+
+                    {this.state.previousUserOrdersLoading ? null : this.state.previousUserOrders.length < 1 ? <div className="pl-3 pt-3">No donations to display</div> : ''}
+                    
+                  </table>
+
+                  
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
           <div className="card settings-card mt-4 d-none">
 
             <div className="card-header">
@@ -1086,34 +1172,13 @@ class Settings extends Component {
             <div onClick={this.updateUser} className="btn btn-articles-light">Update</div>
           </div>
 
-          <div className="row d-none">
+          <div className="row justify-content-center mb-5">
 
-            <div className="col-12 col-md-8">
-
-              <div className="name-tag">
-
-                <div className="photo-history">
-
-                  <div className="photo">
-                    <img src={mongoDBuser?.photo_url} alt=""/>
-                  </div>
-
-                  <div className="history">
-                      <div>Member Since: {mongoDBuser?.sign_up_date ? moment.unix(mongoDBuser?.sign_up_date).format('LL') : "Loading"}</div>
-                      <div>Last Online: {mongoDBuser?.last_online_date ? moment.unix(mongoDBuser?.last_online_date).format('LL') : "Loading"}</div>
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
-
-            <div className="col-12 col-md-4 border-left">
+            <div className="col-12 col-md-4">
 
               <div>
-                <span><b>Orders</b></span>
-                <div className="subscription-list ml-3">
+                <span><b>Old Orders</b></span>
+                <div className="subscription-list">
 
                 {mongoDBuser?.ordersFetched ? 
 

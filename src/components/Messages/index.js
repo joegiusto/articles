@@ -315,7 +315,7 @@ class Messages extends Component {
             messages: [
               ...self.state.focus.messages,
               {
-               date: 'Today',
+               date: moment()._d,
                message: self.state.chatMessage,
                sender: self.props.user_id
               }

@@ -20,7 +20,7 @@ const Page = () => (
                 <div className="title">August 2020</div>
                 <div className="text">
                   <ul>
-                    <li>Add the ability to donate</li>
+                    <li><del>Add the ability to donate</del></li>
                     <li>Add the ability to subscribe to tags</li>
                     <li>Weekly updates to users email and Home page.</li>
                     <li>Weekly development updates via Youtube.</li>
@@ -66,6 +66,7 @@ const Page = () => (
                 <div className="text">
                   <ul>
                     <li>Start production of weekly Youtube videos.</li>
+                    <li>Show Github commits of Development roles inside of their employee data.</li>
                   </ul>
                 </div>
               </div>

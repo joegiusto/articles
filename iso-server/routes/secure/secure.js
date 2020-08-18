@@ -3,6 +3,18 @@ var ObjectId = require('mongodb').ObjectId;
 const passport = require("passport");
 const stripe = require('stripe')(process.env.STRIPE_NEW);
 
+function needAdmin(req, res) {
+
+  const { isAdmin } = req.user.roles;
+
+    if (!isAdmin) {
+
+      return res.status(400).send({
+        error: 'Not Admin',
+     })
+    }
+}
+
 module.exports = (app, db) => {
 
   app.post('/api/secure/getUserDetails', passport.authenticate('jwt', {session: false}), (req, res) => {
@@ -147,8 +159,10 @@ module.exports = (app, db) => {
   });
 
   app.post('/api/secure/toggleRole', passport.authenticate('jwt', {session: false}), (req, res) => {
+
+    needAdmin(req, res);
     
-    console.log(`Call to /api/secure/toggleRole made here at ${new Date()} by user ${req.body.user}`);
+    console.log(`Call to /api/secure/toggleRole made at ${new Date()} on user ${req.body.user} by user ${req.user._id}`);
 
     var o_id = new ObjectId(req.body.user);
 
@@ -167,17 +181,10 @@ module.exports = (app, db) => {
     
     return res.send({note: 'worked'});
 
-    // db.collection("articles_users").find({user_id: req.body.user}).toArray(function(err, result) {
-    //   if (err) throw err;
-    //   data.users = result
-    //   console.log(`Call to /api/secure/toggleRole done`)
-    //   return res.send(data);
-    // });
-
   });
 
   app.post("/api/create-payment-intent", async (req, res) => {
-    const { items } = req.body;
+    console.log(req.body)
     // Create a PaymentIntent with the order amount and currency
     const paymentIntent = await stripe.paymentIntents.create({
       amount: req.body.amount,
@@ -188,7 +195,10 @@ module.exports = (app, db) => {
       },
       description: 'User donation to the site',
     });
-    res.send({
+
+    // console.log(paymentIntent)
+
+    res.send({  
       clientSecret: paymentIntent.client_secret
     });
   });
@@ -204,21 +214,22 @@ module.exports = (app, db) => {
     let total = 0;
 
     for (let i = 0; i < products.length; i++) {
-      console.log(products[i]);
+      // console.log(products[i]);
 
       db.collection("articles_products").findOne( {_id: ObjectId(products[i]._id) }, { projection: {title: 1, price: 1} }, function(err, result) {
         console.log(result)
         retrivedProducts[i] = result || {};
         retrivedProducts[i].size = products[i].size;
+        retrivedProducts[i].cart_id = products[i].cart_id;
         total = total + result.price || 0
         setTimeout( () => onceDone(), 2000)
       });
 
       function onceDone() {
-        console.log("Once done called!")
+        // console.log("Once done called!")
 
         if (i === products.length - 1) {
-          console.log(i)
+          // console.log(i)
 
           res.send({
             total: parseFloat( 
@@ -276,15 +287,15 @@ module.exports = (app, db) => {
     const charges = intent.charges.data;
     const charge = charges[0];
 
-    console.log(charge)
+    // console.log(charge)
 
     // const order = await stripe.orders.retrieve(
     //   req.body.payment.paymentIntent.id
     // );
 
-    db.collection("articles_donations").updateOne({ _id: ObjectId() }, {
+    db.collection("revenues_donations").updateOne({ _id: ObjectId() }, {
       $set: {
-        amount: parseInt(charge.amount),
+        amount: parseFloat(charge.amount),
         type: 'card',
         date: moment()._d,
         // name: donation.name,
@@ -295,6 +306,51 @@ module.exports = (app, db) => {
         createdBy: req.body._id,
         // matched: donation.matched,
         // matchedBy: donation.matchedBy
+      }
+    },
+    {
+      upsert: true
+    }, 
+    function(err, result) {
+      if (err) throw err;
+      // console.log(`Call to /api/upsertDonation done`);
+      // return res.send(result);
+
+      res.send({
+        order: result
+      });
+    });
+
+    
+  });
+
+  app.post("/api/userMadePurchase", async (req, res) => {
+
+    const intent = await stripe.paymentIntents.retrieve(
+      req.body.payment.paymentIntent.id
+    );
+
+    const charges = intent.charges.data;
+    const charge = charges[0];
+
+    // console.log(charge)
+
+    // const order = await stripe.orders.retrieve(
+    //   req.body.payment.paymentIntent.id
+    // );
+
+    db.collection("revenues_clothing").updateOne({ _id: ObjectId() }, {
+      $set: {
+        for: 'Clothing Store Order',
+        user_id: req.body.user_id,
+        date: moment()._d,
+        payment: {
+          type: 'card',
+          processFee: parseFloat(0.00),
+          processor: 'Stripe',
+          total: parseFloat(charge.amount),
+          trueTotal: parseFloat(charge.amount)
+        }
       }
     },
     {
@@ -327,7 +383,7 @@ module.exports = (app, db) => {
         source: 'tok_visa'
       })
       .then((charge) => {
-        db.collection("articles_donations").updateOne({ _id: idClean }, {
+        db.collection("revenues_donations").updateOne({ _id: idClean }, {
           $set: {
             amount: donation.amount,
             type: donation.type,
@@ -355,7 +411,7 @@ module.exports = (app, db) => {
         console.log(err)
       });
     } else {
-      db.collection("articles_donations").updateOne({ _id: idClean }, {
+      db.collection("revenues_donations").updateOne({ _id: idClean }, {
         $set: {
           amount: parseInt(donation.amount),
           type: donation.type,
@@ -379,16 +435,50 @@ module.exports = (app, db) => {
     }
   });
 
+  app.post('/api/deleteUser', passport.authenticate('jwt', {session: false}), (req, res) => {
+
+    needAdmin(req, res);
+
+    console.log(`Call to /api/deleteUser made at ${new Date()}`);
+
+    db.collection("articles_users").deleteOne({_id:  ObjectId(req.body._id)}, function(err, res) {
+      if (err) throw err;
+      console.log(`Call to /api/deleteUser done`);
+    });
+
+    return res.end();
+
+  });
+
   app.post('/api/deleteDonation', passport.authenticate('jwt', {session: false}), (req, res) => {
+
+    needAdmin(req, res);
 
     console.log(`Call to /api/deleteDonation made at ${new Date()}`);
 
     // const donation = req.body.donation;
     // const idClean = (req.body._id === '' ? null : ObjectId(req.body._id))
 
-    db.collection("articles_donations").deleteOne({_id:  ObjectId(req.body._id)}, function(err, res) {
+    db.collection("revenues_donations").deleteOne({_id:  ObjectId(req.body._id)}, function(err, res) {
       if (err) throw err;
       console.log(`Call to /api/deleteDonation done`);
+    });
+
+    return res.end();
+
+  });
+
+  app.post('/api/deleteOrder', passport.authenticate('jwt', {session: false}), (req, res) => {
+
+    needAdmin(req, res);
+
+    console.log(`Call to /api/deleteOrder made at ${new Date()}`);
+
+    // TODO - Fetch order that is being deleted and send it somewhere for archive in case someone means harm
+
+    db.collection("revenues_clothing").deleteOne({_id:  ObjectId(req.body._id)}, function(err, res) {
+      if (err) throw err;
+      console.log(`Call to /api/deleteOrder done`);
     });
 
     return res.end();
@@ -481,9 +571,29 @@ module.exports = (app, db) => {
 
     console.log(`Call to /api/getUserDonations made at ${new Date()}`);
   
-    db.collection("articles_donations").find({createdBy: req.body._id}).toArray(function(err, result) {
+    db.collection("revenues_donations").find({createdBy: req.body._id}).toArray(function(err, result) {
       if (err) throw err;
       console.log(`Call to /api/getUserDonations done`);
+      return res.send(result) 
+    });
+
+  });
+
+  app.post('/api/getUserOrders', passport.authenticate('jwt', {session: false}), (req, res) => {
+
+    console.log(`Call to /api/getUserOrders made at ${new Date()}`);
+
+    if (req.body._id === '' || req.body._id === undefined) {
+      // return res.err('{_id: "user_id"} Needed to get orders.') 
+      return res.status(400).send({
+        // route: '/api/getUserOrders',
+        error: '{_id: "user_id"} Needed to get orders',
+     });
+    }
+  
+    db.collection("revenues_clothing").find({user_id: req.body._id}).toArray(function(err, result) {
+      if (err) throw err;
+      console.log(`Call to /api/getUserOrders done`);
       return res.send(result) 
     });
 
@@ -608,6 +718,8 @@ module.exports = (app, db) => {
   });
   
   app.post('/api/deleteExpenseReport', (req, res) => {
+
+    needAdmin(req, res);
 
     console.log(`/api/deleteExpenseReport ${new Date()}`);
 

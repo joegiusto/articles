@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component, useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -16,26 +16,56 @@ import * as KEYS from '../../../constants/public_keys';
 const stripePromise = loadStripe(KEYS.STRIPE_PUBLIC_KEY);
 
 const CheckoutForm = (props) => {
-  const [returnedProducts, setReturnedProducts] = useState([]);
-  const [total, setTotal] = useState(0);
-  const [error, setError] = useState(null);
   const [tax, setTax] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [returnedProducts, setReturnedProducts] = useState([]);
 
+  const prevReturnRef = useRef()
+  const mounted = useRef();
+  
+  useEffect(() => {
+
+    if (!mounted.current) {
+      // do componentDidMount logic
+      mounted.current = true;
+    } else {
+      // do componentDidUpdate logic
+      console.log("UPDATE!")
+      // userProductsToServer()
+      mounted.current = false;
+
+      if (returnedProducts.length !== props.productsUser.length && returnedProducts.length !== 0) {
+        console.log("Not equal, update");
+      }
+    }
+
+    prevReturnRef.current = returnedProducts;
+  });
+  const prevCount = prevReturnRef.current;
+
+  const [succeeded, setSucceeded] = useState(false);
+  const [error, setError] = useState(null);
   const stripe = useStripe();
-  // const [paymentRequest, setPaymentRequest] = useState(null);
+  const [processing, setProcessing] = useState('');
   const [clientSecret, setClientSecret] = useState('');
+  const [disabled, setDisabled] = useState(true);
+  const elements = useElements();
 
   const tryIntent = () => {
     axios.post('/api/create-payment-intent', {
-      amount: 599
+      amount: (total + tax) * 100,
+      _id: props.user_details._id,
+      first_name: props.user_details.first_name,
+      last_name: props.user_details.last_name,
+      email: props.user_details.email
     })
     .then(res => {
-      console.log(res)
-      return res;
+      setClientSecret(res.data.clientSecret);
+      return res.data.clientSecret
     })
-    .then(data => {
-      setClientSecret(data.clientSecret);
-      // return data.clientSecret
+    .then(secret => {
+      // console.log(secret)
+      handleSubmit(secret) 
     })
     .catch(function (error) {
       console.log(error);
@@ -43,9 +73,14 @@ const CheckoutForm = (props) => {
     });
   }
 
-  const userProductsToServer = () => {
-    const productsUserToServer = props.productsUser.map( (product) => { return {
+  let userProductsToServer = () => {
+
+    console.log("sending this to server")
+    console.log(props.productsUser);
+
+    let productsUserToServer = props.productsUser.map( (product) => { return {
       _id: product.note,
+      cart_id: product.id,
       size: product.size
     } } )
 
@@ -58,18 +93,60 @@ const CheckoutForm = (props) => {
       setReturnedProducts(response.data.retrivedProducts)
       setTotal(response.data.total)
       setTax(response.data.tax)
-      tryIntent();
+      // tryIntent();
     })
     .catch(function (error) {
       console.log(error);
     });
   }
 
+  const handleSubmit = async secret => {
+    setProcessing(true);
+    const payload = await stripe.confirmCardPayment(secret, {
+      payment_method: {
+        card: elements.getElement(CardElement),
+        billing_details: {
+          name: `${props.first_name} ${props.last_name}`,
+          email: props.email
+        }
+      }
+    });
+    if (payload.error) {
+      setError(`Payment failed ${payload.error.message}`);
+      setProcessing(false);
+    } else {
+      console.log(payload);
+      setError(null);
+      setProcessing(false);
+      setSucceeded(true);
+
+      axios.post('/api/userMadePurchase', {
+        payment: payload,
+        user_id: props.user_details._id,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    }
+  };
+
   useEffect(() => {
-
     userProductsToServer()
-
   }, []);
+
+  const removeItemAndRefresh = (item, dispatch) => new Promise((resolve, reject) => {
+
+    props.removeExpense({
+      id: item.cart_id
+      // id: item.id
+    });
+
+    resolve()
+  });
 
   const letterToSize = {
     XS: 'Extra Small',
@@ -136,13 +213,27 @@ const CheckoutForm = (props) => {
   
             </div>
   
-            <div className="card mx-3 mb-3 w-100">
+            <div className="payment-details card mx-3 mb-3 w-100">
   
               <div className="card-body">
+                
                 <h3 className="mb-4">Payment</h3>
+
                 <div className='shadow'>
                   <CardElement/>
                 </div>
+
+                <div class="remember-card form-group form-check">
+                  <input type="checkbox" class="form-check-input" id="exampleCheck1"/>
+                  <label class="form-check-label noselect" for="exampleCheck1">Remember Card?</label>
+                </div>
+
+                <small>We do not store any card information on our servers, all information stored with Stripe.</small>
+
+                <div className="stored-cards mt-5">
+                  <small>No saved cards</small>
+                </div>
+
               </div>
   
             </div>
@@ -165,12 +256,29 @@ const CheckoutForm = (props) => {
             <div className="card-body border-top border-dark p-2">
 
               {returnedProducts.map(item => 
-                <li onClick={() => {
+                <li key={item._id} onClick={() => {
+
                   console.log(item._id)
-                  props.dispatch(removeExpense({
-                    id: item._id
-                  }));
+
+                  // props.dispatch(props.removeExpense({
+                  //   id: item._id
+                  // }));
+
+                  removeItemAndRefresh(item, 'dispatch')
+                  .then( thing => {
+                    console.log("DONE")
+                    console.log(props.productsUser)
+                    // userProductsToServer()
+                  })
+
+                  // props.removeExpense({
+                  //   id: item.cart_id
+                  // })
+
+                  // setTimeout(() => userProductsToServer(), 2000)
+                  
                   // props.history.push('/');
+
                 }} className="cart-item list-group-item d-flex justify-content-between lh-condensed shadow-sm">
                   <div>
                     <h6 className="my-0">{item.title}</h6>
@@ -216,8 +324,29 @@ const CheckoutForm = (props) => {
             </div>
 
             <div className="card-body border-top border-dark p-2">
-              <button className="btn btn-articles-light w-100">Checkout</button>
+              <button onClick={() => tryIntent()} className="btn btn-articles-light w-100">Checkout</button>
               <div className="small text-center pt-2 w-100">You will be charged when you click the button</div>
+
+              {/* Show any error that happens when processing the payment */}
+              {error && (
+                <div className="card-error" role="alert">
+                  {error}
+                </div>
+              )}
+
+              {/* Show a success message upon completion */}
+              <p className={succeeded ? "result-message" : "result-message d-none"}>
+                Payment succeeded, see the result in your
+                <Link to={ROUTES.SETTINGS}>{" "}Account</Link>
+                {/* <a
+                  href={`https://dashboard.stripe.com/test/payments`}
+                >
+                  {" "}
+                  Stripe dashboard.
+                </a>  */}
+                {/* Refresh the page to pay again. */}
+              </p>
+
             </div>
 
           </div>
@@ -233,7 +362,8 @@ const CheckoutPage = (props) => (
   <div className='checkout-page container'>
 
     <Elements stripe={stripePromise}>
-      <CheckoutForm {...props}></CheckoutForm>
+      {/* <CheckoutForm {...props}></CheckoutForm> */}
+      <Test></Test>
     </Elements>
 
   </div>
@@ -249,4 +379,5 @@ const mapStateToProps = (state) => {
 // const CheckoutPageNewConnected = connect(mapStateToProps)(CheckoutForm);
 
 // export default CheckoutPage;
-export default connect(mapStateToProps)(CheckoutPage);
+const Test = connect(mapStateToProps, { removeExpense })(CheckoutForm);
+export default connect(mapStateToProps, { removeExpense })(CheckoutPage);

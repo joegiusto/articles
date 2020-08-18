@@ -5,7 +5,7 @@ module.exports = (app, db) => {
 
     let data = {};
 
-    db.collection("articles_donations").find().toArray(function(err, result) {
+    db.collection("revenues_donations").find().toArray(function(err, result) {
       if (err) throw err;
       data.donations = result;
       return res.send(data);
