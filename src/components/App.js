@@ -36,6 +36,7 @@ import StoreManage from './Store/Manage'
 import NewsPage from './News'
 // Moved to Admin
 // import NewsManagePage from './News/Manage'
+import ExtendedPage from './News/Extended/single.js'
 
 import IssuesPage from './News/Issues'
 import IssuePage from './News/Issues/single.js'
@@ -177,16 +178,20 @@ class AppBase extends Component {
               <Route path={ROUTES.REPORTS} component={ReportsPage} exact={true}/>
               <Route path={ROUTES.REPORTS_CHARTS} component={ReportsPage} exact={true}/>
               <Route path={ROUTES.REPORTS_REPORT} component={ReportsPage} exact={true}/>
-
               <Route path={ROUTES.EMPLOYEES} component={ReportsPage} exact={true}/>
               <Route path={ROUTES.EMPLOYEES_DETAILS} component={ReportsPage} />
         
               <Route exact path={ROUTES.STORE} component={StorePage} />
               <Route exact path={ROUTES.STORE_VIEW} component={StorePage} />
               <Route path={ROUTES.CHECKOUT} component={StoreCheckoutPage} />
+
+              <Route exact path={ROUTES.STORE_PRODUCTS} component={StorePage} />
+              <Route exact path={ROUTES.STORE_COLLECTIONS} component={StorePage} />
   
-              <Route exact path={ROUTES.STORE_ORDERS} component={OrdersPage}/>
+              <Route exact path={ROUTES.STORE_ORDERS} component={StorePage}/>
               <Route path={ROUTES.STORE_ORDERS_DETAILS} component={SingleOrderPage}/>
+
+              <Route exact path={ROUTES.STORE_SAVED} component={StorePage} />
   
               <Route path={ROUTES.STORE_SUBMISSIONS} component={StoreSubmissionsPage} />
               <Route path={ROUTES.STORE_SUBMISSIONS_SUBMIT} component={StoreSubmissionsSubmitPage}/>
@@ -195,19 +200,17 @@ class AppBase extends Component {
         
               <Route exact path={ROUTES.NEWS} component={NewsPage} />
   
-              {/* <Route path={ROUTES.STORIES} component={StoriesPage} exact={true}/> */}
+              <Route path={ROUTES.EXTENDED} component={NewsPage}></Route>
+              <Route path={ROUTES.EXTEND} component={ExtendedPage}></Route>
+
               <Route path={ROUTES.STORIES} component={NewsPage} exact={true}/>
               <Route path={ROUTES.STORY} component={StoryPage}/>
-              {/* <Route path={ROUTES.ISSUES} component={IssuesPage} exact={true}/> */}
+
               <Route path={ROUTES.ISSUES} component={NewsPage} exact={true}/>
               <Route path={ROUTES.ISSUE} component={IssuePage}/>
-              {/* <Route path={ROUTES.MYTHS} component={MythsPage} exact={true}/> */}
+
               <Route path={ROUTES.MYTHS} component={NewsPage} exact={true}/>
               <Route path={ROUTES.MYTH} component={MythPage}/>
-              
-              {/* Moved to admin page */}
-              {/* <Route exact path={ROUTES.MANAGE} component={NewsManagePage} /> */}
-              {/* <Route path={ROUTES.MANAGE_DETAILS} component={NewsManagePage} /> */}
   
               <Route path={ROUTES.TOWN_HALL} component={TownHallPage} />
         

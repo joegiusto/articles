@@ -12,7 +12,7 @@ class OrdersPage extends Component {
     super(props);
 
     this.state = {
-      order_id: props.match.params.id,
+      order_id: props.match?.params?.id || '',
       order: {},
       orderLoading: false
     }

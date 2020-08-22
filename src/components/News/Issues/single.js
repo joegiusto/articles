@@ -72,15 +72,15 @@ class Issue extends React.Component {
     if ( this.props.user._id ) {
       console.log("Is a user")
 
-      console.log(this.props.user?.subscriptions)
-      console.log(this.state._id)
+      // console.log(this.props.user?.subscriptions)
+      // console.log(this.state._id)
 
       const lastDate = this.props.user?.subscriptions.find(x => x.news_id === this.state._id)
 
       // console.log(lastDate)
 
       this.setState({
-        lastRead: lastDate?.lastRead
+        lastRead: lastDate?.lastRead || undefined
       })
 
       axios.post('/api/updateLastRead', {
@@ -89,9 +89,12 @@ class Issue extends React.Component {
       })
       .then(function (response) {
 
+        console.log("We got a response")
         console.log(response);
 
         if (response.data !== "Was not subscribed to issues") {
+
+
           self.props.updateSubscriptionToIssue({
             news_id: self.state._id,
             // lastRead: moment('July 30 2020')

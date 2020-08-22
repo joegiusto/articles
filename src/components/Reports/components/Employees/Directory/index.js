@@ -121,7 +121,7 @@ class EmployeePageDetails extends Component {
             <p className="employee-header-traits-title">Role</p>
             <p className="employee-header-traits-details">{employee.employee?.role.map((role) => <span className="badge badge-dark mr-1">{role}</span>) || 'NONE'}</p>
             <p className="employee-header-traits-title">Joined</p>
-            <p className="employee-header-traits-details">{moment.unix(employee.sign_up_date).format('LL') || 'ERROR'}</p>
+            <p className="employee-header-traits-details">{moment(employee.sign_up_date).format('LL') || 'ERROR'}</p>
           </div>
 
         </div>

@@ -94,7 +94,12 @@ class IssuesClass extends Component {
 
             {
             this.props.site.userSubscriptions ? this.props.user_subscriptions.map((document, i) => (
-              <NewsCard key={i} document={document}/>
+              <div>
+                {/* {moment(document.last_update).format("LLL")}
+                {moment(document.lastRead).format("LLL")}
+                {moment(document.last_update).isSameOrAfter(document.lastRead) ? 'True' : 'False'} */}
+                <NewsCard key={i} hasUpdate={ moment(document.last_update).isSameOrAfter(document.lastRead) } document={document}/>
+              </div>
             ))
             :
             (this.props.issues.issues.map((document, i) => (
@@ -117,6 +122,7 @@ class IssuesClass extends Component {
             isAuth={this.props.isAuth}
             issue={issue}
             podcast={false}
+            isNew={ moment(issue.last_update).isSameOrAfter(issue.lastRead) }
             podcastDay=""
             topText="Rising Cost"
             dateType={this.props.site?.dateType}

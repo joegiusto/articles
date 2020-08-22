@@ -27,8 +27,13 @@ export const EMPLOYEES_DETAILS = '/reports/employees/:id'
 export const STORE ='/store'
 export const STORE_VIEW ='/store/view/:id'
 
+export const STORE_PRODUCTS ='/store/products'
+export const STORE_COLLECTIONS ='/store/collections'
+
 export const STORE_ORDERS ='/store/orders'
 export const STORE_ORDERS_DETAILS ='/store/orders/:id'
+
+export const STORE_SAVED ='/store/saved'
 
 export const CHECKOUT = '/store/checkout';
 
@@ -40,10 +45,16 @@ export const STORE_MANAGE_DETAILS ='/store/manage/:id'
 
 // News
 export const NEWS ='/news'
+
+export const EXTENDED ='/news/extended'
+export const EXTEND ='/news/extended/:id'
+
 export const STORIES ='/news/stories'
 export const STORY ='/news/stories/:id'
+
 export const ISSUES ='/news/issues'
 export const ISSUE = '/news/issues/:id'
+
 export const MYTHS ='/news/myths'
 export const MYTH ='/news/myths/:id'
 

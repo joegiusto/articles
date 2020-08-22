@@ -76,27 +76,34 @@ const StepTwo = (props) => (
            {/* Joey Giusto - I did question which should go first after putting Male here first and wondering why I did that. Alphabetical is the way for me */}
 
           <div onClick={() => (props.changeCut('female'))} className={"female-sign" + (props.clothingCut === 'female' ? ' active' : '') + (props.clothingCut === '' ? '' : props.clothingCut === 'other' ? '' : props.clothingCut === 'skip' ? '' : ' collapsed')}>
-            <div className="text">Female</div>
+            <div className="text">Women</div>
             <div className="shape">
               <div className="icon"><i className="fas fa-female"></i></div>
             </div>
           </div>
   
           <div onClick={() => (props.changeCut('male'))} className={"male-sign" + (props.clothingCut === 'male' ? ' active' : '') + (props.clothingCut === '' ? '' : props.clothingCut === 'other' ? '' : props.clothingCut === 'skip' ? '' : ' collapsed')}>
-            <div className="text">Male</div>
+            <div className="text">Men</div>
             <div className="shape">
               <div className="icon"><i className="fas fa-male"></i></div>
+            </div>
+          </div>
+
+          <div onClick={() => (props.changeCut('skip'))} className={"male-sign" + (props.clothingCut === 'skip' ? ' active' : '') + (props.clothingCut === '' ? '' : props.clothingCut === 'other' ? '' : props.clothingCut === 'skip' ? '' : ' collapsed')}>
+            <div className="text">Skip</div>
+            <div className="shape">
+              <div className="icon"><i className="far fa-arrow-alt-circle-right"></i></div>
             </div>
           </div>
           
         </div>
   
-        <div onClick={() => (props.changeCut('skip'))} className={"skip-sign" + (props.clothingCut === 'skip' ? ' active' : '') + (props.clothingCut === '' ? '' : props.clothingCut === 'other' ? '' : props.clothingCut === 'skip' ? '' : ' collapsed')}>
+        {/* <div onClick={() => (props.changeCut(''))} className={"skip-sign" + (props.clothingCut === '' ? ' active' : '') + (props.clothingCut === '' ? '' : props.clothingCut === 'other' ? '' : props.clothingCut === 'skip' ? '' : ' collapsed')}>
           <div className="text">Skip</div>
           <div className="shape">
             <div className="icon"><i className="far fa-arrow-alt-circle-right"></i></div>
           </div>
-        </div>
+        </div> */}
 
       </div>
 
@@ -110,6 +117,7 @@ const StepTwo = (props) => (
       <h5 className="intro-title mt-4" style={{fontSize: '1rem', lineHeight: '1rem'}}>Shirt Size</h5>
       
       <div className="clothing-tag-container">
+        <ClothingTag changeShirtSize={props.changeShirtSize} stateSize={props.shirtSize} size={"SKIP"}></ClothingTag>
         <ClothingTag changeShirtSize={props.changeShirtSize} stateSize={props.shirtSize} size={"XS"}></ClothingTag>
         <ClothingTag changeShirtSize={props.changeShirtSize} stateSize={props.shirtSize} size={"S"}></ClothingTag>
         <ClothingTag changeShirtSize={props.changeShirtSize} stateSize={props.shirtSize} size={"M"}></ClothingTag>
@@ -117,33 +125,15 @@ const StepTwo = (props) => (
         <ClothingTag changeShirtSize={props.changeShirtSize} stateSize={props.shirtSize} size={"XL"}></ClothingTag>
         <ClothingTag changeShirtSize={props.changeShirtSize} stateSize={props.shirtSize} size={"2XL"}></ClothingTag>
         <ClothingTag changeShirtSize={props.changeShirtSize} stateSize={props.shirtSize} size={"3XL"}></ClothingTag>
-        <ClothingTag changeShirtSize={props.changeShirtSize} stateSize={props.shirtSize} size={"MORE"}></ClothingTag>
-        <ClothingTag changeShirtSize={props.changeShirtSize} stateSize={props.shirtSize} size={"4XL"} isMore={true} canShow={props.canShow}></ClothingTag>
-        <ClothingTag changeShirtSize={props.changeShirtSize} stateSize={props.shirtSize} size={"SKIP"} isMore={true} canShow={props.canShow}></ClothingTag>
-        <ClothingTag changeShirtSize={props.changeShirtSize} stateSize={props.shirtSize} size={"OTHER"} isMore={true} canShow={props.canShow} isInput={true}></ClothingTag>
       </div>
 
     </div>
 
     <div className={"shoe-section mb-5" + (props.clothingCut === '' ? ' d-none' : props.clothingCut === 'other' ? ' d-none' : props.clothingCut === 'skip' ? ' d-none' : '')}>
-      <h5 className="intro-title mt-4" style={{fontSize: '1rem', lineHeight: '1rem'}}>Shoe Size (US)</h5>
+      <h5 className="intro-title mt-4" style={{fontSize: '1rem', lineHeight: '1rem'}}>Shoe Size (Inch)</h5>
 
       <div className="sizes">
-        <NewShoeTag clothingCut={props.clothingCut} changeShoeSize={props.changeShoeSize} mondoSize={37.5} shoeSize={props.shoeSize} femaleSize={6.5} maleSize={5}/>
-        <NewShoeTag clothingCut={props.clothingCut} changeShoeSize={props.changeShoeSize} mondoSize={38} shoeSize={props.shoeSize} femaleSize={7} maleSize={5.5}/>
-        <NewShoeTag clothingCut={props.clothingCut} changeShoeSize={props.changeShoeSize} mondoSize={38.5} shoeSize={props.shoeSize} femaleSize={7.5} maleSize={6}/>
-        <NewShoeTag clothingCut={props.clothingCut} changeShoeSize={props.changeShoeSize} mondoSize={39.5} shoeSize={props.shoeSize} femaleSize={8} maleSize={6.5}/>
-        <NewShoeTag clothingCut={props.clothingCut} changeShoeSize={props.changeShoeSize} mondoSize={40} shoeSize={props.shoeSize} femaleSize={8.5} maleSize={7}/>
-        <NewShoeTag clothingCut={props.clothingCut} changeShoeSize={props.changeShoeSize} mondoSize={40.5} shoeSize={props.shoeSize} femaleSize={9} maleSize={7.5}/>
-        <NewShoeTag clothingCut={props.clothingCut} changeShoeSize={props.changeShoeSize} mondoSize={41.5} shoeSize={props.shoeSize} femaleSize={9.5} maleSize={8}/>
-        <NewShoeTag clothingCut={props.clothingCut} changeShoeSize={props.changeShoeSize} mondoSize={42} shoeSize={props.shoeSize} femaleSize={10} maleSize={8.5}/>
-        <NewShoeTag clothingCut={props.clothingCut} changeShoeSize={props.changeShoeSize} mondoSize={42.5} shoeSize={props.shoeSize} femaleSize={10.5} maleSize={9}/>
-        <NewShoeTag clothingCut={props.clothingCut} changeShoeSize={props.changeShoeSize} mondoSize={43} shoeSize={props.shoeSize} femaleSize={11} maleSize={9.5}/>
-        <NewShoeTag clothingCut={props.clothingCut} changeShoeSize={props.changeShoeSize} mondoSize={44} shoeSize={props.shoeSize} femaleSize={11.5} maleSize={10}/>
-        <NewShoeTag clothingCut={props.clothingCut} changeShoeSize={props.changeShoeSize} mondoSize={44.5} shoeSize={props.shoeSize} femaleSize={12} maleSize={10.5}/>
-        <NewShoeTag clothingCut={props.clothingCut} changeShoeSize={props.changeShoeSize} mondoSize={45} shoeSize={props.shoeSize} femaleSize={12.5} maleSize={11}/>
-        <NewShoeTag clothingCut={props.clothingCut} changeShoeSize={props.changeShoeSize} mondoSize={45.5} shoeSize={props.shoeSize} femaleSize={13} maleSize={11.5}/>
-        <NewShoeTag clothingCut={props.clothingCut} changeShoeSize={props.changeShoeSize} mondoSize={46.5} shoeSize={props.shoeSize} femaleSize={13.5} maleSize={12}/>
+        <NewShoeTag clothingCut={props.clothingCut} changeShoeSize={props.changeShoeSize} shoeSize={props.shoeSize} selection={"W 5 / M 3.5"}/>
       </div>
 
     </div>

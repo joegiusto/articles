@@ -95,6 +95,11 @@ function SearchHead(props) {
       }
       // code block
       break;
+    case "/news/extended":
+      activePage = {
+        title: "Coronavirus",
+        desc: "One stop shop to understanding and protecting yourself and others from illness."
+      }
     default:
       // code block
   }
@@ -144,7 +149,7 @@ function SearchHead(props) {
           onChange={props.onChange} 
           type="text" 
           className="form-control"
-          placeholder={props.userSubscriptions ? "Only works on 'All Issues' sort" : ""}
+          // placeholder={props.userSubscriptions ? "Only works on 'All Issues' sort" : ""}
           />
 
           <select name="" id="">
@@ -223,10 +228,14 @@ function SearchHead(props) {
         </div>
 
         <a href="https://www.youtube.com/channel/UCeftkiTtcniDx87GqoEmFAg" target="_blank" rel="noopener noreferrer" className="extra-panel youtube">
+
           <div className="info">Last Upload: <span className="badge badge-light">Never</span></div>
+
           <div className="background">
             <img src="https://turbologo.com/articles/wp-content/uploads/2019/10/youtube-logo-illustration-1280x720.jpg" alt=""/>
           </div>
+
+          <div className="hover-notice">Open Tab For https://youtube.com</div>
         </a>
 
       </div>
@@ -271,6 +280,16 @@ class NewsCard extends Component {
       <Link to={this.renderRoute(this.props.document.news_type) + '/' + this.props.document.url}>
         <div className="content">
           <div className="date">{moment(this.props.document.news_date).format("L")}</div>
+
+          {this.props.hasUpdate ? 
+          <div className="update">
+            <i className="fas fa-star"></i>
+            <span>Update</span>
+          </div>
+          :
+          null
+          }
+          
           <div className="title">{this.props.document.news_title}</div>
           <img src={this.props.document.hero_url} alt="" className="background"/>
           <div className="filter"></div>
@@ -569,16 +588,18 @@ class Frontpage extends Component {
                 </div>
               </Link>
 
-              {/* <h5 className="title mt-3">Feature</h5>
+              <div className="grow"></div>
 
-              <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS}>
-                <div className={"link " + (this.props.location.pathname === "/news/coronavirus" ? 'active' : null)}>
+              <h5 className="title mt-3">Feature</h5>
+
+              <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.EXTENDED + '/coronavirus'}>
+                <div className={"link frontpage " + (this.props.location.pathname === "/news/extended/coronavirus" ? 'active' : null)}>
                   <i className="fas fa-lungs-virus"></i>
                   <div className="text">Coronavirus</div>
                 </div>
               </Link>
 
-              <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS}>
+              {/* <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS}>
                 <div className={"link " + (this.props.location.pathname === "/news/coronavirus" ? 'active' : null)}>
                   <i className="fas fa-fist-raised"></i>
                   <div className="text">Black Lives Matter</div>
@@ -594,6 +615,10 @@ class Frontpage extends Component {
         <div onClick={() => this.setState({weatherOverlay: !this.state.weatherOverlay})} className={"weather-overlay " + (this.state.weatherOverlay ? 'show' : '')}>
           
           <div className="weather-content">
+
+            <div className="bar">
+              <h2>Weather</h2>
+            </div>
 
             <div className="header">
 
@@ -674,7 +699,7 @@ class Frontpage extends Component {
             <div className="row mb-3 justify-content-between">
   
               {/* Left Side */}
-              <div className="col-12 col-md-12 px-md-0">
+              <div className="col-12 col-md-12">
 
               <SearchHead 
               zip={this.props.user_details.address?.zip || 'None'} 
@@ -704,6 +729,23 @@ class Frontpage extends Component {
                   <Route exact path={ROUTES.STORIES} render={() => <Stories searchText={this.state.search}></Stories>}/>
                   <Route exact path={ROUTES.ISSUES} render={() => <Issues searchText={this.state.search}></Issues> }/>
                   <Route exact path={ROUTES.MYTHS} render={() => <Myths searchText={this.state.search}></Myths> }/>
+                  <Route exact path={ROUTES.EXTEND} render={() => (
+                    <div>
+
+                      <h5>Important Links</h5>
+                      <ul>
+                        <li><a target="_blank" rel="noopener noreferrer" href="https://news.google.com/covid19/map?hl=en-US&gl=US&ceid=US%3Aen&mid=%2Fm%2F09c7w0">Google Interactive Map and Stats</a></li>
+                        <li><a target="_blank" rel="noopener noreferrer" href="https://www.cdc.gov/coronavirus/2019-ncov/index.html">Offical CDC Coronavirus Website</a></li>
+                      </ul>
+
+                      <h5>Misconceptions and Media Lies Debunked</h5>
+
+                      <h5>Quick Images</h5>
+
+                      <h5>Latest Predictions</h5>
+
+                    </div>
+                  )}/>
                 </Switch>
 
               <div className="load-more-button my-5 d-none">

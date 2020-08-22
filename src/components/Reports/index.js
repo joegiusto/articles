@@ -456,8 +456,17 @@ class Reports extends Component {
       case 'payroll':
         return(<PayrollTable/>)
       case 'revenue':
-
-        const megaGroup = [...this.state.revenues_clothing, ...this.state.reportsData.revenue.donations]
+        const megaGroup = [...this.state.revenues_clothing.map(order => {
+          // var o = Object.assign({}, order);
+          order.type = 'Store Sale';
+          order.unifiedPrice = order.payment.trueTotal
+          return order;
+        }), ...this.state.reportsData.revenue.donations.map(order => {
+          // var o = Object.assign({}, order);
+          order.type = 'Donation';
+          order.unifiedPrice = order.amount
+          return order;
+        })]
 
         return(
           <table className='table articles-table table-sm table-hover table-bordered'>
@@ -465,12 +474,16 @@ class Reports extends Component {
               <tr className="table-articles-head">
                 {/* <th scope="col">Order #</th> */}
                 <th scope="col">Date</th>
-                <th scope="col">Name</th>
+                <th scope="col">Type</th>
+                {/* <th scope="col">Name</th> */}
                 <th scope="col">Order Summary</th>
                 <th className='text-right' scope="col">Total</th>
               </tr>
             </thead>
             <tbody>
+
+              {console.log("Logging mega")}
+              {console.log(megaGroup)}
 
               {megaGroup.map(sale => 
                 // <div className="sale">
@@ -478,9 +491,10 @@ class Reports extends Component {
                 // </div>
                 <tr>
                   <td colSpan="1" className="border-right-0 ">{moment(sale.date).format("LLL")}</td>
+                  <td colSpan="1" className="border-right-0 ">{sale.type}</td>
+                  {/* <td colSpan="1" className="border-right-0 "></td> */}
                   <td colSpan="1" className="border-right-0 "></td>
-                  <td colSpan="1" className="border-right-0 "></td>
-                  <td colSpan="1" className="border-right-0 "></td>
+                  <td colSpan="1" className="border-right-0 ">${(sale.unifiedPrice / 100).toFixed(2)}</td>
                 </tr>
               )}
 
@@ -1101,7 +1115,7 @@ class RevenueTable extends Component {
 }
 
 class ExpenseTable extends Component {
-   constructor(props) {
+  constructor(props) {
      super(props);
 
       this.state = {
@@ -1131,32 +1145,65 @@ class ExpenseTable extends Component {
   render () {
     const { donationsFirebase, loading, limit, page } = this.state;
 
-    var render = undefined
-
-    render = this.props.reportsData.expenses.other
-
-    // if (this.props.fetch === 'donations') {
-    //   render = this.props.reportsData.revenue.donations
-    // } else if (this.props.fetch === 'expenses') {
-    //   render = this.props.reportsData.expenses.other
-    // }
-
     return (
       <div>
         {loading && <div className="p-2">Loading data...</div>}
-        {donationsFirebase ? (
-        <div>
-          <StyledDonationList
-            donationsFirebase={render}
-            changeLimit={this.changeLimit}
-            changePage={this.changePage}
-            limit={limit}
-            page={page}
-            fetch={this.props.fetch}
-          />
-        </div>
-        ) : (
-        <div>There are no {this.props.fetch} yet ...</div>
+        {donationsFirebase ? 
+
+        <table className="table articles-table table-sm table-hover table-bordered">
+          <thead>
+            <tr className="table-articles-head">
+              <th scope="col">File</th>
+              <th scope="col">DATE</th>
+              <th scope="col">TYPE</th>
+              <th scope="col">FOR</th>
+              <th scope="col">AMOUNT</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.props.reportsData.expenses.other
+            .sort((a, b) => new Date(b.date) - new Date(a.date))
+            .map(donation => (
+
+              <tr>
+                <td><a rel="noopener noreferrer" target="_blank" href={donation.file}><i className="fas fa-file-invoice mr-0"></i></a></td>
+                <td>{moment(donation.date).format('LL')}</td>
+                <td>Recurring</td>
+                <td>{donation.reason}</td>
+                <td>${(donation.amount / 100).toFixed(2)}</td>
+              </tr>
+
+            ))}
+            <tr>
+              <td colSpan='3' className="border-right-0 table-articles-head">
+
+                  <div className="results-dual-header">
+
+                    {/* <div className="page noselect">
+                      <i onClick={() => props.changePage(props.page - 1)} className="fas fa-chevron-circle-left"></i>
+                      Page {props.page}/1
+                      <i onClick={() => props.changePage(props.page + 1)} style={{marginLeft: '10px'}} className="fas fa-chevron-circle-right"></i>
+                    </div> */}
+                  
+                    {/* <span className="results noselect">
+                      <span>Results:</span>
+                      <span onClick={() => props.changeLimit(10)} className={"result" + (props.limit === 10 ? ' result-active' : '')}>10</span>
+                      <span onClick={() => props.changeLimit(50)} className={"result" + (props.limit === 50 ? ' result-active' : '')}>50</span>
+                      <span onClick={() => props.changeLimit(100)} className={"result" + (props.limit === 100 ? ' result-active' : '')}>100</span>
+                      <span onClick={() => props.changeLimit(250)} className={"result" + (props.limit === 250 ? ' result-active' : '')}>250</span>
+                    </span> */}
+
+                  </div>
+
+              </td>
+
+              <td colSpan="1" className="border-right-0 text-right table-articles-head">Total:</td>
+              <td colSpan="1" className="border-left-0 table-articles-head">${(this.props.reportsData.expenses.other.reduce((a, b) => a + (parseInt(b['amount'] || 0)), 0) / 100).toFixed(2)}</td>
+            </tr>
+          </tbody>
+        </table>
+        : (
+        <div>Error</div>
         )}
 
       </div>
@@ -1166,10 +1213,10 @@ class ExpenseTable extends Component {
 
 const StyledDonationList = (props) => (
   <div className="full-table">
+
     <table className="table articles-table table-sm table-hover table-bordered">
       <thead>
         <tr className="table-articles-head">
-          {/* <th scope="col">DONATION ID</th> */}
           {props.fetch === 'expenses' ? <th scope="col">File</th> : undefined}
           <th scope="col">DATE</th>
           {props.fetch === 'expenses' ? undefined : <th scope="col">NAME</th>}

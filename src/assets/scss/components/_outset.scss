@@ -766,6 +766,7 @@
     }
   
     .shirt-section{
+
       .small-tag-wrap {
         position: relative;
         filter: drop-shadow(0px 0px 2px rgba(50, 50, 0, 0.5));
@@ -782,6 +783,7 @@
           padding: 1rem 3rem 1rem 3rem;
           font: bold 16px system-ui;
           clip-path: polygon(30px 0%, 100% 0%, 100% 100%, 30px 100%, 0 50%);
+
           &.active {
             background: $accent-color;
           }
@@ -805,6 +807,7 @@
       .tag-wrap {
         position: relative;
         filter: drop-shadow(0px 0px 2px rgba(50, 50, 0, 0.5));
+
         .tag {
           transform: rotate(45deg);
           cursor: pointer;
@@ -875,7 +878,7 @@
           clip-path: polygon(30px 0%, 100% 0%, 100% 100%, 30px 100%, 0 50%);
           // width: 100px;
           height: 100%;
-          background-color: #ffb7b7;
+          background-color: $base-color;
   
           .size {
             position: absolute;

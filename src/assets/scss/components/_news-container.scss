@@ -94,7 +94,7 @@ section.frontpage-section {
         padding-bottom: 3rem;
 
         @include media-breakpoint-up(md) {
-          width: 50%;
+          width: 20%;
           margin-bottom: 0rem;
         }
 
@@ -146,33 +146,35 @@ section.frontpage-section {
       }
 
       .search-panel {
-        margin-left: 1rem;
-        width: 50%;
+        margin-left: 0.5rem;
+        width: 40%;
       }
 
-      .extra-panels {
-        flex-grow: unset;
+      // .extra-panels {
+      //   flex-grow: unset;
+      //   flex-direction: row;
 
-        @include media-breakpoint-down(md) {
-          flex-direction: row;
-          display: none;
-        }
+      //   @include media-breakpoint-down(md) {
+      //     flex-direction: row;
+      //     display: none;
+      //   }
 
-        .extra-panel {
-          width: 100px;
+      //   .extra-panel {
+      //     width: 300px;
+      //     height: 100%;
 
-          &:hover {
+      //     &:hover {
 
-            .slideup {
-              display: none!important;
-            }
-          }
+      //       .slideup {
+      //         display: none!important;
+      //       }
+      //     }
 
-          .info {
-            display: none;
-          }
-        }
-      }
+      //     .info {
+      //       display: none;
+      //     }
+      //   }
+      // }
     }
 
     .active-page-panel {
@@ -341,15 +343,22 @@ section.frontpage-section {
       flex-grow: 1;
       margin-top: 1rem;
 
+      flex-direction: row;
+
+      @include media-breakpoint-down(md) {
+        flex-direction: row;
+        display: none;
+      }
+
       @include media-breakpoint-up(md) {
         // margin: 0rem 1rem;
         margin-top: 0rem;
-        margin-left: 1rem;
+        margin-left: 0.5rem;
       }
   
       .extra-panel {
         position: relative;
-        height: 50%;
+        height: 100%;
         cursor: pointer;
         z-index: 0;
         background-color: rgba(255, 255, 255, 0);
@@ -365,7 +374,7 @@ section.frontpage-section {
         width: 100%;
 
         &:not(:first-child) {
-          margin-top: 0.75rem;
+          margin-top: 0rem;
         }
 
         .content {
@@ -449,7 +458,30 @@ section.frontpage-section {
         }
 
         &.youtube {
-          // border-bottom: 3px solid red;
+
+          &:hover {
+            .hover-notice {
+              opacity: 1;
+              transform: translateX(-50%) translateY(0%);
+            }
+          }
+          
+          .hover-notice {
+            pointer-events: none;
+            opacity: 0;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 100%;
+            text-align: center;
+            padding: 1rem;
+            transform: translateX(-50%) translateY(100%);
+            transition-duration: 200ms;
+          }
+          
+          @include media-breakpoint-up(md) {
+            margin-left: 0.5rem;
+          }
 
           .background {
             width: 100%;
@@ -468,9 +500,6 @@ section.frontpage-section {
 
         &.weather {
           overflow: hidden;
-          // border-bottom: 3px solid green;
-          // z-index: 0;
-          // background-color: rgba(255, 255, 255, 0);
 
           &:hover {
             .slideup {
@@ -488,15 +517,6 @@ section.frontpage-section {
           }
         }
 
-        @include media-breakpoint-up(md) {
-          // width: calc(50%);
-          // display: inline-flex;
-          // margin: 0rem 1rem;
-
-          &:not(:first-child) {
-            margin-top: 0.5rem;
-          }
-        }
       }
     }
   }
@@ -562,22 +582,16 @@ section.frontpage-section {
     }
 
     .content {
-      // position: sticky;
-      // margin-top: -50px;
-      // top: calc(0px);
-      // padding-top: 5rem;
-      // transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+
       left: 0px;
       padding-right: 1rem;
       padding-left: 1rem;
-      // margin-left: 1rem;
-      // margin-right: 1rem;
-
       overflow-y: scroll;
-      // width: 100%;
-      // overflow-x: hidden;
       overflow-x: hidden;
       max-height: calc(100vh - 50px);
+      height: 100%;
 
       @include media-breakpoint-down(md) {
         padding-right: 0rem;
@@ -832,6 +846,13 @@ section.frontpage-section {
       }
 
       .menu {
+        display: flex;
+        flex-grow: 1;
+        flex-direction: column;
+
+        .grow {
+          flex-grow: 1;
+        }
         
         @include media-breakpoint-down(md) {
           display: none;
@@ -931,14 +952,18 @@ section.frontpage-section {
       width: 80%;
       height: 70%;
       background-color: #fff;
-      box-shadow: 2px 2px 2px #ffb7b7, -4px -4px 2px #f9edcd;
-      border: solid 3px #000;
+      // box-shadow: 2px 2px 2px #ffb7b7, -4px -4px 2px #f9edcd;
+      // border: solid 3px #000;
       margin-right: 5px;
       margin-left: 5px;
       max-width: 800px;
       display: flex;
       flex-direction: column;
       flex-wrap: wrap;
+
+      .bar {
+        height: 50px;
+      }
 
       .header {
         position: relative;
@@ -1003,12 +1028,12 @@ section.frontpage-section {
     margin-top: 1rem;
     width: 100%;
     max-width: 1920px;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    // padding-left: 1rem;
+    // padding-right: 1rem;
 
     @include media-breakpoint-down(md) {
-      padding-left: 0rem;
-      padding-right: 0rem;
+      // padding-left: 0rem;
+      // padding-right: 0rem;
     }
 
     @include media-breakpoint-up(lg) {
@@ -1227,6 +1252,7 @@ section.frontpage-section {
           position: absolute;
           left: 50%;
           top: 0rem;
+          font-family: brandon-grotesque, sans-serif;
           // background-color: white;
           padding: 0rem 0.25rem;
           font-weight: 900;
@@ -1237,6 +1263,17 @@ section.frontpage-section {
             transform: none;
             left: 0;
           }
+        }
+
+        .update {
+          background-color: white;
+          position: absolute;
+          bottom: -5px;
+          left: 50%;
+          transform: translateX(-50%);
+          padding: 0.1rem 0.25rem;
+          z-index: 5;
+          color: black;
         }
 
         .title {

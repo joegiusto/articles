@@ -16,7 +16,7 @@ function needAdmin(req, res) {
 }
 
 module.exports = (app, db) => {
-
+  
   app.post('/api/secure/getUserDetails', passport.authenticate('jwt', {session: false}), (req, res) => {
     
     console.log(`Call to /api/getUserDetails made here at ${new Date()} by user ${req.body.user}`);
@@ -121,6 +121,42 @@ module.exports = (app, db) => {
         };
 
       });
+
+      return res.end();
+  });
+
+  app.post('/api/secure/userSubscriptionUpdates', passport.authenticate('jwt', {session: false}), (req, res) => {
+    console.log(`Call to /api/secure/userSubscriptionUpdates made at ${new Date()}`);
+      
+      // var o_id = new ObjectId(req.body._id);
+
+      console.log(req.user._id);
+
+      // if (req.body.user_details === undefined || req.body.user === undefined) {
+      //   return res.send("user_details and user are required");
+      // }
+  
+      // db.collection("articles_users").find({_id: req.user._id}, {
+      //   $set: {
+      //     first_name: myobj.first_name,
+      //     last_name: myobj.last_name,
+      //     photo_url: myobj.photo_url,
+      //     birth_date: new Date (myobj.birth_date),
+      //     address: {
+      //       city: myobj.address.city,
+      //       state: myobj.address.state,
+      //       zip: myobj.address.zip,
+      //       lat: myobj.address.lat,
+      //       lng: myobj.address.lng,
+      //     },
+      //     gender: myobj.gender,
+      //     subscriptions: myobj.subscriptions
+      //   }
+      // }, function(err, res) {
+      //   if (err) {
+      //     throw err
+      //   };
+      // });
 
       return res.end();
   });
@@ -444,6 +480,21 @@ module.exports = (app, db) => {
     db.collection("articles_users").deleteOne({_id:  ObjectId(req.body._id)}, function(err, res) {
       if (err) throw err;
       console.log(`Call to /api/deleteUser done`);
+    });
+
+    return res.end();
+
+  });
+
+  app.post('/api/deleteProduct', passport.authenticate('jwt', {session: false}), (req, res) => {
+
+    needAdmin(req, res);
+
+    console.log(`Call to /api/deleteProduct made at ${new Date()}`);
+
+    db.collection("articles_products").deleteOne({_id:  ObjectId(req.body._id)}, function(err, res) {
+      if (err) throw err;
+      console.log(`Call to /api/deleteProduct done`);
     });
 
     return res.end();

@@ -22,6 +22,36 @@ const inital_state = {
   },
 }
 
+class ConfirmDelete extends Component {
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      confirm: false
+    };
+
+  }
+
+  handleClick() {
+
+    if (this.state.confirm) {
+      this.props.afterConfirm()
+    } else {
+      this.setState({confirm: true})
+    }
+
+  }
+
+  render() {
+    return (
+      this.state.confirm ? 
+      <div style={{cursor: 'pointer'}} onClick={() => this.handleClick()} className="badge badge-danger noselect">Confirm</div>
+      :
+      <div style={{cursor: 'pointer'}} onClick={() => this.handleClick()} className="badge badge-danger noselect">Delete</div>
+    )
+  }
+}
+
 class Products extends Component {
   constructor(props) {
   super(props);
@@ -181,6 +211,28 @@ class Products extends Component {
     });
   }
 
+  removeProduct(id) {
+    const self = this;
+
+    axios.post('/api/deleteProduct', {
+      _id: id 
+    })
+    .then(function (response) {
+
+      // socket.emit('deleteUser', id);
+
+      self.setState({
+        products: self.state.products.filter(function( obj ) {
+          return obj._id !== id;
+        })
+      });
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
   onSubmit() {
     console.log('onSubmit called!')
     const self = this;
@@ -239,7 +291,11 @@ class Products extends Component {
       },
       {
         name: 'Actions',
-        cell: row => <><div style={{cursor: "pointer"}} className="badge badge-articles mr-2" onClick={() => this.setState({currentProduct: row._id})}>Edit</div><div className="badge badge-danger">Delete</div></>
+        cell: row => 
+        <>
+          <div style={{cursor: "pointer"}} className="badge badge-articles mr-2" onClick={() => this.setState({currentProduct: row._id})}>Edit</div>
+          <div className="badge badge-danger"><ConfirmDelete afterConfirm={() => this.removeProduct(row._id)}></ConfirmDelete></div>
+        </>
       },
     ];
 

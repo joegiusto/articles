@@ -23,6 +23,7 @@ const AnyReactComponent = ({ text }) => (
     // borderRadius: '10px'
   }}>
     <img src="https://www.logodesignlove.com/images/monograms/tesla-symbol.jpg" height="30px" alt=""/>
+    <span>{text}</span>
   </div>
 );
 
@@ -67,12 +68,19 @@ class SimpleMap extends React.Component {
         lng={-95.712891} 
         text={'Tesla'} 
       />
+
+      <AnyReactComponent 
+        lat={this.props.lat} 
+        lng={this.props.lng} 
+        text={'Tesla'} 
+      />
+
     </GoogleMapReact>
     );
   }
 }
 
-class Outset extends React.Component {
+class Playground extends React.Component {
   constructor(props) {
     super(props);
 
@@ -147,6 +155,26 @@ class Outset extends React.Component {
     const fakeSubmissions = [
 
     ]
+
+    // if ("geolocation" in navigator) {
+    //   console.log("Available");
+    // } else {
+    //   console.log("Not Available");
+    // }
+
+    navigator.geolocation.getCurrentPosition(
+      function(position) {
+        console.log("Latitude is :", position.coords.latitude);
+        console.log("Longitude is :", position.coords.longitude);
+        self.setState({
+          lat : position.coords.latitude,
+          lng: position.coords.longitude
+        })
+      },
+      function(error) {
+        console.error("Error Code = " + error.code + " - " + error.message);
+      }
+    );
 
     this.state.submissions.map((object, i) => {
 
@@ -249,7 +277,7 @@ class Outset extends React.Component {
         <div className="container mt-5 mb-5">
 
           <div style={{width: '100%', height: '400px'}}>
-            <SimpleMap/>
+            <SimpleMap lat={this.state.lat} lng={this.state.lng}/>
           </div>
   
           <div className="type mt-5">
@@ -334,4 +362,4 @@ class Outset extends React.Component {
   }
 }
 
-export default Outset
+export default Playground
