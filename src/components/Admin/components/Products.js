@@ -563,6 +563,11 @@ class Products extends Component {
           data={this.state.products}
           customStyles={customStyles}
           className='table table-bordered bg-white'
+          expandableRows={true}
+          expandOnRowClicked={true}
+          expandableRowsComponent={
+            <div>Testing</div>
+          }
         />
 
         {/* <table className="table table-bordered bg-white mt-3">

@@ -1,6 +1,7 @@
 import React, { Component, useState } from 'react';
 import axios from 'axios';
 import { Helmet } from "react-helmet";
+import { connect } from "react-redux";
 
 import * as ROUTES from '../../constants/routes';
 import { Switch, Route, Link} from 'react-router-dom';
@@ -183,7 +184,7 @@ class StorePage extends Component {
 				</div>
 
 				<Switch>
-					<Route exact path={ROUTES.STORE} render={() => (
+					<Route exact path={[ROUTES.STORE, ROUTES.STORE_VIEW]} render={() => (
 						<div>
 							<div className="hero">
 	
@@ -214,9 +215,9 @@ class StorePage extends Component {
 									<div className="store-section">
 										<h3>Hoodies</h3>
 
-										<div className="background">
+										{/* <div className="background">
 											<img src="https://mymodernmet.com/wp/wp-content/uploads/archive/w-leZAxreDXSpoMROe6G_1082098865.jpeg" alt=""/>
-										</div>
+										</div> */}
 					
 										<div className="items">
 											<StoreItemBeta
@@ -254,7 +255,7 @@ class StorePage extends Component {
 									</div>
 			
 									<div className="store-section">
-										<h3>Others</h3>
+										<h3>Accessories</h3>
 					
 										<div className="items">
 											<StoreItemBeta
@@ -265,7 +266,7 @@ class StorePage extends Component {
 					
 											<StoreItemBeta
 												setPopOutVisible={this.setPopOut}
-												product={this.state.products.find(element => element._id === "5eb50fdde094562238f5b910")}
+												product={this.state.products.find(element => element._id === "5f4c7014537b221bc419408d")}
 												color="articles"
 											/>
 										</div>
@@ -273,7 +274,7 @@ class StorePage extends Component {
 									</div>
 			
 									<div className="store-section">
-										<h3>Accessories</h3>
+										<h3>Pins</h3>
 					
 										<div className="items">
 											<StoreItemBeta
@@ -284,7 +285,7 @@ class StorePage extends Component {
 					
 											<StoreItemBeta
 												setPopOutVisible={this.setPopOut}
-												product={this.state.products.find(element => element._id === "5eb3aaaba316c3077c598cc4")}
+												product={this.state.products.find(element => element._id === "5f4b146d537b221bc419408c")}
 												color="articles"
 											/>
 										</div>
@@ -296,56 +297,56 @@ class StorePage extends Component {
 			
 							<div className='container'>
 			
-								<div className='row justify-content-center'>
+								{/* <div className='row justify-content-center'> */}
 			
-									<div className="link-panels">
-										<Link onClick={() => window.scrollTo(0, 0)} to={ROUTES.STORE_PRODUCTS}>
-											<div className="panel">
-												<img src="https://cdn.articles.media/store/old_sheep_mockup_back.jpg" alt="" className="background view-all"/>
-												<div className="icon">
-													<i className="fas fa-tshirt"></i>
-												</div>
-												<div className="title">View All</div>
+								<div className="link-panels">
+									<Link onClick={() => window.scrollTo(0, 0)} to={ROUTES.STORE_PRODUCTS}>
+										<div className="panel">
+											<img src="https://cdn.articles.media/store/old_sheep_mockup_back.jpg" alt="" className="background view-all"/>
+											<div className="icon">
+												<i className="fas fa-tshirt"></i>
 											</div>
-										</Link>
-			
-										<Link onClick={() => window.scrollTo(0, 0)} to={ROUTES.STORE_COLLECTIONS}>
-											<div className="panel">
-												<img src="https://preview.free3d.com/img/2019/04/2154877840292579114/xqztcxft-900.jpg" alt="" className="background collections"/>
-												<div className="icon">
-													<i className="fas fa-grip-horizontal"></i>
-												</div>
-												<div className="title">Collections</div>
+											<div className="title">View All</div>
+										</div>
+									</Link>
+		
+									<Link onClick={() => window.scrollTo(0, 0)} to={ROUTES.STORE_COLLECTIONS}>
+										<div className="panel">
+											<img src="https://preview.free3d.com/img/2019/04/2154877840292579114/xqztcxft-900.jpg" alt="" className="background collections"/>
+											<div className="icon">
+												<i className="fas fa-grip-horizontal"></i>
 											</div>
-										</Link>
-			
-										<Link onClick={() => window.scrollTo(0, 0)} to={ROUTES.STORE_SUBMISSIONS}>
-											<div className="panel">
-			
-												<div className="background submission"/>
-			
-												<div className="voting-board">
-													<div className="board">
-														{/* <i className="fas fa-ruler-combined"></i> */}
-													</div>
-													<div className="votes">
-														<i className="fas fa-thumbs-down"></i>
-														<i className="fas fa-thumbs-up mr-0"></i>
-													</div>
+											<div className="title">Collections</div>
+										</div>
+									</Link>
+		
+									<Link onClick={() => window.scrollTo(0, 0)} to={ROUTES.STORE_SUBMISSIONS}>
+										<div className="panel">
+		
+											<div className="background submission"/>
+		
+											<div className="voting-board">
+												<div className="board">
+													{/* <i className="fas fa-ruler-combined"></i> */}
 												</div>
-			
-												<div className="icon">
-													<i className="fas fa-lightbulb" aria-hidden="true"></i>
+												<div className="votes">
+													<i className="fas fa-thumbs-down"></i>
+													<i className="fas fa-thumbs-up mr-0"></i>
 												</div>
-			
-												<div className="title">Submissions</div>
-			
 											</div>
-										</Link>
-										
-									</div>
-			
+		
+											<div className="icon">
+												<i className="fas fa-lightbulb" aria-hidden="true"></i>
+											</div>
+		
+											<div className="title">Submissions</div>
+		
+										</div>
+									</Link>
+									
 								</div>
+			
+								{/* </div> */}
 							
 							</div>
 			
@@ -441,6 +442,9 @@ class StorePage extends Component {
 							<div className="container">
 								<h3>Saved</h3>
 								<p>Any products you save will be displayed here.</p>
+								{this.props.user_details.saved_products.map((item) => (
+									<div>{item.product_id}</div>
+								))}
 							</div>
 						</div>
 					}/>
@@ -451,4 +455,13 @@ class StorePage extends Component {
 	}
 }
 
-export default StorePage;
+const mapStateToProps = state => ({
+  user_details: state.auth.user_details
+});
+
+export default connect(
+  mapStateToProps,
+  { } 
+)(StorePage);
+
+// export default StorePage;

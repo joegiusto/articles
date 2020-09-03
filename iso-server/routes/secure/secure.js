@@ -471,6 +471,31 @@ module.exports = (app, db) => {
     }
   });
 
+  app.post('/api/upsertExpense', passport.authenticate('jwt', {session: false}), (req, res) => {
+
+    console.log(`Call to /api/upsertExpense made at ${new Date()}`);
+    const expense = req.body.form;
+    const idClean = (req.body.form._id === '' ? ObjectId() : ObjectId(req.body.form._id))
+
+    db.collection("expenses_recurring").updateOne({ _id: idClean }, {
+      $set: {
+        amount: parseInt(expense.amount),
+        date: new Date(expense.date),
+        reason: expense.reason,
+        file: expense.file,
+        note: expense.note,
+      }
+    },
+    {
+      upsert: true
+    }, 
+    function(err, result) {
+      if (err) throw err;
+      console.log(`Call to /api/upsertExpense done`);
+      return res.send(result);
+    });
+  });
+
   app.post('/api/deleteUser', passport.authenticate('jwt', {session: false}), (req, res) => {
 
     needAdmin(req, res);
@@ -530,6 +555,23 @@ module.exports = (app, db) => {
     db.collection("revenues_clothing").deleteOne({_id:  ObjectId(req.body._id)}, function(err, res) {
       if (err) throw err;
       console.log(`Call to /api/deleteOrder done`);
+    });
+
+    return res.end();
+
+  });
+
+  app.post('/api/deleteExpense', passport.authenticate('jwt', {session: false}), (req, res) => {
+
+    needAdmin(req, res);
+
+    console.log(`Call to /api/deleteExpense made at ${new Date()}`);
+
+    // TODO - Fetch order that is being deleted and send it somewhere for archive in case someone means harm
+
+    db.collection("expenses_recurring").deleteOne({_id:  ObjectId(req.body._id)}, function(err, res) {
+      if (err) throw err;
+      console.log(`Call to /api/deleteExpense done`);
     });
 
     return res.end();
@@ -821,4 +863,73 @@ module.exports = (app, db) => {
     }
   });
 
+  app.post('/api/addSavedProduct', function (req, res) {
+    console.log(`Call to /api/updateLastRead made at ${new Date()}`);
+
+    const o_id = new ObjectId(req.user._id);
+
+    function orginResult() { 
+
+      return db.collection("articles_users").updateOne(
+        {
+            _id: o_id
+        },
+        {
+            $addToSet: {
+              "saved_products": {
+                    product_id: req.body.product_id,
+                    date: new Date()
+                }
+            }
+        }
+      );
+
+    }
+
+    orginResult().then( (result) =>  { 
+     console.log(result.modifiedCount) 
+
+     if ( result.modifiedCount < 1 ) {
+
+      return res.send("Products was already found in saved products");
+
+    } else {
+
+      return res.send("Product added to users saved products")
+
+    }
+
+    })
+    .catch(
+      (result) =>  {
+        console.log(result)
+      }
+    );
+
+  });
+
+  app.post('/api/removeSavedProduct', (req, res) => {
+    console.log(`Call to /api/removeSavedProduct made at ${new Date()}`);
+
+    let report = req.body.report;
+
+    db.collection("articles_expense_reports").updateOne({_id: ObjectId(report._id)}, {
+      $set: {
+        date: moment()._d,
+        user_id: report.user_id,
+        expense_id: report.expense_id,
+        reason: report.reason
+      }
+    },
+    {
+      upsert: true
+    }, 
+    function(err, res) {
+      if (err) throw err;
+      console.log(`Call to /api/removeSavedProduct done`);
+    });
+
+    return res.end();
+
+  });
 } 

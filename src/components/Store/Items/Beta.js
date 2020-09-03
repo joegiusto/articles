@@ -80,7 +80,7 @@ const StoreItem = (props) => {
                   <button className={"btn btn-" + (props.color) + ' ' + (slide === 6 ? 'active' : '')} onMouseEnter={() => changeSlide(6)}>6</button>
               </div>
 
-              <Link to={`${ROUTES.STORE}/view/${props.color}`} onClick={() => props.setPopOutVisible(true, props.product)}><button  className={"mt-1 w-100 btn btn-outline-" + (props.color === "articles" ? 'dark' : props.color)}>View</button></Link>
+              <Link to={`${ROUTES.STORE}/view/${props.product?._id}`} onClick={() => props.setPopOutVisible(true, props.product)}><button  className={"mt-1 w-100 btn btn-outline-" + (props.color === "articles" ? 'dark' : props.color)}>View</button></Link>
 
               <div className="dual-header">
                 <select 

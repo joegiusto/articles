@@ -420,9 +420,14 @@
       display: flex;
       flex-direction: row;
       justify-content: center;
+      justify-content: start;
 
       .store-item {
-        margin-right: 2.5rem;
+        margin-right: 1.5rem;
+
+        @include media-breakpoint-up(xl) {
+          margin-right: 2.5rem;
+        }
       }
     }
   }

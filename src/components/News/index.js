@@ -309,7 +309,7 @@ class RecentSliders extends Component {
     super(props);
 
     this.state = {
-
+      issueSort: 'all'
     }
   }
 
@@ -346,6 +346,7 @@ class RecentSliders extends Component {
 
             {/* See slots https://swiperjs.com/react/ */}
             <span slot="container-start">
+
               <div className="header">
                 <h5>Recent Stories</h5>
 
@@ -354,6 +355,7 @@ class RecentSliders extends Component {
                   <i className="fas fa-forward"></i>
                 </div>
               </div>
+              
             </span>
 
             {this.props.stories.stories.map((story) => (
@@ -374,6 +376,7 @@ class RecentSliders extends Component {
 
             {/* See slots https://swiperjs.com/react/ */}
             <span slot="container-start">
+
               <div className="header">
                 <h5>Recent Issues</h5>
 
@@ -382,6 +385,12 @@ class RecentSliders extends Component {
                   <i className="fas fa-forward"></i>
                 </div>
               </div>
+
+              <div className="types">
+                <div onClick={() => this.setState({issueSort: 'all'})} className={"type-selection " + (this.state.issueSort === 'all' ? 'active' : '') }>Subscriptions</div>
+                <div onClick={() => this.setState({issueSort: 'user'})} className={"type-selection " + (this.state.issueSort === 'user' ? 'active' : '') }>All</div>
+              </div>
+
             </span>
 
             {this.props.issues.issues.map((story) => (

@@ -216,7 +216,7 @@ class AdminPage extends Component {
         <div className="row">
 
           <div className="col col-12 col-md-7">
-            <div className="news-manage-plate">
+            <div className="news-manage-plate" style={{backgroundColor: 'rgba(255, 255, 255, 0)'}}>
               {/* <h1>News Management</h1> */}
   
               <div className="catagories">
@@ -281,9 +281,11 @@ class AdminPage extends Component {
   
                 </div>
               </div>
+
+              <div className="results-header">Results: {this.state.results.length}</div>
   
               <div className="results">
-                <div className="results-header">Results: {this.state.results.length}</div>
+                
                 {resultsLoading ? 
                 (resultsLoadingError === '' ? <span className="badge badge-success">Loading...</span> : <div><div className="badge badge-danger">Error Loading Results</div><div><small>Most likely the content server is off.</small></div></div>)
                 :
@@ -300,9 +302,11 @@ class AdminPage extends Component {
                   <div className="result" key={result.issue_id}>
   
                     <div className="dates">
-                      {result.visible ? null : <span><i className="fas fa-low-vision"></i></span>}
-
-                      <span className="date badge badge-dark border ml-2">{moment(result.news_date).format("LL")} </span>
+                      <span>
+                        {result.visible ? null : <span><i className="fas fa-low-vision"></i></span>}
+  
+                        <span className="date badge badge-dark border ml-2">{moment(result.news_date).format("LL")} </span>
+                      </span>
                       <span className="date badge badge-warning border ml-2">{moment(result.last_update).format("LL")} </span>
                     </div>
                     

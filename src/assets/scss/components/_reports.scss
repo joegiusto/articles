@@ -62,6 +62,24 @@
   // box-shadow: 3px 3px 20px rgba(0,0,0,0.3);
   // border-radius: 3px;
 
+  .expandable-row {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+
+    .big {
+      display: table-row;
+      background-color: lemonchiffon;
+      width: 100%;
+    }
+  }
+
+  // .custom-row {
+  //   display: table-cell;
+  //   width: 100%;
+  //   border-bottom: 1px solid #eee
+  // }
+
   .main {
     border: none!important;
     margin-top: 0rem!important;

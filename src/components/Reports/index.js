@@ -486,13 +486,9 @@ class Reports extends Component {
               {console.log(megaGroup)}
 
               {megaGroup.map(sale => 
-                // <div className="sale">
-                //   {sale.date}
-                // </div>
                 <tr>
                   <td colSpan="1" className="border-right-0 ">{moment(sale.date).format("LLL")}</td>
                   <td colSpan="1" className="border-right-0 ">{sale.type}</td>
-                  {/* <td colSpan="1" className="border-right-0 "></td> */}
                   <td colSpan="1" className="border-right-0 "></td>
                   <td colSpan="1" className="border-right-0 ">${(sale.unifiedPrice / 100).toFixed(2)}</td>
                 </tr>
@@ -508,6 +504,22 @@ class Reports extends Component {
               </tr>
 
             </tbody>
+
+            <div className="expandable-row">
+
+              <tr className="w-100">
+                <td colSpan="1" className="border-right-0 ">{moment().format("LLL")}</td>
+                <td colSpan="1" className="border-right-0 ">Sale</td>
+                <td colSpan="1" className="border-right-0 "></td>
+                <td colSpan="1" className="border-right-0 ">$10.00</td>
+              </tr>
+
+              <tr className="big">
+                Big
+              </tr>
+
+            </div>
+
           </table>
         )
       default:

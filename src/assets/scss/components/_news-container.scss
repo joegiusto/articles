@@ -57,6 +57,8 @@ section.frontpage-section {
   align-items: flex-start;
   // overflow-x: hidden;
   // flex-grow: 1;
+  font-family: montserrat, sans-serif;
+  font-weight: 400;
 
   @include media-breakpoint-down(md) {
     flex-direction: column;
@@ -1188,7 +1190,29 @@ section.frontpage-section {
             }
           }
         }
+      }
 
+      .types {
+        display: flex;
+        justify-content: start;
+        margin-bottom: 1.5rem;
+
+        .type-selection {
+          cursor: pointer;
+          padding: 0.20rem 0.5rem;
+          background-color: rgb(226, 226, 226);
+          border-radius: 10px;
+          box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.3);
+
+          &.active {
+            background-color: $issue-color;
+            color: white;
+          }
+
+          &:first-child {
+            margin-right: 0.5rem;
+          }
+        }
       }
 
       .swiper-container {

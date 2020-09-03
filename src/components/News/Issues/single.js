@@ -1,11 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios'
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from "react-redux";
 import moment from 'moment'
+import TextareaAutosize from 'react-textarea-autosize';
+import { usePopper } from 'react-popper';
 
 import { updateSubscriptionToIssue } from '../../../actions/siteActions'
 import * as ROUTES from '../../../constants/routes'
+
+const SortPopper = (props) => {
+  const [referenceElement, setReferenceElement] = useState(null);
+  const [popperElement, setPopperElement] = useState(null);
+  const [popperVisible, setPopperVisible] = useState(false);
+  const [arrowElement, setArrowElement] = useState(null);
+  const { styles, attributes } = usePopper(referenceElement, popperElement, {
+    modifiers: [{ name: 'arrow', options: { element: arrowElement }, }],
+    placement: 'bottom',
+  });
+
+  return (
+    <>
+      <button onClick={() => setPopperVisible(!popperVisible)} type="button" ref={setReferenceElement}>
+        <span className="">
+          <i className="fas fa-sort"></i>
+          <span>Sort By</span>
+        </span>
+      </button>
+
+      <div className={"popper " + (popperVisible === true ? 'visible' : '')} ref={setPopperElement} style={styles.popper} {...attributes.popper}>
+        <div onClick={() => props.setCommentSort({target: {name: 'commentSort', value: 'top'}})} className={"item " + (props.commentSort === 'top' ? 'active' : '')}><i className="fas fa-sort-amount-down-alt"></i>Top</div>
+        <div onClick={() => props.setCommentSort({target: {name: 'commentSort', value: 'new'}})} className={"item " + (props.commentSort === 'new' ? 'active' : '')}><i className="fas fa-sort-amount-down-alt"></i>New</div>
+        <div ref={setArrowElement} style={styles.arrow} />
+      </div>
+    </>
+  );
+};
 
 class Issue extends React.Component {
   constructor(props) {
@@ -14,7 +44,14 @@ class Issue extends React.Component {
     this.state = {
       loading: false,
       issues: [],
-      news_tags: []
+      news_tags: [],
+      comments: [],
+      realComments: [],
+      comment: '',
+      commentSubmitError: '',
+      commentView: 'normal',
+      commentSort: 'top',
+      newCommentExpanded: false
     };
 
   }
@@ -64,6 +101,10 @@ class Issue extends React.Component {
     }
 
   }
+
+  onChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
 
   loadLastRead() {
     const self = this;
@@ -116,6 +157,28 @@ class Issue extends React.Component {
       // }
 
     } 
+  }
+
+  submitComment() {
+
+    if (this.state.comment === '') {
+      this.setState({commentSubmitError: 'You can not post an empty comment.'})
+    } else {
+      this.setState({
+        comments: [
+          ...this.state.comments,
+          {
+            comment: this.state.comment,
+            date: new Date(),
+            user_id: this.props.user._id
+          }
+        ],
+        comment: '',
+        commentSubmitError: '',
+        newCommentExpanded: false
+      })
+    }
+
   }
 
   render() {
@@ -206,6 +269,7 @@ class Issue extends React.Component {
           </div>
 
           <div className="container">
+
             <div className="content ">
   
               <div style={{whiteSpace: 'pre-wrap'}} dangerouslySetInnerHTML={{__html: news_notes}}></div>
@@ -243,6 +307,176 @@ class Issue extends React.Component {
               </div>
   
             </div>
+
+            <div className="related-proposals card">
+
+              <div className="header d-flex justify-content-between">
+                0 Related Proposals
+              </div>
+
+              <div className="card-body">
+                When there is a related political proposals that could fix an issue it will be listed here.
+
+                <div className="supporters">
+
+                  <div className="supporter">
+                    <span className="badge badge-primary">Democrats</span>
+                    <span>0/100</span>
+                  </div>
+
+                  <div className="supporter ml-2">
+                    <span className="badge badge-danger">Republicans</span>
+                    <span>0/100</span>
+                  </div>
+
+                  <div className="supporter ml-2">
+                    <span className="badge badge-articles px-3">Articles</span>
+                    <span>0/100</span>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+            <div className="comment-section card">
+
+              <div className="header d-flex justify-content-between">
+
+                <div className="types">
+                  <div onClick={() => this.setState({commentView: 'normal'})} className={"type " + (this.state.commentView === 'normal' ? 'active' : '')}>{this.state.comments.length} Comments</div>
+                  <div onClick={() => this.setState({commentView: 'new'})} className={"type ml-2 " + (this.state.commentView === 'new' ? 'active' : '')}>0 Real ID Comments</div>
+                </div>
+
+                <SortPopper setCommentSort={this.onChange} commentSort={this.state.commentSort}/>
+
+              </div>
+
+              {this.state.commentView === 'normal' ?
+                <>
+                  <div className="add-comment">
+    
+                    <div className="profile-photo">
+                    {this.props.user._id === undefined ? 
+                      null
+                      :
+                      <img alt="" className="" width="100%" height="100%" src={`https://articles-website.s3.amazonaws.com/profile_photos/${this.props?.user?._id}.jpg` || ''}/>
+                    }
+                    </div>
+    
+                    <div className="comment">
+                      {/* <input onClick={() => this.setState({newCommentExpanded: true})} type="text" name="comment" id="comment" onChange={this.onChange} value={this.state.comment} placeholder="Add a comment"/> */}
+                      {/* <textarea onClick={() => this.setState({newCommentExpanded: true})} type="text" name="comment" id="comment" onChange={this.onChange} value={this.state.comment} placeholder="Add a comment"/> */}
+                      <div class='tx-div-before'></div>
+                        <TextareaAutosize className="tx-div" onClick={() => this.setState({newCommentExpanded: true})}  placeholder="Add a comment"  type="text" name="comment" id="comment" onChange={this.onChange} value={this.state.comment}/>
+                      <div class='tx-div-after'></div> 
+                    </div>
+    
+                  </div>
+    
+                  {
+                    this.state.newCommentExpanded === true ?
+                    <div className="comment-controls d-flex justify-content-between align-items-start">
+    
+                      {
+                      this.state.commentSubmitError === '' ? 
+                      <div></div>
+                      :
+                      <div className="badge badge-danger">{this.state.commentSubmitError}</div>
+                      }
+    
+                      <div className="d-flex">
+                        <div onClick={() => this.setState({newCommentExpanded: false})} className="btn btn-danger">Cancel</div>
+                        <button onClick={() => this.submitComment()} disabled={this.state.commentSubmitError != "" && this.state.comment === '' ? true : false} className="btn btn-articles-light">Comment</button>
+                      </div>
+    
+                    </div>
+                    :
+                    null
+                  }
+    
+                  {this.state.comments.length < 1 ?
+                  <div className="no-comments">
+    
+                    <div className="sad">
+                      <div className="l-eye"></div>
+                      <div className="r-eye"></div>
+                      <div className="mouth"></div>
+                    </div>
+    
+                    <div className="message">There are no comments yet</div>
+    
+                  </div>
+                  :
+                  null
+                  }
+    
+                  <div className="comments">
+                    {this.state.comments.map(comment => 
+                      <div className="comment">
+    
+                        <div className="profile-photo">
+                        {this.props.user._id === undefined ? 
+                          null
+                          :
+                          <img alt="" className="" width="100%" height="100%" src={`https://articles-website.s3.amazonaws.com/profile_photos/${this.props?.user?._id}.jpg` || ''}/>
+                        }
+                        </div>
+    
+                        <div className="comment">
+                          <div>{comment.comment}</div>
+                          <div className="date">{moment(comment.date).format("LLL")}</div>
+                        </div>
+                        
+                      </div>
+                    )}
+                  </div>
+                </>
+                : 
+                <div className="real-id-notice">
+
+                  <div className="bots">
+
+                    <div className="bot bot-1">
+                      <i className="fas fa-robot"></i>
+                      {/* <i className="fas fa-crosshairs"></i> */}
+                    </div>
+
+                    <div className="bot bot-2">
+                      <i className="fas fa-robot"></i>
+                      {/* <i className="fas fa-crosshairs"></i> */}
+                    </div>
+
+                    <div className="network network-1">
+                      <i className="fas fa-project-diagram"></i>
+                      <i className="fas fa-crosshairs"></i>
+                    </div>
+
+                    <div className="network network-2">
+                      <i className="fas fa-project-diagram"></i>
+                      <i className="fas fa-crosshairs"></i>
+                    </div>
+
+                  </div>
+
+                  <h3>Sign up for Real ID</h3>
+
+                  <div className="icons">
+                    <i className="far fa-id-card"></i>
+                    <i className="fas fa-passport"></i>
+                    <i className="far fa-id-badge"></i>
+                  </div>
+
+                  <p className="about">Help us fight bot accounts and explore real comments. Submit a photo of your state license or passport to gain access to a better comment thread. Free from spam, closely moderated, and interact with the writter of this article.</p>
+
+                  <button className="btn btn-articles-light alt">
+                    Sign up
+                  </button>
+                </div>
+              }
+
+            </div>
+
           </div>
 
           {/* <div className="link badge badge-dark w-100 py-2 mb-3" onClick={() => this.props.history.goBack()}>{String.fromCharCode(11148)} Back to Issues</div> */}
