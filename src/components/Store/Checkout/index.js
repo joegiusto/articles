@@ -12,6 +12,7 @@ import stripePower from '../../../assets/img/stripe.png'
 import CheckoutPageItem from './CheckoutPageItem';
 import * as ROUTES from '../../../constants/routes';
 import * as KEYS from '../../../constants/public_keys';
+import { setUserLoading } from 'actions/authActions';
 
 const stripePromise = loadStripe(KEYS.STRIPE_PUBLIC_KEY);
 
@@ -24,6 +25,7 @@ const CheckoutForm = (props) => {
   const prevReturnRef = useRef()
   const mounted = useRef();
   
+  const [cartLoading, setCartLoading] = useState(false);
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
   const stripe = useStripe();
@@ -74,6 +76,7 @@ const CheckoutForm = (props) => {
   }
 
   let userProductsToServer = () => {
+    setCartLoading(true)
 
     console.log("sending this to server")
     console.log(props.productsUser);
@@ -94,6 +97,7 @@ const CheckoutForm = (props) => {
       setTotal(response.data.total)
       setTax(response.data.tax)
       setCartCount(response.data.retrivedProducts.length)
+      setCartLoading(false)
       // tryIntent();
     })
     .catch(function (error) {
@@ -171,9 +175,9 @@ const CheckoutForm = (props) => {
 
           </div>
           
-          <div className="d-flex">
+          <div className="customer-info-cards">
 
-            <div className="card mx-3 mb-3 w-100">
+            <div className="card mx-md-3 mb-3 w-100">
   
               <div className="shiping-info card-body">
                 <h3 className="mb-4">Shipping Info</h3>
@@ -211,11 +215,11 @@ const CheckoutForm = (props) => {
   
             </div>
   
-            <div className="payment-details card mx-3 mb-3 w-100">
+            <div className="payment-details card mx-md-3 mb-3 w-100">
   
               <div className="card-body">
                 
-                <h3 className="mb-4">Payment</h3>
+                <h3 className="mb-4">Payment {(total + tax).toFixed(2)}</h3>
 
                 <div className='shadow'>
                   <CardElement/>
@@ -231,6 +235,9 @@ const CheckoutForm = (props) => {
                 <div className="stored-cards mt-5">
                   <small>No saved cards</small>
                 </div>
+
+                <button onClick={() => userProductsToServer()} className={"btn btn-articles-light w-100 " + (cartCount === props.productsUser.length ? 'd-none' : '')} disabled={cartLoading ? true : false}>Update</button>
+                <button onClick={() => tryIntent()} className={"btn btn-articles-light w-100 " + (cartCount === props.productsUser.length ? '' : 'd-none')}>Checkout</button>
 
               </div>
   
@@ -266,9 +273,9 @@ const CheckoutForm = (props) => {
                   //   id: item.cart_id
                   // }, () => userProductsToServer() );
 
-                  props.removeExpense({
-                    id: item.cart_id
-                  });
+                  // props.removeExpense({
+                  //   id: item.cart_id
+                  // });
 
                   // userProductsToServer()
 
@@ -345,11 +352,18 @@ const CheckoutForm = (props) => {
 
             <div className="card-body border-top border-dark p-2">
 
-              <button onClick={() => userProductsToServer()} className="btn btn-articles-light w-100" disabled={cartCount === props.productsUser.length ? true : false}>Update</button>
+              <button onClick={() => userProductsToServer()} className={"btn btn-articles-light w-100 " + (cartCount === props.productsUser.length ? 'd-none' : '')} disabled={cartLoading ? true : false}>Update</button>
 
-              <button onClick={() => tryIntent()} className={"btn btn-articles-light w-100 " + (cartCount === props.productsUser.length ? '' : 'd-none')}>Checkout</button>
+              <button onClick={() => tryIntent()} className={"btn btn-articles-light w-100 " + (cartCount === props.productsUser.length ? '' : 'd-none ') + (cartLoading ? 'd-none' : '')}>Checkout</button>
 
+              {cartLoading ? 
+              <div className="small text-center pt-2 w-100">Loading details, please wait.</div>
+              :
+              (cartCount === props.productsUser.length ? 
               <div className="small text-center pt-2 w-100">You will be charged when you click the button</div>
+              :
+              <div className="small text-center pt-2 w-100">Please update your cart total</div>)
+              }
 
               {/* Show any error that happens when processing the payment */}
               {error && (

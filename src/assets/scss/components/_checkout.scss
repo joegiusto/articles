@@ -24,6 +24,15 @@
         margin-top: 0rem;
       }
 
+      .customer-info-cards {
+        display: flex;
+        flex-direction: column;
+
+        @include media-breakpoint-up(md) {
+          flex-direction: row;
+        }
+      }
+
       .shiping-info {
 
         .form-group {
@@ -121,7 +130,11 @@
     }
 
     .cart {
-      flex-basis: 350px;
+      width: 100%;
+
+      @include media-breakpoint-up(md) {
+        flex-basis: 350px;
+      }
 
       .card {
         background-color: $accent-color;

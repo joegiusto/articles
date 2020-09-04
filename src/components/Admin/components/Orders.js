@@ -145,7 +145,8 @@ class Reports extends Component {
 
         <div className="orders mt-4 w-50">
 
-        <table className='table articles-table table-sm table-hover table-bordered'>
+        <div className="table-responsive">
+          <table className='table articles-table table-sm table-hover table-bordered'>
             <thead>
               <tr className="table-articles-head">
                 {/* <th scope="col">Order #</th> */}
@@ -157,7 +158,7 @@ class Reports extends Component {
               </tr>
             </thead>
             <tbody>
-
+  
               {orders.map(order => 
                 <tr>
                   <td colSpan="1" className="border-right-0 ">{moment(order.date).format("LLL")}</td>
@@ -167,26 +168,27 @@ class Reports extends Component {
                   <td colSpan="1" className="border-right-0 "><ConfirmDelete afterConfirm={() => this.removeOrder(order._id)}></ConfirmDelete></td>
                 </tr>
               )}
-
+  
               <tr>
                 <td colSpan="2" className="border-right-0 table-articles-head">
-
+  
                 </td>
-
+  
                 <td colSpan="1" className="border-right-0 text-right table-articles-head">Total:</td>
                 <td colSpan="1" className="border-left-0 table-articles-head">$00.00</td>
                 <td colSpan="1" className="border-left-0 table-articles-head"></td>
               </tr>
-
+  
             </tbody>
           </table>
+        </div>
 
-          {/* {orders.map(order => 
-            <div className="order d-flex justify-content-between">
-              <div>{ moment(order.date).format("LLL") }</div>
-              <div>{ order.payment.trueTotal }</div>
-            </div>  
-          )} */}
+        {/* {orders.map(order => 
+          <div className="order d-flex justify-content-between">
+            <div>{ moment(order.date).format("LLL") }</div>
+            <div>{ order.payment.trueTotal }</div>
+          </div>  
+        )} */}
 
         </div>
 

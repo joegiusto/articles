@@ -10,6 +10,7 @@ import StoreItemAlpha from './StoreItemAlpha';
 import StoreItemBeta from './Items/Beta.js';
 
 import OrdersPage from './Orders/index';
+import CheckoutPage from './Checkout/index'
 
 import hero from 'assets/img/Store/head.jpg';
 
@@ -179,7 +180,7 @@ class StorePage extends Component {
 					</div>
 
 					<div className="right">
-						<Link onClick={() => window.scrollTo(0, 0)} to={ROUTES.CHECKOUT} className={this.props.match.path === ROUTES.STORE_SAVED ? 'active' : ''}>Checkout (0)</Link>
+						<Link onClick={() => window.scrollTo(0, 0)} to={ROUTES.CHECKOUT} className={'btn btn-articles-light ' + (this.props.match.path === ROUTES.CHECKOUT ? 'active' : '')}>Checkout ({this.props.cart.length})</Link>
 					</div>
 				</div>
 
@@ -448,6 +449,7 @@ class StorePage extends Component {
 							</div>
 						</div>
 					}/>
+					<Route exact path={ROUTES.CHECKOUT} render={() => <CheckoutPage/>}/>
 				</Switch>
 
 			</section>
@@ -456,7 +458,8 @@ class StorePage extends Component {
 }
 
 const mapStateToProps = state => ({
-  user_details: state.auth.user_details
+	user_details: state.auth.user_details,
+	cart: state.expenses
 });
 
 export default connect(

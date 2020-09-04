@@ -87,13 +87,17 @@ section.frontpage-section {
     }
 
     &.focus {
-      height: 100px;
+      height: auto;
 
+      @include media-breakpoint-up(md) {
+        height: 100px;
+      }
+      
       .active-page-panel {
         max-width: 1000px;
         transition-duration: 500ms;
         border: solid 5px #000;
-        margin-bottom: 1rem;
+        margin-bottom: 0rem;
         padding-bottom: 3rem;
 
         @include media-breakpoint-up(md) {
@@ -160,6 +164,11 @@ section.frontpage-section {
         display: flex;
         justify-content: center;
         // align-items: center;
+
+        @include media-breakpoint-down(md) {
+          order: -1;
+          margin-bottom: 0.75rem!important;
+        }
 
         .title {
           font-size: 0.8rem;

@@ -1030,7 +1030,7 @@ class Settings extends Component {
 
                 {/* <div className="label">ISSUES</div> */}
 
-                <div className="info donations w-100">
+                <div className="info donations w-100 table-responsive">
                   <table className="table mb-0">
                     <thead className="">
                       <tr>
@@ -1077,7 +1077,7 @@ class Settings extends Component {
 
               <div className="info-snippet p-0">
 
-                <div className="info donations w-100">
+                <div className="info donations w-100 table-responsive">
                   <table className="table mb-0">
                     <thead className="">
                       <tr>
@@ -1102,8 +1102,6 @@ class Settings extends Component {
                     {this.state.previousUserOrdersLoading ? null : this.state.previousUserOrders.length < 1 ? <div className="pl-3 pt-3">No donations to display</div> : ''}
                     
                   </table>
-
-                  
 
                 </div>
 

@@ -184,7 +184,7 @@ class AppBase extends Component {
         
               <Route exact path={ROUTES.STORE} component={StorePage} />
               <Route path={ROUTES.STORE_VIEW} component={StorePage} />
-              <Route path={ROUTES.CHECKOUT} component={StoreCheckoutPage} />
+              <Route path={ROUTES.CHECKOUT} component={StorePage} />
 
               <Route exact path={ROUTES.STORE_PRODUCTS} component={StorePage} />
               <Route exact path={ROUTES.STORE_COLLECTIONS} component={StorePage} />
