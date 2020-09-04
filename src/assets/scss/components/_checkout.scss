@@ -142,6 +142,69 @@
       .articles-profit {
         background-color: lighten($base-color, 7.5%);
       }
+
+      .cart-item {
+        position: relative;
+
+        .remove {
+          cursor: pointer;
+          position: absolute;
+          top: 12px;
+          left: -14px;
+          background-color: white;
+          width: 25px;
+          height: 25px;
+          box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.25);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 5px;
+
+          &:hover {
+            background-color: red;
+            box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.5);
+
+            i {
+              color: black;
+            }
+          }
+
+          i {
+            color: red;
+            margin-right: 0rem;
+          }
+        }
+
+        .edit {
+          cursor: pointer;
+          position: absolute;
+          top: 40px;
+          left: -14px;
+          background-color: white;
+          width: 25px;
+          height: 25px;
+          box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.25);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 5px;
+
+          &:hover {
+            background-color: rgb(0, 0, 0);
+            box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.5);
+
+            i {
+              color: rgb(255, 255, 255);
+            }
+          }
+
+          i {
+            color: black;
+            margin-right: 0rem;
+          }
+        }
+
+      }
     }
   }
 

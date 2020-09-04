@@ -18,12 +18,23 @@ const stripePromise = loadStripe(KEYS.STRIPE_PUBLIC_KEY);
 const CheckoutForm = (props) => {
   const [tax, setTax] = useState(0);
   const [total, setTotal] = useState(0);
+  const [cartCount, setCartCount] = useState(0);
   const [returnedProducts, setReturnedProducts] = useState([]);
 
   const prevReturnRef = useRef()
   const mounted = useRef();
   
+  const [succeeded, setSucceeded] = useState(false);
+  const [error, setError] = useState(null);
+  const stripe = useStripe();
+  const [processing, setProcessing] = useState('');
+  const [clientSecret, setClientSecret] = useState('');
+  const [disabled, setDisabled] = useState(true);
+  const elements = useElements();
+  
   useEffect(() => {
+
+    userProductsToServer()
 
     if (!mounted.current) {
       // do componentDidMount logic
@@ -38,18 +49,7 @@ const CheckoutForm = (props) => {
         console.log("Not equal, update");
       }
     }
-
-    prevReturnRef.current = returnedProducts;
-  });
-  const prevCount = prevReturnRef.current;
-
-  const [succeeded, setSucceeded] = useState(false);
-  const [error, setError] = useState(null);
-  const stripe = useStripe();
-  const [processing, setProcessing] = useState('');
-  const [clientSecret, setClientSecret] = useState('');
-  const [disabled, setDisabled] = useState(true);
-  const elements = useElements();
+  }, []);
 
   const tryIntent = () => {
     axios.post('/api/create-payment-intent', {
@@ -93,6 +93,7 @@ const CheckoutForm = (props) => {
       setReturnedProducts(response.data.retrivedProducts)
       setTotal(response.data.total)
       setTax(response.data.tax)
+      setCartCount(response.data.retrivedProducts.length)
       // tryIntent();
     })
     .catch(function (error) {
@@ -134,18 +135,15 @@ const CheckoutForm = (props) => {
     }
   };
 
-  useEffect(() => {
-    userProductsToServer()
-  }, []);
-
   const removeItemAndRefresh = (item, dispatch) => new Promise((resolve, reject) => {
+
+    console.log('removeItemAndRefresh called')
 
     props.removeExpense({
       id: item.cart_id
       // id: item.id
-    });
+    }, () => resolve());
 
-    resolve()
   });
 
   const letterToSize = {
@@ -249,27 +247,39 @@ const CheckoutForm = (props) => {
             <div className="card-body">
               <h1 className="d-flex justify-content-between">
                 <span>Cart</span>
-                <span>{returnedProducts.length} Items</span>
+                <span>{props.productsUser.length} Items</span>
               </h1>
             </div>
 
             <div className="card-body border-top border-dark p-2">
 
-              {returnedProducts.map(item => 
+              {props.productsUser.map(item => 
                 <li key={item._id} onClick={() => {
 
-                  console.log(item._id)
+                  // console.log(item._id)
 
                   // props.dispatch(props.removeExpense({
                   //   id: item._id
                   // }));
 
-                  removeItemAndRefresh(item, 'dispatch')
-                  .then( thing => {
-                    console.log("DONE")
-                    console.log(props.productsUser)
-                    // userProductsToServer()
-                  })
+                  // props.removeExpense({
+                  //   id: item.cart_id
+                  // }, () => userProductsToServer() );
+
+                  props.removeExpense({
+                    id: item.cart_id
+                  });
+
+                  // userProductsToServer()
+
+                  // removeItemAndRefresh(item, 'dispatch')
+                  // .then( thing => {
+                  //   console.log("DONE")
+                  //   console.log(props.productsUser)
+                  //   // setReturnedProducts(returnedProducts)
+                  //   userProductsToServer()
+                  //   // userProductsToServer()
+                  // })
 
                   // props.removeExpense({
                   //   id: item.cart_id
@@ -281,10 +291,20 @@ const CheckoutForm = (props) => {
 
                 }} className="cart-item list-group-item d-flex justify-content-between lh-condensed shadow-sm">
                   <div>
-                    <h6 className="my-0">{item.title}</h6>
+                    <div className="remove" onClick={() => {
+                      props.removeExpense({
+                        id: item.id
+                      });
+                    }}>
+                      <i className="fas fa-trash-alt"></i>
+                    </div>
+                    <div className="edit">
+                      <i className="fas fa-pen-square"></i>
+                    </div>
+                    <h6 className="my-0">{item.description}</h6>
                     <small className="text-muted">{ letterToSize[item.size] || '' }</small>
                   </div>
-                  <span className="text-muted">${(item.price / 100).toFixed(2) || ''}</span>
+                  <span className="text-muted">${(item.amount / 100).toFixed(2) || ''}</span>
                 </li>
               )}
 
@@ -318,13 +338,17 @@ const CheckoutForm = (props) => {
 
               <li className="articles-profit list-group-item py-1 d-flex justify-content-between">
                 <span>Articles Profit</span>
-                <strong>${ total === 0 ? 0.00 : ( total + tax ) - ( 0.029 * (total + tax + .30 ) ).toFixed(2) }</strong>
+                <strong>${ total === 0 ? 0.00 : ( ( total + tax ) - ( 0.029 * (total + tax + .30 ) ) ).toFixed(2) }</strong>
               </li>
 
             </div>
 
             <div className="card-body border-top border-dark p-2">
-              <button onClick={() => tryIntent()} className="btn btn-articles-light w-100">Checkout</button>
+
+              <button onClick={() => userProductsToServer()} className="btn btn-articles-light w-100" disabled={cartCount === props.productsUser.length ? true : false}>Update</button>
+
+              <button onClick={() => tryIntent()} className={"btn btn-articles-light w-100 " + (cartCount === props.productsUser.length ? '' : 'd-none')}>Checkout</button>
+
               <div className="small text-center pt-2 w-100">You will be charged when you click the button</div>
 
               {/* Show any error that happens when processing the payment */}

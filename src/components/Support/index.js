@@ -8,7 +8,8 @@ const itemsToRender = [
   [ROUTES.ROADMAP, 'Roadmap', <i class="fas fa-map-signs"></i>],
   [ROUTES.UPDATES, 'Updates', <i class="far fa-plus-square"></i>],
   [ROUTES.PRIVACY, 'Privacy', <i class="fas fa-user-secret"></i>],
-  [ROUTES.TRANSLATIONS, 'Translations', <i class="fas fa-language"></i>]
+  [ROUTES.TRANSLATIONS, 'Translations', <i class="fas fa-language"></i>],
+  [ROUTES.FORUM, 'Forum', <i class="far fa-comments"></i>]
 ]
 
 const Page = (props) => (

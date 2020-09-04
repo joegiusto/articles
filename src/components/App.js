@@ -61,6 +61,7 @@ import JobsPage from './Support/Jobs'
 import PressPage from './Support/Press'
 import TranslationsPage from './Support/Translations'
 import RoadmapPage from './Support/Roadmap'
+import ForumPage from './Support/Forum'
 
 import EmployeePage from './Employees'
 import EmployeePageDetails from './Employees/Directory'
@@ -227,6 +228,7 @@ class AppBase extends Component {
               <Route path={ROUTES.PRESS} component={PressPage} />
               <Route path={ROUTES.TRANSLATIONS} component={TranslationsPage} />
               <Route path={ROUTES.ROADMAP} component={RoadmapPage} />
+              <Route path={ROUTES.FORUM} component={ForumPage} />
         
               <Route path={ROUTES.ACCOUNT} component={AccountPage} />
               <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />

@@ -80,6 +80,8 @@ export const JOBS ='/support/jobs'
 export const PRESS ='/support/press'
 export const TRANSLATIONS ='/support/translations'
 export const ROADMAP ='/support/roadmap'
+export const FORUM ='/support/forum'
+export const FORUM_THREAD ='/support/forum/:id'
 
 // Account
 export const ACCOUNT = '/account';
