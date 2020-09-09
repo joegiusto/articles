@@ -444,7 +444,7 @@
       border-radius: .25rem;
   
       @include media-breakpoint-down(md) {
-        z-index: 100;
+        z-index: 99;
   
         @media screen and ( max-height: 600px ) {
           position: fixed;

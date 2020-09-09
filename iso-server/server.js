@@ -18,6 +18,7 @@ var AWS = require('aws-sdk');
 const url = `mongodb+srv://joegiusto:${encodeURIComponent(process.env.MONGODB_PASSWORD)}@articles-xgwnd.mongodb.net/articles_data?retryWrites=true&w=majority`;
 const stripe = require('stripe')(process.env.STRIPE_TEST_PASSWORD);
 const sharp = require('sharp');
+const cache = require('memory-cache');
 
 // var React = require('react');
 // var ReactDOMServer = require('react-dom/server');
@@ -102,6 +103,8 @@ function connectWithRetryMongo() {
     };
   
     var db = mongoUtil.getDb();
+
+    require('./routes/getGithubCommits')(app, db, cache);
   
     require('./routes/getNewsDocument')(app, db);
     // Replace add and edit with upsert

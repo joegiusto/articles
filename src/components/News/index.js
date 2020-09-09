@@ -39,6 +39,8 @@ import { Link, Switch, Route } from 'react-router-dom';
 
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
+// const transactions = 
+
 function FlintCounter() {
   // Declare a new state variable, which we'll call "count"
   const [display, setDisplay] = useState(true);
@@ -107,6 +109,17 @@ function SearchHead(props) {
   return(
     <div className={"news-head " + (isHome ? 'home' : 'focus')}>
 
+      <div className="frontpage-section-header d-none">
+        <h5>Widgets</h5>
+
+        <div className="controls d-none ">
+          <i className="fas fa-backward"></i>
+          <i className="fas fa-forward"></i>
+        </div>
+      </div>
+
+      <div className="spacer"></div>
+
       <div className={"active-page-panel " + (isHome ? 'home' : 'focus')}>
 
         <h1 className="title">{activePage.title}</h1>
@@ -135,6 +148,10 @@ function SearchHead(props) {
       <div className={"search-panel " + (isHome ? 'home' : 'focus')}>
   
         <img src={background} alt="" className="background"/>
+
+        <div onClick={() => props.toggleSearchSettingsOverlay()} className="settings">
+          <i className="fas fa-toolbox mr-0"></i>
+        </div>
   
         <h1 className="title">Search</h1>
   
@@ -237,6 +254,25 @@ function SearchHead(props) {
 
           <div className="hover-notice">Open Tab For https://youtube.com</div>
         </a>
+
+        <div onClick={() => props.toggleBankingOverlay()} className="extra-panel banking">
+          {props.plaidSetup ? 
+          <>
+          <div className="photo"><img src="https://lh3.googleusercontent.com/QruFI-jzHu0gsXrpWsC6gP_DxPs9TjdEzqrr7jhkgIEwPq-fc8-kEmzW79_XhmMxpA2N=s180" alt=""/></div>
+          <div className="info">
+            <div className="branch">HVFCU</div>
+            <div className="amount">$400.00</div>
+          </div>
+          </>
+          :
+          <div className="plaid-setup">
+            <i class="fas fa-money-check-alt"></i>
+            <div>Bank Balance</div>
+            <div className="btn btn-articles-light btn-sm">Setup</div>
+          </div>
+          }
+          
+        </div>
 
       </div>
 
@@ -347,7 +383,7 @@ class RecentSliders extends Component {
             {/* See slots https://swiperjs.com/react/ */}
             <span slot="container-start">
 
-              <div className="header">
+              <div className="frontpage-section-header">
                 <h5>Recent Stories</h5>
 
                 <div className="controls ">
@@ -377,7 +413,7 @@ class RecentSliders extends Component {
             {/* See slots https://swiperjs.com/react/ */}
             <span slot="container-start">
 
-              <div className="header">
+              <div className="frontpage-section-header">
                 <h5>Recent Issues</h5>
 
                 <div className="controls">
@@ -411,7 +447,7 @@ class RecentSliders extends Component {
 
             {/* See slots https://swiperjs.com/react/ */}
             <span slot="container-start">
-              <div className="header">
+              <div className="frontpage-section-header">
                 <h5>Recent Myths</h5>
 
                 <div className="controls">
@@ -440,7 +476,44 @@ class Frontpage extends Component {
 
     this.state = {
       search: '',
+      searchSettingsOverlay: false,
+
       weatherOverlay: false,
+      bankingOverlay: false,
+
+      plaidSetup: false,
+      transactions: [
+        {
+          date: moment().format("LL"),
+          place: 'Dunkin',
+          amount: 4.52
+        },
+        {
+          date: moment().subtract(2, 'days').format("LL"),
+          place: 'Steam',
+          amount: 14.13
+        },
+        {
+          date: moment().subtract(17, 'days').format("LL"),
+          place: 'Walmart',
+          amount: 30.72
+        },
+        {
+          date: moment().subtract(25, 'days').format("LL"),
+          place: 'Amazon',
+          amount: 5.66
+        },
+        {
+          date: moment().subtract(27, 'days').format("LL"),
+          place: 'Banksquare',
+          amount: 3.45
+        },
+        {
+          date: moment().subtract(31, 'days').format("LL"),
+          place: 'Red Line Diner',
+          amount: 12.98
+        }
+      ],
 
       trending: {
         items: ['5f1b2e1c5846204edc02a49a', '5e9c27cdfeb48937d0e54975', '5f173f4210bb9231f0eb7f02'],
@@ -453,6 +526,8 @@ class Frontpage extends Component {
     }
 
     this.toggleWeatherOverlay = this.toggleWeatherOverlay.bind(this);
+    this.toggleBankingOverlay = this.toggleBankingOverlay.bind(this);
+    this.toggleSearchSettingsOverlay = this.toggleSearchSettingsOverlay.bind(this);
   }
 
   componentDidMount() {
@@ -469,6 +544,22 @@ class Frontpage extends Component {
       this.setState({weatherOverlay: bool})
     } else {
       this.setState({weatherOverlay: !this.state.weatherOverlay})
+    }
+  }
+
+  toggleBankingOverlay(bool) {
+    if (bool === true || bool === false) {
+      this.setState({bankingOverlay: bool})
+    } else {
+      this.setState({bankingOverlay: !this.state.bankingOverlay})
+    }
+  }
+
+  toggleSearchSettingsOverlay(bool) {
+    if (bool === true || bool === false) {
+      this.setState({searchSettingsOverlay: bool})
+    } else {
+      this.setState({searchSettingsOverlay: !this.state.searchSettingsOverlay})
     }
   }
 
@@ -678,6 +769,299 @@ class Frontpage extends Component {
 
         </div>
 
+        <div onClick={() => this.setState({bankingOverlay: !this.state.bankingOverlay})} className={"banking-overlay " + (this.state.bankingOverlay ? 'show' : '')}>
+
+          {this.state.plaidSetup ? 
+            <div className="banking-content">
+
+              <div className="overview">
+
+                <div className="overview-control prev">
+                  <i className="fas fa-backward"></i>
+                </div>
+
+                <div className="details">
+                  <div>HVFCU (Checking)</div>
+                  <div><i className="fas fa-money-bill"></i>$400.00</div>
+                </div>
+
+                <div className="overview-control next">
+                  <i className="fas fa-forward"></i>
+                </div>
+
+              </div>
+
+              <div className="transaction-list">
+                <div className="title">Recent Transactions</div>
+
+                <table class="table table-striped table-sm">
+                  <thead>
+                    <tr>
+                      <th scope="col">Date</th>
+                      <th scope="col">Place</th>
+                      <th scope="col">Amount</th>
+                      {/* <th scope="col">Handle</th> */}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.state.transactions.map(transaction => 
+                      <tr>
+                        <th scope="row">{transaction.date}</th>
+                        <td>{transaction.place}</td>
+                        <td>${transaction.amount}</td>
+                      </tr>  
+                    )}
+                  </tbody>
+                </table>
+
+              </div>
+
+              <div className="bottom-controls">
+                <div className="btn btn-articles-light">
+                  <i className="fas fa-map-pin"></i>
+                  Pin to Header
+                </div>
+                <div className="btn btn-articles-light ml-2">
+                  <i className="far fa-window-close"></i>
+                  Close
+                </div>
+              </div>
+
+            </div>
+            :
+            <div className="banking-content">
+
+              <img width="200px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Plaid_logo.svg/1200px-Plaid_logo.svg.png" alt=""/>
+              <div>Get easy access to your bank balance right in Articles</div>
+
+              <div onClick={() => this.setState({plaidSetup: true})}>Dev Toggle</div>
+            </div>
+          }
+          
+          
+
+        </div>
+
+        <div onClick={() => this.setState({searchSettingsOverlay: !this.state.searchSettingsOverlay})} className={"search-settings-overlay " + (this.state.searchSettingsOverlay ? 'show' : '')}>
+
+          <div className="content">
+
+            <div className="animation">
+              <div className="box box-1">
+
+              </div>
+              <div className="box box-2">
+
+              </div>
+              <div className="box box-3">
+
+              </div>
+              <div className="box box-4">
+
+              </div>
+            </div>
+
+            <div className="note">Custimize your search bar with helpful widgets that keep you on top of all the busy things going on in life.</div>
+
+            <div className="group">
+              <div className="title">Availble Widgets</div>
+              <div className="list">
+
+                <div className="item">
+                  <span className="name">Weather</span>
+                  <div className="switch-field">
+                    <input
+                      type="radio"
+                      id="switch_left"
+                      name="switchToggle"
+                      value={this.props.leftLabel}
+                      onChange={this.toggleState}
+                      checked={!this.state.toggle}
+                    />
+                    <label htmlFor="switch_left">Active</label>
+
+                    <input
+                      type="radio"
+                      id="switch_right"
+                      name="switchToggle"
+                      value={this.props.rightLabel}
+                      onChange={this.toggleState}
+                      checked={this.state.toggle}
+                    />
+                    <label htmlFor="switch_right">Inactive</label>
+                  </div>
+                </div>
+
+                <div className="item">
+                  <span className="name">Youtube</span>
+                  <div className="switch-field">
+                    <input
+                      type="radio"
+                      id="switch_left"
+                      name="switchToggle"
+                      value={this.props.leftLabel}
+                      onChange={this.toggleState}
+                      checked={!this.state.toggle}
+                    />
+                    <label htmlFor="switch_left">Active</label>
+
+                    <input
+                      type="radio"
+                      id="switch_right"
+                      name="switchToggle"
+                      value={this.props.rightLabel}
+                      onChange={this.toggleState}
+                      checked={this.state.toggle}
+                    />
+                    <label htmlFor="switch_right">Inactive</label>
+                  </div>
+                </div>
+
+                <div className="item">
+                  <span className="name">Bank Balance</span>
+                  <div className="switch-field">
+                    <input
+                      type="radio"
+                      id="switch_left"
+                      name="switchToggle"
+                      value={this.props.leftLabel}
+                      onChange={this.toggleState}
+                      checked={!this.state.toggle}
+                    />
+                    <label htmlFor="switch_left">Active</label>
+
+                    <input
+                      type="radio"
+                      id="switch_right"
+                      name="switchToggle"
+                      value={this.props.rightLabel}
+                      onChange={this.toggleState}
+                      checked={this.state.toggle}
+                    />
+                    <label htmlFor="switch_right">Inactive</label>
+                  </div>
+                </div>
+
+                <div className="item">
+                  <span className="name">Messages</span>
+                  <div className="switch-field">
+                    <input
+                      type="radio"
+                      id="switch_left"
+                      name="switchToggle"
+                      value={this.props.leftLabel}
+                      onChange={this.toggleState}
+                      checked={!this.state.toggle}
+                    />
+                    <label htmlFor="switch_left">Active</label>
+
+                    <input
+                      type="radio"
+                      id="switch_right"
+                      name="switchToggle"
+                      value={this.props.rightLabel}
+                      onChange={this.toggleState}
+                      checked={this.state.toggle}
+                    />
+                    <label htmlFor="switch_right">Inactive</label>
+                  </div>
+                </div>
+
+                <div className="item">
+                  <span className="name">Orders</span>
+                  <div className="switch-field">
+                    <input
+                      type="radio"
+                      id="switch_left"
+                      name="switchToggle"
+                      value={this.props.leftLabel}
+                      onChange={this.toggleState}
+                      checked={!this.state.toggle}
+                    />
+                    <label htmlFor="switch_left">Active</label>
+
+                    <input
+                      type="radio"
+                      id="switch_right"
+                      name="switchToggle"
+                      value={this.props.rightLabel}
+                      onChange={this.toggleState}
+                      checked={this.state.toggle}
+                    />
+                    <label htmlFor="switch_right">Inactive</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="group">
+              <div className="title">In Development</div>
+              <div className="list">
+
+                <div className="item">
+                  <span className="name">Bank Balance</span>
+                  <div className="switch-field">
+                    <input
+                      type="radio"
+                      id="switch_left"
+                      name="bankBalanceToggle"
+                    />
+                    <label htmlFor="switch_left">Active</label>
+
+                    <input
+                      type="radio"
+                      id="switch_right"
+                      name="bankBalanceToggle"
+                    />
+                    <label htmlFor="switch_right">Inactive</label>
+                  </div>
+                </div>
+
+                <div className="item">
+                  <span className="name">Amazon, Ebay Orders</span>
+                  <div className="switch-field">
+                    <input
+                      type="radio"
+                      id="switch_left"
+                      name="bankBalanceToggle"
+                    />
+                    <label htmlFor="switch_left">Active</label>
+
+                    <input
+                      type="radio"
+                      id="switch_right"
+                      name="bankBalanceToggle"
+                    />
+                    <label htmlFor="switch_right">Inactive</label>
+                  </div>
+                </div>
+
+                <div className="item">
+                  <span className="name">Email</span>
+                  <div className="switch-field">
+                    <input
+                      type="radio"
+                      id="switch_left"
+                      name="bankBalanceToggle"
+                    />
+                    <label htmlFor="switch_left">Active</label>
+
+                    <input
+                      type="radio"
+                      id="switch_right"
+                      name="bankBalanceToggle"
+                    />
+                    <label htmlFor="switch_right">Inactive</label>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+
+          </div>
+          
+        </div>
+
         <div className="content">
           <div className='container-fluid'>
 
@@ -713,12 +1097,15 @@ class Frontpage extends Component {
               <SearchHead 
               zip={this.props.user_details.address?.zip || 'None'} 
               toggleWeatherOverlay={this.toggleWeatherOverlay} 
+              toggleBankingOverlay={this.toggleBankingOverlay}
+              toggleSearchSettingsOverlay={this.toggleSearchSettingsOverlay}
               toggleUserSubscriptions={this.props.toggleUserSubscriptions}
               userSubscriptions={this.props.site?.userSubscriptions}
               filterIssuesDateType={this.props.filterIssuesDateType}
               dateType={this.props.site.dateType}
               homeLayout={true} 
               path={this.props.match.path}
+              plaidSetup={this.state.plaidSetup}
               />
 
                 <Switch>

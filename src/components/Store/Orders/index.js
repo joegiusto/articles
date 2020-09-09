@@ -53,7 +53,7 @@ class OrdersPage extends Component {
             <div className="card-footer"></div>
           </div>
 
-          <Link to={ROUTES.STORE}><div className="btn btn-articles-light">Back To Store</div></Link>
+          {/* <Link to={ROUTES.STORE}><div className="btn btn-articles-light">Back To Store</div></Link> */}
 
         </div>
       </div>

@@ -18,7 +18,10 @@ class EmployeePageDetails extends Component {
       // Can be 'stubs' or 'charts' 
       filter: 'stubs',
 
-      expandedPhoto: false
+      expandedPhoto: false,
+
+      commits: [],
+      commitsLoading: false
     }
   }
 
@@ -41,6 +44,26 @@ class EmployeePageDetails extends Component {
     })
     .catch(function (error) {
       console.log(error);
+    });
+
+    axios.get('/api/getGithubCommits', {
+    })
+    .then(function (response) {
+
+      console.log(response);
+
+      self.setState({
+        commitsLoading: false,
+        commits: response.data.commits
+      })
+
+    })
+    .catch(function (error) {
+      console.log(error);
+
+      self.setState({
+        commitsLoading: false,
+      })
     });
 
     axios.get('/api/getEmployeeAgr', {
@@ -130,10 +153,12 @@ class EmployeePageDetails extends Component {
 
           <div className="filters noselect">
             <div onClick={() => this.setState({filter: 'stubs'})} className={"filter " + ( this.state.filter === 'stubs' ? 'active' : '' ) }>Pay Stubs</div>
+            <div onClick={() => this.setState({filter: 'commits'})} className={"filter " + ( this.state.filter === 'commits' ? 'active' : '' ) }>Commits</div>
             <div onClick={() => this.setState({filter: 'charts'})} className={"filter " + ( this.state.filter === 'charts' ? 'active' : '' ) }>Data Charts</div>
           </div>
 
           <div className="details">
+
             {this.state.filter === 'stubs' ? 
 
             <div className="payrole-stubs">
@@ -161,10 +186,47 @@ class EmployeePageDetails extends Component {
             </div>
 
             :
-            <div className="">
+            null
+            }
+
+            {this.state.filter === 'commits' ? 
+
+            <div className="employee-commits">
+              
+              {this.state.commitsLoading === true ?
+              <div className="loading">Loading</div>
+              :
+              <div className="commits">
+                {this.state.commits.map(commit => 
+                  <a target="_blank" rel="noopener noreferrer" href={commit.html_url}>
+                    <div className="commit d-flex">
+                      <div className="photo"><img src={commit.committer.avatar_url} alt=""/></div>
+                      <div className="commit-details">
+                        <div className="date">{moment(commit.commit.author.date).format("LL")}</div>
+                        <div className="title">{commit.commit.message}</div>
+                      </div>
+                    </div>
+                  </a>
+                )}
+              </div>
+              }
+
+            </div>
+
+            :
+            null
+            }
+
+            {this.state.filter === 'charts' ? 
+
+            <div className="employee-charts">
               Data Charts will appear here once this feature is done.
             </div>
+
+            :
+            null
             }
+
           </div>
 
         </div>

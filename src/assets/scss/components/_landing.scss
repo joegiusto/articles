@@ -663,6 +663,10 @@
           height: 100%;
           margin: 0 5px 1rem 5px;
           transition-duration: 200ms;
+
+          @include media-breakpoint-up(xl) {
+            height: 120px;
+          }
   
           .title {
             font-family: brandon-grotesque, sans-serif;

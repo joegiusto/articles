@@ -119,7 +119,11 @@ class ReportExpenseCards extends Component {
 
               <hr/>
 
-              {this.state.reportsLoading ? 'Loading...' : ''}
+              {this.state.reportsLoading ? 
+              <div>Loading...</div>
+              :
+              ''
+              }
 
               {this.state.reportsLoading === true ?
                '' 
