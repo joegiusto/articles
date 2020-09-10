@@ -1,6 +1,7 @@
 import React, { Component, useState } from 'react';
 import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
+import axios from 'axios';
 
 // import Swiper from 'react-id-swiper';
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
@@ -212,12 +213,17 @@ function SearchHead(props) {
           <div className="info">Zip: <span className="badge badge-light">{props.zip}</span></div>
 
           <div className="background">
+            {props.weatherData?.current?.is_day === 'yes' ?
             <img src="https://s7d2.scene7.com/is/image/TWCNews/partly_cloudy_jpg-4" alt=""/>
+            :
+            <img src="https://www.cruise1st.co.uk/blog/wp-content/uploads/2017/12/Fotolia_96215836_S-702x336.jpg" alt=""/>
+            }
           </div>
 
           <div className="content text-center">
-            <div><i className="fas fa-thermometer-empty"></i>0°F</div>
-            <div>Partly Cloudy</div>
+            <div><i className="fas fa-thermometer-empty"></i>{(props.weatherData?.current?.temperature * 9 / 5 + 32).toFixed(0)}°F</div>
+            <div>{props.weatherData?.current?.weather_descriptions.map(item => <span>{item} </span>)}</div>
+            <div>{moment(props.weatherData?.location?.localtime).format("LLL")}</div>
           </div>
 
           <div className="slideup">
@@ -255,7 +261,7 @@ function SearchHead(props) {
           <div className="hover-notice">Open Tab For https://youtube.com</div>
         </a>
 
-        <div onClick={() => props.toggleBankingOverlay()} className="extra-panel banking">
+        <div onClick={() => props.toggleBankingOverlay()} className="extra-panel d-none banking">
           {props.plaidSetup ? 
           <>
           <div className="photo"><img src="https://lh3.googleusercontent.com/QruFI-jzHu0gsXrpWsC6gP_DxPs9TjdEzqrr7jhkgIEwPq-fc8-kEmzW79_XhmMxpA2N=s180" alt=""/></div>
@@ -479,6 +485,7 @@ class Frontpage extends Component {
       searchSettingsOverlay: false,
 
       weatherOverlay: false,
+      weatherData: {},
       bankingOverlay: false,
 
       plaidSetup: false,
@@ -531,7 +538,28 @@ class Frontpage extends Component {
   }
 
   componentDidMount() {
+    const self = this;
     console.log("Mounted");
+
+    axios.get('/api/getWeather', {
+    })
+    .then(function (response) {
+
+      console.log(response);
+
+      self.setState({
+        // commitsLoading: false,
+        weatherData: response.data.weather
+      })
+
+    })
+    .catch(function (error) {
+      console.log(error);
+
+      self.setState({
+        // commitsLoading: false,
+      })
+    });
   }
 
   onChange = event => {
@@ -591,120 +619,128 @@ class Frontpage extends Component {
 
           <div className="content">
 
-            <div className="states-heatmap">
-              <img src={statesImage} className="head-image" alt=""/>
-              <div className="live-dots">
-
-                <div className={"dot dot-" + this.state.trending.slide}>
-                  <div className="expanded">
-                    
-                    <div className="location">Austin, TX</div>
-                    <div className="date">{moment().format("MM/DD")}</div>
-
-                    <div className="news">Tesla will build its next Gigafactory near Austin, Texas</div>
-                    
-                    <div className="btn btn-articles-light">View</div>
+            <div className="trending-map-wrap">
+              <div className="states-heatmap">
+                <img src={statesImage} className="head-image" alt=""/>
+                <div className="live-dots">
+  
+                  <div className={"dot dot-" + this.state.trending.slide}>
+                    <div className="expanded">
+                      
+                      <div className="location">Austin, TX</div>
+                      <div className="date">{moment().format("MM/DD")}</div>
+  
+                      <div className="news">Tesla will build its next Gigafactory near Austin, Texas</div>
+                      
+                      <div className="btn btn-articles-light">View</div>
+                    </div>
                   </div>
+  
                 </div>
-
               </div>
-            </div>
-
-            <div className="trending">
-
-              <div className="title">Trending</div>
-
-              <Swiper
-                {...swiper_settings}
-              >
-
-                {/* See slots https://swiperjs.com/react/ */}
-                <span slot="container-start">
-
-                </span>
-
-                <SwiperSlide>
-                  <div className="trending-card">
-                    Tesla will build its next Gigafactory near Austin, Texas
-                    <div className="progress"></div>
-                  </div>
-                </SwiperSlide>
-
-                <SwiperSlide>
-                  <div className="trending-card">
-                    Meet Cybertruck
-                    <div className="progress"></div>
-                  </div>
-                </SwiperSlide>
-
-                <SwiperSlide>
-                  <div className="trending-card">
-                    Jeffery Epstein Arrested
-                    <div className="progress"></div>
-                  </div>
-                </SwiperSlide>
-
-              </Swiper>
-
-              {/* <div className="trending-card">Tesla will build its next Gigafactory near Austin, Texas</div>
- 
-              <div className="dots">
-                <div className="dot active"></div>
-                <div className="dot"></div>
-                <div className="dot"></div>
-              </div> */}
-              
+  
+              <div className="trending">
+  
+                <div className="title">Trending</div>
+  
+                <Swiper
+                  {...swiper_settings}
+                >
+  
+                  {/* See slots https://swiperjs.com/react/ */}
+                  <span slot="container-start">
+  
+                  </span>
+  
+                  <SwiperSlide>
+                    <div className="trending-card">
+                      Tesla will build its next Gigafactory near Austin, Texas
+                      <div className="progress"></div>
+                    </div>
+                  </SwiperSlide>
+  
+                  <SwiperSlide>
+                    <div className="trending-card">
+                      Meet Cybertruck
+                      <div className="progress"></div>
+                    </div>
+                  </SwiperSlide>
+  
+                  <SwiperSlide>
+                    <div className="trending-card">
+                      Jeffery Epstein Arrested
+                      <div className="progress"></div>
+                    </div>
+                  </SwiperSlide>
+  
+                </Swiper>
+  
+                {/* <div className="trending-card">Tesla will build its next Gigafactory near Austin, Texas</div>
+   
+                <div className="dots">
+                  <div className="dot active"></div>
+                  <div className="dot"></div>
+                  <div className="dot"></div>
+                </div> */}
+                
+              </div>
             </div>
 
             <div className="menu">
 
-              <h5 className="title">Discover</h5>
-  
-              <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS}>
-                <div className={"link frontpage " + (this.props.location.pathname === "/news" ? 'active' : null)}>
-                  <i className="fas fa-newspaper"></i>
-                  <div className="text">Frontpage</div>
+              <div className="discover-links">
+                <h5 className="title">Discover</h5>
+    
+                <div className="links">
+                  <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS}>
+                    <div className={"link frontpage " + (this.props.location.pathname === "/news" ? 'active' : null)}>
+                      <i className="fas fa-newspaper"></i>
+                      <div className="text">Frontpage</div>
+                    </div>
+                  </Link>
+    
+                  <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.STORIES}>
+                    <div className={"link stories " + (this.props.location.pathname === "/news/stories" ? 'active' : null)}>
+                      <i className="fas fa-bullhorn"></i>
+                      <div className="text">Stories</div>
+                    </div>
+                  </Link>
+    
+                  <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.ISSUES}>
+                    <div className={"link issues " + (this.props.location.pathname === "/news/issues" ? 'active' : null)}>
+                      <i className="fas fa-balance-scale"></i>
+                      <div className="text">Issues</div>
+                    </div>
+                  </Link>
+                  
+                  <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.MYTHS}>
+                    <div className={"link myths " + (this.props.location.pathname === "/news/myths" ? 'active' : null)}>
+                      <i className="fas fa-ghost"></i>
+                      <div className="text">Myths</div>
+                    </div>
+                  </Link>
                 </div>
-              </Link>
-
-              <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.STORIES}>
-                <div className={"link stories " + (this.props.location.pathname === "/news/stories" ? 'active' : null)}>
-                  <i className="fas fa-bullhorn"></i>
-                  <div className="text">Stories</div>
-                </div>
-              </Link>
-
-              <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.ISSUES}>
-                <div className={"link issues " + (this.props.location.pathname === "/news/issues" ? 'active' : null)}>
-                  <i className="fas fa-balance-scale"></i>
-                  <div className="text">Issues</div>
-                </div>
-              </Link>
-              
-              <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.MYTHS}>
-                <div className={"link myths " + (this.props.location.pathname === "/news/myths" ? 'active' : null)}>
-                  <i className="fas fa-ghost"></i>
-                  <div className="text">Myths</div>
-                </div>
-              </Link>
+              </div>
 
               <div className="grow"></div>
 
-              <h5 className="title mt-3">Feature</h5>
-
-              <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.EXTENDED + '/coronavirus'}>
-                <div className={"link frontpage " + (this.props.location.pathname === "/news/extended/coronavirus" ? 'active' : null)}>
-                  <i className="fas fa-lungs-virus"></i>
-                  <div className="text">Coronavirus</div>
-                </div>
-              </Link>
-
-              {/* <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS}>
-                <div className={"link " + (this.props.location.pathname === "/news/coronavirus" ? 'active' : null)}>
-                  <i className="fas fa-fist-raised"></i>
-                  <div className="text">Black Lives Matter</div>
-                </div>
-              </Link> */}
+              <div className="feature-links">
+                <h5 className="title mt-3">Feature</h5>
+  
+                <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.EXTENDED + '/coronavirus'}>
+                  <div className={"link frontpage " + (this.props.location.pathname === "/news/extended/coronavirus" ? 'active' : null)}>
+                    <i className="fas fa-lungs-virus"></i>
+                    <div className="text">Coronavirus</div>
+                  </div>
+                </Link>
+  
+                {/* <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS}>
+                  <div className={"link " + (this.props.location.pathname === "/news/coronavirus" ? 'active' : null)}>
+                    <i className="fas fa-fist-raised"></i>
+                    <div className="text">Black Lives Matter</div>
+                  </div>
+                </Link> */}
+              </div>
 
             </div>
 
@@ -726,26 +762,32 @@ class Frontpage extends Component {
                 <img src="https://s7d2.scene7.com/is/image/TWCNews/partly_cloudy_jpg-4" alt=""/>
               </div>
 
-              <div className="content text-center">
+              <div className="content">
 
                 <div>
-                  <div>{moment().format("dddd")}</div>
-                  <div>{moment().format("MMMM, DD")}</div>
-                  <div>{moment().format("Y")}</div>
-                </div>
-
-                <div>
-                  <div><i className="fas fa-thermometer-empty"></i>80°F</div>
-                  <div>Partly Cloudy</div>
                   <div>
-                    <span>H 80°F</span>
-                    <span> / </span>
-                    <span>L 80°F</span>
+                    <div>{moment(this.state.weatherData?.location?.localtime).format("LL")}</div>
+                    {/* <div>{moment().format("dddd")}</div>
+                    <div>{moment().format("MMMM, DD")}</div>
+                    <div>{moment().format("Y")}</div> */}
+                  </div>
+  
+                  <div>
+                    <div><i className="fas fa-thermometer-empty"></i>{(this.state.weatherData?.current?.temperature * 9 / 5 + 32).toFixed(0)}°F</div>
+  
+                    <div>{this.state.weatherData?.current?.weather_descriptions.map(item => <span>{item} </span>)}</div>
+  
+                    <div className="d-none">
+                      <span>H 80°F</span>
+                      <span> / </span>
+                      <span>L 80°F</span>
+                    </div>
+  
                   </div>
                 </div>
 
                 <div className="chart">
-
+                  {this.state.weatherData?.current?.weather_icons.map(item => <img className="weather-icon" alt="current weather icon" src={item}/>)}
                 </div>
 
               </div>
@@ -1054,7 +1096,7 @@ class Frontpage extends Component {
                     <label htmlFor="switch_right">Inactive</label>
                   </div>
                 </div>
-                
+
               </div>
             </div>
 
@@ -1106,6 +1148,7 @@ class Frontpage extends Component {
               homeLayout={true} 
               path={this.props.match.path}
               plaidSetup={this.state.plaidSetup}
+              weatherData={this.state.weatherData}
               />
 
                 <Switch>

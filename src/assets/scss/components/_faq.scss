@@ -8,15 +8,34 @@
   }
 
   h1 {
-    font-size: 3rem;
     font-family: brandon-grotesque, sans-serif;
     font-style: normal;
     font-weight: 900;
+
+    @include media-breakpoint-up(md) {
+      font-size: 3rem;
+    }
   }
 
   .lead {
-    font-size: 2rem;
+    font-size: 1rem;
     font-weight: 300;
     margin-bottom: 2rem;
+
+    @include media-breakpoint-up(md) {
+      font-size: 2rem;
+    }
+  }
+
+  .accordion {
+    margin-bottom: 1rem;
+    
+    .btn {
+      text-align: left;
+    }
+  }
+
+  .btn-link {
+    color: $accent-color;
   }
 }

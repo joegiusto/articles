@@ -1,5 +1,9 @@
 import React, {Component} from 'react';
 
+import Button from 'react-bootstrap/Button';
+import Accordion from 'react-bootstrap/Accordion';
+import Card from 'react-bootstrap/Card';
+
 class FAQ extends Component {
   constructor(props) {
     super(props)
@@ -21,7 +25,55 @@ class FAQ extends Component {
           <h1>FAQ</h1>
           <p className="lead">Our most asked questions answered</p>
 
-          <div className="accordion" id="accordionExample">
+          <Accordion defaultActiveKey="0">
+
+            <Card>
+              <Card.Header>
+                <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                  What is Articles?
+                </Accordion.Toggle>
+              </Card.Header>
+              <Accordion.Collapse eventKey="0">
+                <Card.Body>Questions like this are better answered in our mission statement which can be read <a target="_blank" className="border-bottom" href="/mission">here.</a></Card.Body>
+              </Accordion.Collapse>
+            </Card>
+
+            <Card>
+              <Card.Header>
+                <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                  Is Articles a Non Profit?
+                </Accordion.Toggle>
+              </Card.Header>
+              <Accordion.Collapse eventKey="1">
+                <Card.Body>Hello! I'm another body</Card.Body>
+              </Accordion.Collapse>
+            </Card>
+
+            <Card>
+              <Card.Header>
+                <Accordion.Toggle as={Button} variant="link" eventKey="2">
+                  How do we plan to use the platform to fix issues in America?
+                </Accordion.Toggle>
+              </Card.Header>
+              <Accordion.Collapse eventKey="2">
+                <Card.Body>Hello! I'm another body</Card.Body>
+              </Accordion.Collapse>
+            </Card>
+
+            <Card>
+              <Card.Header>
+                <Accordion.Toggle as={Button} variant="link" eventKey="3">
+                  Which political party do you align with?
+                </Accordion.Toggle>
+              </Card.Header>
+              <Accordion.Collapse eventKey="3">
+                <Card.Body>Hello! I'm another body</Card.Body>
+              </Accordion.Collapse>
+            </Card>
+
+          </Accordion>
+
+          <div className="accordion d-none" id="accordionExample">
 
             <div className="card">
               <div className="card-header" id="headingOne">
@@ -70,6 +122,7 @@ class FAQ extends Component {
             </div>
 
           </div>
+
         </div>
       </div>
     )

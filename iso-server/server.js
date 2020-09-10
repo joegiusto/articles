@@ -105,6 +105,7 @@ function connectWithRetryMongo() {
     var db = mongoUtil.getDb();
 
     require('./routes/getGithubCommits')(app, db, cache);
+    require('./routes/getWeather')(app, db, cache);
   
     require('./routes/getNewsDocument')(app, db);
     // Replace add and edit with upsert
