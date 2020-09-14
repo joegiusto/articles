@@ -32,11 +32,15 @@ const CheckoutForm = (props) => {
   const [processing, setProcessing] = useState('');
   const [clientSecret, setClientSecret] = useState('');
   const [disabled, setDisabled] = useState(true);
+  const [saveCard, setSaveCard] = useState(false);
   const elements = useElements();
+  const [userPaymentMethods, setUserPaymentMethods] = useState([]);
   
   useEffect(() => {
 
     userProductsToServer()
+
+    getUserPaymentMethods()
 
     if (!mounted.current) {
       // do componentDidMount logic
@@ -59,7 +63,8 @@ const CheckoutForm = (props) => {
       _id: props.user_details._id,
       first_name: props.user_details.first_name,
       last_name: props.user_details.last_name,
-      email: props.user_details.email
+      email: props.user_details.email,
+      customer_id: props.user_details.stripe.customer_id
     })
     .then(res => {
       setClientSecret(res.data.clientSecret);
@@ -72,6 +77,43 @@ const CheckoutForm = (props) => {
     .catch(function (error) {
       console.log(error);
       setError('Could not get valid intent')
+    });
+  }
+
+  function renderCardBrandIcon(brand) {
+    switch(brand) {
+      case 'visa':
+        return( <i class="fab fa-cc-visa"></i> )
+      case 'discover':
+      return( <i class="fab fa-cc-discover"></i> )
+      default:
+        return( <i class="fab fa-cc"></i> )
+    }
+  }
+
+  function removePaymentMethod(method_id) {
+    axios.post('/api/removePaymentMethod', {
+      method_id
+    })
+    .then(function (response) {
+      console.log(response)
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  function getUserPaymentMethods() {
+    axios.post('/api/getUserPaymentMethods', {
+
+    })
+    .then(function (response) {
+      console.log(response)
+      setUserPaymentMethods(response.data.data)
+      console.log(userPaymentMethods)
+    })
+    .catch(function (error) {
+      console.log(error);
     });
   }
 
@@ -107,6 +149,9 @@ const CheckoutForm = (props) => {
 
   const handleSubmit = async secret => {
     setProcessing(true);
+
+    let future_usage = (saveCard ? {setup_future_usage: 'off_session'} : {} );
+
     const payload = await stripe.confirmCardPayment(secret, {
       payment_method: {
         card: elements.getElement(CardElement),
@@ -114,8 +159,10 @@ const CheckoutForm = (props) => {
           name: `${props.first_name} ${props.last_name}`,
           email: props.email
         }
-      }
+      },
+      ...future_usage
     });
+
     if (payload.error) {
       setError(`Payment failed ${payload.error.message}`);
       setProcessing(false);
@@ -128,6 +175,7 @@ const CheckoutForm = (props) => {
       axios.post('/api/userMadePurchase', {
         payment: payload,
         user_id: props.user_details._id,
+        items: props.productsUser
       })
       .then(function (response) {
         console.log(response);
@@ -221,19 +269,74 @@ const CheckoutForm = (props) => {
                 
                 <h3 className="mb-4">Payment {(total + tax).toFixed(2)}</h3>
 
+                <small>We do not store any card information on our servers, all information is stored securely with Stripe.</small>
+
+                <h5 className="stored-cards-label">Saved Cards</h5>
+                <div className="stored-cards">
+
+                  {userPaymentMethods.length < 1 ? 
+                    <div className="no-card">
+                      <small>No saved cards</small>
+                    </div>
+                    :
+                    userPaymentMethods.map(card => 
+                    <div className={"card " + card.card.brand}>
+
+                        {/* <div className="remove"><i onClick={() => removePaymentMethod(card.id)} className="fas fa-times-circle"></i></div> */}
+
+                        <div className="select">
+                          <div className="circle"></div>
+                        </div>
+
+                        <div className="inline-remove">
+                          <i onClick={() => removePaymentMethod(card.id)} className="fas fa-times-circle"></i>
+                        </div>
+
+                        <div className="details">
+                          <div className="card-brand">{renderCardBrandIcon(card.card.brand)}</div>
+                          <div className="last4">
+                            <div className="fake-digits">
+
+                              <i class="fas fa-star-of-life"></i>
+                              <i class="fas fa-star-of-life"></i>
+                              <i class="fas fa-star-of-life"></i>
+                              <i class="fas fa-star-of-life"></i>
+                              <div>-</div>
+
+                              <i class="fas fa-star-of-life"></i>
+                              <i class="fas fa-star-of-life"></i>
+                              <i class="fas fa-star-of-life"></i>
+                              <i class="fas fa-star-of-life"></i>
+                              <div>-</div>
+
+                              <i class="fas fa-star-of-life"></i>
+                              <i class="fas fa-star-of-life"></i>
+                              <i class="fas fa-star-of-life"></i>
+                              <i class="fas fa-star-of-life"></i>
+                              <div>-</div>
+
+                            </div>
+                            {card.card.last4}
+                          </div>
+                        </div>
+
+                        <div className="exp">
+                          {`${card.card.exp_month}/${card.card.exp_year}`}
+                        </div>
+
+                    </div>
+                    )
+                  }
+                  
+                </div>
+
                 <div className='shadow'>
                   <CardElement/>
                 </div>
 
-                <div class="remember-card form-group form-check">
-                  <input type="checkbox" class="form-check-input" id="exampleCheck1"/>
-                  <label class="form-check-label noselect" for="exampleCheck1">Remember Card?</label>
-                </div>
-
-                <small>We do not store any card information on our servers, all information stored with Stripe.</small>
-
-                <div className="stored-cards mt-5">
-                  <small>No saved cards</small>
+                <div className="remember-card form-group form-check">
+                  <input type="checkbox" className="form-check-input" id="exampleCheck1" onClick={() => setSaveCard(!saveCard)} checked={saveCard}/>
+                  <label className="form-check-label noselect" for="exampleCheck1">Remember Card?</label>
                 </div>
 
                 <button onClick={() => userProductsToServer()} className={"btn btn-articles-light w-100 " + (cartCount === props.productsUser.length ? 'd-none' : '')} disabled={cartLoading ? true : false}>Update</button>

@@ -229,7 +229,7 @@ function Menu(props) {
                   {props?.user?.photo_url === undefined ? 
                   null
                   :
-                  <img alt="" className="" style={{borderRadius: '100px'}} width="100%" height="100%" src={`https://articles-website.s3.amazonaws.com/profile_photos/${props?.user?._id}.jpg` || ''}/>
+                  <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SETTINGS}><img alt="" className="" style={{borderRadius: '100px'}} width="100%" height="100%" src={`https://articles-website.s3.amazonaws.com/profile_photos/${props?.user?._id}.jpg` || ''}/></Link>
                   }
                   <i className={props?.user?.photo_url ? '':'fas fa-question'}></i>
               </div> 

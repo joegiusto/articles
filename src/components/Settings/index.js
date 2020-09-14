@@ -624,8 +624,38 @@ class Settings extends Component {
             </div>
           </div>
 
-          <div className="text-center">
-            
+          <div className="card membership-card">
+
+            <div className="card-header">
+              <h5>Membership Status</h5>
+              <p>Details about your membership and contributions</p>
+            </div>
+
+            <div className="card-body">
+              <div className="counter">
+                <div className="amount">0</div>
+                <div className="unit">Months</div>
+              </div>
+              <div className="side-text">
+                You are not a member, consider supporting Articles to become a member and recieve benifits such as ad free browsing expreience and store discounts.
+                <div className="stats">
+                  <div>User Since: {moment(mongoDBuser?.sign_up_date).format('LL')}</div>
+                  <div>Member For: 0 Months</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="card-footer">
+
+              <div className="btn btn-articles-light">
+                Purchase Merch
+              </div>
+
+              <div className="btn btn-articles-light">
+                Purchase Membership
+              </div>
+
+            </div>
           </div>
 
           <div className="card settings-card mt-4">

@@ -72,7 +72,10 @@ import PasswordForgetPage from './PasswordForget';
 import MessagesPage from './Messages';
 
 import AdminPage from './Admin';
+
 import DonatePage from './Donate';
+
+import SubscribePage from './Subscribe'
 
 import PlaygroundPage from './Playground';
 import Chat from './Chat';
@@ -255,6 +258,7 @@ class AppBase extends Component {
               <Route exact path={ROUTES.ADMIN_ADS} component={AdminPage} />
 
               <Route path={ROUTES.DONATE} component={DonatePage} />
+              <Route path={ROUTES.SUBSCRIBE} component={SubscribePage} />
   
               <Route path={ROUTES.MESSAGES} component={MessagesPage} />
               <Route path={ROUTES.MESH} component={MeshPage} />

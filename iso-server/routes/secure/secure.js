@@ -1,18 +1,22 @@
 const moment = require('moment');
 var ObjectId = require('mongodb').ObjectId; 
 const passport = require("passport");
+const { resource } = require('../api/users');
+const { response } = require('express');
 const stripe = require('stripe')(process.env.STRIPE_NEW);
+const mongoose = require("mongoose");
+const User = mongoose.model("users");
 
 function needAdmin(req, res) {
 
   const { isAdmin } = req.user.roles;
 
-    if (!isAdmin) {
+  if (!isAdmin) {
 
-      return res.status(400).send({
-        error: 'Not Admin',
-     })
-    }
+    return res.status(400).send({
+      error: 'Not Admin',
+    })
+  }
 }
 
 module.exports = (app, db) => {
@@ -223,9 +227,12 @@ module.exports = (app, db) => {
     console.log(req.body)
     // Create a PaymentIntent with the order amount and currency
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: req.body.amount,
+      amount: req.body.amount.toFixed(0),
       currency: "usd",
-      // customer: req.body._id,
+
+      // TODO - This
+      customer: req.body.customer_id,
+
       metadata: {
         user_id: req.body._id
       },
@@ -237,6 +244,65 @@ module.exports = (app, db) => {
     res.send({  
       clientSecret: paymentIntent.client_secret
     });
+  });
+
+  app.post("/api/getUserPaymentMethods", passport.authenticate('jwt', {session: false}), async (req, res) => {
+    console.log("Getting user payment methods")
+
+    const paymentMethods = await stripe.paymentMethods.list({
+      customer: req.user.stripe.customer_id,
+      type: 'card',
+    });
+
+    res.send(paymentMethods);
+
+  });
+
+  app.post("/api/removePaymentMethod", passport.authenticate('jwt', {session: false}), async (req, res) => {
+    console.log("Removing a users payment method");
+
+    const paymentMethod = await stripe.paymentMethods.detach(
+      req.body.method_id
+    );
+
+    paymentMethod.then(
+      res.send('removed')
+    ).catch(
+      res.send('not removed')
+    )
+
+  });
+
+  app.post("/api/createSubscription", passport.authenticate('jwt', {session: false}), async (req, res) => {
+    console.log("Removing a users payment method");
+
+    // Attach the payment method to the customer
+    try {
+      await stripe.paymentMethods.attach(req.body.paymentMethodId, {
+        customer: req.body.customerId,
+      });
+    } catch (error) {
+      return res.status('402').send({ error: { message: error.message } });
+    }
+
+    // Change the default invoice settings on the customer to the new payment method
+    await stripe.customers.update(
+    req.body.customerId,
+    {
+      invoice_settings: {
+        default_payment_method: req.body.paymentMethodId,
+      },
+    }
+    );
+
+    const subscription = await stripe.subscriptions.create({
+      customer: req.body.customerId,
+      items: [{ price: 'price_HGd7M3DV3IMXkC' }],
+      expand: ['latest_invoice.payment_intent'],
+    });
+  
+    res.send(subscription);
+
   });
 
   app.post("/api/getTotalFromProducts", async (req, res) => {
@@ -380,6 +446,7 @@ module.exports = (app, db) => {
         for: 'Clothing Store Order',
         user_id: req.body.user_id,
         date: moment()._d,
+        items: req.body.items,
         payment: {
           type: 'card',
           processFee: parseFloat(0.00),
@@ -932,4 +999,78 @@ module.exports = (app, db) => {
     return res.end();
 
   });
+
+  async function addCustomer(email, _id) {
+    const customer = await stripe.customers.create({
+      email: email,
+      description: `Customer for the Articles MongoDB user ${_id}`,
+      phone: '8452142713'
+    });
+  
+    // console.log("Customer")
+    return(customer)
+  }
+
+  app.post('/api/createCustomer', passport.authenticate('jwt', {session: false}), (req, res) => {
+    console.log(`Call to /api/createCustomer made at ${new Date()} for user ${req.body._id}`);
+
+    const o_id = new ObjectId(req.body._id);
+
+    User.findById(req.body._id)
+    .then(user => {
+      if (user) {
+
+        console.log(user)
+        console.log(user.stripe.customer_id)
+
+        if (typeof user.stripe.customer_id === 'undefined') {
+          console.log("Is not customer yet in Stripe");
+    
+          addCustomer(req.body.email, req.body._id).then(response => {
+            console.log(response)
+    
+            db.collection("articles_users").updateOne(
+              {
+                  _id: o_id
+              },
+              {
+                $set: {
+                  stripe: {
+                    customer_id: response.id
+                  }
+                }
+              },
+              {
+                upsert: true
+              }
+            );
+    
+          });
+    
+        } else {
+          return res.send(`Is already a customer ${user.stripe.customer_id}`);
+        }
+      }
+      console.log("Can not find user with");
+    })
+    .catch(err => console.log(err));
+
+  })
+
+  app.post('/api/getCards', passport.authenticate('jwt', {session: false}), (req, res) => {
+
+    async function listPaymentMethods(_id) {
+      const paymentMethods = await stripe.paymentMethods.list({
+        customer: '{{CUSTOMER_ID}}',
+        type: 'card',
+      });
+
+      return paymentMethods;
+    }
+
+    listPaymentMethods.then((methods) => {
+      console.log(methods)
+    })
+
+  })
 } 

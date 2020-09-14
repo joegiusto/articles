@@ -261,6 +261,27 @@ class Users extends Component {
     });
   }
 
+  createCustomer(_id, email) {
+    const self = this;
+
+    console.log(`Trying to create a stripe customer for ${_id}`)
+
+    axios.post('/api/createCustomer', {
+      _id: _id,
+      email: email
+    })
+    .then(function (response) {
+
+      console.log(response)
+
+    })
+    .catch(function (error) {
+
+      console.log(error);
+
+    });
+  }
+
   render() {
 
     return (
@@ -332,6 +353,7 @@ class Users extends Component {
                   <tr>
                     {/* <th scope="col">User ID</th> */}
                     <th scope="col">Name</th>
+                    <th scope="col">Stripe</th>
                     <th scope="col">Membership</th>
                     <th scope="col">State</th>
                     <th scope="col">Party</th>
@@ -351,9 +373,11 @@ class Users extends Component {
                       {/* <td>{`${user.first_name} ${user.last_name}`}</td> */}
                       <td><span style={{width: '150px', display: 'inline-block'}}>{user.first_name} {user.last_name}</span> <span className="badge badge-light">{user._id}</span></td>
 
+                      <td>{user.stripe?.customer_id === undefined ? <span>No<span onClick={() => this.createCustomer(user._id)} className="btn btn-sm btn-articles-light">Create</span></span> : 'Yes'}</td>
+
                       <td>
                         <span className="badge badge-danger">No</span>
-                        <span className="badge badge-dark ml-2">Edit</span>
+                        <span onClick={() => this.createCustomer(user._id, user.email)} className="badge badge-dark ml-2">Edit</span>
                       </td>
 
                       <td>{user.address.state}</td>

@@ -221,27 +221,19 @@ function SearchHead(props) {
           </div>
 
           <div className="content text-center">
-            <div><i className="fas fa-thermometer-empty"></i>{(props.weatherData?.current?.temperature * 9 / 5 + 32).toFixed(0)}°F</div>
-            <div>{props.weatherData?.current?.weather_descriptions.map(item => <span>{item} </span>)}</div>
-            <div>{moment(props.weatherData?.location?.localtime).format("LLL")}</div>
+            <div className="temp"><i className="fas fa-thermometer-empty"></i>{props.weatherData?.current?.temperature}°F</div>
+            <div className="descriptions">{props.weatherData?.current?.weather_descriptions.map(item => <span>{item} </span>)}</div>
+            <div className="time">{moment(props.weatherData?.location?.localtime).format("LLL")}</div>
           </div>
 
           <div className="slideup">
             <div className="days">
 
-              {days}
+              {/* {days} */}
 
-              {/* <div className="day">
-                <div>{moment().add(0, 'day').format('ddd')} - {moment().add(0, 'day').format('DD')}</div>
-                <div><i className="fas fa-cloud-sun"></i></div>
-              </div>
+              <div className="py-1">See 7 day forecast</div>
 
-              <div className="day">{moment().add(1, 'day').format('ddd')} - {moment().add(1, 'day').format('DD')}</div>
-              <div className="day">{moment().add(2, 'day').format('ddd')} - {moment().add(2, 'day').format('DD')}</div>
-              <div className="day">{moment().add(3, 'day').format('ddd')} - {moment().add(3, 'day').format('DD')}</div>
-              <div className="day">{moment().add(4, 'day').format('ddd')} - {moment().add(4, 'day').format('DD')}</div>
-              <div className="day">{moment().add(5, 'day').format('ddd')} - {moment().add(5, 'day').format('DD')}</div>
-              <div className="day">{moment().add(6, 'day').format('ddd')} - {moment().add(6, 'day').format('DD')}</div> */}
+              {/* <div className="badge badge-danger">Test</div> */}
 
             </div>
           </div>
@@ -272,7 +264,7 @@ function SearchHead(props) {
           </>
           :
           <div className="plaid-setup">
-            <i class="fas fa-money-check-alt"></i>
+            <i className="fas fa-money-check-alt"></i>
             <div>Bank Balance</div>
             <div className="btn btn-articles-light btn-sm">Setup</div>
           </div>
@@ -542,6 +534,9 @@ class Frontpage extends Component {
     console.log("Mounted");
 
     axios.get('/api/getWeather', {
+      params: {
+        zip: this.props.user_details.address.zip
+      }
     })
     .then(function (response) {
 
@@ -748,7 +743,11 @@ class Frontpage extends Component {
 
         </div>
 
-        <div onClick={() => this.setState({weatherOverlay: !this.state.weatherOverlay})} className={"weather-overlay " + (this.state.weatherOverlay ? 'show' : '')}>
+        <div className={"weather-overlay " + (this.state.weatherOverlay ? 'show' : '')}>
+
+          <div onClick={() => this.setState({weatherOverlay: !this.state.weatherOverlay})} className="dim-background">
+
+          </div>
           
           <div className="weather-content">
 
@@ -758,22 +757,32 @@ class Frontpage extends Component {
 
             <div className="header">
 
-              <div className="background">
+              {/* <div className="background">
                 <img src="https://s7d2.scene7.com/is/image/TWCNews/partly_cloudy_jpg-4" alt=""/>
+              </div> */}
+
+              <div className="background">
+                {this.state.weatherData?.current?.is_day === 'yes' ?
+                <img src="https://s7d2.scene7.com/is/image/TWCNews/partly_cloudy_jpg-4" alt=""/>
+                :
+                <img src="https://www.cruise1st.co.uk/blog/wp-content/uploads/2017/12/Fotolia_96215836_S-702x336.jpg" alt=""/>
+                }
+              </div>
+
+              <div className="search">
+                <input type="text" value={this.props.user_details.address.zip}/>
               </div>
 
               <div className="content">
 
                 <div>
-                  <div>
-                    <div>{moment(this.state.weatherData?.location?.localtime).format("LL")}</div>
-                    {/* <div>{moment().format("dddd")}</div>
-                    <div>{moment().format("MMMM, DD")}</div>
-                    <div>{moment().format("Y")}</div> */}
+
+                  <div className="time">
+                    {moment(this.state.weatherData?.location?.localtime).format("LL")}
                   </div>
   
                   <div>
-                    <div><i className="fas fa-thermometer-empty"></i>{(this.state.weatherData?.current?.temperature * 9 / 5 + 32).toFixed(0)}°F</div>
+                    <div><i className="fas fa-thermometer-empty"></i>{this.state.weatherData?.current?.temperature}°F</div>
   
                     <div>{this.state.weatherData?.current?.weather_descriptions.map(item => <span>{item} </span>)}</div>
   
@@ -792,6 +801,13 @@ class Frontpage extends Component {
 
               </div>
 
+            </div>
+
+            <div className="extra-badges">
+              <div className="badge badge-articles">Precipitation: {this.state.weatherData?.current?.precip}</div>
+              <div className="badge badge-articles">Pressure: {this.state.weatherData?.current?.pressure}hPa</div>
+              <div className="badge badge-articles">Wind: {this.state.weatherData?.current?.wind_dir}</div>
+              <div className="badge badge-articles">Wind Speed: {this.state.weatherData?.current?.wind_speed}mph</div>
             </div>
 
             <div className="body">Weather is still being worked on and will not be available until September.</div>
@@ -836,7 +852,7 @@ class Frontpage extends Component {
               <div className="transaction-list">
                 <div className="title">Recent Transactions</div>
 
-                <table class="table table-striped table-sm">
+                <table className="table table-striped table-sm">
                   <thead>
                     <tr>
                       <th scope="col">Date</th>

@@ -70,9 +70,13 @@ $grid-breakpoints: (
 @import 'components/forum';
 
 @import 'components/loading_block';
+
 @import 'components/issues';
 @import 'components/stories';
+
 @import 'components/donate';
+@import 'components/subscribe';
+
 @import 'components/messages';
 @import 'components/not-found';
 
@@ -80,6 +84,8 @@ $grid-breakpoints: (
 @import 'components/playground';
 
 @import 'components/admin';
+
+@import 'components/membership';
 
 @import 'components/menu-catalog';
 

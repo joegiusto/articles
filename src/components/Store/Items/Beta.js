@@ -14,6 +14,7 @@ const StoreItem = (props) => {
   const [size, changeSize] = useState('S');
   const [added, changeAdded] = useState(false);
   const [addedButtonDisabled, changeAddedButtonDisabled] = useState(false);
+  const [saved, changeSaved] = useState(false);
 
   const {color, sale, product} = props;
 
@@ -31,6 +32,11 @@ const StoreItem = (props) => {
 
               <div className={"type btn-outline-" + (color + ' ' + props.product?.type)}>
                   <span>{props.product?.type || '?'}</span>
+              </div>
+
+              <div className="save" onClick={() => changeSaved(!saved)}>
+                {saved ? <i className="fas fa-bookmark"></i> : <i className="far fa-bookmark"></i>}
+                {/* <i className="far fa-bookmark"></i> */}
               </div>
 
               <div className={"price"}>

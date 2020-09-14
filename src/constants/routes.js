@@ -115,6 +115,8 @@ export const ADMIN_ADS = '/admin/ads';
 export const DONATE = '/donate';
 export const DONATE_DETAILS = '/donate/:id';
 
+export const SUBSCRIBE = '/subscribe';
+
 // Mail PROTOTYPE
 export const MESSAGES = '/messages';
 

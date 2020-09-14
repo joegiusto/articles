@@ -160,7 +160,7 @@ class Reports extends Component {
             <tbody>
   
               {orders.map(order => 
-                <tr>
+                <tr key={order._id}>
                   <td colSpan="1" className="border-right-0 ">{moment(order.date).format("LLL")}</td>
                   <td colSpan="1" className="border-right-0 ">{order.user_id}</td>
                   <td colSpan="1" className="border-right-0 "></td>

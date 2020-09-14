@@ -279,7 +279,7 @@ class Issue extends React.Component {
                 <div className="ad-wrap">
                   <div className="ad">
                     <img src="https://media-cdn.tripadvisor.com/media/photo-s/0c/8b/a7/c7/photo0jpg.jpg" alt=""/>
-                    <button className="btn btn-sm btn-why">Why<i class="far fa-question-circle mr-0 ml-0"></i></button>
+                    <button className="btn btn-sm btn-why">Why<i className="far fa-question-circle mr-0 ml-0"></i></button>
                   </div>
                   <div className="details">
                     <div className="label">
@@ -293,7 +293,7 @@ class Issue extends React.Component {
                 <div className="ad-wrap">
                   <div className="ad microsoft">
                     <img src="https://res.cloudinary.com/css-tricks/image/fetch/w_250,q_auto,f_auto/https://cdn4.buysellads.net/uu/1/63492/1593196185-Microsoft-logo_rgb_c-wht-250x100.png" alt="Ad for Microsoft"/>
-                    <button className="btn btn-sm btn-why">Why<i class="far fa-question-circle mr-0 ml-0"></i></button>
+                    <button className="btn btn-sm btn-why">Why<i className="far fa-question-circle mr-0 ml-0"></i></button>
                   </div>
                   <div className="details">
                     <div className="label">
@@ -367,9 +367,9 @@ class Issue extends React.Component {
                     <div className="comment">
                       {/* <input onClick={() => this.setState({newCommentExpanded: true})} type="text" name="comment" id="comment" onChange={this.onChange} value={this.state.comment} placeholder="Add a comment"/> */}
                       {/* <textarea onClick={() => this.setState({newCommentExpanded: true})} type="text" name="comment" id="comment" onChange={this.onChange} value={this.state.comment} placeholder="Add a comment"/> */}
-                      <div class='tx-div-before'></div>
+                      <div className='tx-div-before'></div>
                         <TextareaAutosize className="tx-div" onClick={() => this.setState({newCommentExpanded: true})}  placeholder="Add a comment"  type="text" name="comment" id="comment" onChange={this.onChange} value={this.state.comment}/>
-                      <div class='tx-div-after'></div> 
+                      <div className='tx-div-after'></div> 
                     </div>
     
                   </div>

@@ -28,6 +28,18 @@
         font-weight: bold;
       }
 
+      .save {
+        position: absolute;
+        top: calc(-0.5rem);
+        left: 4.5rem;
+        font-size: 1.5rem;
+        cursor: pointer;
+
+        i {
+          margin-right: 0rem;
+        }
+      }
+
       .type {
         position: absolute;
         top: calc(-3px - 0.5rem);

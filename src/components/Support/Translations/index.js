@@ -24,7 +24,7 @@ const Page = () => (
             <p>In the meantime we recommend a browser extension like this one (Chrome users)</p>
 
             <div>
-              <i class="fab fa-chrome"></i>
+              <i className="fab fa-chrome"></i>
               <a href="https://chrome.google.com/webstore/detail/google-translate/aapbdbdomjkkjkaonfhkkikfgjllcleb/RK%3D2/RS%3DBBFW_pnWkPY0xPMYsAZI5xOgQEE-">Google Translate</a>
             </div>
 

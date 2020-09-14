@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom'
 import * as ROUTES from '../../constants/routes'
 
 const itemsToRender = [
-  [ROUTES.FAQ, 'Frequently Asked Questions', <i class="far fa-question-circle"></i>],
-  [ROUTES.PRESS, 'Press', <i class="fas fa-pen-alt"></i>],
-  [ROUTES.ROADMAP, 'Roadmap', <i class="fas fa-map-signs"></i>],
-  [ROUTES.UPDATES, 'Updates', <i class="far fa-plus-square"></i>],
-  [ROUTES.PRIVACY, 'Privacy', <i class="fas fa-user-secret"></i>],
-  [ROUTES.TRANSLATIONS, 'Translations', <i class="fas fa-language"></i>],
-  [ROUTES.FORUM, 'Forum', <i class="far fa-comments"></i>]
+  [ROUTES.FAQ, 'Frequently Asked Questions', <i className="far fa-question-circle"></i>],
+  [ROUTES.PRESS, 'Press', <i className="fas fa-pen-alt"></i>],
+  [ROUTES.ROADMAP, 'Roadmap', <i className="fas fa-map-signs"></i>],
+  [ROUTES.UPDATES, 'Updates', <i className="far fa-plus-square"></i>],
+  [ROUTES.PRIVACY, 'Privacy', <i className="fas fa-user-secret"></i>],
+  [ROUTES.TRANSLATIONS, 'Translations', <i className="fas fa-language"></i>],
+  [ROUTES.FORUM, 'Forum', <i className="far fa-comments"></i>]
 ]
 
 const Page = (props) => (

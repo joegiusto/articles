@@ -362,6 +362,19 @@ class DonateBase extends Component {
                   <div className="blur"></div>
                   <div className="title">Thinking About Donating?</div>
                   <div className="text">Donating is just one of the ways you can really help Articles. </div>
+                  <div className="others">
+
+                    <Link to={ROUTES.SUBSCRIBE}>
+                      <div className="other">
+                        Subscription
+                      </div>
+                    </Link>
+
+                    <div className="other">
+                      Merch
+                    </div>
+
+                  </div>
                   {/* <div>Donations make up ?% of our total revenue and are just one of the income sources helping us help you.</div> */}
                 </div>
               </div>

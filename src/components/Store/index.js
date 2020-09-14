@@ -441,11 +441,21 @@ class StorePage extends Component {
 					<Route exact path={ROUTES.STORE_SAVED} render={() => 
 						<div className="store-saved-page">
 							<div className="container">
+
 								<h3>Saved</h3>
 								<p>Any products you save will be displayed here.</p>
-								{this.props.user_details.saved_products.map((item) => (
-									<div>{item.product_id}</div>
-								))}
+
+								<div className="items">
+									{this.props.user_details.saved_products.map((item) => (
+										// <div>{item.product_id}</div>
+										<StoreItemBeta
+											setPopOutVisible={this.setPopOut}
+											product={this.state.products.find(element => element._id === item.product_id)}
+											color="articles"
+										/>
+									))}
+								</div>
+
 							</div>
 						</div>
 					}/>

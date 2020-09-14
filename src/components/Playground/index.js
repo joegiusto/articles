@@ -276,6 +276,10 @@ class Playground extends React.Component {
       <div className="playground-page">
         <div className="container mt-5 mb-5">
 
+          <div className="membership-page">
+            <div className="title"></div>
+          </div>
+
           <div style={{width: '100%', height: '400px'}}>
             <SimpleMap lat={this.state.lat} lng={this.state.lng}/>
           </div>

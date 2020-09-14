@@ -64,6 +64,10 @@ const UserSchema = new Schema({
   mail: {
     type: Array,
     default: []
+  },
+  stripe: {
+    type: Object,
+    default: {}
   }
 });
 
