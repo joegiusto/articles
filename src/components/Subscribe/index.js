@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 
+import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -10,12 +11,53 @@ class FAQ extends Component {
     super(props)
 
     this.state = {
-
+      subscriptions: []
     }
   }
 
   componentDidMount() {
+    const self = this;
 
+    axios.post('/api/listSubscriptions', {
+       
+    })
+    .then(function (response) {
+
+      // socket.emit('deleteUser', id);
+
+      self.setState({
+        subscriptions: response.data.data
+      });
+
+      console.log(response)
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  createSubscription() {
+    axios.post('/api/createSubscription', {
+       
+    })
+    .then(function (response) {
+
+      // socket.emit('deleteUser', id);
+
+      // self.setState({
+      //   users: self.state.users.filter(function( obj ) {
+      //     return obj._id !== id;
+      //   })
+      // });
+
+      console.log(response)
+
+    })
+    .catch(function (e) {
+      console.log('error')
+      console.log("Error", e.response.data);
+    });
   }
 
   render() {
@@ -104,8 +146,22 @@ class FAQ extends Component {
                   <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
                   <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
                 </ListGroup>
+            
+                {/* INFO - SUPPORTER PLAN */}
+                {this.state.subscriptions.length > 0 ? 
+                  // User has a current subscription
+                  (this.state.subscriptions[0].plan.product === 'prod_I0pC0Ho62i1dV2' ?
+                    // Is this product
+                    <button disabled={true} className="commit-button btn btn-articles-light ">Active</button>
+                    :
+                    // Is another product
+                    <button disabled={false} className="commit-button btn btn-articles-light alt">Switch</button>
+                  )
+                :
+                  // User has no subscription
+                  <div onClick={() => this.createSubscription('prod_I0pC0Ho62i1dV2')} className="commit-button btn btn-articles-light alt">Commit</div>
+                }
 
-                <div className="commit-button btn btn-articles-light alt">Commit</div>
               </div>
 
               <div className="plan">
@@ -123,7 +179,21 @@ class FAQ extends Component {
                   <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
                 </ListGroup>
 
-                <div className="commit-button btn btn-articles-light alt">Commit</div>
+                {/* INFO - PATRIOT PLAN */}
+                {this.state.subscriptions.length > 0 ? 
+                  // User has a current subscription
+                  (this.state.subscriptions[0].plan.product === 'prod_I0pD70RyPyBaU7' ?
+                    // Is this product
+                    <button disabled={true} className="commit-button btn btn-articles-light ">Active</button>
+                    :
+                    // Is another product
+                    <button disabled={false} onClick={() => this.createSubscription('prod_I0pC0Ho62i1dV2')} className="commit-button btn btn-articles-light alt">Upgrade</button>
+                  )
+                :
+                  // User has no subscription
+                  <div onClick={() => this.createSubscription('prod_I0pD70RyPyBaU7')} className="commit-button btn btn-articles-light alt">Commit</div>
+                }
+
               </div>
 
             </div>

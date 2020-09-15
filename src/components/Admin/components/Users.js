@@ -45,6 +45,12 @@ class Users extends Component {
         // The rest of the zips get populated once data loads
       },
 
+      gender: {
+        male: 0,
+        female: 0,
+        other: 0,
+      },
+
       articlesParty: 0,
       republicanParty: 0,
       democratParty: 0,
@@ -148,6 +154,32 @@ class Users extends Component {
             })
         }
 
+        switch(self.state.users[i].gender) {
+          case 'male':
+            self.setState({
+              gender: {
+                ...self.state.gender,
+                male: self.state.gender.male + 1
+              }
+            })
+            break;
+          case 'female':
+            self.setState({
+              gender: {
+                ...self.state.gender,
+                female: self.state.gender.female + 1
+              }
+             })
+             break;
+          default:
+            self.setState({
+              gender: {
+                ...self.state.gender,
+                other: self.state.gender.other + 1
+              }
+            })
+        }
+
         const currentUserZip = self.state.users[i].address.zip
         console.log(self.state.zips[currentUserZip])
   
@@ -192,9 +224,10 @@ class Users extends Component {
   // TODO - Convert this logic to server side code and use https://www.npmjs.com/package/zipcodes to build local directory as loop goes or after loop is done do one call wuth all zips to get names
   checkZipName(zip) {
     const directory = {
+      12508: "Beacon",
       12524: 'Fishkill',
       12533: "Hopewell Junction",
-      12508: "Beacon"
+      12561: "New Paltz"
     }
 
     if ( Object.keys(directory).indexOf(zip) > -1 ) {
@@ -314,6 +347,17 @@ class Users extends Component {
   
                   </div>
                 </div>
+
+                <div className="card mt-3">
+                  <div className="card-header">Gender Data</div>
+                  <div className="card-body">
+  
+                    <div>Male: {(Math.floor((this.state.gender.male / this.state.users.length) * 100))}% ({this.state.gender.male})</div>
+                    <div>Female: {(Math.floor((this.state.gender.female / this.state.users.length) * 100))}% ({this.state.gender.female})</div>
+                    <div>Other: {(Math.floor((this.state.gender.other / this.state.users.length) * 100))}% ({this.state.gender.other})</div>
+  
+                  </div>
+                </div>
   
               </div>
   
@@ -371,7 +415,10 @@ class Users extends Component {
                     <tr key={user._id}>
                       {/* <th scope="row">{user._id}</th> */}
                       {/* <td>{`${user.first_name} ${user.last_name}`}</td> */}
-                      <td><span style={{width: '150px', display: 'inline-block'}}>{user.first_name} {user.last_name}</span> <span className="badge badge-light">{user._id}</span></td>
+                      <td>
+                        <img alt="" className="profile-photo" style={{borderRadius: '100px'}} width="100%" height="100%" src={`https://articles-website.s3.amazonaws.com/profile_photos/${user._id}.jpg` || ''}/>
+                        <span style={{width: '150px', display: 'inline-block'}}>{user.first_name} {user.last_name}</span> <span className="badge badge-light">{user._id}</span>
+                      </td>
 
                       <td>{user.stripe?.customer_id === undefined ? <span>No<span onClick={() => this.createCustomer(user._id)} className="btn btn-sm btn-articles-light">Create</span></span> : 'Yes'}</td>
 

@@ -12,6 +12,8 @@ const inital_state = {
   ourCost: 0,
   material: '',
   visible: true,
+  includesSubscription: false,
+  subscriptionTime: 0,
   photos: {
     one: '',
     two: '',
@@ -42,10 +44,17 @@ class ConfirmDelete extends Component {
 
   }
 
+  cancelConfirm() {
+    this.setState({confirm: false})
+  }
+
   render() {
     return (
       this.state.confirm ? 
-      <div style={{cursor: 'pointer'}} onClick={() => this.handleClick()} className="badge badge-danger noselect">Confirm</div>
+      <div className="d-flex">
+        <div style={{cursor: 'pointer'}} onClick={() => this.cancelConfirm()} className="badge badge-warning noselect">Cancel</div>
+        <div style={{cursor: 'pointer'}} onClick={() => this.handleClick()} className="badge badge-danger noselect">Confirm</div>
+      </div>
       :
       <div style={{cursor: 'pointer'}} onClick={() => this.handleClick()} className="badge badge-danger noselect">Delete</div>
     )
@@ -280,6 +289,16 @@ class Products extends Component {
         )}</div>,
       },
       {
+        name: 'Subscription Bundle',
+        selector: 'includesSubscription',
+        sortable: true,
+        cell: row => <div>{(row.includesSubscription ? 
+        <div className="badge badge-success">True ({row.subscriptionTime})</div>
+        :
+        <div className="badge badge-danger">False</div>
+        )}</div>,
+      },
+      {
         name: 'Price',
         selector: 'price',
         sortable: true,
@@ -294,7 +313,7 @@ class Products extends Component {
         cell: row => 
         <>
           <div style={{cursor: "pointer"}} className="badge badge-articles mr-2" onClick={() => this.setState({currentProduct: row._id})}>Edit</div>
-          <div className="badge badge-danger"><ConfirmDelete afterConfirm={() => this.removeProduct(row._id)}></ConfirmDelete></div>
+          <ConfirmDelete afterConfirm={() => this.removeProduct(row._id)}></ConfirmDelete>
         </>
       },
     ];
@@ -533,6 +552,38 @@ class Products extends Component {
                   }
                 }))} className={"badge " + (!this.state.activeProduct.visible ? 'badge-dark' : 'badge-light')}>No</div>
 
+                <div className="mt-2">Includes Subscription</div>
+
+                <div onClick={() => (this.setState({
+                  activeProduct: {
+                    ...this.state.activeProduct,
+                    includesSubscription: true
+                  }
+                }))} className={"badge " + (this.state.activeProduct.includesSubscription ? 'badge-dark' : 'badge-light')}>Yes</div>
+
+                <div onClick={() => (this.setState({
+                  activeProduct: {
+                    ...this.state.activeProduct,
+                    includesSubscription: false
+                  }
+                }))} className={"badge " + (!this.state.activeProduct.includesSubscription ? 'badge-dark' : 'badge-light')}>No</div>
+
+                {this.state.activeProduct.includesSubscription ? 
+                <div className="form-group">
+                  <label for="our-cost">Subscription Time (Months)</label>
+                  <input
+                  type="number"
+                  className="form-control"
+                  value={this.state.activeProduct.subscriptionTime}
+                  onChange={this.handleProductChange} 
+                  id="subscriptionTime"
+                  name="subscriptionTime"
+                  />
+                </div>
+                :
+                null
+                }
+
               </div>
 
             </div>
@@ -546,7 +597,6 @@ class Products extends Component {
             <div onClick={() => this.onSubmit()} className="btn upsert btn-articles-light">Update Product</div>
             }
             
-
           </div>
 
         </div>

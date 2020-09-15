@@ -10,7 +10,7 @@ module.exports = (app, db) => {
 
     const product = req.body.product;
 
-    db.collection("articles_products").updateOne({_id: ObjectId(req.body.product._id)}, {
+    db.collection("articles_products").updateOne({_id: ObjectId(product._id)}, {
       $set: {
         title: product.title,
         type: product.type,
@@ -19,6 +19,8 @@ module.exports = (app, db) => {
         material: product.material,
         release: product.release,
         visible: product.visible,
+        includesSubscription: product.includesSubscription,
+        subscriptionTime: product.subscriptionTime,
         photos: {
           one: product.photos.one,
           two: product.photos.two,

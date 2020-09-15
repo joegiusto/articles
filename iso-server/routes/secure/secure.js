@@ -274,34 +274,90 @@ module.exports = (app, db) => {
   });
 
   app.post("/api/createSubscription", passport.authenticate('jwt', {session: false}), async (req, res) => {
-    console.log("Removing a users payment method");
+    console.log("Attempting to create a subscription");
 
-    // Attach the payment method to the customer
+    // // Attach the payment method to the customer
+    // try {
+    //   await stripe.paymentMethods.attach(req.body.paymentMethodId, {
+    //     customer: req.body.customerId,
+    //   });
+    // } catch (error) {
+    //   return res.status('402').send({ error: { message: error.message } });
+    // }
+
+    // // Change the default invoice settings on the customer to the new payment method
+    // await stripe.customers.update(
+    // req.body.customerId,
+    // {
+    //   invoice_settings: {
+    //     default_payment_method: req.body.paymentMethodId,
+    //   },
+    // }
+    // );
+
     try {
-      await stripe.paymentMethods.attach(req.body.paymentMethodId, {
-        customer: req.body.customerId,
+
+      const subscriptions = await stripe.subscriptions.list({
+        customer: req.user.stripe.customer_id,
+        limit: 1,
       });
-    } catch (error) {
-      return res.status('402').send({ error: { message: error.message } });
+
+      if (subscriptions.data.length > 0) {
+
+        res.status(400).send({error: 'User may not be subscribed to more then one plan'})
+
+      } else {
+
+        const subscription = await stripe.subscriptions.create({
+          customer: req.user.stripe.customer_id,
+          items: [
+            { 
+              price: 'price_1HQnYZKMwBfw4SyLXuXkEEEG'
+            }
+          ],
+          expand: ['latest_invoice.payment_intent'],
+        });
+
+        res.send(subscription)
+
+      }
+
+    } catch (e) {
+      
+      console.log(e.raw)
+      res.status('402').send({ error:  e.raw  });
+
     }
 
-    // Change the default invoice settings on the customer to the new payment method
-    await stripe.customers.update(
-    req.body.customerId,
-    {
-      invoice_settings: {
-        default_payment_method: req.body.paymentMethodId,
-      },
-    }
-    );
+    // const subscription = await stripe.subscriptions.create({
+    //   customer: req.user.stripe.customer_id,
+    //   items: [
+    //     { 
+    //       price: 'price_1HQnYZKMwBfw4SyLXuXkEEEG'
+    //     }
+    //   ],
+    //   expand: ['latest_invoice.payment_intent'],
+    // });
 
-    const subscription = await stripe.subscriptions.create({
-      customer: req.body.customerId,
-      items: [{ price: 'price_HGd7M3DV3IMXkC' }],
-      expand: ['latest_invoice.payment_intent'],
+    // subscription
+    // .then(response => 
+    //   res.send(response)
+    // )
+    // .catch(error => 
+    //   res.status('402').send({ error: { message: error} })
+    // ) 
+
+  });
+
+  app.post("/api/listSubscriptions", passport.authenticate('jwt', {session: false}), async (req, res) => {
+    console.log("Listing a users subscription");
+
+    const subscriptions = await stripe.subscriptions.list({
+      customer: req.user.stripe.customer_id,
+      limit: 3,
     });
   
-    res.send(subscription);
+    res.send(subscriptions);
 
   });
 

@@ -22,6 +22,7 @@ class StorePage extends Component {
     this.state = {
       loadingProducts: false,
 			products: [],
+			userSavedProducts: [],
 			popOutVisible: false,
 			currentPopOut: "",
 			currentPopOutPhoto: ""
@@ -68,6 +69,28 @@ class StorePage extends Component {
       self.setState({ loadingProducts: true });
       self.setState({ resultsLoadingError: error });
 		});
+
+		// axios.get('/api/getUserSavedProducts')
+    // .then(function (response) {
+
+		// 	// handle success
+		// 	console.log('Got Saved Products')
+
+    //   self.setState({
+		// 		products: response.data,
+		// 		loadingProducts: false
+    //   });
+
+    //   // self.setState({ resultsLoading: false });
+
+    // })
+    // .catch(function (error) {
+    //   // handle error
+    //   console.log(error);
+
+    //   self.setState({ loadingProducts: true });
+    //   self.setState({ resultsLoadingError: error });
+		// });
 
 	}
 	
@@ -225,12 +248,16 @@ class StorePage extends Component {
 												setPopOutVisible={this.setPopOut}
 												product={this.state.products.find(element => element._id === "5eabc1e99b0beb3e04599717")}
 												color="articles"
+												// userSavedProducts={this.props.user_details.saved_products}
+												isSaved={this.props.user_details.saved_products.find(o => o.product_id === '5eabc1e99b0beb3e04599717')}
 											/>
 					
 											<StoreItemBeta
 												setPopOutVisible={this.setPopOut}
 												product={this.state.products.find(element => element._id === "5eabc20a38584110a044f93e")}
 												color="articles"
+												// userSavedProducts={this.props.user_details.saved_products}
+												isSaved={this.props.user_details.saved_products.find(o => o.product_id === '5eabc20a38584110a044f93e')}
 											/>
 										</div>
 					
@@ -402,7 +429,29 @@ class StorePage extends Component {
 						<div className="container">
 							<div className="store-products-page">
 	
-								{this.state.products.map((product) => (
+								{this.state.products.filter((o) => o.type === 'Original').map((product) => (
+									product.visible === true ?
+									<StoreItemBeta
+										setPopOutVisible={this.setPopOut}
+										product={product}
+										color="articles"
+									/>
+									:
+									null
+								))}
+
+								{this.state.products.filter((o) => o.type === 'Partnership').map((product) => (
+									product.visible === true ?
+									<StoreItemBeta
+										setPopOutVisible={this.setPopOut}
+										product={product}
+										color="articles"
+									/>
+									:
+									null
+								))}
+
+								{this.state.products.filter((o) => o.type === 'Sponsored').map((product) => (
 									product.visible === true ?
 									<StoreItemBeta
 										setPopOutVisible={this.setPopOut}
@@ -452,6 +501,7 @@ class StorePage extends Component {
 											setPopOutVisible={this.setPopOut}
 											product={this.state.products.find(element => element._id === item.product_id)}
 											color="articles"
+											isSaved={this.props.user_details.saved_products.find(o => o.product_id === item.product_id)}
 										/>
 									))}
 								</div>
