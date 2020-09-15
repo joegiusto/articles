@@ -192,11 +192,15 @@
   }
 
   .employee-commits {
+
     .commits {
+
       .commit {
         align-content: flex-start;
         flex-wrap: wrap;
         margin-bottom: 0.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #000;
         
         .photo {
           width: 20px;
@@ -215,6 +219,17 @@
           margin-left: 0.75rem;
           
           // flex-grow: 1;
+
+          .date {
+            font-family: brandon-grotesque, sans-serif;
+            font-style: normal;
+            font-weight: 900;
+            font-size: 1rem;
+          }
+
+          .title {
+            white-space: break-spaces;
+          }
         }
       }
     }

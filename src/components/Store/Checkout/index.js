@@ -16,6 +16,60 @@ import { setUserLoading } from 'actions/authActions';
 
 const stripePromise = loadStripe(KEYS.STRIPE_PUBLIC_KEY);
 
+const SavedPaymentMethod = (props) => {
+  return (
+    <div onClick={() => props.setSavedPaymentId(props.card.id) + props.setIsSavedPayment(true)} className={"card " + props.card.card.brand}>
+
+      {/* <div className="remove"><i onClick={() => removePaymentMethod(card.id)} className="fas fa-times-circle"></i></div> */}
+
+      <div className="test">
+        
+      </div>
+
+      <div className="select">
+        <div className={"circle " + (props.savedPaymentId === props.card.id ? 'active' : '')}></div>
+      </div>
+
+      <div className="inline-remove">
+        <i onClick={() => props.removePaymentMethod(props.card.id)} className="fas fa-times-circle"></i>
+      </div>
+
+      <div className="details">
+        <div className="card-brand">{props.renderCardBrandIcon(props.card.card.brand)}</div>
+        <div className="last4">
+          <div className="fake-digits">
+
+            <i class="fas fa-star-of-life"></i>
+            <i class="fas fa-star-of-life"></i>
+            <i class="fas fa-star-of-life"></i>
+            <i class="fas fa-star-of-life"></i>
+            <div>-</div>
+
+            <i class="fas fa-star-of-life"></i>
+            <i class="fas fa-star-of-life"></i>
+            <i class="fas fa-star-of-life"></i>
+            <i class="fas fa-star-of-life"></i>
+            <div>-</div>
+
+            <i class="fas fa-star-of-life"></i>
+            <i class="fas fa-star-of-life"></i>
+            <i class="fas fa-star-of-life"></i>
+            <i class="fas fa-star-of-life"></i>
+            <div>-</div>
+
+          </div>
+          {props.card.card.last4}
+        </div>
+      </div>
+
+      <div className="exp">
+        {`${props.card.card.exp_month}/${props.card.card.exp_year}`}
+      </div>
+
+    </div>
+  )
+}
+
 const CheckoutForm = (props) => {
   const [tax, setTax] = useState(0);
   const [total, setTotal] = useState(0);
@@ -35,6 +89,9 @@ const CheckoutForm = (props) => {
   const [saveCard, setSaveCard] = useState(false);
   const elements = useElements();
   const [userPaymentMethods, setUserPaymentMethods] = useState([]);
+
+  const [isSavedPayment, setIsSavedPayment] = useState(false);
+  const [savedPaymentId, setSavedPaymentId] = useState(null);
   
   useEffect(() => {
 
@@ -97,6 +154,13 @@ const CheckoutForm = (props) => {
     })
     .then(function (response) {
       console.log(response)
+
+      setUserPaymentMethods(
+        userPaymentMethods.filter(function( obj ) {
+          return obj.id !== method_id;
+        })
+      )
+
     })
     .catch(function (error) {
       console.log(error);
@@ -279,64 +343,43 @@ const CheckoutForm = (props) => {
                       <small>No saved cards</small>
                     </div>
                     :
-                    userPaymentMethods.map(card => 
-                    <div className={"card " + card.card.brand}>
-
-                        {/* <div className="remove"><i onClick={() => removePaymentMethod(card.id)} className="fas fa-times-circle"></i></div> */}
-
-                        <div className="select">
-                          <div className="circle"></div>
-                        </div>
-
-                        <div className="inline-remove">
-                          <i onClick={() => removePaymentMethod(card.id)} className="fas fa-times-circle"></i>
-                        </div>
-
-                        <div className="details">
-                          <div className="card-brand">{renderCardBrandIcon(card.card.brand)}</div>
-                          <div className="last4">
-                            <div className="fake-digits">
-
-                              <i class="fas fa-star-of-life"></i>
-                              <i class="fas fa-star-of-life"></i>
-                              <i class="fas fa-star-of-life"></i>
-                              <i class="fas fa-star-of-life"></i>
-                              <div>-</div>
-
-                              <i class="fas fa-star-of-life"></i>
-                              <i class="fas fa-star-of-life"></i>
-                              <i class="fas fa-star-of-life"></i>
-                              <i class="fas fa-star-of-life"></i>
-                              <div>-</div>
-
-                              <i class="fas fa-star-of-life"></i>
-                              <i class="fas fa-star-of-life"></i>
-                              <i class="fas fa-star-of-life"></i>
-                              <i class="fas fa-star-of-life"></i>
-                              <div>-</div>
-
-                            </div>
-                            {card.card.last4}
-                          </div>
-                        </div>
-
-                        <div className="exp">
-                          {`${card.card.exp_month}/${card.card.exp_year}`}
-                        </div>
-
-                    </div>
+                    userPaymentMethods.map(card =>
+                      <SavedPaymentMethod 
+                        card={card}
+                        removePaymentMethod={removePaymentMethod}
+                        renderCardBrandIcon={renderCardBrandIcon}
+                        setSavedPaymentId={setSavedPaymentId}
+                        savedPaymentId={savedPaymentId}
+                        setIsSavedPayment={setIsSavedPayment}
+                      />
                     )
                   }
                   
                 </div>
 
-                <div className='shadow'>
+                <div className='shadow stripe-card-input' onClick={() => setIsSavedPayment(false) + setSavedPaymentId(null)}>
+
+                  <div className={"stripe-card-input-cover " + (isSavedPayment ? '' : 'd-none')}>
+                    <span>Using stored payment</span>
+                  </div>
+
+                  <div className="select">
+                    <div className={"circle " + (isSavedPayment ? '' : 'active')}>
+                    </div>
+                  </div>
+
                   <CardElement/>
                 </div>
 
                 <div className="remember-card form-group form-check">
                   <input type="checkbox" className="form-check-input" id="exampleCheck1" onClick={() => setSaveCard(!saveCard)} checked={saveCard}/>
                   <label className="form-check-label noselect" for="exampleCheck1">Remember Card?</label>
+                  {isSavedPayment ? 
+                  <div className="cover">
+                    <span>Using stored payment</span>
+                  </div> 
+                  :
+                  ''}
                 </div>
 
                 <button onClick={() => userProductsToServer()} className={"btn btn-articles-light w-100 " + (cartCount === props.productsUser.length ? 'd-none' : '')} disabled={cartLoading ? true : false}>Update</button>

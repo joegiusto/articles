@@ -1060,7 +1060,7 @@ module.exports = (app, db) => {
     const customer = await stripe.customers.create({
       email: email,
       description: `Customer for the Articles MongoDB user ${_id}`,
-      phone: '8452142713'
+      phone: ''
     });
   
     // console.log("Customer")
@@ -1082,7 +1082,8 @@ module.exports = (app, db) => {
         if (typeof user.stripe.customer_id === 'undefined') {
           console.log("Is not customer yet in Stripe");
     
-          addCustomer(req.body.email, req.body._id).then(response => {
+          addCustomer(user.email, req.body._id)
+          .then(response => {
             console.log(response)
     
             db.collection("articles_users").updateOne(
@@ -1101,7 +1102,8 @@ module.exports = (app, db) => {
               }
             );
     
-          });
+          })
+          // .catch(err => res.status(400).send({error: 'User may not be subscribed to more then one plan', stripeError: err}))
     
         } else {
           return res.send(`Is already a customer ${user.stripe.customer_id}`);
