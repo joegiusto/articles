@@ -5,7 +5,6 @@ import axios from 'axios'
 // import { connect } from 'react-redux';
 // import { compose } from 'recompose';
 // import { withAuthorizationHide } from '../Session';
-import { withFirebase } from '../../Firebase';
 import * as ROUTES from '../../../constants/routes';
 import { Switch, Route, Link } from 'react-router-dom';
 import Countdown from 'react-countdown-now';
@@ -329,7 +328,7 @@ class SubmissionsListBase extends Component {
   }
 
   componentWillUnmount() {
-    // this.props.firebase.submissions().off();
+
   }
 
   render() {
@@ -468,20 +467,7 @@ class SubmissionsItemBase extends Component {
         console.log(err.response.data)
       );
 
-    } 
-
-    // if (this.state.vote === true) {
-    //   this.setState({vote: null});
-    //   this.props.firebase.submission(uid).update({votes: amount - 1});
-    //   this.props.firebase.submission(uid + '/likes').child('1kgzHcDlDJbBVppJlVXqpsgvhAa2').set({like: null});
-    // } else {
-    //   if (this.state.vote === false) {
-    //     this.props.firebase.submission(uid).update({votes: amount + 2});
-    //   } else {
-    //     this.props.firebase.submission(uid).update({votes: amount + 1});
-    //   }
-    //   this.props.firebase.submission(uid + '/likes').child('1kgzHcDlDJbBVppJlVXqpsgvhAa2').set({like: true});
-    // }    
+    }   
     
   }
 
@@ -529,36 +515,6 @@ class SubmissionsItemBase extends Component {
       );
 
     } 
-
-    // axios
-    // .post("/api/tryVote", {
-    //   user_id: this.props.user_id,
-    //   type: 'down'
-    // })
-    // .then( res => {
-
-    //   self.setState({
-    //     vote: false
-    //   })
-      
-    // }
-    // ) 
-    // .catch(err =>
-    //   console.log(err.response.data)
-    // );
-
-    // if (this.state.vote === false) {
-    //   this.setState({vote: null});
-    //   this.props.firebase.submission(uid).update({votes: amount + 1});
-    //   this.props.firebase.submission(uid + '/likes').child('1kgzHcDlDJbBVppJlVXqpsgvhAa2').set({like: null});
-    // } else {
-    //   if (this.state.vote === true) {
-    //     this.props.firebase.submission(uid).update({votes: amount - 2});
-    //   } else {
-    //     this.props.firebase.submission(uid).update({votes: amount - 1});
-    //   }
-    //   this.props.firebase.submission(uid + '/likes').child('1kgzHcDlDJbBVppJlVXqpsgvhAa2').set({like: false});
-    // }
   }
 
   handleMouseMove = e => {
@@ -783,7 +739,7 @@ class SubmitBase extends Component {
   
 }
 
-const SubmissionsItem = withFirebase(SubmissionsItemBase);
+const SubmissionsItem = SubmissionsItemBase;
 
 // export default Submissions;
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withFirebase } from '../Firebase';
+
 import { AuthUserContext, withAuthorization, withEmailVerification } from '../Session';
 import { compose } from 'recompose';
 import DropdownButton from 'react-bootstrap/DropdownButton';
@@ -27,74 +27,6 @@ class UserIssuesBase extends Component {
     // var cat = 'orders';
 
     this.setState({ loading: true });
-
-    this.props.firebase.catagory('news/issues').once('value').then(snapshot => {
-
-    // this.props.firebase.issues().once('value').then(snapshot => {
-
-      const issuesObject = snapshot.val();
-
-      // console.log(snapshot.val());
-
-      const issuesList = Object.keys(issuesObject).map(key => (
-        {
-          ...issuesObject[key],
-          uid: key,
-        }
-      ));
-
-      this.setState({
-        bulkIssues: issuesList,
-        loading: false
-      });
-
-    });
-
-    this.props.firebase.user_issues('news/issues', 'issues', this.props.firebase.auth.currentUser.uid).once('value').then(snapshot => {
-
-      const issuesObject = snapshot.val();
-
-      console.log(snapshot.val());
-
-      const issuesList = Object.keys(issuesObject).map(key => (
-        {
-          // ...issuesObject,
-          uid: key,
-        }
-      ));
-
-      issuesList.map((issue) => (
-
-        // Returns the uid of each subscribed story
-        // console.log(issue)
-
-        // Pass in the uid to find the issue
-        this.props.firebase.catagory('news/issues').once('value').then(snapshot => {
-          const issueSnapshot = snapshot.val();
-
-          // console.log(snapshot.val());
-
-          // console.log(snapshot);
-
-          issueSnapshot.uid = snapshot.key;
-
-          this.setState({
-            matchedIssues: [
-              ...this.state.matchedIssues,
-              issueSnapshot,
-            ]
-          })
-
-        })
-
-      ));
-
-      this.setState({
-        usersIssues: issuesList,
-        loading: false
-      });
-
-    });
 
   }
 
@@ -144,7 +76,7 @@ class UserIssuesBase extends Component {
 
 const condition = authUser => !!authUser;
 
-const UserIssues = withFirebase(UserIssuesBase);
+const UserIssues = UserIssuesBase;
 
 export default compose(
   withEmailVerification,

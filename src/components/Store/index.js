@@ -94,20 +94,6 @@ class StorePage extends Component {
 
 	}
 	
-	getIndexByUid(uid) {
-			var matchIndex = -1;
-
-			this.state.firebaseClothing.some((element, index) => {
-				console.log(element.uid);
-				if (element.uid === uid) {
-					// console.log("Match! at " + index)
-					matchIndex = index;
-				}
-			})
-
-			return matchIndex 
-	}
-	
 	render() {
 		
 		return(

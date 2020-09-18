@@ -31,7 +31,7 @@ import SingleOrderPage from './Store/Orders/single'
 
 import StoreSubmissionsPage from './Store/Submissions'
 import StoreSubmissionsSubmitPage from './Store/Submissions'
-import StoreManage from './Store/Manage'
+// import StoreManage from './Store/Manage'
 
 import NewsPage from './News'
 // Moved to Admin
@@ -67,7 +67,7 @@ import OpenSourcePage from './Support/OpenSource'
 import EmployeePage from './Employees'
 import EmployeePageDetails from './Employees/Directory'
 
-import AccountPage from './Account';
+// import AccountPage from './Account';
 import PasswordForgetPage from './PasswordForget';
 
 import MessagesPage from './Messages';
@@ -79,14 +79,11 @@ import DonatePage from './Donate';
 import SubscribePage from './Subscribe'
 
 import PlaygroundPage from './Playground';
-import Chat from './Chat';
+// import Chat from './Chat';
 
 import NotFoundPage from './Navigation/NotFoundPage';
 
 import * as ROUTES from '../constants/routes';
-// import { withAuthentication } from './Session';
-
-// import { AuthUserContext } from './Session';
 
 import { connect } from "react-redux";
 import { setUserDetails } from "../actions/authActions";
@@ -201,7 +198,7 @@ class AppBase extends Component {
               <Route path={ROUTES.STORE_SUBMISSIONS} component={StoreSubmissionsPage} />
               <Route path={ROUTES.STORE_SUBMISSIONS_SUBMIT} component={StoreSubmissionsSubmitPage}/>
   
-              <Route path={ROUTES.STORE_MANAGE} component={StoreManage} />
+              {/* <Route path={ROUTES.STORE_MANAGE} component={StoreManage} /> */}
         
               <Route exact path={ROUTES.NEWS} component={NewsPage} />
   
@@ -235,7 +232,7 @@ class AppBase extends Component {
               <Route path={ROUTES.FORUM} component={ForumPage} />
               <Route path={ROUTES.OPEN_SOURCE} component={OpenSourcePage} />
         
-              <Route path={ROUTES.ACCOUNT} component={AccountPage} />
+              {/* <Route path={ROUTES.ACCOUNT} component={AccountPage} /> */}
               <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
               
               <Route path={ROUTES.PRIVACY} component={Privacy} />
@@ -265,7 +262,7 @@ class AppBase extends Component {
               <Route path={ROUTES.MESSAGES} component={MessagesPage} />
               <Route path={ROUTES.MESH} component={MeshPage} />
               <Route path={ROUTES.PLAYGROUND} component={PlaygroundPage} />
-              <Route path={ROUTES.CHAT} component={Chat} />
+              {/* <Route path={ROUTES.CHAT} component={Chat} /> */}
   
               <Route component={NotFoundPage} />
             </Switch>

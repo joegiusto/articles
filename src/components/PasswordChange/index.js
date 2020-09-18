@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import { withFirebase } from '../Firebase';
-
 const INITIAL_STATE = {
   passwordOne: '',
   passwordTwo: '',
@@ -18,14 +16,14 @@ class PasswordChangeForm extends Component {
   onSubmit = event => {
     const { passwordOne } = this.state;
 
-    this.props.firebase
-      .doPasswordUpdate(passwordOne)
-      .then(() => {
-        this.setState({ ...INITIAL_STATE });
-      })
-      .catch(error => {
-        this.setState({ error });
-      });
+    // this.props.firebase
+    //   .doPasswordUpdate(passwordOne)
+    //   .then(() => {
+    //     this.setState({ ...INITIAL_STATE });
+    //   })
+    //   .catch(error => {
+    //     this.setState({ error });
+    //   });
 
     event.preventDefault();
   };
@@ -68,4 +66,4 @@ class PasswordChangeForm extends Component {
   }
 }
 
-export default withFirebase(PasswordChangeForm);
+export default PasswordChangeForm;

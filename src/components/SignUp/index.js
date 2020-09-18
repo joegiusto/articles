@@ -12,7 +12,6 @@ import { registerUser } from "../../actions/authActions";
 
 import { PasswordForgetLink } from '../PasswordForget';
 
-import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import * as ROLES from '../../constants/roles';
 import moment from 'moment';
@@ -324,7 +323,6 @@ const SignUpLink = () => (
 
 const SignUpForm = compose(
   withRouter,
-  withFirebase,
 )(SignUpFormBase);
 
 SignUpForm.propTypes = {
@@ -344,12 +342,5 @@ const SignUpFormConnect = connect(
 )(withRouter(SignUpForm));
 
 export default SignUpPage;
-
-// const SignUpForm = compose(
-//   withRouter,
-//   withFirebase,
-// )(SignUpFormBase);
-
-// export default SignUpPage;
 
 export { SignUpForm, SignUpLink };

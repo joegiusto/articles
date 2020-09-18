@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import moment from 'moment'
-// import { withFirebase } from '../../Firebase';
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 
@@ -159,7 +158,6 @@ class Issue extends React.Component {
 //   </div>
 // );
 
-// const Issue = withFirebase(IssueBase);
 
 // export default withRouter(Issue);
 

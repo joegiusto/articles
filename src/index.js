@@ -7,7 +7,7 @@ import './assets/scss/index.scss';
 import App from './components/App';
 
 import * as serviceWorker from './serviceWorker';
-import Firebase, { FirebaseContext } from './components/Firebase';
+// import Firebase, { FirebaseContext } from './components/Firebase';
 
 import { Provider } from 'react-redux';
 
@@ -63,21 +63,19 @@ function Greeting(props) {
 }
 
 ReactDOM.render(
-  <FirebaseContext.Provider value={new Firebase()}>
-    <PersistGate loading={<h1>Test</h1>} persistor={persistor}>
+  <PersistGate loading={<h1>Test</h1>} persistor={persistor}>
 
-      {store.dispatch(setMyths())}
-      {store.dispatch(setStories())}
-      {store.dispatch(setIssues())}
-      {store.dispatch(setSubmissions())}
+    {store.dispatch(setMyths())}
+    {store.dispatch(setStories())}
+    {store.dispatch(setIssues())}
+    {store.dispatch(setSubmissions())}
 
-      {/* <Greeting/> */}
+    {/* <Greeting/> */}
 
-      <Provider store={store}>
-        <App /> 
-      </Provider>
-    </PersistGate>
-  </FirebaseContext.Provider>, 
+    <Provider store={store}>
+      <App /> 
+    </Provider>
+  </PersistGate>,
 document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

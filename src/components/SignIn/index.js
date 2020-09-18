@@ -7,7 +7,6 @@ import { connect } from "react-redux";
 
 import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
-import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
 import { loginUser } from "../../actions/authActions";
@@ -165,7 +164,6 @@ class SignInFormBase extends Component {
 
 const SignInForm = compose(
   withRouter,
-  withFirebase,
 )(SignInFormBase);
 
 SignInForm.propTypes = {
