@@ -54,6 +54,91 @@
     margin: auto;
     margin-top: 1rem;
 
+    .plans {
+      margin-top: 1rem;
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      border-top: 1px solid #000;
+      padding-top: 1rem;
+
+      .plan {
+        position: relative;
+        padding: 1.5rem 0.5rem;
+        // padding-top: 1.5rem;
+
+        .active-badge {
+          color: white;
+          padding: 0rem 0.5rem;
+          position: absolute;
+          top: 0;
+          background-color: black;
+          border-radius: 5px;
+          left: 50%;
+          transform: translateX(-50%) translateY(-50%);
+        }
+
+        &.active {
+          background-color: white;
+          border-radius: 5px;
+          box-shadow: 0px 0px 1px 3px rgba(0, 0, 0, 0.25);
+        }
+
+        i {
+          width: 100%;
+          text-align: center;
+
+          @include media-breakpoint-up(md) {
+            font-size: 2rem;
+          }
+        }
+
+        .type {
+          margin-top: 0.25rem;
+          margin-bottom: 1rem;
+          font-family: brandon-grotesque, sans-serif;
+          font-style: normal;
+          font-weight: 900;
+          width: 100%;
+          text-align: center;
+        }
+      }
+
+      .or {
+        position: relative;
+        // background-color: white;
+        // border: 1px solid #000;
+        border-radius: 5px;
+        padding: 0rem 0.25rem;
+        margin-left: 1rem;
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 900;
+      }
+    }
+
+    .active-plan {
+      margin-top: -.5rem;
+      padding: 1rem;
+      border-radius: 5px;
+      border: 2px solid #000;
+      background-color: white;
+      width: 100%;
+    }
+
+    .referral-section {
+      margin-top: 1rem;
+      border-top: 1px solid #000;
+      padding-top: 1rem;
+
+      .title {
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 900;
+      }
+    }
+
     .card-header {
       border: none;
       background-color: $accent-color;
@@ -72,8 +157,8 @@
     }
 
     .card-body {
-      display: flex;
-      flex-direction: row;
+      // display: flex;
+      // flex-direction: row;
       background-color: $base-color;
     }
 
@@ -93,7 +178,8 @@
     }
 
     .side-text {
-      margin-left: 1rem;
+      // margin-top: 1rem;
+      // margin-left: 1rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;

@@ -22,6 +22,20 @@ import Reports from './components/Reports'
 import Orders from './components/Orders'
 import Ads from './components/Ads'
 
+const nav_links = [
+  [ ROUTES.ADMIN_USERS, 'Users', <i className="fas fa-money-bill fa-3x"></i> ],
+  [ ROUTES.ADMIN_NEWS, 'News', <i className="fas fa-money-bill fa-3x"></i> ],
+  [ ROUTES.ADMIN_PRODUCTS, 'Products', <i className="fas fa-money-bill fa-3x"></i> ],
+  [ ROUTES.ADMIN_SUBMISSIONS, 'Submissions', <i className="fas fa-money-bill fa-3x"></i> ],
+  [ ROUTES.ADMIN_DONATIONS, 'Donations', <i className="fas fa-money-bill fa-3x"></i> ],
+  [ ROUTES.ADMIN_EXPENSES, 'Expenses', <i className="fas fa-money-bill fa-3x"></i> ],
+  [ ROUTES.ADMIN_DONATIONS, 'Donations', <i className="fas fa-money-bill fa-3x"></i> ],
+  [ ROUTES.ADMIN_SOCKET, 'Sockets', <i className="fas fa-money-bill fa-3x"></i> ],
+  [ ROUTES.ADMIN_REPORTS, 'Reports', <i className="fas fa-money-bill fa-3x"></i> ],
+  [ ROUTES.ADMIN_ORDERS, 'Orders', <i className="fas fa-money-bill fa-3x"></i> ],
+  [ ROUTES.ADMIN_ADS, 'Ads', <i className="fas fa-money-bill fa-3x"></i> ]
+]
+
 class Admin extends Component {
   constructor(props) {
   super(props);
@@ -66,6 +80,10 @@ class Admin extends Component {
             <span onClick={() => this.activeTab('submissions')} className={"tab" + (this.state.tab === 'submissions' ? ' active' : '')}>Submissions</span>
             <span onClick={() => this.activeTab('donations')} className={"tab" + (this.state.tab === 'donations' ? ' active' : '')}>Donations</span>
             <span onClick={() => this.activeTab('expenses')} className={"tab" + (this.state.tab === 'expenses' ? ' active' : '')}>Expenses</span> */}
+
+            {/* {nav_links.map(tab => 
+              <Link to={tab[0]}><span className={"tab" + (this.state.tab === tab[1] ? ' active' : '')}>{tab[2]} {tab[1]}</span></Link>
+            )} */}
 
             <Link to={ROUTES.ADMIN_USERS}><span className={"tab" + (this.state.tab === 'users' ? ' active' : '')}>Users</span></Link>
             <Link to={ROUTES.ADMIN_NEWS}><span className={"tab" + (this.state.tab === 'news' ? ' active' : '')}>News</span></Link>

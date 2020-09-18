@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import qs from 'qs'
 
 import { connect } from "react-redux";
 
@@ -39,13 +40,17 @@ const INITIAL_STATE = {
   outsetOverride: true,
   error: null,
   serverUp: false,
+  referral: null,
+  referralLookup: null
 };
 
 class SignUpFormBase extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { ...INITIAL_STATE };
+    this.state = { 
+      ...INITIAL_STATE
+    };
   }
 
   componentDidMount() {
@@ -61,6 +66,27 @@ class SignUpFormBase extends Component {
       console.log(error);
     });
 
+    var prefixed = qs.parse(this.props.location.search, { ignoreQueryPrefix: true });
+    console.log(prefixed.referral)
+    this.setState({
+      referral: prefixed.referral
+    }, () => {
+
+      if (prefixed.referral !== undefined && prefixed.referral !== null) {
+        axios.post('/api/getReferral', {
+          _id: this.state.referral
+        })
+        .then(function (response) {
+          console.log(response)
+          self.setState({referralLookup: `${response.data.first_name} ${response.data.last_name}'s`});
+        })
+        .catch(function (error) {
+          console.log(error);
+          self.setState({referral: null})
+        });
+      }
+
+    })
   }
 
   onChangeCheckbox = event => {
@@ -82,7 +108,8 @@ class SignUpFormBase extends Component {
       last_name: nameLast,
       email: email,
       password: passwordOne,
-      password2: passwordTwo
+      password2: passwordTwo,
+      referral: this.state.referral
     };
 
     this.props.registerUser(newUser, this.props.history); 
@@ -117,6 +144,13 @@ class SignUpFormBase extends Component {
         <div className="alert alert-danger mt-3">Server Down! Signing up will not work in mean time.</div>
         }
         
+        {this.state.referral === null || this.state.referral === undefined ? 
+        null
+        :
+        <div className="referral">
+          You are signing up through {this.state.referralLookup === null ? <b>{this.state.referral}</b> : <b>{this.state.referralLookup}</b>} referral link, once you complete the sign up process refer friends to gain subscription benifits.
+        </div>
+        }
       
         <h1>Sign Up</h1>
 

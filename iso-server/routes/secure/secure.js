@@ -223,8 +223,32 @@ module.exports = (app, db) => {
 
   });
 
+  app.post("/api/confirmWithPaymentMethod", async (req, res) => {
+    console.log(req.body)
+
+    let payload = await stripe.paymentIntents.confirm(
+      req.body.paymentIntentID.toString(),
+      {payment_method: req.body.payment_method}
+    );
+
+    res.send({  
+      payload: payload
+    });
+  });
+
   app.post("/api/create-payment-intent", async (req, res) => {
     console.log(req.body)
+
+    let isPaymentMethodPurchase = false
+
+    if (req.body.payment_method_id !== null) {
+      isPaymentMethodPurchase = true
+    }
+
+    let payment_method_purchase = (isPaymentMethodPurchase  ? {payment_method: req.body.payment_method_id} : {} );
+
+    console.log(payment_method_purchase)
+
     // Create a PaymentIntent with the order amount and currency
     const paymentIntent = await stripe.paymentIntents.create({
       amount: req.body.amount.toFixed(0),
@@ -232,6 +256,7 @@ module.exports = (app, db) => {
 
       // TODO - This
       customer: req.body.customer_id,
+      ...payment_method_purchase,
 
       metadata: {
         user_id: req.body._id
@@ -239,10 +264,11 @@ module.exports = (app, db) => {
       description: 'User donation to the site',
     });
 
-    // console.log(paymentIntent)
+    console.log(paymentIntent)
 
     res.send({  
-      clientSecret: paymentIntent.client_secret
+      clientSecret: paymentIntent.client_secret,
+      paymentIntentID: paymentIntent.id
     });
   });
 
@@ -485,7 +511,7 @@ module.exports = (app, db) => {
   app.post("/api/userMadePurchase", async (req, res) => {
 
     const intent = await stripe.paymentIntents.retrieve(
-      req.body.payment.paymentIntent.id
+      req.body.payment.id
     );
 
     const charges = intent.charges.data;
@@ -524,7 +550,6 @@ module.exports = (app, db) => {
         order: result
       });
     });
-
     
   });
 

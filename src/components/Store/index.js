@@ -249,7 +249,7 @@ class StorePage extends Component {
 												product={this.state.products.find(element => element._id === "5eabc1e99b0beb3e04599717")}
 												color="articles"
 												// userSavedProducts={this.props.user_details.saved_products}
-												isSaved={this.props.user_details.saved_products.find(o => o.product_id === '5eabc1e99b0beb3e04599717')}
+												isSaved={this.props.user_details?.saved_products?.find(o => o.product_id === '5eabc1e99b0beb3e04599717')}
 											/>
 					
 											<StoreItemBeta
@@ -257,7 +257,7 @@ class StorePage extends Component {
 												product={this.state.products.find(element => element._id === "5eabc20a38584110a044f93e")}
 												color="articles"
 												// userSavedProducts={this.props.user_details.saved_products}
-												isSaved={this.props.user_details.saved_products.find(o => o.product_id === '5eabc20a38584110a044f93e')}
+												isSaved={this.props.user_details?.saved_products?.find(o => o.product_id === '5eabc20a38584110a044f93e')}
 											/>
 										</div>
 					
@@ -495,15 +495,27 @@ class StorePage extends Component {
 								<p>Any products you save will be displayed here.</p>
 
 								<div className="items">
-									{this.props.user_details.saved_products.map((item) => (
+
+									{this.props.auth ? 
+
+									this.props.user_details?.saved_products?.map((item) => (
 										// <div>{item.product_id}</div>
 										<StoreItemBeta
 											setPopOutVisible={this.setPopOut}
-											product={this.state.products.find(element => element._id === item.product_id)}
+											product={this.state.products?.find(element => element._id === item.product_id)}
 											color="articles"
-											isSaved={this.props.user_details.saved_products.find(o => o.product_id === item.product_id)}
+											isSaved={this.props.user_details?.saved_products.find(o => o.product_id === item.product_id)}
 										/>
-									))}
+									))
+
+									:
+
+									<div className="sign-in-required-global-tag">
+										<div>Please Sign In to see saved products</div>
+										<Link to={ROUTES.SIGN_IN + `?directTo=${ROUTES.STORE_SAVED}`}><button className="btn btn-articles-light mt-3">Sign In</button></Link>
+									</div>
+									}
+
 								</div>
 
 							</div>
@@ -518,6 +530,7 @@ class StorePage extends Component {
 }
 
 const mapStateToProps = state => ({
+	auth: state.auth.isAuthenticated,
 	user_details: state.auth.user_details,
 	cart: state.expenses
 });

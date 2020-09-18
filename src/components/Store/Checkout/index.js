@@ -2,11 +2,12 @@ import React, { Component, useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { removeExpense } from '../../../actions/expenses';
+import { useForm } from "react-hook-form";
 
 import { CardElement, PaymentRequestButtonElement, useStripe, useElements, Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 
+import { removeExpense, clearExpenses } from '../../../actions/expenses';
 import scrollLogo from '../../../assets/img/logo.png';
 import stripePower from '../../../assets/img/stripe.png'
 import CheckoutPageItem from './CheckoutPageItem';
@@ -18,13 +19,9 @@ const stripePromise = loadStripe(KEYS.STRIPE_PUBLIC_KEY);
 
 const SavedPaymentMethod = (props) => {
   return (
-    <div onClick={() => props.setSavedPaymentId(props.card.id) + props.setIsSavedPayment(true)} className={"card " + props.card.card.brand}>
+    <div onClick={() => props.setSavedPaymentId(props.card.id) + props.setIsSavedPayment(true)} className={"payment-method " + props.card.card.brand}>
 
       {/* <div className="remove"><i onClick={() => removePaymentMethod(card.id)} className="fas fa-times-circle"></i></div> */}
-
-      <div className="test">
-        
-      </div>
 
       <div className="select">
         <div className={"circle " + (props.savedPaymentId === props.card.id ? 'active' : '')}></div>
@@ -34,27 +31,27 @@ const SavedPaymentMethod = (props) => {
         <i onClick={() => props.removePaymentMethod(props.card.id)} className="fas fa-times-circle"></i>
       </div>
 
-      <div className="details">
+      <div className="card-details">
         <div className="card-brand">{props.renderCardBrandIcon(props.card.card.brand)}</div>
         <div className="last4">
           <div className="fake-digits">
 
-            <i class="fas fa-star-of-life"></i>
-            <i class="fas fa-star-of-life"></i>
-            <i class="fas fa-star-of-life"></i>
-            <i class="fas fa-star-of-life"></i>
+            <i className="fas fa-star-of-life"></i>
+            <i className="fas fa-star-of-life"></i>
+            <i className="fas fa-star-of-life"></i>
+            <i className="fas fa-star-of-life"></i>
             <div>-</div>
 
-            <i class="fas fa-star-of-life"></i>
-            <i class="fas fa-star-of-life"></i>
-            <i class="fas fa-star-of-life"></i>
-            <i class="fas fa-star-of-life"></i>
+            <i className="fas fa-star-of-life"></i>
+            <i className="fas fa-star-of-life"></i>
+            <i className="fas fa-star-of-life"></i>
+            <i className="fas fa-star-of-life"></i>
             <div>-</div>
 
-            <i class="fas fa-star-of-life"></i>
-            <i class="fas fa-star-of-life"></i>
-            <i class="fas fa-star-of-life"></i>
-            <i class="fas fa-star-of-life"></i>
+            <i className="fas fa-star-of-life"></i>
+            <i className="fas fa-star-of-life"></i>
+            <i className="fas fa-star-of-life"></i>
+            <i className="fas fa-star-of-life"></i>
             <div>-</div>
 
           </div>
@@ -71,6 +68,8 @@ const SavedPaymentMethod = (props) => {
 }
 
 const CheckoutForm = (props) => {
+  // const { register, handleSubmit, watch, errors } = useForm();
+
   const [tax, setTax] = useState(0);
   const [total, setTotal] = useState(0);
   const [cartCount, setCartCount] = useState(0);
@@ -78,7 +77,13 @@ const CheckoutForm = (props) => {
 
   const prevReturnRef = useRef()
   const mounted = useRef();
-  
+
+  const [address, setAddress] = useState(props.user_details?.address?.address || '');
+  const [address_two, setAddressTwo] = useState(props.user_details?.address?.address_two || '');
+  const [city, setCity] = useState(props.user_details?.address?.city || '');
+  const [state, setState] = useState(props.user_details?.address?.state || '');
+  const [zip, setZip] = useState(props.user_details?.address?.zip || '');
+  const [cartEmpty, setCartEmpty] = useState(true);
   const [cartLoading, setCartLoading] = useState(false);
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
@@ -87,15 +92,25 @@ const CheckoutForm = (props) => {
   const [clientSecret, setClientSecret] = useState('');
   const [disabled, setDisabled] = useState(true);
   const [saveCard, setSaveCard] = useState(false);
+  const [cardComplete, setCardComplete] = useState(false);
   const elements = useElements();
   const [userPaymentMethods, setUserPaymentMethods] = useState([]);
 
+  const [checkoutComplete, setCheckoutComplete] = useState('');
+
   const [isSavedPayment, setIsSavedPayment] = useState(false);
   const [savedPaymentId, setSavedPaymentId] = useState(null);
+
+  const isValid = (address !== '' && city !== '' && state !== '' && zip !== '' && (isSavedPayment ? true : cardComplete !== false) && (props.productsUser.length > 0) )
   
   useEffect(() => {
 
-    userProductsToServer()
+    if (props.productsUser.length < 1) {
+      setCartEmpty(true)
+    } else {
+      setCartEmpty(false)
+      userProductsToServer()
+    }
 
     getUserPaymentMethods()
 
@@ -121,15 +136,17 @@ const CheckoutForm = (props) => {
       first_name: props.user_details.first_name,
       last_name: props.user_details.last_name,
       email: props.user_details.email,
-      customer_id: props.user_details.stripe.customer_id
+      customer_id: props.user_details.stripe.customer_id,
+      payment_method_id: savedPaymentId
     })
     .then(res => {
+      console.log(res.data)
       setClientSecret(res.data.clientSecret);
-      return res.data.clientSecret
+      return {clientSecret: res.data.clientSecret, paymentIntentID: res.data.paymentIntentID}
     })
-    .then(secret => {
-      // console.log(secret)
-      handleSubmit(secret) 
+    .then( (obj) => {
+      console.log(obj)
+      handleSubmit(obj.clientSecret, obj.paymentIntentID) 
     })
     .catch(function (error) {
       console.log(error);
@@ -140,11 +157,11 @@ const CheckoutForm = (props) => {
   function renderCardBrandIcon(brand) {
     switch(brand) {
       case 'visa':
-        return( <i class="fab fa-cc-visa"></i> )
+        return( <i className="fab fa-cc-visa"></i> )
       case 'discover':
-      return( <i class="fab fa-cc-discover"></i> )
+      return( <i className="fab fa-cc-discover"></i> )
       default:
-        return( <i class="fab fa-cc"></i> )
+        return( <i className="fab fa-cc"></i> )
     }
   }
 
@@ -211,45 +228,111 @@ const CheckoutForm = (props) => {
     });
   }
 
-  const handleSubmit = async secret => {
+  const handleSubmit = async (secret, paymentIntentID) => {
+
+    console.log("PaymentIntentID " + paymentIntentID)
+
     setProcessing(true);
 
     let future_usage = (saveCard ? {setup_future_usage: 'off_session'} : {} );
 
-    const payload = await stripe.confirmCardPayment(secret, {
-      payment_method: {
-        card: elements.getElement(CardElement),
-        billing_details: {
-          name: `${props.first_name} ${props.last_name}`,
-          email: props.email
-        }
-      },
-      ...future_usage
-    });
+    let payload;
 
-    if (payload.error) {
-      setError(`Payment failed ${payload.error.message}`);
-      setProcessing(false);
+    if ( isSavedPayment ) {
+
+      payload = axios.post('/api/confirmWithPaymentMethod', {
+        paymentIntentID: paymentIntentID,
+        payment_method: savedPaymentId
+      })
+      .then(function (response) {
+        // console.log(response)
+        console.log(response.data.payload)
+        return response.data.payload
+        
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
     } else {
+
+      // Will be completed with providede card info
+      payload = stripe.confirmCardPayment(secret, {
+        payment_method: {
+          card: elements.getElement(CardElement),
+          billing_details: {
+            name: `${props.first_name} ${props.last_name}`,
+            email: props.email
+          }
+        },
+        ...future_usage
+      })
+      .then(function (response) {
+        console.log(response.paymentIntent)
+        return response.paymentIntent
+        
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+
+    payload.then(data => {
+      console.log('Should be payment data')
+      console.log(data)
+
       console.log(payload);
       setError(null);
       setProcessing(false);
       setSucceeded(true);
 
       axios.post('/api/userMadePurchase', {
-        payment: payload,
+        payment: data,
         user_id: props.user_details._id,
         items: props.productsUser
       })
       .then(function (response) {
         console.log(response);
+        props.clearExpenses();
+        userProductsToServer();
       })
       .catch(function (error) {
         console.log(error);
       });
+    }
+    ).catch(e => console.log(e))
+
+    if (payload.error) {
+      setError(`Payment failed ${payload.error.message}`);
+      setProcessing(false);
+    } else {
+      // console.log(payload);
+      // setError(null);
+      // setProcessing(false);
+      // setSucceeded(true);
+
+      // axios.post('/api/userMadePurchase', {
+      //   payment: payload,
+      //   user_id: props.user_details._id,
+      //   items: props.productsUser
+      // })
+      // .then(function (response) {
+      //   console.log(response);
+      // })
+      // .catch(function (error) {
+      //   console.log(error);
+      // });
 
     }
   };
+
+  function handleCardChange(e)  {
+    console.log(e)
+
+    setCardComplete(e.complete)
+
+    // if (e.complete)
+  }
 
   const removeItemAndRefresh = (item, dispatch) => new Promise((resolve, reject) => {
 
@@ -274,124 +357,154 @@ const CheckoutForm = (props) => {
   return (
     <div className="checkout-page new mb-5">
 
-        <div className="details card shadow-sm">
+        {/* <div> */}
+          {/* <div className="alert alert-info alert-articles d-flex w-100 mb-2 mt-3 mt-md-0">Cart Empty</div> */}
 
-          <div className="card-body">
+          <div className={"success-overlay " + (succeeded ? 'visible' : '')}>
 
-            <h1 className="d-flex justify-content-between">
-              <span>Checkout Process</span>
-              <a href="https://stripe.com/pricing" target="_blank" rel="noopener noreferrer">
-                <img src={stripePower} height="35px" alt=""/>
-              </a>
-            </h1>
+            <i className="fas fa-box"></i>
+            <h1>Order Complete!</h1>
+            <p>Thank you for your purchase</p>
+
+            <Link to={ROUTES.STORE_ORDERS}>
+              <button className="btn btn-articles-light">
+                View Orders
+              </button>
+            </Link>
 
           </div>
-          
-          <div className="customer-info-cards">
-
-            <div className="card mx-md-3 mb-3 w-100">
   
-              <div className="shiping-info card-body">
-                <h3 className="mb-4">Shipping Info</h3>
+          <div className="details card shadow-sm">
   
-                <div className="form-group">
-                  <label htmlFor="address">Address</label>
-                  <input className="form-control with-label" name="address" id="address" type="text"/>
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="city">City</label>
-                  <div className="prefilled">
-                    Prefilled
-                  </div>
-                  <input className="form-control with-label" value={props.user_details?.address?.city} name="city" id="city" type="text"/>
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="state">State</label>
-                  <div className="prefilled">
-                    Prefilled
-                  </div>
-                  <input className="form-control with-label" value={props.user_details?.address?.state} name="state" id="state" type="text"/>
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="zip">Zip</label>
-                  <div className="prefilled">
-                    Prefilled
-                  </div>
-                  <input className="form-control with-label" value={props.user_details?.address?.zip} name="zip" id="zip" type="text"/>
-                </div>
+            <div className="card-body">
   
-              </div>
+              <h1 className="d-flex justify-content-between">
+
+                <span>Checkout Process</span>
+
+                <a href="https://stripe.com/pricing" target="_blank" rel="noopener noreferrer">
+                  <img src={stripePower} height="35px" alt=""/>
+                </a>
+
+              </h1>
   
             </div>
+            
+            <div className="customer-info-cards">
   
-            <div className="payment-details card mx-md-3 mb-3 w-100">
+              <div className="card mx-md-3 mb-3 w-100">
+    
+                <div className="shiping-info card-body">
+                  <h3 className="mb-4">Shipping Info</h3>
+    
+                  <div className="form-group">
+                    <label htmlFor="address">Address</label>
+                    <input className="form-control with-label" value={address} onChange={e => setAddress(e.target.value)} name="address" id="address" type="text"/>
+                  </div>
   
-              <div className="card-body">
-                
-                <h3 className="mb-4">Payment {(total + tax).toFixed(2)}</h3>
-
-                <small>We do not store any card information on our servers, all information is stored securely with Stripe.</small>
-
-                <h5 className="stored-cards-label">Saved Cards</h5>
-                <div className="stored-cards">
-
-                  {userPaymentMethods.length < 1 ? 
-                    <div className="no-card">
-                      <small>No saved cards</small>
+                  <div className="form-group">
+                    <label htmlFor="address_two">Address Line Two</label>
+                    <input className="form-control with-label" value={address_two} name="address_two" onChange={e => setAddressTwo(e.target.value)} id="address_two" type="text"/>
+                  </div>
+  
+                  <div className="form-group">
+                    <label htmlFor="city">City</label>
+                    <div className="prefilled">
+                      Prefilled
                     </div>
-                    :
-                    userPaymentMethods.map(card =>
-                      <SavedPaymentMethod 
-                        card={card}
-                        removePaymentMethod={removePaymentMethod}
-                        renderCardBrandIcon={renderCardBrandIcon}
-                        setSavedPaymentId={setSavedPaymentId}
-                        savedPaymentId={savedPaymentId}
-                        setIsSavedPayment={setIsSavedPayment}
-                      />
-                    )
-                  }
+                    <input className="form-control with-label" value={city} onChange={e => setCity(e.target.value)} name="city" id="city" type="text"/>
+                  </div>
+  
+                  <div className="form-group">
+                    <label htmlFor="state">State</label>
+                    <div className="prefilled">
+                      Prefilled
+                    </div>
+                    <input className="form-control with-label" value={state} onChange={e => setState(e.target.value)} name="state" id="state" type="text"/>
+                  </div>
+  
+                  <div className="form-group">
+                    <label htmlFor="zip">Zip</label>
+                    <div className="prefilled">
+                      Prefilled
+                    </div>
+                    <input className="form-control with-label" value={zip} onChange={e => setZip(e.target.value)} name="zip" id="zip" type="text"/>
+                  </div>
+    
+                </div>
+    
+              </div>
+    
+              <div className="payment-details card mx-md-3 mb-3 w-100">
+    
+                <div className="card-body">
                   
-                </div>
-
-                <div className='shadow stripe-card-input' onClick={() => setIsSavedPayment(false) + setSavedPaymentId(null)}>
-
-                  <div className={"stripe-card-input-cover " + (isSavedPayment ? '' : 'd-none')}>
-                    <span>Using stored payment</span>
+                  <h3 className="mb-4">Payment {(total + tax).toFixed(2)}</h3>
+  
+                  <small>We do not store any card information on our servers, all information is stored securely with Stripe.</small>
+  
+                  <h5 className="stored-cards-label">Saved Cards</h5>
+                  <div className="stored-cards">
+  
+                    {userPaymentMethods.length < 1 ? 
+                      <div className="no-card">
+                        <small>No saved cards</small>
+                      </div>
+                      :
+                      userPaymentMethods.map(card =>
+                        <SavedPaymentMethod 
+                          card={card}
+                          removePaymentMethod={removePaymentMethod}
+                          renderCardBrandIcon={renderCardBrandIcon}
+                          setSavedPaymentId={setSavedPaymentId}
+                          savedPaymentId={savedPaymentId}
+                          setIsSavedPayment={setIsSavedPayment}
+                        />
+                      )
+                    }
+                    
                   </div>
-
-                  <div className="select">
-                    <div className={"circle " + (isSavedPayment ? '' : 'active')}>
+  
+                  <div className='shadow stripe-card-input' onClick={() => setIsSavedPayment(false) + setSavedPaymentId(null)}>
+  
+                    <div className={"stripe-card-input-cover " + (isSavedPayment ? '' : 'd-none')}>
+                      <span>Using stored payment</span>
                     </div>
+  
+                    <div className="select">
+                      <div className={"circle " + (isSavedPayment ? '' : 'active')}>
+                      </div>
+                    </div>
+  
+                    <CardElement onChange={(e) => handleCardChange(e) }/>
                   </div>
 
-                  <CardElement/>
-                </div>
-
-                <div className="remember-card form-group form-check">
-                  <input type="checkbox" className="form-check-input" id="exampleCheck1" onClick={() => setSaveCard(!saveCard)} checked={saveCard}/>
-                  <label className="form-check-label noselect" for="exampleCheck1">Remember Card?</label>
                   {isSavedPayment ? 
-                  <div className="cover">
-                    <span>Using stored payment</span>
-                  </div> 
-                  :
-                  ''}
+                  ''
+                  : 
+                  <div className="remember-card form-group form-check">
+                    <input type="checkbox" className="form-check-input" id="exampleCheck1" onClick={() => setSaveCard(!saveCard)} checked={saveCard}/>
+                    <label className="form-check-label noselect" for="exampleCheck1">Remember Card?</label>
+                    {isSavedPayment ? 
+                    <div className="cover">
+                      <span>Using stored payment</span>
+                    </div> 
+                    :
+                    ''}
+                  </div>
+                  }
+  
+                  <button onClick={() => userProductsToServer()} className={"btn btn-articles-light w-100 mt-2 " + (cartCount === props.productsUser.length ? 'd-none' : '')} disabled={cartLoading ? true : false}>Update</button>
+                  <button disabled={isValid ? false : true} onClick={() => tryIntent()} className={"btn btn-articles-light w-100 mt-2 " + (cartCount === props.productsUser.length ? '' : 'd-none')}>Checkout</button>
+  
                 </div>
-
-                <button onClick={() => userProductsToServer()} className={"btn btn-articles-light w-100 " + (cartCount === props.productsUser.length ? 'd-none' : '')} disabled={cartLoading ? true : false}>Update</button>
-                <button onClick={() => tryIntent()} className={"btn btn-articles-light w-100 " + (cartCount === props.productsUser.length ? '' : 'd-none')}>Checkout</button>
-
+    
               </div>
   
             </div>
-
+            
           </div>
-          
-        </div>
+        {/* </div> */}
 
         <div className="cart">
 
@@ -406,43 +519,9 @@ const CheckoutForm = (props) => {
 
             <div className="card-body border-top border-dark p-2">
 
-              {props.productsUser.map(item => 
-                <li key={item._id} onClick={() => {
-
-                  // console.log(item._id)
-
-                  // props.dispatch(props.removeExpense({
-                  //   id: item._id
-                  // }));
-
-                  // props.removeExpense({
-                  //   id: item.cart_id
-                  // }, () => userProductsToServer() );
-
-                  // props.removeExpense({
-                  //   id: item.cart_id
-                  // });
-
-                  // userProductsToServer()
-
-                  // removeItemAndRefresh(item, 'dispatch')
-                  // .then( thing => {
-                  //   console.log("DONE")
-                  //   console.log(props.productsUser)
-                  //   // setReturnedProducts(returnedProducts)
-                  //   userProductsToServer()
-                  //   // userProductsToServer()
-                  // })
-
-                  // props.removeExpense({
-                  //   id: item.cart_id
-                  // })
-
-                  // setTimeout(() => userProductsToServer(), 2000)
-                  
-                  // props.history.push('/');
-
-                }} className="cart-item list-group-item d-flex justify-content-between lh-condensed shadow-sm">
+            {props.productsUser.length > 0 ?
+              props.productsUser.map(item => 
+                <li key={item._id} className="cart-item list-group-item d-flex justify-content-between lh-condensed shadow-sm">
                   <div>
                     <div className="remove" onClick={() => {
                       props.removeExpense({
@@ -459,7 +538,26 @@ const CheckoutForm = (props) => {
                   </div>
                   <span className="text-muted">${(item.amount / 100).toFixed(2) || ''}</span>
                 </li>
-              )}
+              )
+              :
+              <li key='empty' className="cart-item list-group-item d-flex justify-content-between lh-condensed shadow-sm">
+                  <div>
+                    {/* <div className="remove" onClick={() => {
+                      props.removeExpense({
+                        id: item.id
+                      });
+                    }}>
+                      <i className="fas fa-trash-alt"></i>
+                    </div> */}
+                    {/* <div className="edit">
+                      <i className="fas fa-pen-square"></i>
+                    </div> */}
+                    <h6 className="my-0">{'Cart Empty!'}</h6>
+                    {/* <small className="text-muted">{ letterToSize[item.size] || '' }</small> */}
+                  </div>
+                  {/* <span className="text-muted">${(item.amount / 100).toFixed(2) || ''}</span> */}
+                </li>
+            }
 
             </div>
 
@@ -500,7 +598,7 @@ const CheckoutForm = (props) => {
 
               <button onClick={() => userProductsToServer()} className={"btn btn-articles-light w-100 " + (cartCount === props.productsUser.length ? 'd-none' : '')} disabled={cartLoading ? true : false}>Update</button>
 
-              <button onClick={() => tryIntent()} className={"btn btn-articles-light w-100 " + (cartCount === props.productsUser.length ? '' : 'd-none ') + (cartLoading ? 'd-none' : '')}>Checkout</button>
+              <button disabled={isValid ? false : true} onClick={() => tryIntent()} className={"btn btn-articles-light w-100 " + (cartCount === props.productsUser.length ? '' : 'd-none ') + (cartLoading ? 'd-none' : '')}>Checkout</button>
 
               {cartLoading ? 
               <div className="small text-center pt-2 w-100">Loading details, please wait.</div>
@@ -563,5 +661,5 @@ const mapStateToProps = (state) => {
 // const CheckoutPageNewConnected = connect(mapStateToProps)(CheckoutForm);
 
 // export default CheckoutPage;
-const Test = connect(mapStateToProps, { removeExpense })(CheckoutForm);
+const Test = connect(mapStateToProps, { removeExpense, clearExpenses })(CheckoutForm);
 export default connect(mapStateToProps, { removeExpense })(CheckoutPage);

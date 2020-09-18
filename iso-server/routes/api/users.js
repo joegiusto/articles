@@ -37,6 +37,7 @@ app.post("/register", (req, res) => {
 
   console.log("Request was valid!");
   console.log(req.body.email);
+  console.log("New user referral through " + req.body.referral)
   
   User.findOne({ email: req.body.email }).then(user => {
 
@@ -55,7 +56,8 @@ app.post("/register", (req, res) => {
         first_name: req.body.first_name,
         last_name: req.body.last_name,
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        referral: req.body.referral 
       });
 
       const msg = {

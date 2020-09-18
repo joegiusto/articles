@@ -65,6 +65,10 @@ const UserSchema = new Schema({
     type: Array,
     default: []
   },
+  referral: {
+    type: String,
+    default: ''
+  },
   stripe: {
     type: Object,
     default: {}

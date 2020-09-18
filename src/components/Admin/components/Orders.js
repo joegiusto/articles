@@ -2,36 +2,37 @@ import React, {Component} from 'react'
 import { connect } from "react-redux";
 import axios from 'axios'
 import moment from 'moment'
+import { ConfirmDelete } from '../../Global'
 
-class ConfirmDelete extends Component {
-  constructor(props) {
-    super(props);
+// class ConfirmDelete extends Component {
+//   constructor(props) {
+//     super(props);
     
-    this.state = {
-      confirm: false
-    };
+//     this.state = {
+//       confirm: false
+//     };
 
-  }
+//   }
 
-  handleClick() {
+//   handleClick() {
 
-    if (this.state.confirm) {
-      this.props.afterConfirm()
-    } else {
-      this.setState({confirm: true})
-    }
+//     if (this.state.confirm) {
+//       this.props.afterConfirm()
+//     } else {
+//       this.setState({confirm: true})
+//     }
 
-  }
+//   }
 
-  render() {
-    return (
-      this.state.confirm ? 
-      <div style={{cursor: 'pointer'}} onClick={() => this.handleClick()} className="badge badge-danger noselect">Confirm</div>
-      :
-      <div style={{cursor: 'pointer'}} onClick={() => this.handleClick()} className="badge badge-danger noselect">Delete</div>
-    )
-  }
-}
+//   render() {
+//     return (
+//       this.state.confirm ? 
+//       <div style={{cursor: 'pointer'}} onClick={() => this.handleClick()} className="badge badge-danger noselect">Confirm</div>
+//       :
+//       <div style={{cursor: 'pointer'}} onClick={() => this.handleClick()} className="badge badge-danger noselect">Delete</div>
+//     )
+//   }
+// }
 
 class Reports extends Component {
   constructor(props) {
@@ -39,7 +40,16 @@ class Reports extends Component {
   
     this.state = {
       loading: false,
-      orders: []
+      orders: [],
+      table_tab: 'Needs Shipping',
+
+      // TODO - Holding off on this for now, 
+      preorders: [],
+
+      needs_shipping: [],
+      pending_delivery: [],
+      delivered: [],
+      deleted: []
     };
 
   }
@@ -65,7 +75,7 @@ class Reports extends Component {
       console.log(response);
 
       self.setState({
-        orders: response.data
+        needs_shipping: response.data
       }, () => {
         console.log("Done")
 
@@ -117,7 +127,7 @@ class Reports extends Component {
       // socket.emit('deleteOrder', id);
 
       self.setState({
-        orders: self.state.orders.filter(function( obj ) {
+        needs_shipping: self.state.needs_shipping.filter(function( obj ) {
           return obj._id !== id;
         })
       });
@@ -130,7 +140,7 @@ class Reports extends Component {
 
   render() {
 
-    const { orders } = this.state;
+    const needs_shipping = this.state.needs_shipping;
 
     return (
       <div className="admin-orders mt-5">
@@ -140,10 +150,19 @@ class Reports extends Component {
 
           <div>Preorders - 0</div>
           <div>Needs Shipping - 0</div>
-          <div>In Transit - 0</div>
+          <div>Pending Delivery - 0</div>
+          <div>Delivered - 0</div>
+          <div>Deleted - 0</div>
         </div>
 
-        <div className="orders mt-4 w-50">
+        <div className="orders mt-4 w-75">
+
+          <div className="table-filters mb-3">
+            <button onClick={() => this.setState({table_tab: 'Needs Shipping'})} className={"btn btn-articles-light " + (this.state.table_tab === 'Needs Shipping' ? 'alt' : '')}>Needs Shipping</button>
+            <button onClick={() => this.setState({table_tab: 'Pending Delivery'})} className={"btn btn-articles-light ml-1 " + (this.state.table_tab === 'Pending Delivery' ? 'alt' : '')}>Pending Delivery</button>
+            <button onClick={() => this.setState({table_tab: 'Delivered'})} className={"btn btn-articles-light ml-1 " + (this.state.table_tab === 'Delivered' ? 'alt' : '')}>Delivered</button>
+            <button onClick={() => this.setState({table_tab: 'Deleted'})} className={"btn btn-articles-light ml-1 " + (this.state.table_tab === 'Deleted' ? 'alt' : '')}>Deleted</button>
+          </div>
 
         <div className="table-responsive">
           <table className='table articles-table table-sm table-hover table-bordered'>
@@ -158,16 +177,38 @@ class Reports extends Component {
               </tr>
             </thead>
             <tbody>
+
+              {this.state.table_tab === "Needs Shipping" ?
   
-              {orders.map(order => 
+              needs_shipping.map(order => 
                 <tr key={order._id}>
                   <td colSpan="1" className="border-right-0 ">{moment(order.date).format("LLL")}</td>
                   <td colSpan="1" className="border-right-0 ">{order.user_id}</td>
-                  <td colSpan="1" className="border-right-0 "></td>
+                  <td colSpan="1" className="border-right-0 ">{order.items.length} Item{order.items.length > 1 ? 's' : ''}</td>
                   <td colSpan="1" className="border-right-0 ">${(order.payment.trueTotal / 100).toFixed(2)}</td>
-                  <td colSpan="1" className="border-right-0 "><ConfirmDelete afterConfirm={() => this.removeOrder(order._id)}></ConfirmDelete></td>
+                  <td colSpan="1" width={'150px'} className="border-right-0 "><ConfirmDelete afterConfirm={() => this.removeOrder(order._id)}></ConfirmDelete></td>
                 </tr>
-              )}
+              )
+
+              :
+
+              this.state.table_tab === 'Pending Delivery' ? 
+
+              this.state.pending_delivery.map(order => 
+                <tr key={order._id}>
+                  <td colSpan="1" className="border-right-0 ">{moment(order.date).format("LLL")}</td>
+                  <td colSpan="1" className="border-right-0 ">{order.user_id}</td>
+                  <td colSpan="1" className="border-right-0 ">{order.items.length} Item{order.items.length > 1 ? 's' : ''}</td>
+                  <td colSpan="1" className="border-right-0 ">${(order.payment.trueTotal / 100).toFixed(2)}</td>
+                  <td colSpan="1" width={'150px'} className="border-right-0 "><ConfirmDelete afterConfirm={() => this.removeOrder(order._id)}></ConfirmDelete></td>
+                </tr>
+              )
+
+              : 
+
+              "no"
+
+              }
   
               <tr>
                 <td colSpan="2" className="border-right-0 table-articles-head">

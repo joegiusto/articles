@@ -93,7 +93,7 @@ class IssuesClass extends Component {
           <div className="news-preview-container issue">
 
             {
-            this.props.site.userSubscriptions ? this.props.user_subscriptions.map((document, i) => (
+            this.props.site.userSubscriptions ? this.props.user_subscriptions?.map((document, i) => (
               <div>
                 {/* {moment(document.last_update).format("LLL")}
                 {moment(document.lastRead).format("LLL")}

@@ -535,7 +535,7 @@ class Frontpage extends Component {
 
     axios.get('/api/getWeather', {
       params: {
-        zip: this.props.user_details.address.zip
+        zip: this.props.user_details?.address?.zip
       }
     })
     .then(function (response) {
@@ -770,7 +770,7 @@ class Frontpage extends Component {
               </div>
 
               <div className="search">
-                <input type="text" value={this.props.user_details.address.zip}/>
+                <input type="text" value={this.props.user_details?.address?.zip}/>
               </div>
 
               <div className="content">

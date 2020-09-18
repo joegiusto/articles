@@ -82,6 +82,7 @@ export const TRANSLATIONS ='/support/translations'
 export const ROADMAP ='/support/roadmap'
 export const FORUM ='/support/forum'
 export const FORUM_THREAD ='/support/forum/:id'
+export const OPEN_SOURCE ='/support/open-source'
 
 // Account
 export const ACCOUNT = '/account';

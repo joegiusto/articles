@@ -42,3 +42,8 @@ export const setExpenses = (expenses) => ({
   type: 'SET_EXPENSE',
   expenses
 });
+
+// CLEAR_EXPENSE
+export const clearExpenses = () => ({
+  type: 'REMOVE_ALL'
+});

@@ -114,6 +114,8 @@ class Settings extends Component {
       birthDateExpanded: false,
       subscriptionsExpanded: false,
 
+      subscriptions: [],
+
       mongoDBuser: {
         first_name: this.props.user_details?.first_name || '',
         last_name: this.props.user_details?.last_name || '',
@@ -210,6 +212,24 @@ class Settings extends Component {
       self.setState({
         previousUserDonationsLoading: false
       })
+    });
+
+    axios.post('/api/listSubscriptions', {
+       
+    })
+    .then(function (response) {
+
+      // socket.emit('deleteUser', id);
+
+      self.setState({
+        subscriptions: response.data.data
+      });
+
+      console.log(response)
+
+    })
+    .catch(function (error) {
+      console.log(error);
     });
 
     this.setState({previousUserOrdersLoading: true})
@@ -632,30 +652,83 @@ class Settings extends Component {
             </div>
 
             <div className="card-body">
-              <div className="counter">
-                <div className="amount">0</div>
-                <div className="unit">Months</div>
-              </div>
-              <div className="side-text">
+
+              <div className="">
                 You are not a member, consider supporting Articles to become a member and recieve benifits such as ad free browsing expreience and store discounts.
-                <div className="stats">
-                  <div>User Since: {moment(mongoDBuser?.sign_up_date).format('LL')}</div>
-                  <div>Member For: 0 Months</div>
+              </div>
+
+              <div className="plans d-flex justify-content-center">
+  
+                <div className="plan d-flex flex-column active">
+
+                  <div className="active-badge">
+                    Active
+                  </div>
+
+                  <i className="fas fa-user"></i>
+                  <div className="type">Supporter Plan</div>
+                  <div>$1.00 / month</div>
+                  <button className="btn btn-articles-light btn-sm">Join</button>
                 </div>
+  
+                <div className="plan d-flex flex-column ml-3">
+                  <i className="fas fa-medal"></i>
+                  <div className="type">Supporter Plan</div>
+                  <div>$5.00 / month</div>
+                  <button className="btn btn-articles-light btn-sm">Join</button>
+                </div>
+
+                <div className="or">- Or -</div>
+
+                <div className="plan d-flex flex-column ml-3">
+                  <i className="fas fa-shopping-cart"></i>
+                  <div className="type">Store Bundles</div>
+                  <div>0 Purchases</div>
+                  <button className="btn btn-articles-light btn-sm">Shop</button>
+                </div>
+
+                <div className="plan d-flex flex-column ml-3">
+                  <i className="far fa-share-square"></i>
+                  <div className="type">Referrals</div>
+                  <div>1 Week / referrals</div>
+                  <button className="btn btn-articles-light btn-sm">Refer</button>
+                </div>
+
               </div>
+
+              <div className="active-plan">
+                <div>Next Charge: 12/14/20</div>
+                <div className="pending-credits-container">
+                  <div className="title">
+                    Pending Credits
+                  </div>
+                  <div>Store Purchase - 1 month</div>
+                  <div>Store Purchase - 1 month</div>
+                </div>
+                <div>Amount: $1.00</div>
+              </div>
+
+              <div className="referral-section">
+                <h3 className="title">Referral Link</h3>
+                <div className="small">Get subscription benifits by refering friends to sign up</div>
+                <div>https://articles.media/signup?referral=5e90cc96579a17440c5d7d52</div>
+              </div>
+
             </div>
 
-            <div className="card-footer">
-
-              <div className="btn btn-articles-light">
-                Purchase Merch
-              </div>
-
-              <div className="btn btn-articles-light">
-                Purchase Membership
-              </div>
-
+          {this.state.subscriptions.length > 0 ?
+            <div className="mt-2">
+              {this.state.subscriptions.map(plan => 
+                <div className="plan mb-2">
+                  <div>{plan.id}</div>
+                  <div>{moment.unix(plan.current_period_end).format('LLL')}</div>
+                </div>  
+              )}
             </div>
+            :
+            null
+          }
+
           </div>
 
           <div className="card settings-card mt-4">
