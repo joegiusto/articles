@@ -73,17 +73,6 @@ class Admin extends Component {
         <div className="tab-bar">
           <div className="container-fluid">
 
-            {/* <span onClick={() => this.activeTab('users')} className={"tab" + (this.state.tab === 'users' ? ' active' : '')}>Users</span>
-            <span onClick={() => this.activeTab('news')} className={"tab" + (this.state.tab === 'news' ? ' active' : '')}>News</span>
-            <span onClick={() => this.activeTab('products')} className={"tab" + (this.state.tab === 'products' ? ' active' : '')}>Products</span>
-            <span onClick={() => this.activeTab('submissions')} className={"tab" + (this.state.tab === 'submissions' ? ' active' : '')}>Submissions</span>
-            <span onClick={() => this.activeTab('donations')} className={"tab" + (this.state.tab === 'donations' ? ' active' : '')}>Donations</span>
-            <span onClick={() => this.activeTab('expenses')} className={"tab" + (this.state.tab === 'expenses' ? ' active' : '')}>Expenses</span> */}
-
-            {/* {nav_links.map(tab => 
-              <Link to={tab[0]}><span className={"tab" + (this.state.tab === tab[1] ? ' active' : '')}>{tab[2]} {tab[1]}</span></Link>
-            )} */}
-
             <Link to={ROUTES.ADMIN_USERS}><span className={"tab" + (this.state.tab === 'users' ? ' active' : '')}>Users</span></Link>
             <Link to={ROUTES.ADMIN_NEWS}><span className={"tab" + (this.state.tab === 'news' ? ' active' : '')}>News</span></Link>
             <Link to={ROUTES.ADMIN_PRODUCTS}><span className={"tab" + (this.state.tab === 'products' ? ' active' : '')}>Products</span></Link>
@@ -102,10 +91,24 @@ class Admin extends Component {
           <div className="container-fluid">
 
             <Switch>
-              <Route path={ROUTES.ADMIN_USERS} render={() => <Users match={this.props.match} tabLocation='users' setLoaction={this.setLoaction}></Users>}/>
 
-              <Route exact path={ROUTES.ADMIN_NEWS} render={() => <News match={this.props.match} tabLocation='news' setLoaction={this.setLoaction}></News> }/>
-              <Route path={ROUTES.ADMIN_NEWS_DETAILS} render={() => <News match={this.props.match} tabLocation='news' setLoaction={this.setLoaction}></News> }/>
+              <Route path={ROUTES.ADMIN_USERS} render={() => <Users 
+                match={this.props.match} 
+                tabLocation='users' 
+                setLoaction={this.setLoaction}
+              ></Users>}/>
+
+              <Route exact path={ROUTES.ADMIN_NEWS} render={() => <News 
+                match={this.props.match} 
+                tabLocation='news' 
+                setLoaction={this.setLoaction}
+              ></News> }/>
+
+              <Route path={ROUTES.ADMIN_NEWS_DETAILS} render={() => <News 
+                match={this.props.match} 
+                tabLocation='news' 
+                setLoaction={this.setLoaction}
+              ></News> }/>
 
               <Route path={ROUTES.ADMIN_PRODUCTS} render={() => <Products
                 match={this.props.match}
@@ -130,35 +133,35 @@ class Admin extends Component {
                 match={this.props.match}
                 tabLocation='expenses'
                 setLoaction={this.setLoaction}
-                ></Expenses> 
+              ></Expenses> 
               }/>
 
               <Route exact path={ROUTES.ADMIN_SOCKET} render={() => <Sockets 
                 match={this.props.match}
                 tabLocation='sockets'
                 setLoaction={this.setLoaction}
-                ></Sockets> 
+              ></Sockets> 
               }/>
 
               <Route exact path={ROUTES.ADMIN_REPORTS} render={() => <Reports 
                 match={this.props.match}
                 tabLocation='reports'
                 setLoaction={this.setLoaction}
-                ></Reports> 
+              ></Reports> 
               }/>
 
               <Route exact path={ROUTES.ADMIN_ORDERS} render={() => <Orders 
                 match={this.props.match}
                 tabLocation='orders'
                 setLoaction={this.setLoaction}
-                ></Orders> 
+              ></Orders> 
               }/>
 
               <Route exact path={ROUTES.ADMIN_ADS} render={() => <Ads 
                 match={this.props.match}
                 tabLocation='ads'
                 setLoaction={this.setLoaction}
-                ></Ads> 
+              ></Ads> 
               }/>
 
             </Switch>

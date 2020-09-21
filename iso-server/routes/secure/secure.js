@@ -37,7 +37,7 @@ module.exports = (app, db) => {
         data.user.submissionsFetched = [];
         data.user.subscriptionsFetched = [];
 
-        db.collection("articles_orders").find({user_id: req.body.user}).toArray(function(err, result) {
+        db.collection("revenues_clothing").find({user_id: req.body.user}).toArray(function(err, result) {
           if (err) throw err;
           // console.log(`Call to /api/getUserDetails done`)
           // console.log(result);
@@ -272,6 +272,55 @@ module.exports = (app, db) => {
     });
   });
 
+  app.post("/api/setDefaultPaymentMethod", passport.authenticate('jwt', {session: false}), async (req, res) => {
+
+    if (req.body.payment_method_id === null || req.body.payment_method_id === undefined || req.body.payment_method_id === '') {
+      res.status('400').send({ error:  'payment_method_id field is required' })
+    }
+
+    console.log("Attempting to set a default payment method on customer");
+
+    let customer;
+
+    try {
+
+      customer = await stripe.customers.update(
+        req.user.stripe.customer_id,
+        {
+          invoice_settings: {
+            default_payment_method: req.body.payment_method_id
+          }
+        }
+      );
+
+      res.send(customer)
+
+    } catch (err) {
+      console.log(`⚠️  Error with setting a default payment method on customer.`);
+      res.status('400').send({ error:  err  })
+      // return res.sendStatus(400);
+    }
+
+    
+
+    // console.log()
+
+    // customer.then(
+    //   console.log("Success")
+    // ).catch(
+    //   console.log("Error")
+    // )
+
+    // customer.then((response) => {
+    //   console.log(response)
+    //   console.log(customer)
+    //   res.send('removed')
+    // }).catch(e => 
+    //   res.status('402').send({ error:  e.raw  })
+    // )
+
+  });
+
   app.post("/api/getUserPaymentMethods", passport.authenticate('jwt', {session: false}), async (req, res) => {
     console.log("Getting user payment methods")
 
@@ -338,7 +387,7 @@ module.exports = (app, db) => {
           customer: req.user.stripe.customer_id,
           items: [
             { 
-              price: 'price_1HQnYZKMwBfw4SyLXuXkEEEG'
+              price: 'price_1HSsAyKMwBfw4SyLEQAkf5zm'
             }
           ],
           expand: ['latest_invoice.payment_intent'],
@@ -372,6 +421,17 @@ module.exports = (app, db) => {
     // .catch(error => 
     //   res.status('402').send({ error: { message: error} })
     // ) 
+
+  });
+
+  app.post("/api/getStripeCustomer", passport.authenticate('jwt', {session: false}), async (req, res) => {
+    console.log("Listing a users subscription");
+
+    const customer = await stripe.customers.retrieve(
+      req.user.stripe.customer_id
+    );
+  
+    res.send(customer);
 
   });
 

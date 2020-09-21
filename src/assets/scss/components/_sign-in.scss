@@ -139,6 +139,13 @@ $decal-color: #b06565;
       font-size: 12px;
       line-height: 16px;
 
+      @include media-breakpoint-down(md) {
+        top: 20px;
+        right: 50%;
+        width: 100%;
+        max-width: 90%;
+      }
+
       b {
         font-family: brandon-grotesque, sans-serif;
         font-style: normal;

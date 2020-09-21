@@ -229,7 +229,7 @@ function Menu(props) {
                   {props?.user?.photo_url === undefined ? 
                   null
                   :
-                  <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SETTINGS}><img alt="" className="" style={{borderRadius: '100px'}} width="100%" height="100%" src={`https://articles-website.s3.amazonaws.com/profile_photos/${props?.user?._id}.jpg` || ''}/></Link>
+                  <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SETTINGS_ACCOUNT}><img alt="" className="" style={{borderRadius: '100px'}} width="100%" height="100%" src={`https://articles-website.s3.amazonaws.com/profile_photos/${props?.user?._id}.jpg` || ''}/></Link>
                   }
                   <i className={props?.user?.photo_url ? '':'fas fa-question'}></i>
               </div> 
@@ -241,7 +241,7 @@ function Menu(props) {
                   {!props.isAuth ? (
                   <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SIGN_IN} id='nav-sign-in'>Log In / Sign Up</Link>
                   ) : (
-                  <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SETTINGS} id='nav-sign-in'>{props?.user?.first_name} {props?.user?.last_name}</Link>
+                  <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SETTINGS_ACCOUNT} id='nav-sign-in'>{props?.user?.first_name} {props?.user?.last_name}</Link>
                   )}
                   </span>
                 </p>

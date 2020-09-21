@@ -150,7 +150,7 @@ class FAQ extends Component {
                 {/* INFO - SUPPORTER PLAN */}
                 {this.state.subscriptions.length > 0 ? 
                   // User has a current subscription
-                  (this.state.subscriptions[0].plan.product === 'prod_I0pC0Ho62i1dV2' ?
+                  (this.state.subscriptions[0].plan.product === 'prod_I2y7aiDpmeSkFP' ?
                     // Is this product
                     <button disabled={true} className="commit-button btn btn-articles-light ">Active</button>
                     :
@@ -159,7 +159,7 @@ class FAQ extends Component {
                   )
                 :
                   // User has no subscription
-                  <div onClick={() => this.createSubscription('prod_I0pC0Ho62i1dV2')} className="commit-button btn btn-articles-light alt">Commit</div>
+                  <div onClick={() => this.createSubscription('prod_I2y7aiDpmeSkFP')} className="commit-button btn btn-articles-light alt">Commit</div>
                 }
 
               </div>
@@ -182,16 +182,16 @@ class FAQ extends Component {
                 {/* INFO - PATRIOT PLAN */}
                 {this.state.subscriptions.length > 0 ? 
                   // User has a current subscription
-                  (this.state.subscriptions[0].plan.product === 'prod_I0pD70RyPyBaU7' ?
+                  (this.state.subscriptions[0].plan.product === 'prod_I2y7Q1Dz5Rl9tj' ?
                     // Is this product
                     <button disabled={true} className="commit-button btn btn-articles-light ">Active</button>
                     :
                     // Is another product
-                    <button disabled={false} onClick={() => this.createSubscription('prod_I0pC0Ho62i1dV2')} className="commit-button btn btn-articles-light alt">Upgrade</button>
+                    <button disabled={false} onClick={() => this.createSubscription('prod_I2y7Q1Dz5Rl9tj')} className="commit-button btn btn-articles-light alt">Upgrade</button>
                   )
                 :
                   // User has no subscription
-                  <div onClick={() => this.createSubscription('prod_I0pD70RyPyBaU7')} className="commit-button btn btn-articles-light alt">Commit</div>
+                  <div onClick={() => this.createSubscription('prod_I2y7Q1Dz5Rl9tj')} className="commit-button btn btn-articles-light alt">Commit</div>
                 }
 
               </div>

@@ -24,6 +24,7 @@ import "slick-carousel/slick/slick-theme.css";
 // import MythsDisplay from './MythsDisplay'
 
 // import { GzyCard } from './Issues/index'
+import NewsCard from './NewsCard'
 
 import { toggleUserSubscriptions, filterIssuesDateType } from '../../actions/siteActions'
 
@@ -280,63 +281,7 @@ function SearchHead(props) {
   )
 }
 
-class NewsCard extends Component {
-  constructor(props) {
-    super(props);
 
-    this.state = {
-
-    }
-  }
-
-  componentDidMount() {
-    
-  }
-
-  renderRoute(type) {
-    switch(type) {
-      case 'story':
-        return ROUTES.STORIES
-        // break;
-      case 'issue':
-        return ROUTES.ISSUES
-        // break;
-      case 'myth':
-        return ROUTES.MYTHS
-        // break;
-      default:
-        // code block
-    }
-  }
-
-  render() {
-    return (
-      <Link to={this.renderRoute(this.props.document.news_type) + '/' + this.props.document.url}>
-        <div className="content">
-          <div className="date">{moment(this.props.document.news_date).format("L")}</div>
-
-          {this.props.hasUpdate ? 
-          <div className="update">
-            <i className="fas fa-star"></i>
-            <span>Update</span>
-          </div>
-          :
-          null
-          }
-          
-          <div className="title">{this.props.document.news_title}</div>
-          <img src={this.props.document.hero_url} alt="" className="background"/>
-          <div className="filter"></div>
-          <div className="shadow"></div>
-          <div className="bar"></div>
-          <div className="tagline">
-            {this.props.document.news_tagline}
-          </div>
-        </div>
-      </Link>
-    )
-  }
-}
 
 class RecentSliders extends Component {
   constructor(props) {
@@ -420,18 +365,65 @@ class RecentSliders extends Component {
                 </div>
               </div>
 
-              <div className="types">
-                <div onClick={() => this.setState({issueSort: 'all'})} className={"type-selection " + (this.state.issueSort === 'all' ? 'active' : '') }>Subscriptions</div>
-                <div onClick={() => this.setState({issueSort: 'user'})} className={"type-selection " + (this.state.issueSort === 'user' ? 'active' : '') }>All</div>
+              <div className="issue-view-controls">
+                {/* <div onClick={() => this.setState({issueSort: 'all'})} className={"type-selection " + (this.state.issueSort === 'all' ? 'active' : '') }>Subscriptions</div>
+                <div onClick={() => this.setState({issueSort: 'user'})} className={"type-selection " + (this.state.issueSort === 'user' ? 'active' : '') }>All</div> */}
+                <div onClick={() => this.props.toggleUserSubscriptions()} className={"type-selection " + (!this.props.userSubscriptions  ? 'active' : '') }>All</div>
+                <div onClick={() => this.props.toggleUserSubscriptions()} className={"type-selection " + (this.props.userSubscriptions  ? 'active' : '') }>Subscriptions</div>
               </div>
 
             </span>
 
-            {this.props.issues.issues.map((story) => (
+            {this.props.userSubscriptions && !this.props.isAuth ? 
+            <div className="sign-up-alert">
+
+              <div className="title">Account Feature</div>
+
+              <div className="text">To subscribe to issues and stay up to date about the news you care about create an account!</div>
+
+              <button className="btn btn-articles-light mt-2">
+                Sign Up
+              </button>
+
+              <small className="d-block mt-2">Already a member? Sign In</small>
+
+            </div>
+            :
+            null
+            }
+
+            {
+            this.props.userSubscriptions ? this.props.user_subscriptions?.map((document, i) => (
+              <SwiperSlide>
+                <NewsCard 
+                  key={i} 
+                  hasUpdate={ moment(document.last_update).isSameOrAfter(document.lastRead) } 
+                  isSub={this.props.user_subscriptions?.filter(sub => sub._id === document._id).length > 0}
+                  document={document}
+                />
+              </SwiperSlide>
+            ))
+            :
+            (this.props.issues.issues.map((document, i) => (
+              <SwiperSlide>
+                <NewsCard 
+                  key={i}
+                  hasUpdate={ moment(document.last_update).isSameOrAfter(document.lastRead) } 
+                  isSub={this.props.user_subscriptions?.filter(sub => sub._id === document._id).length > 0}
+                  document={document}
+                />
+              </SwiperSlide>
+            )))
+            }
+
+            {/* {this.props.issues.issues.map((story) => (
+
               <SwiperSlide>
                 <NewsCard document={story}/>
               </SwiperSlide>
-            ))}
+
+            ))} */}
+
           </Swiper>
   
         </div>
@@ -455,9 +447,12 @@ class RecentSliders extends Component {
               </div>
             </span>
 
-            {this.props.myths.myths.map((story) => (
+            {this.props.myths.myths.map((story, i) => (
               <SwiperSlide>
-                <NewsCard document={story}/>
+                <NewsCard 
+                key={story._id}
+                document={story}
+                />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -1177,6 +1172,10 @@ class Frontpage extends Component {
                       stories={this.props.stories}
                       issues={this.props.issues}
                       myths={this.props.myths}
+                      userSubscriptions={this.props.site.userSubscriptions}
+                      toggleUserSubscriptions={this.props.toggleUserSubscriptions}
+                      user_subscriptions={this.props.user_subscriptions}
+                      isAuth={this.props.isAuth}
                       />
 
                     </>
@@ -1226,11 +1225,13 @@ class Frontpage extends Component {
 }
 
 const mapStateToProps = state => ({
+  isAuth: state.auth.isAuthenticated,
   issues: state.issues,
   stories: state.stories,
   myths: state.myths,
   site: state.site,
-  user_details: state.auth.user_details
+  user_details: state.auth.user_details,
+  user_subscriptions: state.auth.user_details.subscriptionsFetched
 });
 
 export default connect(

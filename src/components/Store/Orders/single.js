@@ -69,7 +69,7 @@ class SingleOrderPage extends Component {
             <div className="card">
 
               <div className="card-header">
-                {order_id}
+                Order {order_id}
               </div>
 
               <div className="card-body">
@@ -86,23 +86,27 @@ class SingleOrderPage extends Component {
                 <div className="details">
   
                   <div className="item">
-                    <div className="left">Order Date:</div>
-                    <div className="right">{moment.unix(order.order_date).format('LLL')}</div>
+                    <div className="title">Order Date:</div>
+                    <div className="right">{moment(order.date).format('LLL')}</div>
                   </div>
   
                   <div className="item">
-                    <div className="left">Order Product:</div>
-                    <div className="right">{order.order_title}</div>
+                    <div className="title">Products:</div>
+                    <div className="right">
+                      {order.items?.map(item => 
+                        <div>{item.description}</div>
+                      )}
+                    </div>
                   </div>
   
                   <div className="item">
-                    <div className="left">Order Date:</div>
-                    <div className="right">{moment.unix(order.order_date).format('LLL')}</div>
+                    <div className="title">Order Date:</div>
+                    <div className="right">{moment(order.date).format('LLL')}</div>
                   </div>
   
                   <div className="item">
                     <div className="left">Order Total:</div>
-                    <div className="right">${(order.order_total / 100).toFixed(2)}</div>
+                    <div className="right">${(order.payment?.amount / 100).toFixed(2)}</div>
                   </div>
   
                 </div>

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useForm } from "react-hook-form";
 
-import { CardElement, PaymentRequestButtonElement, useStripe, useElements, Elements } from '@stripe/react-stripe-js';
+import { CardElement, useStripe, useElements, Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 
 import { removeExpense, clearExpenses } from '../../../actions/expenses';
@@ -619,7 +619,7 @@ const CheckoutForm = (props) => {
               {/* Show a success message upon completion */}
               <p className={succeeded ? "result-message" : "result-message d-none"}>
                 Payment succeeded, see the result in your
-                <Link to={ROUTES.SETTINGS}>{" "}Account</Link>
+                <Link to={ROUTES.SETTINGS_BILLING}>{" "}Account</Link>
                 {/* <a
                   href={`https://dashboard.stripe.com/test/payments`}
                 >

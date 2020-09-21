@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component, useState, useEffect, useRef } from 'react';
 import { Helmet } from "react-helmet";
 import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
@@ -6,6 +6,10 @@ import axios from 'axios';
 import moment from 'moment';
 import Cleave from 'cleave.js/react';
 import PlacesAutocomplete from 'react-places-autocomplete';
+
+import { CardElement, useStripe, useElements, Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+
 import {
   geocodeByAddress,
   geocodeByPlaceId,
@@ -15,6 +19,307 @@ import {
 import * as ROUTES from '../../constants/routes';
 import { logoutUser } from "../../actions/authActions";
 import { setUserDetails } from "../../actions/authActions";
+
+import * as KEYS from '../../constants/public_keys';
+const stripePromise = loadStripe(KEYS.STRIPE_PUBLIC_KEY);
+
+const CheckoutForm = (props) => {
+  // const { register, handleSubmit, watch, errors } = useForm();
+
+  const [tax, setTax] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [cartCount, setCartCount] = useState(0);
+  const [returnedProducts, setReturnedProducts] = useState([]);
+
+  const prevReturnRef = useRef()
+  const mounted = useRef();
+
+  const [address, setAddress] = useState(props.user_details?.address?.address || '');
+  const [address_two, setAddressTwo] = useState(props.user_details?.address?.address_two || '');
+  const [city, setCity] = useState(props.user_details?.address?.city || '');
+  const [state, setState] = useState(props.user_details?.address?.state || '');
+  const [zip, setZip] = useState(props.user_details?.address?.zip || '');
+  const [cartEmpty, setCartEmpty] = useState(true);
+  const [cartLoading, setCartLoading] = useState(false);
+  const [succeeded, setSucceeded] = useState(false);
+  const [error, setError] = useState(null);
+  const stripe = useStripe();
+  const [processing, setProcessing] = useState('');
+  const [clientSecret, setClientSecret] = useState('');
+  const [disabled, setDisabled] = useState(true);
+  const [saveCard, setSaveCard] = useState(false);
+  const [cardComplete, setCardComplete] = useState(false);
+  const elements = useElements();
+  const [userPaymentMethods, setUserPaymentMethods] = useState([]);
+
+  const [checkoutComplete, setCheckoutComplete] = useState('');
+
+  const [isSavedPayment, setIsSavedPayment] = useState(false);
+  const [savedPaymentId, setSavedPaymentId] = useState(null);
+
+  const isValid = (address !== '' && city !== '' && state !== '' && zip !== '' && (isSavedPayment ? true : cardComplete !== false) && (props.productsUser.length > 0) )
+  
+  useEffect(() => {
+
+    // if (props.productsUser.length < 1) {
+    //   setCartEmpty(true)
+    // } else {
+    //   setCartEmpty(false)
+    //   userProductsToServer()
+    // }
+
+    // getUserPaymentMethods()
+
+    // if (!mounted.current) {
+    //   // do componentDidMount logic
+    //   mounted.current = true;
+    // } else {
+    //   // do componentDidUpdate logic
+    //   console.log("UPDATE!")
+    //   // userProductsToServer()
+    //   mounted.current = false;
+
+    //   if (returnedProducts.length !== props.productsUser.length && returnedProducts.length !== 0) {
+    //     console.log("Not equal, update");
+    //   }
+    // }
+  }, []);
+
+  // const tryIntent = () => {
+  //   axios.post('/api/create-payment-intent', {
+  //     amount: (total + tax) * 100,
+  //     _id: props.user_details._id,
+  //     first_name: props.user_details.first_name,
+  //     last_name: props.user_details.last_name,
+  //     email: props.user_details.email,
+  //     customer_id: props.user_details.stripe.customer_id,
+  //     payment_method_id: savedPaymentId
+  //   })
+  //   .then(res => {
+  //     console.log(res.data)
+  //     setClientSecret(res.data.clientSecret);
+  //     return {clientSecret: res.data.clientSecret, paymentIntentID: res.data.paymentIntentID}
+  //   })
+  //   .then( (obj) => {
+  //     console.log(obj)
+  //     handleSubmit(obj.clientSecret, obj.paymentIntentID) 
+  //   })
+  //   .catch(function (error) {
+  //     console.log(error);
+  //     setError('Could not get valid intent')
+  //   });
+  // }
+
+  function renderCardBrandIcon(brand) {
+    switch(brand) {
+      case 'visa':
+        return( <i className="fab fa-cc-visa"></i> )
+      case 'discover':
+      return( <i className="fab fa-cc-discover"></i> )
+      default:
+        return( <i className="fab fa-cc"></i> )
+    }
+  }
+
+  function removePaymentMethod(method_id) {
+    axios.post('/api/removePaymentMethod', {
+      method_id
+    })
+    .then(function (response) {
+      console.log(response)
+
+      setUserPaymentMethods(
+        userPaymentMethods.filter(function( obj ) {
+          return obj.id !== method_id;
+        })
+      )
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  function getUserPaymentMethods() {
+    axios.post('/api/getUserPaymentMethods', {
+
+    })
+    .then(function (response) {
+      console.log(response)
+      setUserPaymentMethods(response.data.data)
+      console.log(userPaymentMethods)
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  let userProductsToServer = () => {
+    setCartLoading(true)
+
+    console.log("sending this to server")
+    console.log(props.productsUser);
+
+    let productsUserToServer = props.productsUser.map( (product) => { return {
+      _id: product.note,
+      cart_id: product.id,
+      size: product.size
+    } } )
+
+    axios.post('/api/getTotalFromProducts', {
+      products: [
+        ...productsUserToServer
+      ]
+    })
+    .then(function (response) {
+      setReturnedProducts(response.data.retrivedProducts)
+      setTotal(response.data.total)
+      setTax(response.data.tax)
+      setCartCount(response.data.retrivedProducts.length)
+      setCartLoading(false)
+      // tryIntent();
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  const handleSubmit = async (secret, paymentIntentID) => {
+
+    console.log("PaymentIntentID " + paymentIntentID)
+
+    setProcessing(true);
+
+    let future_usage = (saveCard ? {setup_future_usage: 'off_session'} : {} );
+
+    let payload;
+
+    if ( isSavedPayment ) {
+
+      payload = axios.post('/api/confirmWithPaymentMethod', {
+        paymentIntentID: paymentIntentID,
+        payment_method: savedPaymentId
+      })
+      .then(function (response) {
+        // console.log(response)
+        console.log(response.data.payload)
+        return response.data.payload
+        
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    } else {
+
+      // Will be completed with providede card info
+      payload = stripe.confirmCardPayment(secret, {
+        payment_method: {
+          card: elements.getElement(CardElement),
+          billing_details: {
+            name: `${props.first_name} ${props.last_name}`,
+            email: props.email
+          }
+        },
+        ...future_usage
+      })
+      .then(function (response) {
+        console.log(response.paymentIntent)
+        return response.paymentIntent
+        
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+
+    payload.then(data => {
+      console.log('Should be payment data')
+      console.log(data)
+
+      console.log(payload);
+      setError(null);
+      setProcessing(false);
+      setSucceeded(true);
+
+      axios.post('/api/userMadePurchase', {
+        payment: data,
+        user_id: props.user_details._id,
+        items: props.productsUser
+      })
+      .then(function (response) {
+        console.log(response);
+        props.clearExpenses();
+        userProductsToServer();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+    ).catch(e => console.log(e))
+
+    if (payload.error) {
+      setError(`Payment failed ${payload.error.message}`);
+      setProcessing(false);
+    } else {
+      
+    }
+  };
+
+  function handleCardChange(e)  {
+    console.log(e)
+
+    setCardComplete(e.complete)
+
+    // if (e.complete)
+  }
+
+  const removeItemAndRefresh = (item, dispatch) => new Promise((resolve, reject) => {
+
+    console.log('removeItemAndRefresh called')
+
+    props.removeExpense({
+      id: item.cart_id
+      // id: item.id
+    }, () => resolve());
+
+  });
+
+  const letterToSize = {
+    XS: 'Extra Small',
+    S: 'Small',
+    M: 'Medium',
+    L: 'Large',
+    XL: 'Extra Large'
+   };
+
+  // Use a traditional checkout form.
+  return (
+    <div className="checkout-page new mb-5">
+
+      <div className="details card shadow-sm">
+        
+        <div className="customer-info-cards">
+
+          <div className="payment-details card mx-md-3 mb-3 w-100">
+
+            <div className="card-body">
+
+              <div className='stripe-card-input'>
+                <CardElement style={{marginLeft: '0'}} onChange={(e) => handleCardChange(e) }/>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+        
+      </div>
+
+    </div>
+  );
+}
 
 class LocationSearchInput extends React.Component {
   constructor(props) {
@@ -98,6 +403,10 @@ class Settings extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      settingsTab: 'Account',
+      userPaymentMethods: [],
+      defaultUserPaymentMethod: '',
+
       newsAll: [],
       newsAllLoading: false,
       updatingUserDetails: false,
@@ -160,12 +469,96 @@ class Settings extends Component {
 
     this.placesToAddress = this.placesToAddress.bind(this);
     this.latLng = this.latLng.bind(this);
+    this.getUserPaymentMethods = this.getUserPaymentMethods.bind(this)
+  }
+
+  getUserPaymentMethods() {
+    const self = this;
+
+    axios.post('/api/getUserPaymentMethods', {
+
+    })
+    .then(function (response) {
+      console.log(response)
+
+      console.log(response.data.data)
+
+      self.setState({userPaymentMethods: response.data.data})
+
+      // setUserPaymentMethods(response.data.data)
+      // console.log(userPaymentMethods)
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  getStripeUser() {
+    let self = this;
+
+    axios.post('/api/getStripeCustomer', {
+
+    })
+    .then(function (response) {
+      console.log(response)
+      self.setState({
+        defaultUserPaymentMethod: response.data.invoice_settings.default_payment_method
+      })
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  setDefaultPaymentMethod(payment_method_id) {
+    let self = this;
+
+    axios.post('/api/setDefaultPaymentMethod', {
+      payment_method_id
+    })
+    .then(function (response) {
+      console.log(response)
+      self.setState({
+        defaultUserPaymentMethod: response.data.invoice_settings.default_payment_method
+      })
+    })
+    .catch(function (error) {
+      console.log(error.response);
+    });
   }
 
   componentDidMount() {
+    this.getUserPaymentMethods();
+    this.getStripeUser();
     // console.log("Subscribe Mounted");
 
     let self = this;
+
+    // TODO - I really think something like the admin page tab system belongs here instead for hard coded links
+
+    switch ( localStorage.getItem('settingsTab') ) {
+      case 'Account':
+        self.setState({
+          settingsTab: 'Account'
+        })
+        break;
+      case 'Subscriptions':
+        self.setState({
+          settingsTab: 'Subscriptions'
+        })
+        break;
+      case 'Billing':
+        self.setState({
+          settingsTab: 'Billing'
+        })
+        break;
+      default:
+        self.setState({
+          settingsTab: 'Account'
+        })
+    }
+    
+
     // console.log('Making changes to subscriptions');
     // this.setState({ newsAllLoading: true });
 
@@ -543,43 +936,6 @@ class Settings extends Component {
     } 
   } 
 
-  // Not sure why I made this, leaving it here for a little bit...
-  // mergeStuff() {
-
-  //   if (this.state.mongoDBuser.subscriptions && this.state.allIssues) {
-
-  //     console.log("This should have a .news_id for every item");
-  //     console.log(this.state.mongoDBuser.subscriptions)
-
-  //     let mergedArray = [];
-
-  //     this.state.mongoDBuser.subscriptions.map( ( item, i ) => {
-
-  //       console.log(i)
-  //       console.log(item)
-
-  //       var toSearch = item.news_id;
-
-  //       for(var i=0; i<this.state.allIssues.length; i++) {
-  //         for(this.state.allIssues._id in this.state.allIssues[i]) {
-  //           if(this.state.allIssues[i][this.state.allIssues._id].indexOf(toSearch)!=-1) {
-  //             mergedArray.push(this.state.allIssues[i]);
-  //           }
-  //         }
-  //       }
-
-  //     })
-
-  //     this.setState({
-  //       merge: mergedArray
-  //     })
-
-  //   } else {
-  //     console.log("Not Ready Yet!")
-  //   }
-
-  // }
-
   onChangeProfile(e) {
     console.log(e.target.files);
     const data = new FormData();
@@ -614,6 +970,10 @@ class Settings extends Component {
     console.log(detail)
   }
 
+  handleClick(id) {
+    this.props.history.push(ROUTES.STORE_ORDERS + '/' + id)
+  }
+
   render() {
     const {mongoDBuser, mongoDBsubmissions, mongoDBorders, allIssues, mongoDBsubscriptionsBulk, merge} = this.state;
 
@@ -644,7 +1004,26 @@ class Settings extends Component {
             </div>
           </div>
 
-          <div className="card membership-card">
+          <div className="tabs mt-3 " style={{maxWidth: '800px', marginRight: 'auto', marginLeft: 'auto'}}>
+
+            <div onClick={() => {
+              localStorage.setItem( 'settingsTab', 'Account' ) 
+              this.setState({settingsTab: 'Account'})}
+            } className={"btn btn-articles-light " + (this.state.settingsTab === 'Account' ? 'alt' : '')}>Account</div>
+
+            <div onClick={() => {
+              localStorage.setItem( 'settingsTab', 'Subscription' ) 
+              this.setState({settingsTab: 'Subscription'})}
+            } className={"btn btn-articles-light " + (this.state.settingsTab === 'Subscription' ? 'alt' : '')}>Subscription</div>
+
+            <div onClick={() => {
+              localStorage.setItem( 'settingsTab', 'Billing' ) 
+              this.setState({settingsTab: 'Billing'})}
+            } className={"btn btn-articles-light " + (this.state.settingsTab === 'Billing' ? 'alt' : '')}>Billing</div>
+            
+          </div>
+
+          <div className={"card membership-card " + (this.state.settingsTab !== 'Subscription' ? 'd-none' : '')}>
 
             <div className="card-header">
               <h5>Membership Status</h5>
@@ -716,22 +1095,22 @@ class Settings extends Component {
 
             </div>
 
-          {this.state.subscriptions.length > 0 ?
-            <div className="mt-2">
-              {this.state.subscriptions.map(plan => 
-                <div className="plan mb-2">
-                  <div>{plan.id}</div>
-                  <div>{moment.unix(plan.current_period_end).format('LLL')}</div>
-                </div>  
-              )}
-            </div>
-            :
-            null
-          }
+            {this.state.subscriptions.length > 0 ?
+              <div className="mt-2">
+                {this.state.subscriptions.map(plan => 
+                  <div className="plan mb-2">
+                    <div>{plan.id}</div>
+                    <div>{moment.unix(plan.current_period_end).format('LLL')}</div>
+                  </div>  
+                )}
+              </div>
+              :
+              null
+            }
 
           </div>
 
-          <div className="card settings-card mt-4">
+          <div className={"card settings-card mt-3 " + (this.state.settingsTab !== 'Account' ? 'd-none' : '')}>
 
             <div className="card-header">
               <h5>Profile Info</h5>
@@ -1014,7 +1393,7 @@ class Settings extends Component {
 
           </div>
 
-          <div className="card settings-card mt-4">
+          <div className={"card settings-card mt-3 " + (this.state.settingsTab !== 'Account' ? 'd-none' : '')}>
 
             <div className="card-header">
               <h5>Subscriptions</h5>
@@ -1120,7 +1499,61 @@ class Settings extends Component {
 
           </div>
 
-          <div className="card settings-card mt-4">
+          <div className={"card settings-card mt-3 " + (this.state.settingsTab !== 'Billing' ? 'd-none' : '')}>
+
+            <div className="card-header">
+              <h5>Payment Methods</h5>
+              <p>Saved payment methods for subscriptions and orders</p>
+            </div>
+
+            <div className="card-body">
+
+              <div className="info donations w-100 table-responsive" style={{borderBottom: '1px solid #000'}}>
+                <table className="table mb-0">
+                  <thead className="">
+                    <tr>
+                      <th scope="col">Brand</th>
+                      <th scope="col">Last 4</th>
+                      <th scope="col">Exp</th>
+                      <th scope="col">Primary</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {this.state.userPaymentMethods?.map(card => 
+                      <tr className="donation">
+                        <th scope="row" className="" >{card.card.brand}</th>
+                        <td className="">{card.card.last4}</td>
+                        <td className="">{card.card.exp_month}/{card.card.exp_year}</td>
+                        <td className="">
+                          {
+                          this.state.defaultUserPaymentMethod === card.id ?
+                          <span className="badge badge-primary">Primary</span>
+                          :
+                          <span className="badge badge-secondary" onClick={() => this.setDefaultPaymentMethod(card.id)}>Make Primary</span>
+                          }
+                        </td>
+                      </tr>  
+                    )}
+                  </tbody>
+
+                  {this.state.previousUserDonationsLoading ? null : this.state.previousUserDonations.length < 1 ? <div className="pl-3 pt-3">No donations to display</div> : ''}
+                  
+                </table>
+
+              </div>
+
+              <button className="btn btn-articles-light my-3 mx-auto w-100 d-block" style={{maxWidth: '300px'}}>Add Payment Method</button>
+
+              <Elements stripe={stripePromise}>
+                <CheckoutForm/>
+              </Elements>
+
+            </div>
+
+          </div>
+
+          <div className={"card settings-card mt-3 " + (this.state.settingsTab !== 'Billing' ? 'd-none' : '')}>
 
             <div className="card-header">
               <h5>Donation History</h5>
@@ -1169,7 +1602,7 @@ class Settings extends Component {
 
           </div>
 
-          <div className="card settings-card mt-4">
+          <div className={"card settings-card mt-3 " + (this.state.settingsTab !== 'Billing' ? 'd-none' : '')}>
 
             <div className="card-header">
               <h5>Order History</h5>
@@ -1177,36 +1610,32 @@ class Settings extends Component {
             </div>
 
             <div className="card-body">
+              
+              <div className="info billing-orders w-100 table-responsive">
+                <table className="table table-hover mb-0">
+                  <thead className="">
+                    <tr>
+                      <th scope="col">Order #</th>
+                      <th scope="col">Date</th>
+                      <th scope="col">For</th>
+                      <th scope="col">Amount</th>
+                    </tr>
+                  </thead>
 
-              <div className="info-snippet p-0">
+                  <tbody>
+                    {this.state.previousUserOrders.map(order => 
+                      <tr className="order" onClick={() => this.handleClick(order._id)}>
+                        <th scope="row" className="order-id">{order._id}</th>
+                        <td className="date">{moment(order.date).format('LLL')}</td>
+                        <td className="type">{order.for}</td>
+                        <td className="amount">${(order.payment.total / 100).toFixed(2)}</td>
+                      </tr>  
+                    )}
+                  </tbody>
 
-                <div className="info donations w-100 table-responsive">
-                  <table className="table mb-0">
-                    <thead className="">
-                      <tr>
-                        <th scope="col">Order #</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">For</th>
-                        <th scope="col">Amount</th>
-                      </tr>
-                    </thead>
-
-                    <tbody>
-                      {this.state.previousUserOrders.map(order => 
-                        <tr className="order">
-                          <th scope="row" className="order-id">{order._id}</th>
-                          <td className="date">{moment(order.date).format('LLL')}</td>
-                          <td className="type">{order.for}</td>
-                          <td className="amount">${(order.payment.total / 100).toFixed(2)}</td>
-                        </tr>  
-                      )}
-                    </tbody>
-
-                    {this.state.previousUserOrdersLoading ? null : this.state.previousUserOrders.length < 1 ? <div className="pl-3 pt-3">No donations to display</div> : ''}
-                    
-                  </table>
-
-                </div>
+                  {this.state.previousUserOrdersLoading ? null : this.state.previousUserOrders.length < 1 ? <div className="pl-3 pt-3">No donations to display</div> : ''}
+                  
+                </table>
 
               </div>
 
@@ -1271,34 +1700,6 @@ class Settings extends Component {
             </div>
 
             <div onClick={this.updateUser} className="btn btn-articles-light">Update</div>
-          </div>
-
-          <div className="row justify-content-center mb-5">
-
-            <div className="col-12 col-md-4">
-
-              <div>
-                <span><b>Old Orders</b></span>
-                <div className="subscription-list">
-
-                {mongoDBuser?.ordersFetched ? 
-
-                  mongoDBuser?.ordersFetched.map((order) => (
-                    <Link className="submission-item" to={ROUTES.STORE_ORDERS + "/" + order._id}>
-                      {moment.unix(order.order_date).format('LL')} - {order.order_title}
-                    </Link>
-                  ))
-                  :
-                  'Loading'
-
-                }
-
-                </div>
-
-              </div>
-
-            </div>
-
           </div>
 
         </div>

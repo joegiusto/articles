@@ -352,7 +352,7 @@ class HomePageFour extends Component {
                 <div className="tile-update"></div>
               </div>
 
-              <Link to={ROUTES.SETTINGS}>
+              <Link to={ROUTES.SETTINGS_ACCOUNT}>
                 <div className="tile-content">
 
                   <div className="icons">

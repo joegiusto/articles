@@ -245,7 +245,7 @@ function CheckoutForm(props) {
         {/* Show a success message upon completion */}
         <p className={succeeded ? "result-message" : "result-message d-none"}>
           Payment succeeded, see the result in your
-          <Link to={ROUTES.SETTINGS}>{" "}Account</Link>
+          <Link to={ROUTES.SETTINGS_ACCOUNT}>{" "}Account</Link>
           {/* <a
             href={`https://dashboard.stripe.com/test/payments`}
             target="_"

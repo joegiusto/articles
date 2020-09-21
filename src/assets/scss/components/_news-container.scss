@@ -1777,7 +1777,7 @@ section.frontpage-section {
 
         .content {
           height: 300px;
-          margin-top: 1rem;
+          // margin-top: 1rem;
         }
 
         @include media-breakpoint-up(md) {
@@ -1835,8 +1835,16 @@ section.frontpage-section {
           background-color: $issue-color;
         }
 
-        .bar, .date, .update {
+        .bar, .date, .update, .subscribe {
           background-color: $issue-color; 
+        }
+
+        .subscribed {
+          background-color: rgba($issue-color, 0.5);
+
+          .btn {
+            opacity: 0.75;
+          }
         }
 
         .tagline { 
@@ -1860,29 +1868,6 @@ section.frontpage-section {
         }
 
       } 
-
-      .types {
-        display: flex;
-        justify-content: start;
-        margin-bottom: 1.5rem;
-
-        .type-selection {
-          cursor: pointer;
-          padding: 0.20rem 0.5rem;
-          background-color: rgb(226, 226, 226);
-          border-radius: 10px;
-          box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.3);
-
-          &.active {
-            background-color: $issue-color;
-            color: white;
-          }
-
-          &:first-child {
-            margin-right: 0.5rem;
-          }
-        }
-      }
 
       .swiper-container {
         padding-bottom: 2rem;
@@ -1938,10 +1923,13 @@ section.frontpage-section {
             background-color: rgba(73, 80, 87, 0.5);
             opacity: 1;
           }
+          .subscribe {
+            transform: translateX(0px);
+          }
         }
 
         .date {
-          z-index: 10;
+          z-index: 1;
           position: absolute;
           left: 50%;
           top: 0rem;
@@ -1960,21 +1948,68 @@ section.frontpage-section {
           }
         }
 
+        .subscribe-container {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 50px;
+          overflow: hidden;
+        }
+        
+        .subscribe {
+          z-index: 2;
+          position: absolute;
+          right: 0;
+          top: 0rem;
+          font-size: 1rem;
+          transition-duration: 200ms;
+          // background-color: rgb(124, 101, 101);
+          padding: 0.25rem;
+          line-height: 1rem;
+          width: 125px;
+          border-radius: 5px;
+          border-top-right-radius: 0px;
+          border-bottom-right-radius: 0px;
+          transform: translateX(91px);
+          color: black;
+
+          display: flex;
+          // justify-content: center;
+          align-items: center;
+
+          i {
+            // position: absolute;
+            // left: 0;
+            // top: 0;
+            margin-right: .35rem!important;
+            margin-left: .20rem!important;
+            font-size: 1.5rem;
+          }
+
+          .btn {
+            margin-left: 0.5rem;
+          }
+        }
+
         .update {
           // background-color: white;
           position: absolute;
           bottom: 0px;
-          left: 0%;
+          left: 50%;
           // transform: translateX(-50%);
           padding: 0.1rem 0.25rem;
           z-index: 5;
           color: black;
+          border-radius: 10px;
           font-family: brandon-grotesque, sans-serif;
           font-weight: 900;
+          transform: translateX(-50%) translateY(-50%);
+          border: 2px solid #000;
         }
 
         .title {
-          z-index: 10;
+          z-index: 1;
           position: absolute;
           width: 100%;
           text-align: center;
@@ -1984,7 +2019,7 @@ section.frontpage-section {
           font-style: normal;
           font-weight: 900;
           font-size: 1.4rem;
-          padding-top: 1.5rem;
+          padding-top: 2rem;
 
           @include media-breakpoint-down(md) {
             padding-top: 2rem;
@@ -2033,6 +2068,19 @@ section.frontpage-section {
           font-size: 13px;
           transform: translateY(200px);
           transition-duration: 500ms;
+          padding-top: 0.75rem;
+
+          .tags {
+            position: absolute;
+            top: 0;
+            transform: translateY(-50%);
+
+            .tag {
+              &:not(:first-child) {
+                margin-left: 0.25rem;
+              }
+            }
+          }
         }
       }
 
@@ -2086,6 +2134,53 @@ section.frontpage-section {
     .fas {
       cursor: pointer;
     }
+  }
+}
+
+.issue-view-controls {
+  display: flex;
+  justify-content: start;
+  margin-bottom: 1rem;
+
+  .type-selection {
+    cursor: pointer;
+    padding: 0.20rem 0.5rem;
+    background-color: rgb(226, 226, 226);
+    border-radius: 5px;
+    border: 2px solid rgba(87, 87, 87, 0.5);
+    box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.3);
+    font-family: brandon-grotesque, sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 1.25rem;
+
+    &.active {
+      background-color: $issue-color;
+      color: rgb(0, 0, 0);
+    }
+
+    &:first-child {
+      margin-right: 0.5rem;
+    }
+  }
+}
+
+.sign-up-alert {
+  background-color: white;
+  border: 2px solid #000;
+  box-shadow: 4px 4px 0px 0px #000;
+  width: 100%;
+  padding: 0.75rem;
+
+  .title {
+    font-family: brandon-grotesque, sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 1.5rem;
+  }
+
+  @include media-breakpoint-up(md) {
+    max-width: 300px;
   }
 }
 

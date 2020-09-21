@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import moment from 'moment'
 import { Link } from 'react-router-dom';
 
-import { NewsCard } from '../index'
+// import { NewsCard } from '../index'
+import NewsCard from '../NewsCard'
 import * as ROUTES from '../../../constants/routes'
 import { toggleUserSubscriptions, filterIssuesDateType } from '../../../actions/siteActions'
 
@@ -13,6 +14,7 @@ class IssuesClass extends Component {
 
     this.state = {
       scrollPosition: 0,
+      issueSort: 'all'
     }
   }
 
@@ -64,7 +66,7 @@ class IssuesClass extends Component {
     }
 
     return (
-      <section className="issues-section issues-page text-center">
+      <section className="issues-section issues-page">
 
         <div className="issues-head d-none">
           <h1 className="title">Issues</h1>
@@ -90,20 +92,54 @@ class IssuesClass extends Component {
 
         <div className="news-static mb-4">
 
+          <div className="issue-view-controls">
+            {/* <div onClick={() => this.setState({issueSort: 'all'})} className={"type-selection " + (this.state.issueSort === 'all' ? 'active' : '') }>All</div> */}
+            {/* <div onClick={() => this.setState({issueSort: 'user'})} className={"type-selection " + (this.state.issueSort === 'user' ? 'active' : '') }>Subscriptions</div> */}
+            <div onClick={() => this.props.toggleUserSubscriptions()} className={"type-selection " + (!this.props.site.userSubscriptions  ? 'active' : '') }>All</div>
+            <div onClick={() => this.props.toggleUserSubscriptions()} className={"type-selection " + (this.props.site.userSubscriptions  ? 'active' : '') }>Subscriptions</div>
+          </div>
+
+          <div className="issue-date-contorls">
+            
+          </div>
+
           <div className="news-preview-container issue">
+
+            {this.props.site.userSubscriptions && !this.props.isAuth ? 
+              <div className="sign-up-alert">
+
+                <div className="title">Account Feature</div>
+
+                <div className="text">To subscribe to issues and stay up to date about the news you care about create an account!</div>
+
+                <button className="btn btn-articles-light mt-2">
+                  Sign Up
+                </button>
+
+                <small className="d-block mt-2">Already a member? Sign In</small>
+
+              </div>
+              :
+              null
+            }
 
             {
             this.props.site.userSubscriptions ? this.props.user_subscriptions?.map((document, i) => (
-              <div>
-                {/* {moment(document.last_update).format("LLL")}
-                {moment(document.lastRead).format("LLL")}
-                {moment(document.last_update).isSameOrAfter(document.lastRead) ? 'True' : 'False'} */}
-                <NewsCard key={i} hasUpdate={ moment(document.last_update).isSameOrAfter(document.lastRead) } document={document}/>
-              </div>
+              <NewsCard 
+                key={i} 
+                hasUpdate={ moment(document.last_update).isSameOrAfter(document.lastRead) } 
+                isSub={this.props.user_subscriptions?.filter(sub => sub._id === document._id).length > 0}
+                document={document}
+              />
             ))
             :
             (this.props.issues.issues.map((document, i) => (
-              <NewsCard key={i} document={document}/>
+              <NewsCard 
+                key={i}
+                hasUpdate={ moment(document.last_update).isSameOrAfter(document.lastRead) } 
+                isSub={this.props.user_subscriptions?.filter(sub => sub._id === document._id).length > 0}
+                document={document}
+              />
             )))
             }
 

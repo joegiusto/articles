@@ -6,8 +6,6 @@ import * as ROUTES from '../../../constants/routes'
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 
-// import { withFirebase } from '../../Firebase';
-
 class Issue extends React.Component {
   constructor(props) {
     super(props);

@@ -7,7 +7,11 @@ export const SIGN_IN = '/signin';
 
 // Account Creation
 export const OUTSET = '/outset';
-export const SETTINGS = '/settings';
+
+// Settings
+export const SETTINGS_ACCOUNT = '/settings/account';
+export const SETTINGS_SUBSCRIPTION = '/settings/subscription';
+export const SETTINGS_BILLING = '/settings/billing';
 
 // Home
 export const HOME = '/home';

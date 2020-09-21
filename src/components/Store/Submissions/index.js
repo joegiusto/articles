@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import axios from 'axios'
 // import { connect } from 'react-redux';
 // import { compose } from 'recompose';
-// import { withAuthorizationHide } from '../Session';
 import * as ROUTES from '../../../constants/routes';
 import { Switch, Route, Link } from 'react-router-dom';
 import Countdown from 'react-countdown-now';

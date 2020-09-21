@@ -171,7 +171,9 @@ class AppBase extends Component {
   
               <Route path={ROUTES.OUTSET} component={OutsetPage} />
   
-              <PrivateRoute path={ROUTES.SETTINGS} component={SettingsPage} />
+              <PrivateRoute path={ROUTES.SETTINGS_ACCOUNT} component={SettingsPage} />
+              <PrivateRoute path={ROUTES.SETTINGS_SUBSCRIPTION} component={SettingsPage} />
+              <PrivateRoute path={ROUTES.SETTINGS_BILLING} component={SettingsPage} />
               
               <Route exact path={ROUTES.HOME} component={HomePage} />
               <Route path={ROUTES.HOME_OLD} component={HomePageOld} />
