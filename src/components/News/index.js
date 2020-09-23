@@ -5,7 +5,7 @@ import axios from 'axios';
 import GoogleMapReact from 'google-map-react';
 
 // import Swiper from 'react-id-swiper';
-import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, EffectFade } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.scss'
 import 'swiper/components/navigation/navigation.scss';
@@ -41,27 +41,38 @@ import * as ROUTES from '../../constants/routes';
 import { Link, Switch, Route } from 'react-router-dom';
 
 const AnyReactComponent = ({ text }) => (
-  <div style={{
-    color: 'black', 
-    background: 'white',
-    // padding: '5px 5px',
-    // border: '5px solid #fff',
-    display: 'inline-flex',
-    textAlign: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '0.25rem',
-    // borderLeftColor: '#ffc8c8',
-    // borderTopColor: '#ffc8c8',
-    // borderBottomColor: '#F5F5DC',
-    // borderRightColor: '#F5F5DC',
-    // borderRadius: '100%',
-    transform: 'translate(-50%, -50%)',
-    // boxShadow: '0px 0px 1px 3px rgba(0, 0, 0, 0.5)'
-    // borderRadius: '10px'
-  }}>
-    {/* <img src="https://www.logodesignlove.com/images/monograms/tesla-symbol.jpg" height="30px" alt=""/> */}
-    <span>{text}</span>
+  <div>
+    
+    <div style={{
+      color: 'red', 
+      display: 'inline-flex',
+      textAlign: 'center',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '0.25rem',
+      marginRight: '0rem',
+      fontSize: '1rem',
+      transform: 'translate(-50%, -50%)',
+    }}>
+      <i class="fas fa-map-marker-alt"></i>
+    </div>
+
+    <div style={{
+      color: 'black',
+      backgroundColor: 'white', 
+      display: 'inline-flex',
+      textAlign: 'center',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '0.1rem 0rem',
+      borderRadius: '5px',
+      marginTop: '0px',
+      width: '100px',
+      marginRight: '0rem',
+      fontSize: '0.6rem',
+      transform: 'translate(-50%, -50%)',
+    }}>{text}</div>
+
   </div>
 );
 
@@ -89,7 +100,7 @@ class SimpleMap extends React.Component {
 
   static defaultProps = {
     center: {lat: 37.09, lng: -95.71},
-    zoom: -1,
+    zoom: 10,
     lat: 37.09, 
     lng: -95.71
     // bootstrapURLKeys: { key: '565403139080-i42ucf0miotmvqobitbsd35f92pek539.apps.googleusercontent.com' }
@@ -101,11 +112,15 @@ class SimpleMap extends React.Component {
       bootstrapURLKeys={{ key: 'AIzaSyAKmyGIU1IJo_54kahuds7huxuoEyZF-68' }}
       center={{lat: this.props.lat, lng: this.props.lng}}
       defaultZoom={this.props.zoom}
+      options={{
+        fullscreenControl: false,
+        // zoomControl: false
+      }}
     >
       <AnyReactComponent 
         lat={this.props.lat} 
         lng={this.props.lng} 
-        text={'Tesla'} 
+        text={this.props.text} 
       />
 
     </GoogleMapReact>
@@ -113,7 +128,7 @@ class SimpleMap extends React.Component {
   }
 }
 
-SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, EffectFade]);
 
 // const transactions = 
 
@@ -359,8 +374,6 @@ function SearchHead(props) {
   )
 }
 
-
-
 class RecentSliders extends Component {
   constructor(props) {
     super(props);
@@ -594,16 +607,22 @@ class Frontpage extends Component {
           // Tesla Factory Austin
           lat: 30.267153,
           lng: -97.743057,
+          text: 'Austin, TX',
+          url: ''
         },
         {
           // Meet Cybertruck
-          lat: 37.396380,
-          lng: -122.152090,
+          lat: 33.921425,
+          lng: -118.329995,
+          text: 'Tesla Design Center',
+          url: ''
         },
         {
           // Jeffery Epstein Arrested
           lat: 40.654098,
           lng: -74.013238,
+          text: 'Metropolitan Correctional Center',
+          url: ''
         },
       ],
 
@@ -685,24 +704,12 @@ class Frontpage extends Component {
       spaceBetween: 10,
       slidesPerView: 1,
       // slidesPerGroup: 1,
-      // navigation: true,
+      navigation: {
+        nextEl: '.fa-forward',
+        prevEl: '.fa-backward',
+      },
       loop: true,
       pagination: true,
-      
-      locations: [
-        {
-          lat: 40.654098,
-          lng: -74.013238,
-        },
-        {
-          lat: 30.293831,
-          lng: 97.732916,
-        },
-        {
-          lat: 37.3946474,
-          lng: 122.15014478,
-        },
-      ],
 
       onSlideChange: (swiper) => {
         console.log(`slide change ${swiper.realIndex}`)
@@ -726,9 +733,23 @@ class Frontpage extends Component {
 
               <div className="map">
 
+                <div className="beta-warning">WIP</div>
+
+                <div className="zoom-controls">
+
+                  <div className="zoom-in">
+                    <i class="fas fa-plus mr-0"></i>
+                  </div>
+
+                  <div className="zoom-out">
+                    <i class="fas fa-minus mr-0"></i>
+                  </div>
+                </div>
+
                 <SimpleMap 
                   lat={this.state.locations[this.state.trending.slide].lat} 
                   lng={this.state.locations[this.state.trending.slide].lng}
+                  text={this.state.locations[this.state.trending.slide].text}
                 />
 
               </div>
@@ -757,13 +778,19 @@ class Frontpage extends Component {
                 <div className="title">Trending</div>
   
                 <Swiper
+                  // effect="fade"
                   {...swiper_settings}
                 >
   
                   {/* See slots https://swiperjs.com/react/ */}
                   <span slot="container-start">
-  
+                
                   </span>
+
+                  <div className="controls">
+                    <i className="swiper-button-prev fas fa-backward"></i>
+                    <i className="swiper-button-next fas fa-forward"></i>
+                  </div>
   
                   <SwiperSlide>
                     <div className="trending-card">
