@@ -1,12 +1,12 @@
 const moment = require('moment');
 var ObjectId = require('mongodb').ObjectId; 
 
-module.exports = (app, db) => {
-  app.post('/api/outsetUpdate', (req, res) => {
+module.exports = (app, db, passport) => {
+  app.post('/api/outsetUpdate', passport.authenticate('jwt', {session: false}), (req, res) => {
 
     console.log(`Call to /api/outsetUpdate made at ${new Date()}`);
 
-    const o_id = new ObjectId(req.body.user);
+    const o_id = new ObjectId(req.user._id);
 
     var outset = req.body.outsetState;
 
@@ -57,6 +57,5 @@ module.exports = (app, db) => {
       return res.send(result);
     });
 
-    });
-
+  });
 } 

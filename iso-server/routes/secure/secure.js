@@ -23,9 +23,9 @@ module.exports = (app, db) => {
   
   app.post('/api/secure/getUserDetails', passport.authenticate('jwt', {session: false}), (req, res) => {
     
-    console.log(`Call to /api/getUserDetails made here at ${new Date()} by user ${req.body.user}`);
+    console.log(`Call to /api/getUserDetails made here at ${new Date()} by user ${req.user._id}`);
       let data = {};
-      var o_id = new ObjectId(req.body.user);
+      var o_id = new ObjectId(req.user._id);
       // let justNews = []
 
       db.collection("articles_users").findOne( o_id, function(err, result) {
@@ -37,14 +37,14 @@ module.exports = (app, db) => {
         data.user.submissionsFetched = [];
         data.user.subscriptionsFetched = [];
 
-        db.collection("revenues_clothing").find({user_id: req.body.user}).toArray(function(err, result) {
+        db.collection("revenues_clothing").find({user_id: req.user._id}).toArray(function(err, result) {
           if (err) throw err;
           // console.log(`Call to /api/getUserDetails done`)
           // console.log(result);
           data.user.ordersFetched = result
           // return res.send(data);
 
-          db.collection("articles_submissions").find({user_id: req.body.user}).toArray(function(err, result) {
+          db.collection("articles_submissions").find({user_id: req.user._id}).toArray(function(err, result) {
             if (err) throw err;
             data.user.submissionsFetched = result;
 
@@ -95,11 +95,11 @@ module.exports = (app, db) => {
     console.log(`Call to /api/updateUserDetails made at ${new Date()}`);
       
       var myobj = req.body.user_details;
-      var o_id = new ObjectId(req.body.user);
+      var o_id = new ObjectId(req.user._id);
 
       console.log(myobj);
 
-      if (req.body.user_details === undefined || req.body.user === undefined) {
+      if (req.user === undefined || req.user._id === undefined) {
         return res.send("user_details and user are required");
       }
   
@@ -136,7 +136,7 @@ module.exports = (app, db) => {
 
       console.log(req.user._id);
 
-      // if (req.body.user_details === undefined || req.body.user === undefined) {
+      // if ( req.body.user_details === undefined ) {
       //   return res.send("user_details and user are required");
       // }
   
@@ -184,11 +184,13 @@ module.exports = (app, db) => {
   });
 
   app.post('/api/secure/getUsers', passport.authenticate('jwt', {session: false}), (req, res) => {
+
+    needAdmin(req, res);
     
-    console.log(`Call to /api/getUsers made here at ${new Date()} by user ${req.body.user}`);
+    console.log(`Call to /api/getUsers made here at ${new Date()} by user ${req.user._id}`);
     let data = {};
     
-    db.collection("articles_users").find({user_id: req.body.user}).toArray(function(err, result) {
+    db.collection("articles_users").find().toArray(function(err, result) {
       if (err) throw err;
 
       data.users = result
@@ -202,9 +204,9 @@ module.exports = (app, db) => {
 
     needAdmin(req, res);
     
-    console.log(`Call to /api/secure/toggleRole made at ${new Date()} on user ${req.body.user} by user ${req.user._id}`);
+    console.log(`Call to /api/secure/toggleRole made at ${new Date()} on user ${req.user._id} by user ${req.user._id}`);
 
-    var o_id = new ObjectId(req.body.user);
+    var o_id = new ObjectId(req.user._id);
 
     const access = `roles.${req.body.role}`
 
@@ -568,7 +570,7 @@ module.exports = (app, db) => {
     
   });
 
-  app.post("/api/userMadePurchase", async (req, res) => {
+  app.post("/api/userMadePurchase", passport.authenticate('jwt', {session: false}), async (req, res) => {
 
     const intent = await stripe.paymentIntents.retrieve(
       req.body.payment.id
@@ -586,7 +588,7 @@ module.exports = (app, db) => {
     db.collection("revenues_clothing").updateOne({ _id: ObjectId() }, {
       $set: {
         for: 'Clothing Store Order',
-        user_id: req.body.user_id,
+        user_id: req.user._id,
         date: moment()._d,
         items: req.body.items,
         payment: {
@@ -798,8 +800,8 @@ module.exports = (app, db) => {
         {
           // $set: {
             $pull: {
-              "up": req.body.user_id,
-              "down": req.body.user_id
+              "up": req.user._id,
+              "down": req.user._id
             }
           // }
         }, 
@@ -818,10 +820,10 @@ module.exports = (app, db) => {
         {
           // $set: {
             $pull: {
-              "down": req.body.user_id
+              "down": req.user._id
             },
             $push: {
-              "up": req.body.user_id
+              "up": req.user._id
             }
           // }
         }, 
@@ -839,10 +841,10 @@ module.exports = (app, db) => {
         {
           // $set: {
             $pull: {
-              "up": req.body.user_id,
+              "up": req.user._id,
             },
             $push: {
-              "down": req.body.user_id
+              "down": req.user._id
             }
           // }
         }, 
@@ -1036,7 +1038,7 @@ module.exports = (app, db) => {
 
   app.post('/api/chatMessage', (req, res) => {
 
-    if (req.body.chat_id === '' || req.body.user_id === '' || req.body.user_id === undefined || req.body.message === '') {
+    if (req.body.chat_id === '' || req.user._id === '' || req.user._id === undefined || req.body.message === '') {
 
       console.log("should End Here")
 
@@ -1055,7 +1057,7 @@ module.exports = (app, db) => {
       {
         $push: {
           messages: {
-            sender: req.body.user_id,
+            sender: req.user._id,
             message: req.body.message,
             date: moment()._d
           }
@@ -1216,4 +1218,140 @@ module.exports = (app, db) => {
     })
 
   })
+
+  app.post('/api/getCanSubmit', passport.authenticate('jwt', {session: false}), (req, res) => {
+
+    console.log("Call to /api/getCanSubmit at " + new Date());
+
+    db.collection("articles_submissions").find({user_id: req.user._id})
+    .toArray(function(err, result) {
+      if (err) throw err;
+      return res.send(result);
+    });
+    
+  });
+
+  app.post('/api/outsetUpdate', passport.authenticate('jwt', {session: false}), (req, res) => {
+
+    console.log(`Call to /api/outsetUpdate made at ${new Date()}`);
+
+    const o_id = new ObjectId(req.user._id);
+
+    var outset = req.body.outsetState;
+
+    var correctDate = moment(outset.age).unix();
+
+    var correctSubscriptions = outset.subscriptions.map(subscription => {
+      return {
+        news_id: subscription
+      }
+    });
+
+    // console.log(correctSubscriptions);
+
+    db.collection("articles_users").updateOne({_id: o_id}, {
+      $set: {
+        first_name: outset.first_name,
+        last_name: outset.last_name,
+
+        birth_date: correctDate,
+        cell: outset.cell,
+        gender: outset.gender,
+
+        address: {
+          zip: outset.zip,
+          city: outset.city,
+          state:  outset.state
+        },
+        
+        clothing: {
+          cut: outset.clothingCut,
+          shirt: outset.shirtSize,
+          shoe: outset.shoeSize,
+        },
+
+        subscriptions: correctSubscriptions,
+
+        political: {
+          party: outset.partyAffiliation
+        },
+
+        outset: true
+        
+      }
+    }, function(err, result) {
+
+      if (err) throw err;
+
+      return res.send(result);
+    });
+
+  });
+
+  // app.post('/api/updateLastRead', passport.authenticate('jwt', {session: false}), function (req, res) {
+  //   console.log(`Call to /api/updateLastRead made at ${new Date()}`);
+
+  //   const o_id = new ObjectId(req.user._id);
+
+  //   console.log(req.user._id)
+  //   // console.log(req.body.news_id)
+
+  //   function orginResult() { 
+
+  //     return db.collection("articles_users").updateOne(
+  //       {
+  //           _id : o_id,
+  //           "subscriptions.news_id": req.user._id
+  //       },
+  //       {
+  //           $set: { 
+  //             "subscriptions.$.lastRead": new Date() 
+  //           } 
+  //       }
+  //     );
+
+  //   }
+
+  //   orginResult().then( (result) =>  { 
+  //    console.log(result.modifiedCount) 
+
+  //    if ( result.modifiedCount < 1 ) {
+
+  //     console.log("Was not there, gotta add")
+
+      
+
+  //     db.collection("articles_users").updateOne(
+  //         {
+  //             _id: o_id
+  //         },
+  //         {
+  //             $addToSet: {
+  //               "subscriptions": {
+  //                     news_id: req.body.news_id,
+  //                     lastRead: new Date()
+  //                 }
+  //             }
+  //         }
+  //     );
+
+  //     return res.send("Adding new ")
+
+  //   } else {
+  //     return res.send("Updating exist")
+  //   }
+
+  //   });
+
+
+  //   orginResult().catch(
+  //     (result) =>  {
+  //       console.log(result)
+  //     }
+  //   )
+
+  // });
+
+  require('./routes/updateLastRead')(app, db, passport);
+  require('./routes/outsetUpdate')(app, db, passport);
 } 

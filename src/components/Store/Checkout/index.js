@@ -14,6 +14,7 @@ import CheckoutPageItem from './CheckoutPageItem';
 import * as ROUTES from '../../../constants/routes';
 import * as KEYS from '../../../constants/public_keys';
 import { setUserLoading } from 'actions/authActions';
+import { setUserDetails } from "../../../actions/authActions";
 
 const stripePromise = loadStripe(KEYS.STRIPE_PUBLIC_KEY);
 
@@ -296,6 +297,9 @@ const CheckoutForm = (props) => {
         props.clearExpenses();
         userProductsToServer();
       })
+      // .then(
+      //   props.setUserDetails()
+      // )
       .catch(function (error) {
         console.log(error);
       });
@@ -661,5 +665,5 @@ const mapStateToProps = (state) => {
 // const CheckoutPageNewConnected = connect(mapStateToProps)(CheckoutForm);
 
 // export default CheckoutPage;
-const Test = connect(mapStateToProps, { removeExpense, clearExpenses })(CheckoutForm);
+const Test = connect(mapStateToProps, { removeExpense, clearExpenses, setUserDetails })(CheckoutForm);
 export default connect(mapStateToProps, { removeExpense })(CheckoutPage);

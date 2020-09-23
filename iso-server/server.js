@@ -115,7 +115,6 @@ function connectWithRetryMongo() {
     require('./routes/getNewsByTag')(app, db);
     require('./routes/getNews')(app, db);
     require('./routes/getNewsTags')(app, db);
-    require('./routes/outsetUpdate')(app, db);
 
     require('./routes/getRevenue')(app, db);
     require('./routes/getExpenses')(app, db);
@@ -126,7 +125,7 @@ function connectWithRetryMongo() {
 
     require('./routes/getDonationTimeframe')(app, db);
 
-    require('./routes/updateLastRead')(app, db);
+    // require('./routes/updateLastRead')(app, db);
 
     require('./routes/getEmployees')(app, db);
 
@@ -497,9 +496,9 @@ app.post('/api/addPhoto', function (req, res) {
 
 app.post('/api/addProfilePhoto', function (req, res) {
 
-  console.log(`${req.body.user} Is trying to change their profile photo`);
+  console.log(`${req.user._id} Is trying to change their profile photo`);
 
-  if (!req.files || Object.keys(req.files).length === 0 || req.body.user === undefined || req.body.user === 'undefined') {
+  if (!req.files || Object.keys(req.files).length === 0 || req.user._id === undefined || req.user._id === 'undefined') {
     console.log("Upload failed");
     return res.status(400).send('No files were uploaded.');
   }
@@ -518,7 +517,7 @@ app.post('/api/addProfilePhoto', function (req, res) {
   .toBuffer()
   .then( data => {
 
-    var params = {Bucket: 'articles-website/profile_photos', Prefix: 'profile_photos', Key: req.body.user + '.' + sampleFile.name.split('.')[1].toLowerCase(), ContentType: "image/jpeg", Body: data, ACL: "public-read"};
+    var params = {Bucket: 'articles-website/profile_photos', Prefix: 'profile_photos', Key: req.user._id + '.' + sampleFile.name.split('.')[1].toLowerCase(), ContentType: "image/jpeg", Body: data, ACL: "public-read"};
     s3.upload(params, function(err, data) {
       console.log(err, data);
       if (err) {

@@ -1,13 +1,12 @@
 var ObjectId = require('mongodb').ObjectId; 
 
-module.exports = (app, db) => {
-  app.post('/api/updateLastRead', function (req, res) {
+module.exports = (app, db, passport) => {
+  app.post('/api/updateLastRead', passport.authenticate('jwt', {session: false}), function (req, res) {
     console.log(`Call to /api/updateLastRead made at ${new Date()}`);
 
-    const o_id = new ObjectId(req.body.user);
+    const o_id = new ObjectId(req.user._id);
 
-    console.log(req.body.user)
-    console.log(req.body.news_id)
+    console.log(req.user._id)
 
     function orginResult() { 
 

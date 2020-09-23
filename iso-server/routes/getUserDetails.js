@@ -6,12 +6,12 @@ var ObjectId = require('mongodb').ObjectId;
 // const app = express();
 // var router = require('express').Router();
 
-module.exports = (app, db, ) => {
-  app.post('/getUserDetails', (req, res) => {
+module.exports = (app, db, passport) => {
+  app.post('/getUserDetails', passport.authenticate('jwt', {session: false}), (req, res) => {
 
     ///... This file is destroyed by the way, dont try to fix it just grab the /getUserDetails post call form the main server.js file.
     
-    console.log(`Call to /api/getUserDetails made here at ${new Date()} by user ${req.body.user}`);
+    console.log(`Call to /api/getUserDetails made here at ${new Date()} by user ${req.user._id}`);
 
     // MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
 
@@ -19,7 +19,7 @@ module.exports = (app, db, ) => {
 
       // if (err) throw err;
       // var dbo = db.db("articles_data");
-      var o_id = new ObjectId(req.body.user);
+      var o_id = new ObjectId(req.user._id);
 
       let justNews = []
 
@@ -30,12 +30,12 @@ module.exports = (app, db, ) => {
         // return res.send(data);
       });
 
-      db.collection("articles_orders").find({user_id: req.body.user}).toArray(function(err, result) {
+      db.collection("articles_orders").find({user_id: req.user._id}).toArray(function(err, result) {
         if (err) throw err;
         data.orders = result
       });
 
-      db.collection("articles_submissions").find({user_id: req.body.user}).toArray(function(err, result) {
+      db.collection("articles_submissions").find({user_id: req.user._id}).toArray(function(err, result) {
         if (err) throw err;
         data.submissions = result;
         data.subscriptions = [];
