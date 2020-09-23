@@ -47,12 +47,12 @@ class NewsCard extends Component {
                 {this.props.isSub ? 
                 <>
                 <i className="far fa-check-square"></i>
-                <button className="btn btn-sm btn-articles-light">Subscribed</button>
+                <button onClick={(e) => {e.preventDefault()}} className="btn btn-sm btn-articles-light">Subscribed</button>
                 </>
                 :
                 <>
                 <i className="far fa-plus-square"></i>
-                <button className="btn btn-sm btn-articles-light">Subscribe</button>
+                <button onClick={(e) => {e.preventDefault()}} className="btn btn-sm btn-articles-light">Subscribe</button>
                 </>
                 }
               </div>

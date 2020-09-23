@@ -132,13 +132,19 @@
   border-radius: 5px;
 
   .filters {
-    padding: 1rem 2rem;
+    padding: 0.5rem 0.5rem;
     border-bottom: 2px solid #000;
     width: 100%;
     margin: 0 auto;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    flex-direction: column;
+
+    @include media-breakpoint-up(lg) {
+      flex-direction: row;
+      padding: 1rem 2rem;
+    }
 
     .filter {
       cursor: pointer;
@@ -146,6 +152,10 @@
       text-align: center;
       padding: 0.25rem;
       border: 1px solid rgba(0, 0, 0, 0.4);
+      display: flex;
+      // justify-content: center;
+      justify-content: space-between;
+      align-items: center;
 
       @include media-breakpoint-up(lg) {
 

@@ -266,11 +266,14 @@ $decal-color: #b06565;
       top: unset;
       left: 23%;
     }
+    
     .SignInContainer, .SignUpContainer, .ForgotPasswordContainer {
       width: 95%;
     }
+
     .SignInContainer {
-      left: 50%;
+      // left: 50%;
+
       .border-decal_top, .border-decal_side {
         display: none;
       }

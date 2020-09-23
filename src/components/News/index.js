@@ -2,6 +2,7 @@ import React, { Component, useState } from 'react';
 import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
 import axios from 'axios';
+import GoogleMapReact from 'google-map-react';
 
 // import Swiper from 'react-id-swiper';
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
@@ -38,6 +39,79 @@ import background from '../../assets/img/card-1.png'
 
 import * as ROUTES from '../../constants/routes';
 import { Link, Switch, Route } from 'react-router-dom';
+
+const AnyReactComponent = ({ text }) => (
+  <div style={{
+    color: 'black', 
+    background: 'white',
+    // padding: '5px 5px',
+    // border: '5px solid #fff',
+    display: 'inline-flex',
+    textAlign: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '0.25rem',
+    // borderLeftColor: '#ffc8c8',
+    // borderTopColor: '#ffc8c8',
+    // borderBottomColor: '#F5F5DC',
+    // borderRightColor: '#F5F5DC',
+    // borderRadius: '100%',
+    transform: 'translate(-50%, -50%)',
+    // boxShadow: '0px 0px 1px 3px rgba(0, 0, 0, 0.5)'
+    // borderRadius: '10px'
+  }}>
+    {/* <img src="https://www.logodesignlove.com/images/monograms/tesla-symbol.jpg" height="30px" alt=""/> */}
+    <span>{text}</span>
+  </div>
+);
+
+class SimpleMap extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      active: 0,
+      
+      places: [
+        {
+          text: 'Tesla',
+          lat: 37.090240, 
+          lng: -95.712891 
+        },
+        {
+          text: 'Protest',
+          lat: 37.090240, 
+          lng: -95.712891 
+        }
+      ]
+    }
+  }
+
+  static defaultProps = {
+    center: {lat: 37.09, lng: -95.71},
+    zoom: -1,
+    lat: 37.09, 
+    lng: -95.71
+    // bootstrapURLKeys: { key: '565403139080-i42ucf0miotmvqobitbsd35f92pek539.apps.googleusercontent.com' }
+  };
+
+  render() {
+    return (
+      <GoogleMapReact
+      bootstrapURLKeys={{ key: 'AIzaSyAKmyGIU1IJo_54kahuds7huxuoEyZF-68' }}
+      defaultCenter={this.props.center}
+      defaultZoom={this.props.zoom}
+    >
+      <AnyReactComponent 
+        lat={this.props.lat} 
+        lng={this.props.lng} 
+        text={'Tesla'} 
+      />
+
+    </GoogleMapReact>
+    );
+  }
+}
 
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
@@ -195,13 +269,17 @@ function SearchHead(props) {
 
         </div> */}
   
-        <div className="tags">
+        <div className="tags-container">
+
           <div className="type">Trending</div>
-          <div className="badge badge-articles">Coronavirus</div>
-          <div className="badge badge-articles">United Nations</div>
-          <div className="badge badge-articles">2020 Elections</div>
-          <div className="badge badge-articles">Global Warming</div>
-          <div className="badge badge-articles">Flint Michigan</div>
+
+          <div className="tags">
+            <div className="tag badge badge-articles">Coronavirus</div>
+            <div className="tag badge badge-articles">United Nations</div>
+            <div className="tag badge badge-articles">2020 Elections</div>
+            <div className="tag badge badge-articles">Global Warming</div>
+            <div className="tag badge badge-articles">Flint Michigan</div>
+          </div>
         </div>
   
       </div>
@@ -301,7 +379,7 @@ class RecentSliders extends Component {
     const swiper_settings = {
       spaceBetween: 10,
       slidesPerView: 'auto',
-      slidesPerGroup: 1,
+      // slidesPerGroup: 1,
       // navigation: true,
       scrollbar: { draggable: true },
       navigation: {
@@ -309,8 +387,10 @@ class RecentSliders extends Component {
         prevEl: '.fa-backward',
       },
 
-      onSlideChange: () => console.log('slide change'),
-      onSwiper: (swiper) => console.log(swiper),
+      // onSlideChange: () => console.log('slide change'),
+      // onSwiper: (swiper) => console.log(swiper),
+
+      
     }
 
     return (
@@ -509,6 +589,24 @@ class Frontpage extends Component {
         }
       ],
 
+      locations: [
+        {
+          // Tesla Factory Austin
+          lat: 30.267153,
+          lng: -97.743057,
+        },
+        {
+          // Meet Cybertruck
+          lat: 37.396380,
+          lng: -122.152090,
+        },
+        {
+          // Jeffery Epstein Arrested
+          lat: 40.654098,
+          lng: -74.013238,
+        },
+      ],
+
       trending: {
         items: ['5f1b2e1c5846204edc02a49a', '5e9c27cdfeb48937d0e54975', '5f173f4210bb9231f0eb7f02'],
         slide: 0
@@ -590,6 +688,21 @@ class Frontpage extends Component {
       // navigation: true,
       loop: true,
       pagination: true,
+      
+      locations: [
+        {
+          lat: 40.654098,
+          lng: -74.013238,
+        },
+        {
+          lat: 30.293831,
+          lng: 97.732916,
+        },
+        {
+          lat: 37.3946474,
+          lng: 122.15014478,
+        },
+      ],
 
       onSlideChange: (swiper) => {
         console.log(`slide change ${swiper.realIndex}`)
@@ -610,6 +723,16 @@ class Frontpage extends Component {
           <div className="content">
 
             <div className="trending-map-wrap">
+
+              <div className="map">
+
+                <SimpleMap 
+                  lat={this.state.locations[this.state.trending.slide].lat} 
+                  lng={this.state.locations[this.state.trending.slide].lng}
+                />
+
+              </div>
+
               <div className="states-heatmap">
                 <img src={statesImage} className="head-image" alt=""/>
                 <div className="live-dots">
@@ -644,6 +767,8 @@ class Frontpage extends Component {
   
                   <SwiperSlide>
                     <div className="trending-card">
+                      <div className="type story">Story</div>
+                      <div className="view btn btn-articles-light btn-sm">View</div>
                       Tesla will build its next Gigafactory near Austin, Texas
                       <div className="progress"></div>
                     </div>
@@ -651,6 +776,8 @@ class Frontpage extends Component {
   
                   <SwiperSlide>
                     <div className="trending-card">
+                      <div className="type story">Story</div>
+                      <div className="view btn btn-articles-light btn-sm">View</div>
                       Meet Cybertruck
                       <div className="progress"></div>
                     </div>
@@ -658,6 +785,8 @@ class Frontpage extends Component {
   
                   <SwiperSlide>
                     <div className="trending-card">
+                      <div className="type story">Story</div>
+                      <div className="view btn btn-articles-light btn-sm">View</div>
                       Jeffery Epstein Arrested
                       <div className="progress"></div>
                     </div>

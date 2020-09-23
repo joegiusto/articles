@@ -88,85 +88,85 @@ class Admin extends Component {
         </div>
 
         <div className="tab-content">
-          <div className="container-fluid">
+          {/* <div className="container-fluid"> */}
 
-            <Switch>
+          <Switch>
 
-              <Route path={ROUTES.ADMIN_USERS} render={() => <Users 
-                match={this.props.match} 
-                tabLocation='users' 
-                setLoaction={this.setLoaction}
-              ></Users>}/>
+            <Route path={ROUTES.ADMIN_USERS} render={() => <Users 
+              match={this.props.match} 
+              tabLocation='users' 
+              setLoaction={this.setLoaction}
+            ></Users>}/>
 
-              <Route exact path={ROUTES.ADMIN_NEWS} render={() => <News 
-                match={this.props.match} 
-                tabLocation='news' 
-                setLoaction={this.setLoaction}
-              ></News> }/>
+            <Route exact path={ROUTES.ADMIN_NEWS} render={() => <News 
+              match={this.props.match} 
+              tabLocation='news' 
+              setLoaction={this.setLoaction}
+            ></News> }/>
 
-              <Route path={ROUTES.ADMIN_NEWS_DETAILS} render={() => <News 
-                match={this.props.match} 
-                tabLocation='news' 
-                setLoaction={this.setLoaction}
-              ></News> }/>
+            <Route path={ROUTES.ADMIN_NEWS_DETAILS} render={() => <News 
+              match={this.props.match} 
+              tabLocation='news' 
+              setLoaction={this.setLoaction}
+            ></News> }/>
 
-              <Route path={ROUTES.ADMIN_PRODUCTS} render={() => <Products
-                match={this.props.match}
-                tabLocation='products'
-                setLoaction={this.setLoaction}
-              ></Products> }/>
+            <Route path={ROUTES.ADMIN_PRODUCTS} render={() => <Products
+              match={this.props.match}
+              tabLocation='products'
+              setLoaction={this.setLoaction}
+            ></Products> }/>
 
-              <Route path={ROUTES.ADMIN_SUBMISSIONS} render={() => <Submissions
-                match={this.props.match}
-                tabLocation='submissions'
-                setLoaction={this.setLoaction}
-              ></Submissions> }/>
+            <Route path={ROUTES.ADMIN_SUBMISSIONS} render={() => <Submissions
+              match={this.props.match}
+              tabLocation='submissions'
+              setLoaction={this.setLoaction}
+            ></Submissions> }/>
 
-              <Route exact path={ROUTES.ADMIN_DONATIONS} render={() => <Donations 
-                match={this.props.match}
-                tabLocation='donations'
-                setLoaction={this.setLoaction}
-                ></Donations>
-              }/>
+            <Route exact path={ROUTES.ADMIN_DONATIONS} render={() => <Donations 
+              match={this.props.match}
+              tabLocation='donations'
+              setLoaction={this.setLoaction}
+              ></Donations>
+            }/>
 
-              <Route exact path={ROUTES.ADMIN_EXPENSES} render={() => <Expenses 
-                match={this.props.match}
-                tabLocation='expenses'
-                setLoaction={this.setLoaction}
-              ></Expenses> 
-              }/>
+            <Route exact path={ROUTES.ADMIN_EXPENSES} render={() => <Expenses 
+              match={this.props.match}
+              tabLocation='expenses'
+              setLoaction={this.setLoaction}
+            ></Expenses> 
+            }/>
 
-              <Route exact path={ROUTES.ADMIN_SOCKET} render={() => <Sockets 
-                match={this.props.match}
-                tabLocation='sockets'
-                setLoaction={this.setLoaction}
-              ></Sockets> 
-              }/>
+            <Route exact path={ROUTES.ADMIN_SOCKET} render={() => <Sockets 
+              match={this.props.match}
+              tabLocation='sockets'
+              setLoaction={this.setLoaction}
+            ></Sockets> 
+            }/>
 
-              <Route exact path={ROUTES.ADMIN_REPORTS} render={() => <Reports 
-                match={this.props.match}
-                tabLocation='reports'
-                setLoaction={this.setLoaction}
-              ></Reports> 
-              }/>
+            <Route exact path={ROUTES.ADMIN_REPORTS} render={() => <Reports 
+              match={this.props.match}
+              tabLocation='reports'
+              setLoaction={this.setLoaction}
+            ></Reports> 
+            }/>
 
-              <Route exact path={ROUTES.ADMIN_ORDERS} render={() => <Orders 
-                match={this.props.match}
-                tabLocation='orders'
-                setLoaction={this.setLoaction}
-              ></Orders> 
-              }/>
+            <Route exact path={ROUTES.ADMIN_ORDERS} render={() => <Orders 
+              match={this.props.match}
+              tabLocation='orders'
+              setLoaction={this.setLoaction}
+            ></Orders> 
+            }/>
 
-              <Route exact path={ROUTES.ADMIN_ADS} render={() => <Ads 
-                match={this.props.match}
-                tabLocation='ads'
-                setLoaction={this.setLoaction}
-              ></Ads> 
-              }/>
+            <Route exact path={ROUTES.ADMIN_ADS} render={() => <Ads 
+              match={this.props.match}
+              tabLocation='ads'
+              setLoaction={this.setLoaction}
+            ></Ads> 
+            }/>
 
-            </Switch>
+          </Switch>
 
-          </div>
+          {/* </div> */}
         </div>
 
       </div>

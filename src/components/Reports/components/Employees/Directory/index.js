@@ -153,7 +153,9 @@ class EmployeePageDetails extends Component {
 
           <div className="filters noselect">
             <div onClick={() => this.setState({filter: 'stubs'})} className={"filter " + ( this.state.filter === 'stubs' ? 'active' : '' ) }>Pay Stubs</div>
-            <div onClick={() => this.setState({filter: 'commits'})} className={"filter " + ( this.state.filter === 'commits' ? 'active' : '' ) }>Commits</div>
+            <div onClick={() => this.setState({filter: 'commits'})} className={"filter " + ( this.state.filter === 'commits' ? 'active' : '' ) }>Commits<span className="badge badge-dark ml-1">Developer</span></div>
+            {/* TODO - Show news documents that were writen by this employee if they have the role of 'writer' a way to select the author inside the Admin-News Page will need to be added first FYI... */}
+            <div onClick={() => this.setState({filter: 'news'})} className={"filter " + ( this.state.filter === 'news' ? 'active' : '' ) }>News<span className="badge badge-dark ml-1">Writer</span></div>
             <div onClick={() => this.setState({filter: 'charts'})} className={"filter " + ( this.state.filter === 'charts' ? 'active' : '' ) }>Data Charts</div>
           </div>
 
@@ -217,10 +219,20 @@ class EmployeePageDetails extends Component {
             null
             }
 
+            {this.state.filter === 'news' ? 
+
+            <div className="employee-charts">
+              News articles writen by this employee will appear here once this feature is implemented.
+            </div>
+
+            :
+            null
+            }
+
             {this.state.filter === 'charts' ? 
 
             <div className="employee-charts">
-              Data Charts will appear here once this feature is done.
+              Data Charts about this employee will appear here once this feature is implemented.
             </div>
 
             :
