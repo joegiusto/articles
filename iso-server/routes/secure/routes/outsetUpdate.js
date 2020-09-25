@@ -10,7 +10,10 @@ module.exports = (app, db, passport) => {
 
     var outset = req.body.outsetState;
 
-    var correctDate = moment(outset.age).unix();
+    var correctDate = moment(outset.age).toISOString();
+
+    // console.log(correctDate)
+    // return(null);
 
     var correctSubscriptions = outset.subscriptions.map(subscription => {
       return {

@@ -379,12 +379,25 @@ class RecentSliders extends Component {
     super(props);
 
     this.state = {
-      issueSort: 'all'
+      issueSort: 'all',
+      tags: []
     }
   }
 
   componentDidMount() {
+    const self = this;
 
+    axios.get('/api/getNewsTags')
+    .then(function (response) {
+      console.log(response);
+
+      self.setState({
+        tags: response.data.tags
+      })
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   render() {
@@ -402,8 +415,6 @@ class RecentSliders extends Component {
 
       // onSlideChange: () => console.log('slide change'),
       // onSwiper: (swiper) => console.log(swiper),
-
-      
     }
 
     return (
@@ -459,8 +470,6 @@ class RecentSliders extends Component {
               </div>
 
               <div className="issue-view-controls">
-                {/* <div onClick={() => this.setState({issueSort: 'all'})} className={"type-selection " + (this.state.issueSort === 'all' ? 'active' : '') }>Subscriptions</div>
-                <div onClick={() => this.setState({issueSort: 'user'})} className={"type-selection " + (this.state.issueSort === 'user' ? 'active' : '') }>All</div> */}
                 <div onClick={() => this.props.toggleUserSubscriptions()} className={"type-selection " + (!this.props.userSubscriptions  ? 'active' : '') }>All</div>
                 <div onClick={() => this.props.toggleUserSubscriptions()} className={"type-selection " + (this.props.userSubscriptions  ? 'active' : '') }>Subscriptions</div>
               </div>
@@ -509,14 +518,6 @@ class RecentSliders extends Component {
             )))
             }
 
-            {/* {this.props.issues.issues.map((story) => (
-
-              <SwiperSlide>
-                <NewsCard document={story}/>
-              </SwiperSlide>
-
-            ))} */}
-
           </Swiper>
   
         </div>
@@ -551,6 +552,25 @@ class RecentSliders extends Component {
           </Swiper>
   
         </div>
+
+        <div className="news-preview-container tags">
+
+          <div className="frontpage-section-header">
+            <h5>Tags</h5>
+          </div>
+
+          <div className="tags">
+
+            {this.state.tags.map(tag => 
+              <div className="tag">
+                <h3>{tag.tag_name}</h3>
+              </div>
+            )}
+
+          </div>
+
+        </div>
+
       </div>
     )
   }
