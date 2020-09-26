@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import * as ROUTES from '../../constants/routes';
 import Users from './components/Users';
 import News from './components/News/';
+import Proposals from './components/Proposals';
 import Products from './components/Products'
 import Submissions from './components/Submissions'
 import Donations from './components/Donations'
@@ -75,6 +76,7 @@ class Admin extends Component {
 
             <Link to={ROUTES.ADMIN_USERS}><span className={"tab" + (this.state.tab === 'users' ? ' active' : '')}>Users</span></Link>
             <Link to={ROUTES.ADMIN_NEWS}><span className={"tab" + (this.state.tab === 'news' ? ' active' : '')}>News</span></Link>
+            <Link to={ROUTES.ADMIN_PROPOSALS}><span className={"tab" + (this.state.tab === 'proposals' ? ' active' : '')}>Proposals</span></Link>
             <Link to={ROUTES.ADMIN_PRODUCTS}><span className={"tab" + (this.state.tab === 'products' ? ' active' : '')}>Products</span></Link>
             <Link to={ROUTES.ADMIN_SUBMISSIONS}><span className={"tab" + (this.state.tab === 'submissions' ? ' active' : '')}>Submissions</span></Link>
             <Link to={ROUTES.ADMIN_DONATIONS}><span className={"tab" + (this.state.tab === 'donations' ? ' active' : '')}>Donations</span></Link>
@@ -103,6 +105,12 @@ class Admin extends Component {
               tabLocation='news' 
               setLoaction={this.setLoaction}
             ></News> }/>
+
+            <Route exact path={ROUTES.ADMIN_PROPOSALS} render={() => <Proposals 
+              match={this.props.match} 
+              tabLocation='proposals' 
+              setLoaction={this.setLoaction}
+            ></Proposals> }/>
 
             <Route path={ROUTES.ADMIN_NEWS_DETAILS} render={() => <News 
               match={this.props.match} 

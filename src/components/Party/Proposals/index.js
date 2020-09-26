@@ -1,87 +1,10 @@
 import React from 'react';
 import { Helmet } from "react-helmet";
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 import * as ROUTES from '../../../constants/routes'
 import Component from 'react-live-clock/lib/Component';
-
-const proposals = {
-  social: [
-    {
-      title: 'Revise The Pledge Of Alligence',
-      url: 'revise-the-pledge-of-alligence',
-      description: "Revert the pledge back to its creators vision",
-      content: ""
-    },
-    {
-      title: 'Legalize Marijuana',
-      url: 'legalize-marijuana',
-      description: "Mariuana and alcohol equal availability"
-    },
-    {
-      title: 'Expand Psychedelic Studys',
-      url: 'expand-psychedelic-studys',
-      description: "Expand psychedelic studys and trials"
-    },
-    {
-      title: 'Lower Charges For Psychedelic Possession',
-      url: 'legalize-marijuana',
-      description: "Study is still needed, jail is not"
-    },
-    {
-      title: 'Universal Emergency Number',
-      url: 'universal-emergency-number',
-      description: "One number for everyone, anywhere"
-    }
-  ],
-  eduacation: [
-    {
-      title: 'Class Size Reduction',
-      url: 'class-size-reduction',
-      description: 'Limit of 1-20 teacher/student for core subjects'
-    },
-    {
-      title: 'Public School Lunch Reform',
-      url: 'school-lunch-reform',
-      description: 'Better lunch, for all'
-    },
-  ],
-  financial: [
-    {
-      title: 'NASA Funding',
-      url: 'nasa-funding',
-      description: 'Set NASA budget to 2% (min) of Budget',
-      cut: "Federal Budeget"
-    },
-    {
-      title: 'Tidy Up Tax Loopholes',
-      url: 'tax-loopholes',
-      description: 'Provide patches to common abused loopholes'
-    },
-  ],
-  fundamental: [
-    {
-      title: 'Mental Health Equality In Healthcare',
-      url: 'mental-health-equality',
-      description: 'Fair treatment of mental issues'
-    },
-    {
-      title: 'Federal Gun Laws',
-      url: 'federal-gun-laws',
-      description: 'Standard to protect people and gun owners'
-    },
-    {
-      title: 'Purto Rico Statehood',
-      url: 'purto-rico-statehood',
-      description: 'Allow Purto Rico to join the union'
-    },
-    {
-      title: 'Create Secure Mail/Online Voting',
-      url: 'vote-by-mail',
-      description: 'Allow citizens to vote online and by mail'
-    }
-  ]
-}
 
 class Proposals extends Component {
   constructor(props) {
@@ -89,6 +12,7 @@ class Proposals extends Component {
 
     this.state = {
       filter: 'All',
+      proposals: [],
 
       senateSeats: 100,
       ourSenateSeats: 0,
@@ -105,7 +29,19 @@ class Proposals extends Component {
   }
 
   componentDidMount() {
+    const self = this;
 
+    axios.get('/api/getProposals')
+    .then(function (response) {
+      console.log(response);
+
+      self.setState({
+        proposals: response.data
+      })
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   render(props) {
@@ -175,11 +111,13 @@ class Proposals extends Component {
               Social
             </div>
 
-            {proposals.social.map((proposal, i) => (
-              <Proposal
-                proposal={proposal}
-              />
-            ))}
+            {
+              this.state.proposals.filter(proposal => proposal.type === 'social').map(proposal => 
+                <Proposal
+                  proposal={proposal}
+                />
+              )
+            }
 
           </div>
 
@@ -190,11 +128,13 @@ class Proposals extends Component {
               Financial
             </div>
 
-            {proposals.financial.map((proposal, i) => (
-              <Proposal
-                proposal={proposal}
-              />
-            ))}
+            {
+              this.state.proposals.filter(proposal => proposal.type === 'financial').map(proposal => 
+                <Proposal
+                  proposal={proposal}
+                />
+              )
+            }
 
           </div>
 
@@ -205,11 +145,13 @@ class Proposals extends Component {
               Fundamental
             </div>
 
-            {proposals.fundamental.map((proposal, i) => (
-              <Proposal
-                proposal={proposal}
-              />
-            ))}
+            {
+              this.state.proposals.filter(proposal => proposal.type === 'fundamental').map(proposal => 
+                <Proposal
+                  proposal={proposal}
+                />
+              )
+            }
 
           </div>
 
@@ -220,11 +162,13 @@ class Proposals extends Component {
               Eduacation
             </div>
 
-            {proposals.eduacation.map((proposal, i) => (
-              <Proposal
-                proposal={proposal}
-              />
-            ))}
+            {
+              this.state.proposals.filter(proposal => proposal.type === 'eduacation').map(proposal => 
+                <Proposal
+                  proposal={proposal}
+                />
+              )
+            }
 
           </div>
 

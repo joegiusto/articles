@@ -56,3 +56,26 @@ export const updateSubscriptionToIssue = subscription => dispatch => {
   })
   
 };
+
+export const removeSubscription = subscription_id => dispatch => {
+
+  console.log(`Removing ${subscription_id}`);
+
+  dispatch({
+    type: 'REMOVE_SUBSCRIPTION',
+    subscription_id
+  })
+  
+};
+
+export const addSubscription = subscription => dispatch => {
+
+  console.log(`Adding subscription`);
+  console.log(subscription);
+
+  dispatch({
+    type: 'ADD_SUBSCRIPTION',
+    subscription
+  })
+  
+};

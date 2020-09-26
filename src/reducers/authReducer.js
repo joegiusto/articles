@@ -54,11 +54,6 @@ export default function(state = initialState, action) {
       } else {
         console.log("Gotta add")
       }
-      
-      
-
-      
-      
 
       return {
         ...state,
@@ -66,6 +61,35 @@ export default function(state = initialState, action) {
           ...state.user_details,
           subscriptions: [ ...newSubscriptions ],
           subscriptionsFetched: [ ...newSubscriptionsFetched ]
+        }
+      }
+    case 'REMOVE_SUBSCRIPTION':
+      return {
+        ...state,
+        user_details: {
+          ...state.user_details,
+          subscriptions: state.user_details.subscriptions.filter( subscription => subscription.news_id !== action.subscription_id),
+          subscriptionsFetched: state.user_details.subscriptionsFetched.filter( subscription => subscription._id !== action.subscription_id),
+        }
+      }
+    case 'ADD_SUBSCRIPTION':
+      return {
+
+        ...state,
+
+        user_details: {
+          ...state.user_details,
+
+          subscriptions: [
+            ...state.user_details.subscriptions,
+            {
+              news_id: action.subscription._id,
+            }
+          ],
+          subscriptionsFetched: [
+            ...state.user_details.subscriptionsFetched,
+            action.subscription
+          ],
         }
       }
     case USER_LOADING:

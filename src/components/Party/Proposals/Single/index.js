@@ -128,7 +128,10 @@ class Proposal extends Component {
 
             <div className="proposal-body mt-3 mb-5">
 
-              {proposalLoading ? <LoadingBlock></LoadingBlock> : null}
+              {proposalLoading ? <LoadingBlock></LoadingBlock> : 
+              
+              <p>{proposal.content}</p>
+              }
 
               {this.props.match.params.id === "revise-the-pledge-of-alligence" ? 
                 <>

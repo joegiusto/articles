@@ -1,7 +1,14 @@
 import React, { Component, useState } from 'react';
 import moment from 'moment';
-import * as ROUTES from '../../constants/routes';
+
+
 import { Link, Switch, Route } from 'react-router-dom';
+
+import * as ROUTES from '../../constants/routes';
+
+import { connect } from 'react-redux';
+import { removeSubscription, addSubscription } from "../../actions/siteActions";
+import News from '.';
 
 class NewsCard extends Component {
   constructor(props) {
@@ -47,12 +54,12 @@ class NewsCard extends Component {
                 {this.props.isSub ? 
                 <>
                 <i className="far fa-check-square"></i>
-                <button onClick={(e) => {e.preventDefault()}} className="btn btn-sm btn-articles-light">Subscribed</button>
+                <button onClick={(e) => e.preventDefault() + this.props.removeSubscription(this.props.document._id)} className="btn btn-sm btn-articles-light">Subscribed</button>
                 </>
                 :
                 <>
                 <i className="far fa-plus-square"></i>
-                <button onClick={(e) => {e.preventDefault()}} className="btn btn-sm btn-articles-light">Subscribe</button>
+                <button onClick={(e) => e.preventDefault() + this.props.addSubscription(this.props.document)} className="btn btn-sm btn-articles-light">Subscribe</button>
                 </>
                 }
               </div>
@@ -88,7 +95,7 @@ class NewsCard extends Component {
           </div> */}
           <div className="tagline">
             <div className="tags">
-              {this.props.document?.news_tags.length > 0 ?
+              {this.props.document?.news_tags?.length > 0 ?
               this.props.document?.news_tags?.map((tag) => 
                 <div className="tag badge badge-light">{tag.tag_name}</div>
               )
@@ -108,4 +115,15 @@ class NewsCard extends Component {
   }
 }
 
-export default NewsCard;
+// export default NewsCard;
+
+const mapStateToProps = state => ({
+  // auth: state.auth,
+  // errors: state.errors,
+  // site: state.site
+});
+
+export default connect(
+  mapStateToProps,
+  { removeSubscription, addSubscription }
+)(NewsCard);

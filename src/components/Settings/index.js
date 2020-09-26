@@ -1,6 +1,6 @@
 import React, { Component, useState, useEffect, useRef } from 'react';
 import { Helmet } from "react-helmet";
-import { Link } from 'react-router-dom';
+import { Switch, Route, Link } from 'react-router-dom';
 import { connect } from "react-redux";
 import axios from 'axios';
 import moment from 'moment';
@@ -19,6 +19,10 @@ import {
 import * as ROUTES from '../../constants/routes';
 import { logoutUser } from "../../actions/authActions";
 import { setUserDetails } from "../../actions/authActions";
+
+import Account from './Account'
+import Subscription from './Subscription'
+import Billing from './Billing'
 
 import * as KEYS from '../../constants/public_keys';
 const stripePromise = loadStripe(KEYS.STRIPE_PUBLIC_KEY);
@@ -1021,6 +1025,32 @@ class Settings extends Component {
               this.setState({settingsTab: 'Billing'})}
             } className={"btn btn-articles-light " + (this.state.settingsTab === 'Billing' ? 'alt' : '')}>Billing</div>
             
+          </div>
+
+          <div className="content">
+
+          <Switch>
+
+            {/* <Route path={ROUTES.SETTINGS_ACCOUNT} render={() => <Account 
+              match={this.props.match} 
+              tabLocation='account' 
+              setLoaction={this.setLoaction}
+            ></Account>}/>
+
+            <Route exact path={ROUTES.SETTINGS_SUBSCRIPTION} render={() => <Subscription 
+              match={this.props.match} 
+              tabLocation='subscription' 
+              setLoaction={this.setLoaction}
+            ></Subscription> }/>
+
+            <Route exact path={ROUTES.SETTINGS_BILLING} render={() => <Billing 
+              match={this.props.match} 
+              tabLocation='billing' 
+              setLoaction={this.setLoaction}
+            ></Billing> }/> */}
+
+          </Switch>
+          
           </div>
 
           <div className={"card membership-card " + (this.state.settingsTab !== 'Subscription' ? 'd-none' : '')}>

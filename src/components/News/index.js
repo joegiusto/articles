@@ -304,7 +304,7 @@ function SearchHead(props) {
         <div onClick={() => props.toggleWeatherOverlay()} className="extra-panel weather">
 
           {/* <div className="info">Zip: </div> */}
-          <div className="info">Zip: <span className="badge badge-light">{props.zip}</span></div>
+          <div className="info"><span className="badge badge-light">{props.zip}</span></div>
 
           <div className="background">
             {props.weatherData?.current?.is_day === 'yes' ?
@@ -338,7 +338,9 @@ function SearchHead(props) {
 
         <a href="https://www.youtube.com/channel/UCeftkiTtcniDx87GqoEmFAg" target="_blank" rel="noopener noreferrer" className="extra-panel youtube">
 
-          <div className="info">Last Upload: <span className="badge badge-light">Never</span></div>
+          <div className="info">
+            <span>Last Upload: <span className="badge badge-light">Never</span></span>
+          </div>
 
           <div className="background">
             <img src="https://turbologo.com/articles/wp-content/uploads/2019/10/youtube-logo-illustration-1280x720.jpg" alt=""/>
@@ -398,6 +400,7 @@ class RecentSliders extends Component {
     .catch(function (error) {
       console.log(error);
     });
+    
   }
 
   render() {
@@ -495,17 +498,41 @@ class RecentSliders extends Component {
             }
 
             {
-            this.props.userSubscriptions ? this.props.user_subscriptions?.map((document, i) => (
-              <SwiperSlide>
-                <NewsCard 
-                  key={i} 
-                  hasUpdate={ moment(document.last_update).isSameOrAfter(document.lastRead) } 
-                  isSub={this.props.user_subscriptions?.filter(sub => sub._id === document._id).length > 0}
-                  document={document}
-                />
-              </SwiperSlide>
-            ))
+            this.props.userSubscriptions ? 
+
+              this.props.user_subscriptions.length === 0 ? 
+
+              <div className="sign-up-alert mt-5">
+
+                <div className="title">No Subscriptions</div>
+
+                <div className="text">Sort by all issues and subscribe to ones that you find interesting.</div>
+
+                {/* <button className="btn btn-articles-light mt-2">
+                  Sign Up
+                </button> */}
+
+                {/* <small className="d-block mt-2">Already a member? Sign In</small> */}
+
+              </div>
+
+              :
+
+              this.props.user_subscriptions?.map((document, i) => (
+                
+                <SwiperSlide>
+                  <NewsCard 
+                    key={i} 
+                    hasUpdate={ moment(document.last_update).isSameOrAfter(document.lastRead) } 
+                    isSub={this.props.user_subscriptions?.filter(sub => sub._id === document._id).length > 0}
+                    document={document}
+                  />
+                </SwiperSlide>
+
+              ))
+
             :
+
             (this.props.issues.issues.map((document, i) => (
               <SwiperSlide>
                 <NewsCard 

@@ -1,37 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/scss/index.scss';
 
 import App from './components/App';
 
 import * as serviceWorker from './serviceWorker';
 
-
-import { Provider } from 'react-redux';
-
-// import {store, persistor} from './store/configureStore';
-// import {store, persistor} from './store/configureStore';
-import configureStore from './store/configureStore';
-
-import { PersistGate } from 'redux-persist/integration/react'
-
+// Passport Related
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
+
+// Redux Realted
+import { Provider } from 'react-redux';
+
+import configureStore from './store/configureStore';
+import { PersistGate } from 'redux-persist/integration/react'
+
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 import { setStories } from "./actions/stories";
 import { setMyths } from "./actions/mythsActions";
 import { setIssues } from "./actions/issues";
 import { setSubmissions } from 'actions/submissionsActions';
 
-
 const {store, persistor} = configureStore();
-
-// const store = store;
-
-// const initialState = {};
-// const store = configureStore(initialStates);
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -54,14 +46,6 @@ if (localStorage.jwtToken) {
   }
 }
 
-// store.dispatch(setStories());
-
-// console.log("Render")
-
-function Greeting(props) {
-
-}
-
 ReactDOM.render(
   <PersistGate loading={<h1>Test</h1>} persistor={persistor}>
 
@@ -70,11 +54,10 @@ ReactDOM.render(
     {store.dispatch(setIssues())}
     {store.dispatch(setSubmissions())}
 
-    {/* <Greeting/> */}
-
     <Provider store={store}>
       <App /> 
     </Provider>
+
   </PersistGate>,
 document.getElementById('root'));
 

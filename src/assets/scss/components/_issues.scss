@@ -464,6 +464,15 @@
       
     }
 
+    .proposal {
+      width: 200px;
+      height: 200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #000;
+    }
+
     .related-proposals {
       max-width: 1000px;
       
