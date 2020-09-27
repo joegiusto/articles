@@ -55,8 +55,6 @@ section.frontpage-section {
   width: 100%;
   display: flex;
   align-items: flex-start;
-  // overflow-x: hidden;
-  // flex-grow: 1;
   font-family: montserrat, sans-serif;
   font-weight: 400;
 
@@ -81,7 +79,6 @@ section.frontpage-section {
     @include media-breakpoint-up(md) {
       flex-direction: row;
       flex-wrap: nowrap;
-      // overflow: hidden;
       overflow-x: hidden;
     }
 
@@ -101,14 +98,11 @@ section.frontpage-section {
 
       .search-panel {
         flex-grow: 1;
-        // width: 40%;
-        // min-width: 400px!important;
         min-width: 350px !important;
       }
     }
 
     &.focus {
-      // height: 130px;
 
       @include media-breakpoint-down(md) {
         height: auto;
@@ -186,13 +180,6 @@ section.frontpage-section {
       }
 
       .search-panel {
-        // margin-left: 0.5rem;
-        // width: 40%;
-        // height: 100%;
-        // display: flex;
-        // justify-content: center;
-        // align-items: center;
-        // min-width: 800px!important;
         width: 40%;
         flex-grow: 0;
 
@@ -203,10 +190,7 @@ section.frontpage-section {
         }
 
         @include media-breakpoint-up(md) {
-          // width: unset;
           margin-bottom: 0!important;
-          // min-width: 800px!important;
-          // flex-grow: unset;
         }
 
         .settings {
@@ -232,7 +216,6 @@ section.frontpage-section {
       }
 
       .extra-panels {
-        // width: 100%;
         margin-left: 0rem;
 
         .extra-panel {
@@ -304,7 +287,6 @@ section.frontpage-section {
       position: relative;
       background-color: rgba(255, 255, 255, 0.75);
       border: solid 1px rgba(0, 0, 0, 0.5);
-      // border-radius: 5px;
       text-align: left;
       padding: 1rem;
       box-shadow: 2px 2px 2px $accent-color, -4px -4px 2px $base-color;
@@ -349,7 +331,6 @@ section.frontpage-section {
       } 
 
       .search {
-        // margin-bottom: 1rem;
 
         @include media-breakpoint-down(md) {
           display: none;
@@ -375,7 +356,6 @@ section.frontpage-section {
       select {
         font-size: 0.9rem;
         margin-left: 0.5rem;
-        // border-radius: 5px;
         border: 1px solid rgba(0, 0, 0, 0.4);
       }
 
@@ -442,7 +422,6 @@ section.frontpage-section {
       .tags-container {
         margin-top: 2rem;
         background-color: rgba(255, 255, 255, 0.75);
-        // border-radius: 5px;
         padding: 0.5rem;
 
         .tags {
@@ -470,16 +449,10 @@ section.frontpage-section {
   
         @include media-breakpoint-down(md) {
           margin-top: 1rem;
-          // display: none;
         }
       }
   
       &.shrink {
-        // position: absolute;
-        // right: 0;
-        // flex: 0 0 33.33333%;
-        // max-width: 33.33333%;
-        // padding: 1rem;
         display: none;
         transform: scale(0.8);
       }
@@ -501,20 +474,15 @@ section.frontpage-section {
       display: flex;
       flex-direction: column;
       flex-grow: 1;
-      // margin-top: 1rem;
       margin-left: 0.5rem;
-
       flex-direction: row;
 
       @include media-breakpoint-down(md) {
         flex-direction: row;
-        // display: none;
       }
 
       @include media-breakpoint-up(md) {
-        // margin: 0rem 1rem;
         margin-top: 0rem;
-        
       }
   
       .extra-panel {
@@ -524,8 +492,6 @@ section.frontpage-section {
         z-index: 0;
         background-color: rgba(255, 255, 255, 0);
         box-shadow: 2px 2px 2px #ffb7b7, -4px -4px 2px #f9edcd;
-        // border-radius: 5px;
-        // border: px solid #000;
         border: solid 1px rgba(0, 0, 0, 0.5);
         padding: 1rem;
         display: flex;
@@ -549,15 +515,13 @@ section.frontpage-section {
         }
 
         .slideup {
+          text-align: center;
           position: absolute;
           bottom: 0rem;
           left: 0;
-          // display: none;
           width: 100%;
           background-color: rgba(255, 255, 255, 0.75);
-          // opacity: 0;
-          // transition-property: transform;
-          transition-duration: 500ms;
+          transition-duration: 200ms;
           transform: translateY(100%);
 
           .days {
@@ -592,22 +556,11 @@ section.frontpage-section {
           left: 0;
           border-radius: 0;
           margin: 1rem;
-          // transform: translateX(-50%) translateY(-50%);
-          // background-color: black;
-          // color: white;
           display: flex;
           justify-content: center;
           align-items: center;
-          box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-
-          &:hover {
-            transform: scale(1.1);
-            box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-            cursor: pointer;
-          }
 
           .badge {
-            // margin-left: 0.25rem;
             border-radius: 0;
           }
 
@@ -631,6 +584,7 @@ section.frontpage-section {
         }
 
         &.youtube {
+          overflow: hidden;
           margin-left: 0.5rem;
 
           &:hover {
@@ -675,19 +629,19 @@ section.frontpage-section {
         &.weather {
           overflow: hidden;
 
-          &:hover {
-            .slideup {
-              // opacity: 1;
-              transform: translateY(0%);
-              // display: block;
-            }
-          }
-
           .background {
   
             img {
               filter: blur(1px);
             }
+          }
+        }
+
+        &:hover {
+          .slideup {
+            // opacity: 1;
+            transform: translateY(0%);
+            // display: block;
           }
         }
 
@@ -1828,22 +1782,44 @@ section.frontpage-section {
           }
         }
 
-        .search {
+        .search-container {
           position: absolute;
           left: 50%;
           top: 1rem;
           transform: translateX(-50%);
-          background-color: rgba(255, 255, 255, 0.5);
-          border: 2px solid #000;
           padding: 0.5rem 0.5rem;
-          border-radius: 20px;
+          border-radius: 5px;
+
+          display: flex;
+          flex-direction: column;
 
           input {
+            padding: 0.25rem 0.5rem;
             background-color: rgba(255, 255, 255, 0.90);
-            border-radius: 20px;
-            padding: 0rem 0.75rem;
+            border-radius: 5;
             border: none;
             outline: none;
+          }
+
+          .search-button {
+            cursor: pointer;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transform: translateX(-50%) translateY(50%);
+
+            &:hover {
+              color: $accent-color;
+            }
+
+            i {
+
+            }
+          }
+
+          .badge {
+            border-radius: 0;
+            padding: 0.1rem 0.5rem;
           }
         }
 

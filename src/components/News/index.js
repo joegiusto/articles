@@ -347,7 +347,11 @@ function SearchHead(props) {
             <img style={{objectFit: 'cover'}} src="https://www.dailydot.com/wp-content/uploads/2019/08/listen_youtube_music_youtube_premium-800x400.jpg" alt=""/>
           </div>
 
-          {/* <div className="hover-notice">Open Tab For https://youtube.com</div> */}
+          <div className="slideup">
+            <div className="py-1">View Channel</div>
+          </div>
+
+          <div className="hover-notice d-none">View Channel</div>
         </a>
 
         <div onClick={() => props.toggleBankingOverlay()} className="extra-panel d-none banking">
@@ -614,6 +618,8 @@ class Frontpage extends Component {
       search: '',
       searchSettingsOverlay: false,
 
+      weatherSearch: this.props.user_details?.address?.zip || '',
+
       weatherOverlay: false,
       weatherData: {},
       bankingOverlay: false,
@@ -780,7 +786,6 @@ class Frontpage extends Component {
   }
 
   onChange = event => {
-    console.log("Fired")
     this.setState({ [event.target.name]: event.target.value });
   };
 
@@ -1018,10 +1023,6 @@ class Frontpage extends Component {
 
             <div className="header">
 
-              {/* <div className="background">
-                <img src="https://s7d2.scene7.com/is/image/TWCNews/partly_cloudy_jpg-4" alt=""/>
-              </div> */}
-
               <div className="background">
                 {this.state.weatherData?.current?.is_day === 'yes' ?
                 <img src="https://cdn.articles.media/weather/partly-cloudy.jpg" alt=""/>
@@ -1030,8 +1031,18 @@ class Frontpage extends Component {
                 }
               </div>
 
-              <div className="search">
-                <input type="text" value={this.props.user_details?.address?.zip}/>
+              <div className="search-container">
+
+                <input type="text" name='weatherSearch' id='weatherSearch' onChange={(e) => this.onChange(e)} value={this.state.weatherSearch}/>
+
+                <div className="search-button">
+                  <i class="fas fa-search"></i>
+                </div>
+
+                <div className="badge badge-articles d-flex">
+                  <div>Prefilled</div><i class="fas fa-info-circle mr-0 ml-1"></i>
+                </div>
+
               </div>
 
               <div className="content">

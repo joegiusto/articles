@@ -4,7 +4,7 @@ import moment from 'moment'
 import axios from 'axios';
 
 import * as ROUTES from '../../../../constants/routes';
-import NewsAdd from './Add';
+import NewsAdd from './NewsAdd';
 
 class AdminPage extends Component {
   constructor(props) {
