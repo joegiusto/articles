@@ -124,15 +124,39 @@ class IssuesClass extends Component {
             }
 
             {
-            this.props.site.userSubscriptions ? this.props.user_subscriptions?.map((document, i) => (
-              <NewsCard 
-                key={i} 
-                hasUpdate={ moment(document.last_update).isSameOrAfter(document.lastRead) } 
-                isSub={this.props.user_subscriptions?.filter(sub => sub._id === document._id).length > 0}
-                document={document}
-              />
-            ))
+            this.props.site.userSubscriptions ? 
+
+            this.props.user_subscriptions.length === 0 ? 
+
+              <div className="sign-up-alert mt-2">
+
+                <div className="title">No Subscriptions</div>
+
+                <div className="text">Sort by all issues and subscribe to ones that you find interesting.</div>
+
+                {/* <button className="btn btn-articles-light mt-2">
+                  Sign Up
+                </button> */}
+
+                {/* <small className="d-block mt-2">Already a member? Sign In</small> */}
+
+              </div>
+
+              :
+
+              this.props.user_subscriptions?.map((document, i) => (
+                
+                <NewsCard 
+                  key={i} 
+                  hasUpdate={ moment(document.last_update).isSameOrAfter(document.lastRead) } 
+                  isSub={this.props.user_subscriptions?.filter(sub => sub._id === document._id).length > 0}
+                  document={document}
+                />
+
+              ))
+
             :
+            
             (this.props.issues.issues.map((document, i) => (
               <NewsCard 
                 key={i}

@@ -130,10 +130,12 @@ const StepTwo = (props) => (
     </div>
 
     <div className={"shoe-section mb-5" + (props.clothingCut === '' ? ' d-none' : props.clothingCut === 'other' ? ' d-none' : props.clothingCut === 'skip' ? ' d-none' : '')}>
-      <h5 className="intro-title mt-4" style={{fontSize: '1rem', lineHeight: '1rem'}}>Shoe Size (Inch)</h5>
+      <h5 className="intro-title mt-4" style={{fontSize: '1rem', lineHeight: '1rem'}}>Shoe Size (US)</h5>
 
       <div className="sizes">
-        <NewShoeTag clothingCut={props.clothingCut} changeShoeSize={props.changeShoeSize} shoeSize={props.shoeSize} selection={"W 5 / M 3.5"}/>
+        <button className="btn btn-articles-light">Female</button>
+        <button className="btn btn-articles-light">Male</button>
+        <input className="input-group" type="text"/>
       </div>
 
     </div>

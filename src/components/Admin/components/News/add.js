@@ -40,7 +40,7 @@ const initial_state = {
   isInitial: true,
 }
 
-class newsAdd extends Component {
+class Add extends Component {
   constructor(props) {
   super(props);
 
@@ -560,4 +560,4 @@ class newsAdd extends Component {
   }
 }
 
-export default withRouter(newsAdd)
+export default withRouter(Add)

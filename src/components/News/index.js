@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
 import axios from 'axios';
 import GoogleMapReact from 'google-map-react';
+import Chart from 'chart.js';
 
 // import Swiper from 'react-id-swiper';
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, EffectFade } from 'swiper';
@@ -308,7 +309,7 @@ function SearchHead(props) {
 
           <div className="background">
             {props.weatherData?.current?.is_day === 'yes' ?
-            <img src="https://s7d2.scene7.com/is/image/TWCNews/partly_cloudy_jpg-4" alt=""/>
+            <img src="https://cdn.articles.media/weather/partly-cloudy.jpg" alt=""/>
             :
             <img src="https://www.cruise1st.co.uk/blog/wp-content/uploads/2017/12/Fotolia_96215836_S-702x336.jpg" alt=""/>
             }
@@ -339,14 +340,14 @@ function SearchHead(props) {
         <a href="https://www.youtube.com/channel/UCeftkiTtcniDx87GqoEmFAg" target="_blank" rel="noopener noreferrer" className="extra-panel youtube">
 
           <div className="info">
-            <span>Last Upload: <span className="badge badge-light">Never</span></span>
+            <span className="badge badge-light">Last Upload: <span className="badge badge-danger">Never</span></span>
           </div>
 
           <div className="background">
-            <img src="https://turbologo.com/articles/wp-content/uploads/2019/10/youtube-logo-illustration-1280x720.jpg" alt=""/>
+            <img style={{objectFit: 'cover'}} src="https://www.dailydot.com/wp-content/uploads/2019/08/listen_youtube_music_youtube_premium-800x400.jpg" alt=""/>
           </div>
 
-          <div className="hover-notice">Open Tab For https://youtube.com</div>
+          {/* <div className="hover-notice">Open Tab For https://youtube.com</div> */}
         </a>
 
         <div onClick={() => props.toggleBankingOverlay()} className="extra-panel d-none banking">
@@ -399,8 +400,8 @@ class RecentSliders extends Component {
     })
     .catch(function (error) {
       console.log(error);
-    });
-    
+    }); 
+
   }
 
   render() {
@@ -419,6 +420,8 @@ class RecentSliders extends Component {
       // onSlideChange: () => console.log('slide change'),
       // onSwiper: (swiper) => console.log(swiper),
     }
+
+
 
     return (
       <div className="news-sliders">
@@ -714,6 +717,66 @@ class Frontpage extends Component {
         // commitsLoading: false,
       })
     });
+
+    this.renderCharts();
+  }
+
+  renderCharts() {
+    var chartElement = document.getElementById('chart');
+
+    new Chart(chartElement, {
+        type: 'line',
+        data: {
+            labels: [ '12am', '1am', '2am', '3am', '4am', '5am', '6am', '7am', '8am', '9am', '10am', '11am', '12pm' ],
+            datasets: [{
+                label: 'Temperature',
+                data: [ '45', '44', '44', '43', '43', '44', '45', '51', '52', '55', '55', '55' ],
+                backgroundColor: [
+                  'rgba(0, 0, 0, 0.2)'
+                ],
+                borderColor: [
+                  'rgba(63, 191, 127, 1)'
+                ],
+                pointBackgroundColor: 'rgba(63, 191, 127, 1)',
+                pointBorderColor: 'rgba(63, 191, 127, 1)',
+                borderWidth: 1,
+                lineTension: 0.1,
+            }]
+        },
+        options: {
+            responsive: true,
+            tooltips: {
+              mode: 'index',
+              intersect: false,
+            },
+            hover: {
+              mode: 'nearest',
+              intersect: true
+            },
+            scales: {
+                yAxes: [{
+                  // display: false,
+                  ticks: {
+                    fontFamily: "brandon-grotesque",
+                    beginAtZero: true,
+                  },
+                  scaleLabel: {
+                    display: true,
+                    labelString: 'Temp'
+                  }
+                }],
+                xAxes: [{
+                  // display: false,
+                  gridLines: {
+                    display: false
+                  },
+                  ticks: {
+                    fontFamily: "brandon-grotesque",
+                  }
+                }]
+            }
+        }
+    });
   }
 
   onChange = event => {
@@ -961,7 +1024,7 @@ class Frontpage extends Component {
 
               <div className="background">
                 {this.state.weatherData?.current?.is_day === 'yes' ?
-                <img src="https://s7d2.scene7.com/is/image/TWCNews/partly_cloudy_jpg-4" alt=""/>
+                <img src="https://cdn.articles.media/weather/partly-cloudy.jpg" alt=""/>
                 :
                 <img src="https://www.cruise1st.co.uk/blog/wp-content/uploads/2017/12/Fotolia_96215836_S-702x336.jpg" alt=""/>
                 }
@@ -1008,7 +1071,82 @@ class Frontpage extends Component {
               <div className="badge badge-articles">Wind Speed: {this.state.weatherData?.current?.wind_speed}mph</div>
             </div>
 
-            <div className="body">Weather is still being worked on and will not be available until September.</div>
+            <div className="weather-info">
+
+              <div className="weather-forecast">
+
+                <div className="day first">
+
+                  <div className="day-name">{moment().format("ddd")}</div>
+                  <div className="deg">50°</div>
+                  <div className="deg low">38°</div>
+
+                </div>
+
+                <div className="days">
+                  <div className="day">
+    
+                    <div className="day-name">{moment().add('days', 1).format("ddd")}</div>
+                    <div className="deg high">50°</div>
+                    <div className="deg low">38°</div>
+    
+                  </div>
+    
+                  <div className="day">
+    
+                    <div className="day-name">{moment().add('days', 2).format("ddd")}</div>
+                    <div className="deg">50°</div>
+                    <div className="deg low">38°</div>
+
+                  </div>
+    
+                  <div className="day">
+    
+                    <div className="day-name">{moment().add('days', 3).format("ddd")}</div>
+                    <div className="deg">50°</div>
+                    <div className="deg low">38°</div>
+
+                  </div>
+    
+                  <div className="day">
+    
+                    <div className="day-name">{moment().add('days', 4).format("ddd")}</div>
+                    <div className="deg">50°</div>
+                    <div className="deg low">38°</div>
+
+                  </div>
+    
+                  <div className="day">
+    
+                    <div className="day-name">{moment().add('days', 5).format("ddd")}</div>
+                    <div className="deg">50°</div>
+                    <div className="deg low">38°</div>
+
+                  </div>
+    
+                  <div className="day">
+    
+                    <div className="day-name">{moment().add('days', 6).format("ddd")}</div>
+                    <div className="deg">50°</div>
+                    <div className="deg low">38°</div>
+
+                  </div>
+                </div>
+
+              </div>
+
+              <div className="chart">
+                <div className="chart-select">
+                  <span className="badge badge-danger">Temp</span>
+                  <span className="badge badge-primary">Precip</span>
+                  <span className="badge badge-success">Wind</span>
+                </div>
+                <canvas id="chart"></canvas>
+              </div>
+
+            </div>
+
+            
 
             <div className="bottom-controls">
               <div className="btn btn-articles-light">
