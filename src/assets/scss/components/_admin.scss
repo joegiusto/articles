@@ -185,75 +185,7 @@
 
   .tab-content {
 
-    .admin-users {
-      display: flex;
-      flex-direction: column;
-      flex-wrap: wrap;
-      // margin-left: -15px;
-      // margin-right: -15px;
-
-      @include media-breakpoint-up(md) {
-        width: 100%;
-        flex-direction: row;
-        // margin-left: -1rem;
-        // margin-right: -1rem;
-      }
-
-      .side-panel {
-        background-color: $base-color;
-        border-right: 1px solid #000;
-        width: 100%;
-        padding: 1rem;
-
-        .card {
-          border: none;
-          box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.5);
-
-          .card-header {
-            padding: 0.25rem 0.5rem;
-            font-size: 1.1rem;
-          }
-  
-          .card-body {
-            font-size: 0.8rem;
-          }
-        }
-
-        @include media-breakpoint-up(md) {
-          flex-basis: 300px;
-          height: calc(100vh - 100px);
-          // padding-right: 1rem;
-          // margin-right: 1rem;
-        }
-      }
-
-      .main-panel {
-        // margin-top: 1rem;
-        flex-grow: 1;
-        padding: 1rem;
-
-        @include media-breakpoint-down(md) {
-          width: 100%;
-        }
-      }
-
-      .profile-photo {
-        background-color: black;
-        margin-right: 5px;
-        height: 20px;
-        width: 20px;
-        object-fit: cover;
-        text-indent: -10000px;
-        overflow: hidden;
-      }
-
-      .card-header {
-        background-color: $accent-color;
-        font-family: brandon-grotesque, sans-serif;
-        font-weight: 900;
-        font-style: normal;
-      }
-    }
+    
 
     // News in its own files as all these should be one day...
 
@@ -417,6 +349,16 @@
           background-color: white;
           border: 1px solid #000;
 
+          ._id {
+            background-color: $base-color;
+            padding: 0rem 0.5rem;
+            text-transform: capitalize;
+            position: absolute;
+            right: 0.5rem;
+            top: 0;
+            transform: translateY(-50%);
+          }
+
           .type {
             background-color: $base-color;
             padding: 0rem 0.5rem;
@@ -522,30 +464,45 @@
     }
 
     .admin-reports {
+      padding: 1rem;
 
-      .expenses {
+      .reports {
 
-        .expense {
+        .report {
+          padding: 1rem;
+          box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
+          transition: box-shadow 83ms;
+          background-color: #fff;
+          border-radius: 2px;
+
           position: relative;
-          border-left: 2px solid #000;
-          padding-left: 0.25rem;
+          // border-left: 2px solid #000;
+          // padding-left: 0.25rem;
           margin-bottom: 2rem;
-          margin-left: 1rem;
+          // margin-left: 1rem;
+
+          .actions {
+            margin-top: 1rem;
+            // color: black!important;
+          }
 
           .delete {
+            color: black!important;
             cursor: pointer;
-            color: red;
-            position: absolute;
-            left: -1.25rem;
-            top: 0;
+            // color: red;
+            // position: absolute;
+            // left: -1.25rem;
+            // top: 0;
           }
 
           .respond {
+            color: black!important;
+            margin-left: 0.5rem;
             cursor: pointer;
-            color: green;
-            position: absolute;
-            left: -1.25rem;
-            bottom: 0;
+            // color: green;
+            // position: absolute;
+            // left: -1.25rem;
+            // bottom: 0;
           }
         }
       }

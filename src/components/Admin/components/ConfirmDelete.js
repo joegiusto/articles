@@ -23,9 +23,9 @@ class ConfirmDelete extends Component {
   render() {
     return (
       this.state.confirm ? 
-      <div style={{cursor: 'pointer'}} onClick={() => this.handleClick()} className="badge badge-danger noselect">Confirm</div>
+      <div style={{cursor: 'pointer'}} onClick={() => this.handleClick()} className={"badge badge-danger noselect " + (this.props.className)}>Confirm</div>
       :
-      <div style={{cursor: 'pointer'}} onClick={() => this.handleClick()} className="badge badge-danger noselect">Delete</div>
+      <div style={{cursor: 'pointer'}} onClick={() => this.handleClick()} className={"badge badge-danger noselect " + (this.props.className)}>Delete</div>
     )
   }
 }

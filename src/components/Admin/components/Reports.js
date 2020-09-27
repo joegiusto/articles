@@ -74,30 +74,35 @@ class Reports extends Component {
   render() {
 
     return (
-      <div className="admin-reports mt-5">
+      <div className="admin-reports mt-3">
 
-        <div className="expenses">
-          <h5>Expense Reports ({this.state.reports.length})</h5>
+        <div className="reports">
+          <h5>Reports ({this.state.reports.length})</h5>
           {this.state.reports.map((report) => (
-            <div className="expense">
+            <div className="report">
 
-              <div onClick={() => this.deleteExpenseReport(report._id)} className="delete">
-                <i className="fas fa-trash"></i>
-              </div>
-
-              <div className="respond">
-                <i className="fas fa-comment"></i>
+              <div>
+                {/* {moment(report.date).format("LLL")} - {report.expense_id} - - <span className="badge badge-dark">{report.user_id}</span> */}
               </div>
 
               <div>
-                {report.date} - {report.expense_id} - {report.user_id}
-              </div>
-
-              <div>
-                <span className="badge badge-dark">{moment(report.date).format("LL")}</span> - <span className="badge badge-warning">{report.fetchedId}</span> - <span className="badge badge-info"><b>{report.fetchedUser}</b></span>
+                <span className="badge badge-dark">{moment(report.date).format("LL")}</span> - <span className="badge badge-warning">{report.fetchedId}</span> - <span className="badge badge-info"><b>{report.fetchedUser} <small>{report.user_id}</small></b></span>
               </div>
 
               <div>{report.reason}</div>
+
+              <div className="actions d-flex">
+                <div onClick={() => this.deleteExpenseReport(report._id)} className="delete badge badge-danger">
+                  <i className="fas fa-trash"></i>
+                  <span>Delete</span>
+                </div>
+  
+                <div className="respond badge badge-success">
+                  <i className="fas fa-comment"></i>
+                  <span>Respond</span>
+                </div>
+              </div>
+
             </div>
           ))}
         </div>

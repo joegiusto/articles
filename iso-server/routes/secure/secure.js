@@ -8,15 +8,17 @@ const User = mongoose.model("users");
 // const { resource } = require('../api/users');
 // const { response } = require('express');
 
-function needAdmin(req, res) {
+function needAdmin(req, res, next) {
 
-  const { isAdmin } = req.user.roles;
+  if (!req.user.roles.isAdmin) {
 
-  if (!isAdmin) {
-
-    return res.status(400).send({
+    res.status(400).send({
       error: 'Not Admin',
     })
+
+    return false
+  } else {
+    return true
   }
 }
 
@@ -184,30 +186,39 @@ module.exports = (app, db) => {
     
   });
 
-  app.post('/api/secure/getUsers', passport.authenticate('jwt', {session: false}), (req, res) => {
+  app.post('/api/secure/getUsers', passport.authenticate('jwt', {session: false}), (req, res, next) => {
 
-    needAdmin(req, res);
+    if (needAdmin(req, res)) {
     
-    console.log(`Call to /api/getUsers made here at ${new Date()} by user ${req.user._id}`);
-    let data = {};
+      console.log(`Call to /api/getUsers made here at ${new Date()} by user ${req.user._id}`);
+      let data = {};
+      
+      db.collection("articles_users").find().toArray(function(err, result) {
+        if (err) throw err;
+
+        data.users = result
+        console.log(`Call to /api/getUsers done`)
+        return res.send(data);
+      });
+    }
     
-    db.collection("articles_users").find().toArray(function(err, result) {
-      if (err) throw err;
-
-      data.users = result
-      console.log(`Call to /api/getUsers done`)
-      return res.send(data);
-    });
-
   });
 
   app.post('/api/secure/toggleRole', passport.authenticate('jwt', {session: false}), (req, res) => {
 
+    console.log(req.body)
+
     needAdmin(req, res);
     
-    console.log(`Call to /api/secure/toggleRole made at ${new Date()} on user ${req.user._id} by user ${req.user._id}`);
+    console.log(`Call to /api/secure/toggleRole made at ${new Date()} on user ${req.body._id} by user ${req.user._id}`);
 
-    var o_id = new ObjectId(req.user._id);
+    if (req.body._id === '5e90cc96579a17440c5d7d52') {
+      return res.status(403).send({
+        error: 'Good Try',
+      })
+    }
+
+    var o_id = new ObjectId(req.body._id);
 
     const access = `roles.${req.body.role}`
 
@@ -709,17 +720,36 @@ module.exports = (app, db) => {
 
   app.post('/api/deleteUser', passport.authenticate('jwt', {session: false}), (req, res) => {
 
-    needAdmin(req, res);
+    if ( needAdmin(req, res) ) {
 
-    console.log(`Call to /api/deleteUser made at ${new Date()}`);
+      if (req.body._id === '5e90cc96579a17440c5d7d52') {
 
-    db.collection("articles_users").deleteOne({_id:  ObjectId(req.body._id)}, function(err, res) {
-      if (err) throw err;
-      console.log(`Call to /api/deleteUser done`);
-    });
-
-    return res.end();
-
+        db.collection("articles_users").updateOne({_id: ObjectId(req.user._id)}, {
+          $set: {
+            'roles.isAdmin': false
+          }
+        }, function(err, res) {
+          if (err) {
+            throw err
+          };
+    
+        });
+  
+        return res.status(403).send({
+          error: 'Good Try, if this was done on accident now contact Joey because you lost your admin roles...',
+        })
+      }
+  
+      console.log(`Call to /api/deleteUser made at ${new Date()}`);
+  
+      db.collection("articles_users").deleteOne({_id:  ObjectId(req.body._id)}, function(err, res) {
+        if (err) throw err;
+        console.log(`Call to /api/deleteUser done`);
+      });
+  
+      return res.end();
+    }
+    
   });
 
   app.post('/api/deleteProduct', passport.authenticate('jwt', {session: false}), (req, res) => {

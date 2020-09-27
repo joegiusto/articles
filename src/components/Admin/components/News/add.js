@@ -28,6 +28,8 @@ const initial_state = {
   last_update: new Date(),
   visible: true,
 
+  author: '',
+
   tagSelectOpen: false,
 
   submitting_data: false,
@@ -248,7 +250,7 @@ class newsAdd extends Component {
   render(props) {
 
     return(
-      <div className="news-manage-plate bottom-add">
+      <div className={"edit-panel bottom-add " + ( this.props.isEdit ? 'active' : '' ) }>
         {/* <h1>Document Details</h1> */}
         
         {
@@ -256,6 +258,13 @@ class newsAdd extends Component {
           null
           :
           <Link to={ROUTES.ADMIN_NEWS}><div className="clear" onClick={() => this.changeIsEdit(false)}>Cancel Edit</div></Link>
+        }
+
+        {
+        this.props.news_id === undefined && this.props.isEdit ? 
+          <Link to={ROUTES.ADMIN_NEWS}><div className="clear" onClick={() => this.changeIsEdit(false)}>Cancel</div></Link>
+          :
+          null
         }
 
         <div className="row">
@@ -483,6 +492,16 @@ class newsAdd extends Component {
               </select>
             </div>
           </div>
+
+          <div className="col-12 col-md-6">
+            <div className="form-group">
+              <label for="visible">Author:</label>
+              <select className="form-control" name="author" id="author" value={this.state.author} onChange={this.handleChange}>
+              <option value={undefined}>None</option>
+              {this.props.authors.map(author => <option value={author._id}>{author.first_name} {author.last_name}</option>)}
+              </select>
+            </div>
+          </div>
           
           {/* <div className="col-12 col-md-6">
             <div className="form-group">
@@ -534,7 +553,7 @@ class newsAdd extends Component {
         </div>
 
         {this.state.submitting_data ? ' Sending...' : null}
-        <div className="btn btn-articles-light w-100 mt-5" onClick={this.pushNews}>Submit</div>
+        <div className="submit btn btn-articles-light w-100 mt-5" onClick={this.pushNews}>Submit</div>
 
       </div>
     )

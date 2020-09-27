@@ -250,7 +250,7 @@ class Users extends Component {
     
 
     axios.post('/api/secure/toggleRole', {
-      user: user_id,
+      _id: user_id,
       role: role,
       permission: permission
     })
@@ -268,7 +268,7 @@ class Users extends Component {
 
     })
     .catch(function (error) {
-      console.log(error);
+      console.log(error.response);
     });
   }
 
@@ -290,7 +290,7 @@ class Users extends Component {
 
     })
     .catch(function (error) {
-      console.log(error);
+      console.log(error.response);
     });
   }
 

@@ -9,7 +9,7 @@ module.exports = (app, db) => {
     myobj.last_update = new Date(myobj.last_update);
 
     // Preform Whitelist Acceptance
-    const allowedKeys = ['news_type', 'news_title', 'news_notes', 'news_date', 'news_tags', "url", "hero_url", "last_update", "news_tagline", "visible"];
+    const allowedKeys = ['news_type', 'news_title', 'news_notes', 'news_date', 'news_tags', "url", "hero_url", "last_update", "news_tagline", "visible", "author"];
 
     if (myobj.visible === true || myobj.visible === "true") {
       myobj.visible = true
