@@ -133,9 +133,25 @@ const StepTwo = (props) => (
       <h5 className="intro-title mt-4" style={{fontSize: '1rem', lineHeight: '1rem'}}>Shoe Size (US)</h5>
 
       <div className="sizes">
-        <button className="btn btn-articles-light">Female</button>
-        <button className="btn btn-articles-light">Male</button>
-        <input className="input-group" type="text"/>
+        <div onClick={() => props.changeShoeSize(5)} className={"size " + (props.shoeSize === 5 ? 'active' : '')}>5</div>
+        <div onClick={() => props.changeShoeSize(5.5)} className={"size " + (props.shoeSize === 5.5 ? 'active' : '')}>5.5</div>
+        <div onClick={() => props.changeShoeSize(6)} className={"size " + (props.shoeSize === 6 ? 'active' : '')}>6</div>
+        <div onClick={() => props.changeShoeSize(6.5)} className={"size " + (props.shoeSize === 6.5 ? 'active' : '')}>6.5</div>
+        <div onClick={() => props.changeShoeSize(7)} className={"size " + (props.shoeSize === 7 ? 'active' : '')}>7</div>
+        <div onClick={() => props.changeShoeSize(7.5)} className={"size " + (props.shoeSize === 7.5 ? 'active' : '')}>7.5</div>
+        <div onClick={() => props.changeShoeSize(8)} className={"size " + (props.shoeSize === 8 ? 'active' : '')}>8</div>
+        <div onClick={() => props.changeShoeSize(8.5)} className={"size " + (props.shoeSize === 8.5 ? 'active' : '')}>8.5</div>
+        <div onClick={() => props.changeShoeSize(9)} className={"size " + (props.shoeSize === 9 ? 'active' : '')}>9</div>
+        <div onClick={() => props.changeShoeSize(9.5)} className={"size " + (props.shoeSize === 9.5 ? 'active' : '')}>9.5</div>
+        <div onClick={() => props.changeShoeSize(10)} className={"size " + (props.shoeSize === 10 ? 'active' : '')}>10</div>
+        <div onClick={() => props.changeShoeSize(10.5)} className={"size " + (props.shoeSize === 10.5 ? 'active' : '')}>10.5</div>
+        <div onClick={() => props.changeShoeSize(11)} className={"size " + (props.shoeSize === 11 ? 'active' : '')}>11</div>
+        <div onClick={() => props.changeShoeSize(11.5)} className={"size " + (props.shoeSize === 11.5 ? 'active' : '')}>11.5</div>
+        <div onClick={() => props.changeShoeSize(12)} className={"size " + (props.shoeSize === 12 ? 'active' : '')}>12</div>
+        <div onClick={() => props.changeShoeSize(12.5)} className={"size " + (props.shoeSize === 12.5 ? 'active' : '')}>12.5</div>
+        <div onClick={() => props.changeShoeSize(13)} className={"size " + (props.shoeSize === 13 ? 'active' : '')}>13</div>
+        <div onClick={() => props.changeShoeSize(13.5)} className={"size " + (props.shoeSize === 13.5 ? 'active' : '')}>13.5</div>
+        <div onClick={() => props.changeShoeSize(14)} className={"size " + (props.shoeSize === 14 ? 'active' : '')}>14</div>
       </div>
 
     </div>

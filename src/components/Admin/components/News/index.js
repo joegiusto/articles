@@ -21,6 +21,8 @@ class AdminPage extends Component {
       searchLoadingError: '',
 
       tags: [],
+      proposals: [],
+
       searchedTag: '',
       tagsLoading: false,
       tagsLoadingError: '',
@@ -89,6 +91,22 @@ class AdminPage extends Component {
 
       self.setState({ tagsLoading: false });
       self.setState({ resultsLoadingError: error });
+    })
+
+    axios.get('/api/getProposals')
+    .then(function (response) {
+
+      self.setState({
+        proposals: response.data,
+        // tagsLoading: false
+      });
+
+    })
+    .catch(function (error) {
+      // handle error
+      // console.log(error);
+      // self.setState({ tagsLoading: false });
+      // self.setState({ resultsLoadingError: error });
     })
 
     axios.get('/api/getWriters')
@@ -354,7 +372,7 @@ class AdminPage extends Component {
 
         </div>
       
-        <NewsAdd authors={this.state.authors} tags={this.state.tags} isEdit={this.state.isEdit} news_id={this.props.match.params.id} isExact={this.props.match.isExact} changeIsEdit={this.changeIsEdit}/>
+        <NewsAdd authors={this.state.authors} proposals={this.state.proposals} tags={this.state.tags} isEdit={this.state.isEdit} news_id={this.props.match.params.id} isExact={this.props.match.isExact} changeIsEdit={this.changeIsEdit}/>
         
       </div>
     );

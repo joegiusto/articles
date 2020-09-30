@@ -4,9 +4,12 @@ import { connect } from "react-redux";
 import axios from 'axios'
 import moment from 'moment'
 
+import Card from 'react-bootstrap/Card';
+import Accordion from 'react-bootstrap/Accordion';
+
 import ConfirmDelete from './ConfirmDelete'
 
-class Reports extends Component {
+class Ads extends Component {
   constructor(props) {
   super(props);
   
@@ -14,10 +17,54 @@ class Reports extends Component {
       loading: false,
       lat: '',
       lng: '',
-      ads: [],
 
-      age: false,
-      zip: false,
+      users: [],
+
+      userAreas:[],
+
+      zipsArray: [],
+      zips: {
+        // Is capital for display purposes, changing this to lowercase will show in reports
+        None: 0
+        // The rest of the zips get populated once data loads
+      },
+
+      ads: [],
+      results: [],
+
+      business: '',
+      contact: '',
+      // age: false,
+      ageFilters: {
+        range: {
+          active: false,
+          start: 0,
+          end: 0,
+        },
+        above: {
+          active: false,
+          age: 0
+        },
+        below: {
+          active: false,
+          age: 0
+        }
+      },
+      // zip: false,
+      zipFilters: {
+        list: {
+          active: false,
+          list: []
+        },
+        nearby: {
+          active: false,
+          zip: ''
+        },
+        around: {
+          active: false,
+          zip: ''
+        }
+      }
     };
 
   }
@@ -39,14 +86,171 @@ class Reports extends Component {
         console.error("Error Code = " + error.code + " - " + error.message);
       }
     );
+
+    axios.post('/api/secure/getAdPopulation')
+    .then(function (response) {
+
+      console.log(response)
+
+      self.setState({
+        userAreas: response.data.data
+      });
+
+      // for ( var i=0; i < self.state.users.length; i++ ) {
+      //   const currentUserZip = self.state.users[i].address.zip               
+
+      //   if (currentUserZip === undefined || currentUserZip === null || currentUserZip === "") {
+
+      //     self.setState({
+      //       zips: {
+      //         ...self.state.zips,
+      //         None: self.state.zips.None + 1
+      //       }
+      //     })
+
+      //   } else {
+
+      //     self.setState({
+      //       zipsArray: self.state.zipsArray.concat(currentUserZip),
+      //       zips: {
+      //         ...self.state.zips,
+      //         [self.state.users[i].address.zip]: (!isNaN(self.state.zips[currentUserZip]) ? (self.state.zips[currentUserZip] + 1) : 1)
+      //       }
+      //     })
+
+      //   }
+
+      // }
+
+      // return axios.post('/api/zipToLatLng', {
+      //   zips: self.state.zipsArray
+      // })
+      // .then(function (response) {
+      //   console.log(response);
+      // }.catch(function (error) {
+      //   console.log(error);
+      // }));
+
+    })
+    .catch(function (error) {
+      console.log(error);
+
+      self.setState({
+        // users: []
+      })
+
+    });
   }
 
-  componentWillUnmount() {
+  compileZips() {
+    
+  }
 
+  changeAgeFilterOption(key, option, e) {
+
+    console.log(e.target.value)
+    
+    this.setState({
+      ageFilters: {
+        ...this.state.ageFilters,
+        [key]: {
+          ...this.state.ageFilters[key],
+          [option]: e.target.value
+        }
+      }
+    })
+
+  };
+
+  changeZipFilterOption(key, option, e) {
+
+    console.log(e.target.value)
+    
+    this.setState({
+      zipFilters: {
+        ...this.state.zipFilters,
+        [key]: {
+          ...this.state.zipFilters[key],
+          [option]: e.target.value
+        }
+      }
+    })
+
+  };
+
+  changeFilterOption(filter, option) {
+    console.log(`Called ${filter}`)
+
+    if (filter === 'ageFilters') {
+      this.setState(prevState => ({
+
+        [filter]: {
+          ...this.state.ageFilters,
+          range: {
+            ...this.state.ageFilters.range,
+            active: false
+          },
+          above: {
+            ...this.state.ageFilters.above,
+            active: false
+          },
+          below: {
+            ...this.state.ageFilters.below,
+            active: false
+          },
+          [option]: {
+            ...this.state.ageFilters[option],
+            active: !prevState.ageFilters[option].active
+          },
+        }
+  
+      }))
+    } else if (filter === 'zipFilters') {
+      this.setState(prevState => ({
+
+        zipFilters: {
+          ...this.state.zipFilters,
+          list: {
+            ...this.state.zipFilters.list,
+            active: false
+          },
+          nearby: {
+            ...this.state.zipFilters.nearby,
+            active: false
+          },
+          around: {
+            ...this.state.zipFilters.around,
+            active: false
+          },
+          [option]: {
+            ...this.state.zipFilters[option],
+            active: !prevState.zipFilters[option].active
+          },
+        }
+  
+      }))
+    }
+    
   }
 
   retrieveReach() {
+    const self = this;
     console.log("Reach")
+
+    axios.post('/api/getReach', {
+      ageFilters: this.state.ageFilters,
+      zipFilters: this.state.zipFilters
+    })
+    .then( (obj) => {
+      console.log(obj)
+      self.setState({
+        results: obj.data
+      })
+    })
+    .catch(function (error) {
+      console.log(error.response);
+    });
+
   }
 
   render() {
@@ -69,79 +273,306 @@ class Reports extends Component {
 
         <div className="creator">
 
-          <div class="card">
-            <h5 class="card-header">Ad Builder</h5>
-            <div class="card-body">
-              <h5 class="card-title">Avalible Sorts</h5>
-              <p class="card-text">Use any of the following tools to select who to target your ads to.</p>
+          <div className="card">
+            <h5 className="card-header">Ad Builder</h5>
+            <div className="card-body">
+              {/* <h5 className="card-title">Available Sorts</h5> */}
+              <p className="card-text">Use any of the following tools to select who to target your ads to. We suggest sticking with the stable filters to reach a bigger audience.</p>
 
               <div>
-                <h5>Great Filters</h5>
+                <h5>Stable Filters</h5>
 
-                <div onClick={() => this.setState({age: !this.state.age})} className={"sort " + (this.state.age ? 'active' : '')}>
+                <Accordion>
 
-                  <div className="selected badge badge-dark">
-                    Active
-                  </div>
+                  <Card>
+                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                      <div>Age</div>
+                      {
+                        this.state.ageFilters.range.active  || this.state.ageFilters.above.active || this.state.ageFilters.below.active ?
+                        <i className="fas fa-circle mr-0 d-flex align-items-center"></i>
+                        :
+                        <i className="far fa-circle mr-0 d-flex align-items-center"></i>
+                      }
+                      
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey="0">
+                      <Card.Body>
 
-                  <div className="title">Age</div>
-                  <div>
-                    <span className="badge badge-articles">Range</span>
-                    <span className="badge badge-articles">Above</span>
-                    <span className="badge badge-articles">Below</span>
-                  </div>
-                </div>
+                        <button onClick={() => this.changeFilterOption('ageFilters','range')} className={"btn btn-articles-light " + (this.state.ageFilters.range.active ? 'alt' : '')}>
+                          <div>Range</div>
+                        </button>
 
-                <div onClick={() => this.setState({zip: !this.state.zip})} className={"sort " + (this.state.zip ? 'active' : '')}>
+                        <button onClick={() => this.changeFilterOption('ageFilters','above')} className={"btn btn-articles-light " + (this.state.ageFilters.above.active ? 'alt' : '')}>
+                          Above
+                        </button>
 
-                  <div className="selected badge badge-dark">
-                    Active
-                  </div>
+                        <button onClick={() => this.changeFilterOption('ageFilters','below')} className={"btn btn-articles-light " + (this.state.ageFilters.below.active ? 'alt' : '')}>
+                          Below
+                        </button>
 
-                  <div className="title">Zip</div>
-                  <div>
-                    <span className="badge badge-articles">Near Zip</span>
-                    <span className="badge badge-articles">Exact</span>
-                    <span className="badge badge-articles">Around</span>
-                  </div>
-                </div>
+                        <div className={"filter-option-dropdown " + (this.state.ageFilters.range.active ? '' : 'd-none')}>
+
+                          <div className="d-flex">
+                            <div className="form-group">
+                              <label for="address">Start Age</label>
+                              <input className="form-control with-label" onChange={(e) => {this.changeAgeFilterOption('range', 'start', e)}} name="age_range_start" id="age_range_start" type="text" value={this.state.age_range_start}/>
+                            </div>
+  
+                            <div className="form-group">
+                              <label for="address">End Age</label>
+                              <input className="form-control with-label" onChange={(e) => {this.changeAgeFilterOption('range', 'end', e)}}  name="age-range-end" id="age-range-end" type="text" value={this.state.age_range_end}/>
+                            </div>
+                          </div>
+
+                        </div>
+
+                        <div className={"filter-option-dropdown " + (this.state.ageFilters.above.active ? '' : 'd-none')}>
+
+                          <div className="form-group">
+                            <label for="address">Above Age</label>
+                            <input className="form-control with-label" onChange={(e) => {this.changeAgeFilterOption('above', 'age', e)}}  name="address" id="address" type="text" value={this.state.age_above}/>
+                          </div>
+
+                        </div>
+
+                        <div className={"filter-option-dropdown " + (this.state.ageFilters.below.active ? '' : 'd-none')}>
+
+                          <div className="form-group">
+                            <label for="address">Below Age</label>
+                            <input className="form-control with-label" onChange={(e) => {this.changeAgeFilterOption('below', 'age', e)}}  name="address" id="address" type="text" value={this.state.age_below}/>
+                          </div>
+
+                        </div>
+
+                      </Card.Body>
+                    </Accordion.Collapse>
+                  </Card>
+
+                </Accordion>
+
+                <Accordion>
+
+                  <Card>
+                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                      <div>Zip</div>
+                      {
+                        this.state.zipFilters.list.active  || this.state.zipFilters.nearby.active || this.state.zipFilters.around.active ?
+                        <i className="fas fa-circle mr-0 d-flex align-items-center"></i>
+                        :
+                        <i className="far fa-circle mr-0 d-flex align-items-center"></i>
+                      }
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey="0">
+                      <Card.Body>
+
+                        <button 
+                        onClick={() => this.changeFilterOption('zipFilters','list')} 
+                        className={"btn btn-articles-light " + (this.state.zipFilters.list.active ? 'alt' : '')}
+                        >
+                          List
+                        </button>
+                        <button 
+                        onClick={() => this.changeFilterOption('zipFilters','nearby')}
+                        className={"btn btn-articles-light " + (this.state.zipFilters.nearby.active ? 'alt' : '')}
+                        >
+                          Nearby
+                        </button>
+                        <button
+                        onClick={() => this.changeFilterOption('zipFilters','around')}
+                        className={"btn btn-articles-light " + (this.state.zipFilters.around.active ? 'alt' : '')}
+                        >
+                          Around
+                        </button>
+
+                        {this.state.zipFilters.list.active ?
+                          <div className="filter-option-dropdown d-flex">
+
+                            <small className="w-100">Comma Separated List</small>
+
+                            <div className="form-group">
+                              <label className="d-flex justify-content-between" for="address">Zips</label>
+                              <input className="form-control with-label" onChange={(e) => {this.changeZipFilterOption('list', 'zip', e)}} name="address" id="address" type="text" value={this.state.zipFilters.list.zip}/>
+                            </div>
+
+                          </div>
+                          :
+                          ''
+                        }
+
+                        {this.state.zipFilters.nearby.active ?
+                          <div className="filter-option-dropdown">
+
+                            <small className="w-100">Specified Distance Around Zip Code (including zip code)</small>
+
+                            <div className="form-group">
+                              <label for="address">Zip Code</label>
+                              <input className="form-control with-label" name="address" id="address" type="text" value=""/>
+                            </div>
+
+                            <div class="form-group">
+                              <label for="exampleFormControlSelect1">Miles</label>
+                              <select class="form-control" id="exampleFormControlSelect1">
+                                <option>1</option>
+                                <option>5</option>
+                                <option>10</option>
+                                <option>15</option>
+                                <option>30</option>
+                                <option>50</option>
+                              </select>
+                            </div>
+
+                          </div>
+                          :
+                          ''
+                        }
+
+                        {this.state.zipFilters.around.active ?
+                          <div className="filter-option-dropdown">
+
+                            <small className="w-100">Specified Distance Around Zip Code (not including zip code)</small>
+
+                            <div className="form-group">
+                              <label for="address">Zip</label>
+                              <input className="form-control with-label" name="address" id="address" type="text" value=""/>
+                            </div>
+
+                            <div class="form-group">
+                              <label for="exampleFormControlSelect1">Miles</label>
+                              <select class="form-control" id="exampleFormControlSelect1">
+                                <option>1</option>
+                                <option>5</option>
+                                <option>10</option>
+                                <option>15</option>
+                                <option>30</option>
+                                <option>50</option>
+                              </select>
+                            </div>
+
+                          </div>
+                          :
+                          ''
+                        }
+
+                      </Card.Body>
+                    </Accordion.Collapse>
+                  </Card>
+
+                </Accordion>
+
               </div>
 
-              <div className="d-none">
-                <h5>Okay Filters</h5>
+              <div className="">
+                <h5>Unstable Filters</h5>
 
-                <div className="sort">
-                  <div className="title">Occupation</div>
-                  <div>
-                    <span className="badge badge-articles">White Collar</span>
-                    <span className="badge badge-articles">Blue Collar</span>
-                  </div>
-                </div>
+                {/* Occupation */}
+                <Accordion>
 
-                <div className="sort d-none">
-                  <div className="title">Hobbys</div>
-                  <div>
-                    <span className="badge badge-articles">Near Zip</span>
-                    <span className="badge badge-articles">Exact</span>
-                    <span className="badge badge-articles">Around</span>
-                  </div>
-                </div>
+                  <Card>
+                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                      Occupation
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey="0">
+                      <Card.Body>
+                        <button className="btn btn-articles-light">
+                          Blue Collar
+                        </button>
+                        <button className="btn btn-articles-light">
+                          White Collar
+                        </button>
+                      </Card.Body>
+                    </Accordion.Collapse>
+                  </Card>
 
-                <div className="sort">
-                  <div className="title">Owns House</div>
-                  <div>
-                    <span className="badge badge-articles">Yes</span>
-                    <span className="badge badge-articles">No</span>
-                    <span className="badge badge-articles">Rents</span>
-                  </div>
-                </div>
-                <div className="sort">
-                  <div className="title">Has Kids</div>
-                  <div>
-                    <span className="badge badge-articles">Yes</span>
-                    <span className="badge badge-articles">No</span>
-                  </div>
-                </div>
+                </Accordion>
+
+                {/* Hobbies */}
+                <Accordion>
+
+                  <Card>
+                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                    Hobbies
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey="0">
+                      <Card.Body>
+
+                        <div className="form-group">
+                          <label for="hobbies-search">Hobbies Search</label>
+                          <input className="form-control with-label" name="hobbies-search" id="hobbies-search" type="text" value=""/>
+                        </div>
+
+                        <button className="btn btn-articles-light">Snowboarding</button>
+                        <button className="btn btn-articles-light">Fishing</button>
+                        <button className="btn btn-articles-light">Skiing</button>
+                        <button className="btn btn-articles-light">Woodworking</button>
+                        <button className="btn btn-articles-light">Painting</button>
+                        <button className="btn btn-articles-light">Sculpting</button>
+                        <button className="btn btn-articles-light">Rock Climbing</button>
+                        <button className="btn btn-articles-light">Reading</button>
+                        <button className="btn btn-articles-light">Hiking</button>
+                        <button className="btn btn-articles-light">Yoga</button>
+                        <button className="btn btn-articles-light">Bicycling</button>
+                        <button className="btn btn-articles-light">Gaming</button>
+                        <button className="btn btn-articles-light">Cooking</button>
+                        <button className="btn btn-articles-light">Sewing</button>
+                        <button className="btn btn-articles-light">Camping</button>
+                        <button className="btn btn-articles-light">Gardening</button>
+                        <button className="btn btn-articles-light">Photography</button>
+                        <button className="btn btn-articles-light">Dance</button>
+                        <button className="btn btn-articles-light">Golfing</button>
+                        <button className="btn btn-articles-light">Scrapbooking</button>
+                        <button className="btn btn-articles-light">Baseball</button>
+                        <button className="btn btn-articles-light">Basketball</button>
+                        <button className="btn btn-articles-light">Soccer</button>
+                        <button className="btn btn-articles-light">Brewing</button>
+                        <button className="btn btn-articles-light">Programming</button>
+
+                      </Card.Body>
+                    </Accordion.Collapse>
+                  </Card>
+
+                </Accordion>
+
+                {/* Residence Type */}
+                <Accordion>
+
+                  <Card>
+                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                      Residence Type
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey="0">
+                      <Card.Body>
+                        <button className="btn btn-articles-light">
+                          Owns
+                        </button>
+                        <button className="btn btn-articles-light">
+                          Rents
+                        </button>
+                      </Card.Body>
+                    </Accordion.Collapse>
+                  </Card>
+
+                </Accordion>
+
+                {/* Children */}
+                <Accordion>
+
+                  <Card>
+                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                    Children
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey="0">
+                      <Card.Body>
+                        <button className="btn btn-articles-light">
+                          No
+                        </button>
+                        <button className="btn btn-articles-light">
+                          Yes
+                        </button>
+                      </Card.Body>
+                    </Accordion.Collapse>
+                  </Card>
+
+                </Accordion>
 
               </div>
 
@@ -149,20 +580,32 @@ class Reports extends Component {
             </div>
           </div>
 
-          <div class="card mt-2">
-            <h5 class="card-header">Reach Report</h5>
-            <div class="card-body">
-              <h5 class="card-title">0 Users</h5>
-              <p class="card-text">The amount of users that will potentially see your ad.</p>
+          <div className="card mt-2">
+            <h5 className="card-header">Reach Report</h5>
+            <div className="card-body">
+              <h5 className="card-title">{this.state.results.length} Users</h5>
+              <p className="card-text">The amount of users that will potentially see your ad.</p>
 
-              <button class="btn btn-articles-light mt-3">Reset</button>
+              <div className="alert alert-danger">
+                {this.state.results.map(result => 
+                  <div className="result">
+                    {result.first_name} {result.last_name}
+                  </div>
+                )}
+              </div>
+
+              <button className="btn btn-articles-light mt-3">Reset</button>
             </div>
           </div>
 
         </div>
 
-        <div className="map" style={{width: '100%', height: '400px'}}>
-          <Map lat={this.state.lat} lng={this.state.lng}/>
+        <div className="map-container">
+
+          <div className="map" style={{width: '100%', height: '400px'}}>
+            <Map userAreas={this.state.userAreas} lat={this.state.lat} lng={this.state.lng}/>
+          </div>
+
           <div className="table-responsive">
           <table className='table articles-table table-sm table-hover table-bordered'>
             <thead>
@@ -170,6 +613,7 @@ class Reports extends Component {
                 {/* <th scope="col">Order #</th> */}
                 <th scope="col">Dates</th>
                 <th scope="col">Name</th>
+                <th scope="col">Contact</th>
                 <th scope="col">Sorts</th>
                 <th scope="col">Reach</th>
                 <th scope="col">Actions</th>
@@ -192,6 +636,8 @@ class Reports extends Component {
 
                 <td colSpan="1" className="border-right-0 ">Bank Square</td>
 
+                <td colSpan="1" className="border-right-0 ">Behney</td>
+
                 <td colSpan="1" className="border-right-0 "><span className="badge badge-articles">Age</span> <span className="badge badge-articles">Zip</span></td>
 
                 <td colSpan="1" className="border-right-0 ">0</td>
@@ -209,6 +655,7 @@ class Reports extends Component {
                 </td>
   
                 <td colSpan="1" className="border-right-0 text-right table-articles-head"></td>
+                <td colSpan="1" className="border-left-0 table-articles-head"></td>
                 <td colSpan="1" className="border-left-0 table-articles-head"></td>
                 <td colSpan="1" className="border-left-0 table-articles-head"></td>
               </tr>
@@ -229,35 +676,21 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-)(Reports);
+)(Ads);
 
 class Map extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      active: 0,
-      
-      places: [
-        {
-          text: 'Tesla',
-          lat: 37.090240, 
-          lng: -95.712891 
-        },
-        {
-          text: 'Protest',
-          lat: 37.090240, 
-          lng: -95.712891 
-        }
-      ]
+
     }
   }
 
   static defaultProps = {
     center: {lat: 37.09, lng: -95.71},
-    zoom: 5
-    ,
-    // bootstrapURLKeys: { key: '565403139080-i42ucf0miotmvqobitbsd35f92pek539.apps.googleusercontent.com' }
+    zoom: 5,
+    userAreas: []
   };
 
   render() {
@@ -266,20 +699,65 @@ class Map extends React.Component {
       bootstrapURLKeys={{ key: 'AIzaSyAKmyGIU1IJo_54kahuds7huxuoEyZF-68' }}
       center={{lat: this.props.lat, lng: this.props.lng}}
       zoom={11}
-    >
-      {/* <AnyReactComponent 
-        lat={37.090240} 
-        lng={-95.712891} 
-        text={'Tesla'} 
-      />
+      >
 
-      <AnyReactComponent 
-        lat={this.props.lat} 
-        lng={this.props.lng} 
-        text={'Tesla'} 
-      /> */}
+      {this.props.userAreas.map(area => 
+
+        <Area 
+          lat={area.lat} 
+          lng={area.lng} 
+          zip={area.zip}
+          amount={area.amount}
+          name={area.name}
+        />
+      )}
 
     </GoogleMapReact>
     );
   }
 }
+
+const Area = ({ zip, amount, name }) => (
+  <div>
+    
+    <div style={{
+      color: 'red', 
+      display: 'inline-flex',
+      textAlign: 'center',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '0.25rem',
+      marginRight: '0rem',
+      fontSize: '1rem',
+      transform: 'translate(-50%, -50%)',
+    }}>
+      <i className="fas fa-map-marker-alt mr-0"></i>
+    </div>
+
+    <div style={{
+      color: 'black',
+      backgroundColor: 'white', 
+      display: 'block',
+      textAlign: 'center',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '0.1rem 0.25rem',
+      borderRadius: '5px',
+      margin: '0px',
+      width: '70px',
+      marginTop: '5px',
+      marginRight: '0rem',
+      fontSize: '0.8rem',
+      transform: 'translate(-50%, -50%)',
+      fontFamily: 'brandon-grotesque, sans-serif',
+      fontWeight: 900
+    }}>
+      <div>{zip} - {amount}</div>
+      <div style={{
+        fontSize: '0.5rem',
+        textTransform: 'uppercase'
+      }}>{name}</div>
+    </div>
+
+  </div>
+);

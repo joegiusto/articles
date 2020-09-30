@@ -22,7 +22,10 @@ const initial_state = {
   news_tagline: "",
   news_notes: "",
   news_date: new Date(),
+
   news_tags: [],
+  proposals: [],
+
   url: '',
   hero_url: "",
   last_update: new Date(),
@@ -31,6 +34,7 @@ const initial_state = {
   author: '',
 
   tagSelectOpen: false,
+  proposalSelectOpen: false,
 
   submitting_data: false,
   submitting_error: false,
@@ -133,6 +137,22 @@ class Add extends Component {
     this.setState({
       ...initial_state
     });
+  }
+
+  addProposal(proposalObj) {
+
+    if ( !contains(proposalObj, this.state.proposals) ) {
+      this.setState({ 
+        proposals: [...this.state.proposals, {...proposalObj} ] 
+      })
+    }
+
+    function contains(obj, list) {
+      return list.some(function(elem) {
+           return elem._id === obj._id
+      })
+    }
+
   }
 
   addTag(tagObj) {
@@ -423,18 +443,65 @@ class Add extends Component {
                     ))
                     :
                       <div className="badge badge-warning mr-1">Loading</div>
+                    }                  
+                  </div>
+                  :
+                  null
+                  }
+                  
+
+                </div>
+
+            </div>
+
+          </div>
+
+          <div className="col-12 col-md-6">
+
+            <div className="form-group proposals-group">
+
+                <label for="news_title">{this.state.news_type === '' ? 'News' : this.state.news_type} Tags:</label>
+                <div className="preview form-control">
+
+                  <div className="tags">
+                    {this.state.proposals.length > 0 ?
+                    this.state.proposals.map((tag) => (
+                      <div onClick={() => this.removeTag(tag)} className="badge badge-dark d-inline-block mr-1">{tag.tag_name}</div>
+                    ))
+                    :
+                    <div className="badge badge-danger d-inline-block">No Tags</div>
                     }
-                    {/* <badge onClick={() => this.setState({ news_tags: [...this.state.news_tags, {id: Math.floor(Math.random()*90000) + 10000, tag_name: "Elon Musk"} ] })} className="badge badge-dark mr-1">Elon Musk</badge>
-                    <badge onClick={() => this.setState({ news_tags: [...this.state.news_tags, {id: Math.floor(Math.random()*90000) + 10000, tag_name: "Tesla"} ] })} className="badge badge-dark mr-1">Tesla</badge>
-                    <badge onClick={() => this.setState({ news_tags: [...this.state.news_tags, {id: Math.floor(Math.random()*90000) + 10000, tag_name: "SpaceX"} ] })} className="badge badge-dark mr-1">SpaceX</badge>
-                    <badge onClick={() => this.setState({ news_tags: [...this.state.news_tags, {id: Math.floor(Math.random()*90000) + 10000, tag_name: "NASA"} ] })} className="badge badge-dark mr-1">NASA</badge>
-                    <badge onClick={() => this.setState({ news_tags: [...this.state.news_tags, {id: Math.floor(Math.random()*90000) + 10000, tag_name: "Monsanto"} ] })} className="badge badge-dark mr-1">Monsanto</badge>
-                    <badge onClick={() => this.setState({ news_tags: [...this.state.news_tags, {id: Math.floor(Math.random()*90000) + 10000, tag_name: "Bill Gates"} ] })} className="badge badge-dark mr-1">Bill Gates</badge>
-                    <badge onClick={() => this.setState({ news_tags: [...this.state.news_tags, {id: Math.floor(Math.random()*90000) + 10000, tag_name: "United Nations"} ] })} className="badge badge-dark mr-1">United Nations</badge>
-                    <badge onClick={() => this.setState({ news_tags: [...this.state.news_tags, {id: Math.floor(Math.random()*90000) + 10000, tag_name: "Bernie Sanders"} ] })} className="badge badge-dark mr-1">Bernie Sanders</badge>
-                    <badge onClick={() => this.setState({ news_tags: [...this.state.news_tags, {id: Math.floor(Math.random()*90000) + 10000, tag_name: "Donald Trump"} ] })} className="badge badge-dark mr-1">Donald Trump</badge>
-                    <badge onClick={() => this.setState({ news_tags: [...this.state.news_tags, {id: Math.floor(Math.random()*90000) + 10000, tag_name: "Edward Snowden"} ] })} className="badge badge-dark mr-1">Edward Snowden</badge> */}
                     
+                  </div>
+                  
+                  <div className="edit" onClick={() => {this.setState({proposalSelectOpen: !this.state.proposalSelectOpen})}}>
+                    <i className="fas fa-file-signature"></i>
+                  </div>
+
+                  {this.state.proposalSelectOpen ? 
+                  <div className="select noselect">
+
+                    <div className="form-group">
+                      <input 
+                        type="text" 
+                        className="form-control" 
+                        id="news_tag_search"
+                        name="news_tag_search" 
+                        aria-describedby=""
+                        value={this.state.news_tag_search}
+                        onChange={this.handleChange}
+                        placeholder="Search Tags"
+                      />
+                    </div>
+
+                    {/* Replace this with a map of the database tags */}
+                    {this.props.proposals !== [] ?
+                    this.props.proposals.map((tag) => (
+                      <div onClick={() => this.addTag(tag)} className="badge badge-dark mr-1">{tag.title}</div>
+                    ))
+                    :
+                      <div className="badge badge-warning mr-1">Loading</div>
+                    }                  
                   </div>
                   :
                   null

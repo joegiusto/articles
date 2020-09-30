@@ -116,7 +116,7 @@ class IssuesClass extends Component {
                   Sign Up
                 </button>
 
-                <small className="d-block mt-2">Already a member? Sign In</small>
+                <small className="d-block mt-2">Already a member? <Link to={ROUTES.SIGN_IN}>Sign In</Link></small>
 
               </div>
               :
@@ -126,7 +126,7 @@ class IssuesClass extends Component {
             {
             this.props.site.userSubscriptions ? 
 
-            this.props.user_subscriptions.length === 0 ? 
+            this.props.user_subscriptions?.length === 0 ? 
 
               <div className="sign-up-alert mt-2">
 

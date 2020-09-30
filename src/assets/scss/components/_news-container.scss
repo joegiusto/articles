@@ -421,7 +421,7 @@ section.frontpage-section {
   
       .tags-container {
         margin-top: 2rem;
-        background-color: rgba(255, 255, 255, 0.75);
+        background-color: rgba(255, 255, 255, 0.5);
         padding: 0.5rem;
 
         .tags {
@@ -429,13 +429,21 @@ section.frontpage-section {
           .tag {
             cursor: pointer;
             margin-right: 0.25rem;
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.25);
             border: 1px solid rgba(0, 0, 0, 0.75);
-            transform: scale(0.9);
+            // transform: scale(0.9);
             border-radius: 0px;
+            transition-duration: 100ms;
+
+            &.badge-danger {
+              // color: black;
+              background-color: red;
+            }
   
             &:hover {
-              transform: scale(1);
+              // transform: scale(1);
+              background-color: white;
+              border: 1px solid rgba(0, 0, 0, 1);
             }
           }
         }
@@ -2135,9 +2143,23 @@ section.frontpage-section {
             // border: 1px solid #000;
             // border-radius: 8px;
             // min-height: 300px;
+            cursor: pointer;
             width: 100%;
             background: $accent-color;
             height: 100%;
+            transition-duration: 300ms;
+
+            &.active {
+              background: $base-color;
+            }
+
+            &:hover {
+              box-shadow: 2px 2px 2px 0px #000;
+              
+              h3 {
+                font-weight: 900;
+              }
+            }
 
             &::after {
               content: "";
@@ -2201,6 +2223,61 @@ section.frontpage-section {
         height: 400px;
         color: white;
 
+        &.story {
+
+          .frontpage-section-header h5:after {
+            background-color: $story-color;
+          }
+  
+          .bar, .date, .update {
+            background-color: $story-color; 
+          }
+  
+          .tagline { 
+            background-color: $story-color; 
+          }
+  
+        }
+  
+        &.issue {
+  
+          .frontpage-section-header h5:after {
+            background-color: $issue-color;
+          }
+  
+          .bar, .date, .update, .subscribe {
+            background-color: $issue-color; 
+          }
+  
+          .subscribed {
+            background-color: rgba($issue-color, 0.5);
+  
+            .btn {
+              opacity: 0.75;
+            }
+          }
+  
+          .tagline { 
+            background-color: $issue-color; 
+          }
+  
+        } 
+  
+        &.myth {
+  
+          .frontpage-section-header h5:after {
+            background-color: $myth-color;
+          }
+  
+          .bar, .date, .update {
+            background-color: $myth-color; 
+          }
+  
+          .tagline { 
+            background-color: $myth-color; 
+          }
+  
+        } 
 
         &:hover {
           .shadow {
@@ -2359,7 +2436,7 @@ section.frontpage-section {
           transition-duration: 500ms;
           padding-top: 0.75rem;
 
-          .tags {
+          .news-card-tags {
             position: absolute;
             top: 0;
             transform: translateY(-50%);

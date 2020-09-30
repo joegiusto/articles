@@ -6,6 +6,53 @@
     flex-direction: row;
   }
 
+  
+  .form-group {
+    position: relative;
+
+    label {
+      display: block;
+      background-color: $base-color;
+      // border: 0.5px solid #000;
+      box-shadow: 0px 0px ;
+      border-radius: 0.25rem;
+      border: 1px solid #ced4da;
+      // position: absolute;
+      margin-bottom: 0;
+      top: -0.75rem;
+      left: 0rem;
+      width: 100%;
+      // color: white;
+      padding: 0.0rem 0.25rem;
+      font-size: 0.7rem;
+      // box-shadow: 0 2px 5px rgba( $base-color , 0.7);
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    input.with-label {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+
+    input:focus, select:focus {
+      border-color: rgba(0, 0, 0, 0.8);
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(0, 0, 0, 0.6);
+      outline: 0 none;
+    }
+
+    .prefilled {
+      background-color: white;
+      border: 0.5px solid #000;
+      border-radius: 0.25rem;
+      position: absolute;
+      top: -0.75rem;
+      left: 3.5rem;
+      padding: 0.05rem 0.25rem;
+      font-size: 0.7rem;
+    }
+  }
+
   .side-panel {
     width: 100%;
     background-color: $base-color;
@@ -39,6 +86,15 @@
 
   .creator {
     padding: 1rem;
+    background-color: rgba($accent-color, 0.5);
+
+    @include media-breakpoint-up(md) {
+      flex-basis: 425px;
+      flex-shrink: 0;
+      height: calc(100vh - 100px);
+      overflow-y: scroll;
+      border-right: 2px solid #000;
+    }
 
     h5 {
       // background-color: $accent-color;
@@ -47,6 +103,45 @@
       font-style: normal;
       padding: 0.25rem 0.5rem;
       font-size: 1.1rem;
+    }
+
+    .accordion {
+      margin-bottom: 0.5rem;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+
+      .card {
+        border-radius: 0px;
+      }
+
+      .card-header {
+        cursor: pointer;
+        border: none;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .card-body {
+        border: none;
+
+        .filter-option-dropdown {
+          display: flex;
+          flex-wrap: wrap;
+          margin: 0.5rem 0rem;
+          background-color: rgba(128, 128, 128, 0.5);
+          border-radius: 0px;
+          padding: 0.5rem;
+
+          small {
+            width: 100%;
+            flex-shrink: 0;
+            margin-bottom: 0.5rem;
+          }
+
+          .form-group {
+            margin-bottom: 0rem;
+          }
+        }
+      }
     }
 
     .sort {
@@ -79,13 +174,22 @@
     }
   }
 
-  .map {
+  .map-container {
     padding: 1rem;
-    // max-width: 500px;
     flex-grow: 1;
 
-    @include media-breakpoint-up(md) {
-      padding-left: 0;
+    .map {
+      flex-grow: 1;
+  
+      @include media-breakpoint-up(md) {
+        // padding-left: 0;
+      }
+    }
+
+    table {
+      background-color: white;
     }
   }
+
+  
 }

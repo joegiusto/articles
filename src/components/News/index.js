@@ -52,10 +52,10 @@ const AnyReactComponent = ({ text }) => (
       justifyContent: 'center',
       padding: '0.25rem',
       marginRight: '0rem',
-      fontSize: '1rem',
+      fontSize: '1.2rem',
       transform: 'translate(-50%, -50%)',
     }}>
-      <i class="fas fa-map-marker-alt"></i>
+      <i className="fas fa-map-marker-alt mr-0"></i>
     </div>
 
     <div style={{
@@ -290,11 +290,11 @@ function SearchHead(props) {
           <div className="type">Trending</div>
 
           <div className="tags">
-            <div className="tag badge badge-articles">Coronavirus</div>
-            <div className="tag badge badge-articles">United Nations</div>
-            <div className="tag badge badge-articles">2020 Elections</div>
-            <div className="tag badge badge-articles">Global Warming</div>
-            <div className="tag badge badge-articles">Flint Michigan</div>
+            <Link to={ROUTES.EXTENDED + '/coronavirus'}><div className="tag badge badge-danger"><i className="fas fa-map-pin mr-1"></i>Coronavirus</div></Link>
+            <Link to={ROUTES.ISSUES + '/2020-election'}><div className="tag badge badge-articles">2020 Elections</div></Link>
+            <Link to={ROUTES.ISSUES + '/global-warming'}><div className="tag badge badge-articles">Global Warming</div></Link>
+            <Link to={ROUTES.ISSUES + '/gun-laws-and-control'}><div className="tag badge badge-articles">Gun Laws And Control</div></Link>
+            {/* <Link to={ROUTES.ISSUES + '/flint-water-crisis'}><div className="tag badge badge-articles">Flint Water Crisis</div></Link> */}
           </div>
         </div>
   
@@ -497,7 +497,7 @@ class RecentSliders extends Component {
                 Sign Up
               </button>
 
-              <small className="d-block mt-2">Already a member? Sign In</small>
+              <small className="d-block mt-2">Already a member? <Link to={ROUTES.SIGN_IN}>Sign In</Link></small>
 
             </div>
             :
@@ -507,20 +507,11 @@ class RecentSliders extends Component {
             {
             this.props.userSubscriptions ? 
 
-              this.props.user_subscriptions.length === 0 ? 
+              this.props.user_subscriptions?.length === 0 ? 
 
               <div className="sign-up-alert mt-5">
-
                 <div className="title">No Subscriptions</div>
-
                 <div className="text">Sort by all issues and subscribe to ones that you find interesting.</div>
-
-                {/* <button className="btn btn-articles-light mt-2">
-                  Sign Up
-                </button> */}
-
-                {/* <small className="d-block mt-2">Already a member? Sign In</small> */}
-
               </div>
 
               :
@@ -580,6 +571,8 @@ class RecentSliders extends Component {
                 <NewsCard 
                 key={story._id}
                 document={story}
+                // hasUpdate={ moment(document.last_update).isSameOrAfter(document.lastRead) } 
+                // isSub={this.props.user_subscriptions?.filter(sub => sub._id === document._id).length > 0}
                 />
               </SwiperSlide>
             ))}
@@ -596,11 +589,34 @@ class RecentSliders extends Component {
           <div className="tags">
 
             {this.state.tags.map(tag => 
-              <div className="tag">
+              <div onClick={() => this.props.changeTagFocus(tag.tag_name)} className={"tag " + (this.props.tagSearch === tag.tag_name ? 'active' : '')}>
                 <h3>{tag.tag_name}</h3>
               </div>
             )}
 
+          </div>
+
+          <div className="tag-results">
+            {this.props.tagSearch !== '' && this.props.tagSearchResults !== [] ? 
+            <Swiper
+            {...swiper_settings}
+            >
+              {
+              this.props.tagSearchResults?.map(result => 
+                <SwiperSlide>
+                  <NewsCard 
+                    key={result._id}
+                    document={result}
+                    hasUpdate={ moment(result.last_update).isSameOrAfter(result.lastRead) }
+                    isSub={this.props.user_subscriptions?.filter(sub => sub._id === result._id).length > 0}
+                  />
+                </SwiperSlide>
+              )
+              }
+            </Swiper>
+            :
+            null
+            }
           </div>
 
         </div>
@@ -616,6 +632,12 @@ class Frontpage extends Component {
 
     this.state = {
       search: '',
+
+      tagSearch: '',
+      tagSearchResults: [
+
+      ],
+
       searchSettingsOverlay: false,
 
       weatherSearch: this.props.user_details?.address?.zip || '',
@@ -695,6 +717,7 @@ class Frontpage extends Component {
     this.toggleWeatherOverlay = this.toggleWeatherOverlay.bind(this);
     this.toggleBankingOverlay = this.toggleBankingOverlay.bind(this);
     this.toggleSearchSettingsOverlay = this.toggleSearchSettingsOverlay.bind(this);
+    this.changeTagFocus = this.changeTagFocus.bind(this);
   }
 
   componentDidMount() {
@@ -789,6 +812,31 @@ class Frontpage extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  
+  changeTagFocus(tag) {
+    const self = this;
+
+    self.setState({
+      tagSearch: tag
+    }, () => {
+
+      axios.post('/api/getNewsByTag', {
+        tag: tag
+      })
+      .then(function (response) {
+        console.log(response);
+
+        self.setState({
+          tagSearchResults: response.data.tags
+        })
+      })
+      .catch(function (error) {
+        console.log(error.response);
+      }); 
+
+    })
+  }
+
   toggleWeatherOverlay(bool) {
     if (bool === true || bool === false) {
       this.setState({weatherOverlay: bool})
@@ -853,11 +901,11 @@ class Frontpage extends Component {
                 <div className="zoom-controls">
 
                   <div className="zoom-in">
-                    <i class="fas fa-plus mr-0"></i>
+                    <i className="fas fa-plus mr-0"></i>
                   </div>
 
                   <div className="zoom-out">
-                    <i class="fas fa-minus mr-0"></i>
+                    <i className="fas fa-minus mr-0"></i>
                   </div>
                 </div>
 
@@ -1036,11 +1084,11 @@ class Frontpage extends Component {
                 <input type="text" name='weatherSearch' id='weatherSearch' onChange={(e) => this.onChange(e)} value={this.state.weatherSearch}/>
 
                 <div className="search-button">
-                  <i class="fas fa-search"></i>
+                  <i className="fas fa-search"></i>
                 </div>
 
                 <div className="badge badge-articles d-flex">
-                  <div>Prefilled</div><i class="fas fa-info-circle mr-0 ml-1"></i>
+                  <div>Prefilled</div><i className="fas fa-info-circle mr-0 ml-1"></i>
                 </div>
 
               </div>
@@ -1518,19 +1566,17 @@ class Frontpage extends Component {
                   {/* <Route exact path={ROUTES.NEWS} render={() => <h1>Front</h1>}/> */}
                   {/* <Route exact path={ROUTES.NEWS} render={() => <JustFrontpage stories={this.props.stories} issues={this.props.issues} myths={this.props.myths}></JustFrontpage>}/> */}
                   <Route exact path={ROUTES.NEWS} render={() => 
-                    <>
-
-                      <RecentSliders
-                      stories={this.props.stories}
-                      issues={this.props.issues}
-                      myths={this.props.myths}
-                      userSubscriptions={this.props.site.userSubscriptions}
-                      toggleUserSubscriptions={this.props.toggleUserSubscriptions}
-                      user_subscriptions={this.props.user_subscriptions}
-                      isAuth={this.props.isAuth}
-                      />
-
-                    </>
+                    <RecentSliders
+                    stories={this.props.stories}
+                    issues={this.props.issues}
+                    myths={this.props.myths}
+                    userSubscriptions={this.props.site.userSubscriptions}
+                    toggleUserSubscriptions={this.props.toggleUserSubscriptions}
+                    user_subscriptions={this.props.user_subscriptions}
+                    isAuth={this.props.isAuth}
+                    changeTagFocus={this.changeTagFocus}
+                    tagSearch={this.state.tagSearch}
+                    tagSearchResults={this.state.tagSearchResults}/>
                   }/>
                   <Route exact path={ROUTES.STORIES} render={() => <Stories searchText={this.state.search}></Stories>}/>
                   <Route exact path={ROUTES.ISSUES} render={() => <Issues searchText={this.state.search}></Issues> }/>

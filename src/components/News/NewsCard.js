@@ -42,7 +42,7 @@ class NewsCard extends Component {
   render() {
     return (
       <Link to={this.renderRoute(this.props.document.news_type) + '/' + this.props.document.url}>
-        <div className="content">
+        <div className={"content " + (this.props.document.news_type) }>
 
           <div className="date">{moment(this.props.document.news_date).format("L")}</div>
 
@@ -69,7 +69,7 @@ class NewsCard extends Component {
           }
 
           {
-            this.props.hasUpdate 
+            this.props.hasUpdate && this.props.document.news_type === 'issue'
             ? 
             <div className="update">
               <i className="fas fa-star"></i>
@@ -94,7 +94,7 @@ class NewsCard extends Component {
             }
           </div> */}
           <div className="tagline">
-            <div className="tags">
+            <div className="news-card-tags">
               {this.props.document?.news_tags?.length > 0 ?
               this.props.document?.news_tags?.map((tag) => 
                 <div className="tag badge badge-light">{tag.tag_name}</div>

@@ -3,6 +3,7 @@ var ObjectId = require('mongodb').ObjectId;
 const passport = require("passport");
 const stripe = require('stripe')(process.env.STRIPE_NEW);
 const mongoose = require("mongoose");
+const axios = require("axios");
 const User = mongoose.model("users");
 
 // const { resource } = require('../api/users');
@@ -1260,6 +1261,163 @@ module.exports = (app, db) => {
       return res.send(result);
     });
     
+  });
+
+  app.post("/api/getReach", passport.authenticate('jwt', {session: false}), async (req, res) => {
+    console.log("Getting reach of provided ad");
+    console.log(req.body)
+    console.log('All people less then this date ' + moment().subtract(req.body.ageFilters.above.age, 'years').format("LLL") )
+
+    let ageRange, ageAbove, ageBelow = {}
+    let zipList, zipNearby, zipAround = {}
+
+    if (req.body.ageFilters.range.active) {
+      ageRange = {birth_date: {$lte: new Date( moment().subtract( req.body.ageFilters.above.age, 'years') ) } }
+    }
+    
+    if (req.body.ageFilters.above.active) {
+      ageAbove = {birth_date: {$lte: new Date( moment().subtract( req.body.ageFilters.above.age, 'years') ) } }
+    }
+
+    if (req.body.ageFilters.below.active) {
+      ageBelow = {birth_date: {$gte: new Date( moment().subtract( req.body.ageFilters.below.age, 'years') ) } }
+    }
+
+    if (req.body.zipFilters.list.active) {
+      zipList = {"address.zip": req.body.zipFilters.list.zip }
+    }
+    
+    if (req.body.zipFilters.nearby.active) {
+      zipNearby = {"address.zip": req.body.zipFilters.nearby.zip }
+    }
+
+    if (req.body.zipFilters.around.active) {
+      zipNearby = {"address.zip": req.body.zipFilters.around.zip }
+    }
+
+    db.collection("articles_users").find(
+      {...ageRange, ...ageAbove, ...ageBelow, ...zipList, ...zipNearby, ...zipAround}
+    ).toArray(function(err, result) {
+      if (err) throw err;
+      console.log(`Call to /api/getUserDonations done`);
+      return res.send(result) 
+    });
+  
+  });
+
+  app.post("/api/secure/getAdPopulation", passport.authenticate('jwt', {session: false}), async (req, res) => {
+
+    let compiledZips = []
+
+    const users = await db.collection("articles_users").find( {}, { projection: { 'address.zip': 1 } } ).toArray();
+
+    // res.send(users);
+
+    processArray();
+
+    async function processArray() {
+      // const array = users
+      const output = []
+      const promises = users.map( async(item, i) => {
+
+        // const it = await Users.findById(item.user).lean()
+
+        const it = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+          params: {
+            address: item.address.zip,
+            key: 'AIzaSyAKmyGIU1IJo_54kahuds7huxuoEyZF-68'
+          }
+        })
+        .then(function (response) {
+          console.log(response.data.results[0].geometry.location)
+          return response.data.results[0]
+        })
+        .catch(function (error) {
+          return error
+        });
+
+        item = {...it.geometry.location}
+        item.name = it.address_components[1].short_name
+        item.zip = users[i].address.zip
+        item.amount = 1
+        output.push(item)
+      })
+      await Promise.all(promises)
+      return res.json({ data: output })
+    }
+
+
+    // for ( var i=0; i < users.length; i++ ) {
+      
+    //     const currentUserZip = users[i].address.zip               
+    //     console.log(currentUserZip)
+    //     compiledZips.push(users[i].address.zip)
+
+    //     axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+    //       params: {
+    //         address: users[i],
+    //         key: 'AIzaSyAKmyGIU1IJo_54kahuds7huxuoEyZF-68'
+    //       }
+    //     })
+    //     .then(function (response) {
+    //       console.log(response.data.results[0].geometry.location)
+    //     })
+    //     .catch(function (error) {
+    //       console.log(error.response);
+    //     });
+
+    // }
+
+  })
+
+  app.post("/api/zipToLatLng", passport.authenticate('jwt', {session: false}), async (req, res) => {
+    console.log("Getting LatLng of provided zips");
+    console.log(req.body)
+
+    let completed = 0;
+
+    let returned = []
+    const zips = req.body.zips;
+
+    for (let i = 0; i < zips.length; i++) {
+      console.log(`Ran ${i} / ${zips.length}`)
+
+      axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+        params: {
+          address: zips[i],
+          key: 'AIzaSyAKmyGIU1IJo_54kahuds7huxuoEyZF-68'
+        }
+      })
+      .then(function (response) {
+
+        completed++;
+
+        console.log(response.data.results[0].geometry.location)
+        returned.push(response.data.results[0].geometry.location)
+        console.log(returned)
+
+      })
+      .catch(function (error) {
+        console.log(error.response);
+      });
+
+      if ( completed === zips.length ) {
+        // delaySubmit()
+      }
+
+    }
+
+    function delaySubmit() {
+      setTimeout(function(){ return res.send(returned) }, 1000);
+    }
+
+    // if ( completed === zips.length ) {
+    //   console.log("Should send now")
+    //   res.send(returned)
+    // }
+
+    return res.send(returned)
+
   });
 
   require('./routes/updateLastRead')(app, db, passport);
