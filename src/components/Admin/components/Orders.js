@@ -4,36 +4,6 @@ import axios from 'axios'
 import moment from 'moment'
 import { ConfirmDelete } from '../../Global'
 
-// class ConfirmDelete extends Component {
-//   constructor(props) {
-//     super(props);
-    
-//     this.state = {
-//       confirm: false
-//     };
-
-//   }
-
-//   handleClick() {
-
-//     if (this.state.confirm) {
-//       this.props.afterConfirm()
-//     } else {
-//       this.setState({confirm: true})
-//     }
-
-//   }
-
-//   render() {
-//     return (
-//       this.state.confirm ? 
-//       <div style={{cursor: 'pointer'}} onClick={() => this.handleClick()} className="badge badge-danger noselect">Confirm</div>
-//       :
-//       <div style={{cursor: 'pointer'}} onClick={() => this.handleClick()} className="badge badge-danger noselect">Delete</div>
-//     )
-//   }
-// }
-
 class Reports extends Component {
   constructor(props) {
   super(props);
@@ -143,19 +113,25 @@ class Reports extends Component {
     const needs_shipping = this.state.needs_shipping;
 
     return (
-      <div className="admin-orders mt-5">
+      <div className="admin-orders">
 
-        <div className="order-overview">
-          <h5>Orders</h5>
+        <div className="side-panel">
 
-          <div>Preorders - 0</div>
-          <div>Needs Shipping - 0</div>
-          <div>Pending Delivery - 0</div>
-          <div>Delivered - 0</div>
-          <div>Deleted - 0</div>
+          <div className="card">
+            <div className="card-header">Status</div>
+            <div className="card-body">
+              {/* <div>Preorders - 0</div> */}
+              <div>Needs Shipping - 0</div>
+              <div>Pending Delivery - 0</div>
+              <div>Delivered - 0</div>
+              <hr/>
+              <div>Deleted - 0</div>
+            </div>
+          </div>
+
         </div>
 
-        <div className="orders mt-4 w-75">
+        <div className="orders w-75">
 
           <div className="table-filters mb-3">
             <button onClick={() => this.setState({table_tab: 'Needs Shipping'})} className={"btn btn-articles-light " + (this.state.table_tab === 'Needs Shipping' ? 'alt' : '')}>Needs Shipping</button>

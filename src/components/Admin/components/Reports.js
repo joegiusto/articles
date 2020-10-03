@@ -74,7 +74,21 @@ class Reports extends Component {
   render() {
 
     return (
-      <div className="admin-reports mt-3">
+      <div className="admin-reports">
+
+        <div className="side-panel">
+
+          <div className="card">
+            <div className="card-header">Status</div>
+            <div className="card-body">
+              <div>Total: {this.state.reports.length}</div>
+              <hr/>
+              <div>Unresponded: {this.state.reports.length}</div>
+              <div>Responded: 0</div>
+            </div>
+          </div>
+
+        </div>
 
         <div className="reports">
           <h5>Reports ({this.state.reports.length})</h5>
@@ -86,7 +100,7 @@ class Reports extends Component {
               </div>
 
               <div>
-                <span className="badge badge-dark">{moment(report.date).format("LL")}</span> - <span className="badge badge-warning">{report.fetchedId}</span> - <span className="badge badge-info"><b>{report.fetchedUser} <small>{report.user_id}</small></b></span>
+                <span className="badge badge-dark">{moment(report.date).format("LL")}</span> - <span className="badge badge-warning">{report.fetchedId}</span> - <span className="badge badge-info"><b>{report.first_name} <small>{report.user_id}</small></b></span>
               </div>
 
               <div>{report.reason}</div>

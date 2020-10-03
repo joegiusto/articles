@@ -827,9 +827,17 @@
             flex-direction: column;
             align-items: flex-start;
 
+            .user {
+              font-family: brandon-grotesque, sans-serif;
+              font-style: normal;
+              font-weight: 900;
+            }
+
             .date {
+              margin-left: 0.5rem;
               font-size: 0.8rem;
               font-weight: 700;
+              color: rgba(0, 0, 0, 0.6);
             }
           }
         }

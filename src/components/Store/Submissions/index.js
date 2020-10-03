@@ -342,6 +342,58 @@ class SubmissionsListBase extends Component {
 
       {/* {loading && <div>Loading ...</div>} */}
 
+      <div className="submissions-new">
+
+        <div className="submission">
+
+          <div className="vote-controls">
+
+            <div className="voting-bar">
+
+              <div className="like">
+                <i className="far fa-thumbs-up" aria-hidden="true"></i>
+              </div>
+  
+              <div className="dislike">
+                <i className="far fa-thumbs-down" aria-hidden="true"></i>
+              </div>
+
+            </div>
+
+            <div className="visual-bar">
+
+              <div className="like"></div>
+              <div className="dislike"></div>
+
+            </div>
+          </div>
+        </div>
+
+        <div className="submission">
+
+          <div className="vote-controls">
+
+            <div className="voting-bar">
+
+              <div className="like">
+                <i className="far fa-thumbs-up" aria-hidden="true"></i>
+              </div>
+  
+              <div className="dislike">
+                <i className="far fa-thumbs-down" aria-hidden="true"></i>
+              </div>
+              
+            </div>
+
+            <div className="visual-bar">
+              <div className="like"></div>
+              <div className="dislike"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
       <div className="submissions">
 
         {

@@ -24,47 +24,78 @@ module.exports = (app, db) => {
 
       console.log(result)
 
-      for (let i = 0; i < result.length; i++) {
-        console.log(i)
+      processArray();
 
-        db.collection("articles_expenses").findOne( {_id: ObjectId(result[i].expense_id)}, function(subErr, subResult) {
-          if (err) throw subErr;
-          // console.log(subResult)
-          result[i].fetchedId = subResult.reason
-        });
+      async function processArray() {
+        const output = []
+        const promises = result.map( async(item, i) => {
 
-        db.collection("articles_users").findOne( {_id: ObjectId(result[i].user_id)}, function(subErr, subResult) {
+          const it = await db.collection("articles_users").findOne( {_id: ObjectId(result[i].user_id)}, { projection: { 'first_name': 1 } } )
+          .then((response) => {
+            return response
+          })
+          .catch((error) => {
+            return error
+          })
 
-          if ( subResult === null ) {
-            subResult = {}
-          }
+          console.log(it)
+          item = result[i]
+          item.first_name = it.first_name
+          // item += it
+          // item.name = it.address_components[1].short_name
+          // item.zip = users[i].address.zip
+          // item.amount = 1
+          
+          output.push(item)
 
-          if (err) throw subErr;
-          // console.log(subResult)
-
-          // let first_name = subResult.first_name || ''
-          // let last_name = subResult.last_name || ''
-
-          if ( !subResult.hasOwnProperty('first_name') ) {
-            subResult.first_name = 'User Account Deleted'
-          }
-
-          if ( !subResult.hasOwnProperty('last_name') ) {
-            subResult.last_name = ''
-          }
-
-          result[i].fetchedUser = subResult.first_name + ' ' + subResult.last_name 
-        });
-
-        if (i === result.length - 1) {
-          delaySubmit()
-        }
-
+        })
+        await Promise.all(promises)
+        return res.json(output)
       }
 
-      function delaySubmit() {
-        setTimeout(function(){ return res.send(result) }, 500);
-      }
+      // console.log(result)
+
+      // for (let i = 0; i < result.length; i++) {
+      //   console.log(i)
+
+      //   db.collection("articles_expenses").findOne( {_id: ObjectId(result[i].expense_id)}, function(subErr, subResult) {
+      //     if (err) throw subErr;
+      //     // console.log(subResult)
+      //     result[i].fetchedId = subResult.reason
+      //   });
+
+        // db.collection("articles_users").findOne( {_id: ObjectId(result[i].user_id)}, function(subErr, subResult) {
+
+        //   if ( subResult === null ) {
+        //     subResult = {}
+        //   }
+
+        //   if (err) throw subErr;
+        //   // console.log(subResult)
+
+        //   // let first_name = subResult.first_name || ''
+        //   // let last_name = subResult.last_name || ''
+
+        //   if ( !subResult.hasOwnProperty('first_name') ) {
+        //     subResult.first_name = 'User Account Deleted'
+        //   }
+
+        //   if ( !subResult.hasOwnProperty('last_name') ) {
+        //     subResult.last_name = ''
+        //   }
+
+        //   result[i].fetchedUser = subResult.first_name + ' ' + subResult.last_name 
+        // });
+
+        // if (i === result.length - 1) {
+        //   delaySubmit()
+        // }
+
+      // }
+
+      // function delaySubmit() {
+      //   setTimeout(function(){ return res.send(result) }, 500);
+      // }
 
       // return res.send(result) 
     });

@@ -96,41 +96,6 @@ class Ads extends Component {
         userAreas: response.data.data
       });
 
-      // for ( var i=0; i < self.state.users.length; i++ ) {
-      //   const currentUserZip = self.state.users[i].address.zip               
-
-      //   if (currentUserZip === undefined || currentUserZip === null || currentUserZip === "") {
-
-      //     self.setState({
-      //       zips: {
-      //         ...self.state.zips,
-      //         None: self.state.zips.None + 1
-      //       }
-      //     })
-
-      //   } else {
-
-      //     self.setState({
-      //       zipsArray: self.state.zipsArray.concat(currentUserZip),
-      //       zips: {
-      //         ...self.state.zips,
-      //         [self.state.users[i].address.zip]: (!isNaN(self.state.zips[currentUserZip]) ? (self.state.zips[currentUserZip] + 1) : 1)
-      //       }
-      //     })
-
-      //   }
-
-      // }
-
-      // return axios.post('/api/zipToLatLng', {
-      //   zips: self.state.zipsArray
-      // })
-      // .then(function (response) {
-      //   console.log(response);
-      // }.catch(function (error) {
-      //   console.log(error);
-      // }));
-
     })
     .catch(function (error) {
       console.log(error);

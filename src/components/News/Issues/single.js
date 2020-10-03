@@ -88,6 +88,7 @@ class Issue extends React.Component {
           loading: false
         }, (() => {
           self.loadLastRead();
+          self.loadComments();
         }));
 
       })
@@ -105,6 +106,27 @@ class Issue extends React.Component {
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
+
+  loadComments() {
+    const self = this;
+
+    axios.get('/api/getComments', {
+      params: {
+        _id: this.state._id,
+      }
+    })
+    .then(function (response) {
+      console.log(response);
+
+      self.setState({
+        comments: response.data
+      })
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
 
   loadLastRead() {
     const self = this;
@@ -160,23 +182,41 @@ class Issue extends React.Component {
   }
 
   submitComment() {
+    const self = this;
 
     if (this.state.comment === '') {
       this.setState({commentSubmitError: 'You can not post an empty comment.'})
     } else {
-      this.setState({
-        comments: [
-          ...this.state.comments,
-          {
-            comment: this.state.comment,
-            date: new Date(),
-            user_id: this.props.user._id
-          }
-        ],
-        comment: '',
-        commentSubmitError: '',
-        newCommentExpanded: false
+
+      axios.post('/api/upsertComment', {
+        _id: this.state._id,
+        comment: this.state.comment
       })
+      .then(function (response) {
+        console.log(response);
+
+        self.setState({
+          comments: [
+            ...self.state.comments,
+            {
+              comment: self.state.comment,
+              date: new Date(),
+              user_id: self.props.user._id,
+              first_name: `${self.props.user.first_name}`,
+              last_name: `${self.props.user.last_name.charAt(0)}`
+            }
+          ],
+          comment: '',
+          commentSubmitError: '',
+          newCommentExpanded: false
+        })
+  
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+      
     }
 
   }
@@ -412,7 +452,7 @@ class Issue extends React.Component {
                   }
     
                   <div className="comments">
-                    {this.state.comments.map(comment => 
+                    {this.state.comments.sort( (a, b) => new Date(b.date) - new Date(a.date) ).map(comment => 
                       <div className="comment">
     
                         <div className="profile-photo">
@@ -424,8 +464,14 @@ class Issue extends React.Component {
                         </div>
     
                         <div className="comment">
-                          <div>{comment.comment}</div>
-                          <div className="date">{moment(comment.date).format("LLL")}</div>
+
+                          <div>
+                            <span className="user">{comment.first_name + ' ' + comment.last_name?.charAt(0) || comment.user_id}</span>
+                            <span className="date">{moment(comment.date).format("LLL")}</span>
+                          </div>
+
+                          <div className="comment-text">{comment.comment}</div>
+                          
                         </div>
                         
                       </div>

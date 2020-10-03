@@ -1307,25 +1307,19 @@ module.exports = (app, db) => {
 
   app.post("/api/secure/getAdPopulation", passport.authenticate('jwt', {session: false}), async (req, res) => {
 
-    let compiledZips = []
-
     const users = await db.collection("articles_users").find( {}, { projection: { 'address.zip': 1 } } ).toArray();
-
-    // res.send(users);
 
     processArray();
 
     async function processArray() {
-      // const array = users
       const output = []
+      
       const promises = users.map( async(item, i) => {
-
-        // const it = await Users.findById(item.user).lean()
 
         const it = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
           params: {
             address: item.address.zip,
-            key: 'AIzaSyAKmyGIU1IJo_54kahuds7huxuoEyZF-68'
+            key: process.env.GOOGLE_MAPS_KEY
           }
         })
         .then(function (response) {
@@ -1346,81 +1340,11 @@ module.exports = (app, db) => {
       return res.json({ data: output })
     }
 
-
-    // for ( var i=0; i < users.length; i++ ) {
-      
-    //     const currentUserZip = users[i].address.zip               
-    //     console.log(currentUserZip)
-    //     compiledZips.push(users[i].address.zip)
-
-    //     axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
-    //       params: {
-    //         address: users[i],
-    //         key: 'AIzaSyAKmyGIU1IJo_54kahuds7huxuoEyZF-68'
-    //       }
-    //     })
-    //     .then(function (response) {
-    //       console.log(response.data.results[0].geometry.location)
-    //     })
-    //     .catch(function (error) {
-    //       console.log(error.response);
-    //     });
-
-    // }
-
   })
-
-  app.post("/api/zipToLatLng", passport.authenticate('jwt', {session: false}), async (req, res) => {
-    console.log("Getting LatLng of provided zips");
-    console.log(req.body)
-
-    let completed = 0;
-
-    let returned = []
-    const zips = req.body.zips;
-
-    for (let i = 0; i < zips.length; i++) {
-      console.log(`Ran ${i} / ${zips.length}`)
-
-      axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
-        params: {
-          address: zips[i],
-          key: 'AIzaSyAKmyGIU1IJo_54kahuds7huxuoEyZF-68'
-        }
-      })
-      .then(function (response) {
-
-        completed++;
-
-        console.log(response.data.results[0].geometry.location)
-        returned.push(response.data.results[0].geometry.location)
-        console.log(returned)
-
-      })
-      .catch(function (error) {
-        console.log(error.response);
-      });
-
-      if ( completed === zips.length ) {
-        // delaySubmit()
-      }
-
-    }
-
-    function delaySubmit() {
-      setTimeout(function(){ return res.send(returned) }, 1000);
-    }
-
-    // if ( completed === zips.length ) {
-    //   console.log("Should send now")
-    //   res.send(returned)
-    // }
-
-    return res.send(returned)
-
-  });
 
   require('./routes/updateLastRead')(app, db, passport);
   require('./routes/outsetUpdate')(app, db, passport);
   require('./routes/addProfilePhoto')(app, db, passport);
+  
+  require('./routes/upsertComment')(app, db, passport);
 } 

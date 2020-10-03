@@ -116,6 +116,8 @@ function connectWithRetryMongo() {
     require('./routes/getNews')(app, db);
     require('./routes/getNewsTags')(app, db);
 
+    require('./routes/getComments')(app, db, cache);
+
     require('./routes/getRevenue')(app, db);
     require('./routes/getExpenses')(app, db);
   

@@ -280,6 +280,37 @@ class Playground extends React.Component {
             <div className="title"></div>
           </div>
 
+          <div className="email-background">
+
+            <div className="email">
+
+               <div className="header">
+                 <img src="https://cdn.articles.media/email/logo-rebrand.jpg" height="50px" alt=""/>
+                 Welcome
+               </div>
+
+               <div className="body">
+                <span className="greeting">Hello Joey,</span>
+
+                Thank you for taking the time to sign up and become apart of what we are building. From here please complete the Outset, which will get you acclimated with some of the features of Articles. This is an automated email but you can respond to reach out to me with any questions or concerns you may have. Feel free to respond to this email or by sending one to joey@articles.media, I just ask that you read the frequently asked questions <a href="https://articles.media/support/FAQ">here</a> before sending anything to help cut down on repeat questions.
+
+                <div>
+                  
+                </div>
+
+                <div className="sign-off">
+                 <div>Looking forward,</div>
+                 <div>Joey Giusto</div>
+                </div>
+
+               </div>
+
+               
+
+            </div>
+
+          </div>
+
           <div style={{width: '100%', height: '400px'}}>
             <SimpleMap lat={this.state.lat} lng={this.state.lng}/>
           </div>
