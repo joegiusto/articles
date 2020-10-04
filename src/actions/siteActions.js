@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export const toggleColorMode = () => dispatch => {
   console.log(`Toggling the color mode option!`);
 
@@ -58,24 +60,45 @@ export const updateSubscriptionToIssue = subscription => dispatch => {
 };
 
 export const removeSubscription = subscription_id => dispatch => {
-
   console.log(`Removing ${subscription_id}`);
 
-  dispatch({
-    type: 'REMOVE_SUBSCRIPTION',
-    subscription_id
-  })
+  axios
+    .post("/api/removeSubscription", {
+      subscription_id
+    })
+    .then( res => {
+      console.log(res);
+
+      dispatch({
+        type: 'REMOVE_SUBSCRIPTION',
+        subscription_id
+      })
+    }
+    ) 
+    .catch(err =>
+      console.log(err.response.data)
+    );
   
 };
 
 export const addSubscription = subscription => dispatch => {
-
   console.log(`Adding subscription`);
-  console.log(subscription);
 
-  dispatch({
-    type: 'ADD_SUBSCRIPTION',
-    subscription
-  })
+  axios
+    .post("/api/addSubscription", {
+      subscription_id: subscription._id
+    })
+    .then( res => {
+      console.log(res);
+
+      dispatch({
+        type: 'ADD_SUBSCRIPTION',
+        subscription
+      })
+    }
+    ) 
+    .catch(err =>
+      console.log(err.response.data)
+    );
   
 };

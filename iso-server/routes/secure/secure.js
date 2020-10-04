@@ -1391,6 +1391,9 @@ module.exports = (app, db) => {
   require('./routes/updateLastRead')(app, db, passport);
   require('./routes/outsetUpdate')(app, db, passport);
   require('./routes/addProfilePhoto')(app, db, passport);
+  
+  require('./routes/addSubscription')(app, db, passport);
+  require('./routes/removeSubscription')(app, db, passport);
 
   require('./routes/upsertComment')(app, db, passport);
 } 

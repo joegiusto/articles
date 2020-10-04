@@ -2359,19 +2359,34 @@ section.frontpage-section {
         }
 
         .update {
+
+          i {
+            margin-right: 0.25rem;
+            animation: 0.9s update_bobble infinite alternate ease-in-out;
+
+            @keyframes update_bobble {
+              from {
+                transform: translateY(1.5px);
+              }
+              to {
+                transform: translateY(-1.5px);
+              }
+            }
+          }
+
           // background-color: white;
           position: absolute;
-          bottom: 0px;
+          bottom: 7px;
           left: 50%;
           // transform: translateX(-50%);
-          padding: 0.1rem 0.25rem;
+          padding: 0.1rem 0.4rem;
           z-index: 5;
           color: black;
-          border-radius: 10px;
+          border-radius: 2px;
           font-family: brandon-grotesque, sans-serif;
           font-weight: 900;
           transform: translateX(-50%) translateY(-50%);
-          border: 2px solid #000;
+          // border: 2px solid #000;
         }
 
         .title {

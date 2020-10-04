@@ -390,43 +390,97 @@ class EmployeePageDetails extends Component {
             {this.state.filter === 'get-to-know' ? 
 
             <div className="employee-get-to-know">
-              {/* When browsing online we forget that we are talking to other people with their own lives and issues. In an effort to help humanize ourselves employees can fill out this section. */}
+
+              <div className="intro-snippet">When we talk politics (especially online) we forget there is a person behind those beliefs, a person with a life and an existence as complex, complicated, and intricate as yours. By sharing this info I hope we can find some sort of common ground and relate, and if not take a look into the world I call mine.</div>
               
-              <div className="get-to-know-header">Favorite Movies:</div>
-              <a target="_blank" href="https://en.wikipedia.org/wiki/Tomorrowland_(film)">Tommorowland (2015)</a>
-              <a target="_blank" href="https://en.wikipedia.org/wiki/Inception">Inception (2010)</a>
-              <a target="_blank" href="https://en.wikipedia.org/wiki/The_Matrix_(franchise)">Matrix (1999)</a>
-              <a target="_blank" href="https://en.wikipedia.org/wiki/Iron_Man_(2008_film)">Iron Man Series</a>
-              <a target="_blank" href="https://en.wikipedia.org/wiki/Tron:_Legacy">Tron (2010)</a>
+              <div className="get-to-know-block">
+                <div className="get-to-know-block__header">Favorite Movies:</div>
 
-              <div className="get-to-know-header">Favorite Music Artists:</div>
+                <div className="get-to-know-content movies">
 
-              <div className="get-to-know-subheader">Present</div>
-              <div className="get-to-know-content">G-Eazy, Russ, Olivia O'Brian, Blackbear, Skizzy Mars, Joyner Lucas, Bryce Vine, Kyle, Claire Laffut, Halsey</div>
+                  <a className="movie" target="_blank" href="https://en.wikipedia.org/wiki/Tomorrowland_(film)">
+                    <img src="https://flicksandbricks.files.wordpress.com/2017/09/img_2421.jpg" alt=""/>
+                    <span>Tommorowland (2015)</span>
+                  </a>
 
-              <div className="get-to-know-subheader">~70's - 90's</div>
-              <div className="get-to-know-content">Billy Joel, Queen, The Beatles, Aerosmith, Pink Floyd, Elton John, </div>
+                  <a className="movie" target="_blank" href="https://en.wikipedia.org/wiki/Inception">
+                    <img src="https://images.csmonitor.com/csmarchives/2010/07/Film-Review-Inception.jpg?alias=standard_900x600" alt=""/>
+                    <span>Inception (2010)</span>
+                  </a>
 
-              <div className="get-to-know-subheader">~40's - 60's</div>
-              <div className="get-to-know-content">Dion and the Belmonts, Frank Sinatra, Sam Cooke</div>
+                  <a className="movie" target="_blank" href="https://en.wikipedia.org/wiki/The_Matrix_(franchise)">
+                    <img src="https://i.guim.co.uk/img/media/b251ae63d78acf9389a8fce146580483ecdd2253/57_6_1416_849/master/1416.jpg?width=1200&quality=85&auto=format&fit=max&s=89145656e8b5b713e7515eca0c207c4a" alt=""/>
+                    <span>Matrix (1999)</span>
+                  </a>
 
-              <div className="get-to-know-header">Favorite Podcast / Creators:</div>
-              <div><a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/user/PowerfulJRE">The Joe Rogan Experience</a></div>
-              <div><a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/channel/UCGeBogGDZ9W3dsGx-mWQGJA">Impaulsive</a></div>
-              <div><a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/user/GaryVaynerchuk">Garyvee</a></div>
-              <div><a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/user/caseyneistat">Casey Neistat</a></div>
+                  <a className="movie" target="_blank" href="https://en.wikipedia.org/wiki/Iron_Man_(2008_film)">
+                    <img src="https://i.pinimg.com/originals/11/ed/bd/11edbd2b87a4926224f8c5dfa05526e2.jpg" alt=""/>
+                    <span>Iron Man (MCU Series)</span>
+                  </a>
 
-              <div className="get-to-know-header">Hobbies:</div>
-              <div><a target="_blank" rel="noopener noreferrer" href="https://www.rei.com/learn/expert-advice/hiking-for-beginners.html">Hiking</a></div>
-              <div><a target="_blank" rel="noopener noreferrer" href="https://www.w3schools.com/html/">Coding</a></div>
-              <div><a target="_blank" rel="noopener noreferrer" href="https://www.rei.com/learn/expert-advice/getting-started-kayaking.html">Kayaking</a></div>
-              <div>Driving</div>
+                  <a className="movie" target="_blank" href="https://en.wikipedia.org/wiki/Tron:_Legacy">
+                    <img src="http://blog.bigmoviezone.com/images/TronLegacy58_555pxBLOG.jpg" alt=""/>
+                    <span>Tron (2010)</span>
+                  </a>
 
-              <div className="get-to-know-header">Role Models:</div>
-              <div><a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Walt_Disney">Walt Disney</a></div>
+                  <a className="movie" target="_blank" href="https://en.wikipedia.org/wiki/Pulp_Fiction">
+                    <img src="https://static.standard.co.uk/s3fs-public/thumbnails/image/2015/09/14/14/umathurmanpulp1409a.jpg?w968" alt=""/>
+                    <span>Pulp Fiction (1994)</span>
+                  </a>
 
-              <div className="get-to-know-header">Favorite Foods: </div>
-              <div>Strawberries, Grapes</div>
+                  {/* <a className="movie" target="_blank" href="https://en.wikipedia.org/wiki/Pulp_Fiction">
+                    <img src="https://i.pinimg.com/originals/a9/2b/f6/a92bf65db3db694dfc40af5a5da2c4d7.jpg" alt=""/>
+                    <span>The Boy in the Striped Pajamas (2008)</span>
+                  </a> */}
+
+                  {/* <a target="_blank" href="https://en.wikipedia.org/wiki/Inception">Inception (2010)</a>
+                  <a target="_blank" href="https://en.wikipedia.org/wiki/The_Matrix_(franchise)">Matrix (1999)</a>
+                  <a target="_blank" href="https://en.wikipedia.org/wiki/Iron_Man_(2008_film)">Iron Man Series</a>
+                  <a target="_blank" href="https://en.wikipedia.org/wiki/Tron:_Legacy">Tron (2010)</a> */}
+                </div>
+
+              </div>
+
+              <div className="get-to-know-block">
+                <div className="get-to-know-block__header">Favorite Music Artists:</div>
+
+                <div className="get-to-know-subheader">Present</div>
+                <div className="get-to-know-content">G-Eazy, Russ, Olivia O'Brian, Blackbear, Skizzy Mars, Joyner Lucas, Bryce Vine, Kyle, Claire Laffut, Halsey</div>
+
+                <div className="get-to-know-subheader">~70's - 90's</div>
+                <div className="get-to-know-content">Billy Joel, Queen, The Beatles, Aerosmith, Pink Floyd, Elton John, </div>
+
+                <div className="get-to-know-subheader">~40's - 60's</div>
+                <div className="get-to-know-content">Dion and the Belmonts, Frank Sinatra, Sam Cooke</div>
+              </div>        
+
+              <div className="get-to-know-block">
+                <div className="get-to-know-block__header">Favorite Podcast / Creators:</div>
+                <div className="get-to-know-block-content">
+                  <div><a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/user/PowerfulJRE">The Joe Rogan Experience</a></div>
+                  <div><a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/channel/UCGeBogGDZ9W3dsGx-mWQGJA">Impaulsive</a></div>
+                  <div><a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/user/GaryVaynerchuk">Garyvee</a></div>
+                  <div><a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/user/caseyneistat">Casey Neistat</a></div>
+                </div>
+              </div>
+
+              <div className="get-to-know-block">
+                <div className="get-to-know-block__header">Hobbies:</div>
+                <div><a target="_blank" rel="noopener noreferrer" href="https://www.rei.com/learn/expert-advice/hiking-for-beginners.html">Hiking</a></div>
+                <div><a target="_blank" rel="noopener noreferrer" href="https://www.w3schools.com/html/">Coding</a></div>
+                <div><a target="_blank" rel="noopener noreferrer" href="https://www.rei.com/learn/expert-advice/getting-started-kayaking.html">Kayaking</a></div>
+                <div>Driving</div>
+              </div>
+
+              <div className="get-to-know-block">
+                <div className="get-to-know-block__header">Role Models:</div>
+                <div><a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Walt_Disney">Walt Disney</a></div>
+              </div>
+
+              <div className="get-to-know-block">
+                <div className="get-to-know-block__header">Favorite Foods: </div>
+                <div>Strawberries, Grapes</div>
+              </div>
 
               {/* <div className="get-to-know-header">Stress Relief: </div> */}
 

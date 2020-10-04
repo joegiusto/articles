@@ -29,14 +29,29 @@ module.exports = (app, db) => {
       return obj;
     }, {});
 
-    db.collection("articles_news").replaceOne({_id: o_id}, myobj, function(err, result) {
+    // Was deleting comments
+    // db.collection("articles_news").replaceOne({_id: o_id}, myobj, function(err, result) {
+    //   if (err) throw err;
+    //   console.log(myobj);
+    //   console.log("1 news document replaced");
+    //   // db.close();
+    // });
+
+    db.collection("articles_news").updateOne({_id: o_id}, {
+      $set: {
+        ...myobj
+      }
+    },
+    {
+      upsert: true
+    }, 
+    function(err, response) {
       if (err) throw err;
-      console.log(myobj);
-      console.log("1 news document replaced");
-      // db.close();
+      console.log(`Call to /api/upsertNews done`);
+      return res.send(response);
     });
 
-    return res.end();
+    
   
   });
 

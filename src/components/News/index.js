@@ -958,7 +958,9 @@ class Frontpage extends Component {
                   <SwiperSlide>
                     <div className="trending-card">
                       <div className="type story">Story</div>
+                      <Link to={`${ROUTES.STORIES}/tesla-new-gigafactory-austin-texas`}>
                       <div className="view btn btn-articles-light btn-sm">View</div>
+                      </Link>
                       Tesla will build its next Gigafactory near Austin, Texas
                       <div className="progress"></div>
                     </div>
@@ -967,19 +969,23 @@ class Frontpage extends Component {
                   <SwiperSlide>
                     <div className="trending-card">
                       <div className="type story">Story</div>
+                      <Link to={`${ROUTES.STORIES}/meet-cybertruck`}>
                       <div className="view btn btn-articles-light btn-sm">View</div>
+                      </Link>
                       Meet Cybertruck
                       <div className="progress"></div>
                     </div>
                   </SwiperSlide>
   
                   <SwiperSlide>
-                    <div className="trending-card">
-                      <div className="type story">Story</div>
-                      <div className="view btn btn-articles-light btn-sm">View</div>
-                      Jeffery Epstein Arrested
-                      <div className="progress"></div>
-                    </div>
+                      <div className="trending-card">
+                        <div className="type story">Story</div>
+                        <Link to={`${ROUTES.STORIES}/jeffery-epstein-arrested`}>
+                          <div className="view btn btn-articles-light btn-sm">View</div>
+                        </Link>
+                        Jeffery Epstein Arrested
+                        <div className="progress"></div>
+                      </div>
                   </SwiperSlide>
   
                 </Swiper>
