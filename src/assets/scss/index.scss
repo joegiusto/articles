@@ -43,7 +43,7 @@ $grid-breakpoints: (
 @import 'components/checkout';
 
 @import 'components/news-container';
-@import 'components/news-manage';
+// @import 'components/news-manage';
 @import 'components/settings';
 
 
@@ -85,6 +85,7 @@ $grid-breakpoints: (
 
 @import 'components/admin';
 @import 'components/admin_users';
+@import 'components/admin_news';
 @import 'components/admin_reports';
 @import 'components/admin_orders';
 @import 'components/admin_ads';

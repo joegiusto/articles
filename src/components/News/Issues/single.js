@@ -453,28 +453,7 @@ class Issue extends React.Component {
     
                   <div className="comments">
                     {this.state.comments.sort( (a, b) => new Date(b.date) - new Date(a.date) ).map(comment => 
-                      <div className="comment">
-    
-                        <div className="profile-photo">
-                        {this.props.user._id === undefined ? 
-                          null
-                          :
-                          <img alt="" className="" width="100%" height="100%" src={`https://articles-website.s3.amazonaws.com/profile_photos/${this.props?.user?._id}.jpg` || ''}/>
-                        }
-                        </div>
-    
-                        <div className="comment">
-
-                          <div>
-                            <span className="user">{comment.first_name + ' ' + comment.last_name?.charAt(0) || comment.user_id}</span>
-                            <span className="date">{moment(comment.date).format("LLL")}</span>
-                          </div>
-
-                          <div className="comment-text">{comment.comment}</div>
-                          
-                        </div>
-                        
-                      </div>
+                      <Comment comment={comment} user={this.props.user}/>
                     )}
                   </div>
                 </>
@@ -597,3 +576,78 @@ export default connect(
   mapStateToProps,
   { updateSubscriptionToIssue }
 )(withRouter(Issue));
+
+class Comment extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      reply: false
+    };
+
+  }
+
+  componentDidMount() {
+    const self = this;
+  }
+
+  onChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  render() {
+
+    const comment = this.props.comment
+
+    return (
+      <div className="comment">
+    
+        <div className="profile-photo">
+          {comment.user_id === undefined ? 
+            null
+            :
+            <img alt="" className="" width="100%" height="100%" src={`https://articles-website.s3.amazonaws.com/profile_photos/${comment.user_id}.jpg` || ''}/>
+          }
+        </div>
+
+        <div className="comment-content">
+
+          <div>
+            <span className="user">{comment.first_name + ' ' + comment.last_name?.charAt(0) || comment.user_id}</span>
+            <span className="date">{moment(comment.date).format("LLL")}</span>
+          </div>
+
+          <div className="comment-text">{comment.comment}</div>
+
+          <div className="comment-manage">
+            <span onClick={() => this.setState({reply: true})}className="action">Reply</span>
+            <span className="action">Edit</span>
+            <span className="action">Delete</span>
+          </div>
+
+          <div className={"add-comment " + (this.state.reply ? '' : 'd-none')}>
+    
+            <div className="profile-photo">
+            {this.props.user._id === undefined ? 
+              null
+              :
+              <img alt="" className="" width="100%" height="100%" src={`https://articles-website.s3.amazonaws.com/profile_photos/${this.props?.user?._id}.jpg` || ''}/>
+            }
+            </div>
+
+            <div className={"comment "}>
+              {/* <input onClick={() => this.setState({newCommentExpanded: true})} type="text" name="comment" id="comment" onChange={this.onChange} value={this.state.comment} placeholder="Add a comment"/> */}
+              {/* <textarea onClick={() => this.setState({newCommentExpanded: true})} type="text" name="comment" id="comment" onChange={this.onChange} value={this.state.comment} placeholder="Add a comment"/> */}
+              <div className='tx-div-before'></div>
+                <TextareaAutosize className="tx-div" onClick={() => this.setState({newCommentExpanded: true})}  placeholder="Add a comment"  type="text" name="comment" id="comment" onChange={this.onChange} value={this.state.comment}/>
+              <div className='tx-div-after'></div> 
+            </div>
+
+          </div>
+          
+        </div>
+        
+      </div>
+    )
+  }
+}

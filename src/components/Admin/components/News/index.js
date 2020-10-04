@@ -342,8 +342,9 @@ class AdminPage extends Component {
                   <span className="date badge badge-warning border ml-2">{moment(result.last_update).format("LL")} </span>
                 </div>
 
-                <div className="">
-                  {result.visible ? null : <i className="visible fas fa-low-vision mr-0"></i>}
+                <div className="indicators">
+                  {result.visible ? null : <i className="visible fas fa-low-vision"></i>}
+                  {result.author === undefined || result.author === null || result.author === '' ? <i className="author fas fa-user-edit"></i> : null}
                 </div>
                 
                 <Link onClick={() => this.setState({isEdit: true})} to={ROUTES.ADMIN_NEWS + '/' + result._id}><span className="title">{result.news_title} <small>({result.news_type})</small></span></Link>

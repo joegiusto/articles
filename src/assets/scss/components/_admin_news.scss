@@ -393,15 +393,25 @@
         }
       }
 
-      .visible {
-        background-color: white;
-        padding: 0.25rem;
-        border-radius: 5px;
+      .indicators {
         position: absolute;
         top: 0;
         left: 50%;
         transform: translateX(-50%);
+
+        .visible {
+          background-color: white;
+          padding: 0.25rem;
+          border-radius: 5px;
+        }
+  
+        .author {
+          background-color: white;
+          padding: 0.25rem;
+          border-radius: 5px;
+        }
       }
+      
 
       // .date {
       //   position: absolute;

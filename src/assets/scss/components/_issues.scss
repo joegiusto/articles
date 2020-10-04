@@ -625,7 +625,8 @@
             
             &.active {
               
-              background-color: rgb(204, 204, 204);
+              background-color: rgba(37, 37, 37, 1);
+              color: white;
             }
           }
         }
@@ -808,11 +809,15 @@
       .comments {
 
         .comment {
+          border-top: 1px solid rgba(0, 0, 0, 0.5);
           display: flex;
           align-items: center;
           padding: 0.5rem 1rem;
+          padding-top: 0.5rem;
   
           .profile-photo {
+            display: flex;
+            align-self: flex-start;
   
             img {
               border-radius: 10px;
@@ -821,11 +826,13 @@
             }
           }
   
-          .comment {
+          .comment-content {
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
+            padding: 0.5rem 1rem;
+            padding-top: 0rem;
 
             .user {
               font-family: brandon-grotesque, sans-serif;
@@ -838,6 +845,29 @@
               font-size: 0.8rem;
               font-weight: 700;
               color: rgba(0, 0, 0, 0.6);
+            }
+
+            .comment-text {
+              margin-top: 0.25rem;
+            }
+
+            .comment-manage {
+              border-top: 1px solid rgba(0, 0, 0, 0.5);
+              margin-top: 1rem;
+      
+              .action {
+                cursor: pointer;
+                font-size: 0.8rem;
+                font-weight: 900;
+                
+                &:not(:first-child) {
+                  margin-left: 0.5rem;
+                }
+      
+                &:hover {
+                  background-color: rgba(0, 0, 0, 0.25);
+                }
+              }
             }
           }
         }

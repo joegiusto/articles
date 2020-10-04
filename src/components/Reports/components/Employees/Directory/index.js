@@ -21,7 +21,16 @@ class EmployeePageDetails extends Component {
       expandedPhoto: false,
 
       commits: [],
-      commitsLoading: false
+      commitsLoading: false,
+
+      news: [],
+      newsCount: {
+        stories: 0,
+        issues: 0,
+        myths: 0
+      },
+      news_type: 'story',
+      newsPage: 0
     }
   }
 
@@ -66,6 +75,10 @@ class EmployeePageDetails extends Component {
       })
     });
 
+    this.getWriterNews();
+
+    this.getWriterNewsCount();
+
     axios.get('/api/getEmployeeAgr', {
       params: {
         _id: this.props.match.params.id
@@ -84,6 +97,99 @@ class EmployeePageDetails extends Component {
       console.log(error);
     });
 
+  }
+
+  renderIsNextPageDisabled() {
+    if ( this.state.news_type === 'story' ) {
+      return  ( ( this.state.newsPage + 1) * 10) > this.state.newsCount.stories ? true : false
+    } else if ( this.state.news_type === 'issue' ) {
+      return  ( ( this.state.newsPage + 1) * 10) > this.state.newsCount.issues ? true : false
+    } else if ( this.state.news_type === 'myth' ) {
+      return  ( ( this.state.newsPage + 1) * 10) > this.state.newsCount.myths ? true : false
+    }
+  }
+
+  renderPagePlace() {
+    if ( this.state.news_type === 'story' ) {
+      return <span className="ml-2">Page: {this.state.newsPage + 1} / {Math.ceil(this.state.newsCount.stories / 10)}</span>
+    } else if ( this.state.news_type === 'issue' ) {
+      return <span className="ml-2">Page: {this.state.newsPage + 1} / {Math.ceil(this.state.newsCount.issues / 10)}</span>
+    } else if ( this.state.news_type === 'myth' ) {
+      return <span className="ml-2">Page: {this.state.newsPage + 1} / {Math.ceil(this.state.newsCount.myths / 10)}</span>
+    }
+  }
+
+  getWriterNewsCount() {
+    const self = this;
+
+    axios.get('/api/getWriterNewsCount', {
+      params: {
+        user_id: '5e90cc96579a17440c5d7d52',
+      }
+    })
+    .then(function (response) {
+
+      // console.log(response);
+
+      self.setState({
+        newsCount: {
+          stories: response.data.stories,
+          issues: response.data.issues,
+          myths: response.data.myths
+        },
+        // newsCount:,
+      })
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  getWriterNews() {
+    const self = this;
+    
+    axios.get('/api/getWriterNews', {
+      params: {
+        user_id: '5e90cc96579a17440c5d7d52',
+        news_type: this.state.news_type,
+        skip: this.state.newsPage
+      }
+    })
+    .then(function (response) {
+
+      console.log(response);
+
+      self.setState({
+        // commitsLoading: false,
+        news: response.data,
+
+      })
+
+    })
+    .catch(function (error) {
+      console.log(error);
+
+      self.setState({
+        // commitsLoading: false,
+      })
+    });
+  }
+
+  renderRoute(type) {
+    switch(type) {
+      case 'story':
+        return ROUTES.STORIES
+        // break;
+      case 'issue':
+        return ROUTES.ISSUES
+        // break;
+      case 'myth':
+        return ROUTES.MYTHS
+        // break;
+      default:
+        // code block
+    }
   }
 
   render(props) {
@@ -140,7 +246,7 @@ class EmployeePageDetails extends Component {
 
           <div className='employee-header-traits'>
             <p className="employee-header-traits-title">Location</p>
-            <p className="employee-header-traits-details">{employee.address.city + ', ' + employee.address.state}</p>
+            <p className="employee-header-traits-details">{employee.address.state}</p>
             <p className="employee-header-traits-title">Role</p>
             <p className="employee-header-traits-details">{employee.employee?.role.map((role) => <span className="badge badge-dark mr-1">{role}</span>) || 'NONE'}</p>
             <p className="employee-header-traits-title">Joined</p>
@@ -153,10 +259,11 @@ class EmployeePageDetails extends Component {
 
           <div className="filters noselect">
             <div onClick={() => this.setState({filter: 'stubs'})} className={"filter " + ( this.state.filter === 'stubs' ? 'active' : '' ) }>Pay Stubs</div>
-            <div onClick={() => this.setState({filter: 'commits'})} className={"filter " + ( this.state.filter === 'commits' ? 'active' : '' ) }>Commits<span className="badge badge-dark ml-1">Developer</span></div>
-            {/* TODO - Show news documents that were writen by this employee if they have the role of 'writer' a way to select the author inside the Admin-News Page will need to be added first FYI... */}
-            <div onClick={() => this.setState({filter: 'news'})} className={"filter " + ( this.state.filter === 'news' ? 'active' : '' ) }>News<span className="badge badge-dark ml-1">Writer</span></div>
             <div onClick={() => this.setState({filter: 'charts'})} className={"filter " + ( this.state.filter === 'charts' ? 'active' : '' ) }>Data Charts</div>
+            <div onClick={() => this.setState({filter: 'get-to-know'})} className={"filter " + ( this.state.filter === 'get-to-know' ? 'active' : '' ) }>Get To Know</div>
+            <div onClick={() => this.setState({filter: 'proposals'})} className={"filter " + ( this.state.filter === 'proposals' ? 'active' : '' ) }>Proposals</div>
+            <div onClick={() => this.setState({filter: 'commits'})} className={"filter " + ( this.state.filter === 'commits' ? 'active' : '' ) }>Commits<span className="badge badge-dark ml-1">Developer</span></div>
+            <div onClick={() => this.setState({filter: 'news'})} className={"filter " + ( this.state.filter === 'news' ? 'active' : '' ) }>News<span className="badge badge-dark ml-1">Writer</span></div>
           </div>
 
           <div className="details">
@@ -199,6 +306,14 @@ class EmployeePageDetails extends Component {
               <div className="loading">Loading</div>
               :
               <div className="commits">
+
+                <a target="_blank" rel="noopener noreferrer" href="https://github.com/">
+                  <div className="powered-by d-flex align-items-center justify-content-center">
+                    <i className="fab fa-github-square fa-3x"></i>
+                    <span className="">Powered by Github</span>
+                  </div>
+                </a>
+
                 {this.state.commits.map(commit => 
                   <a target="_blank" rel="noopener noreferrer" href={commit.html_url}>
                     <div className="commit d-flex">
@@ -221,8 +336,100 @@ class EmployeePageDetails extends Component {
 
             {this.state.filter === 'news' ? 
 
-            <div className="employee-charts">
-              News articles writen by this employee will appear here once this feature is implemented.
+            <div className="employee-news">
+              
+              {/* {this.state.commitsLoading === true ?
+              <div className="loading">Loading</div>
+              : */}
+              <div className="news">
+
+                <div className="btn-group mb-3">
+                  <div onClick={() => this.setState({news_type: 'story', skip: 0, newsPage: 0}, () => this.getWriterNews())} className={"btn btn-articles-light " + (this.state.news_type === 'story' ? 'alt' : '')}>Stories ({this.state.newsCount.stories})</div>
+                  <div onClick={() => this.setState({news_type: 'issue', skip: 0, newsPage: 0}, () => this.getWriterNews())} className={"btn btn-articles-light " + (this.state.news_type === 'issue' ? 'alt' : '')}>Issues ({this.state.newsCount.issues})</div>
+                  <div onClick={() => this.setState({news_type: 'myth', skip: 0, newsPage: 0}, () => this.getWriterNews())} className={"btn btn-articles-light " + (this.state.news_type === 'myth' ? 'alt' : '')}>Myths ({this.state.newsCount.myths})</div>
+                </div>
+
+                {this.state.news.sort( (a, b) => new Date(b.news_date) - new Date(a.news_date) ).map(document => 
+                  <a target="_blank" rel="noopener noreferrer" href={`${this.renderRoute(document.news_type)}/${document.url}`}>
+                    <div className={"document d-flex w-100 " + (document.news_type)}>
+                      <div className="photo"><img src={document.hero_url} alt=""/></div>
+                      <div className="document-details w-100">
+
+                        <div className="dates w-100 d-flex justify-content-between">
+                          <div className="date">{moment(document.news_date).format("LL")}</div>
+                          <div className="date">{moment(document.last_update).format("LL")}</div>
+                        </div>
+
+                        <div className="title">{document.news_title}</div>
+                        <div className="tagline">{document.news_tagline}</div>
+
+                      </div>
+                    </div>
+                  </a>
+                )}
+
+                {/* {(this.state.newsCount.stories / 5).map( (item, i) => {
+                  <div>{i}</div>
+                })} */}
+
+                <div>
+                  <button onClick={ () => this.setState({ newsPage: this.state.newsPage - 1}, () => this.getWriterNews() ) } disabled={this.state.newsPage === 0 ? true : false} className={"btn btn-articles-light "}>{this.state.newsPage === 0 ? this.state.newsPage + 1 : this.state.newsPage }</button>
+                  <button onClick={ () => { this.setState({ newsPage: this.state.newsPage + 1 }, () => this.getWriterNews() ) } } disabled={this.renderIsNextPageDisabled()} className="btn btn-articles-light">{this.state.newsPage + 2}</button>
+                  
+                  {this.renderPagePlace()}
+                </div>
+
+              </div>
+
+            </div>
+
+            :
+            null
+            }
+
+            {this.state.filter === 'get-to-know' ? 
+
+            <div className="employee-get-to-know">
+              {/* When browsing online we forget that we are talking to other people with their own lives and issues. In an effort to help humanize ourselves employees can fill out this section. */}
+              
+              <div className="get-to-know-header">Favorite Movies:</div>
+              <a target="_blank" href="https://en.wikipedia.org/wiki/Tomorrowland_(film)">Tommorowland (2015)</a>
+              <a target="_blank" href="https://en.wikipedia.org/wiki/Inception">Inception (2010)</a>
+              <a target="_blank" href="https://en.wikipedia.org/wiki/The_Matrix_(franchise)">Matrix (1999)</a>
+              <a target="_blank" href="https://en.wikipedia.org/wiki/Iron_Man_(2008_film)">Iron Man Series</a>
+              <a target="_blank" href="https://en.wikipedia.org/wiki/Tron:_Legacy">Tron (2010)</a>
+
+              <div className="get-to-know-header">Favorite Music Artists:</div>
+
+              <div className="get-to-know-subheader">Present</div>
+              <div className="get-to-know-content">G-Eazy, Russ, Olivia O'Brian, Blackbear, Skizzy Mars, Joyner Lucas, Bryce Vine, Kyle, Claire Laffut, Halsey</div>
+
+              <div className="get-to-know-subheader">~70's - 90's</div>
+              <div className="get-to-know-content">Billy Joel, Queen, The Beatles, Aerosmith, Pink Floyd, Elton John, </div>
+
+              <div className="get-to-know-subheader">~40's - 60's</div>
+              <div className="get-to-know-content">Dion and the Belmonts, Frank Sinatra, Sam Cooke</div>
+
+              <div className="get-to-know-header">Favorite Podcast / Creators:</div>
+              <div><a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/user/PowerfulJRE">The Joe Rogan Experience</a></div>
+              <div><a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/channel/UCGeBogGDZ9W3dsGx-mWQGJA">Impaulsive</a></div>
+              <div><a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/user/GaryVaynerchuk">Garyvee</a></div>
+              <div><a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/user/caseyneistat">Casey Neistat</a></div>
+
+              <div className="get-to-know-header">Hobbies:</div>
+              <div><a target="_blank" rel="noopener noreferrer" href="https://www.rei.com/learn/expert-advice/hiking-for-beginners.html">Hiking</a></div>
+              <div><a target="_blank" rel="noopener noreferrer" href="https://www.w3schools.com/html/">Coding</a></div>
+              <div><a target="_blank" rel="noopener noreferrer" href="https://www.rei.com/learn/expert-advice/getting-started-kayaking.html">Kayaking</a></div>
+              <div>Driving</div>
+
+              <div className="get-to-know-header">Role Models:</div>
+              <div><a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Walt_Disney">Walt Disney</a></div>
+
+              <div className="get-to-know-header">Favorite Foods: </div>
+              <div>Strawberries, Grapes</div>
+
+              {/* <div className="get-to-know-header">Stress Relief: </div> */}
+
             </div>
 
             :
