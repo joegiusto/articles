@@ -62,15 +62,37 @@
         // top: 0;
       }
 
-      .respond {
-        color: black!important;
-        margin-left: 0.5rem;
-        cursor: pointer;
-        // color: green;
-        // position: absolute;
-        // left: -1.25rem;
-        // bottom: 0;
+      .responses {
+
+        .response {
+          position: relative;
+          margin-top: 1rem;
+          background-color: rgba(0, 0, 0, 0.2);
+          padding: 1rem 0.5rem;
+
+          .employee {
+            background-color: black;
+            color: white;
+            font-size: 0.8rem;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translateY(-50%);
+          }
+
+          .date {
+            font-family: brandon-grotesque, sans-serif;
+            font-weight: 900;
+            font-style: normal;
+            font-size: 1.1rem;
+          }
+        }
       }
+
+      .response {
+        margin-top: 1rem;
+      }
+      
     }
   }
 }

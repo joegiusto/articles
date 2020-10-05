@@ -3,6 +3,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { Link } from "react-router-dom";
 
+import { ConfirmDelete } from '../../../Global'
 import * as ROUTES from '../../../../constants/routes';
 
 class ReportExpenseCards extends Component {
@@ -20,7 +21,8 @@ class ReportExpenseCards extends Component {
     }
 
     this.handleChange = this.handleChange.bind(this);
-    this.submitReport = this.submitReport.bind(this)
+    this.submitReport = this.submitReport.bind(this);
+    this.deleteReport = this.deleteReport.bind(this)
   }
 
   componentDidMount() {
@@ -82,6 +84,7 @@ class ReportExpenseCards extends Component {
         previousReports: [
           ...self.state.previousReports,
           {
+            _id: response.data.upsertedId._id,
             expense_id: self.state.expense_id,
             reason: self.state.reason,
             date: moment()._d
@@ -90,7 +93,8 @@ class ReportExpenseCards extends Component {
       }, () => (
         self.setState({
           _id: '',
-          reason: ''
+          reason: '',
+          expense_id: ''
         })
       ));
 
@@ -105,6 +109,34 @@ class ReportExpenseCards extends Component {
 
   }
 
+  deleteReport(id) {
+    const self = this;
+
+    console.log(this.state.previousReports)
+    
+    console.log(`Delete ${id}`);
+
+    axios.post('/api/deleteReport', {
+      _id: id
+    })
+    .then(function (response) {
+
+      console.log(response)
+
+      self.setState({
+        previousReports: self.state.previousReports.filter(function( obj ) {
+          return obj._id !== id;
+        })
+      });
+
+    })
+    .catch(function (error) {
+
+      console.log(error);
+
+    });
+  }
+
   render() {
     return(
       <>
@@ -115,7 +147,7 @@ class ReportExpenseCards extends Component {
             <div className="col-12 col-md-12">
 
               <h5>Previous Reports</h5>
-              <p>Any updates to reported items you may have reported will apprear here.</p>
+              <p>Any updates to reported items you may have reported will appear here.</p>
 
               <hr/>
 
@@ -126,17 +158,21 @@ class ReportExpenseCards extends Component {
               }
 
               {this.state.reportsLoading === true ?
-               '' 
-               : 
-               this.state.previousReports.length < 1 ? 
+
+              '' 
+
+              : 
+
+              this.state.previousReports.length < 1 ? 
                 <p className="mb-0"><b>No reported items to display</b></p>
                 :
                 <table className="table articles-table table-sm table-hover table-bordered">
                   <thead>
                     <tr className="table-articles-head">
-                      <th>DATE</th>
-                      <th>ID</th>
-                      <th>ACTIONS</th>
+                      <th>Date</th>
+                      <th>Id</th>
+                      <th>Status</th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
                   {
@@ -144,6 +180,7 @@ class ReportExpenseCards extends Component {
                       <ReportExpenseRow 
                         key={report._id || report.date}
                         report={report}
+                        deleteReport={this.deleteReport}
                       />
                     ))
                   }
@@ -185,7 +222,7 @@ class ReportExpenseCards extends Component {
 
                 <div className="form-group">
                   <label for="newsType">Concern, Recommendation, or Problem:</label>
-                  <textarea className="d-block w-100 p-2" name="reason" id="reason" onChange={this.handleChange} rows="10"></textarea>
+                  <textarea className="d-block w-100 p-2" name="reason" id="reason" onChange={this.handleChange} value={this.state.reason} rows="10"></textarea>
                 </div>
 
                 <div className="pb-3 d-flex justify-content-end">
@@ -229,20 +266,48 @@ class ReportExpenseRow extends Component {
       <>
         <tr>
           <td>{moment(this.props.report.date).format("LL")}</td>
-          <td>{this.props.report.expense_id}</td>
 
-          {this.state.expanded !== true ? 
-          <td onClick={() => this.setState({expanded: !this.state.expanded})} className="link badge badge-dark noselect" style={{cursor: 'pointer'}}>Click to Expand</td>
-          :
-          <td onClick={() => this.setState({expanded: !this.state.expanded})} className="link badge badge-light border noselect" style={{cursor: 'pointer'}}>Click to Collapse</td>
-          }
+          <td>{this.props.report._id}</td>
+
+          <td>{this.props.report.responses?.length > 0 ? 'Response' : 'No Response'}</td>
+
+          <td className="">
+
+            {this.state.expanded !== true ? 
+              <button onClick={ () => this.setState({expanded: !this.state.expanded}) } className="link badge badge-dark noselect">Expand</button>
+              :
+              <button onClick={ () => this.setState({expanded: !this.state.expanded}) } className="link badge badge-light border noselect">Collapse</button>
+            }
+
+            <ConfirmDelete className={"link"} afterConfirm={() => this.props.deleteReport(this.props.report._id)}/>
+
+          </td>          
 
         </tr>
 
         <tr className={(this.state.expanded ? '' : 'd-none')}>
-          <td colSpan="3">
-            <div>Reason:</div>
-            <div>{this.props.report.reason}</div>
+          <td colSpan="4">
+
+            <div>Concern, Recommendation, or Problem:</div>
+            <div className="border border-dark p-2">{this.props.report.reason}</div>
+
+            <div className="mt-2">Response:</div>
+
+            <div>
+              {this.props.report.responses?.length > 0 ? 
+              this.props.report.responses.map(response => 
+                <div className="border border-dark p-2">
+                  <div className="date">{response.date}</div>
+                  <div className="response-text">{response.response}</div>
+                </div>  
+              )
+              : 
+              <div className="border border-dark p-2">
+                No Response yet, check back soon
+              </div>
+              }
+            </div>
+
           </td>
         </tr>
       </>

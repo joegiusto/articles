@@ -1043,12 +1043,11 @@ module.exports = (app, db) => {
     {
       upsert: true
     }, 
-    function(err, res) {
+    function(err, response) {
       if (err) throw err;
       console.log(`Call to /api/upsertProduct done`);
+      return res.send(response);
     });
-
-    return res.end();
 
   });
   
@@ -1391,6 +1390,8 @@ module.exports = (app, db) => {
   require('./routes/updateLastRead')(app, db, passport);
   require('./routes/outsetUpdate')(app, db, passport);
   require('./routes/addProfilePhoto')(app, db, passport);
+
+  require('./routes/deleteReport')(app, db, passport);
   
   require('./routes/addSubscription')(app, db, passport);
   require('./routes/removeSubscription')(app, db, passport);

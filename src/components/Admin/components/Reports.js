@@ -10,6 +10,8 @@ class Reports extends Component {
     this.state = {
       loading: false,
       reports: [],
+      filter: 'unresponded',
+      filterFormula: (obj) => obj.responses?.length === 0 || obj.responses?.length === undefined
     };
 
   }
@@ -49,26 +51,52 @@ class Reports extends Component {
 
   }
 
-  deleteExpenseReport(_id) {
+  deleteReport(id) {
     const self = this;
 
-    axios.post('/api/deleteExpenseReport', {
-      _id
+    axios.post('/api/deleteReport', {
+      _id: id
     })
     .then(function (response) {
 
       console.log(response)
 
       self.setState({
-        reports: self.state.reports.filter((report) => report._id !== _id)
-      })
+        reports: self.state.reports.filter(function( obj ) {
+          return obj._id !== id;
+        })
+      });
 
     })
     .catch(function (error) {
       console.log(error);
-
     });
 
+  }
+
+  respondReport(id, response) {
+    const self = this;
+
+    console.log(id, response)
+
+    // axios.post('/api/respondReport', {
+    //   _id: id,
+
+    // })
+    // .then(function (response) {
+
+    //   console.log(response)
+
+    //   self.setState({
+    //     reports: self.state.reports.filter(function( obj ) {
+    //       return obj._id !== id;
+    //     })
+    //   });
+
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    // });
   }
 
   render() {
@@ -83,42 +111,31 @@ class Reports extends Component {
             <div className="card-body">
               <div>Total: {this.state.reports.length}</div>
               <hr/>
-              <div>Unresponded: {this.state.reports.length}</div>
-              <div>Responded: 0</div>
+              <div>Unresponded: {this.state.reports.filter((obj) => obj.responses?.length > 0).length}</div>
+              <div>Responded: {this.state.reports.filter((obj) => obj.responses?.length === 0 || obj.responses?.length === undefined).length}</div>
             </div>
           </div>
 
         </div>
 
         <div className="reports">
-          <h5>Reports ({this.state.reports.length})</h5>
-          {this.state.reports.map((report) => (
-            <div className="report">
 
-              <div>
-                {/* {moment(report.date).format("LLL")} - {report.expense_id} - - <span className="badge badge-dark">{report.user_id}</span> */}
-              </div>
+          {/* <h5>Reports ({this.state.reports.length})</h5> */}
+          <div className="filters mb-3">
+            <button onClick={() => this.setState({filter: 'unresponded', filterFormula: (obj) => obj.responses?.length === 0 || obj.responses?.length === undefined})} className={"btn btn-articles-light " + (this.state.filter === 'unresponded' ? 'alt' : '')}>Unresponded</button>
+            <button onClick={() => this.setState({filter: 'responded', filterFormula: (obj) => obj.responses?.length > 0 })} className={"btn btn-articles-light " + (this.state.filter === 'responded' ? 'alt' : '')}>Responded</button>
+          </div>
 
-              <div>
-                <span className="badge badge-dark">{moment(report.date).format("LL")}</span> - <span className="badge badge-warning">{report.fetchedId}</span> - <span className="badge badge-info"><b>{report.first_name} <small>{report.user_id}</small></b></span>
-              </div>
-
-              <div>{report.reason}</div>
-
-              <div className="actions d-flex">
-                <div onClick={() => this.deleteExpenseReport(report._id)} className="delete badge badge-danger">
-                  <i className="fas fa-trash"></i>
-                  <span>Delete</span>
-                </div>
-  
-                <div className="respond badge badge-success">
-                  <i className="fas fa-comment"></i>
-                  <span>Respond</span>
-                </div>
-              </div>
-
-            </div>
+          {this.state.reports
+          .filter( this.state.filterFormula )
+          .map((report) => (
+            <Report 
+            report={report}
+            respondReport={this.respondReport}
+            deleteReport={this.deleteReport}
+            />
           ))}
+
         </div>
 
       </div>
@@ -133,3 +150,97 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
 )(Reports);
+
+
+class Report extends Component {
+  constructor(props) {
+  super(props);
+  
+    this.state = {
+      expanded: false,
+      response: ''
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    const self = this;
+
+    // this.props.setLoaction(this.props.tabLocation);
+    // this.setState({
+    //   loading: true
+    // })
+
+  }
+
+  componentWillUnmount() {
+
+  }
+
+  handleChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
+  render() {
+
+    const report = this.props.report
+
+    return (
+      <div className="report">
+
+        <div>
+          {/* {moment(report.date).format("LLL")} - {report.expense_id} - - <span className="badge badge-dark">{report.user_id}</span> */}
+        </div>
+
+        <div>
+          <span className="badge badge-dark">{moment(report.date).format("LL")}</span> - <span className="badge badge-warning">{report.fetchedId}</span> - <span className="badge badge-info"><b>{report.first_name} <small>{report.user_id}</small></b></span>
+        </div>
+
+        <div>{report.reason}</div>
+
+        <div className="responses">
+          {/* {report.responses?.length} */}
+          {report.responses?.map(response => 
+            <div className="response">
+              <div className="employee">{response.employee}</div>
+              <div className="date">{moment(response.date).format("LLL")}</div>
+              <div className="response-text">{response.response}</div>
+            </div>  
+          )}
+        </div>
+
+        <div className="actions d-flex">
+          <div onClick={() => this.props.deleteReport(report._id)} className="delete badge badge-danger">
+            <i className="fas fa-trash"></i>
+            <span>Delete</span>
+          </div>
+
+          <div onClick={() => this.setState({expanded: true})} className="badge badge-success ml-2">
+            <i className="fas fa-comment"></i>
+            <span>Respond</span>
+          </div>
+        </div>
+
+        <div className={"response " + (this.state.expanded ? '' : 'd-none')}>
+
+          <div className="form-group">
+            <label for="address">Response</label>
+            <input className="form-control with-label" onChange={this.handleChange} name="response" id="response" type="text" value={this.state.response}/>
+          </div>
+
+          <button onClick={() => this.setState({expanded: false})} className="btn btn-articles-light">Cancel</button>
+          <button onClick={() => this.props.respondReport(this.props.report._id, this.state.response)} className="btn btn-articles-light">Respond</button>
+
+        </div>
+
+      </div>
+    );
+  }
+}
