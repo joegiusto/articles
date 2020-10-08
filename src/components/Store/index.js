@@ -480,7 +480,7 @@ class StorePage extends Component {
 								<h3>Saved</h3>
 								<p>Any products you save will be displayed here.</p>
 
-								<div className="items">
+								<div className="items pb-5">
 
 									{this.props.auth ? 
 

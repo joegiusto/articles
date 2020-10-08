@@ -79,24 +79,24 @@ class Reports extends Component {
 
     console.log(id, response)
 
-    // axios.post('/api/respondReport', {
-    //   _id: id,
+    axios.post('/api/respondReport', {
+      _id: id,
+      response: response
+    })
+    .then(function (response) {
 
-    // })
-    // .then(function (response) {
+      console.log(response)
 
-    //   console.log(response)
+      // self.setState({
+      //   reports: self.state.reports.filter(function( obj ) {
+      //     return obj._id !== id;
+      //   })
+      // });
 
-    //   self.setState({
-    //     reports: self.state.reports.filter(function( obj ) {
-    //       return obj._id !== id;
-    //     })
-    //   });
-
-    // })
-    // .catch(function (error) {
-    //   console.log(error);
-    // });
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   render() {
@@ -217,15 +217,17 @@ class Report extends Component {
         </div>
 
         <div className="actions d-flex">
-          <div onClick={() => this.props.deleteReport(report._id)} className="delete badge badge-danger">
+
+          <button onClick={() => this.props.deleteReport(report._id)} className="delete badge badge-danger">
             <i className="fas fa-trash"></i>
             <span>Delete</span>
-          </div>
+          </button>
 
-          <div onClick={() => this.setState({expanded: true})} className="badge badge-success ml-2">
+          <button onClick={() => this.setState({expanded: true})} className="badge badge-success ml-2">
             <i className="fas fa-comment"></i>
             <span>Respond</span>
-          </div>
+          </button>
+
         </div>
 
         <div className={"response " + (this.state.expanded ? '' : 'd-none')}>

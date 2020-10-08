@@ -29,6 +29,7 @@
           }
         }
       }
+
     }
 
     .chart-block {
@@ -66,6 +67,7 @@
     display: table-row-group;
     vertical-align: middle;
     border-color: inherit;
+    background-color: yellow;
 
     .big {
       display: table-row;
@@ -74,11 +76,36 @@
     }
   }
 
-  // .custom-row {
-  //   display: table-cell;
-  //   width: 100%;
-  //   border-bottom: 1px solid #eee
-  // }
+  .expanded-row {
+    background-color: $base-color;
+    
+    td {
+      padding: 1rem;
+      padding-top: 0.5rem;
+
+      .header {
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 900;
+      }
+
+      .content {
+        padding: 0.75rem;
+        background-color: #fff;
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+
+        .date {
+          margin-top: -0.75rem;
+          margin-left: -0.75rem;
+          margin-right: -0.75rem;
+          background-color: black;
+          padding: 0.1rem 0.75rem;
+          color: white;
+          margin-bottom: 0.5rem;
+        }
+      }
+    }
+  }
 
   .main {
     border: none!important;

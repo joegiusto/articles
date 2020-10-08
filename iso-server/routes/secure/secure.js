@@ -1391,10 +1391,18 @@ module.exports = (app, db) => {
   require('./routes/outsetUpdate')(app, db, passport);
   require('./routes/addProfilePhoto')(app, db, passport);
 
+  require('./routes/respondReport')(app, db, passport);
   require('./routes/deleteReport')(app, db, passport);
   
   require('./routes/addSubscription')(app, db, passport);
   require('./routes/removeSubscription')(app, db, passport);
 
   require('./routes/upsertComment')(app, db, passport);
+
+  // Gets how many people a user has refereed
+  require('./routes/getUserReferrals')(app, db, passport);
+
+  // Proposal Related
+  require('./routes/upsertProposal')(app, db, passport);
+  require('./routes/deleteProposal')(app, db, passport);
 } 

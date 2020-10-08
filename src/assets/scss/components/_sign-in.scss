@@ -126,24 +126,22 @@ $decal-color: #b06565;
     box-shadow: 5px 5px #000;
 
     .referral {
-      position: absolute;
-      top: 0;
-      right: 0;
-      max-width: 250px;
       background-color: $base-color;
       border: solid 2px #000;
       padding: 0.5rem;
-      transform: translateY(-50%) translateX(50%);
+      margin-top: 1rem;
       font-family: montserrat, sans-serif;
       font-weight: 400;
       font-size: 12px;
       line-height: 16px;
 
-      @include media-breakpoint-down(md) {
-        top: 20px;
-        right: 50%;
-        width: 100%;
-        max-width: 90%;
+      @include media-breakpoint-up(md) {
+        margin-top: 0rem;
+        position: absolute;
+        top: 0;
+        right: 0;
+        max-width: 250px;
+        transform: translateY(-50%) translateX(50%);
       }
 
       b {

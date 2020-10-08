@@ -101,7 +101,7 @@ class Proposals extends Component {
             <div onClick={() => this.setState({filter: 'Fundamental'})} className={"badge " + (this.state.filter === "Fundamental" ? 'badge-dark' : 'badge-light')}>Fundamental</div>
             <div onClick={() => this.setState({filter: 'Social'})} className={"badge " + (this.state.filter === "Social" ? 'badge-dark' : 'badge-light')}>Social</div>
             <div onClick={() => this.setState({filter: 'Financial'})} className={"badge " + (this.state.filter === "Financial" ? 'badge-dark' : 'badge-light')}>Financial</div>
-            <div onClick={() => this.setState({filter: 'Eduacation'})} className={"badge " + (this.state.filter === "Eduacation" ? 'badge-dark' : 'badge-light')}>Eduacation</div>
+            <div onClick={() => this.setState({filter: 'Education'})} className={"badge " + (this.state.filter === "Education" ? 'badge-dark' : 'badge-light')}>Education</div>
           </div>
 
           {/* Social */}
@@ -155,15 +155,15 @@ class Proposals extends Component {
 
           </div>
 
-          {/* Eduacation */}
-          <div className={"proposals " + (this.state.filter === "All" || this.state.filter === "Eduacation" ? '' : 'd-none')}>
+          {/* Education */}
+          <div className={"proposals " + (this.state.filter === "All" || this.state.filter === "Education" ? '' : 'd-none')}>
 
             <div className="after-text noselect">
-              Eduacation
+            Education
             </div>
 
             {
-              this.state.proposals.filter(proposal => proposal.type === 'eduacation').map(proposal => 
+              this.state.proposals.filter(proposal => proposal.type === 'education').map(proposal => 
                 <Proposal
                   proposal={proposal}
                 />
@@ -190,7 +190,7 @@ const Proposal = (props) => {
     <div className="proposal">
       <div className="title">{proposal.title}</div>
       <div className="the-short">
-        <div className="label">The Short:</div>
+        <div className="label">Summary:</div>
         <div className="description">{proposal.description}</div>
       </div>
     </div>

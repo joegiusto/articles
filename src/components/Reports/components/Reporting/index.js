@@ -166,25 +166,27 @@ class ReportExpenseCards extends Component {
               this.state.previousReports.length < 1 ? 
                 <p className="mb-0"><b>No reported items to display</b></p>
                 :
-                <table className="table articles-table table-sm table-hover table-bordered">
-                  <thead>
-                    <tr className="table-articles-head">
-                      <th>Date</th>
-                      <th>Id</th>
-                      <th>Status</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  {
-                    this.state.previousReports.map((report) => (
-                      <ReportExpenseRow 
-                        key={report._id || report.date}
-                        report={report}
-                        deleteReport={this.deleteReport}
-                      />
-                    ))
-                  }
-                </table>
+                <div className="table-responsive">
+                  <table className="table articles-table table-sm table-hover table-bordered">
+                    <thead>
+                      <tr className="table-articles-head">
+                        <th>Date</th>
+                        <th>Id</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    {
+                      this.state.previousReports.map((report) => (
+                        <ReportExpenseRow 
+                          key={report._id || report.date}
+                          report={report}
+                          deleteReport={this.deleteReport}
+                        />
+                      ))
+                    }
+                  </table>
+                </div>
               }
 
             </div>
@@ -285,24 +287,24 @@ class ReportExpenseRow extends Component {
 
         </tr>
 
-        <tr className={(this.state.expanded ? '' : 'd-none')}>
+        <tr className={'expanded-row ' + (this.state.expanded ? '' : 'd-none')}>
           <td colSpan="4">
 
-            <div>Concern, Recommendation, or Problem:</div>
-            <div className="border border-dark p-2">{this.props.report.reason}</div>
+            <div className="header">Concern, Recommendation, or Problem:</div>
+            <div className="content border border-dark">{this.props.report.reason}</div>
 
-            <div className="mt-2">Response:</div>
+            <div className="header mt-2">Response:</div>
 
             <div>
               {this.props.report.responses?.length > 0 ? 
               this.props.report.responses.map(response => 
-                <div className="border border-dark p-2">
-                  <div className="date">{response.date}</div>
+                <div className="content border border-dark">
+                  <div className="date">{moment(response.date).format("LLL")}</div>
                   <div className="response-text">{response.response}</div>
                 </div>  
               )
               : 
-              <div className="border border-dark p-2">
+              <div className="content border border-dark">
                 No Response yet, check back soon
               </div>
               }

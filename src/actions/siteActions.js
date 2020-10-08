@@ -82,7 +82,7 @@ export const removeSubscription = subscription_id => dispatch => {
 };
 
 export const addSubscription = subscription => dispatch => {
-  console.log(`Adding subscription`);
+  console.log(`Adding Subscription`);
 
   axios
     .post("/api/addSubscription", {
@@ -100,5 +100,17 @@ export const addSubscription = subscription => dispatch => {
     .catch(err =>
       console.log(err.response.data)
     );
+  
+};
+
+export const addOrder = order => dispatch => {
+  console.log(`Adding Order to User Details`);
+
+  console.log(order)
+
+  dispatch({
+    type: 'ADD_ORDER',
+    order
+  })
   
 };

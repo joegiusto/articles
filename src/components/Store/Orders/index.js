@@ -37,8 +37,17 @@ class OrdersPage extends Component {
         <div className="container d-flex flex-column align-items-center">
 
           <div className="orders-card card">
-            <div className="card-header">Orders</div>
+
+            <div className="card-header">
+              Orders
+            </div>
+
             <div className="card-body">
+
+              <div className="mb-3">
+                <button className="btn btn-articles-light alt">Active - {this.props.orders.length}</button>
+                <button className="btn btn-articles-light">Archived</button>
+              </div>
 
               {this.props.auth ? 
 

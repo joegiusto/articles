@@ -92,6 +92,19 @@ export default function(state = initialState, action) {
           ],
         }
       }
+    case 'ADD_ORDER':
+      return {
+        
+        ...state,
+        user_details: {
+          ...state.user_details,
+          ordersFetched: [
+            ...state.user_details.ordersFetched,
+            action.order
+          ]
+        }
+
+      }
     case USER_LOADING:
       return {
         ...state,

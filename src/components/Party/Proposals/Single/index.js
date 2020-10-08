@@ -109,6 +109,10 @@ class Proposal extends Component {
           }
 
           {
+            proposalLoading ? '' : <div className="mb-3">Type: <span style={{textTransform: 'capitalize'}}>{proposal.type}</span></div>
+          }
+
+          {
             proposalLoading || this.state.notFound.bool ? 
             <div className="description-fake"></div>
             :
@@ -126,11 +130,12 @@ class Proposal extends Component {
 
             :
 
-            <div className="proposal-body mt-3 mb-5">
+            <div className="proposal-body bg-white py-4 px-3 mt-3 mb-5">
 
               {proposalLoading ? <LoadingBlock></LoadingBlock> : 
               
-              <p>{proposal.content}</p>
+              // <p>{proposal.content}</p>
+              <div style={{whiteSpace: 'pre-wrap'}} dangerouslySetInnerHTML={{__html: proposal.content}}></div>
               }
 
               {this.props.match.params.id === "revise-the-pledge-of-alligence" ? 

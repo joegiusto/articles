@@ -2,6 +2,7 @@ import React, { Component, useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import moment from 'moment';
 import { useForm } from "react-hook-form";
 
 import { CardElement, useStripe, useElements, Elements } from '@stripe/react-stripe-js';
@@ -13,8 +14,9 @@ import stripePower from '../../../assets/img/stripe.png'
 import CheckoutPageItem from './CheckoutPageItem';
 import * as ROUTES from '../../../constants/routes';
 import * as KEYS from '../../../constants/public_keys';
-import { setUserLoading } from 'actions/authActions';
+// import { setUserLoading } from 'actions/authActions';
 import { setUserDetails } from "../../../actions/authActions";
+import { addOrder } from "../../../actions/siteActions";
 
 const stripePromise = loadStripe(KEYS.STRIPE_PUBLIC_KEY);
 
@@ -294,6 +296,18 @@ const CheckoutForm = (props) => {
       })
       .then(function (response) {
         console.log(response);
+        props.addOrder({
+          date: moment().d,
+          for: "Clothing Store Order",
+          _id: response.data.order.upsertedId._id,
+          user_id: props.user_details._id,
+          payment: {
+            ...data,
+            total: data.amount,
+            trueTotal: data.amount,
+          },
+          items: props.productsUser
+        })
         props.clearExpenses();
         userProductsToServer();
       })
@@ -665,5 +679,5 @@ const mapStateToProps = (state) => {
 // const CheckoutPageNewConnected = connect(mapStateToProps)(CheckoutForm);
 
 // export default CheckoutPage;
-const Test = connect(mapStateToProps, { removeExpense, clearExpenses, setUserDetails })(CheckoutForm);
+const Test = connect(mapStateToProps, { removeExpense, clearExpenses, setUserDetails, addOrder })(CheckoutForm);
 export default connect(mapStateToProps, { removeExpense })(CheckoutPage);

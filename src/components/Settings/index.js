@@ -10,6 +10,8 @@ import PlacesAutocomplete from 'react-places-autocomplete';
 import { CardElement, useStripe, useElements, Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 
+import QRCode from 'qrcode.react';
+
 import {
   geocodeByAddress,
   geocodeByPlaceId,
@@ -427,6 +429,8 @@ class Settings extends Component {
       birthDateExpanded: false,
       subscriptionsExpanded: false,
 
+      userReferrals: [],
+
       subscriptions: [],
 
       mongoDBuser: {
@@ -514,6 +518,26 @@ class Settings extends Component {
     });
   }
 
+  getUserReferrals() {
+    let self = this;
+
+    axios.post('/api/getUserReferrals', {
+
+    })
+    .then(function (response) {
+
+      console.log(response)
+
+      self.setState({
+        userReferrals: response.data
+      })
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
   setDefaultPaymentMethod(payment_method_id) {
     let self = this;
 
@@ -534,6 +558,7 @@ class Settings extends Component {
   componentDidMount() {
     this.getUserPaymentMethods();
     this.getStripeUser();
+    this.getUserReferrals();
     // console.log("Subscribe Mounted");
 
     let self = this;
@@ -1119,8 +1144,29 @@ class Settings extends Component {
 
               <div className="referral-section">
                 <h3 className="title">Referral Link</h3>
-                <div className="small">Get subscription benifits by refering friends to sign up</div>
-                <div>https://articles.media/signup?referral=5e90cc96579a17440c5d7d52</div>
+
+                <div className="d-flex">
+
+                  <QRCode value={`https://articles.media/signup?referral=${this.props.user_id}`} />
+
+                  <div className="ml-2">
+                    <h5 className="">Get subscription benifits by refering friends to sign up</h5>
+                    <div>https://articles.media/signup?referral={this.props.user_id}</div>
+
+                    <h5 className="mt-2">User Referrals</h5>
+                    {this.state.userReferrals.map(referral => 
+
+                      <div className="border border-dark p-1">
+                        <div>{moment(referral.date).format("LLL")} </div>
+                        <div>{referral.first_name} {referral.last_name}</div>
+                        <div>Outset: {referral.outset ? 'Complete' : 'Not Complete'}</div>
+                      </div>
+
+                    )}
+                  </div>
+
+                </div>
+                
               </div>
 
             </div>
