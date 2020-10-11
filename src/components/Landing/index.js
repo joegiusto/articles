@@ -38,6 +38,13 @@ class LandingPage extends Component {
 				education: 0
 			},
 
+			newsShowcase: 'stories',
+			newsShowcaseStories: 0,
+			newsShowcaseIssues: 0,
+			newsShowcaseMyths: 0,
+
+			doesTheListReallyGoOn: false,
+
 			products: [],
 
 			avenueTab: 0,
@@ -552,15 +559,56 @@ class LandingPage extends Component {
 
 						<div className="tiles">
 
-							<div className="tile">School Shootings</div>
-							<div className="tile">Botched Gun Laws</div>
-							<div className="tile">Corporate Tax Evasion</div>
-							<div className="tile">School Lunch Debt</div>
+							<div className="tile">
+								School Shootings
+								<div className="more">
+									80 kids died in 2019
+								</div>
+							</div>
 
-							<div className="tile">Underfunded NASA Programs</div>
+							<div className="tile">
+								Botched Gun Laws
+								<div className="more">
+									Still problems
+								</div>
+							</div>
+
+							<div className="tile">
+								Corporate Tax Evasion
+								<div className="more">
+									Amazon paid $0 in Federal Tax in 2019
+								</div>
+							</div>
+
+							<div className="tile">
+								School Lunch Debt
+								<div className="more">
+									High Schools withholding diplomas over lunch debt
+								</div>
+							</div>
+
+							<div className="tile">
+								Underfunded NASA Programs
+								<div className="more">
+									Annual budget of less then half of 1% in 2019 
+								</div>
+							</div>
+
 							<div className="tile">Disproportionate Military Spending</div>
-							<div className="tile">Increasing Automation of Jobs</div>
-							<div className="tile">National Decaying Infrastructure</div>
+
+							<div className="tile">
+								Increasing Automation of Jobs
+								<div className="more">
+									Taxi and tractor trailer drivers are just a fraction of the jobs we are saying goodbye to forever 
+								</div>
+							</div>
+
+							<div className="tile">
+								National Decaying Infrastructure
+								<div className="more">
+								The ASCE estimates the US needs to spend some $4.5 trillion by 2025 to fix the country's infrastructure.  
+								</div>
+							</div>
 
 							<div className="tile">Wealth Inequality</div>
 							<div className="tile">Global Warming</div>
@@ -570,7 +618,39 @@ class LandingPage extends Component {
 							<div className="tile">Climate Change</div>
 							<div className="tile">Accessible Voting</div>
 							<div className="tile">School Lunch Debt</div>
-							<div className="tile">The List Goes On...</div>
+							<div onClick={() => this.setState({doesTheListReallyGoOn: !this.state.doesTheListReallyGoOn})} className="tile click">
+								The List Goes On...
+								<div className="more">
+									It does, click again!
+								</div>
+							</div>
+
+							{this.state.doesTheListReallyGoOn ?
+							<> 
+							<div className="tile">WIP</div>
+							<div className="tile">WIP</div>
+							<div className="tile">WIP</div>
+							<div className="tile">WIP</div>
+
+							<div className="tile">WIP</div>
+							<div className="tile">WIP</div>
+							<div className="tile">WIP</div>
+							<div className="tile">WIP</div>
+
+							<div className="tile">WIP</div>
+							<div className="tile">WIP</div>
+							<div className="tile">WIP</div>
+
+							<div className="tile">
+								And More!
+								<div className="more">
+									But that's all for now
+								</div>
+							</div>
+							</>
+							:
+							null
+							}
 						</div>
 
 						<div className="bottom-text">Is our nations media outlets and leaders tackling any of the problems that plague this nation as well as we need them to?</div>
@@ -657,7 +737,7 @@ class LandingPage extends Component {
 
 								</div>
 
-								<p className="text mt-auto">At Articles everything we do is as transparent as we can possible make it, Donations, Store Orders, Payroll, you name it!</p>
+								<p className="text mt-auto">At Articles everything we do is as transparent as we can possible make it. View our bank balance and explore live Donations, Store Orders, Payroll, Taxes, Manufacturing Cost, you name it!</p>
 							</div>
 
 							{/* Clothing Tile */}
@@ -690,7 +770,7 @@ class LandingPage extends Component {
 									/>
 								</div>
 
-								<p className="text mt-auto">We have our own store, where sales help fund the development of our movement.</p>
+								<p className="text mt-auto">We have our own clothing store! Sales of our politically motivated merch help fund the development of our movement. Explore our collections and even submit designs!</p>
 							</div>
 
 							{/* News Tile */}
@@ -702,19 +782,19 @@ class LandingPage extends Component {
 
 									<div className="stats">
 
-										<div className="stat active">
+										<div onClick={() => this.setState({newsShowcase: 'stories'})} className={"stat " + (this.state.newsShowcase === 'stories' ? 'active' : '')}>
 											<div className="number">{this.state.newsTotals.stories}</div>
 											<div className="type">Stories</div>
 											<div className="active-dot"></div>
 										</div>
 
-										<div className="stat">
+										<div onClick={() => this.setState({newsShowcase: 'issues'})} className={"stat " + (this.state.newsShowcase === 'issues' ? 'active' : '')}>
 											<div className="number">{this.state.newsTotals.issues}</div>
 											<div className="type">Issues</div>
 											<div className="active-dot"></div>
 										</div> 
 
-										<div className="stat">
+										<div onClick={() => this.setState({newsShowcase: 'myths'})} className={"stat " + (this.state.newsShowcase === 'myths' ? 'active' : '')}>
 											<div className="number">{this.state.newsTotals.myths}</div>
 											<div className="type">Myths</div>
 											<div className="active-dot"></div>
@@ -733,7 +813,44 @@ class LandingPage extends Component {
 											All Canadians will get COVID-19 vaccine for free, Trudeau confirms
 										</div> */}
 
-										{this.props.stories.loading ? null : <NewsCard key={''} document={this.props.stories.stories[0]}/>}
+										{this.state.newsShowcase === 'stories' ? this.props.stories.loading ? null : <NewsCard key={''} document={this.props.stories.stories[this.state.newsShowcaseStories]}/> : null}
+										{this.state.newsShowcase === 'issues' ? this.props.issues.loading ? null : <NewsCard key={''} document={this.props.issues.issues[this.state.newsShowcaseIssues]}/> : null}
+										{this.state.newsShowcase === 'myths' ? this.props.myths.loading ? null : <NewsCard key={''} document={this.props.myths.myths[this.state.newsShowcaseMyths]}/> : null}
+
+										<div className="controls">
+
+											{
+												this.state.newsShowcase === 'stories' ? 
+												<>
+												<div onClick={() => this.setState({newsShowcaseStories: this.state.newsShowcaseStories - 1})} className="prev"><i className="far fa-hand-point-left"></i></div>
+												<div onClick={() => this.setState({newsShowcaseStories: this.state.newsShowcaseStories + 1})} className="next"><i className="far fa-hand-point-right"></i></div>
+												</>
+												:
+												null
+											}
+
+											{
+												this.state.newsShowcase === 'issues' ? 
+												<>
+												<div onClick={() => this.setState({newsShowcaseIssues: this.state.newsShowcaseIssues - 1})} className="prev"><i className="far fa-hand-point-left"></i></div>
+												<div onClick={() => this.setState({newsShowcaseIssues: this.state.newsShowcaseIssues + 1})} className="next"><i className="far fa-hand-point-right"></i></div>
+												</>
+												:
+												null
+											}
+
+											{
+												this.state.newsShowcase === 'myths' ? 
+												<>
+												<div onClick={() => this.setState({newsShowcaseMyths: this.state.newsShowcaseMyths - 1})} className="prev"><i className="far fa-hand-point-left"></i></div>
+												<div onClick={() => this.setState({newsShowcaseMyths: this.state.newsShowcaseMyths + 1})} className="next"><i className="far fa-hand-point-right"></i></div>
+												</>
+												:
+												null
+											}
+
+										</div>
+
 
 										{/* <NewsCard key={''} document={this.props?.stories?.stories[0]}/> */}
 									</div>
@@ -742,7 +859,7 @@ class LandingPage extends Component {
 
 								{/* <small className="d-flex justify-content-center mt-3">With more being added everyday!</small> */}
 
-								<p className="text mt-3">Packed with features like the ability to subscribe to issues, we let our users pick the news they wish to see to stay updated on the things most important to them.</p>
+								<p className="text mt-3">Packed with features like the ability to subscribe to issues, we let our users pick the news they wish to see. Stay updated on the things that are most important to you!</p>
 
 							</div>
 
@@ -754,32 +871,43 @@ class LandingPage extends Component {
 
 									<div className="stats">
 
-										<div className="stat">
-											<div className="number">{this.state.proposalsTotals.fundamental}</div>
-											<div className="type">Fundamental</div>
-										</div>
+										<Link className="w-100" to={ROUTES.PROPOSALS}>
+											<div className="stat">
+												<div className="number">{this.state.proposalsTotals.fundamental}</div>
+												<div className="type">Fundamental</div>
+											</div>
+										</Link>
 
-										<div className="stat">
-											<div className="number">{this.state.proposalsTotals.social}</div>
-											<div className="type">Social</div>
-										</div>
+										<Link className="w-100" to={ROUTES.PROPOSALS}>
+											<div className="stat">
+												<div className="number">{this.state.proposalsTotals.social}</div>
+												<div className="type">Social</div>
+											</div>
+										</Link>
 
-										<div className="stat">
-											<div className="number">{this.state.proposalsTotals.education}</div>
-											<div className="type">Education</div>
-										</div> 
+										<Link className="w-100" to={ROUTES.PROPOSALS}>
+											<div className="stat">
+												<div className="number">{this.state.proposalsTotals.education}</div>
+												<div className="type">Education</div>
+											</div>
+										</Link>
 
-										<div className="stat">
-											<div className="number">{this.state.proposalsTotals.financial}</div>
-											<div className="type">Financial</div>
-										</div> 
+										<Link className="w-100" to={ROUTES.PROPOSALS}>
+											<div className="stat">
+												<div className="number">{this.state.proposalsTotals.financial}</div>
+												<div className="type">Financial</div>
+											</div>
+										</Link>
 
 									</div>
 
-									<img src="https://thumbs.gfycat.com/ThinMajorIridescentshark-max-14mb.gif" alt=""/>
+									<div className="image">
+										<img src="https://thumbs.gfycat.com/ThinMajorIridescentshark-max-14mb.gif" alt=""/>
+									</div>
+									
 								</div>
 
-								<p className="text mt-3">Here are just some of the proposals we are advocating for and soon hope to campaign on.</p>
+								<p className="text mt-3">We create Proposals as we encounter all the issues going on in the nation. Here are just some of the proposals we are advocating for and soon hope to campaign on.</p>
 							</div>
 
 						</div>
@@ -1000,16 +1128,22 @@ class LandingPage extends Component {
 
 						<div className="info">
 							<div className="title">Skeptical?</div>
-							<p>Good, read more about our misison here, then take our tour to get to know the site.</p>
-							<button className="btn btn-articles-light alt">Read On</button>
+							<p>Good, as one should be. Read more about our mission and values here, as well as the direction we want to take this company.</p>
+							<Link to={ROUTES.MISSION}><button className="btn btn-articles-light alt">Read On</button></Link>
 						</div>
 
 						<div className="info">
 							<div className="title">Ready?</div>
-							<p>Get started with an account today and start participating in our platform.</p>
-							<button className="btn btn-articles-light alt">Sign Up</button>
+							<p>Get started with an account today and start participating to support our platform.</p>
+							<Link to={ROUTES.SIGN_UP}><button className="btn btn-articles-light alt">Sign Up</button></Link>
 						</div>
 
+						<div className="info">
+							<div className="title">Check us out on Youtube!</div>
+							<p>Right now we just post development and company updates but soon we will start producing our own news videos.</p>
+							<a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/channel/UCeftkiTtcniDx87GqoEmFAg"><button className="btn btn-articles-light alt">Visit</button></a>
+						</div>
+						
 					</div>
 				</section>
 				
@@ -1169,8 +1303,9 @@ function NewCustomPanel(props) {
 // export default LandingPage;
 
 const mapStateToProps = state => ({
-  myths: state.myths,
-  stories: state.stories
+	stories: state.stories,
+	issues: state.issues,
+	myths: state.myths,
 });
 
 export default connect(
