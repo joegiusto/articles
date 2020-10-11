@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 import * as ROUTES from '../../constants/routes';
 
@@ -25,18 +26,23 @@ class PasswordForgetFormBase extends Component {
   }
 
   onSubmit = event => {
-    // const { email } = this.state;
+    event.preventDefault();
+    console.log("Submit")
 
-    // this.props.firebase
-    //   .doPasswordReset(email)
-    //   .then(() => {
-    //     this.setState({ ...INITIAL_STATE });
-    //   })
-    //   .catch(error => {
-    //     this.setState({ error });
-    //   });
+    axios
+    .post("/recover", {
+      email: this.state.email
+    })
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => {
+      console.log(err.response)
 
-    // event.preventDefault();
+      // this.setState({
+      //   error: err.response.data.message
+      // })
+    });
   };
 
   onChange = event => {

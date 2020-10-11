@@ -110,28 +110,27 @@ function Menu(props) {
 
             {/* {console.log(props.isAuth)} */}
 
-            {!props.isAuth ? 
-            null
-            :
-            !props.user?.outset ? (
+            {
+            !props.user?.outset ? 
               <Link className="menu-bar-link mr-3" to={ROUTES.OUTSET}>
               <span className="badge badge-articles-light">
                 <i className="fas fa-file-signature"/>Please Complete Outset 
               </span>
               </Link>
-            ) : (
-              <>
-                {/* A call to get menu bar notifications will go here so they will only show after we are sure outset is done */}
-                {/* <h3 style ={{cursor: 'pointer'}} data-toggle="modal" data-target="#pin" className="top-headline mx-1 d-inline"><span className="badge badge-articles"><i className="fas fa-file-signature"/>Terms and Privacy<span className="badge badge-danger ml-2">!</span></span></h3> */}
-
-                {/* Not Complete */}
-                {/* <h3 style ={{cursor: 'pointer'}} data-toggle="modal" data-target="#pin" className="top-headline mx-1 d-inline"><span className="badge badge-articles-light"><i className="fas fa-tint" style={{color: '#9494ff', fontSize: '1rem', marginLeft: '10px'}}></i>Flint Water Cleanup<span className="badge badge-danger ml-2">7</span></span></h3> */}
-                {/* <h3 style ={{cursor: 'pointer'}} data-toggle="modal" data-target="#pin" className="top-headline mx-1 d-inline"><span className="badge badge-articles-light"><img className="gun-icon-img" src={gunIcon} alt=""/>Gun Laws<span className="badge badge-danger ml-1">4</span></span></h3> */}
-                {/* <h3 style ={{cursor: 'pointer'}} data-toggle="modal" data-target="#pin" className="top-headline mx-1 d-inline"><span className="badge badge-articles-light">+ <span className="badge badge-danger">23</span></span></h3> */}
-              </>
-            )
+            :
+            null
             }
 
+            {
+            !props.user?.isVerified ? 
+              <Link className="menu-bar-link mr-3" to={ROUTES.VERIFY_EMAIL}>
+              <span className="badge badge-articles-light badge-danger">
+                <i className="fas fa-file-signature"/>Please Verify Email 
+              </span>
+              </Link>
+            :
+            null
+            }
 
             {/* <>
 

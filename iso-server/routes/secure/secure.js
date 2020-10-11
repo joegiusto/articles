@@ -603,6 +603,7 @@ module.exports = (app, db) => {
         for: 'Clothing Store Order',
         user_id: req.user._id,
         date: moment()._d,
+        status: 'Awaiting Shipment',
         items: req.body.items,
         payment: {
           type: 'card',
@@ -1016,8 +1017,8 @@ module.exports = (app, db) => {
 
   });
 
-  app.post('/api/upsertExpenseReport', (req, res) => {
-    console.log(`Call to /api/upsertProduct made at ${new Date()}`);
+  app.post('/api/upsertExpenseReport', passport.authenticate('jwt', {session: false}), (req, res) => {
+    console.log(`Call to /api/upsertExpenseReport made at ${new Date()}`);
 
     let report = req.body.report;
 
@@ -1035,7 +1036,7 @@ module.exports = (app, db) => {
     db.collection("articles_expense_reports").updateOne({_id: ObjectId(report._id)}, {
       $set: {
         date: moment()._d,
-        user_id: report.user_id,
+        user_id: req.user._id.toString(),
         expense_id: report.expense_id,
         reason: report.reason
       }
@@ -1045,8 +1046,21 @@ module.exports = (app, db) => {
     }, 
     function(err, response) {
       if (err) throw err;
-      console.log(`Call to /api/upsertProduct done`);
-      return res.send(response);
+      console.log(`Call to /api/upsertExpenseReport done`);
+      // return res.send(response);
+
+      db.collection("articles_users").updateOne({_id: ObjectId(req.user._id)}, {
+        $set: {
+          last_report: moment()._d
+        }
+      },
+      function(err, responseLater) {
+        if (err) throw err;
+        console.log(`Update to user last_report done`);
+        // return res.send(response);
+        return res.send(response);
+      });
+
     });
 
   });
@@ -1313,12 +1327,17 @@ module.exports = (app, db) => {
     users.map( (user, i) => {
 
       if (  processed_users.findIndex( obj => obj.zip === user.address.zip ) === -1  ) {
-        console.log('not')
+        // console.log('not')
 
-        processed_users.push({
-          zip: user.address.zip,
-          amount: 1
-        })
+        // console.log(user.address.zip)
+
+        // Do not process users with no address zip information
+        if (user.address.zip !== undefined && user.address.zip !== null) {
+          processed_users.push({
+            zip: user.address.zip,
+            amount: 1
+          })
+        }
 
       } else {
         const index = processed_users.findIndex( obj => obj.zip === user.address.zip )
@@ -1357,6 +1376,8 @@ module.exports = (app, db) => {
       //   item.amount = 1
       //   output.push(item)
       // })
+
+      console.log(processed_users)
 
       const promises = processed_users.map( async(item, i) => {
 
@@ -1405,4 +1426,9 @@ module.exports = (app, db) => {
   // Proposal Related
   require('./routes/upsertProposal')(app, db, passport);
   require('./routes/deleteProposal')(app, db, passport);
+
+  // require('./routes/sendVerificationEmail')(app, db, passport);
+
+  require('./routes/progressNeedsShipping')(app, db, passport);
+  require('./routes/progressShipped')(app, db, passport);
 } 

@@ -143,7 +143,10 @@ class Add extends Component {
 
     if ( !contains(proposalObj, this.state.proposals) ) {
       this.setState({ 
-        proposals: [...this.state.proposals, {...proposalObj} ] 
+        proposals: [...this.state.proposals, {
+          _id: proposalObj._id,
+          title: proposalObj.title
+        } ] 
       })
     }
 
@@ -160,6 +163,24 @@ class Add extends Component {
     if ( !contains(tagObj, this.state.news_tags) ) {
       this.setState({ 
         news_tags: [...this.state.news_tags, {...tagObj} ] 
+      })
+    }
+
+    function contains(obj, list) {
+      return list.some(function(elem) {
+           return elem._id === obj._id
+      })
+    }
+
+  }
+
+  removeProposal(tagObj) {
+
+    if ( contains(tagObj, this.state.proposals) ) {
+      this.setState({ 
+        proposals:  this.state.proposals.filter(function( obj ) {
+          return obj._id !== tagObj._id;
+        }) 
       })
     }
 
@@ -402,7 +423,8 @@ class Add extends Component {
 
             <div className="form-group tags-group">
 
-                <label for="news_title">{this.state.news_type === '' ? 'News' : this.state.news_type} Tags:</label>
+                <label for="news_title">Tags:</label>
+
                 <div className="preview form-control">
 
                   <div className="tags">
@@ -460,16 +482,17 @@ class Add extends Component {
 
             <div className="form-group proposals-group">
 
-                <label for="news_title">{this.state.news_type === '' ? 'News' : this.state.news_type} Tags:</label>
+                <label for="news_title">Proposals:</label>
+
                 <div className="preview form-control">
 
                   <div className="tags">
                     {this.state.proposals.length > 0 ?
-                    this.state.proposals.map((tag) => (
-                      <div onClick={() => this.removeTag(tag)} className="badge badge-dark d-inline-block mr-1">{tag.tag_name}</div>
+                    this.state.proposals.map((proposal) => (
+                      <div onClick={() => this.removeProposal(proposal)} className="badge badge-dark d-inline-block mr-1">{proposal.title}</div>
                     ))
                     :
-                    <div className="badge badge-danger d-inline-block">No Tags</div>
+                    <div className="badge badge-danger d-inline-block">No Proposals</div>
                     }
                     
                   </div>
@@ -496,8 +519,8 @@ class Add extends Component {
 
                     {/* Replace this with a map of the database tags */}
                     {this.props.proposals !== [] ?
-                    this.props.proposals.map((tag) => (
-                      <div onClick={() => this.addTag(tag)} className="badge badge-dark mr-1">{tag.title}</div>
+                    this.props.proposals.map((proposal) => (
+                      <div onClick={() => this.addProposal(proposal)} className="badge badge-dark mr-1">{proposal.title}</div>
                     ))
                     :
                       <div className="badge badge-warning mr-1">Loading</div>

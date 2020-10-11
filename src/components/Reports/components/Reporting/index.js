@@ -17,7 +17,8 @@ class ReportExpenseCards extends Component {
       expenses: [],
       expense_id: '',
       reason: '',
-      user_id: this.props.user_id
+      user_id: this.props.user_id,
+      last_report: this.props.last_report
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -27,6 +28,8 @@ class ReportExpenseCards extends Component {
 
   componentDidMount() {
     const self = this;
+
+    console.log( )
 
     self.setState({
       reportsLoading: true
@@ -177,7 +180,7 @@ class ReportExpenseCards extends Component {
                       </tr>
                     </thead>
                     {
-                      this.state.previousReports.map((report) => (
+                      this.state.previousReports.sort( (a, b) => ( new Date(b.date) - new Date(a.date) ) ).map((report) => (
                         <ReportExpenseRow 
                           key={report._id || report.date}
                           report={report}
@@ -227,9 +230,25 @@ class ReportExpenseCards extends Component {
                   <textarea className="d-block w-100 p-2" name="reason" id="reason" onChange={this.handleChange} value={this.state.reason} rows="10"></textarea>
                 </div>
 
-                <div className="pb-3 d-flex justify-content-end">
-                  <button onClick={() => this.submitReport()} className="btn btn-articles-light" disabled={this.state.reason === '' || this.state.expense_id === '' ? true : false}>Submit</button>
-                </div>
+                {
+                  // moment(this.state.last_report).hours() > 24 ? 
+                  <div className="pb-3 d-flex justify-content-end">
+                    <button onClick={() => this.submitReport()} className="btn btn-articles-light" disabled={this.state.reason === '' || this.state.expense_id === '' ? true : false}>Submit</button>
+                  </div>
+                  // :
+                  // <div className="alert alert-warning">
+                  //   We limit users to one report every 24 hours to cut down on potential spam, please come back at { moment(this.state.last_report).add(1, 'day').format("LLL") } if you wish to file another report. 
+                  // </div>
+                }
+
+                
+
+                {/* {
+                  moment(this.state.last_report).diff(Date.now(), 'hours') < -24 ? 
+                  <div>Can Report</div>
+                  :
+                  <div className="alert alert-danger">We limit users to one report every 24 hours, please wait until { moment(this.state.last_report).add(1, 'days').format("LLL") } to make another report</div>
+                } */}
 
               </>
               :

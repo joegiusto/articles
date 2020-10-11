@@ -117,3 +117,13 @@ export const logoutUser = () => dispatch => {
     type: 'SET_CURRENT_USER_DETAILS_TO_EMPTY'
   })
 };
+
+// verifyEmail - get user token
+export const verifyEmail = () => dispatch => {
+  console.log("Here")
+
+  dispatch({
+    type: 'VERIFY_EMAIL',
+  })
+
+};

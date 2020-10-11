@@ -8,6 +8,8 @@ const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const jwt = require("jsonwebtoken");
+
+const {sendEmail} = require('../../utils/index');
 // const keys = require("../../config/keys");
 
 // Load input validation
@@ -16,13 +18,14 @@ const validateLoginInput = require("../../validation/login");
 
 // Load User model
 const User = require("../../models/User");
+const Token = require('../../models/Token');
 
 // @route POST api/users/register
 // @desc Register user
 // @access Public
 
 // router.post("/register", (req, res) => {
-app.post("/register", (req, res) => {
+app.post("/register", async (req, res) => {
 
   // Log that we got request
   console.log("Called a register user");
@@ -82,19 +85,21 @@ app.post("/register", (req, res) => {
           newUser.password = hash;
           newUser
             .save()
-            .then(user => {
+            .then( async (user) => {
 
-              res.json(user)
+              // res.json(user)
 
-              sgMail
-                .send(msg)
-                .then(() => {}, error => {
-                  console.error(error);
-              
-                  if (error.response) {
-                    console.error(error.response.body)
-                  }
-                });
+              await sendVerificationEmail(user, req, res);
+
+              // sgMail
+              // .send(msg)
+              // .then(() => {}, error => {
+              //   console.error(error);
+            
+              //   if (error.response) {
+              //     console.error(error.response.body)
+              //   }
+              // });
             })
             .catch(err => console.log(err));
         });
@@ -157,5 +162,97 @@ app.post("/login", (req, res) => {
     });
   });
 });
+
+// ===EMAIL VERIFICATION
+// @route GET api/verify/:token
+// @desc Verify token
+// @access Public
+app.get("/verify", async (req, res) => {
+
+  console.log("Verify called")
+  console.log(req.query.token)
+
+  if(!req.query.token) return res.status(400).json({message: "We were unable to find a user for this token."});
+
+  try {
+      // Find a matching token
+      const token = await Token.findOne({ token: req.query.token });
+
+      if (!token) return res.status(400).json({ message: 'We were unable to find a valid token. Your token my have expired.' });
+
+      // If we found a token, find a matching user
+      User.findOne({ _id: token.userId }, (err, user) => {
+          if (!user) return res.status(400).json({ message: 'We were unable to find a user for this token.' });
+
+          if (user.isVerified) return res.status(400).json({ message: 'This user has already been verified.' });
+
+          // Verify and save the user
+          user.isVerified = true;
+          user.save(function (err) {
+              if (err) return res.status(500).json({message:err.message});
+
+              res.status(200).send("The account has been verified. Please log in.");
+          });
+      });
+  } catch (error) {
+      res.status(500).json({message: error.message})
+  }
+
+});
+
+// @route POST api/resend
+// @desc Resend Verification Token
+// @access Public
+app.post("/resendToken", async (req, res) => {
+
+  console.log("Resend Verify called")
+
+  try {
+    const { email } = req.body;
+
+    const user = await User.findOne({ email });
+
+    if (!user) return res.status(401).json({ message: 'The email address ' + req.body.email + ' is not associated with any account. Double-check your email address and try again.'});
+
+    if (user.isVerified) return res.status(400).json({ message: 'This account has already been verified. Please log in.'});
+
+    await sendVerificationEmail(user, req, res);
+} catch (error) {
+    res.status(500).json({message: error.message})
+}
+
+});
+
+async function sendVerificationEmail(user, req, res){
+  try{
+      const token = user.generateVerificationToken();
+
+      // Save the verification token
+      await token.save();
+
+      let subject = "Account Verification Token";
+      let to = user.email;
+      let from = {
+        email: "no-reply@articles.media",
+        name: "Articles Media"
+      };
+      let link="http://"+req.headers.host+"/verify-email?token="+token.token;
+      let html = `
+      <img width="100" height="100" src="https://cdn.articles.media/email/logo.jpg"></img>
+      <br>
+      <strong>Hello ${user.first_name},</strong>
+      <br>
+      <p>Please click on the following <a href="${link}">link</a> to verify your account.</p> 
+      <br>
+      <p>If you did not request this, please ignore this email.</p>`;
+
+      await sendEmail({to, from, subject, html});
+
+      res.status(200).json({message: 'A verification email has been sent to ' + user.email + '.'});
+  }catch (error) {
+    console.log(error)
+    res.status(500).json({message: error.message})
+  }
+}
 
 module.exports = app;

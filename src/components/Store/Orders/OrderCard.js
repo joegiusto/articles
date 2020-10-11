@@ -14,7 +14,7 @@ const {order} = props;
         </div>
 
         <div className="status">
-          Pending Shipment
+          {order.status}
         </div>
 
         <div className="preview">

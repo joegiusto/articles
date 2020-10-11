@@ -20,6 +20,12 @@ const stripe = require('stripe')(process.env.STRIPE_TEST_PASSWORD);
 const sharp = require('sharp');
 const cache = require('memory-cache');
 
+const users = require("./routes/api/users");
+
+// const Password = require('../controllers/password');
+// const password = require('./routes/api/password');
+const password = require('./routes/api/password');
+
 // var React = require('react');
 // var ReactDOMServer = require('react-dom/server');
 
@@ -43,8 +49,8 @@ app.use(
       {
         from: /^\/api\/.*$/,
         to: function(context) {
-          console.log(context.parsedUrl.pathname);
-          return context.parsedUrl.pathname;
+          console.log(context.parsedUrl.path);
+          return context.parsedUrl.path;
         }
       }
     ]
@@ -210,7 +216,8 @@ function connectWithRetryMongoose() {
 
 connectWithRetryMongoose();
 
-const users = require("./routes/api/users");
+
+// const password = require("./routes/api/password");
 
 // Not sure wehat this did
 app.use( express.static(path.join(__dirname, '../build')) );
@@ -229,6 +236,10 @@ require("./config/passport")(passport);
 // Routes
 app.use("/api/users", users);
 
+//Configure Route
+// require('./routes/index')(app);
+// app.use('/password', password);
+
 // app.listen(process.env.PORT || 8080);
 
 app.get('/', function (req, res) {
@@ -237,7 +248,10 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, './build', 'index.html'));
 });
 
-// io.origins('*:*');
+app.post('/recover', function (req, res) {
+  console.log("Called")
+  password.recover(req, res)
+});
 
 io.on('connection', (socket) => {
   console.log('User connected');

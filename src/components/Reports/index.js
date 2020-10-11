@@ -831,6 +831,7 @@ class Reports extends Component {
                   <ReportExpenseCards 
                     expenses={this.state.reportsData.expenses.other}
                     user_id={this.props.user_id}
+                    last_report={this.props.last_report}
                   />
 
                 </div>
@@ -1842,7 +1843,8 @@ const mapStateToProps = (state) => {
   return {
     expenses: state.expenses,
     site: state.site,
-    user_id: state.auth.user.id
+    user_id: state.auth.user.id,
+    last_report: state.auth.user_details.last_report
   };
 };
 

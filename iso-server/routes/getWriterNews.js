@@ -47,4 +47,27 @@ module.exports = (app, db) => {
 
   });
 
+  app.get('/api/getNewsCount', async function (req, res) {
+    console.log(`Call to /api/getNewsCount made at ${new Date()}`);
+
+    var stories = await db.collection('articles_news').count( {news_type: 'story', visible: true} );
+    var issues = await db.collection('articles_news').count( {news_type: 'issue', visible: true} );
+    var myths = await db.collection('articles_news').count( {news_type: 'myth', visible: true} );
+
+    res.send({stories, issues, myths})
+
+  });
+
+  app.get('/api/getProposalCount', async function (req, res) {
+    console.log(`Call to /api/getNewsCount made at ${new Date()}`);
+
+    var fundamental = await db.collection('articles_proposals').count( {type: 'fundamental'} );
+    var social = await db.collection('articles_proposals').count( {type: 'social'} );
+    var financial = await db.collection('articles_proposals').count( {type: 'financial'} );
+    var education = await db.collection('articles_proposals').count( {type: 'education'} );
+
+    res.send({fundamental, social, financial, education})
+
+  });
+
 }

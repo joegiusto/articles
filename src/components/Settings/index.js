@@ -11,6 +11,8 @@ import { CardElement, useStripe, useElements, Elements } from '@stripe/react-str
 import { loadStripe } from '@stripe/stripe-js';
 
 import QRCode from 'qrcode.react';
+import TextareaAutosize from 'react-textarea-autosize';
+import { Editor } from '@tinymce/tinymce-react';
 
 import {
   geocodeByAddress,
@@ -27,6 +29,7 @@ import Subscription from './Subscription'
 import Billing from './Billing'
 
 import * as KEYS from '../../constants/public_keys';
+
 const stripePromise = loadStripe(KEYS.STRIPE_PUBLIC_KEY);
 
 const CheckoutForm = (props) => {
@@ -471,6 +474,7 @@ class Settings extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleUserChange = this.handleUserChange.bind(this);
+    // this.handleUserChange = this.handleUserChange.bind(this);
     this.handleAddressChange = this.handleAddressChange.bind(this);
     this.onChangeProfile = this.onChangeProfile.bind(this);
     this.updateUser = this.updateUser.bind(this);
@@ -1003,6 +1007,10 @@ class Settings extends Component {
     this.props.history.push(ROUTES.STORE_ORDERS + '/' + id)
   }
 
+  handleEditorChange = (content, editor) => {
+    console.log('Content was updated:', content);
+  }
+
   render() {
     const {mongoDBuser, mongoDBsubmissions, mongoDBorders, allIssues, mongoDBsubscriptionsBulk, merge} = this.state;
 
@@ -1049,6 +1057,11 @@ class Settings extends Component {
               localStorage.setItem( 'settingsTab', 'Billing' ) 
               this.setState({settingsTab: 'Billing'})}
             } className={"btn btn-articles-light " + (this.state.settingsTab === 'Billing' ? 'alt' : '')}>Billing</div>
+
+            <div onClick={() => {
+              localStorage.setItem( 'settingsTab', 'Employee' ) 
+              this.setState({settingsTab: 'Employee'})}
+            } className={"btn btn-articles-light " + (this.state.settingsTab === 'Employee' ? 'alt' : '')}>Employee</div>
             
           </div>
 
@@ -1093,26 +1106,59 @@ class Settings extends Component {
 
               <div className="plans d-flex justify-content-center">
   
-                <div className="plan d-flex flex-column active">
+                <div className={"plan d-flex flex-column " + (this.state.subscriptions[0]?.plan.product === 'prod_I2y7aiDpmeSkFP' ? 'active' : '')}>
 
                   <div className="active-badge">
                     Active
                   </div>
 
-                  <i className="fas fa-user"></i>
+                  {/* <i className="fas fa-user"></i> */}
+                  <img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/usa-1495530-1266384.png" alt=""/>
                   <div className="type">Supporter Plan</div>
-                  <div>$1.00 / month</div>
+
+                  <ul className="list-group list-group-flush">
+                    <li className="list-group-item">Ad Free Browsing</li>
+                    <li className="list-group-item">Private Video Calls with Staff</li>
+                    <li className="list-group-item">Exclusive Store Items</li>
+                    <li className="list-group-item">&nbsp;</li>
+                    <li className="list-group-item">&nbsp;</li>
+                  </ul>
+
+                  <div className="price">$1 / mo</div>
+
+                  {(this.state.subscriptions[0]?.plan.product === 'prod_I2y7aiDpmeSkFP' ? 
+                  <button className="btn btn-danger btn-sm">Cancel</button>
+                  :
                   <button className="btn btn-articles-light btn-sm">Join</button>
+                  )}
+                  
                 </div>
   
-                <div className="plan d-flex flex-column ml-3">
-                  <i className="fas fa-medal"></i>
-                  <div className="type">Supporter Plan</div>
-                  <div>$5.00 / month</div>
+                <div className={"plan d-flex flex-column ml-3 " + (this.state.subscriptions[0]?.plan.product === 'prod_I2y7aiDpmeSkFP' ? 'active' : '')}>
+
+                  {/* <i className="fas fa-medal"></i> */}
+                  <img src="https://cdn1.iconfinder.com/data/icons/japanese-landmarks-color/512/statue_of_liberty-512.png" alt=""/>
+                  <div className="type">Founder Plan</div>
+
+                  <ul className="list-group list-group-flush">
+                    <li className="list-group-item">Ad Free Browsing</li>
+                    <li className="list-group-item">Private Video Calls with Staff</li>
+                    <li className="list-group-item">Exclusive Store Items</li>
+                    <li className="list-group-item">Free US Shipping (inc AK, HI, UM)</li>
+                    <li className="list-group-item">Store Discounts</li>
+                  </ul>
+                  
+                  <div className="price">$5 / mo</div>
+
+                  {/* <button className="btn btn-articles-light btn-sm">Join</button> */}
+                  {(this.state.subscriptions[0]?.plan.product === 'prod_I2y7aiDpmeSkFP' ? 
+                  <button className="btn btn-danger btn-sm">Switch</button>
+                  :
                   <button className="btn btn-articles-light btn-sm">Join</button>
+                  )}
                 </div>
 
-                <div className="or">- Or -</div>
+                {/* <div className="or">- Or -</div>
 
                 <div className="plan d-flex flex-column ml-3">
                   <i className="fas fa-shopping-cart"></i>
@@ -1126,12 +1172,37 @@ class Settings extends Component {
                   <div className="type">Referrals</div>
                   <div>1 Week / referrals</div>
                   <button className="btn btn-articles-light btn-sm">Refer</button>
-                </div>
+                </div> */}
 
               </div>
 
               <div className="active-plan">
-                <div>Next Charge: 12/14/20</div>
+
+                {/* <div>Next Charge: 12/14/20</div> */}
+
+                {this.state.subscriptions.length > 0 ?
+                  <div className="">
+                    {this.state.subscriptions.map(plan => 
+
+                      <div className="plan mb-2">
+
+                        <div className="heading">
+                          Current Plan: {plan.id}
+                        </div>
+
+                        <div className="">
+                          Next Charge: {moment.unix(plan.current_period_end).format('LLL')}
+                        </div>
+
+                        <button>Cancel</button>
+
+                      </div>  
+                    )}
+                  </div>
+                  :
+                  null
+                }
+
                 <div className="pending-credits-container">
                   <div className="title">
                     Pending Credits
@@ -1139,7 +1210,9 @@ class Settings extends Component {
                   <div>Store Purchase - 1 month</div>
                   <div>Store Purchase - 1 month</div>
                 </div>
+
                 <div>Amount: $1.00</div>
+
               </div>
 
               <div className="referral-section">
@@ -1150,19 +1223,28 @@ class Settings extends Component {
                   <QRCode value={`https://articles.media/signup?referral=${this.props.user_id}`} />
 
                   <div className="ml-2">
-                    <h5 className="">Get subscription benifits by refering friends to sign up</h5>
+                    
+                    <h5 className="title">Get subscription benifits by refering friends to sign up</h5>
                     <div>https://articles.media/signup?referral={this.props.user_id}</div>
 
-                    <h5 className="mt-2">User Referrals</h5>
-                    {this.state.userReferrals.map(referral => 
+                    <h5 className="title mt-2">User Referrals <span className="border badge badge-light">{this.state.userReferrals.length}</span></h5>
 
+                    {this.state.userReferrals.length > 0 ? 
+
+                    this.state.userReferrals.map(referral => 
                       <div className="border border-dark p-1">
                         <div>{moment(referral.date).format("LLL")} </div>
                         <div>{referral.first_name} {referral.last_name}</div>
                         <div>Outset: {referral.outset ? 'Complete' : 'Not Complete'}</div>
                       </div>
+                    )
 
-                    )}
+                    :
+
+                    <small>No user referrals found.</small>
+
+                    }
+
                   </div>
 
                 </div>
@@ -1170,19 +1252,6 @@ class Settings extends Component {
               </div>
 
             </div>
-
-            {this.state.subscriptions.length > 0 ?
-              <div className="mt-2">
-                {this.state.subscriptions.map(plan => 
-                  <div className="plan mb-2">
-                    <div>{plan.id}</div>
-                    <div>{moment.unix(plan.current_period_end).format('LLL')}</div>
-                  </div>  
-                )}
-              </div>
-              :
-              null
-            }
 
           </div>
 
@@ -1259,7 +1328,11 @@ class Settings extends Component {
                     {/* <div>CHANGE NAME</div> */}
                     <p>Anyone can see this info when they communicate with you or view content you create</p>
 
-                    <input className="d-block" name="first_name" onChange={this.handleUserChange} value={mongoDBuser.first_name} type="text"/>
+                    <div className="form-group">
+                      <label htmlFor="first_name">First Name</label>
+                      <input className="d-block" name="first_name" onChange={this.handleUserChange} value={mongoDBuser.first_name} type="text"/>
+                    </div>
+
                     <span className="badge badge-dark">Visible To All</span>
 
                     <input className="d-block mt-2" name="last_name" onChange={this.handleUserChange} value={mongoDBuser.last_name} type="text"/>
@@ -1713,6 +1786,66 @@ class Settings extends Component {
                   
                 </table>
 
+              </div>
+
+            </div>
+
+          </div>
+
+          <div className={"card settings-card mt-3 employee-section " + (this.state.settingsTab !== 'Employee' ? 'd-none' : '')}>
+
+            <div className="card-header">
+              <h5>Employee Info</h5>
+              <p>Info you wish to share with others on your employee page located at:</p>
+              <Link to={ROUTES.EMPLOYEES + `/${this.props.user_id}`}> {`articles.media${ROUTES.EMPLOYEES}/${this.props.user_id}`} </Link>
+            </div>
+
+            <div className="card-body m-3">
+
+              <div className="mb-3">
+                <button className="btn btn-articles-light alt">Visible</button>
+                <button className="btn btn-articles-light">Hidden</button>
+              </div>
+
+              <div className="form-group articles">
+                <label htmlFor="">Quote</label>
+                <TextareaAutosize className="form-control with-label" name="content" id="content" type="text" value={this.props.user_details.employee.quote} onChange={(e) => {this.handleNewProposalChange(e)}} cols="30" rows="3"/>
+              </div>
+
+              <div className="form-group articles">
+                <label htmlFor="">Movies</label>
+
+                {/* <input className="form-control with-label" name="content" id="content" type="text" value={""} onChange={(e) => {this.handleNewProposalChange(e)}} cols="30" rows="3"/> */}
+
+                <TextareaAutosize 
+                  className="form-control with-label" 
+                  name="content" 
+                  id="content" 
+                  type="text" 
+                  value={this.props.user_details.employee.movies} 
+                  onChange={(e) => {this.handleNewProposalChange(e)}}
+                />
+
+              </div>
+
+              <div className="form-group articles">
+                <label htmlFor="">Music</label>
+                <input className="form-control with-label" name="content" id="content" type="text" value={""} onChange={(e) => {this.handleNewProposalChange(e)}} cols="30" rows="3"/>
+              </div>
+
+              <div className="form-group articles">
+                <label htmlFor="">Hobbies</label>
+                <input className="form-control with-label" name="content" id="content" type="text" value={""} onChange={(e) => {this.handleNewProposalChange(e)}} cols="30" rows="3"/>
+              </div>
+
+              <div className="form-group articles">
+                <label htmlFor="">Role Models</label>
+                <input className="form-control with-label" name="content" id="content" type="text" value={""} onChange={(e) => {this.handleNewProposalChange(e)}} cols="30" rows="3"/>
+              </div>
+
+              <div className="form-group articles">
+                <label htmlFor="">Favorite Foods</label>
+                <input className="form-control with-label" name="content" id="content" type="text" value={""} onChange={(e) => {this.handleNewProposalChange(e)}} cols="30" rows="3"/>
               </div>
 
             </div>

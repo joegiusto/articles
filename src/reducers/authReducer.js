@@ -105,6 +105,16 @@ export default function(state = initialState, action) {
         }
 
       }
+    case 'VERIFY_EMAIL':
+      console.log('VERIFY_EMAIL called')
+      return {
+        ...state,
+        user_details: {
+          ...state.user_details,
+          isVerified: true
+        }
+
+      }
     case USER_LOADING:
       return {
         ...state,

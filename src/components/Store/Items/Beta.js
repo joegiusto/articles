@@ -27,7 +27,7 @@ const IncludedSubscriptionInfoPopper = (props) => {
       {/* </button> */}
 
       <div className={"popper " + (popperVisible === true ? 'visible' : '')} ref={setPopperElement} style={styles.popper} {...attributes.popper}>
-        Certain store items include a subscription to our site which removes ads, discounts future purchases and much more!
+        Certain store items include a subscription to our site (Supporter Plan) which removes all ads, enters you for a chance to participate in weekly video calls with staff to voice opinions and concerns, unlocks exclusive store items and more! If you are already a supporter this will delay future payments by {props.time} months.
       </div>
 
     </span>
@@ -83,7 +83,7 @@ const StoreItem = (props) => {
             {props.product?.includesSubscription ? 
               <div className="subscription-note">
                 <span className='text'>Includes {props.product.subscriptionTime} Month Subscription!</span>
-                <IncludedSubscriptionInfoPopper/>
+                <IncludedSubscriptionInfoPopper time={props.product.subscriptionTime}/>
                 {/* <i className="fas fa-info-circle"></i> */}
               </div>
               :

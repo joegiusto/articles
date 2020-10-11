@@ -1,4 +1,9 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import { connect } from "react-redux";
+import { NewsCard } from '../News/index'
+
+import StoreItemBeta from '../Store/Items/Beta.js';
 
 // import ShowcaseCard from './ShowcaseCard';
 // import slideHead from '../../assets/img/slide-head.png';
@@ -19,6 +24,21 @@ class LandingPage extends Component {
 			timeProgress: 0,
 			// Time at which the time progress will be set t 0 and next slide will be displayed
 			timeToNextTime: 100,
+
+			newsTotals: {
+				stories: 0,
+				issues: 0,
+				myths: 0
+			},
+
+			proposalsTotals: {
+				fundamental: 0,
+				social: 0,
+				financial: 0,
+				education: 0
+			},
+
+			products: [],
 
 			avenueTab: 0,
 			avenueScroll: false,
@@ -141,6 +161,63 @@ class LandingPage extends Component {
 	}
 
 	componentDidMount() {
+		const self = this;
+
+		axios.get('/api/getProducts')
+    .then(function (response) {
+
+			// handle success
+			console.log('Got Products')
+      console.log(response.data.news);
+
+      self.setState({
+				products: response.data,
+				loadingProducts: false
+      });
+
+      // self.setState({ resultsLoading: false });
+
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+
+      self.setState({ loadingProducts: true });
+      self.setState({ resultsLoadingError: error });
+		});
+
+		axios.get('/api/getNewsCount')
+    .then(function (response) {
+			console.log(response);
+			
+			self.setState({
+				newsTotals: {
+					stories: response.data.stories,
+					issues: response.data.issues,
+					myths: response.data.myths
+				},
+			})
+    })
+    .catch(function (error) {
+      console.log(error);
+		});
+		
+		axios.get('/api/getProposalCount')
+    .then(function (response) {
+			console.log(response);
+			
+			self.setState({
+				proposalsTotals: {
+					fundamental: response.data.fundamental,
+					social: response.data.social,
+					financial: response.data.financial,
+					education: response.data.education,
+				},
+			})
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 
 		// Default scroll of slides if avenue scroll is enabled
 		if (this.state.avenueScroll) {
@@ -420,8 +497,366 @@ class LandingPage extends Component {
 		return (
 			<div className="landing-page landing-new">
 
+				{/* Welcome Block - October 2020 Remodel */}
+				<div className="welcome-block">
+
+					<div className="background">
+						<div className="bg"></div>
+						<div className="bg bg2"></div>
+						<div className="bg bg3"></div>
+					</div>
+
+					<div className="content">
+
+						<div className="details">
+							<div className="small">Welcome To</div>
+		
+							<div className="brand">Articles Media</div>
+		
+							<div className="text">
+								A political organization and platform, working to make America a better place for the people through avenues of transparency, clothing, news and politics.
+							</div>
+		
+							<div className="looking-for-section">
+								<div className="header">Looking for one of the following pages?</div>
+			
+								<div className="links">
+									<Link to={ROUTES.REPORTS}><button className="btn btn-articles-light">Transparency</button></Link>
+									<Link to={ROUTES.STORE}><button className="btn btn-articles-light">Clothing</button></Link>
+									<Link to={ROUTES.NEWS}><button className="btn btn-articles-light">News</button></Link>
+									<Link to={ROUTES.PARTY}><button className="btn btn-articles-light">Politics</button></Link>
+									{/* <span className="link">Transparency</span>
+									<span className="link">Clothing</span>
+									<span className="link">News</span>
+									<span className="link">Politics</span> */}
+								</div>
+							</div>
+						</div>
+
+						<div className="image">
+							<img src="https://www.economist.com/sites/default/files/images/print-edition/20130921_USD000_0.jpg" alt=""/>
+						</div>
+						
+					</div>
+
+				</div>
+
+				{/* Think about it - October 2020 Remodel */}
+				<div className="think-about-it">
+
+					<div className="content">
+
+						<div className="articles-heading">
+							Think about it
+						</div>
+
+						<div className="tiles">
+
+							<div className="tile">School Shootings</div>
+							<div className="tile">Botched Gun Laws</div>
+							<div className="tile">Corporate Tax Evasion</div>
+							<div className="tile">School Lunch Debt</div>
+
+							<div className="tile">Underfunded NASA Programs</div>
+							<div className="tile">Disproportionate Military Spending</div>
+							<div className="tile">Increasing Automation of Jobs</div>
+							<div className="tile">National Decaying Infrastructure</div>
+
+							<div className="tile">Wealth Inequality</div>
+							<div className="tile">Global Warming</div>
+							<div className="tile">Two Party Partisanship</div>
+							<div className="tile">Affordable Healthcare</div>
+
+							<div className="tile">Climate Change</div>
+							<div className="tile">Accessible Voting</div>
+							<div className="tile">School Lunch Debt</div>
+							<div className="tile">The List Goes On...</div>
+						</div>
+
+						<div className="bottom-text">Is our nations media outlets and leaders tackling any of the problems that plague this nation as well as we need them to?</div>
+
+					</div>
+
+				</div>
+
+				{/* How we help - October 2020 Remodel */}
+				<div className="how-we-help">
+
+					<div className="content">
+
+						<div className="articles-heading">
+							How we help
+						</div>
+
+						<div className="tiles">
+
+							{/* Transparency Tile */}
+							<div className="tile">
+								<div className="header">Transparency</div>
+									
+								<div className="transparency-showcase">
+
+									<div className="icon">
+										<i className="fas fa-paste" aria-hidden="true"></i>
+									</div>
+
+									<div className="fake-note">This data is for display purposes only, live data available on the <Link style={{textDecoration: 'underline'}} to={ROUTES.REPORTS}>Reports Page</Link></div>
+
+									<div className="fake-sales">
+										{this.startSalesAnimation()}
+
+										<div className="sale active" style={{'animationDelay': '0s'}}>
+											<div className="amount revenue">+$10</div>
+											<div className="reason">Donation</div>
+											<div className="person">Casey Newton</div>
+										</div>
+
+										<div className="sale active" style={{'animationDelay': '0.7s'}}>
+											<div className="amount revenue">+$30</div>
+											<div className="reason">Store Order</div>
+											<div className="person">Frank Walker</div>
+										</div>
+
+										<div className="sale active" style={{'animationDelay': '1.4s'}}>
+											<div className="amount expense">-$7.50</div>
+											<div className="reason">Expense</div>
+											<div className="person">Email Servers</div>
+										</div>
+
+										<div className="sale active" style={{'animationDelay': '2.1s'}}>
+											<div className="amount revenue">+$1</div>
+											<div className="reason">Membership</div>
+											<div className="person">David Nix</div>
+										</div>
+
+										<div className="sale active" style={{'animationDelay': '2.8s'}}>
+											<div className="amount revenue">+$5</div>
+											<div className="reason">Membership</div>
+											<div className="person">Athena A.A</div>
+										</div>
+
+										<div className="sale active" style={{'animationDelay': '3.5s'}}>
+											<div className="amount expense">-$50</div>
+											<div className="reason">Expense</div>
+											<div className="person">Website Servers</div>
+										</div>
+
+										<div className="sale active" style={{'animationDelay': '4.2s'}}>
+											<div className="amount expense">-$10</div>
+											<div className="reason">Expense</div>
+											<div className="person">Mileage Reimbursement</div>
+										</div>
+
+										<div className="sale active" style={{'animationDelay': '4.9s'}}>
+											<div className="amount revenue">+$10</div>
+											<div className="reason">Store Order</div>
+											<div className="person">Joey Giusto</div>
+										</div>
+
+									</div>
+
+								</div>
+
+								<p className="text mt-auto">At Articles everything we do is as transparent as we can possible make it, Donations, Store Orders, Payroll, you name it!</p>
+							</div>
+
+							{/* Clothing Tile */}
+							<div className="tile">
+								<div className="header">Clothing</div>
+
+								<div className="clothing-showcase">
+									<StoreItemBeta
+										setPopOutVisible={this.setPopOut}
+										product={this.state.products.find(element => element._id === "5eabc1e99b0beb3e04599717")}
+										color="articles"
+										// userSavedProducts={this.props.user_details.saved_products}
+										isSaved={this.props.user_details?.saved_products?.find(o => o.product_id === '5eabc1e99b0beb3e04599717')}
+									/>
+	
+									<StoreItemBeta
+										setPopOutVisible={this.setPopOut}
+										product={this.state.products.find(element => element._id === "5eabc20a38584110a044f93e")}
+										color="articles"
+										// userSavedProducts={this.props.user_details.saved_products}
+										isSaved={this.props.user_details?.saved_products?.find(o => o.product_id === '5eabc20a38584110a044f93e')}
+									/>
+	
+									<StoreItemBeta
+										setPopOutVisible={this.setPopOut}
+										product={this.state.products.find(element => element._id === "5eb3aaaba316c3077c598cc4")}
+										color="articles"
+										// userSavedProducts={this.props.user_details.saved_products}
+										isSaved={this.props.user_details?.saved_products?.find(o => o.product_id === '5eb3aaaba316c3077c598cc4')}
+									/>
+								</div>
+
+								<p className="text mt-auto">We have our own store, where sales help fund the development of our movement.</p>
+							</div>
+
+							{/* News Tile */}
+							<div className="tile">
+
+								<div className="header">News</div>
+
+								<div className="news-showcase">
+
+									<div className="stats">
+
+										<div className="stat active">
+											<div className="number">{this.state.newsTotals.stories}</div>
+											<div className="type">Stories</div>
+											<div className="active-dot"></div>
+										</div>
+
+										<div className="stat">
+											<div className="number">{this.state.newsTotals.issues}</div>
+											<div className="type">Issues</div>
+											<div className="active-dot"></div>
+										</div> 
+
+										<div className="stat">
+											<div className="number">{this.state.newsTotals.myths}</div>
+											<div className="type">Myths</div>
+											<div className="active-dot"></div>
+										</div>
+
+									</div>
+
+									<div className="news">
+										{/* <img src="https://eh9ti3qk8yf3m8xqr5gt2fp4-wpengine.netdna-ssl.com/wp-content/uploads/2020/10/22937693_web1_CP110166417.jpg" alt="" class="background"/>
+
+										<div className="date">
+											10/07/2020
+										</div>
+										
+										<div className="title">
+											All Canadians will get COVID-19 vaccine for free, Trudeau confirms
+										</div> */}
+
+										{this.props.stories.loading ? null : <NewsCard key={''} document={this.props.stories.stories[0]}/>}
+
+										{/* <NewsCard key={''} document={this.props?.stories?.stories[0]}/> */}
+									</div>
+
+								</div>
+
+								{/* <small className="d-flex justify-content-center mt-3">With more being added everyday!</small> */}
+
+								<p className="text mt-3">Packed with features like the ability to subscribe to issues, we let our users pick the news they wish to see to stay updated on the things most important to them.</p>
+
+							</div>
+
+							{/* Politics Tile */}
+							<div className="tile">
+								<div className="header">Politics</div>
+
+								<div className="politics-showcase">
+
+									<div className="stats">
+
+										<div className="stat">
+											<div className="number">{this.state.proposalsTotals.fundamental}</div>
+											<div className="type">Fundamental</div>
+										</div>
+
+										<div className="stat">
+											<div className="number">{this.state.proposalsTotals.social}</div>
+											<div className="type">Social</div>
+										</div>
+
+										<div className="stat">
+											<div className="number">{this.state.proposalsTotals.education}</div>
+											<div className="type">Education</div>
+										</div> 
+
+										<div className="stat">
+											<div className="number">{this.state.proposalsTotals.financial}</div>
+											<div className="type">Financial</div>
+										</div> 
+
+									</div>
+
+									<img src="https://thumbs.gfycat.com/ThinMajorIridescentshark-max-14mb.gif" alt=""/>
+								</div>
+
+								<p className="text mt-3">Here are just some of the proposals we are advocating for and soon hope to campaign on.</p>
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+
+				{/* Read about our mission - October 2020 Remodel */}
+				<div className="our-mission">
+
+					<div className="content">
+
+						<div className="mission-snippet">
+							<div className="title">Read about our mission</div>
+							<div className="text">All the details about what we are doing and the direction we want to take this company.</div>
+							<Link to={ROUTES.MISSION}><div className="btn btn-articles-light">Mission</div></Link>
+						</div>
+	
+						<div className="link-panels">
+	
+							<Link to={ROUTES.STORE}>
+								<div className="link-panel">
+									<div className="title">Store</div>
+									<div className="text">Shop our collection of clothing, as well as products made in collaboration with other brands.</div>
+									<div className="arrow">></div>
+								</div>
+							</Link>
+			
+							<Link to={ROUTES.NEWS}>
+								<div className="link-panel">
+									<div className="title">News</div>
+									<div className="text">Our take on the truth, source based facts, clear stated opinions.</div>
+									<div className="arrow">></div>
+								</div>
+							</Link>
+				
+							<Link to={ROUTES.STORE_SUBMISSIONS}>
+								<div className="link-panel">
+									<div className="title">Submissions</div>
+									<div className="text">Submit designs you have for a chance to get them printed and make some money.</div>
+									<div className="arrow">></div>
+								</div>
+							</Link>
+				
+							<Link to={ROUTES.REPORTS}>
+								<div className="link-panel">
+									<div className="title">Reports</div>
+									<div className="text">An inside look into our finances. We believe transparency is key to ending corruption.</div>
+									<div className="arrow">></div>
+								</div>
+							</Link>
+					
+							<Link to={ROUTES.SIGN_UP}>
+								<div className="link-panel">
+									<div className="title">Sign Up</div>
+									<div className="text">Create an account for all sorts of benifits and access to the entire site.</div>
+									<div className="arrow">></div>
+								</div>
+							</Link>
+					
+							<Link to={ROUTES.PRESS}>
+								<div className="link-panel">
+									<div className="title">Press and Buisness</div>
+									<div className="text">To reach out with questions or any other inquires</div>
+									<div className="arrow">></div>
+								</div>
+							</Link>				
+	
+						</div>
+						
+					</div>
+
+				</div>
+
 				{/* Think about it */}
-				<section className="header-section">
+				<section className="header-section d-none">
 
 					<div className="background">
 						<div className="bg"></div>
@@ -466,12 +901,12 @@ class LandingPage extends Component {
 				</section>
 
 				{/* articles.media */}
-				<section className="section-break brand-name">
+				<section className="section-break brand-name d-none">
 					articles.media
 				</section>
 
 				{/* We Have a Plan! */}
-				<section className="intro-section base">
+				<section className="intro-section base d-none">
 					<div className="background"></div>
 					<div className="content">
 						<div className="container">
@@ -509,11 +944,11 @@ class LandingPage extends Component {
 				</section>
 
 				{/* Motto */}
-				<section className="section-break motto">
+				<section className="section-break motto d-none">
 					<div className="text-center motto-block">Something To Stand For</div>
 				</section>
 
-				<section className="tour-section">
+				<section className="tour-section d-none">
 					
 					<div className="content">
 
@@ -559,7 +994,7 @@ class LandingPage extends Component {
 
 				</section>
 
-				<section className="more-section d-none">
+				<section className="more-section">
 					<div className="background"></div>
 					<div className="content">
 
@@ -615,13 +1050,13 @@ class LandingPage extends Component {
 					</div>
 				</section>
 
-				<div className="section-break">
+				<div className="section-break d-none">
 
 					<img className="text-center d-block ml-auto mr-auto" src={logo} height="35px" alt=""/>
 
 				</div>
 
-				<section className="intro-section base">
+				<section className="intro-section d-none">
 
 					<div className="background"></div>
 
@@ -731,4 +1166,13 @@ function NewCustomPanel(props) {
 
 }
 
-export default LandingPage;
+// export default LandingPage;
+
+const mapStateToProps = state => ({
+  myths: state.myths,
+  stories: state.stories
+});
+
+export default connect(
+  mapStateToProps
+)(LandingPage);

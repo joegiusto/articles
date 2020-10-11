@@ -4,6 +4,7 @@ export const LANDING = '/';
 // Access
 export const SIGN_UP = '/signup';
 export const SIGN_IN = '/signin';
+export const VERIFY_EMAIL = '/verify-email';
 
 // Account Creation
 export const OUTSET = '/outset';

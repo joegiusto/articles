@@ -2,6 +2,635 @@
   // TODO Figure out why this is now lagging, first noticed 6/01/2020. After furthur inspection a reboot of the browser fixed this but want it documented.
   @import 'landing_background';
 
+  .welcome-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5rem 0rem;
+    margin: 0rem 1rem;
+
+    .content {
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      overflow: visible;
+
+      .image {
+        position: relative;
+        margin-left: auto;
+        object-fit: contain;
+        width: 550px;
+        height: auto;
+        flex-shrink: 0;
+        // box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+      }
+
+      img {
+        position: absolute;
+        // object-fit: contain;
+        width: 100%;
+        height: 100%;
+
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    .small {
+      font-family: brandon-grotesque, sans-serif;
+      font-style: normal;
+      font-weight: 900;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .brand {
+      font-size: 5rem;
+      font-family: forte;
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .text {
+      // text-align: center;
+      max-width: 570px;
+      font-size: 22px;
+      // line-height: 30px;
+      margin-top: 16px;
+      font-family: brandon-grotesque, sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 1.5rem;
+    }
+
+    .looking-for-section {
+      width: 100%;
+
+      .header {
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 0.9rem;
+        margin-top: 3rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .btn {
+        font-size: 1.2rem;
+      }
+    }
+
+    .links {
+
+      .link {
+        font-size: 2rem;
+        background-color: white;
+        padding: 0.25rem 0.1rem;
+
+        &:not(:first-child) {
+          margin-left: 1rem;
+        }
+      }
+    }
+  }
+
+  .articles-heading{
+    font-family: brandon-grotesque, sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .content {
+    width: 100%;
+    max-width: 1200px;
+    text-align: left;
+  }
+
+  .think-about-it {
+    border-top: 1px solid #000000;
+    // background-image: url('https://www.nationalgeographic.com/content/dam/archaeologyandhistory/2020/02/washington-dc-statehood-explainer/washington-dc-aerial-2548942.adapt.1900.1.jpg');
+    background-color: rgba($accent-color, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem;
+    box-shadow: inset 0 0 10px;
+    // margin: 0rem 1rem;
+
+    .tiles {
+      margin: 0.25rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 10px 10px;
+
+      .tile {
+        cursor: pointer;
+        position: relative;
+        padding: 0.75rem;
+        padding-left: 1rem;
+        background-color: white;
+        box-shadow: 0px 0px 1px 2px rgba(0, 0, 0, 0.4);
+        // min-height: 30px;
+
+        display: flex;
+        // justify-content: center;
+        align-items: center;
+
+
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 1.5rem;
+
+        &:after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 5px;
+          background-color: black;
+          border-right: 1px solid transparent;
+          transition-duration: 500ms;
+        }
+
+        &:hover {
+          &:after {
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    .bottom-text {
+      border-top: 1px solid #000;
+      font-family: brandon-grotesque, sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 1.5rem;
+      line-height: 1;
+      margin-top: 1.8rem;
+      padding-top: 1.3rem;
+    }
+  }
+
+  .how-we-help {
+    border-top: 1px solid #d7d7d7;
+    background-color: lighten($base-color, 0%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem;
+
+    .tiles {
+      margin: 0.25rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 10px 10px;
+
+      .tile {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        padding: 0.75rem;
+        padding-left: 1rem;
+        background-color: white;
+        // box-shadow: 0px 0px 1px 2px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+        min-height: 400px;
+
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 1.5rem;
+
+        .header {
+          background-color: rgb(214, 214, 214);
+          padding: 0.1rem 0.5rem;
+        }
+
+        .text {
+          font-size: 1.2rem;
+          border-top: 1px solid #000;
+          padding-top: 0.5rem;
+        }
+
+        i {
+          position: absolute;
+        }
+
+        .transparency-showcase {
+          position: relative;
+          display: flex;
+          height: 250px;
+
+          .icon {
+            width: 30%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            i {
+              margin: 0;
+              font-size: 5rem;
+            }
+          }
+
+          .fake-note {
+            opacity: 0.8;
+            // display: inline;
+            // margin: 0 auto;
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            bottom: 20px;
+            left: 0;
+            font-size: 1rem;
+            background-color: white;
+            z-index: 1;
+            border: 1px solid #000;
+          }
+          
+          .fake-sales {
+            width: 70%;
+            // margin-right: auto;
+            // margin-left: auto;
+            // height: 250px;
+            // padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+      
+            .sale {
+              position: absolute;
+              bottom: 50%;
+              left: 0;
+              width: 100%;
+              background-color: white;
+              display: flex;
+              border: solid 1px gray;
+              overflow: hidden;
+              transform: translateY(200px);
+              font-size: 1rem;
+
+              // margin-top: 0.5rem;
+      
+              &.active {
+                animation-name: example;
+                animation-duration: 5.65s;
+                animation-timing-function: linear;
+                animation-iteration-count: infinite;
+              }
+      
+              @keyframes example {
+                from {transform: translateY(200px);}
+                to {transform: translateY(-200px);}
+              }
+      
+              &:first-child() {
+                // margin-top: 0;
+              }
+      
+              .amount, .person, .reason {
+                padding: 0.10rem 0.5rem;
+              }
+      
+              .amount {
+                border-right: solid 2px;
+                width: 60px;
+                text-align: center;
+
+                &.revenue {
+                  background-color: rgb(107, 255, 107);
+                  border-color: darken(rgb(107, 255, 107), 30%);
+                }
+                &.expense {
+                  background-color: rgb(255, 107, 107);
+                  border-color: darken(rgb(255, 107, 107), 30%);
+                  // border-color: ;
+                }
+      
+              }
+
+              .reason {
+                font-weight: 900;
+                // padding-right: 0rem;
+                border-right: solid 1px #000;
+                width: 100px;
+                // margin-left: 0.5rem;
+              }
+
+              .person {
+      
+              }
+            }
+          }
+        }
+
+        .news-showcase {
+          display: flex;
+          height: 250px;
+          margin-top: 1rem;
+
+          .stats {
+            width: 30%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            text-align: center;
+            // margin-top: 1rem;
+
+            .stat {
+              cursor: pointer;
+              position: relative;
+              background-color: $accent-color;
+              width: 100%;
+
+              &.active {
+                background-color: black;
+                color: white;
+
+                .active-dot {
+                  position: absolute;
+                  top: 0%;
+                  left: 0;
+                  margin: 0.75rem;
+                  width: 8px;
+                  height: 8px;
+                  transform: translateX(-50%) translateY(-50%);
+                  background-color: rgb(255, 255, 255);
+                  border-radius: 10px;
+                }
+              }
+
+              .number {
+                font-size: 1.5rem;
+                font-weight: 900;
+              }
+
+              .type {
+                font-size: 1rem;
+              }
+
+              &:not(:first-child) {
+                margin-top: 0.25rem;
+              }
+            }
+          }
+
+          .news {
+            position: relative;
+            width: 70%;
+            background-color: lawngreen;
+            height: 100%;
+            // margin-top: 1rem;
+            margin-left: 1rem;
+
+            img {
+              position: absolute;
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+
+            }
+
+            .date {
+              font-size: 1rem;
+              background-color: yellow;
+              transform: none;
+              left: 0;
+              top: 0rem;
+              font-family: brandon-grotesque, sans-serif;
+              padding: 0rem 0.25rem;
+              font-weight: 900;
+              color: black;
+              position: absolute;
+              z-index: 1;
+            }
+
+            .title {
+              z-index: 1;
+              position: absolute;
+              width: 100%;
+              text-align: center;
+              padding: 0.5rem;
+              padding-top: 1rem;
+              font-family: brandon-grotesque, sans-serif;
+              font-style: normal;
+              font-weight: 900;
+              font-size: 1.2rem;
+              color: white;
+              padding-top: 2rem;
+            }
+
+            .bar {
+              position: absolute;
+              width: 85%;
+              left: 0;
+              right: 0;
+              margin-left: auto;
+              margin-right: auto;
+              height: 2px;
+              bottom: 2rem;
+              background-color: yellow;
+            }
+            
+          }
+        }
+
+        .clothing-showcase {
+          display: flex;
+          height: 250px;
+          justify-content: space-evenly;
+          align-items: center;
+
+          .store-item {
+            transform: scale(0.7);
+            margin-bottom: 0rem;
+
+            .price, .type {
+              font-size: 1rem;
+            }
+
+            .item-photos {
+              height: 200px;
+            }
+
+            .subscription-note, .photo-gallery, .dual-header, .footer, .save {
+              display: none;
+            }
+          }
+        }
+
+        .politics-showcase {
+          display: flex;
+          height: 250px;
+          margin-top: 1rem;
+
+          .stats {
+            width: 30%;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            text-align: center;
+
+            .stat {
+              background-color: $accent-color;
+              width: 100%;
+
+              .number {
+                font-size: 1.5rem;
+                font-weight: 900;
+              }
+
+              .type {
+                font-size: 1rem;
+              }
+
+              &:not(:first-child) {
+                margin-top: 0.25rem;
+              }
+            }
+          }
+
+          img {
+            width: 70%;
+            flex-shrink: 0;
+          }
+        }
+
+      }
+    }
+
+  }
+
+  .our-mission {
+    background-image: url('../../img/crossword.png');
+    background-repeat: repeat;
+    background-size: 1100px;
+    // height: 500px;
+    padding: 2rem 1rem;
+    box-shadow: inset 0 0 10px;
+
+    .content {
+      margin-left: auto;
+      margin-right: auto;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mission-snippet {
+      display: block;
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+      margin: 2rem auto;
+
+      .title {
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 2rem;
+      }
+
+      .text {
+        font-family: montserrat, sans-serif;
+        font-weight: 400;
+        font-size: 16px;
+        font-style: normal;
+      }
+
+      .btn {
+        margin-top: 1.5rem;
+        // margin-bottom: 2rem;
+        width: 100%;
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 1.5rem;
+      }
+    }
+
+    .link-panels {
+      // padding: 3.5rem 0rem;
+      padding-top: 0.5rem;
+      margin-left: 3rem;
+
+      display: flex;
+      flex-wrap: wrap;
+      align-items: stretch;
+
+      a {
+        display: contents;
+      }
+
+      .link-panel {
+        width: calc(50% - (5px * 2));
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        background-color: white;
+        border-bottom: 3px solid #000;
+        padding: 1rem;
+        height: 100%;
+        margin: 0 5px 1rem 5px;
+        transition-duration: 200ms;
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+
+        @include media-breakpoint-up(xl) {
+          height: 120px;
+        }
+
+        .title {
+          font-family: brandon-grotesque, sans-serif;
+          font-style: normal;
+          font-weight: 900;
+          font-size: 1.5rem;
+        }
+
+        .text {
+          font-family: montserrat, sans-serif;
+          font-weight: 400;
+          font-size: 14px;
+          margin-top: 10px;
+          font-style: normal;
+          padding-right: 2rem;
+        }
+
+        .arrow {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          height: 40px;
+          width: 40px;
+          background-color: black;
+          color: white;
+          font-family: brandon-grotesque, sans-serif;
+          font-size: 35px;
+          font-weight: 900;
+        }
+
+        &:hover {
+          transform: scale(1.05);
+        }
+      }
+    }
+  }
+
   .header-section {
     display: flex;
     height: calc(100vh - 50px);
@@ -773,7 +1402,7 @@
       left: 0%;
       width: 100%;
       height: 100%;
-      background-color: $accent-color;
+      // background-color: $accent-color;
       z-index: -1;
     }
 

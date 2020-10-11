@@ -10,7 +10,8 @@
     @include media-breakpoint-up(md) {
       flex-basis: 300px;
       flex-shrink: 0;
-      height: calc(100vh - 100px);
+      min-height: calc(100vh - 100px);
+      height: auto;
     }
 
     .card {

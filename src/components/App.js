@@ -13,6 +13,7 @@ import LandingPage from './Landing';
 
 import SignUpPage from './SignUp';
 import SignInPage from './SignIn';
+import VerifyEmailPage from './VerifyEmail'
 
 import OutsetPage from './Outset';
 import SettingsPage from './Settings';
@@ -168,6 +169,8 @@ class AppBase extends Component {
         
               <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
               <Route path={ROUTES.SIGN_IN} component={SignInPage} />
+              
+              <Route path={ROUTES.VERIFY_EMAIL} component={VerifyEmailPage} />
   
               <Route path={ROUTES.OUTSET} component={OutsetPage} />
   

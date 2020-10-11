@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const moment = require("moment");
+const crypto = require('crypto');
+const Token = require('../models/Token');
 const Schema = mongoose.Schema;
 
 // Create Schema
@@ -22,6 +24,10 @@ const UserSchema = new Schema({
   sign_up_date: {
     type: Date,
     default: moment()
+  },
+  isVerified: {
+    type: Boolean,
+    default: false
   },
   address: {
     zip: {
@@ -72,8 +78,32 @@ const UserSchema = new Schema({
   stripe: {
     type: Object,
     default: {}
+  },
+  resetPasswordToken: {
+    type: String,
+    required: false
+  },
+
+  resetPasswordExpires: {
+    type: Date,
+    required: false
   }
 });
+
+UserSchema.methods.generatePasswordReset = function() {
+  console.log("generatePasswordReset called");
+  this.resetPasswordToken = crypto.randomBytes(20).toString('hex');
+  this.resetPasswordExpires = Date.now() + 3600000; //expires in an hour
+};
+
+UserSchema.methods.generateVerificationToken = function() {
+  let payload = {
+      userId: this._id,
+      token: crypto.randomBytes(20).toString('hex')
+  };
+
+  return new Token(payload);
+};
 
 var User = mongoose.model("users", UserSchema, 'articles_users');
 module.exports = User;

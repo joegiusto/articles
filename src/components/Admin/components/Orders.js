@@ -4,24 +4,31 @@ import axios from 'axios'
 import moment from 'moment'
 import { ConfirmDelete } from '../../Global'
 
-class Reports extends Component {
+class Orders extends Component {
   constructor(props) {
   super(props);
   
     this.state = {
       loading: false,
       orders: [],
-      table_tab: 'Needs Shipping',
+      table_tab: 'Awaiting Shipment',
+
+      order: {},
+      tracking_code: '',
+      tracking_code_popup: false,
 
       // TODO - Holding off on this for now, 
-      preorders: [],
+      // preorders: [],
 
-      needs_shipping: [],
-      pending_delivery: [],
+      awaiting_shipment: [],
+      shipped: [],
       delivered: [],
+
       deleted: []
     };
 
+    this.handleChange = this.handleChange.bind(this);
+    this.handleOrderEdit = this.handleOrderEdit.bind(this);
   }
 
   componentDidMount() {
@@ -45,7 +52,10 @@ class Reports extends Component {
       console.log(response);
 
       self.setState({
-        needs_shipping: response.data
+        orders: response.data
+        // awaiting_shipment: response.data.filter(order => order.status === 'Awaiting Shipment'),
+        // shipped: response.data.filter(order => order.status === 'Shipped'),
+        // delivered: response.data.filter(order => order.status === 'Delivered'),
       }, () => {
         console.log("Done")
 
@@ -82,6 +92,96 @@ class Reports extends Component {
 
   }
 
+  handleChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      ...this.state,
+      [name]: value
+    });
+  }
+
+  handleOrderEdit(id, status) {
+
+    this.setState({
+      orders: this.state.orders.map(el => (el._id === id ? Object.assign({}, el, { status }) : el))
+    });
+
+  }
+
+  progressOrder(order) {
+    const self = this
+
+    if (order.status === 'Awaiting Shipment') {
+      this.setState({
+        tracking_code_popup: true,
+        currentOrder: order
+      })
+    } else if (order.status === 'Shipped') {
+
+      axios.post('/api/progressShipped', {
+        order: order,
+      })
+      .then(function (response) {
+  
+        console.log(response);
+  
+        self.setState({ 
+          order: {},
+          tracking_code: '',
+          tracking_code_popup: false,
+          orders: [
+
+          ]
+        });
+  
+      })
+      .catch(function (error) {
+        console.log(error);
+  
+        // self.setState({
+        //   products: [],
+        // })
+
+      });
+
+    }
+
+  }
+
+  progressNeedsShipping() {
+    const self = this;
+
+    axios.post('/api/progressNeedsShipping', {
+      order: this.state.currentOrder,
+      tracking_code: this.state.tracking_code
+    })
+    .then(function (response) {
+
+      console.log(response);
+
+      self.handleOrderEdit(self.state.currentOrder._id, 'Shipped')
+
+      self.setState({ 
+        order: {},
+        tracking_code: '',
+        tracking_code_popup: false,
+      });
+
+    })
+    .catch(function (error) {
+      console.log(error);
+
+      // self.setState({
+      //   products: [],
+      // })
+
+    });
+
+  }
+
   removeOrder(id) {
     const self = this;
 
@@ -97,7 +197,7 @@ class Reports extends Component {
       // socket.emit('deleteOrder', id);
 
       self.setState({
-        needs_shipping: self.state.needs_shipping.filter(function( obj ) {
+        orders: self.state.orders.filter(function( obj ) {
           return obj._id !== id;
         })
       });
@@ -110,10 +210,60 @@ class Reports extends Component {
 
   render() {
 
-    const needs_shipping = this.state.needs_shipping;
+    // const needs_shipping = this.state.needs_shipping;
 
     return (
       <div className="admin-orders">
+
+        <div className={"tracking-code-popup " + (this.state.tracking_code_popup ? 'active' : '')}>
+
+          <div className="background" onClick={() => this.setState({
+            tracking_code_popup: false,
+            currentOrder: {}
+          })}></div>
+
+          <div className="window">
+
+            <div className="mb-3">
+              <button className="btn btn-articles-light alt">USPS</button>
+              <button className="btn btn-articles-light ml-1">UPS</button>
+              <button className="btn btn-articles-light ml-1">FedEx</button>
+            </div>
+
+            <div className="form-group articles">
+              <label for="title">Tracking Code</label>
+              <input 
+                type="text"
+                className="form-control with-label"
+                value={this.state.tracking_code}
+                onChange={this.handleChange}
+                id="tracking_code"
+                name="tracking_code"
+              />
+            </div>
+
+            <div>
+
+              <div className="font-weight-bold">Link:</div>
+              <a className="d-block mb-3" rel="noopener noreferrer" target="_blank" href={`https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=${this.state.tracking_code}`}>
+                {`https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=${this.state.tracking_code}`}
+              </a>
+
+              <div className="mb-3">PLEASE CHECK THE LINK!</div>
+
+            </div>
+
+            <button onClick={() => this.setState({ 
+              order: {},
+              tracking_code: '',
+              tracking_code_popup: false,
+            })} className="btn btn-danger">Cancel</button>
+
+            <button disabled={this.state.tracking_code === '' ? true : false} onClick={() => this.progressNeedsShipping()} className="btn btn-articles-light ml-1">Progress</button>
+
+          </div>
+
+        </div>
 
         <div className="side-panel">
 
@@ -134,78 +284,106 @@ class Reports extends Component {
         <div className="orders w-75">
 
           <div className="table-filters mb-3">
-            <button onClick={() => this.setState({table_tab: 'Needs Shipping'})} className={"btn btn-articles-light " + (this.state.table_tab === 'Needs Shipping' ? 'alt' : '')}>Needs Shipping</button>
-            <button onClick={() => this.setState({table_tab: 'Pending Delivery'})} className={"btn btn-articles-light ml-1 " + (this.state.table_tab === 'Pending Delivery' ? 'alt' : '')}>Pending Delivery</button>
+            <button onClick={() => this.setState({table_tab: 'Awaiting Shipment'})} className={"btn btn-articles-light " + (this.state.table_tab === 'Awaiting Shipment' ? 'alt' : '')}>Awaiting Shipment</button>
+            <button onClick={() => this.setState({table_tab: 'Shipped'})} className={"btn btn-articles-light ml-1 " + (this.state.table_tab === 'Shipped' ? 'alt' : '')}>Shipped</button>
             <button onClick={() => this.setState({table_tab: 'Delivered'})} className={"btn btn-articles-light ml-1 " + (this.state.table_tab === 'Delivered' ? 'alt' : '')}>Delivered</button>
-            <button onClick={() => this.setState({table_tab: 'Deleted'})} className={"btn btn-articles-light ml-1 " + (this.state.table_tab === 'Deleted' ? 'alt' : '')}>Deleted</button>
+            {/* <button onClick={() => this.setState({table_tab: 'Deleted'})} className={"btn btn-articles-light ml-1 " + (this.state.table_tab === 'Deleted' ? 'alt' : '')}>Deleted</button> */}
           </div>
 
-        <div className="table-responsive">
-          <table className='table articles-table table-sm table-hover table-bordered'>
-            <thead>
-              <tr className="table-articles-head">
-                {/* <th scope="col">Order #</th> */}
-                <th scope="col">Date</th>
-                <th scope="col">Name</th>
-                <th scope="col">Order Summary</th>
-                <th className='text-right' scope="col">Total</th>
-                <th scope="col">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-
-              {this.state.table_tab === "Needs Shipping" ?
-  
-              needs_shipping.map(order => 
-                <tr key={order._id}>
-                  <td colSpan="1" className="border-right-0 ">{moment(order.date).format("LLL")}</td>
-                  <td colSpan="1" className="border-right-0 ">{order.user_id}</td>
-                  <td colSpan="1" className="border-right-0 ">{order.items.length} Item{order.items.length > 1 ? 's' : ''}</td>
-                  <td colSpan="1" className="border-right-0 ">${(order.payment.trueTotal / 100).toFixed(2)}</td>
-                  <td colSpan="1" width={'150px'} className="border-right-0 "><ConfirmDelete afterConfirm={() => this.removeOrder(order._id)}></ConfirmDelete></td>
+          <div className="table-responsive">
+            <table className='table articles-table table-sm table-hover table-bordered'>
+              <thead>
+                <tr className="table-articles-head">
+                  {/* <th scope="col">Order #</th> */}
+                  <th scope="col">Date</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Order Summary</th>
+                  <th scope="col">Order Status</th>
+                  <th className='' scope="col">Total</th>
+                  <th scope="col">Actions</th>
                 </tr>
-              )
+              </thead>
+              <tbody>
 
-              :
+                {this.state.table_tab === "Awaiting Shipment" ?
+    
+                  this.state.orders.filter(order => order.status === 'Awaiting Shipment').map(order => 
+                  <tr key={order._id}>
+                    <td colSpan="1" className="border-right-0 ">{moment(order.date).format("LLL")}</td>
+                    <td colSpan="1" className="border-right-0 ">{order.user_id}</td>
+                    <td colSpan="1" className="border-right-0 ">{order.items.length} Item{order.items.length > 1 ? 's' : ''}</td>
+                    <td colSpan="1" className="border-right-0 ">{order.status}</td>
+                    <td colSpan="1" className="border-right-0 ">${(order.payment.trueTotal / 100).toFixed(2)}</td>
 
-              this.state.table_tab === 'Pending Delivery' ? 
+                    <td colSpan="1" width={'150px'} className="border-right-0 ">
+                      <button onClick={() => this.progressOrder(order)} className="badge badge-success">Progress</button>
+                      <ConfirmDelete className="ml-1" afterConfirm={() => this.removeOrder(order._id)}></ConfirmDelete>
+                    </td>
+                  </tr>
+                )
 
-              this.state.pending_delivery.map(order => 
-                <tr key={order._id}>
-                  <td colSpan="1" className="border-right-0 ">{moment(order.date).format("LLL")}</td>
-                  <td colSpan="1" className="border-right-0 ">{order.user_id}</td>
-                  <td colSpan="1" className="border-right-0 ">{order.items.length} Item{order.items.length > 1 ? 's' : ''}</td>
-                  <td colSpan="1" className="border-right-0 ">${(order.payment.trueTotal / 100).toFixed(2)}</td>
-                  <td colSpan="1" width={'150px'} className="border-right-0 "><ConfirmDelete afterConfirm={() => this.removeOrder(order._id)}></ConfirmDelete></td>
+                :
+
+                this.state.table_tab === 'Shipped' ? 
+
+                this.state.orders.filter(order => order.status === 'Shipped').map(order => 
+                  <tr key={order._id}>
+                    <td colSpan="1" className="border-right-0 ">{moment(order.date).format("LLL")}</td>
+                    <td colSpan="1" className="border-right-0 ">{order.user_id}</td>
+                    <td colSpan="1" className="border-right-0 ">{order.items.length} Item{order.items.length > 1 ? 's' : ''}</td>
+                    <td colSpan="1" className="border-right-0 ">{order.status}</td>
+                    <td colSpan="1" className="border-right-0 ">${(order.payment.trueTotal / 100).toFixed(2)}</td>
+                    
+                    <td colSpan="1" width={'150px'} className="border-right-0 ">
+                      <button onClick={() => this.progressOrder(order)} className="badge badge-success">Progress</button>
+                      <ConfirmDelete className="ml-1" afterConfirm={() => this.removeOrder(order._id)}></ConfirmDelete>
+                    </td>
+                  </tr>
+                )
+
+                : 
+
+                this.state.table_tab === 'Delivered' ? 
+
+                this.state.orders.filter(order => order.status === 'Delivered').map(order => 
+                  <tr key={order._id}>
+                    <td colSpan="1" className="border-right-0 ">{moment(order.date).format("LLL")}</td>
+                    <td colSpan="1" className="border-right-0 ">{order.user_id}</td>
+                    <td colSpan="1" className="border-right-0 ">{order.items.length} Item{order.items.length > 1 ? 's' : ''}</td>
+                    <td colSpan="1" className="border-right-0 ">{order.status}</td>
+                    <td colSpan="1" className="border-right-0 ">${(order.payment.trueTotal / 100).toFixed(2)}</td>
+
+                    <td colSpan="1" width={'150px'} className="border-right-0 ">
+                      {/* <button className="badge badge-success">Progress</button> */}
+                      <ConfirmDelete afterConfirm={() => this.removeOrder(order._id)}></ConfirmDelete>
+                      <button className="badge badge-warning">Archive</button>
+                    </td>
+                  </tr>
+                )
+
+                :
+
+                ''
+
+                }
+    
+                <tr>
+                  <td colSpan="3" className="border-right-0 table-articles-head"></td>
+                  <td colSpan="1" className="border-right-0 text-right table-articles-head">Total:</td>
+                  <td colSpan="1" className="border-left-0 table-articles-head">$00.00</td>
+                  <td colSpan="1" className="border-left-0 table-articles-head"></td>
                 </tr>
-              )
+    
+              </tbody>
+            </table>
+          </div>
 
-              : 
-
-              "no"
-
-              }
-  
-              <tr>
-                <td colSpan="2" className="border-right-0 table-articles-head">
-  
-                </td>
-  
-                <td colSpan="1" className="border-right-0 text-right table-articles-head">Total:</td>
-                <td colSpan="1" className="border-left-0 table-articles-head">$00.00</td>
-                <td colSpan="1" className="border-left-0 table-articles-head"></td>
-              </tr>
-  
-            </tbody>
-          </table>
-        </div>
-
-        {/* {orders.map(order => 
-          <div className="order d-flex justify-content-between">
-            <div>{ moment(order.date).format("LLL") }</div>
-            <div>{ order.payment.trueTotal }</div>
-          </div>  
-        )} */}
+          {/* {orders.map(order => 
+            <div className="order d-flex justify-content-between">
+              <div>{ moment(order.date).format("LLL") }</div>
+              <div>{ order.payment.trueTotal }</div>
+            </div>  
+          )} */}
 
         </div>
 
@@ -220,4 +398,4 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-)(Reports);
+)(Orders);

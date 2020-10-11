@@ -105,8 +105,15 @@ class SingleOrderPage extends Component {
                   </div>
   
                   <div className="item">
-                    <div className="left">Order Total:</div>
+                    <div className="title">Order Total:</div>
                     <div className="right">${(order.payment?.amount / 100).toFixed(2)}</div>
+                  </div>
+
+                  <div className="item">
+                    <div className="title">Tracking Code:</div>
+                    <div className="right">
+                      <a href={order.tracking_code}>{order.tracking_code}</a>
+                    </div>
                   </div>
   
                 </div>

@@ -45,6 +45,7 @@ class Issue extends React.Component {
       loading: false,
       issues: [],
       news_tags: [],
+      proposals: [],
       comments: [],
       realComments: [],
       comment: '',
@@ -351,7 +352,15 @@ class Issue extends React.Component {
             <div className="related-proposals card">
 
               <div className="header d-flex justify-content-between">
-                0 Related Proposals
+                {this.state.proposals?.length} Related Proposals
+              </div>
+
+              <div className="p-2">
+                {this.state.proposals.map(proposal => 
+                <div>
+                  {proposal.title}
+                </div>
+                )}
               </div>
 
               <div className="card-body">
