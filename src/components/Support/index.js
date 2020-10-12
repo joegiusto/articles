@@ -10,7 +10,7 @@ const itemsToRender = [
   [ROUTES.PRIVACY, 'Privacy', <i className="fas fa-user-secret"></i>],
   [ROUTES.TRANSLATIONS, 'Translations', <i className="fas fa-language"></i>],
   [ROUTES.FORUM, 'Forum', <i className="far fa-comments"></i>],
-  [ROUTES.FORUM, 'Forum', <i className="far fa-comments"></i>]
+  [ROUTES.BLOG, 'Blog', <i className="far fa-comments"></i>]
 ]
 
 const Page = (props) => (

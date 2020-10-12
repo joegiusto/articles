@@ -451,7 +451,7 @@ class EmployeePageDetails extends Component {
                 <div className="get-to-know-content">Billy Joel, Queen, The Beatles, Aerosmith, Pink Floyd, Elton John, </div>
 
                 <div className="get-to-know-subheader">~40's - 60's</div>
-                <div className="get-to-know-content">Dion and the Belmonts, Frank Sinatra, Sam Cooke</div>
+                <div className="get-to-know-content">Dion and the Belmonts, Frank Sinatra, Sam Cooke, Elvis Presley</div>
               </div>        
 
               <div className="get-to-know-block">

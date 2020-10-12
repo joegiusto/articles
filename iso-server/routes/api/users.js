@@ -237,21 +237,52 @@ async function sendVerificationEmail(user, req, res){
         name: "Articles Media"
       };
       let link="http://"+req.headers.host+"/verify-email?token="+token.token;
-      let html = `
+
+      let htmlOld = `
       <img width="100" height="100" src="https://cdn.articles.media/email/logo.jpg"></img>
       <br>
       <strong>Hello ${user.first_name},</strong>
       <br>
-      <p>Please click on the following <a href="${link}">link</a> to verify your account.</p> 
+      <p>Thank you for taking the time to sign up and become apart of what we are building, for verification purposes please click on the following <a href="${link}">link</a> to verify your account.</p> 
       <br>
       <p>If you did not request this, please ignore this email.</p>`;
+
+      let html = `
+      <style>
+        *  {
+                font-family: montserrat, sans-serif;
+          }
+      </style>
+
+      <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="https://use.typekit.net/wvo0uze.css">
+
+      <div style="max-width: 600px;">
+
+        <div style="background-color: black; padding: 0.5rem">
+          <img width="100" height="100" src="https://cdn.articles.media/email/logo.jpg"></img>  
+        </div>
+
+        <br>
+
+        <strong style="font-family: brandon-grotesque, sans-serif; font-weight: 900; font-size: 2rem;">Hello ${user.first_name},</strong>
+
+        <br>
+
+        <p>Thank you for taking the time to sign up and become apart of what we are building, for verification purposes please click on the following <a href="${link}">link</a> to verify your account.</p> 
+
+        <br>
+
+        <p>If you did not request this, please ignore this email.</p>
+      </div>
+      `;
 
       await sendEmail({to, from, subject, html});
 
       res.status(200).json({message: 'A verification email has been sent to ' + user.email + '.'});
   }catch (error) {
     console.log(error)
-    res.status(500).json({message: error.message})
+    res.status(500).json({message: error.message, bulk: error})
   }
 }
 

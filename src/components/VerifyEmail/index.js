@@ -39,8 +39,13 @@ class VerifyEmail extends Component {
     })
     .then(res => {
       console.log(res)
+      // console.log("Made it here")
       this.props.verifyEmail()
+      // console.log("Made it here")
       this.props.history.push('/home')
+      // console.log("Made it here")
+
+      // Funny story, wasted some time trying to fix this because it wasn't working when I clicked the button but it was because the email send me to :8080 instead of :3000 and I was running an old build of the site before it had this so of course clicking the button did nothing on that version. My time was wasted so figured I waste yours :) ... running npm run build now
     })
     .catch(err => {
       console.log(err.response)

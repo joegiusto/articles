@@ -55,6 +55,7 @@ import TownHallPage from './Party/TownHall'
 import MeshPage from './Mesh'
 
 import SupportPage from './Support'
+import BlogPage from './Support/Blog'
 import FaqPage from './Support/FAQ'
 import Privacy from './Support/Privacy'
 import UpdatesPage from './Support/Updates'
@@ -228,6 +229,7 @@ class AppBase extends Component {
               <Route path={ROUTES.MESH} component={MeshPage} />
         
               <Route exact path={ROUTES.SUPPORT} component={SupportPage} />
+              <Route exact path={ROUTES.BLOG} component={BlogPage} />
               <Route exact path={ROUTES.UPDATES} component={UpdatesPage} />
               <Route path={ROUTES.FAQ} component={FaqPage} />
               <Route path={ROUTES.JOBS} component={JobsPage} />

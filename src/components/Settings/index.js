@@ -1772,14 +1772,22 @@ class Settings extends Component {
                   </thead>
 
                   <tbody>
-                    {this.state.previousUserOrders.map(order => 
-                      <tr className="order" onClick={() => this.handleClick(order._id)}>
-                        <th scope="row" className="order-id">{order._id}</th>
-                        <td className="date">{moment(order.date).format('LLL')}</td>
-                        <td className="type">{order.for}</td>
-                        <td className="amount">${(order.payment.total / 100).toFixed(2)}</td>
-                      </tr>  
-                    )}
+                    {this.props.orders.length > 0 ? 
+
+                      this.props.orders.map(order => 
+                        <tr className="order" onClick={() => this.handleClick(order._id)}>
+                          <th scope="row" className="order-id">{order._id}</th>
+                          <td className="date">{moment(order.date).format('LLL')}</td>
+                          <td className="type">{order.for}</td>
+                          <td className="amount">${(order.payment.total / 100).toFixed(2)}</td>
+                        </tr>  
+                      )
+                      :
+                      <tr>
+                        <th>No Orders yet, place one at the <Link tp={ROUTES.STORE}>Store</Link></th>
+                      </tr>
+
+                    } 
                   </tbody>
 
                   {this.state.previousUserOrdersLoading ? null : this.state.previousUserOrders.length < 1 ? <div className="pl-3 pt-3">No donations to display</div> : ''}
@@ -1921,6 +1929,7 @@ const mapStateToProps = state => ({
   auth: state.auth,
   user_id: state.auth.user.id,
   user_details: state.auth.user_details,
+  orders: state.auth.user_details.ordersFetched,
   errors: state.errors
 });
 

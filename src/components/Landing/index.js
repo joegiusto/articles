@@ -562,14 +562,14 @@ class LandingPage extends Component {
 							<div className="tile">
 								School Shootings
 								<div className="more">
-									80 kids died in 2019
+									An average of one school shooting a week in 2019.
 								</div>
 							</div>
 
 							<div className="tile">
 								Botched Gun Laws
 								<div className="more">
-									Still problems
+									Gun show loophole still available in some states
 								</div>
 							</div>
 
@@ -594,7 +594,12 @@ class LandingPage extends Component {
 								</div>
 							</div>
 
-							<div className="tile">Disproportionate Military Spending</div>
+							<div className="tile">
+								Disproportionate Military Spending
+								<div className="more">
+									WIP 
+								</div>
+							</div>
 
 							<div className="tile">
 								Increasing Automation of Jobs
@@ -610,14 +615,55 @@ class LandingPage extends Component {
 								</div>
 							</div>
 
-							<div className="tile">Wealth Inequality</div>
-							<div className="tile">Global Warming</div>
-							<div className="tile">Two Party Partisanship</div>
-							<div className="tile">Affordable Healthcare</div>
+							<div className="tile">
+								Wealth Inequality
+								<div className="more">
+									The wealthiest 1 percent of American households own 40 percent of the country's wealth 
+								</div>
+							</div>
 
-							<div className="tile">Climate Change</div>
-							<div className="tile">Accessible Voting</div>
-							<div className="tile">School Lunch Debt</div>
+							<div className="tile">
+								Global Warming
+								<div className="more">
+									Since 1880 global temperature is up 2°F and 19 of the 20 warmest years on record have occurred since 2001
+								</div>
+							</div>
+
+							<div className="tile">
+								Two Party Partisanship
+								<div className="more">
+									WIP
+								</div>
+							</div>
+
+							<div className="tile">
+								Affordable Healthcare
+								<div className="more">
+									WIP
+								</div>
+							</div>
+
+							<div className="tile">
+								Climate Change
+								<div className="more">
+									WIP
+								</div>
+							</div>
+
+							<div className="tile">
+								Accessible Voting
+								<div className="more">
+									WIP
+								</div>
+							</div>
+
+							<div className="tile">
+								Two Party System
+								<div className="more">
+									WIP
+								</div>
+							</div>
+
 							<div onClick={() => this.setState({doesTheListReallyGoOn: !this.state.doesTheListReallyGoOn})} className="tile click">
 								The List Goes On...
 								<div className="more">
@@ -822,8 +868,14 @@ class LandingPage extends Component {
 											{
 												this.state.newsShowcase === 'stories' ? 
 												<>
-												<div onClick={() => this.setState({newsShowcaseStories: this.state.newsShowcaseStories - 1})} className="prev"><i className="far fa-hand-point-left"></i></div>
-												<div onClick={() => this.setState({newsShowcaseStories: this.state.newsShowcaseStories + 1})} className="next"><i className="far fa-hand-point-right"></i></div>
+				
+												<button onClick={() => this.setState({newsShowcaseStories: this.state.newsShowcaseStories - 1})} disabled={this.state.newsShowcaseStories === 0 ? true : false} className={"prev"}> 
+													<i className="far fa-hand-point-left"></i>
+												</button>
+
+												<button onClick={() => this.setState({newsShowcaseStories: this.state.newsShowcaseStories + 1})} disabled={this.state.newsShowcaseStories === (this.props.stories.stories.length - 1) ? true : false}  className="next">
+													<i className="far fa-hand-point-right"></i>
+												</button>
 												</>
 												:
 												null
@@ -832,8 +884,8 @@ class LandingPage extends Component {
 											{
 												this.state.newsShowcase === 'issues' ? 
 												<>
-												<div onClick={() => this.setState({newsShowcaseIssues: this.state.newsShowcaseIssues - 1})} className="prev"><i className="far fa-hand-point-left"></i></div>
-												<div onClick={() => this.setState({newsShowcaseIssues: this.state.newsShowcaseIssues + 1})} className="next"><i className="far fa-hand-point-right"></i></div>
+												<button onClick={() => this.setState({newsShowcaseIssues: this.state.newsShowcaseIssues - 1})} disabled={this.state.newsShowcaseIssues === 0 ? true : false} className="prev"><i className="far fa-hand-point-left"></i></button>
+												<button onClick={() => this.setState({newsShowcaseIssues: this.state.newsShowcaseIssues + 1})} disabled={this.state.newsShowcaseIssues === (this.props.issues.issues.length - 1) ? true : false} className="next"><i className="far fa-hand-point-right"></i></button>
 												</>
 												:
 												null
@@ -842,8 +894,8 @@ class LandingPage extends Component {
 											{
 												this.state.newsShowcase === 'myths' ? 
 												<>
-												<div onClick={() => this.setState({newsShowcaseMyths: this.state.newsShowcaseMyths - 1})} className="prev"><i className="far fa-hand-point-left"></i></div>
-												<div onClick={() => this.setState({newsShowcaseMyths: this.state.newsShowcaseMyths + 1})} className="next"><i className="far fa-hand-point-right"></i></div>
+												<button onClick={() => this.setState({newsShowcaseMyths: this.state.newsShowcaseMyths - 1})} disabled={this.state.newsShowcaseMyths === 0 ? true : false} className="prev"><i className="far fa-hand-point-left"></i></button>
+												<button onClick={() => this.setState({newsShowcaseMyths: this.state.newsShowcaseMyths + 1})} disabled={this.state.newsShowcaseMyths === (this.props.myths.myths.length - 1) ? true : false} className="next"><i className="far fa-hand-point-right"></i></button>
 												</>
 												:
 												null

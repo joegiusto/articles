@@ -108,89 +108,32 @@ function Menu(props) {
         <section>
           <div className={'side-menu-notch-top-end-custom ' + (menuOpen ? 'show' : '')}>
 
-            {/* {console.log(props.isAuth)} */}
-
             {
-            !props.user?.outset ? 
+              props.isAuth ? 
+
+              <>
+              {!props.user?.outset ? 
               <Link className="menu-bar-link mr-3" to={ROUTES.OUTSET}>
               <span className="badge badge-articles-light">
                 <i className="fas fa-file-signature"/>Please Complete Outset 
               </span>
               </Link>
-            :
-            null
-            }
+              :
+              null}
 
-            {
-            !props.user?.isVerified ? 
-              <Link className="menu-bar-link mr-3" to={ROUTES.VERIFY_EMAIL}>
-              <span className="badge badge-articles-light badge-danger">
-                <i className="fas fa-file-signature"/>Please Verify Email 
-              </span>
-              </Link>
-            :
-            null
-            }
-
-            {/* <>
-
-              <div className="full h-100 d-flex" ref={setReferenceElement}>
-                <Link className="menu-bar-link mr-3" to={ROUTES.OUTSET} onMouseEnter={() => {setShouldShowElement(true)}} onMouseLeave={() => {setShouldShowElement(false)}}>
-                  <span className="badge badge-articles-light">
-                    <i className="fas fa-file-signature"/>Please Complete Outset 
-                  </span>
+              {!props.user?.isVerified ? 
+                <Link className="menu-bar-link mr-3" to={ROUTES.VERIFY_EMAIL}>
+                <span className="badge badge-articles-light badge-danger">
+                  <i className="fas fa-file-signature"/>Please Verify Email 
+                </span>
                 </Link>
-              </div>
+              :
+              null}
+              </>
 
-              {shouldShowElement ? 
-              <div ref={setPopperElement} style={{width: '200px', backgroundColor: 'gray', padding: '0.5rem', color: 'white', ...styles.popper}} {...attributes.popper}>
-                To continue into the site we just need to ask you a few questions.
-              <div ref={setArrowElement} style={styles.arrow} />
-              </div>
               :
               null
-              }
-
-              
-            </> */}
-
-            {/* <Manager>
-              <Reference>
-                {({ ref }) => (
-                  
-                  // <button className="btn btn-primary" type="button" ref={ref} onMouseEnter={() => {setShouldShowElement(true)}} onMouseLeave={() => {setShouldShowElement(false)}}>
-                  //   Reference element
-                  // </button>
-
-                  <Link className="menu-bar-link mr-3" to={ROUTES.OUTSET} ref={ref} onMouseEnter={() => {setShouldShowElement(true)}} onMouseLeave={() => {setShouldShowElement(false)}}>
-                    <span className="badge badge-articles-light">
-                      <i className="fas fa-file-signature"/>Please Complete Outset 
-                    </span>
-                  </Link>
-
-                  // <div ref={ref} onMouseEnter={() => {setShouldShowElement(true)}} onMouseLeave={() => {setShouldShowElement(false)}}>
-                  //   <input disabled onFocus={() => (props.changeFocus('email'))} type="text" className="form-control" id="validationTooltip03" placeholder={props.user.email}/>
-                  //   <div className="valid-tooltip">
-                  //     Looks good!
-                  //   </div>
-                  // </div>
-
-                )}
-              </Reference>
-              {shouldShowElement ? (
-                <Popper placement="bottom">
-                {({ ref, style, placement, arrowProps }) => (
-                  <div className="popper-help-wrap1" ref={ref} style={style} data-placement={placement}>
-                    <div className="popper-help1">
-                      Completing the outset allows us to collect information about you if you allow us.
-                    </div>
-                    <div ref={arrowProps.ref} style={arrowProps.style} />
-                  </div>
-                )}
-              </Popper>
-              ) : null}
-              
-            </Manager> */}
+            }
 
           </div>
             
