@@ -250,7 +250,8 @@ async function sendVerificationEmail(user, req, res){
       let html = `
       <style>
         *  {
-                font-family: montserrat, sans-serif;
+            font-family: montserrat, sans-serif;
+            color: black;
           }
       </style>
 
@@ -265,11 +266,11 @@ async function sendVerificationEmail(user, req, res){
 
         <br>
 
-        <strong style="font-family: brandon-grotesque, sans-serif; font-weight: 900; font-size: 2rem;">Hello ${user.first_name},</strong>
+        <strong style="font-family: brandon-grotesque, sans-serif; font-weight: 900; font-size: 2rem; color: black;">Hello ${user.first_name},</strong>
 
         <br>
 
-        <p>Thank you for taking the time to sign up and become apart of what we are building, for verification purposes please click on the following <a href="${link}">link</a> to verify your account.</p> 
+        <p style="color: black;">Thank you for taking the time to sign up and become apart of what we are building, for verification purposes please click on the following <a href="${link}">link</a> to verify your account.</p> 
 
         <br>
 

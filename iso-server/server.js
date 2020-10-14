@@ -16,7 +16,7 @@ const mongoose = require('mongoose');
 var ObjectId = require('mongodb').ObjectId;
 var AWS = require('aws-sdk');
 const url = `mongodb+srv://joegiusto:${encodeURIComponent(process.env.MONGODB_PASSWORD)}@articles-xgwnd.mongodb.net/articles_data?retryWrites=true&w=majority`;
-const stripe = require('stripe')(process.env.STRIPE_TEST_PASSWORD);
+const stripe = require('stripe')(process.env.STRIPE_TEST_SECRET);
 const sharp = require('sharp');
 const cache = require('memory-cache');
 
