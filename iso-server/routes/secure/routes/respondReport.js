@@ -40,7 +40,7 @@ module.exports = (app, db, passport) => {
     console.log("This is the users email that sent this report");
     console.log(user.email)
 
-    let link="http://"+req.headers.host+"/reports/report";
+    let link="http://articles.media/reports/report";
     let subject = "An expense you reported has received a response";
     let to = user.email;
     let from = {

@@ -1817,7 +1817,7 @@ class Settings extends Component {
 
               <div className="form-group articles">
                 <label htmlFor="">Quote</label>
-                <TextareaAutosize className="form-control with-label" name="content" id="content" type="text" value={this.props.user_details.employee.quote} onChange={(e) => {this.handleNewProposalChange(e)}} cols="30" rows="3"/>
+                <TextareaAutosize className="form-control with-label" name="content" id="content" type="text" value={this.props.user_details.employee?.quote} onChange={(e) => {this.handleNewProposalChange(e)}} cols="30" rows="3"/>
               </div>
 
               <div className="form-group articles">
@@ -1830,7 +1830,7 @@ class Settings extends Component {
                   name="content" 
                   id="content" 
                   type="text" 
-                  value={this.props.user_details.employee.movies} 
+                  value={this.props.user_details.employee?.movies} 
                   onChange={(e) => {this.handleNewProposalChange(e)}}
                 />
 
