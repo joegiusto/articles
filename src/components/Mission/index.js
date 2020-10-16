@@ -258,7 +258,7 @@ const Mission = (props) => {
 
                     <div className="sub-title" id="title-tldr">TLDR?</div>
                     <div className="sub-text">
-                      <p>Articles is a for-profit political organization and platform, working to make America a better place for the people through avenues of clothing, news, politics and transparency.</p>
+                      <p>Articles is a political organization and platform, working to make America a better place for the people through avenues of transparency, clothing, news and politics.</p>
                       <span className="black-highlight">
                         At Articles we align with no political party and actively try to promote independent thought through all of our ventures. 
                       </span>
@@ -340,7 +340,7 @@ const Mission = (props) => {
                     <div className="sub-text">
 
                       <p>In figuring out how we are going to do all of this, questions had to be asked, how will we raise money? Money again, is one of the things required to run this operation. So what is something that we all have in common that we need? Well that answer was wearing clothes. Many times throughout history and even today clothing is used as a means of expression. Movements like the Flappers and Flower Children used clothing as a way of expression and we plan to do the same. While all of our clothing will not be politically woke, everything we sell will help the platform to a degree. In our store we will be selling four types of products as we develop and grow.</p>
-                      <p className="d-none">We all share something in common, we are all American yes but thats not all, we all wear clothes. Many times in recent history clothing has served as a form of expression. Movements like the Flappers and modern streetwear stand for more then just the look it gives at face value. Using clothing we hope to spread the Artricles mission while raising funds to continue development of the site and reinvesting in ourself. At our online marketplace people can support us, our partners and some of the charities we sponsor. We have three tiers of products. Clothing has evolved so much in the past century. From pushes in equality via movements like the Flappers to quite literally the words and images we can now print on out shirts, clothing has always been a very expressive form. We see brands like Supreme and other popular streetwear brands take off and grow large followings. We also see fans buying an artist’s or creator’s clothing to show support. If we could create a brand and movement to get people to show us that same support, then we would have a very good stream of income off that while creating awareness from people advertising our mission. With this we can push on to pursue achievement of our goals. Many brands have untraditionally created names for themselves in the industry, some examples would be Supreme, Mr. Beast, Yes Theory and more. These companies sell thousands of items to fund themselves and their platforms. Using this approach, we can sell clothing that encourages thought to get people thinking about the system we live in and the inequalities and hardships others face. Through advertising and creating videos while partnering with brands and creators Articles will sell products that people feel proud to wear.</p>
+                      <p className="d-none">We all share something in common, we are all American yes but thats not all, we all wear clothes. Many times in recent history clothing has served as a form of expression. Movements like the Flappers and modern streetwear stand for more then just the look it gives at face value. Using clothing we hope to spread the Articles mission while raising funds to continue development of the site and reinvesting in ourself. At our online marketplace people can support us, our partners and some of the charities we sponsor. We have three tiers of products. Clothing has evolved so much in the past century. From pushes in equality via movements like the Flappers to quite literally the words and images we can now print on out shirts, clothing has always been a very expressive form. We see brands like Supreme and other popular streetwear brands take off and grow large followings. We also see fans buying an artist’s or creator’s clothing to show support. If we could create a brand and movement to get people to show us that same support, then we would have a very good stream of income off that while creating awareness from people advertising our mission. With this we can push on to pursue achievement of our goals. Many brands have untraditional created names for themselves in the industry, some examples would be Supreme, Mr. Beast, Yes Theory and more. These companies sell thousands of items to fund themselves and their platforms. Using this approach, we can sell clothing that encourages thought to get people thinking about the system we live in and the inequalities and hardships others face. Through advertising and creating videos while partnering with brands and creators Articles will sell products that people feel proud to wear.</p>
 
                     </div>
                   </div>
@@ -357,7 +357,7 @@ const Mission = (props) => {
                         </div>
 
                         <div className="card-body">
-                          Items availble on the store made and sold by us. We recieve all of the net profits from these items.
+                          Items available on the store made and sold by us. We receive all of the net profits from these items.
                         </div>
 
                         <div className="card-footer">
@@ -382,7 +382,7 @@ const Mission = (props) => {
                         </div>
                         
                         <div className="card-body">
-                          Items available on the store that we sell in partnership with a brand or creator. Net profits of these items are split a percentage to benifit both parties. We plan to raise awareness and work with others to grow our platform with these items.
+                          Items available on the store that we sell in partnership with a brand or creator. Net profits of these items are split a percentage to benefit both parties. We plan to raise awareness and work with others to grow our platform with these items.
                         </div>
                         <div className="card-footer">
 
@@ -400,14 +400,14 @@ const Mission = (props) => {
                     <div className="col-12 col-md-6 mb-3">
                       <div className="card clothing-card">
 
-                        {/* <div className="card-title">Sponsered Goods</div> */}
+                        {/* <div className="card-title">Sponsored Goods</div> */}
                         <div className="card-title">
-                          <span>Sponsered</span>
+                          <span>Sponsored</span>
                           <span className="profit-tag">0% - 5% Net Profit</span>
                         </div>
 
                         <div className="card-body">
-                          Using our platform we plan to help smaller chairties and orginaiztions by providing a platform for them to sell on. Online sales and hosting can get tricky so we hope to help others focus on thier mission for a small fee per sale.
+                          Using our platform we plan to help smaller charities and organizations by providing a platform for them to sell on. Online sales and hosting can get tricky so we hope to help others focus on their mission for a small fee per sale.
                         </div>
 
                         <div className="card-footer">
@@ -425,7 +425,7 @@ const Mission = (props) => {
                     <div className="col-12 col-md-6 mb-3">
                       <div className="card clothing-card">
 
-                        {/* <div className="card-title">Sponsered Goods</div> */}
+                        {/* <div className="card-title">Sponsored Goods</div> */}
                         <div className="card-title">
                           <span>Submission</span>
                           <span className="profit-tag">50% Net Profit</span>
@@ -463,7 +463,7 @@ const Mission = (props) => {
                   <div className="subwrap pt-2">
                     <div className="sub-title" id="title-synopsis">Synopsis</div>
                     <div className="sub-text">
-                      <p>A huge majority of American publishing is owned by just 6 companies, all of which give politcal donations to our government. Take a look at the image below</p>
+                      <p>A huge majority of American publishing is owned by just 6 companies, all of which give political donations to our government. Take a look at the image below</p>
 
                       <img className="news-media-image mb-4" src="https://i.stack.imgur.com/lAT2b.jpg" height="400px" alt=""/>
 
@@ -472,16 +472,16 @@ const Mission = (props) => {
                       <p>Online news platforms are so dry with content and littered with ads today. With the help of clothing sales, we will build and maintain a new kind of news platform. A platform that is not biased and corporate focused. Timeline based news threads that users can subscribe to if they are interested and get notified on developments. <span className="d-none">New gun law bills, or Flint Michigan water progress? Many of these stories lose focus in the spotlight but users can keep the things they care most close to them.</span></p>
 
                       <div className="dream-quote">
-                        <p>TODO/REMOVE B4 LAUNCH: This is by far my least favorite section to read and neads to be the most powerful section to read by launch, more info on whats wrong with the current news system and sources to go along with it.</p>
+                        <p>TODO/REMOVE B4 LAUNCH: This is by far my least favorite section to read and needs to be the most powerful section to read by launch, more info on whats wrong with the current news system and sources to go along with it.</p>
                         
                         <ul className="ml-4 d-none">
                           <li>Lack of Edward Snowden Information and the disrespect shown by media towards him</li>
                           <li>Lack of Hong Kong coverage and how China threatens our way of life</li>
-                          <li>Examples of the press running to the goverment and all of a sudden not running stories</li>
+                          <li>Examples of the press running to the government and all of a sudden not running stories</li>
                           <li>Lack of coverage about things like the Panama Papers, Jeffrey Epstein and literally every problem that exist, yet lets talk about sports and weather?</li>
                           <li>Lack of Hong Kong coverage and how China threatens our way of life</li>
-                          <li>Lack of partnerships with growing creators way more talented then shmucks held up in a fancy NYC office writting dumb fucking news stories</li>
-                          <li>Lack of pressure on goverment yet you pay the goverment for your interest?</li>
+                          <li>Lack of partnerships with growing creators way more talented then schmucks held up in a fancy NYC office writhing dumb fucking news stories</li>
+                          <li>Lack of pressure on government yet you pay the government for your interest?</li>
                         </ul>
 
                       </div>
@@ -516,13 +516,13 @@ const Mission = (props) => {
     
                   <div className="sub-wrap pt-2">
                     <div className="sub-title" id="title-reforms">Reforms</div>
-                    <div className="sub-text">Articles has a strong underlying politcal aspect to it and we want that to be known. We want to keep our opinions clear as day throughout the news portions of our platform. The Reforms section is a place we talk about some of the changes we feel should happen in the politcal landscape of the country and the facts and details behind our conclusions. All are welcome to contribute and voice thier thoughts on the Reforms so we can shape it into what this country needs. We plan on sharing what parties, members of congress, senator's and political candidate's have said on the matter and thier stance here, as well as providing history to the issues at hand. Although we don't have a reform page for every issue page, think of reforms as our answer to the issues we have on the site.</div>
+                    <div className="sub-text">Articles has a strong underlying political aspect to it and we want that to be known. We want to keep our opinions clear as day throughout the news portions of our platform. The Reforms section is a place we talk about some of the changes we feel should happen in the political landscape of the country and the facts and details behind our conclusions. All are welcome to contribute and voice their thoughts on the Reforms so we can shape it into what this country needs. We plan on sharing what parties, members of congress, senator's and political candidate's have said on the matter and their stance here, as well as providing history to the issues at hand. Although we don't have a reform page for every issue page, think of reforms as our answer to the issues we have on the site.</div>
                   </div>
     
                   <div className="sub-wrap pt-2">
                     <div className="sub-title" id="title-town-hall">Town Hall</div>
                     <div className="sub-text">
-                      <p>The Town Hall page is still a work in progress and if you took the time to read this far, thank you. We could use everyones help here, we want Articles to be by the people, for the people, so we are building out a section where users can voice thier concerns, provide input to the platform, vote on features, talk with others in thier community and with everyone at large. More details will come with time but we really wanted to get this idea out there and start taking suggestions. More details of this will be placed in the next version of our mission page in 2020.</p>
+                      <p>The Town Hall page is still a work in progress and if you took the time to read this far, thank you. We could use everyone's help here, we want Articles to be by the people, for the people, so we are building out a section where users can voice their concerns, provide input to the platform, vote on features, talk with others in their community and with everyone at large. More details will come with time but we really wanted to get this idea out there and start taking suggestions. More details of this will be placed in the next version of our mission page in 2020.</p>
                       <hr/>
                       <p className="mb-0">Joey here, Feel free to message me from the <Link to={ROUTES.EMPLOYEES + '/42'}><span className="articles-inline-link noselect">here</span></Link> with suggestions.</p>
                       
@@ -531,7 +531,7 @@ const Mission = (props) => {
     
                   <div className="sub-wrap pt-2">
                     <div className="sub-title" id="title-seat-tracker">Seat Tracker</div>
-                    <div className="sub-text">Articles is a for-profit political orginization working to make America a better place for the people through avenues of clothing, news, politics and transparency.</div>
+                    <div className="sub-text">Articles is a for-profit political organization working to make America a better place for the people through avenues of clothing, news, politics and transparency.</div>
                   </div>
                 </div>
   
@@ -554,7 +554,7 @@ const Mission = (props) => {
                   </div>
     
                   <div className="sub-wrap pt-2">
-                    <div className="sub-title" id="title-payrole">Payrole</div>
+                    <div className="sub-title" id="title-payrole">Payroll</div>
                     <div className="sub-text">
                       <p>At this time no one at Articles is receiving any sort of pay until things pick up a little bit. This will not always be the case and we want people to know that from day one. All information on how much is being given to employees and statistics on that can be found at the Reports Page and the <Link to={ROUTES.EMPLOYEES + '/a'}><span className="articles-inline-link noselect">Employee Directory Page</span></Link>.</p>
                     </div>
@@ -562,10 +562,10 @@ const Mission = (props) => {
 
                   <div className="mb-4" style={{height: '100px'}}></div>
     
-                  {/* Repetetive? */}
+                  {/* Repetitive? */}
                   <div className="sub-wrap pt-2 d-none">
                     <div className="sub-title">Employees</div>
-                    <div className="sub-text">Articles is a for-profit political orginization working to make America a better place for the people through avenues of clothing, news, politics and transparency.</div>
+                    <div className="sub-text">Articles is a for-profit political organization working to make America a better place for the people through avenues of clothing, news, politics and transparency.</div>
                   </div>
 
                 </div>

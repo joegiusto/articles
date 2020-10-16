@@ -248,9 +248,9 @@ class AdminPage extends Component {
     }
 
     return (
-      <div className="admin-news">
+      <div className={"admin-news " + (this.state.isEdit ? 'active' : '')}>
 
-        <div className="news-manage-plate">
+        <div className={"news-manage-plate " + (this.state.isEdit ? 'active' : '')}>
           {/* <h1>News Management</h1> */}
 
           <div className="catagories">
@@ -283,7 +283,7 @@ class AdminPage extends Component {
                 (searchLoadingError === '' ? <span className="badge badge-success">Loading...</span> : <span className="badge badge-danger">Error Loading Search</span>)
               : 
               <div className="tag-container">
-                <div className="assist-header">Latest Searced Terms:</div>
+                <div className="assist-header">Latest Searched Terms:</div>
                 <div className="tags">
 
                   {searchHistory.map((search) =>
@@ -338,8 +338,8 @@ class AdminPage extends Component {
               <div className="result" key={result.issue_id}>
 
                 <div className="dates">
-                  <span className="date badge badge-dark border ml-2">{moment(result.news_date).format("LL")} </span>
-                  <span className="date badge badge-warning border ml-2">{moment(result.last_update).format("LL")} </span>
+                  <span className="date badge badge-dark border ">{moment(result.news_date).format("LL")} </span>
+                  <span className="date badge badge-warning border ">{moment(result.last_update).format("LL")} </span>
                 </div>
 
                 <div className="indicators">
@@ -369,9 +369,9 @@ class AdminPage extends Component {
 
         </div>
 
-        <div className={"editor-dim " + (this.state.isEdit ? 'active' : '')}>
+        {/* <div className={"editor-dim " + (this.state.isEdit ? 'active' : '')}>
 
-        </div>
+        </div> */}
       
         <NewsAdd authors={this.state.authors} proposals={this.state.proposals} tags={this.state.tags} isEdit={this.state.isEdit} news_id={this.props.match.params.id} isExact={this.props.match.isExact} changeIsEdit={this.changeIsEdit}/>
         

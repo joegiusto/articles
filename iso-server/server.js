@@ -35,12 +35,6 @@ const mongooseConnectionAttemptsMax = 5
 let mongoConnectionAttempts = 1
 const mongoConnectionAttemptsMax = 5
 
-// const element = React.createElement(
-//   'h1',
-//   {className: 'greeting'},
-//   'Hello, world!'
-// );
-
 app.use(
 
   history({

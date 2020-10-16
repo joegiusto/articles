@@ -9,6 +9,8 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const jwt = require("jsonwebtoken");
 
+const axios = require('axios')
+
 const {sendEmail} = require('../../utils/index');
 // const keys = require("../../config/keys");
 
@@ -19,6 +21,24 @@ const validateLoginInput = require("../../validation/login");
 // Load User model
 const User = require("../../models/User");
 const Token = require('../../models/Token');
+
+function sendNewUserMessage(user) {
+  axios.post(process.env.DISCORD_HOOK, {
+      username: "Articles Hook",
+      avatar_url: "https://cdn.articles.media/email/logo.jpg",
+      content: `A new user ${user.email} - ${user.first_name} has signed up!`
+    },
+    {
+      'Content-type': 'application/json'
+    }
+  )
+  .then(function (response) {
+    // console.log(response)
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
 
 // @route POST api/users/register
 // @desc Register user
@@ -90,6 +110,8 @@ app.post("/register", async (req, res) => {
               // res.json(user)
 
               await sendVerificationEmail(user, req, res);
+
+              sendNewUserMessage(user)
 
               // sgMail
               // .send(msg)

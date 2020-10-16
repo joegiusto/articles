@@ -104,6 +104,23 @@ class Proposals extends Component {
             <div onClick={() => this.setState({filter: 'Education'})} className={"badge " + (this.state.filter === "Education" ? 'badge-dark' : 'badge-light')}>Education</div>
           </div>
 
+          {/* Fundamental */}
+          <div className={"proposals " + (this.state.filter === "All" || this.state.filter === "Fundamental" ? '' : 'd-none')}>
+
+            <div className="after-text noselect">
+              Fundamental
+            </div>
+
+            {
+              this.state.proposals.filter(proposal => proposal.type === 'fundamental').map(proposal => 
+                <Proposal
+                  proposal={proposal}
+                />
+              )
+            }
+
+          </div>
+
           {/* Social */}
           <div className={"proposals " + (this.state.filter === "All" || this.state.filter === "Social" ? '' : 'd-none')}>
 
@@ -130,23 +147,6 @@ class Proposals extends Component {
 
             {
               this.state.proposals.filter(proposal => proposal.type === 'financial').map(proposal => 
-                <Proposal
-                  proposal={proposal}
-                />
-              )
-            }
-
-          </div>
-
-          {/* Fundamental */}
-          <div className={"proposals " + (this.state.filter === "All" || this.state.filter === "Fundamental" ? '' : 'd-none')}>
-
-            <div className="after-text noselect">
-              Fundamental
-            </div>
-
-            {
-              this.state.proposals.filter(proposal => proposal.type === 'fundamental').map(proposal => 
                 <Proposal
                   proposal={proposal}
                 />

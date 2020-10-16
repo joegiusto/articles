@@ -109,6 +109,7 @@
     box-shadow: 1px 0px 5px #000;
     // padding-left: 0.5rem;
     display: flex;
+    flex-shrink: 0;
     flex-direction: column;
     border-bottom: 2px solid #000;
     // overflow: hidden;

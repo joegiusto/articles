@@ -292,31 +292,53 @@ class Add extends Component {
 
     return(
       <div className={"edit-panel bottom-add " + ( this.props.isEdit ? 'active' : '' ) }>
+
+        <div className={"edit-status " + (this.props.isEdit || this.state.editLoading ? '' : 'd-none')}>
+
+          <div className="details">
+            <div className="type badge badge-dark">{this.state.news_type}</div>
+
+            {this.state.editLoading ? 
+            <div>Loading</div>
+            :
+            <div className="title">{this.state.news_title}</div>
+            }
+            
+          </div>
+
+          <div>
+            <button className="btn btn-warning" onClick={() => this.changeIsEdit(false)}>Cancel</button>
+            <button className="btn btn-danger">Delete</button>
+            <button className="btn btn-success">Save</button>
+          </div>
+
+        </div>
+
         {/* <h1>Document Details</h1> */}
         
-        {
+        {/* {
         this.props.news_id === undefined ? 
           null
           :
           <Link to={ROUTES.ADMIN_NEWS}><div className="clear" onClick={() => this.changeIsEdit(false)}>Cancel Edit</div></Link>
-        }
+        } */}
 
-        {
+        {/* {
         this.props.news_id === undefined && this.props.isEdit ? 
           <Link to={ROUTES.ADMIN_NEWS}><div className="clear" onClick={() => this.changeIsEdit(false)}>Cancel</div></Link>
           :
           null
-        }
+        } */}
 
         <div className="row">
 
-          <div className="col-12">
+          {/* <div className="col-12">
             {this.state.editLoading ? 
             <div className="alert alert-danger">Loading Story</div>
             :
             null
             }
-          </div>
+          </div> */}
 
           <div className="col-12">
             {
