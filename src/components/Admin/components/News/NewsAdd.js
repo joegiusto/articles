@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import axios from 'axios';
+import TextareaAutosize from 'react-textarea-autosize';
 import moment from 'moment'
 
 import 'react-day-picker/lib/style.css';
@@ -17,6 +18,7 @@ import * as ROUTES from '../../../../constants/routes';
 
 const initial_state = {
   // Keep in mind any new states that are added here must be whitelisted on the server route for addNewsDocument and editNewsDocument
+  _id: "",
   news_type: "",
   news_title: "",
   news_tagline: "",
@@ -50,6 +52,7 @@ class Add extends Component {
 
     this.state = {
       ...initial_state,
+      formatGuideOpen: false,
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -107,8 +110,10 @@ class Add extends Component {
 
       self.setState({
         ...response.data.document,
-        editLoading: false
+        editLoading: false,
       });
+
+      self.props.changeIsEdit(true)
 
     })
     .catch(function (error) {
@@ -239,13 +244,14 @@ class Add extends Component {
       })
       .then(function (response) {
         console.log(response);
+
+        self.props.changeIsEdit(false)
   
         self.setState({
           ...initial_state
         });
 
         self.props.history.push(ROUTES.ADMIN_NEWS);
-  
       })
       .catch(function (error) {
         console.log(error);
@@ -266,13 +272,14 @@ class Add extends Component {
       })
       .then(function (response) {
         console.log(response);
+
+        self.props.changeIsEdit(false)
   
         self.setState({
           ...initial_state
         });
 
         self.props.history.push(ROUTES.ADMIN_NEWS);
-  
       })
       .catch(function (error) {
         console.log(error);
@@ -293,23 +300,49 @@ class Add extends Component {
     return(
       <div className={"edit-panel bottom-add " + ( this.props.isEdit ? 'active' : '' ) }>
 
+        <div className={"overlay " + (this.props.isEdit ? '' : 'active')}>
+
+          <div className="greetings">Hello {this.props.user.first_name},</div>
+
+          <div className="updates">You have 0 new mentions</div>
+
+          <button className="btn btn-articles-light" onClick={() => this.props.changeIsEdit(true)}>Add Content</button>
+
+          <small className="mt-1">Version 3.0</small>
+          {/* <small className="mt-3">Changelog</small> */}
+        </div>
+
         <div className={"edit-status " + (this.props.isEdit || this.state.editLoading ? '' : 'd-none')}>
 
           <div className="details">
-            <div className="type badge badge-dark">{this.state.news_type}</div>
-
-            {this.state.editLoading ? 
-            <div>Loading</div>
-            :
-            <div className="title">{this.state.news_title}</div>
+            {
+              this.props.news_id === '' || this.props.news_id === undefined ? 
+              '' 
+              : 
+              <div className="d-flex justify-content-between">
+                <div className="badge badge-dark">{this.state.news_id}</div>
+  
+                {this.state.editLoading ? 
+                <div className="badge badge-warning">Loading</div>
+                :
+                this.state.editLoadingError ? 
+                <div className="badge badge-danger">Error</div>
+                :
+                <div className="badge badge-success">Success</div>
+                }
+              </div>
             }
+
+            <div className="type badge badge-dark ml-1">{this.state.news_type}</div>
+
+            <div className="title">{this.state.news_title}</div>
             
           </div>
 
           <div>
-            <button className="btn btn-warning" onClick={() => this.changeIsEdit(false)}>Cancel</button>
+            <button className="btn btn-warning" onClick={() => this.changeIsEdit(false) + this.props.history.push(ROUTES.ADMIN_NEWS)}>Cancel</button>
             <button className="btn btn-danger">Delete</button>
-            <button className="btn btn-success">Save</button>
+            <button disabled={ this.state.submitting_data || this.state.news_type === '' || this.state.news_title === '' || this.state.hero_url === '' || this.state.url === ''} className="btn btn-success" onClick={this.pushNews}>Save</button>
           </div>
 
         </div>
@@ -341,23 +374,7 @@ class Add extends Component {
           </div> */}
 
           <div className="col-12">
-            {
-              this.state.news_id === '' ? 
-              '' 
-              : 
-              <div className="d-flex justify-content-between">
-                <div className="badge badge-dark mb-3">{this.state.news_id}</div>
-  
-                {this.state.editLoading ? 
-                <div className="badge badge-warning mb-3">Loading</div>
-                :
-                this.state.editLoadingError ? 
-                <div className="badge badge-danger mb-3">Error</div>
-                :
-                <div className="badge badge-success mb-3">Success</div>
-                }
-              </div>
-            }
+            
           </div>
           
           <div className="col-12 col-md-6">
@@ -374,7 +391,7 @@ class Add extends Component {
 
           <div className="col-12 col-md-6">
             <div className="form-group">
-              <label for="news_title">{this.state.news_type === ''  ? 'News' : this.state.news_type} Title:</label>
+              <label for="news_title">Title:</label>
               <input 
                 type="text" 
                 className="form-control" 
@@ -423,23 +440,6 @@ class Add extends Component {
               />
             </div>
           </div>
-
-          {/* <div className="col-12 col-md-6">
-            <div className="form-group">
-              <label for="news_date">{this.state.news_type === '' ? 'News' : this.state.news_type} Date:</label>
-              <input 
-                type="text" 
-                className="form-control" 
-                id="news_date"
-                name="news_date" 
-                aria-describedby=""
-                value={this.state.news_date}
-                onChange={this.handleChange}
-                disabled
-                placeholder=""
-              />
-            </div>
-          </div> */}
 
           <div className="col-12 col-md-6">
 
@@ -614,23 +614,6 @@ class Add extends Component {
               </select>
             </div>
           </div>
-          
-          {/* <div className="col-12 col-md-6">
-            <div className="form-group">
-              <label for="news_date">Last Update:</label>
-              <input 
-                type="text" 
-                className="form-control" 
-                id="news_date"
-                name="news_date" 
-                aria-describedby=""
-                value={this.state.last_update}
-                onChange={this.handleChange}
-                disabled
-                placeholder=""
-              />
-            </div>
-          </div> */}
 
           <div className="col-12">
             <div className="form-group">
@@ -649,23 +632,60 @@ class Add extends Component {
 
           <div className="col-12">
             <div className="form-group">
-              <label for="news_notes">Purpose of Story / Notes</label>
-              <textarea 
+              <label for="news_notes">Content</label>
+
+              <div className="content-controls">
+
+                <button className="btn btn-articles-light control noselect" onClick={() => this.setState({formatGuideOpen: true})}>
+                  <i className="far fa-question-circle mr-0"></i>
+                </button>
+                
+                <button className="btn btn-articles-light control h1 noselect" onClick={() => this.setState({news_notes: `${this.state.news_notes}\n${'<h1></h1>'}`})}>
+                  {'<h1/>'}
+                </button>
+
+                <button className="btn btn-articles-light control h2 noselect" onClick={() => this.setState({news_notes: `${this.state.news_notes}\n${'<h2></h2>'}`})}>
+                  {'<h2/>'}
+                </button>
+
+                <button className="btn btn-articles-light control h3 noselect" onClick={() => this.setState({news_notes: `${this.state.news_notes}\n${'<h3></h3>'}`})}>
+                  {'<h3/>'}
+                </button>
+
+                <button className="btn btn-articles-light control h4 noselect" onClick={() => this.setState({news_notes: `${this.state.news_notes}\n${'<h4></h4>'}`})}>
+                  {'<h4/>'}
+                </button>
+
+                <button className="btn btn-articles-light control h5 noselect" onClick={() => this.setState({news_notes: `${this.state.news_notes}\n${'<h5></h5>'}`})}>
+                  {'<h5/>'}
+                </button>
+
+                <button className="btn btn-articles-light control noselect" onClick={() => this.setState({news_notes: `${this.state.news_notes}\n${'<img src="" alt=""></img>'}`})}>
+                  {'<img/>'}
+                </button>
+
+                <button className="btn btn-articles-light control noselect" onClick={() => this.setState({news_notes: `${this.state.news_notes}\n${`<a href='https://articles.media' target="_blank" rel="noopener noreferrer">Articles Media</a>`}`})}>
+                  {'<a/>'}
+                </button>
+
+              </div>
+              
+              <TextareaAutosize
                 className="form-control" 
                 id="news_notes" 
                 name="news_notes"
                 value={this.state.news_notes}
                 onChange={this.handleChange}
-                rows="7"
+                // rows="7"
                 disabled={this.state.editLoading ? 'disabled' : ''}>
-            </textarea>
+              </TextareaAutosize>
             </div>
           </div>
 
         </div>
 
-        {this.state.submitting_data ? ' Sending...' : null}
-        <div className="submit btn btn-articles-light w-100 mt-5" onClick={this.pushNews}>Submit</div>
+        {/* {this.state.submitting_data ? ' Sending...' : null} */}
+        {/* <div className="submit btn btn-articles-light w-100 mt-5" onClick={this.pushNews}>Submit</div> */}
 
       </div>
     )

@@ -9,6 +9,8 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const jwt = require("jsonwebtoken");
 
+const stripe = require('stripe')(process.env.STRIPE_TEST_SECRET);
+
 const axios = require('axios')
 
 const {sendEmail} = require('../../utils/index');
@@ -122,6 +124,37 @@ app.post("/register", async (req, res) => {
               //     console.error(error.response.body)
               //   }
               // });
+
+              console.log(user._id)
+              console.log(user.email)
+
+              addCustomer(user.email, user._id)
+              .then(async response => {
+                // console.log(response)
+
+                const filter = { _id: user._id };
+                const update = { stripe: { customer_id: response.id } };
+
+                let test = await User.findOneAndUpdate(filter, update, {
+                  returnOriginal: false,
+                  strict: false,
+                  useFindAndModify: false
+                });
+
+                console.log(test)
+        
+              })
+
+              async function addCustomer(email, _id) {
+                const customer = await stripe.customers.create({
+                  email: email,
+                  description: `Customer for the Articles MongoDB user ${_id}`,
+                  phone: ''
+                });
+              
+                return(customer)
+              }
+
             })
             .catch(err => console.log(err));
         });

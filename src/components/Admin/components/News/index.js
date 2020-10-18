@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
 import moment from 'moment'
 import axios from 'axios';
@@ -6,7 +7,7 @@ import axios from 'axios';
 import * as ROUTES from '../../../../constants/routes';
 import NewsAdd from './NewsAdd';
 
-class AdminPage extends Component {
+class NewsAdmin extends Component {
   constructor(props) {
   super(props);
 
@@ -14,8 +15,8 @@ class AdminPage extends Component {
       catagory: 'All',
       searchAlert: false,
       searchFilter: 'Tags',
-      searchText: '',
 
+      searchText: '',
       searchHistory: [],
       searchLoading: false,
       searchLoadingError: '',
@@ -52,7 +53,7 @@ class AdminPage extends Component {
     let self = this;
 
     self.setState({ tagsLoading: true });
-    self.setState({ searchLoading: true });
+    // self.setState({ searchLoading: true });
     self.setState({ resultsLoading: true });
 
     axios.get('/api/getNews')
@@ -205,7 +206,8 @@ class AdminPage extends Component {
       catagory: catagory,
       // searchFilter: 'Content',
       results: catagory !== 'All' ? this.state.resultsOriginal.filter(result => result.news_type == catagory) : this.state.resultsOriginal,
-      searchedTag: ''
+      searchedTag: '',
+      searchText: ''
     })
   }
 
@@ -243,7 +245,7 @@ class AdminPage extends Component {
 
     function NewsTypeSelector(props) {
       return (
-      <div className={"catagory " + (props.catagory === props.changeCatagoryTo ? 'active' : '')} onClick={() => props.changeCatagory(props.changeCatagoryTo)}>{props.displayCatagoryAs}</div>
+      <div className={"catagory " + (props.catagory === props.changeCatagoryTo && props.searchedTag === '' && props.searchText === '' ? 'active' : '')} onClick={() => props.changeCatagory(props.changeCatagoryTo)}>{props.displayCatagoryAs}</div>
       )
     }
 
@@ -254,10 +256,10 @@ class AdminPage extends Component {
           {/* <h1>News Management</h1> */}
 
           <div className="catagories">
-            <NewsTypeSelector catagory={this.state.catagory} changeCatagory={this.changeCatagory} changeCatagoryTo="All" displayCatagoryAs="All" />
-            <NewsTypeSelector catagory={this.state.catagory} changeCatagory={this.changeCatagory} changeCatagoryTo="story" displayCatagoryAs="Stories" />
-            <NewsTypeSelector catagory={this.state.catagory} changeCatagory={this.changeCatagory} changeCatagoryTo="issue" displayCatagoryAs="Issues" />
-            <NewsTypeSelector catagory={this.state.catagory} changeCatagory={this.changeCatagory} changeCatagoryTo="myth" displayCatagoryAs="Myths" />
+            <NewsTypeSelector searchText={this.state.searchText} searchedTag={this.state.searchedTag} catagory={this.state.catagory} changeCatagory={this.changeCatagory} changeCatagoryTo="All" displayCatagoryAs="All" />
+            <NewsTypeSelector searchText={this.state.searchText} searchedTag={this.state.searchedTag} catagory={this.state.catagory} changeCatagory={this.changeCatagory} changeCatagoryTo="story" displayCatagoryAs="Stories" />
+            <NewsTypeSelector searchText={this.state.searchText} searchedTag={this.state.searchedTag} catagory={this.state.catagory} changeCatagory={this.changeCatagory} changeCatagoryTo="issue" displayCatagoryAs="Issues" />
+            <NewsTypeSelector searchText={this.state.searchText} searchedTag={this.state.searchedTag} catagory={this.state.catagory} changeCatagory={this.changeCatagory} changeCatagoryTo="myth" displayCatagoryAs="Myths" />
           </div>
 
           <div className="search-controls">
@@ -283,7 +285,22 @@ class AdminPage extends Component {
                 (searchLoadingError === '' ? <span className="badge badge-success">Loading...</span> : <span className="badge badge-danger">Error Loading Search</span>)
               : 
               <div className="tag-container">
-                <div className="assist-header">Latest Searched Terms:</div>
+                {/* <div className="assist-header">Latest Searched Terms:</div> */}
+
+                <div className="form-group articles">
+                  <label for="searchText">Search:</label>
+                  <input 
+                    type="text" 
+                    className="form-control with-label" 
+                    id="searchText"
+                    name="searchText" 
+                    aria-describedby=""
+                    value={this.state.searchText}
+                    onChange={this.handleChange}
+                    placeholder=""
+                  />
+                </div>
+                
                 <div className="tags">
 
                   {searchHistory.map((search) =>
@@ -316,11 +333,24 @@ class AdminPage extends Component {
             </div>
           </div>
 
-          <button onClick={() => this.setState({isEdit: true})} className="btn btn-articles-light mx-auto d-block">Add Content</button>
+          {/* <button onClick={() => this.setState({isEdit: true})} className="btn btn-articles-light mx-auto d-block">Add Content</button> */}
 
-          <div className="results-header">Results: {this.state.results.length}</div>
+          <div className="results-header">Results: {this.state.results.filter(result => result.news_title.includes(this.state.searchText)).length}</div>
 
           <div className="results">
+
+            {this.state.results.filter(result => result.news_title.includes(this.state.searchText)).length === 0 && resultsLoading !== true ? 
+              <div>
+                <div>No Results</div>
+                <button onClick={() =>
+                  this.setState({
+                    searchText: ''
+                  })
+                } className="btn btn-articles-light">Reset Search</button>
+              </div>
+              :
+              ''
+            }
             
             {resultsLoading ? 
             (resultsLoadingError === '' ? <span className="badge badge-success">Loading...</span> : <div><div className="badge badge-danger">Error Loading Results</div><div><small>Most likely the content server is off.</small></div></div>)
@@ -328,7 +358,9 @@ class AdminPage extends Component {
             ''
             }
 
-            {results.sort(function(a,b){
+            {results
+            .filter(result => result.news_title.includes(this.state.searchText))
+            .sort(function(a,b){
               return new Date(b.news_date) - new Date(a.news_date)
             }).map((result) => {
 
@@ -339,13 +371,15 @@ class AdminPage extends Component {
 
                 <div className="dates">
                   <span className="date badge badge-dark border ">{moment(result.news_date).format("LL")} </span>
+                  {result.visible ? null : <i className="visible fas fa-low-vision"></i>}
+                  {result.author === undefined || result.author === null || result.author === '' ? <i className="author fas fa-user-edit"></i> : null}
                   <span className="date badge badge-warning border ">{moment(result.last_update).format("LL")} </span>
                 </div>
 
-                <div className="indicators">
+                {/* <div className="indicators">
                   {result.visible ? null : <i className="visible fas fa-low-vision"></i>}
                   {result.author === undefined || result.author === null || result.author === '' ? <i className="author fas fa-user-edit"></i> : null}
-                </div>
+                </div> */}
                 
                 <Link onClick={() => this.setState({isEdit: true})} to={ROUTES.ADMIN_NEWS + '/' + result._id}><span className="title">{result.news_title} <small>({result.news_type})</small></span></Link>
 
@@ -373,11 +407,28 @@ class AdminPage extends Component {
 
         </div> */}
       
-        <NewsAdd authors={this.state.authors} proposals={this.state.proposals} tags={this.state.tags} isEdit={this.state.isEdit} news_id={this.props.match.params.id} isExact={this.props.match.isExact} changeIsEdit={this.changeIsEdit}/>
+        <NewsAdd 
+          authors={this.state.authors} 
+          proposals={this.state.proposals} 
+          tags={this.state.tags} 
+          isEdit={this.state.isEdit} 
+          news_id={this.props.match.params.id} 
+          isExact={this.props.match.isExact} 
+          changeIsEdit={this.changeIsEdit}
+          user={this.props.user}
+        />
         
       </div>
     );
   }
 }
 
-export default AdminPage
+// export default AdminPage
+
+const mapStateToProps = state => ({
+  user: state.auth.user_details,
+});
+
+export default connect(
+  mapStateToProps,
+)(NewsAdmin);

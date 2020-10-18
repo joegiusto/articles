@@ -77,7 +77,10 @@ const UserSchema = new Schema({
   },
   stripe: {
     type: Object,
-    default: {}
+    default: {
+      customer_id: '',
+      test: 'test'
+    }
   },
   resetPasswordToken: {
     type: String,

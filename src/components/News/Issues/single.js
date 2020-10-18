@@ -139,7 +139,7 @@ class Issue extends React.Component {
       // console.log(this.props.user?.subscriptions)
       // console.log(this.state._id)
 
-      const lastDate = this.props.user?.subscriptions.find(x => x.news_id === this.state._id)
+      const lastDate = this.props.user?.subscriptions?.find(x => x.news_id === this.state._id)
 
       // console.log(lastDate)
 
@@ -312,6 +312,11 @@ class Issue extends React.Component {
           <div className="container">
 
             <div className="content ">
+
+              <div className={"mb-3 d-inline-block border border-dark p-2 " + (this.props.user?.roles?.isWriter ? '' : 'd-none')}>
+                <Link to={`${ROUTES.ADMIN_NEWS}/${this.state._id}`}><button className="btn btn-articles-light" onClick={() => ''}>Edit Issue</button></Link>
+                <small className="d-block">You are seeing this because you are a writer</small>
+              </div>
   
               <div style={{whiteSpace: 'pre-wrap'}} dangerouslySetInnerHTML={{__html: news_notes}}></div>
   

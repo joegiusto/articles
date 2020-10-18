@@ -64,8 +64,8 @@ class HomePageFour extends Component {
 
               <div>
                 <div className="name">{this.props.user?.first_name} {this.props.user?.last_name}</div>
-                <div className="email">{this.props.user?.email}</div>
-                <Link to={ROUTES.MESSAGES}><div className="badge badge-light mt-3">0 Messages</div></Link>
+                {/* <small className="email d-block">{this.props.user?.email}</small> */}
+                <Link to={ROUTES.MESSAGES}><button className="btn btn-articles-light mt-4">0 Messages</button></Link>
               </div>
 
             </div>

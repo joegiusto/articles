@@ -14,7 +14,7 @@ const Page = () => (
 
       <Link to={ROUTES.PROPOSALS}>
         <div className="card card-block px-5 py-3 mt-2">
-          <h1 className="link"><i class="fas fa-scroll" aria-hidden="true"></i>View Proposals</h1>
+          <h1 className="link"><i className="fas fa-scroll" aria-hidden="true"></i>View Proposals</h1>
         </div>
       </Link>
 

@@ -374,9 +374,9 @@ class Ads extends Component {
                               <input className="form-control with-label" name="address" id="address" type="text" value=""/>
                             </div>
 
-                            <div class="form-group">
+                            <div className="form-group">
                               <label for="exampleFormControlSelect1">Miles</label>
-                              <select class="form-control" id="exampleFormControlSelect1">
+                              <select className="form-control" id="exampleFormControlSelect1">
                                 <option>1</option>
                                 <option>5</option>
                                 <option>10</option>
@@ -401,9 +401,9 @@ class Ads extends Component {
                               <input className="form-control with-label" name="address" id="address" type="text" value=""/>
                             </div>
 
-                            <div class="form-group">
+                            <div className="form-group">
                               <label for="exampleFormControlSelect1">Miles</label>
-                              <select class="form-control" id="exampleFormControlSelect1">
+                              <select className="form-control" id="exampleFormControlSelect1">
                                 <option>1</option>
                                 <option>5</option>
                                 <option>10</option>

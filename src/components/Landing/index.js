@@ -849,7 +849,7 @@ class LandingPage extends Component {
 									</div>
 
 									<div className="news">
-										{/* <img src="https://eh9ti3qk8yf3m8xqr5gt2fp4-wpengine.netdna-ssl.com/wp-content/uploads/2020/10/22937693_web1_CP110166417.jpg" alt="" class="background"/>
+										{/* <img src="https://eh9ti3qk8yf3m8xqr5gt2fp4-wpengine.netdna-ssl.com/wp-content/uploads/2020/10/22937693_web1_CP110166417.jpg" alt="" className="background"/>
 
 										<div className="date">
 											10/07/2020

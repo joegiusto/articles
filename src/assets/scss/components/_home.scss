@@ -157,6 +157,7 @@
       }
 
       .tile-header {
+
         .tile-title {
           font-family: brandon-grotesque, sans-serif;
           font-style: normal;
@@ -182,6 +183,15 @@
         align-items: center;
         text-align: center;
         overflow: hidden;
+        // transition: all 0.5s 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+        &:after {
+          content: "";
+          // Need Square
+          // display: block;
+          // padding-top: 100%;
+          // width: 100%;
+        }
 
         @include media-breakpoint-down(sm) {
           overflow: visible;

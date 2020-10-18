@@ -304,14 +304,10 @@ class Users extends Component {
       email: email
     })
     .then(function (response) {
-
       console.log(response)
-
     })
     .catch(function (error) {
-
       console.log(error);
-
     });
   }
 
@@ -408,7 +404,14 @@ class Users extends Component {
                       <span style={{width: '150px', display: 'inline-block'}}>{user.first_name} {user.last_name}</span> <span className="badge badge-light">{user._id}</span>
                     </td>
 
-                    <td>{user.stripe?.customer_id === undefined ? <span>No<span onClick={() => this.createCustomer(user._id)} className="btn btn-sm btn-articles-light">Create</span></span> : 'Yes'}</td>
+                    {/* <td>{user.stripe?.customer_id === undefined ? <span>No<span onClick={() => this.createCustomer(user._id)} className="btn btn-sm btn-articles-light">Create</span></span> : 'Yes'}</td> */}
+                    <td>
+                        {user.stripe?.customer_id === undefined || user.stripe?.customer_id === '' 
+                        ? 
+                        <span>No<span onClick={() => this.createCustomer(user._id)} className="btn btn-sm btn-articles-light">Create</span></span> 
+                        : 
+                        user.stripe?.customer_id}
+                      </td>
 
                     <td>
                       <span className="badge badge-danger">No</span>
@@ -430,134 +433,6 @@ class Users extends Component {
             </table>
           </div>
 
-        </div>
-
-        <div className="row d-none">
-
-          <div className="col-12 col-md-4">
-  
-            <div className="row">
-  
-              <div className="col-12 col-md-6">
-  
-                <div className="card">
-                  <div className="card-header">Outset</div>
-                  <div className="card-body">
-                    <div>Outset Complete: {(Math.floor((this.state.outsetComplete / this.state.users.length) * 100))}%</div>
-                  </div>
-                </div>
-  
-                <div className="card mt-3">
-                  <div className="card-header">Geographical Data</div>
-                  <div className="card-body">
-  
-                    {
-                      Object.entries(this.state.zips).map(([key, val]) => 
-                          <div key={key}>{this.checkZipName(key)}: {val}</div>
-                      )
-                    }
-  
-                  </div>
-                </div>
-
-                <div className="card mt-3">
-                  <div className="card-header">Gender Data</div>
-                  <div className="card-body">
-  
-                    <div>Male: {(Math.floor((this.state.gender.male / this.state.users.length) * 100))}% ({this.state.gender.male})</div>
-                    <div>Female: {(Math.floor((this.state.gender.female / this.state.users.length) * 100))}% ({this.state.gender.female})</div>
-                    <div>Other: {(Math.floor((this.state.gender.other / this.state.users.length) * 100))}% ({this.state.gender.other})</div>
-  
-                  </div>
-                </div>
-  
-              </div>
-  
-              <div className="col-12 col-md-6">
-
-                <div className="card mt-3 mt-md-0">
-                  <div className="card-header">Political</div>
-                  <div className="card-body">
-
-                    <div>Articles: {(Math.floor((this.state.articlesParty / this.state.users.length) * 100))}% ({this.state.articlesParty})</div>
-                    <div>Republican: {(Math.floor((this.state.republicanParty / this.state.users.length) * 100))}% ({this.state.republicanParty})</div>
-                    <div>Democrat: {(Math.floor((this.state.democratParty / this.state.users.length) * 100))}% ({this.state.democratParty})</div>
-
-                    <div>Independent: {(Math.floor((this.state.independentParty / this.state.users.length) * 100))}% ({this.state.independentParty})</div>
-                    <div>Green: {(Math.floor((this.state.greenParty / this.state.users.length) * 100))}% ({this.state.greenParty})</div>
-                    <div>Libertarian: {(Math.floor((this.state.libertarianParty / this.state.users.length) * 100))}% ({this.state.libertarianParty})</div>
-                    <div>Constitution: {(Math.floor((this.state.constitutionParty / this.state.users.length) * 100))}% ({this.state.constitutionParty})</div>
-                    <div>Reform: {(Math.floor((this.state.reformParty / this.state.users.length) * 100))}% ({this.state.reformParty})</div>
-                    <div>Legal Marijuana: {(Math.floor((this.state.legalMarijuanaNowParty / this.state.users.length) * 100))}% ({this.state.legalMarijuanaNowParty})</div>
-                    <div>Socialist Equality: {(Math.floor((this.state.socialistEqualityParty / this.state.users.length) * 100))}% ({this.state.socialistEqualityParty})</div>
-                    <div>Justice: {(Math.floor((this.state.justiceParty / this.state.users.length) * 100))}% ({this.state.justiceParty})</div>
-                  
-                    <div>Other: {(Math.floor((this.state.otherParty / this.state.users.length) * 100))}% ({this.state.otherParty})</div>
-
-                  </div>
-                </div>
-
-              </div>
-  
-            </div>
-  
-          </div>
-  
-          <div className="col-12 col-md-8 mt-2 mt-md-0">
-  
-            <div className="table-responsive">
-              <table className="table table-sm table-bordered bg-white">
-                <thead className="thead-dark">
-                  <tr>
-                    {/* <th scope="col">User ID</th> */}
-                    <th scope="col">Name</th>
-                    <th scope="col">Stripe</th>
-                    <th scope="col">Membership</th>
-                    <th scope="col">State</th>
-                    <th scope="col">Party</th>
-                    <th scope="col">Outset</th>
-                    <th scope="col">Admin</th>
-                    <th scope="col">Dev</th>
-                    <th scope="col">Writer</th>
-                    <th scope="col">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-    
-                  {this.state.users.map(user => (
-    
-                    <tr key={user._id}>
-                      {/* <th scope="row">{user._id}</th> */}
-                      {/* <td>{`${user.first_name} ${user.last_name}`}</td> */}
-                      <td>
-                        <img alt="" className="profile-photo" style={{borderRadius: '100px'}} width="100%" height="100%" src={`https://articles-website.s3.amazonaws.com/profile_photos/${user._id}.jpg` || ''}/>
-                        <span style={{width: '150px', display: 'inline-block'}}>{user.first_name} {user.last_name}</span> <span className="badge badge-light">{user._id}</span>
-                      </td>
-
-                      <td>{user.stripe?.customer_id === undefined ? <span>No<span onClick={() => this.createCustomer(user._id)} className="btn btn-sm btn-articles-light">Create</span></span> : 'Yes'}</td>
-
-                      <td>
-                        <span className="badge badge-danger">No</span>
-                        <span onClick={() => this.createCustomer(user._id, user.email)} className="badge badge-dark ml-2">Edit</span>
-                      </td>
-
-                      <td>{user.address.state}</td>
-                      <td>{user.political?.party || 'None'}</td>
-                      <td>{user.outset === true ? 'True' : 'False'}</td>
-                      <td>{user.roles?.isAdmin === true ? <div onClick={() => this.toggleRole(user._id, 'isAdmin', false )} className="badge badge-danger">True</div> : <div onClick={() => this.toggleRole(user._id, 'isAdmin', true )} className="badge badge-success">False</div>}</td>
-                      <td>{user.roles?.isDev === true ? <div onClick={() => this.toggleRole(user._id, 'isDev', false )} className="badge badge-danger">True</div> : <div onClick={() => this.toggleRole(user._id, 'isDev', true )} className="badge badge-success">False</div>}</td>
-                      <td>{user.roles?.isWriter === true ? <div onClick={() => this.toggleRole(user._id, 'isWriter', false )} className="badge badge-danger">True</div> : <div onClick={() => this.toggleRole(user._id, 'isWriter', true )} className="badge badge-success">False</div>}</td>
-                      <td><ConfirmDelete afterConfirm={() => this.removeUser(user._id)}></ConfirmDelete></td>
-                    </tr>
-                    
-                  ))}
-    
-                </tbody>
-              </table>
-            </div>
-  
-          </div>
-          
         </div>
 
       </div>
