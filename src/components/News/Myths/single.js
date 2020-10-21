@@ -6,7 +6,7 @@ import * as ROUTES from '../../../constants/routes'
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 
-class Issue extends React.Component {
+class Myth extends React.Component {
   constructor(props) {
     super(props);
 
@@ -37,11 +37,11 @@ class Issue extends React.Component {
       this.loadNewsByUrl(this.props.match.params.id);
     }
 
-    self.interval = setTimeout(() => self.setState({expandHero: false}), 1000);
+    // self.interval = setTimeout(() => self.setState({expandHero: false}), 1000);
   }
 
   componentWillUnmount() {
-    clearTimeout(this.interval);
+    // clearTimeout(this.interval);
   }
 
   change() {
@@ -77,150 +77,69 @@ class Issue extends React.Component {
 
   render() {
 
-    const {loading, news_notes} = this.state;
-
-    // news_notes.replace(/(\r\n|\n|\r)/gm, "")
+    // const {loading, news_notes} = this.state;
 
     return (
       <div className="myths-page">
-        {loading ?
-        <div className="alert alert-danger">Loading Issue - {this.props.match.params.id}</div>
-        :
-        <div className="container single mt-5">
 
-          <div className="info-bar">
+        <div className="container">
+
+          <div className="myth">
 
             <div className="breadcrumbs">
+              <Link to={ROUTES.NEWS}>News</Link>
+              <i className="fas fa-arrow-alt-circle-right mr-0"></i>
+              <Link to={ROUTES.MYTHS}>Myths</Link>
+            </div>
+            
+            <img src={this.state.hero_url} alt="" className={"thin-img"}/>
 
-              <i onClick={() => this.props.history.goBack()} className="back-button fas fa-chevron-circle-left mr-3" aria-hidden="true"></i>
-
-              <Link to={ROUTES.NEWS}>
-                <span className="articles-breadcrumb mr-2">
-                  <i className="fas fa-newspaper" aria-hidden="true"></i>
-                  News 
-                </span>
-              </Link>
-
-              <span className="icon"><i className="fas fa-angle-right"></i></span>
-
-              <Link to={ROUTES.MYTHS}>
-                <span className="articles-breadcrumb active">
-                  <i className="fas fa-ghost" aria-hidden="true"></i>
-                  Myths
-                </span>
-              </Link>
-
+            <div className={"mb-3 border border-dark p-2 " + (this.props.user?.roles?.isWriter ? '' : 'd-none')}>
+              <Link to={`${ROUTES.ADMIN_NEWS}/${this.state._id}`}><button className="btn btn-articles-light" onClick={() => ''}>Edit Myth</button></Link>
+              <small className="d-block">You are seeing this because you are a writer</small>
             </div>
 
-            <div className="search">
-              <input type="text" placeholder="Search"/>
-              <i className="icon fas fa-ghost" aria-hidden="true"></i>
-              <i className="button fas fa-chevron-circle-right" aria-hidden="true"></i>
+            <h3 className="title">{this.state.news_title}</h3>
+
+            <div className="date">
+              <div>Published: {moment(this.state.news_date).format("LLL")}</div>
+              <div>Last Updated: {moment(this.state.last_update).format("LLL")}</div>
             </div>
+
+            <div style={{marginBottom: '0.5rem'}}>At this time our news content is still in development. We have many placeholders where content will be placed after it is done being written and researched.</div>
+
+            <div className="content-text" style={{whiteSpace: 'pre-wrap'}} dangerouslySetInnerHTML={{__html: this.state?.news_notes}}></div>
 
           </div>
 
-          <div className="myth-container">
+          <div className="sidebar">
+            <button className="btn btn-articles-light w-100">Share</button>
 
-            <div className="sidebar">
-              <h5>Other Myths</h5>
-              <div className="other-myths">
-                {this.props.myths.myths.map((myth) => (
-                  
-                  (
-                    myth.url === this.state.url ? 
-                    null
-                    :
-                    <Link onClick={() => (this.loadNewsByUrl(myth.url))} to={ROUTES.MYTHS + '/' + myth.url}>
-                      <div className="myth">
-                        <span>{myth.news_title}</span>
-                        <div className="slide-down">
-                          {moment(myth.news_date).format("LL")}
-                        </div>
-                      </div>
-                    </Link>
-                  )
-
-                ))}
-              </div>
+            <div className="related">
+              <h5 className="title">Related Stories</h5>
+              <div className="news-card"></div>
+              <div className="count">1/5</div>
             </div>
 
-            <div className="content">
-              <h3 className="title">{this.state.news_title}</h3>
-
-              <div className="author-block">
-                    <Link to={'/reports/employees/42'}>
-                      <div className="photo">
-                        <img src="https://bethanychurch.org.uk/wp-content/uploads/2018/09/profile-icon-png-black-6.png" alt=""/>
-                      </div>
-                    </Link>
-                    <div className="info">
-                      <div className="name">Joey Giusto</div>
-                      <div className="date">{moment(this.state.news_date).format("LLL")}</div>
-                    </div>
-              </div>
-
-              <div onClick={() => this.setState({expandHero: !this.state.expandHero})} className="hero">
-                <img src={this.state.hero_url} alt="" className={"thin-img " + (this.state.expandHero ? 'expand' : '')}/>
-                <div className="credit">Source</div>
-              </div>
-
-              
-
-              <div className="content-text" style={{whiteSpace: 'pre-wrap'}} dangerouslySetInnerHTML={{__html: this.state?.news_notes?.replace('<break>', '<div className="alert alert-danger my-3">Testing Break</div>').replace(/(\r\n|\n|\r)/gm, "")}}></div>
+            <div className="related">
+              <h5 className="title">Related Issues</h5>
+              <div className="news-card"></div>
+              <div className="count">1/5</div>
             </div>
 
-          </div>
-
-          {/* <div className="link" onClick={() => this.props.history.goBack()}>{String.fromCharCode(11148)} Back to Home</div> */}
-
-          <div className="card d-none">
-
-            <h3 className="card-header">{this.state.news_title}</h3>
-
-            <img src="https://media.nationalgeographic.org/assets/photos/cc2/bba/cc2bbae1-0699-45b9-b86e-a03a23b28077.jpg" alt="" className="thin-img"/>
-
-            <div className="card-body">
-              <div style={{whiteSpace: 'pre-wrap'}} dangerouslySetInnerHTML={{__html: this.state?.news_notes?.replace('<break>', '<div className="alert alert-danger my-3">Testing Break</div>').replace(/(\r\n|\n|\r)/gm, "")}}>
-                {/* { dangerouslySetInnerHTML={{__html: this.state?.news_notes?} } */}
-                {/* {this.state?.news_notes?.replace('<break>', '<div className="alert alert-danger">Test</div>')} */}
-              </div>
-              {/* <div className="w-100" style={{background: this.state.data.photoExtra}}>
-                <img src={this.state.data.photo} className="img-fluid" alt=""/>
-              </div> */}
-              {/* <small className="d-block">Photo Extra Info: {this.state.data.photoExtra}</small> */}
-              {/* <button onClick={() => this.props.history.goBack()} className="btn btn-articles-light">Go Back</button> */}
+            <div className="related">
+              <h5 className="title">Related Proposals</h5>
+              <div className="news-card"></div>
+              <div className="count">1/5</div>
             </div>
           </div>
+
         </div>
-        }
+
       </div>
     )
   }
 }
-
-// const Issue = () => (
-//   <div className='container issues-page text-center'>
-
-
-
-//     <div className="mt-3">
-//       <h1>Issues</h1>
-//       <p>Overview of the most pressing issues and status updates on them. </p>
-//       <p>Unlike normal stories </p>
-//       {/* <p>Monday - blank - Tuesday - blank - Wednesday - blank</p> */}
-//     </div>
-
-//     <div className="row mb-5">
-
-//     </div>
-
-//   </div>
-// );
-
-// const Issue = withFirebase(IssueBase);
-
-// export default withRouter(Issue);
 
 const mapStateToProps = state => ({
   auth: state.auth,
@@ -232,5 +151,4 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  // { logoutUser, setUserDetails }
-)(withRouter(Issue));
+)(withRouter(Myth));

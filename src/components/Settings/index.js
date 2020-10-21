@@ -20,6 +20,8 @@ import {
   getLatLng,
 } from 'react-places-autocomplete';
 
+import { StepOneProfilePhoto } from '../Outset/StepOne'
+
 import * as ROUTES from '../../constants/routes';
 import { logoutUser } from "../../actions/authActions";
 import { setUserDetails } from "../../actions/authActions";
@@ -1297,13 +1299,15 @@ class Settings extends Component {
 
                 <div className="label">PHOTO</div>
 
-                <div className="info">
-                  <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${this.props.auth.user.id}.jpg`} alt=""/>
+                <div className="info profile-photo">
+                  {/* <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${this.props.auth.user.id}.jpg`} alt=""/>
+                  <div className="upload-notification">Uploading</div> */}
+                  <StepOneProfilePhoto changeFocus={() => console.log("Prevent Crash")} user_id={this.props.user_id}/>
                 </div>
 
-                <div className="arrow"><i className="far fa-hand-point-right"></i></div>
+                {/* <div className="arrow"><i className="far fa-hand-point-right"></i></div> */}
 
-                <input className="profile-photo" onChange={this.onChangeProfile} accept=".jpg" type="file" name="myfile" />
+                {/* <input className="profile-photo" onChange={this.onChangeProfile} accept=".jpg" type="file" name="myfile" /> */}
 
               </div>
 

@@ -253,23 +253,14 @@
         }
   
         .details {
-          margin-top: 1rem;
+          margin-top: 0.5rem;
           display: flex;
           flex-direction: row;
 
           @include media-breakpoint-up(md) {
-            margin-top: 2rem;
+            margin-top: 0.5rem;
           }
-  
-          img {
-            width: 80px;
-            height: 80px;
-            border-radius: 30px;
 
-            &:hover {
-              box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.2);
-            }
-          }
   
           .label {
             font-size: 13px;
@@ -280,12 +271,8 @@
             font-size: 15px;
           }
   
-          .author {
-            margin-left: 1rem;
-          }
-  
           .published {
-            margin-left: 1rem;
+            // margin-left: 1rem;
           }
   
           .updated {
@@ -294,6 +281,41 @@
   
         }
 
+        .subscribe {
+          margin-top: 1rem;
+        }
+
+        .authors {
+          margin-top: 1rem;
+
+          .label {
+            font-size: 13px;
+            font-weight: bold;
+          }
+
+          .author {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            
+            img {
+              width: 40px;
+              height: 40px;
+              border-radius: 3px;
+  
+              &:hover {
+                box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.2);
+              }
+            }
+
+            .name {
+              margin-left: 0.5rem;
+            }
+          }
+  
+        }
+          
+        
         .last-viewed-tag-wrap-container {
           margin-top: 1rem;
           display: flex;

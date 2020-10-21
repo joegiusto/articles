@@ -27,6 +27,7 @@ const initial_state = {
 
   news_tags: [],
   proposals: [],
+  authors: [],
 
   url: '',
   hero_url: "",
@@ -37,6 +38,7 @@ const initial_state = {
 
   tagSelectOpen: false,
   proposalSelectOpen: false,
+  authorsSelectOpen: false,
 
   submitting_data: false,
   submitting_error: false,
@@ -179,6 +181,22 @@ class Add extends Component {
 
   }
 
+  addAuthor(id) {
+
+    if ( !contains(id, this.state.authors) ) {
+      this.setState({ 
+        authors: [...this.state.authors, id ] 
+      })
+    }
+
+    function contains(passed_id, list) {
+      return list.some(function(elem) {
+           return elem === passed_id
+      })
+    }
+
+  }
+
   removeProposal(tagObj) {
 
     if ( contains(tagObj, this.state.proposals) ) {
@@ -210,6 +228,24 @@ class Add extends Component {
     function contains(obj, list) {
       return list.some(function(elem) {
            return elem._id === obj._id
+      })
+    }
+
+  }
+
+  removeAuthor(id) {
+
+    if ( contains(id, this.state.authors) ) {
+      this.setState({ 
+        authors:  this.state.authors.filter(function( obj ) {
+          return obj !== id;
+        }) 
+      })
+    }
+
+    function contains(passed_id, list) {
+      return list.some(function(elem) {
+           return elem === passed_id
       })
     }
 
@@ -606,6 +642,72 @@ class Add extends Component {
           </div>
 
           <div className="col-12 col-md-6">
+
+            <div className="form-group tags-group">
+
+                <label for="news_title">Authors:</label>
+
+                <div className="preview form-control">
+
+                  <div className="author">
+                    {this.state.authors.length > 0 ?
+                    this.state.authors.map((author) => {
+                      const fullAuthor = this.props.authors.find((propAuthor) => propAuthor._id === author)
+
+                      return (
+                        <div onClick={() => this.removeAuthor(author)} className="badge badge-dark d-inline-block mr-1">
+                          {`${fullAuthor?.first_name} ${fullAuthor?.last_name }`|| author}
+                          {/* {console.log(  )} */}
+                        </div>
+                      )
+                    })
+                    :
+                    <div className="badge badge-danger d-inline-block">No Authors</div>
+                    }
+                    
+                  </div>
+                  
+                  <div className="edit" onClick={() => {this.setState({authorsSelectOpen: !this.state.authorsSelectOpen})}}>
+                    <i className="fas fa-file-signature"></i>
+                  </div>
+
+                  {this.state.authorsSelectOpen ? 
+                  <div className="select noselect">
+
+                    {/* <div className="form-group">
+                      <input 
+                        type="text" 
+                        className="form-control" 
+                        id="news_tag_search"
+                        name="news_tag_search" 
+                        aria-describedby=""
+                        value={this.state.news_tag_search}
+                        onChange={this.handleChange}
+                        placeholder="Search Tags"
+                      />
+                    </div> */}
+
+                    {/* Replace this with a map of the database tags */}
+                    {this.props.authors !== [] ?
+                    this.props.authors.map((author) => (
+                      <div onClick={() => this.addAuthor(author._id)} className="badge badge-dark mr-1">{author.first_name} {author.last_name}</div>
+                    ))
+                    :
+                      <div className="badge badge-warning mr-1">Loading</div>
+                    }                  
+                  </div>
+                  :
+                  null
+                  }
+                  
+
+                </div>
+
+            </div>
+
+          </div>
+
+          <div className="col-12 col-md-6 d-none">
             <div className="form-group">
               <label for="visible">Author:</label>
               <select className="form-control" name="author" id="author" value={this.state.author} onChange={this.handleChange}>

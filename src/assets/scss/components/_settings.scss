@@ -369,10 +369,10 @@
       .info {
         z-index: 11;
 
-        img {
-          height: 100px;
-          width: 100px;
-        }
+        // img {
+        //   height: 100px;
+        //   width: 100px;
+        // }
 
         .last-changed, .email-note {
           font-size: 0.8rem;
@@ -394,6 +394,20 @@
           margin-right: 0.5rem;
           border-radius: 100px;
           background-color: red;
+        }
+      }
+
+      .profile-photo {
+        position: relative;
+
+        .upload-notification {
+          position: absolute;
+          left: 50%;
+          bottom: 5px;
+          transform: translateX(-50%);
+          font-size: 14px;
+          background-color: white;
+          padding: 0.1rem 0.25rem;
         }
       }
 

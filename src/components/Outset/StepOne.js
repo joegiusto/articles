@@ -90,7 +90,7 @@ class StepOneProfilePhoto extends Component {
 
   render() {
     return (
-      <div className="aws-profile-photo-test">
+      <div className="aws-profile-photo-edit">
 
           <div className="upload-photo-wrap mr-1">
 
@@ -277,3 +277,5 @@ const StepOne = (props) => (
 )
 
 export default StepOne;
+
+export { StepOneProfilePhoto }

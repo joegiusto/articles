@@ -20,7 +20,7 @@ module.exports = (app, db) => {
       myobj.visible = false
     }
 
-    const allowedKeys = ['news_type', 'news_title', 'news_notes', 'news_date', 'news_tags', "url", "hero_url", "last_update", "news_tagline", "visible", "author", "proposals", 'internal_notes'];
+    const allowedKeys = ['news_type', 'news_title', 'news_notes', 'news_date', 'news_tags', "url", "hero_url", "last_update", "news_tagline", "visible", "author", "authors", "proposals", 'internal_notes'];
 
     myobj = Object.keys(myobj)
     .filter(key => allowedKeys.includes(key))

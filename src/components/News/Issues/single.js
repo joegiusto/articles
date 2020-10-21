@@ -5,8 +5,9 @@ import { connect } from "react-redux";
 import moment from 'moment'
 import TextareaAutosize from 'react-textarea-autosize';
 import { usePopper } from 'react-popper';
+// import {  } from "../../actions/siteActions";
 
-import { updateSubscriptionToIssue } from '../../../actions/siteActions'
+import { updateSubscriptionToIssue, removeSubscription, addSubscription } from '../../../actions/siteActions'
 import * as ROUTES from '../../../constants/routes'
 
 const SortPopper = (props) => {
@@ -251,13 +252,6 @@ class Issue extends React.Component {
   
                 <div className="details">
   
-                  <Link to={ROUTES.EMPLOYEES + '/5e90cc96579a17440c5d7d52'}><img src="https://articles-website.s3.amazonaws.com/profile_photos/5e90cc96579a17440c5d7d52.jpg" alt=""/></Link>
-  
-                  <div className="author">
-                    <div className="label">Author</div>
-                    <Link to={ROUTES.EMPLOYEES + '/5e90cc96579a17440c5d7d52'}><div>Joey Giusto</div></Link>
-                  </div>
-  
                   <div className="published">
                     <div className="label">Published</div>
                     <div className="date">{moment(this.state.news_date).format("LL")}</div>
@@ -269,8 +263,40 @@ class Issue extends React.Component {
                   </div>
                 </div>
 
+                {
+                this.props.user_subscriptions?.filter(sub => sub._id === this.state._id).length > 0 ?
                 <div className="subscribe">
-                  
+                  <button onClick={() => this.props.removeSubscription(this.state._id)} style={{opacity: '0.5'}} className="btn btn-articles-light">Subscribed</button>
+                  <small className="d-block">0 others subscribed to this issue</small>
+                </div>
+                :
+                <div className="subscribe">
+                  <button onClick={() => this.props.addSubscription(this.state._id)} className="btn btn-articles-light">Subscribe</button>
+                  <small className="d-block">Join 0 others subscribed to this issue</small>
+                </div>
+                }
+
+                {/* <div className="subscribe">
+                  <button className="btn btn-articles-light">Subscribe</button>
+                  <small className="d-block">Join 0 others subscribed to this issue</small>
+                </div> */}
+
+                <div className="authors">
+
+                <div className="label">Author{this.state.authors?.length > 1 ? 's' : ''}</div>
+
+                  {this.state.authors?.map(author => 
+                  <div className="author">
+                    <Link to={ROUTES.EMPLOYEES + `/${author}`}><img src={`https://articles-website.s3.amazonaws.com/profile_photos/${author}.jpg`} alt=""/></Link>
+                    <Link to={ROUTES.EMPLOYEES + `/${author}`}><div className="name">Joey Giusto</div></Link>
+                  </div>
+                  )}
+
+                  {/* <div className="author">
+                    <Link to={ROUTES.EMPLOYEES + '/5e90cc96579a17440c5d7d52'}><img src="https://articles-website.s3.amazonaws.com/profile_photos/5e90cc96579a17440c5d7d52.jpg" alt=""/></Link>
+                    <Link to={ROUTES.EMPLOYEES + '/5e90cc96579a17440c5d7d52'}><div className="name">Joey Giusto</div></Link>
+                  </div> */}
+
                 </div>
 
                 <div className="last-viewed-tag-wrap-container">
@@ -313,7 +339,7 @@ class Issue extends React.Component {
 
             <div className="content ">
 
-              <div className={"mb-3 d-inline-block border border-dark p-2 " + (this.props.user?.roles?.isWriter ? '' : 'd-none')}>
+              <div className={"mb-3 border border-dark p-2 " + (this.props.user?.roles?.isWriter ? '' : 'd-none')}>
                 <Link to={`${ROUTES.ADMIN_NEWS}/${this.state._id}`}><button className="btn btn-articles-light" onClick={() => ''}>Edit Issue</button></Link>
                 <small className="d-block">You are seeing this because you are a writer</small>
               </div>
@@ -583,12 +609,13 @@ const mapStateToProps = state => ({
   stories: state.stories,
   issues: state.issues,
   myths: state.myths,
-  errors: state.errors
+  errors: state.errors,
+  user_subscriptions: state.auth.user_details.subscriptionsFetched
 });
 
 export default connect(
   mapStateToProps,
-  { updateSubscriptionToIssue }
+  { updateSubscriptionToIssue, removeSubscription, addSubscription }
 )(withRouter(Issue));
 
 class Comment extends React.Component {
