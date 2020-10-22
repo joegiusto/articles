@@ -5,8 +5,8 @@ import { Link, withRouter } from 'react-router-dom'
 function Footer(props) {
   const has =  props.location.pathname.toString().includes("/admin/news") 
 
-  console.log(props.location)
-  console.log(`Has is equal to ${has}`)
+  // console.log(props.location)
+  // console.log(`Has is equal to ${has}`)
 
   return (
     <footer className={"site-footer " + (props.location.pathname === '/messages' || props.location.pathname === '/outset' || has ? 'd-none' : '')}>

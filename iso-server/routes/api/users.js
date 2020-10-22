@@ -35,9 +35,11 @@ function sendNewUserMessage(user) {
     }
   )
   .then(function (response) {
-    // console.log(response)
+    // console.log(JSON.stringify(response.data))
+    console.log(response)
   })
   .catch(function (error) {
+    console.log(JSON.stringify(error))
     console.log(error);
   });
 }
@@ -114,16 +116,6 @@ app.post("/register", async (req, res) => {
               await sendVerificationEmail(user, req, res);
 
               sendNewUserMessage(user)
-
-              // sgMail
-              // .send(msg)
-              // .then(() => {}, error => {
-              //   console.error(error);
-            
-              //   if (error.response) {
-              //     console.error(error.response.body)
-              //   }
-              // });
 
               console.log(user._id)
               console.log(user.email)
