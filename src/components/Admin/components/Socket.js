@@ -29,7 +29,7 @@ class Sockets extends Component {
   componentDidMount() {
     socket = socketIOClient(ENDPOINT);
 
-    this.props.setLoaction(this.props.tabLocation);
+    this.props.setLocation(this.props.tabLocation);
     const self = this;
     
     socket.on('online', function(msg){
@@ -62,7 +62,7 @@ class Sockets extends Component {
   }
 
   componentWillUnmount() {
-    this.props.setLoaction('');
+    this.props.setLocation('');
     socket.disconnect();
   }
 

@@ -85,7 +85,7 @@ class Products extends Component {
   }
 
   componentDidMount() {
-    this.props.setLoaction(this.props.tabLocation);
+    this.props.setLocation(this.props.tabLocation);
     const self = this;
 
     axios.get('/api/getProducts')
@@ -143,7 +143,7 @@ class Products extends Component {
   }
 
   componentWillUnmount() {
-    this.props.setLoaction('');
+    this.props.setLocation('');
   }
 
   renderType(type) {

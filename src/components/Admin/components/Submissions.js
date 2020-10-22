@@ -12,7 +12,7 @@ class Submissions extends Component {
   }
 
   componentDidMount() {
-    this.props.setLoaction(this.props.tabLocation);
+    this.props.setLocation(this.props.tabLocation);
     const self = this;
 
     axios.get('/api/getSubmissions')
@@ -35,7 +35,7 @@ class Submissions extends Component {
   }
 
   componentWillUnmount() {
-    this.props.setLoaction('');
+    this.props.setLocation('');
   }
 
   render() {

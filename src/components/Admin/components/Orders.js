@@ -33,7 +33,7 @@ class Orders extends Component {
 
   componentDidMount() {
     const self = this;
-    this.props.setLoaction(this.props.tabLocation);
+    this.props.setLocation(this.props.tabLocation);
 
     // this.setState({
     //   loading: true
@@ -213,7 +213,7 @@ class Orders extends Component {
     // const needs_shipping = this.state.needs_shipping;
 
     return (
-      <div className="admin-orders">
+      <div className="admin-page admin-orders">
 
         <div className={"tracking-code-popup " + (this.state.tracking_code_popup ? 'active' : '')}>
 
@@ -281,7 +281,7 @@ class Orders extends Component {
 
         </div>
 
-        <div className="orders w-75">
+        <div className="main-panel orders w-75">
 
           <div className="table-filters mb-3">
             <button onClick={() => this.setState({table_tab: 'Awaiting Shipment'})} className={"btn btn-articles-light " + (this.state.table_tab === 'Awaiting Shipment' ? 'alt' : '')}>Awaiting Shipment</button>

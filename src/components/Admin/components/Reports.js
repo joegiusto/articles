@@ -9,7 +9,10 @@ class Reports extends Component {
   
     this.state = {
       loading: false,
-      reports: [],
+      reports: {
+        unresponded: [],
+        responded: []
+      },
       filter: 'unresponded',
       filterFormula: (obj) => obj.responses?.length === 0 || obj.responses?.length === undefined
     };
@@ -18,7 +21,7 @@ class Reports extends Component {
 
   componentDidMount() {
     const self = this;
-    this.props.setLoaction(this.props.tabLocation);
+    this.props.setLocation(this.props.tabLocation);
 
     this.setState({
       loading: true
@@ -32,7 +35,10 @@ class Reports extends Component {
       console.log(response)
 
       self.setState({ 
-        reports: response.data,
+        reports: {
+          unresponded: response.data.filter( (obj) => obj.responses?.length === 0 || obj.responses?.length === undefined ),
+          responded: response.data.filter( (obj) => obj.responses?.length > 0 ),
+        },
         loading: false
       });
 
@@ -102,17 +108,17 @@ class Reports extends Component {
   render() {
 
     return (
-      <div className="admin-reports">
+      <div className="admin-page admin-reports">
 
         <div className="side-panel">
 
           <div className="card">
             <div className="card-header">Status</div>
             <div className="card-body">
-              <div>Total: {this.state.reports.length}</div>
+              <div>Total: {(this.state.reports.unresponded.length + this.state.reports.responded.length)}</div>
               <hr/>
-              <div>Unresponded: {this.state.reports.filter((obj) => obj.responses?.length > 0).length}</div>
-              <div>Responded: {this.state.reports.filter((obj) => obj.responses?.length === 0 || obj.responses?.length === undefined).length}</div>
+              <div>Unresponded: {this.state.reports.unresponded.length}</div>
+              <div>Responded: {this.state.reports.responded.length}</div>
             </div>
           </div>
 
@@ -120,21 +126,58 @@ class Reports extends Component {
 
         <div className="reports">
 
-          {/* <h5>Reports ({this.state.reports.length})</h5> */}
           <div className="filters mb-3">
-            <button onClick={() => this.setState({filter: 'unresponded', filterFormula: (obj) => obj.responses?.length === 0 || obj.responses?.length === undefined})} className={"btn btn-articles-light " + (this.state.filter === 'unresponded' ? 'alt' : '')}>Unresponded</button>
-            <button onClick={() => this.setState({filter: 'responded', filterFormula: (obj) => obj.responses?.length > 0 })} className={"btn btn-articles-light " + (this.state.filter === 'responded' ? 'alt' : '')}>Responded</button>
+            <button onClick={() => this.setState({filter: 'unresponded'})} className={"btn btn-articles-light " + (this.state.filter === 'unresponded' ? 'alt' : '')}>Unresponded</button>
+            <button onClick={() => this.setState({filter: 'responded'})} className={"btn btn-articles-light " + (this.state.filter === 'responded' ? 'alt' : '')}>Responded</button>
           </div>
 
-          {this.state.reports
-          .filter( this.state.filterFormula )
+          {/* Unresponded Reports */}
+          {this.state.filter === 'unresponded' ?
+
+          this.state.reports.unresponded.length > 0 ?
+
+          this.state.reports.unresponded
           .map((report) => (
             <Report 
             report={report}
             respondReport={this.respondReport}
             deleteReport={this.deleteReport}
             />
-          ))}
+          ))
+
+          :
+
+          <div className="alert alert-primary">No Reports to view, check back later!</div>
+
+          :
+
+          null
+
+          }
+
+          {/* Responded Reports */}
+          {this.state.filter === 'responded' ?
+
+          this.state.reports.responded.length > 0 ?
+
+          this.state.reports.responded
+          .map((report) => (
+            <Report 
+            report={report}
+            respondReport={this.respondReport}
+            deleteReport={this.deleteReport}
+            />
+          ))
+
+          :
+
+          <div className="alert alert-danger">There is always responded reports to view so this is very bad!</div>
+
+          :
+
+          null
+
+          }
 
         </div>
 

@@ -1,5 +1,7 @@
 import React from 'react';
 import moment from 'moment';
+import Card from 'react-bootstrap/Card';
+import Accordion from 'react-bootstrap/Accordion';
 
 class StepFive extends React.Component {
   render() {
@@ -12,8 +14,28 @@ class StepFive extends React.Component {
               <h5>Privacy Policy</h5>
   
               <div className="text">
-                We respect your privacy and abide by all the rules and regualations set fourth in the <a href="">The Gramm-Leach-Bliley Act</a>, <a href="">COPPA</a>, <a href="">CalOPPA</a>, <a href="">SOPIPA</a>, <a href="">Content Eraser Law</a>.
+                We respect your privacy and abide by all the rules and regulations set fourth in the <a href="https://www.ftc.gov/enforcement/rules/rulemaking-regulatory-reform-proceedings/childrens-online-privacy-protection-rule" target="_blank" rel="noopener noreferrer">COPPA</a>, <a href="https://oag.ca.gov/privacy/ccpa" target="_blank" rel="noopener noreferrer">CCPA</a>, <a href="https://www.dwt.com/insights/2014/11/californias-online-eraser-law-for-minors-to-take-e#:~:text=California%20S.B.,posted%20on%20the%20operator's%20website." target="_blank" rel="noopener noreferrer">Content Eraser Law</a> as well as our own Privacy Policy.
               </div>
+
+              <Accordion className="mt-3">
+
+                <Card>
+                  <Accordion.Toggle as={Card.Header} eventKey="0">
+                    <div className="d-flex justify-content-between">
+                      <div>View</div>
+                      <div>Click to Expand</div>
+                    </div>
+                  </Accordion.Toggle>
+                  <Accordion.Collapse eventKey="0">
+                    <Card.Body>
+
+                      We are still in beta and our Privacy Policy is not yet complete, it will be placed here before launch.
+
+                    </Card.Body>
+                  </Accordion.Collapse>
+                </Card>
+
+              </Accordion>
   
               <div className="accept-row">
                 <label>I accept</label>
@@ -32,8 +54,28 @@ class StepFive extends React.Component {
               <h5>Cookie Usage</h5>
   
               <div className="text">
-                To make this site work properly, we sometimes place small data files called cookies on your device. Most big websites do this too.
+                To make this site work properly, we sometimes place small data files called cookies on your device. Almost all websites do this.
               </div>
+
+              <Accordion className="mt-3">
+
+                <Card>
+                  <Accordion.Toggle as={Card.Header} eventKey="0">
+                    <div className="d-flex justify-content-between">
+                      <div>View</div>
+                      <div>Click to Expand</div>
+                    </div>
+                  </Accordion.Toggle>
+                  <Accordion.Collapse eventKey="0">
+                    <Card.Body>
+
+                      We are still in beta and our Cookie Usage is not yet complete, it will be placed here before launch.
+
+                    </Card.Body>
+                  </Accordion.Collapse>
+                </Card>
+
+              </Accordion>
   
               <div className="accept-row">
                 <label>I accept</label>

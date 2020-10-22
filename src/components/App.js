@@ -176,8 +176,9 @@ class AppBase extends Component {
               <Route path={ROUTES.OUTSET} component={OutsetPage} />
   
               <PrivateRoute path={ROUTES.SETTINGS_ACCOUNT} component={SettingsPage} />
-              <PrivateRoute path={ROUTES.SETTINGS_SUBSCRIPTION} component={SettingsPage} />
+              <PrivateRoute path={ROUTES.SETTINGS_MEMBERSHIP} component={SettingsPage} />
               <PrivateRoute path={ROUTES.SETTINGS_BILLING} component={SettingsPage} />
+              <PrivateRoute path={ROUTES.SETTINGS_EMPLOYEE} component={SettingsPage} />
               
               <Route exact path={ROUTES.HOME} component={HomePage} />
               <Route path={ROUTES.HOME_OLD} component={HomePageOld} />
@@ -246,19 +247,16 @@ class AppBase extends Component {
 
               <Route exact path={ROUTES.ADMIN_USERS} component={AdminPage} />
               <Route path={ROUTES.ADMIN_USER_DETAILS} component={AdminPage} />
-
               <Route exact path={ROUTES.ADMIN_NEWS} component={AdminPage} />
               <Route path={ROUTES.ADMIN_NEWS_DETAILS} component={AdminPage} />
-
               <Route exact path={ROUTES.ADMIN_PRODUCTS} component={AdminPage} />
               <Route path={ROUTES.ADMIN_PRODUCT_DETAILS} component={AdminPage} />
-
               <Route exact path={ROUTES.ADMIN_SUBMISSIONS} component={AdminPage} />
               <Route path={ROUTES.ADMIN_SUBMISSION_DETAILS} component={AdminPage} />
-
               <Route exact path={ROUTES.ADMIN_DONATIONS} component={AdminPage} />
               <Route exact path={ROUTES.ADMIN_EXPENSES} component={AdminPage} />
               <Route exact path={ROUTES.ADMIN_SOCKET} component={AdminPage} />
+              <Route exact path={ROUTES.ADMIN_COMMENTS} component={AdminPage} />
               <Route exact path={ROUTES.ADMIN_REPORTS} component={AdminPage} />
               <Route exact path={ROUTES.ADMIN_ORDERS} component={AdminPage} />
               <Route exact path={ROUTES.ADMIN_ADS} component={AdminPage} />

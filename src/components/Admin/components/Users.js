@@ -71,7 +71,7 @@ class Users extends Component {
 
   componentDidMount() {
     const self = this;
-    this.props.setLoaction(this.props.tabLocation);
+    this.props.setLocation(this.props.tabLocation);
 
     axios.post('/api/secure/getUsers')
     .then(function (response) {
@@ -218,7 +218,7 @@ class Users extends Component {
   }
 
   componentWillUnmount() {
-    this.props.setLoaction('');
+    this.props.setLocation('');
   }
 
   // TODO - Convert this logic to server side code and use https://www.npmjs.com/package/zipcodes to build local directory as loop goes or after loop is done do one call wuth all zips to get names
@@ -314,7 +314,7 @@ class Users extends Component {
   render() {
 
     return (
-      <div className="admin-users">
+      <div className="admin-page admin-users">
 
         <div className="side-panel">
 

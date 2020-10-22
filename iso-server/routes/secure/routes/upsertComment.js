@@ -16,6 +16,7 @@ module.exports = (app, db, passport) => {
 
       $push: {
         "comments": {
+            _id: ObjectId(),
             comment: req.body.comment,
             date: new Date(),
             user_id: req.user._id

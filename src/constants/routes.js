@@ -11,8 +11,9 @@ export const OUTSET = '/outset';
 
 // Settings
 export const SETTINGS_ACCOUNT = '/settings/account';
-export const SETTINGS_SUBSCRIPTION = '/settings/subscription';
+export const SETTINGS_MEMBERSHIP = '/settings/membership';
 export const SETTINGS_BILLING = '/settings/billing';
+export const SETTINGS_EMPLOYEE = '/settings/employee';
 
 // Home
 export const HOME = '/home';
@@ -112,6 +113,7 @@ export const ADMIN_SUBMISSION_DETAILS = '/admin/submissions/:id';
 export const ADMIN_DONATIONS = '/admin/donations';
 export const ADMIN_EXPENSES = '/admin/expenses';
 export const ADMIN_SOCKET = '/admin/socket';
+export const ADMIN_COMMENTS = '/admin/comments';
 export const ADMIN_REPORTS = '/admin/reports';
 export const ADMIN_ORDERS = '/admin/orders';
 export const ADMIN_ADS = '/admin/ads';

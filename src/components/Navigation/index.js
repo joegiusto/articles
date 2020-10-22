@@ -171,14 +171,14 @@ function Menu(props) {
                   {props?.user?.photo_url === undefined ? 
                   null
                   :
-                  <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SETTINGS_ACCOUNT}><img alt="" className="" style={{borderRadius: '100px'}} width="100%" height="100%" src={`https://articles-website.s3.amazonaws.com/profile_photos/${props?.user?._id}.jpg` || ''}/></Link>
+                  <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SETTINGS_ACCOUNT}><img alt="" className="" style={{borderRadius: '0px'}} width="100%" height="100%" src={`https://articles-website.s3.amazonaws.com/profile_photos/${props?.user?._id}.jpg` || ''}/></Link>
                   }
                   <i className={props?.user?.photo_url ? '':'fas fa-question'}></i>
               </div> 
 
               <div className="profile-welcome">
 
-                <p id="nav-welcome" className="subheading-font m-0 py-0">
+                <p id="nav-welcome" className="subheading-font m-0 pl-2 py-0">
                   <span>Hello,&nbsp;
                   {!props.isAuth ? (
                   <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SIGN_IN} id='nav-sign-in'>Log In / Sign Up</Link>
@@ -188,7 +188,7 @@ function Menu(props) {
                   </span>
                 </p>
 
-                <p id="nav-member-message" className='subheading-font m-0 py-0'>
+                <p id="nav-member-message" className='subheading-font m-0 pl-2 py-0'>
                   {!props.isAuth ? (
                     <span></span>
                   ) : (
@@ -196,9 +196,7 @@ function Menu(props) {
                     <span>Member Since {moment(props.user?.sign_up_date).format("MMMM Y") || "Loading..."}</span>
                   )
                   }
-                  
                 </p>
-
 
               </div>
 

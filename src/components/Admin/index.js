@@ -18,6 +18,7 @@ import Submissions from './components/Submissions'
 import Donations from './components/Donations'
 import Expenses from './components/Expenses'
 import Sockets from './components/Socket'
+import Comments from './components/Comments'
 import Reports from './components/Reports'
 import Orders from './components/Orders'
 import Ads from './components/Ads'
@@ -39,7 +40,7 @@ const nav_links = [
 class Admin extends Component {
   constructor(props) {
   super(props);
-  this.setLoaction = this.setLoaction.bind(this)
+  this.setLocation = this.setLocation.bind(this)
   
     this.state = {
       tab: '',
@@ -52,7 +53,7 @@ class Admin extends Component {
     }
   }
 
-  setLoaction(tab) {
+  setLocation(tab) {
     this.setState({
       tab: tab
     })
@@ -69,7 +70,7 @@ class Admin extends Component {
   render() {
 
     return (
-      <div className="admin-page">
+      <div className="admin-container">
 
         <div className="tab-bar">
           <div className="container-fluid">
@@ -82,6 +83,7 @@ class Admin extends Component {
             <Link to={ROUTES.ADMIN_DONATIONS}><span className={"tab" + (this.state.tab === 'donations' ? ' active' : '')}>Donations</span></Link>
             <Link to={ROUTES.ADMIN_EXPENSES}><span className={"tab" + (this.state.tab === 'expenses' ? ' active' : '')}>Expenses</span></Link>
             <Link to={ROUTES.ADMIN_SOCKET}><span className={"tab" + (this.state.tab === 'sockets' ? ' active' : '')}>Sockets</span></Link>
+            <Link to={ROUTES.ADMIN_COMMENTS}><span className={"tab" + (this.state.tab === 'comments' ? ' active' : '')}>Comments</span></Link>
             <Link to={ROUTES.ADMIN_REPORTS}><span className={"tab" + (this.state.tab === 'reports' ? ' active' : '')}>Reports</span></Link>
             <Link to={ROUTES.ADMIN_ORDERS}><span className={"tab" + (this.state.tab === 'orders' ? ' active' : '')}>Orders</span></Link>
             <Link to={ROUTES.ADMIN_ADS}><span className={"tab" + (this.state.tab === 'ads' ? ' active' : '')}>Ads</span></Link>
@@ -97,78 +99,85 @@ class Admin extends Component {
             <Route path={ROUTES.ADMIN_USERS} render={() => <Users 
               match={this.props.match} 
               tabLocation='users' 
-              setLoaction={this.setLoaction}
+              setLocation={this.setLocation}
             ></Users>}/>
 
             <Route exact path={ROUTES.ADMIN_NEWS} render={() => <News 
               match={this.props.match} 
               tabLocation='news' 
-              setLoaction={this.setLoaction}
+              setLocation={this.setLocation}
             ></News> }/>
 
             <Route exact path={ROUTES.ADMIN_PROPOSALS} render={() => <Proposals 
               match={this.props.match} 
               tabLocation='proposals' 
-              setLoaction={this.setLoaction}
+              setLocation={this.setLocation}
             ></Proposals> }/>
 
             <Route path={ROUTES.ADMIN_NEWS_DETAILS} render={() => <News 
               match={this.props.match} 
               tabLocation='news' 
-              setLoaction={this.setLoaction}
+              setLocation={this.setLocation}
             ></News> }/>
 
             <Route path={ROUTES.ADMIN_PRODUCTS} render={() => <Products
               match={this.props.match}
               tabLocation='products'
-              setLoaction={this.setLoaction}
+              setLocation={this.setLocation}
             ></Products> }/>
 
             <Route path={ROUTES.ADMIN_SUBMISSIONS} render={() => <Submissions
               match={this.props.match}
               tabLocation='submissions'
-              setLoaction={this.setLoaction}
+              setLocation={this.setLocation}
             ></Submissions> }/>
 
             <Route exact path={ROUTES.ADMIN_DONATIONS} render={() => <Donations 
               match={this.props.match}
               tabLocation='donations'
-              setLoaction={this.setLoaction}
+              setLocation={this.setLocation}
               ></Donations>
             }/>
 
             <Route exact path={ROUTES.ADMIN_EXPENSES} render={() => <Expenses 
               match={this.props.match}
               tabLocation='expenses'
-              setLoaction={this.setLoaction}
+              setLocation={this.setLocation}
             ></Expenses> 
             }/>
 
             <Route exact path={ROUTES.ADMIN_SOCKET} render={() => <Sockets 
               match={this.props.match}
               tabLocation='sockets'
-              setLoaction={this.setLoaction}
+              setLocation={this.setLocation}
             ></Sockets> 
+            }/>
+
+            <Route exact path={ROUTES.ADMIN_COMMENTS} render={() => <Comments 
+              match={this.props.match}
+              tabLocation='comments'
+              setLocation={this.setLocation}
+            ></Comments> 
             }/>
 
             <Route exact path={ROUTES.ADMIN_REPORTS} render={() => <Reports 
               match={this.props.match}
               tabLocation='reports'
-              setLoaction={this.setLoaction}
+              setLocation={this.setLocation}
             ></Reports> 
             }/>
 
             <Route exact path={ROUTES.ADMIN_ORDERS} render={() => <Orders 
               match={this.props.match}
               tabLocation='orders'
-              setLoaction={this.setLoaction}
+              setLocation={this.setLocation}
             ></Orders> 
             }/>
 
             <Route exact path={ROUTES.ADMIN_ADS} render={() => <Ads 
               match={this.props.match}
               tabLocation='ads'
-              setLoaction={this.setLoaction}
+              setLocation={this.setLocation}
             ></Ads> 
             }/>
 

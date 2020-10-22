@@ -521,7 +521,7 @@ class OutsetBase extends React.Component {
             <div className="breif">Founded on January 8, 1828 ({moment("January 8, 1828").fromNow()}) by supporters of Andrew Jackson, making it the world's oldest active political party. Use the following links to learn more about the Democratic Party and the history of behind them.</div>
             <div className="links">
               <h5>Links</h5>
-              <a href="https://en.wikipedia.org/wiki/Democratic_Party_(United_States)" className="link">- Wikipedia</a>
+              <a href="https://en.wikipedia.org/wiki/Democratic_Party_(United_States)" target="_blank" rel="noopener noreferrer" className="link">- Wikipedia</a>
               <a href="https://democrats.org/" target="_blank" rel="noopener noreferrer" className="link">- Offical Website</a>
             </div>
           </div> 
@@ -532,7 +532,7 @@ class OutsetBase extends React.Component {
             <div className="breif">No text yet availible for the republican party, use links below to find out more.</div>
             <div className="links">
               <h5>Links</h5>
-              <a href="https://en.wikipedia.org/wiki/Republican_Party_(United_States)" className="link">- Wikipedia</a>
+              <a href="https://en.wikipedia.org/wiki/Republican_Party_(United_States)" target="_blank" rel="noopener noreferrer" className="link">- Wikipedia</a>
               <a href="https://www.gop.com/" target="_blank" rel="noopener noreferrer" className="link">- Offical Website</a>
             </div>
           </div> 
@@ -543,7 +543,7 @@ class OutsetBase extends React.Component {
             <div className="breif">Voters who votes for candidates on issues rather than on the basis of a political ideology or partisanship, a voter who does not have long-standing loyalty to, or identification with, a political party;.</div>
             <div className="links">
               <h5>Links</h5>
-              <a href="https://en.wikipedia.org/wiki/Independent_voter" className="link">- Wikipedia</a>
+              <a href="https://en.wikipedia.org/wiki/Independent_voter" target="_blank" rel="noopener noreferrer" className="link">- Wikipedia</a>
               {/* <a href="https://democrats.org/" target="_blank" rel="noopener noreferrer" className="link">- Offical Website</a> */}
             </div>
           </div> 
@@ -554,7 +554,7 @@ class OutsetBase extends React.Component {
             <div className="breif">The Green Party of the United States is a federation of Green state political parties in the United States. The party promotes green politics, specifically environmentalism; nonviolence; social justice; participatory, grassroots democracy; gender equality; LGBTQ rights; anti-war; anti-racism and ecosocialism..</div>
             <div className="links">
               <h5>Links</h5>
-              <a href="https://en.wikipedia.org/wiki/Green_party" className="link">- Wikipedia</a>
+              <a href="https://en.wikipedia.org/wiki/Green_party" target="_blank" rel="noopener noreferrer" className="link">- Wikipedia</a>
               <a href="https://www.gp.org/" target="_blank" rel="noopener noreferrer" className="link">- Offical Website</a>
             </div>
           </div> 
@@ -565,8 +565,8 @@ class OutsetBase extends React.Component {
             <div className="breif">The Libertarian Party is a political party in the United States that promotes civil liberties, non-interventionism, laissez-faire capitalism, and limiting the size and scope of government.</div>
             <div className="links">
               <h5>Links</h5>
-              <a href="https://en.wikipedia.org/wiki/Libertarian_Party_(United_States)" className="link">- Wikipedia</a>
-              <a href="https://www.lp.org/" target="_blank" rel="noopener noreferrer" className="link">- Offical Website</a>
+              <a href="https://en.wikipedia.org/wiki/Libertarian_Party_(United_States)" target="_blank" rel="noopener noreferrer" className="link">- Wikipedia</a>
+              <a href="https://www.lp.org/" target="_blank" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" className="link">- Offical Website</a>
             </div>
           </div> 
         )
@@ -576,7 +576,7 @@ class OutsetBase extends React.Component {
             <div className="breif">The Constitution Party, previously known as the U.S. Taxpayers' Party, is a national political party in the United States. The idea that the principles and intents of the U.S. Constitution remain relevant in human relations was the origin of its founding in 1991. </div>
             <div className="links">
               <h5>Links</h5>
-              <a href="https://en.wikipedia.org/wiki/Constitution_Party_(United_States)" className="link">- Wikipedia</a>
+              <a href="https://en.wikipedia.org/wiki/Constitution_Party_(United_States)" target="_blank" rel="noopener noreferrer" className="link">- Wikipedia</a>
               <a href="http://www.constitutionparty.com/" target="_blank" rel="noopener noreferrer" className="link">- Offical Website</a>
             </div>
           </div> 
@@ -587,7 +587,7 @@ class OutsetBase extends React.Component {
             <div className="breif">The Reform Party of the United States of America, generally known as the Reform Party USA or the Reform Party, is a political party in the United States, founded in 1995 by Ross Perot.</div>
             <div className="links">
               <h5>Links</h5>
-              <a href="https://en.wikipedia.org/wiki/Reform_Party_of_the_United_States_of_America" className="link">- Wikipedia</a>
+              <a href="https://en.wikipedia.org/wiki/Reform_Party_of_the_United_States_of_America" target="_blank" rel="noopener noreferrer" className="link">- Wikipedia</a>
               <a href="https://reformparty.org/" target="_blank" rel="noopener noreferrer" className="link">- Offical Website</a>
             </div>
           </div> 
@@ -598,8 +598,7 @@ class OutsetBase extends React.Component {
             <div className="breif">Legal Marijuana Now is a political third party in the United States established in 1998 to oppose drug prohibition. The party shares many of the progressive values of the Farmer-Labor Party but with an emphasis on marijuana/hemp legalization issues.</div>
             <div className="links">
               <h5>Links</h5>
-              <a href="https://en.wikipedia.org/wiki/Legal_Marijuana_Now_Party" className="link">- Wikipedia</a>
-              <a href="www.legalcannabisnow.org" target="_blank" rel="noopener noreferrer" className="link">- Offical Website</a>
+              <a href="https://en.wikipedia.org/wiki/Legal_Marijuana_Now_Party" target="_blank" rel="noopener noreferrer" className="link">- Wikipedia</a>
             </div>
           </div> 
         )
@@ -609,7 +608,7 @@ class OutsetBase extends React.Component {
             <div className="breif">The Socialist Equality Party is a Trotskyist political party in the United States, one of several Socialist Equality parties around the world affiliated with the International Committee of the Fourth International.</div>
             <div className="links">
               <h5>Links</h5>
-              <a href="https://en.wikipedia.org/wiki/Socialist_Equality_Party_(United_States)" className="link">- Wikipedia</a>
+              <a href="https://en.wikipedia.org/wiki/Socialist_Equality_Party_(United_States)" target="_blank" rel="noopener noreferrer" className="link">- Wikipedia</a>
               <a href="https://socialequality.com/" target="_blank" rel="noopener noreferrer" className="link">- Offical Website</a>
             </div>
           </div> 
@@ -620,7 +619,7 @@ class OutsetBase extends React.Component {
             <div className="breif">The Justice Party USA is a political party in the United States. It was organized in November 2011 by a group of political activists including former mayor of Salt Lake City Rocky Anderson as an alternative to what he saw as a duopoly of the two major political parties.</div>
             <div className="links">
               <h5>Links</h5>
-              <a href="https://en.wikipedia.org/wiki/Justice_Party_(United_States)" className="link">- Wikipedia</a>
+              <a href="https://en.wikipedia.org/wiki/Justice_Party_(United_States)" target="_blank" rel="noopener noreferrer" className="link">- Wikipedia</a>
               <a href="http://justicepartyusa.org/" target="_blank" rel="noopener noreferrer" className="link">- Offical Website</a>
             </div>
           </div> 

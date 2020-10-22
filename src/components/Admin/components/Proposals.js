@@ -138,7 +138,7 @@ class Proposals extends Component {
 
   componentDidMount() {
     const self = this;
-    this.props.setLoaction(this.props.tabLocation);
+    this.props.setLocation(this.props.tabLocation);
 
     axios.get('/api/getProposals')
     .then(function (response) {
@@ -226,7 +226,7 @@ class Proposals extends Component {
   render() {
 
     return (
-      <div className="admin-proposals mt-5">
+      <div className="admin-page admin-proposals mt-5">
 
         <div className="container">
           <h1>Proposals</h1>

@@ -623,7 +623,8 @@ class Comment extends React.Component {
     super(props);
 
     this.state = {
-      reply: false
+      reply: false,
+      replies: false
     };
 
   }
@@ -662,8 +663,25 @@ class Comment extends React.Component {
 
           <div className="comment-manage">
             <span onClick={() => this.setState({reply: true})}className="action">Reply</span>
-            <span className="action">Edit</span>
-            <span className="action">Delete</span>
+            <span className={"action " + (this.props.user._id === comment.user_id ? '' : 'd-none')}>Edit</span>
+            <span className={"action " + (this.props.user._id === comment.user_id ? '' : 'd-none')}>Delete</span>
+          </div>
+
+          <div className={"replies-container mt-2 " + (comment.replies?.length > 0 ? '' : 'd-none')}>
+            {this.state.replies ?
+              <div className="replies ml-2 border-left border-dark">
+                {comment.replies.map(comment => (
+                  <div className="reply ml-2" key={comment._id}>
+                    <div>{moment(comment.date).format("LLL")}</div>
+                    <div>{comment.user_id}</div>
+                    <div>{comment.comment}</div>
+                  </div>
+                ))}
+              </div>
+              :
+              <button onClick={() => this.setState({replies: true})} className="btn btn-articles-light">View Replies ({comment.replies?.length})</button>
+              }
+            
           </div>
 
           <div className={"add-comment " + (this.state.reply ? '' : 'd-none')}>

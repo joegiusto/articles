@@ -906,8 +906,10 @@ module.exports = (app, db) => {
   app.post('/api/getUserDonations', passport.authenticate('jwt', {session: false}), (req, res) => {
 
     console.log(`Call to /api/getUserDonations made at ${new Date()}`);
+
+    console.log(req.user._id);
   
-    db.collection("revenues_donations").find({createdBy: req.body._id}).toArray(function(err, result) {
+    db.collection("revenues_donations").find({createdBy: `${req.user._id}`}).toArray(function(err, result) {
       if (err) throw err;
       console.log(`Call to /api/getUserDonations done`);
       return res.send(result) 
@@ -919,15 +921,15 @@ module.exports = (app, db) => {
 
     console.log(`Call to /api/getUserOrders made at ${new Date()}`);
 
-    if (req.body._id === '' || req.body._id === undefined) {
-      // return res.err('{_id: "user_id"} Needed to get orders.') 
-      return res.status(400).send({
-        // route: '/api/getUserOrders',
-        error: '{_id: "user_id"} Needed to get orders',
-     });
-    }
+    // if (req.body._id === '' || req.body._id === undefined) {
+    //   // return res.err('{_id: "user_id"} Needed to get orders.') 
+    //   return res.status(400).send({
+    //     // route: '/api/getUserOrders',
+    //     error: '{_id: "user_id"} Needed to get orders',
+    //  });
+    // }
   
-    db.collection("revenues_clothing").find({user_id: req.body._id}).toArray(function(err, result) {
+    db.collection("revenues_clothing").find({user_id: `${req.user._id}`}).toArray(function(err, result) {
       if (err) throw err;
       console.log(`Call to /api/getUserOrders done`);
       return res.send(result) 
@@ -1419,6 +1421,7 @@ module.exports = (app, db) => {
   require('./routes/removeSubscription')(app, db, passport);
 
   require('./routes/upsertComment')(app, db, passport);
+  require('./routes/adminComments')(app, db, passport);
 
   // Gets how many people a user has refereed
   require('./routes/getUserReferrals')(app, db, passport);

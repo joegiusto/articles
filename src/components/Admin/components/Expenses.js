@@ -58,7 +58,7 @@ class Donations extends Component {
   }
 
   componentDidMount() {
-    this.props.setLoaction(this.props.tabLocation);
+    this.props.setLocation(this.props.tabLocation);
     const self = this;
 
     axios.get('/api/getExpenses')
@@ -138,7 +138,7 @@ class Donations extends Component {
   }
 
   componentWillUnmount() {
-    this.props.setLoaction('');
+    this.props.setLocation('');
   }
 
   upsertExpense() {

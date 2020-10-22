@@ -71,7 +71,7 @@ class Ads extends Component {
 
   componentDidMount() {
     const self = this;
-    this.props.setLoaction(this.props.tabLocation);
+    this.props.setLocation(this.props.tabLocation);
 
     navigator.geolocation.getCurrentPosition(
       function(position) {
@@ -221,7 +221,7 @@ class Ads extends Component {
   render() {
 
     return (
-      <div className="admin-ads">
+      <div className="admin-page admin-ads">
 
         <div className="side-panel">
 

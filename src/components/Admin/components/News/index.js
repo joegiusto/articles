@@ -49,7 +49,7 @@ class NewsAdmin extends Component {
   }
 
   componentDidMount() {
-    this.props.setLoaction('news');
+    this.props.setLocation('news');
     let self = this;
 
     self.setState({ tagsLoading: true });
@@ -128,7 +128,7 @@ class NewsAdmin extends Component {
   }
 
   componentWillUnmount() {
-    this.props.setLoaction('');
+    this.props.setLocation('');
   }
 
   getNewsByTag(tag) {
