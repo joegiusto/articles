@@ -148,8 +148,8 @@ class Myth extends React.Component {
             
             <img src={this.state.hero_url} alt="" className={"thin-img"}/>
 
-            <div className={"mb-3 border border-dark p-2 " + (this.props.user?.roles?.isWriter ? '' : 'd-none')}>
-              <Link to={`${ROUTES.ADMIN_NEWS}/${this.state._id}?writerFromDocument=true`}><button className="btn btn-articles-light" onClick={() => ''}>Edit Myth</button></Link>
+            <div style={{background: 'linear-gradient(45deg, #ffb7b7, #f9edcd 80%)'}} className={"mb-3 border border-dark p-2 " + (this.props.user?.roles?.isWriter ? 'd-inline-block' : 'd-none')}>
+              <Link to={`${ROUTES.ADMIN_NEWS}/${this.state._id}?writerFromDocument=true`}><button className="btn btn-articles-light border border-dark" onClick={() => ''}>Edit Myth</button></Link>
               <small className="d-block">You are seeing this because you are a writer</small>
             </div>
 

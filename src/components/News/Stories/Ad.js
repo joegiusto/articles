@@ -51,12 +51,16 @@ class Ad extends React.Component {
 
           <div className="grow"></div>
 
-          <div className="reason">As always all ads we display to you will be completly transparent and follow our privacy policy.To change your Zip code settings click here (Note to testers this is hard edited in so this page is not working yet)</div>
+          <div className="reason">As always all ads we display to you will be completely transparent and follow our privacy policy.To change your Zip code settings click here (Note to testers this is hard edited in so this page is not working yet)</div>
+
+          <div onClick={() => this.adDetailsExpandedToggle()} className="explanation">
+            Ad Details
+          </div>
 
         </div>
 
         <div className="photo-banner">
-          <div className="ad-warning">Ad</div>
+          <div className="ad-warning">Advertisement</div>
 
           <div className="logo">
             <img src="https://i.pinimg.com/originals/85/0d/54/850d54feba288afe7fb40a93283fde56.jpg" alt=""/>

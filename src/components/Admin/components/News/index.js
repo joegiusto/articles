@@ -372,7 +372,7 @@ class NewsAdmin extends Component {
                 <div className="dates">
                   <span className="date badge badge-dark border ">{moment(result.news_date).format("LL")} </span>
                   {result.visible ? null : <i className="visible fas fa-low-vision"></i>}
-                  {result.author === undefined || result.author === null || result.author === '' ? <i className="author fas fa-user-edit"></i> : null}
+                  {result.authors?.length === 0 || result.authors?.length === undefined ? <i className="author fas fa-user-edit"></i> : null}
                   <span className="date badge badge-warning border ">{moment(result.last_update).format("LL")} </span>
                 </div>
 

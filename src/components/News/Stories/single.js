@@ -7,9 +7,10 @@ import { connect } from "react-redux";
 
 import Ad from './Ad'
 
+import loadingGif from '../../../assets/img/News/loading.gif'
 import * as ROUTES from '../../../constants/routes'
 
-class Issue extends React.Component {
+class Story extends React.Component {
   constructor(props) {
     super(props);
 
@@ -20,146 +21,132 @@ class Issue extends React.Component {
   }
 
   componentDidMount() {
-    const self = this;
     this.setState({ loading: true });
 
-    // Returns undefined if the id of news is not in local storage
-    let storedStories = this.props.stories.stories.find(x => x._id === this.props.match.params.id)
-    storedStories = undefined
+    this.getNews();
+  }
 
-    if (storedStories !== undefined ) {
-      // Try to pull from local storage and if not there then do server call
+  getNews() {
+    const self = this;
+
+    axios.post('/api/getNewsDocument', {
+      news_url: this.props.match.params.id
+    })
+    .then(function (response) {
+      console.log(response);
+
       self.setState({
-        ...storedStories,
+        ...response.data.document,
         loading: false
       });
-    } else {
-      // Was not local, we make a server call!
-      axios.post('/api/getNewsDocument', {
-        news_url: this.props.match.params.id
-      })
-      .then(function (response) {
-        console.log(response);
 
-        self.setState({
-          ...response.data.document,
-          loading: false
-        });
+    })
+    .catch(function (error) {
+      console.log(error);
 
-      })
-      .catch(function (error) {
-        console.log(error);
-
-        self.setState({
-          editLoading: false
-        });
+      self.setState({
+        editLoading: false
       });
-    }
+    });
   }
 
   render() {
 
-    const { loading } = this.state;
-
     return (
       <div className="stories-page">
-        {loading ?
-        <div className="alert alert-danger">Loading Issue - {this.props.match.params.id}</div>
+        {this.state.loading ?
+
+          <div className="loading-page">
+            <img src={loadingGif} alt="Loading Icon"/>
+            <div className="alert alert-warning">Loading Story</div>
+            <small>{this.props.match.params.id}</small>
+          </div>
+
         :
-        <div className="container-fluid single">
 
-          <div className="content-wrapper">
+          <div className="container story-container">
 
-            <div className="news-one-head">
-
-              <div className="back-button-container">
-                <i className="back-button fas fa-chevron-circle-left mr-0" aria-hidden="true"></i>
-                <div className="back-button-dropdown">
-                  <div className="subheading">Recent</div>
-                  <div onClick={() => this.props.history.goBack()} className="link"><i className="fas fa-chevron-circle-left" aria-hidden="true"></i>Previous Page</div>
-                  <div className="subheading">Associated</div>
-                  <Link to={ROUTES.STORIES}><i className="fas fa-bullhorn" aria-hidden="true"></i>Stories</Link>
-                  <Link to={ROUTES.NEWS}><i className="fas fa-newspaper" aria-hidden="true"></i>News</Link>
-                </div>
-              </div>
-              
-              {/* <span className="back-link" onClick={() => this.props.history.goBack()}>{String.fromCharCode(11148)}</span> */}
-
-              <span className="date-badge">
-                <div className="date-badge-inner">
-                  <span className="front">{moment(this.state?.news_date).format("LL")}</span>
-                  <span className="back">Updated {moment(this.state?.last_update).format("LL")}</span>
-                </div>
-              </span>
-
-              <span className="author-link"> Written By:<span className="person">Joey Giusto</span> </span>
-
+            <div style={{background: 'linear-gradient(45deg, #ffb7b7, #f9edcd 80%)'}} className={"mb-3 border border-dark p-2 " + (this.props.user?.roles?.isWriter ? 'd-inline-block' : 'd-none')}>
+              <Link to={`${ROUTES.ADMIN_NEWS}/${this.state._id}?writerFromDocument=true`}><button className="btn btn-articles-light border border-dark" onClick={() => ''}>Edit Story</button></Link>
+              <small className="d-block">You are seeing this because you are a writer</small>
             </div>
 
-            <div className="hero">
-              <img src={this.state?.hero_url} alt="" className="image"/>
-              <div className="title">{this.state.news_title}</div>
+            <div className="top-bar">
+
+              <div className="breadcrumbs">
+                <Link to={ROUTES.NEWS}>News</Link>
+                <i className="fas fa-arrow-alt-circle-right mr-0"></i>
+                <Link to={ROUTES.STORIES}>Stories</Link>
+              </div>
             </div>
 
             <div className="content">
-              {/* All */}
-              {/* <p>{this.state?.news_notes}</p> */}
 
-              {/* Formatted */}
-              {/* <span dangerouslySetInnerHTML={{__html: this.state?.news_notes?.replace(/(\r\n|\n|\r)/gm, "")}}></span> */}
+              <div className="main-panel">
 
-              {/* Formated Line Space */}
-              <div dangerouslySetInnerHTML={{ __html: decodeURIComponent(this.state?.news_notes).replace(/\+/g, " ").replace(/\r/g, "<br/>") }}></div>
-              
-            </div>
-            
-          </div>
+                <div className="dates">
+                  <div className="date">Published: {moment(this.state.news_date).format("LLL")}</div>
+                  <div className="date">Updated: {moment(this.state.last_update).format("LLL")}</div>
+                </div>
 
-          <Ad/>
+                <div className="tags">
+                  {this.state.news_tags?.length > 0 ?
+                  this.state.news_tags?.map(tag => 
+                    <div className="tag badge badge-dark">
+                      {tag.tag_name}
+                    </div>  
+                  )
+                  :
+                  <div className="tag badge badge-light border border-dark">No Tags</div>
+                  }
+                </div>
 
-          <div className="card d-none">
-            <h3 className="card-header">{this.state.news_title}</h3>
-            <div className="card-body">
-              <div style={{whiteSpace: 'pre-wrap'}} dangerouslySetInnerHTML={{__html: this.state?.news_notes?.replace(/(\r\n|\n|\r)/gm, "")}}>
-                {/* { dangerouslySetInnerHTML={{__html: this.state?.news_notes?} } */}
-                {/* {this.state?.news_notes?.replace('<break>', '<div className="alert alert-danger">Test</div>')} */}
+                <div className="title">
+                  {this.state.news_title}
+                </div>
+
+                <div className="head-img">
+                  <img src={this.state.hero_url} alt=""/>
+                </div>
+
+                <div className="authors-container">
+                  <div className="authors-title">Author{this.state.authors?.length > 1 ? 's' : ''}</div>
+    
+                  <div className="authors">
+                    {this.state.authors?.length === 0 || this.state.authors?.length === undefined ?
+      
+                    <div>No Author</div>
+      
+                    :
+      
+                    this.state.authors?.map(author => 
+                    <div className="author">
+                      <Link to={ROUTES.EMPLOYEES + `/${author}`}><img src={`https://articles-website.s3.amazonaws.com/profile_photos/${author}.jpg`} alt=""/></Link>
+                      <Link to={ROUTES.EMPLOYEES + `/${author}`}><div className="name">Joey Giusto</div></Link>
+                    </div>
+                    )
+      
+                    }
+                  </div>
+                </div>
+
+                <div className="document-text" style={{whiteSpace: 'pre-wrap'}} dangerouslySetInnerHTML={{__html: this.state?.news_notes}}></div>
+
               </div>
-              {/* <div className="w-100" style={{background: this.state.data.photoExtra}}>
-                <img src={this.state.data.photo} className="img-fluid" alt=""/>
-              </div> */}
-              {/* <small className="d-block">Photo Extra Info: {this.state.data.photoExtra}</small> */}
-              {/* <button onClick={() => this.props.history.goBack()} className="btn btn-articles-light">Go Back</button> */}
+
+              <div className="side-panel">
+                <Ad/>
+              </div>
+
             </div>
+
           </div>
-          
-        </div>
+
         }
       </div>
     )
   }
 }
-
-// const Issue = () => (
-//   <div className='container issues-page text-center'>
-
-
-
-//     <div className="mt-3">
-//       <h1>Issues</h1>
-//       <p>Overview of the most pressing issues and status updates on them. </p>
-//       <p>Unlike normal stories </p>
-//       {/* <p>Monday - blank - Tuesday - blank - Wednesday - blank</p> */}
-//     </div>
-
-//     <div className="row mb-5">
-
-//     </div>
-
-//   </div>
-// );
-
-
-// export default withRouter(Issue);
 
 const mapStateToProps = state => ({
   auth: state.auth,
@@ -171,5 +158,4 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  // { logoutUser, setUserDetails }
-)(withRouter(Issue));
+)(withRouter(Story));
