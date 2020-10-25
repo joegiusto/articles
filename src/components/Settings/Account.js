@@ -58,6 +58,8 @@ class Account extends Component {
       subscriptionsExpanded: false,
     };
 
+    this.placesToAddress = this.placesToAddress.bind(this);
+    this.latLng = this.latLng.bind(this);
   }
 
   componentDidMount() {

@@ -339,12 +339,33 @@ module.exports = (app, db) => {
   app.post("/api/getUserPaymentMethods", passport.authenticate('jwt', {session: false}), async (req, res) => {
     console.log("Getting user payment methods")
 
-    const paymentMethods = await stripe.paymentMethods.list({
-      customer: req.user.stripe.customer_id,
-      type: 'card',
-    });
+    // const paymentMethods = await stripe.paymentMethods.list({
+    //   customer: req.user.stripe.customer_id,
+    //   type: 'card',
+    // });
 
-    res.send(paymentMethods);
+    try {
+      const paymentMethods = await stripe.paymentMethods.list({
+        customer: req.user.stripe.customer_id,
+        type: 'card',
+      });
+
+      res.send(paymentMethods);
+      } catch (err) {
+        console.log('Error')
+        console.log(err)
+        // next(err);
+        // res.err(err);
+        return res.status(400).send({
+          message: err
+       });
+      }
+
+    // paymentMethods
+    // .then( (empty) => res.send(paymentMethods) )
+    // .catch( (e) => res.send(e) )
+
+    // res.send(paymentMethods);
 
   });
 

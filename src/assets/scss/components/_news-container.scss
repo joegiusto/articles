@@ -68,9 +68,9 @@ section.frontpage-section {
     margin-bottom: 1rem;
     display: flex;
     flex-direction: column;
-    padding-bottom: 1rem;
-    border-bottom: 10px solid #000;
-    height: 300px;
+    // padding-bottom: 1rem;
+    // border-bottom: 10px solid #000;
+    height: 220px;
     transition-duration: 200ms;
     flex-wrap: wrap;
     overflow-x: scroll;
@@ -284,6 +284,8 @@ section.frontpage-section {
 
     .search-panel {
       flex-grow: 1;
+      flex-basis: 50%;
+      flex-shrink: 0;
       position: relative;
       background-color: rgba(255, 255, 255, 0.75);
       border: solid 1px rgba(0, 0, 0, 0.5);
@@ -303,6 +305,7 @@ section.frontpage-section {
       }
 
       .settings {
+        display: none!important;
         cursor: pointer;
         z-index: 2;
         position: absolute;
@@ -482,6 +485,8 @@ section.frontpage-section {
       display: flex;
       flex-direction: column;
       flex-grow: 1;
+      flex-basis: 50%;
+      flex-shrink: 0;
       margin-left: 0.5rem;
       flex-direction: row;
 
@@ -2061,6 +2066,19 @@ section.frontpage-section {
         
       }
 
+      .swiper-scrollbar {
+        height: 10px;
+        border-radius: 0px;
+        left: 0;
+        width: 100%;
+        // border: 1px solid #000000;
+
+        .swiper-scrollbar-drag {
+          border: 1px solid #000000;
+          cursor: pointer;
+        }
+      }
+
       .swiper-slide-active {
 
         .tagline {
@@ -2076,7 +2094,7 @@ section.frontpage-section {
           background-color: $story-color;
         }
 
-        .bar, .date, .update {
+        .bar, .date, .update, .swiper-scrollbar-drag {
           background-color: $story-color; 
         }
 
@@ -2092,7 +2110,7 @@ section.frontpage-section {
           background-color: $issue-color;
         }
 
-        .bar, .date, .update, .subscribe {
+        .bar, .date, .update, .subscribe, .swiper-scrollbar-drag {
           background-color: $issue-color; 
         }
 
@@ -2116,7 +2134,7 @@ section.frontpage-section {
           background-color: $myth-color;
         }
 
-        .bar, .date, .update {
+        .bar, .date, .update, .swiper-scrollbar-drag {
           background-color: $myth-color; 
         }
 

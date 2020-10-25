@@ -245,6 +245,7 @@ class AppBase extends Component {
               
               <Route path={ROUTES.PRIVACY} component={Privacy} />
 
+              <Route exact path={ROUTES.ADMIN} component={AdminPage} />
               <Route exact path={ROUTES.ADMIN_USERS} component={AdminPage} />
               <Route path={ROUTES.ADMIN_USER_DETAILS} component={AdminPage} />
               <Route exact path={ROUTES.ADMIN_NEWS} component={AdminPage} />

@@ -213,11 +213,70 @@ section.myths-section {
     margin-top: 1rem;
     margin-bottom: 1rem;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+
+    @include media-breakpoint-up(md) {
+      flex-direction: row;
+    }
 
     .sidebar {
-      margin-left: 1.5rem;
+      margin-top: 1rem;
       width: 100%;
+      min-width: 0;
+
+      @include media-breakpoint-up(md) {
+        margin-top: 0;
+        margin-left: 1.5rem;
+      }
+
+      .tags {
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+        background-color: $base-color;
+        margin-left: -0.5rem;
+        margin-right: -0.5rem;
+        padding: 0.1rem 0.25rem;
+        margin-bottom: 0.75rem;
+
+        .tag {
+          &:not(:first-child) {
+            margin-left: 0.25rem;
+          }
+        }
+      }
+
+      .proposals {
+        position: relative;
+        
+        .fas {
+          background-color: $accent-color;
+          padding: 0.25rem;
+          position: absolute;
+          top: 50%;
+          z-index: 1;
+          transform: translateY(-50%) translateX(-50%);
+        }
+
+        .fa-backward {
+          left: 0;
+        }
+
+        .fa-forward {
+          right: 0;
+        }
+
+        .proposal {
+          text-align: center;
+          padding: 2rem;
+          height: 230px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: black;
+          color: white;
+        }
+
+      }
+ 
     }
 
     .related {
@@ -250,11 +309,18 @@ section.myths-section {
     // margin-top: 1rem;
     box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
     background-color: white;
-    width: 800px;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    width: 100%;
+    max-width: 800px;
+    padding-left: 1rem;
+    padding-right: 1rem;
     padding-bottom: 1.5rem;
     font-size: 14px;
+
+    @include media-breakpoint-up(md) {
+      width: 800px;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
 
     .breadcrumbs {
       padding: 0.5rem 0rem;
@@ -266,14 +332,20 @@ section.myths-section {
 
     .thin-img {
       height: 200px;
-      width: inherit;
+      width: calc(100% - -2rem);
+      
       object-fit: cover;
       object-position: bottom;
-      margin-left: -1.5rem;
-      margin-right: -1.5rem;
+      margin-left: -1rem;
+      margin-right: -1rem;
       margin-bottom: 1.5rem;
-    }
 
+      @include media-breakpoint-up(md) {
+        width: inherit;
+        margin-left: -1.5rem;
+      margin-right: -1.5rem;
+      }
+    }
 
     .date {
       font-size: 13px;
@@ -434,6 +506,7 @@ section.myths-section {
           }
         }
       }
+
     }
 
     .content {

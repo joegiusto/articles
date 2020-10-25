@@ -44,6 +44,8 @@ class Issue extends React.Component {
 
     this.state = {
       loading: false,
+      authors: [],
+      subCount: 0,
       issues: [],
       news_tags: [],
       proposals: [],
@@ -91,6 +93,7 @@ class Issue extends React.Component {
         }, (() => {
           self.loadLastRead();
           self.loadComments();
+          self.getSubCount()
         }));
 
       })
@@ -108,6 +111,27 @@ class Issue extends React.Component {
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
+
+  getSubCount() {
+    const self = this;
+
+    axios.get('/api/getSubCount', {
+      params: {
+        _id: this.state._id,
+      }
+    })
+    .then(function (response) {
+      console.log(response);
+
+      self.setState({
+        subCount: response.data.count
+      })
+
+    })
+    .catch(function (error) {
+      console.log(error.response);
+    });
+  }
 
   loadComments() {
     const self = this;
@@ -267,12 +291,12 @@ class Issue extends React.Component {
                 this.props.user_subscriptions?.filter(sub => sub._id === this.state._id).length > 0 ?
                 <div className="subscribe">
                   <button onClick={() => this.props.removeSubscription(this.state._id)} style={{opacity: '0.5'}} className="btn btn-articles-light">Subscribed</button>
-                  <small className="d-block">0 others subscribed to this issue</small>
+                  <small className="d-block">{this.state.subCount} others subscribed to this issue</small>
                 </div>
                 :
                 <div className="subscribe">
                   <button onClick={() => this.props.addSubscription(this.state._id)} className="btn btn-articles-light">Subscribe</button>
-                  <small className="d-block">Join 0 others subscribed to this issue</small>
+                  <small className="d-block">Join {this.state.subCount} others subscribed to this issue</small>
                 </div>
                 }
 
@@ -285,12 +309,20 @@ class Issue extends React.Component {
 
                 <div className="label">Author{this.state.authors?.length > 1 ? 's' : ''}</div>
 
-                  {this.state.authors?.map(author => 
-                  <div className="author">
-                    <Link to={ROUTES.EMPLOYEES + `/${author}`}><img src={`https://articles-website.s3.amazonaws.com/profile_photos/${author}.jpg`} alt=""/></Link>
-                    <Link to={ROUTES.EMPLOYEES + `/${author}`}><div className="name">Joey Giusto</div></Link>
-                  </div>
-                  )}
+                {this.state.authors.length === 0 ?
+
+                <div>No Author</div>
+
+                :
+
+                this.state.authors?.map(author => 
+                <div className="author">
+                  <Link to={ROUTES.EMPLOYEES + `/${author}`}><img src={`https://articles-website.s3.amazonaws.com/profile_photos/${author}.jpg`} alt=""/></Link>
+                  <Link to={ROUTES.EMPLOYEES + `/${author}`}><div className="name">Joey Giusto</div></Link>
+                </div>
+                )
+                
+                }
 
                   {/* <div className="author">
                     <Link to={ROUTES.EMPLOYEES + '/5e90cc96579a17440c5d7d52'}><img src="https://articles-website.s3.amazonaws.com/profile_photos/5e90cc96579a17440c5d7d52.jpg" alt=""/></Link>

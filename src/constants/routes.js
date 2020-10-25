@@ -97,7 +97,6 @@ export const PASSWORD_FORGET = '/pw-forget';
 
 // Admin
 export const ADMIN = '/admin';
-
 export const ADMIN_USERS = '/admin/users';
 export const ADMIN_USER_DETAILS = '/admin/users/:id';
 

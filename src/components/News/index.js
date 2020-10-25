@@ -337,7 +337,7 @@ function SearchHead(props) {
 
         </div>
 
-        <a href="https://www.youtube.com/channel/UCeftkiTtcniDx87GqoEmFAg" target="_blank" rel="noopener noreferrer" className="extra-panel youtube">
+        <a href="https://www.youtube.com/channel/UCeftkiTtcniDx87GqoEmFAg" target="_blank" rel="noopener noreferrer" className="extra-panel youtube d-none">
 
           <div className="info">
             <span className="badge badge-light">Last Upload: <span className="badge badge-danger">Never</span></span>

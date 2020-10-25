@@ -204,72 +204,68 @@ class Donations extends Component {
     let { amount, reason, file, note, date } = this.state;
 
     return (
-      <div className="admin-expenses">
+      <div className="admin-page admin-expenses">
 
-        <div className="row">
+        <div className="side-panel">
+          <div className="card">
+            <div className="card-header">Details</div>
+            <div className="card-body">
+              <div>Payroll: 0</div>
+              <div>Inventory: 0</div>
+              <div>Reoccurring: 0</div>
+              <div>Utilities: 0</div>
+              <div>Other: 0</div>
+            </div>
+          </div>
+        </div>
 
-          <div className="col-12 col-md-4">
+        <div className="main-panel">
 
-            <div className="admin-side-by-side-form">
+          <div className="admin-side-by-side-form">
 
-              <div className="form-group">
-                <input className="form-control" type="text" name="reason" onChange={this.handleFormChange} value={this.state.form.reason} placeholder="Reason"/>
-              </div>
-
-              <div className="form-group">
-                <input className="form-control" type="number" name="amount" onChange={this.handleFormChange} value={this.state.form.amount} placeholder="Amount"/>
-              </div>
-
-              <DayPickerInput 
-                style={{display: 'block'}}
-                onDayChange={this.handleDateChange} 
-                inputProps={{className: 'form-control mb-3'}}
-                value={`${formatDate(this.state.form.date)}`}
-                formatDate={formatDate}
-                parseDate={parseDate}
-                dayPickerProps={{
-                  showWeekNumbers: true,
-                  todayButton: 'Today',
-                }}
-              />
-
-              <div className="match-details d-none">
-                <small>Created By</small>
-                <div className="content">
-                  <div className="match-button active mr-2">User</div>
-                  <div className="match-button mr-2">Admin</div>
-                  <select className="form-control" disabled id="exampleFormControlSelect1">
-                    <option>Joey Giusto</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="form-group">
-                <textarea className="form-control" type="text" rows="5" name="note" onChange={this.handleFormChange} value={this.state.form.note} placeholder="Note"/>
-              </div>
-
-              <div className="form-group">
-                <input className="form-control" type="text" name="file" onChange={this.handleFormChange} value={this.state.form.file} placeholder="File"/>
-              </div>
-
-              <div className="submit">
-                <div onClick={() => this.upsertExpense()} className="btn btn-articles-light w-100">Submit</div>
-              </div>
-
-              {this.state.form._id === '' ? 
-              null
-              :
-              <div className="submit">
-                <div onClick={() => this.cancelExpense()} className="btn btn-danger w-100">Cancel</div>
-              </div>
-              }
-              
-
+            <div className="form-group">
+              <input className="form-control" type="text" name="reason" onChange={this.handleFormChange} value={this.state.form.reason} placeholder="Reason"/>
             </div>
 
-          </div>
+            <div className="form-group">
+              <input className="form-control" type="number" name="amount" onChange={this.handleFormChange} value={this.state.form.amount} placeholder="Amount"/>
+            </div>
 
-          <div className="col-12 col-md-8">
+            <DayPickerInput 
+              style={{display: 'block'}}
+              onDayChange={this.handleDateChange} 
+              inputProps={{className: 'form-control mb-3'}}
+              value={`${formatDate(this.state.form.date)}`}
+              formatDate={formatDate}
+              parseDate={parseDate}
+              dayPickerProps={{
+                showWeekNumbers: true,
+                todayButton: 'Today',
+              }}
+            />
+
+            <div className="form-group">
+              <textarea className="form-control" type="text" rows="5" name="note" onChange={this.handleFormChange} value={this.state.form.note} placeholder="Note"/>
+            </div>
+
+            <div className="form-group">
+              <input className="form-control" type="text" name="file" onChange={this.handleFormChange} value={this.state.form.file} placeholder="File"/>
+            </div>
+
+            <div className="submit">
+              <div onClick={() => this.upsertExpense()} className="btn btn-articles-light w-100">Submit</div>
+            </div>
+
+            {this.state.form._id === '' ? 
+            null
+            :
+            <div className="submit">
+              <div onClick={() => this.cancelExpense()} className="btn btn-danger w-100">Cancel</div>
+            </div>
+            }
+            
+
+          </div>
 
           <div className="table-responsive mt-4">
             <table className="table table-sm table-bordered bg-white">
@@ -305,7 +301,6 @@ class Donations extends Component {
             </table>
           </div>
 
-          </div>
         </div>
 
       </div>

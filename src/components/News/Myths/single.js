@@ -2,9 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import moment from 'moment'
-import * as ROUTES from '../../../constants/routes'
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import 'swiper/swiper.scss'
+import 'swiper/components/navigation/navigation.scss';
+import 'swiper/components/pagination/pagination.scss';
+import 'swiper/components/scrollbar/scrollbar.scss';
+
+import * as ROUTES from '../../../constants/routes'
 
 class Myth extends React.Component {
   constructor(props) {
@@ -12,7 +19,15 @@ class Myth extends React.Component {
 
     this.state = {
       loading: false,
+      news_tags: [],
       expandHero: true,
+      
+      proposals: [],
+      proposalsIndex: 0,
+
+      relatedContent: [],
+      relatedContentLoading: false,
+      relatedContentIndex: 0
     };
 
   }
@@ -21,23 +36,7 @@ class Myth extends React.Component {
     const self = this;
     this.setState({ loading: true });
 
-    let storedMyths = this.props.myths.myths.find(x => x._id === this.props.match.params.id)
-
-    // TODO - Invalidate this
-    storedMyths = undefined
-
-    if (storedMyths !== undefined) {
-      // Try to pull from local storage and if not there then do server call
-      self.setState({
-        ...storedMyths,
-        loading: false
-      });
-    } else {
-      // Was not local, we make a server call!
-      this.loadNewsByUrl(this.props.match.params.id);
-    }
-
-    // self.interval = setTimeout(() => self.setState({expandHero: false}), 1000);
+    this.loadNewsByUrl(this.props.match.params.id);
   }
 
   componentWillUnmount() {
@@ -61,9 +60,12 @@ class Myth extends React.Component {
       self.setState({
         ...response.data.document,
         loading: false
-      });
+      }, () => (
+        self.loadRelatedContent(self.state.news_tags[0])
+      ));
+      
 
-      self.interval = setTimeout(() => self.setState({expandHero: false}), 1000);
+      // self.interval = setTimeout(() => self.setState({expandHero: false}), 1000);
 
     })
     .catch(function (error) {
@@ -75,9 +77,61 @@ class Myth extends React.Component {
     });
   }
 
+  renderRoute(type) {
+    switch(type) {
+      case 'story':
+        return (
+          ROUTES.STORIES
+        )
+      case 'issue':
+        return (
+          ROUTES.ISSUES
+        )
+      case 'myth':
+        return (
+          ROUTES.MYTHS
+        )
+      default:
+        return (
+          "...uh oh"
+        )
+    }
+  }
+
+  loadRelatedContent(tag) {
+    const self = this;
+    console.log("Related content loading")
+    self.setState({relatedContentLoading: true})
+
+    axios.post('/api/getNewsByTag', {
+      tag: tag?.tag_name
+    })
+    .then(function (response) {
+      console.log(response);
+
+      self.setState({
+        relatedContent: response.data.tags,
+        relatedContentLoading: false
+      })
+    })
+    .catch(function (error) {
+      console.log(error.response);
+    }); 
+  }
+
   render() {
 
-    // const {loading, news_notes} = this.state;
+    const swiper_settings = {
+      spaceBetween: 10,
+      slidesPerView: 1,
+      // slidesPerGroup: 1,
+      // navigation: true,
+      scrollbar: { draggable: true },
+      navigation: {
+        nextEl: '.fa-forward',
+        prevEl: '.fa-backward',
+      }
+    }
 
     return (
       <div className="myths-page">
@@ -95,7 +149,7 @@ class Myth extends React.Component {
             <img src={this.state.hero_url} alt="" className={"thin-img"}/>
 
             <div className={"mb-3 border border-dark p-2 " + (this.props.user?.roles?.isWriter ? '' : 'd-none')}>
-              <Link to={`${ROUTES.ADMIN_NEWS}/${this.state._id}`}><button className="btn btn-articles-light" onClick={() => ''}>Edit Myth</button></Link>
+              <Link to={`${ROUTES.ADMIN_NEWS}/${this.state._id}?writerFromDocument=true`}><button className="btn btn-articles-light" onClick={() => ''}>Edit Myth</button></Link>
               <small className="d-block">You are seeing this because you are a writer</small>
             </div>
 
@@ -116,21 +170,92 @@ class Myth extends React.Component {
             <button className="btn btn-articles-light w-100">Share</button>
 
             <div className="related">
-              <h5 className="title">Related Stories</h5>
-              <div className="news-card"></div>
-              <div className="count">1/5</div>
-            </div>
+              <h5 className="title">Related Content</h5>
+              <div className="tags">
+                {this.state.news_tags.length > 0 ?
+                this.state.news_tags.map((tag) => 
+                  <div className="tag badge badge-dark">{tag.tag_name}</div>
+                )
+                :
+                <div className="badge badge-light">No Tags</div>
+                }
+              </div>
 
-            <div className="related">
-              <h5 className="title">Related Issues</h5>
-              <div className="news-card"></div>
-              <div className="count">1/5</div>
+              {this.state.relatedContentLoading ? 
+              <div>Loading</div>
+              :
+              this.state.relatedContent.length === 0 ?
+                <div>No related content</div>
+ 
+                :
+ 
+               <Swiper 
+                 className="proposals"
+                 {...swiper_settings}
+                 onSlideChange={(swiper) => this.setState({relatedContentIndex: swiper.activeIndex })}
+               >
+ 
+                 <i className="fas fa-backward"></i>
+                 <i className="fas fa-forward"></i>
+ 
+                 {this.state.relatedContent.map( (proposal) => 
+                   <SwiperSlide>
+                     <Link to={`${this.renderRoute(proposal.news_type)}/${proposal.url}`}>
+                       <div className="proposal">
+                         {proposal.news_title}
+                       </div>
+                     </Link>
+                   </SwiperSlide>
+                 )}
+ 
+               </Swiper>
+ 
+              }
+
+              {this.state.relatedContent.length === 0 ?
+              null:
+              <div className="count">{this.state.relatedContentIndex + 1}/{this.state.relatedContent.length}</div>
+              }
+              
             </div>
 
             <div className="related">
               <h5 className="title">Related Proposals</h5>
-              <div className="news-card"></div>
-              <div className="count">1/5</div>
+
+              {this.state.proposals.length === 0 ?
+
+                <div>No related proposals</div>
+
+              :
+
+              <Swiper 
+              className="proposals"
+              {...swiper_settings}
+              onSlideChange={(swiper) => this.setState({proposalsIndex: swiper.activeIndex })}
+              >
+
+                <i className="fas fa-backward"></i>
+                <i className="fas fa-forward"></i>
+
+                {this.state.proposals.map( (proposal) => 
+                  <SwiperSlide>
+                    <Link to={`${ROUTES.PROPOSALS}/${proposal._id}`}>
+                      <div className="proposal">
+                        {proposal.title}
+                      </div>
+                    </Link>
+                  </SwiperSlide>
+                )}
+
+              </Swiper>
+
+                }
+
+              {this.state.proposals.length === 0 ?
+              null:
+              <div className="count">{this.state.proposalsIndex + 1}/{this.state.proposals.length}</div>
+              }
+
             </div>
           </div>
 

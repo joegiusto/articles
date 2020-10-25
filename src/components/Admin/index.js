@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 // import "slick-carousel/slick/slick-theme.css";
 
 import * as ROUTES from '../../constants/routes';
+import Dashboard from './components/Dashboard';
 import Users from './components/Users';
 import News from './components/News/';
 import Proposals from './components/Proposals';
@@ -75,6 +76,7 @@ class Admin extends Component {
         <div className="tab-bar">
           <div className="container-fluid">
 
+            <Link to={ROUTES.ADMIN}><span className={"tab" + (this.state.tab === 'dashboard' ? ' active' : '')}>Dashboard</span></Link>
             <Link to={ROUTES.ADMIN_USERS}><span className={"tab" + (this.state.tab === 'users' ? ' active' : '')}>Users</span></Link>
             <Link to={ROUTES.ADMIN_NEWS}><span className={"tab" + (this.state.tab === 'news' ? ' active' : '')}>News</span></Link>
             <Link to={ROUTES.ADMIN_PROPOSALS}><span className={"tab" + (this.state.tab === 'proposals' ? ' active' : '')}>Proposals</span></Link>
@@ -96,7 +98,13 @@ class Admin extends Component {
 
           <Switch>
 
-            <Route path={ROUTES.ADMIN_USERS} render={() => <Users 
+            <Route exact path={ROUTES.ADMIN} render={() => <Dashboard 
+              match={this.props.match} 
+              tabLocation='dashboard' 
+              setLocation={this.setLocation}
+            ></Dashboard>}/>
+
+            <Route exact path={ROUTES.ADMIN_USERS} render={() => <Users 
               match={this.props.match} 
               tabLocation='users' 
               setLocation={this.setLocation}

@@ -60,6 +60,7 @@ class Billing extends Component {
 
     })
     .then(function (response) {
+      console.log("Good")
       self.setState({userPaymentMethodsLoading: false})
 
       console.log(response)
@@ -68,6 +69,7 @@ class Billing extends Component {
       self.setState({userPaymentMethods: response.data.data})
     })
     .catch(function (error) {
+      console.log("Bad")
       self.setState({userPaymentMethodsLoading: false})
       console.log(error);
     });

@@ -3,6 +3,7 @@ import { withRouter, Link } from 'react-router-dom';
 import axios from 'axios';
 import TextareaAutosize from 'react-textarea-autosize';
 import moment from 'moment'
+import qs from 'qs'
 
 import 'react-day-picker/lib/style.css';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
@@ -55,6 +56,7 @@ class Add extends Component {
     this.state = {
       ...initial_state,
       formatGuideOpen: false,
+      writerFromDocument: false,
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -73,6 +75,9 @@ class Add extends Component {
       // this.setState({
       //   editLoading: true
       // })
+
+      // var qsParse = qs.parse(this.props.location.search, { ignoreQueryPrefix: true });
+      // console.log(qsParse.writerFromDocument)
 
       this.loadNews(this.props.news_id);
 
@@ -265,7 +270,28 @@ class Add extends Component {
     });
   }
 
-  pushNews() {
+  renderRoute(type) {
+    switch(type) {
+      case 'story':
+        return (
+          ROUTES.STORIES
+        )
+      case 'issue':
+        return (
+          ROUTES.ISSUES
+        )
+      case 'myth':
+        return (
+          ROUTES.MYTHS
+        )
+      default:
+        return (
+          "...uh oh"
+        )
+    }
+  }
+
+  pushNews(options) {
     const self = this;
 
     this.setState({
@@ -310,12 +336,22 @@ class Add extends Component {
         console.log(response);
 
         self.props.changeIsEdit(false)
+
+        const savedURL = self.state.url
+        const savedType = self.state.news_type
   
         self.setState({
           ...initial_state
         });
 
-        self.props.history.push(ROUTES.ADMIN_NEWS);
+        if (options.redirect === true) {
+          console.log("HERE")
+          self.props.history.push(`${self.renderRoute(savedType)}/${savedURL}`);
+        } else {
+          console.log("THERE")
+          self.props.history.push(ROUTES.ADMIN_NEWS);
+        }
+
       })
       .catch(function (error) {
         console.log(error);
@@ -378,7 +414,8 @@ class Add extends Component {
           <div>
             <button className="btn btn-warning" onClick={() => this.changeIsEdit(false) + this.props.history.push(ROUTES.ADMIN_NEWS)}>Cancel</button>
             <button className="btn btn-danger">Delete</button>
-            <button disabled={ this.state.submitting_data || this.state.news_type === '' || this.state.news_title === '' || this.state.hero_url === '' || this.state.url === ''} className="btn btn-success" onClick={this.pushNews}>Save</button>
+            <button disabled={ this.state.submitting_data || this.state.news_type === '' || this.state.news_title === '' || this.state.hero_url === '' || this.state.url === '' || this.state._id === ''} className="btn btn-primary" onClick={() => this.pushNews({redirect: true})}>Save/View</button>
+            <button disabled={ this.state.submitting_data || this.state.news_type === '' || this.state.news_title === '' || this.state.hero_url === '' || this.state.url === ''} className="btn btn-success" onClick={() => this.pushNews({redirect: false})}>Save</button>
           </div>
 
         </div>

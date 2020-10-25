@@ -129,7 +129,7 @@ const LandingPage = () => (
   
             <div className="col-6 pr-md-0">
               <div className="content-text p-5 pt-3">
-                With a completly transparent buisness model and a diffrent approach on clothing, news and politics, we are making it easier for Americans to get involved and stay up to date on the issues that matter most in this country. Below outlines some of the approachs we are taking to set up Articles for success and more details on what we are doing.
+                With a completely transparent buisness model and a diffrent approach on clothing, news and politics, we are making it easier for Americans to get involved and stay up to date on the issues that matter most in this country. Below outlines some of the approachs we are taking to set up Articles for success and more details on what we are doing.
               </div>
             </div>
   
@@ -313,7 +313,7 @@ const LandingPage = () => (
               <div className="content-card">
                 <div className="content-card_title">News</div>
                 <div className="content-card_text">A modern subscription/feed based news platform that serves the peoples needs while maintinaing a fact based agenda.</div>
-                <SimpleSlider/>
+                {/* <SimpleSlider/> */}
               </div>
             </div>
 
@@ -370,9 +370,9 @@ const LandingPage = () => (
           <div>
 
             <div className="header-container">
-              <img className="logo" src={logo} height="85px" alt="" />
+              {/* <img className="logo" src={logo} height="85px" alt="" /> */}
               <div className="d-inline-block">
-                <img src={slideHead} width="275px" alt="" />
+                {/* <img src={slideHead} width="275px" alt="" /> */}
                 <h5 className="card-text">Something To Stand For.</h5>
               </div>
             </div>

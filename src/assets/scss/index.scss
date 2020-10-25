@@ -84,10 +84,12 @@ $grid-breakpoints: (
 @import 'components/playground';
 
 @import 'components/admin';
+@import 'components/admin_dashboard';
 @import 'components/admin_users';
 @import 'components/admin_news';
 @import 'components/admin_proposals';
 @import 'components/admin_products';
+@import 'components/admin_expenses';
 @import 'components/admin_reports';
 @import 'components/admin_orders';
 @import 'components/admin_ads';
