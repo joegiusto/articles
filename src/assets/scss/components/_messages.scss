@@ -1,5 +1,5 @@
 .dark-mode {
-  .email-page {
+  .messages-page {
 
     .inbox-messages, .ad-panel, .page-note, .scroll-lock {
       background-color: $dark-mode-card-color!important;
@@ -23,7 +23,7 @@
   }
 }
 
-.email-page {
+.messages-page {
   font-family: montserrat, sans-serif;
   font-weight: 400;
 
@@ -80,10 +80,19 @@
       border-right: 1px solid #d8e2ef;
       flex: 0 0 17.5rem;
       max-width: 17.5rem;
+      transform: translateX(-17.5rem);
+      transition-duration: 200ms;
+      z-index: 1;
+      background-color: white;
+
+      &.expand {
+        transform: translateX(0rem);
+      }
 
       @include media-breakpoint-up(xl) {
         flex: 0 0 21.88rem;
         max-width: 21.88rem;
+        transform: translateX(0rem);
       }
 
       .chat-contact {
@@ -169,17 +178,54 @@
     }
 
     .chat-content {
+      
+      @include media-breakpoint-down(md) {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+      }
+
       display: flex;
       flex-direction: column;
       flex-grow: 1;
       flex-basis: 0;
       max-width: 100%;
+      transform: translateX(0rem);
+
+      &.expand {
+        transform: translateX(0);
+      }
+
+      @include media-breakpoint-up(md) {
+        transform: translateX(0)!important;
+      }
+
+      .content-darken {
+        background-color: rgba(0, 0, 0, 0);
+        transition-duration: 200ms;
+        position: absolute;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        pointer-events: none;
+        
+        @include media-breakpoint-down(md) {
+
+          &.visible {
+            background-color: rgba(0, 0, 0, 0.5);
+            pointer-events: initial;
+            z-index: 1;
+          }
+
+        }
+      }
 
       .content-header {
         padding: 1rem;
-        border-bottom: 1px solid #d8e2ef;
-
-        
+        border-bottom: 1px solid #d8e2ef;        
       }
 
       .content-body {
@@ -233,7 +279,7 @@
             .message {
               background-color: #edf2f9;
               padding: 0.5rem;
-              width: max-content;
+              width: auto;
 
               &.photo {
                 width: 33%;
@@ -314,40 +360,6 @@
 
   }
 
-  .page-note {
-    position: absolute;
-    top: 0px;
-    right: 5%;
-    display: flex;
-    font-weight: bold;
-    align-items: center;
-    height: 50px;
-    z-index: 201;
-
-    @include media-breakpoint-down(md) {
-      right: 10%;
-    }
-
-    .branding-badge {
-      position: relative;
-      font-family: brandon-grotesque, sans-serif;
-      font-style: normal;
-      font-weight: 900;
-      font-size: 16px;
-      background-color: white;
-      padding: 0rem 0.25rem;
-
-      .beta {
-        padding-left: 0.25rem;
-        position: absolute;
-        font-size: 12px;
-        bottom: 0;
-        right: 0;
-        transform: translateY(0%) translateX(100%);
-      }
-    }
-  }
-
   .start-chat-container {
     position: absolute;
     width: 100%;
@@ -360,7 +372,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1;
+    z-index: 5;
 
     &.visible {
       opacity: 1;
@@ -379,6 +391,8 @@
 
     .start-chat {
       z-index: 2;
+      margin-left: 0.5rem;
+      margin-right: 0.5rem;
 
       .card-header {
         font-family: brandon-grotesque, sans-serif;
@@ -390,476 +404,4 @@
 
   }
 
-  .create-chat-overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    background-color: rgba(0, 0, 0, 0.75);
-    z-index: 20;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    pointer-events: none;
-    transition-duration: 500ms;
-
-    .create-chat {
-      background-color: $accent-color;
-      padding: 1rem;
-      width: 500px;
-
-      h5 {
-        font-family: brandon-grotesque, sans-serif;
-        font-style: normal;
-        font-weight: 900;
-      }
-
-      .btn {
-        padding: 0.175rem 0.75rem;
-      }
-
-      .quick-chat-cards {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-
-        .quick-chat-card {
-          width: 50%;
-          text-align: center;
-          border-bottom: 2px solid #000;
-          box-shadow: 0px -1px 2px 1px rgba(0, 0, 0, 0.25);
-          padding: 0.25rem 1rem;
-          background-color: whitesmoke;
-          border-radius: 3px;
-        }
-      }
-    }
-
-    &.active {
-      opacity: 1;
-      pointer-events: initial;
-    }
-  }
-
-  .dashboard {
-    display: flex;
-    flex-wrap: wrap;
-
-    @include media-breakpoint-up(md) {
-      height: calc(100vh - 50px);
-    }
-
-    .inbox-messages {
-      background-color: whitesmoke;
-      height: 100%;
-      width: 100%;
-      margin: auto;
-
-      @include media-breakpoint-down(md) {
-        position: absolute;
-        left: 0;
-        height: auto;
-        transition-duration: 200ms;
-        
-        &.active {
-          transform: translateX(-100%);
-        }
-      }
-      
-      @include media-breakpoint-up(md) {
-        width: 400px;
-        height: calc(100vh - 50px);
-      }
-
-      .loading-block {
-        display: block;
-        margin: auto auto;
-      }
-      
-      .current-spotlight {
-        background-color: rgb(220, 220, 220);
-        width: 100%;
-        font-weight: bold;
-
-        .create {
-          cursor: pointer;
-        }
-      }
-
-      .inbox-message {
-        position: relative;
-        cursor: pointer;
-        border-bottom: solid 2px #000;
-        display: flex;
-        flex-direction: row;
-        padding: 0.25rem 0rem;
-
-        &.active {
-          border-right: 5px solid #000;
-        }
-
-        &:hover {
-          background-color: rgba(0, 0, 0, 0.1);
-        }
-
-        .active-bullet {
-          position: absolute;
-          right: -2.5px;
-          top: 50%;
-          transform: translateY(-50%) translateX(50%);
-          
-          .bullet {
-            height: 20px;
-            width: 20px;
-            border-radius: 20px;
-            background-color: $accent-color;
-            border: 1px solid #000;
-
-            animation-name: shrink_n_grow;
-            animation-duration: 1s;
-            animation-iteration-count: infinite;
-            animation-direction: alternate;
-          }
-
-          @keyframes shrink_n_grow {
-            from {
-              transform: scale(1);
-            }
-            to {
-              transform: scale(0.5);
-            }
-          }
-        }
-
-        .message-photo {
-          margin: 0 1rem;
-          height: 50px;
-          border: 2px solid #000;
-          background-color: black;
-
-          flex-basis: 50px;
-          flex-grow: 0;
-          flex-shrink: 0;
-
-          img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-          }
-        }
-
-        .message-content {
-
-          .message-sender {
-            font-weight: bold;
-            font-family: brandon-grotesque, sans-serif;
-            font-style: normal;
-            font-weight: 900;
-          }
-        }
-      }
-
-      .newsletters {
-        padding: 1rem;
-
-        .newsletters-card {
-          background-color: black;
-          padding: 0.5rem;
-          color: white;
-        }
-      }
-
-      .rooms {
-        padding: 1rem;
-
-        .rooms-card {
-          background-color: black;
-          padding: 0.5rem;
-          color: white;
-        }
-      }
-    }
-
-    .chat-messages {
-      position: relative;
-      margin: 0 auto;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-      width: 100%;
-      padding: 0 1rem;
-
-      @include media-breakpoint-up(md) {
-        width: 400px
-      }
-
-      .chat-message {
-        position: relative;
-        box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.35);
-        background-color: rgba(255, 255, 255, 0.5);
-
-        display: flex;
-        flex-direction: column;
-        padding: 0.5rem 0.5rem;
-        margin-right: 0.25rem;
-        border-top-left-radius: 0px;
-
-        &:not(:first-child) {
-          margin-top: 2rem;
-        }
-
-        &.personal {
-          text-align: right;
-          // border: solid 2px rgba(0, 0, 0, 0.75);
-          background-color: rgba($accent-color, 0.5);
-          border-top-right-radius: 0px;
-          margin-left: 0.25rem;
-          margin-right: 0.0rem;
-
-          .sender {
-            left: unset;
-            right: -2px;
-          }
-        }
-
-        .sender {
-          display: none;
-          font-size: 10px;
-          position: absolute;
-          top: 0;
-          // background-color: black;
-          // color: white;
-          padding: 0.1rem 0.25rem;
-          left: -2px;
-          transform: translateY(-100%);
-
-          img {
-            width: 100%;
-            height: 100%;
-          }
-        }
-
-        .message {
-          // padding-top: 0.5rem;
-        }
-
-        .date {
-          font-weight: 900;
-          font-size: 10px;
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          transform: translateY(100%);
-        }
-      }
-    }
-
-    .content {
-      flex-grow: 8;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      max-width: 100vw;
-
-      @include media-breakpoint-down(md) {
-        position: absolute;
-        left: 0;
-        top: 50px;
-        width: 100%;
-        transition: 500ms;
-        transform: translateX(100%);
-        height: calc(100vh - 50px);
-
-        &.active {
-          transform: translateX(0%);
-        }
-      }
-
-      @include media-breakpoint-up(md) {
-        height: calc(100vh - 50px);
-      }
-
-      .welcome-page {
-        font-size: 2rem;
-      }
-
-      .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: black;
-        color: white;
-        // border-bottom: 1px solid #000;
-        width: 100%;
-        
-        .subject {
-          font-weight: bold;
-          font-size: 1rem;
-        }
-      }
-
-      .response {
-        // overflow: hidden;
-        clip-path: inset( -100vw 0vw -100vw 0 );
-        width: 100%;
-        margin: 0 auto;
-        position: relative;
-        background: $accent-color;  /* fallback for old browsers */
-        background: -webkit-linear-gradient(to right, $base-color, $accent-color);  /* Chrome 10-25, Safari 5.1-6 */
-        background: linear-gradient(to right, $base-color, $accent-color); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-        padding: 0.5rem;
-
-        @include media-breakpoint-up(md) {
-          width: 400px;
-        }
-
-        .label {
-          font-family: brandon-grotesque, sans-serif;
-          font-style: normal;
-          font-weight: 900;
-        }
-
-        .scroll-lock {
-          position: absolute;
-          right: 5%;
-          top: 0rem;
-          // width: 20px;
-          // height: 20px;
-          display: flex;
-          justify-content: center;
-          padding: 0.1rem 0.4rem;
-          align-items: center;
-          font-size: 12px;
-          border-radius: 20px;
-          background-color: rgb(0, 0, 0);
-          color: white;
-          box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.35);
-          // border: 2px solid #000;
-          // border-radius: 30px;
-          transform: translateY(-50%) translateX( calc(100% + 2rem) );
-          transition-duration: 200ms;
-
-          &.active {
-            transform: translateY(-50%) translateX(0%);
-          }
-        }
-
-        .input-wrap {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-
-          textarea {
-            display: flex;
-            flex-grow: 1;
-            width: 100%;
-          }
-
-          .icon-wrap {
-            cursor: pointer;
-            width: 30px;
-            height: 30px;
-            padding: 0.25rem;
-            background-color: white;
-            margin: 0.5rem;
-            border-radius: 50px;
-
-            i {
-
-            }
-          }
-        }
-
-        .security-status {
-          // position: absolute;
-          // margin-top: 0.5rem;
-          
-          background-color: $dark-mode-card-color;
-          color: white;
-          bottom: 0;
-          left: 0;
-          padding: 0.1rem 0.5rem;
-          margin-top: 0.5rem;
-          // transform: translateY( calc( 100% + 0.0rem ) );
-          font-size: 14px;
-          font-weight: 900;
-        }
-        
-      }
-
-      .color-options {
-        font-family: brandon-grotesque, sans-serif;
-        font-style: normal;
-        font-weight: 900;
-        font-size: 12px;
-        text-decoration: underline;
-        position: absolute;
-        left: 1rem;
-        bottom: 1rem;
-        // width: 400px;
-        border-radius: 5px;
-        padding: 0.25rem 0.5rem;
-        background-color: rgb(255, 255, 255);
-        border: 1px solid rgba(0, 0, 0, 0.15);
-
-        @include media-breakpoint-down(md) {
-          display: none;
-        }
-
-        .option {
-          cursor: pointer;
-          display: inline-block;
-          width: 25px;
-          height: 25px;
-          margin-right: 5px;
-          border: 1px solid rgba(0, 0, 0, 0.15);
-        }
-      }
-    }
-
-    .gradientBlue {
-      background: #6190E8;  /* fallback for old browsers */
-      background: -webkit-linear-gradient(to right, #A7BFE8, #6190E8);  /* Chrome 10-25, Safari 5.1-6 */
-      background: linear-gradient(to right, #A7BFE8, #6190E8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-      
-    }
-
-    .gradientGreen {
-      background: #43C6AC;  /* fallback for old browsers */
-      background: -webkit-linear-gradient(to right, #F8FFAE, #43C6AC);  /* Chrome 10-25, Safari 5.1-6 */
-      background: linear-gradient(to right, #F8FFAE, #43C6AC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-    }
-
-    .gradientRed {
-      background: #FF5F6D;  /* fallback for old browsers */
-      background: -webkit-linear-gradient(to right, #FFC371, #FF5F6D);  /* Chrome 10-25, Safari 5.1-6 */
-      background: linear-gradient(to right, #FFC371, #FF5F6D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    }
-
-    .gradientYellow {
-      background: #fffc00;  /* fallback for old browsers */
-      background: -webkit-linear-gradient(to right, #ffffff, #fffc00);  /* Chrome 10-25, Safari 5.1-6 */
-      background: linear-gradient(to right, #ffffff, #fffc00); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    }
-
-    .gradientPurple {
-      background: #f4c4f3;  /* fallback for old browsers */
-      background: -webkit-linear-gradient(to right, #fc67fa, #f4c4f3);  /* Chrome 10-25, Safari 5.1-6 */
-      background: linear-gradient(to right, #fc67fa, #f4c4f3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    }
-
-    .ad-panel {
-      width: 300px;
-      background-color: whitesmoke;
-
-      @include media-breakpoint-down(md) {
-        display: none;
-      }
-    }
-
-  }
 }

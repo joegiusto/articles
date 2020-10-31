@@ -344,12 +344,6 @@ io.on('connection', (socket) => {
     }
   }
 
-  // setInterval(function(){ 
-
-  //   io.emit('You are a connected client, thank you.');
-
-  // }, 5000);
-
   socket.on('join-room', function(data){
 
     // console.log('Creating a room named')
@@ -364,18 +358,9 @@ io.on('connection', (socket) => {
   
       console.log(socket.adapter.rooms)
   
-      // let bannedRooms = ['undefined'];
-  
       roomListeners = Object.keys(socket.adapter.rooms);
   
-      // roomListeners.forEach((word, index) => {
-      //   if(bannedRooms.indexOf(word) !== -1){
-      //     roomListeners.splice(index, 1);
-      //     // roomListeners[index] = null;
-      //   }
-      // });
-  
-      console.log("room listenres to open listeners on");
+      console.log("room listeners to open listeners on");
       console.log(roomListeners);
   
       createRoomListeners();
@@ -519,13 +504,13 @@ app.post('/api/charge', function (req, res) {
     // id: 'tok_visa',
     source: 'tok_visa'
   })
-.then((charge) => {
+  .then((charge) => {
     console.log("Success")
     console.log(charge)
-}).catch((err) => {
+  }).catch((err) => {
     // charge failed. Alert user that charge failed somehow
     console.log("Error")
     console.log(err)
-});
+  });
   
 });

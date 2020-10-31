@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Helmet } from "react-helmet";
 
-import { Manager, Reference, Popper } from 'react-popper';
-
 import Scrollspy from 'react-scrollspy';
 
 import * as ROUTES from '../../constants/routes';

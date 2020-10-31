@@ -8,7 +8,7 @@ import * as ROUTES from '../../constants/routes';
 // import * as ROLES from '../../constants/roles';
 
 // import { Manager, Reference, Popper } from 'react-popper';
-import { usePopper } from 'react-popper';
+// import { usePopper } from 'react-popper';
 
 import moment from 'moment';
 import Clock from 'react-live-clock';
@@ -42,9 +42,9 @@ function Menu(props) {
   const [popperElement, setPopperElement] = React.useState(null);
   const [arrowElement, setArrowElement] = React.useState(null);
   
-  const { styles, attributes } = usePopper(referenceElement, popperElement, {
-    modifiers: [{ name: 'arrow', options: { element: arrowElement } }],
-  });
+  // const { styles, attributes } = usePopper(referenceElement, popperElement, {
+  //   modifiers: [{ name: 'arrow', options: { element: arrowElement } }],
+  // });
 
   const documentWidth = document.documentElement.clientWidth;
   const windowWidth = window.innerWidth;

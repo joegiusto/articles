@@ -4,10 +4,45 @@ import moment from 'moment'
 import { connect } from 'react-redux';
 import TextareaAutosize from 'react-textarea-autosize';
 
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Popover from 'react-bootstrap/Popover';
+
 import io from 'socket.io-client'
 
 const ENDPOINT = "/";
 let socket = ''
+
+const popover = (
+  <Popover id="popover-basic">
+    <Popover.Title as="h3">Settings</Popover.Title>
+    <Popover.Content>
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <div className="mr-3">Encrypt Chat</div>
+        <div>
+          <button className="btn btn-sm btn-articles-light">
+            Encrypt
+          </button>
+        </div>
+      </div>
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <div className="mr-3">Mute Chat</div>
+        <div>
+          <button className="btn btn-sm btn-articles-light">
+            Yes
+          </button>
+        </div>
+      </div>
+      <div className="d-flex justify-content-between align-items-center">
+        <div className="mr-3">Delete Chat</div>
+        <div>
+          <button className="btn btn-sm btn-danger">
+            Delete
+          </button>
+        </div>
+      </div>
+    </Popover.Content>
+  </Popover>
+);
 
 class Messages extends Component {
   constructor(props) {
@@ -24,6 +59,9 @@ class Messages extends Component {
 
       scrollPosition: 0,
       isTyping: false,
+
+      sidebarVisible: false,
+      settingsOpen: false,
 
       chatMessage: '',
       image: '',
@@ -156,6 +194,8 @@ class Messages extends Component {
       
       this.setState({focus: message}, 
         () => {
+
+          this.setState({sidebarVisible: false})
           
           self.myScrollRef.current.scrollTop = self.myScrollRef.current.scrollHeight;
   
@@ -396,7 +436,7 @@ class Messages extends Component {
     const { focus } = this.state;
 
     return (
-      <div className="email-page background">
+      <div className="messages-page">
 
         <div className={"start-chat-container " + (this.state.createChatOverlay ? 'visible' : '')}>
 
@@ -426,22 +466,6 @@ class Messages extends Component {
           </div>
 
         </div>
-
-        <div onClick={() => this.setState({createChatOverlay: false})} className={"create-chat-overlay d-none " + (this.state.createChatOverlay ? 'active' : '')}>
-
-          <div className="create-chat active">
-            <h5>Start Chat</h5>
-            
-            <input className="" type="text"/>
-            <button className="btn btn-articles-light">Start</button>
-
-            <h5 className="mt-3">Quick Chat</h5>
-            <div className="quick-chat-cards">
-              <div className="quick-chat-card">Joey Giusto (Founder)</div>
-            </div>
-
-          </div>
-        </div>
         
         <div className={"nav-bar-sticker " + (this.props.sideMenuOpen ? '' : '')}>
           <div className="bg"></div>
@@ -451,11 +475,11 @@ class Messages extends Component {
 
         <div className="container-fluid">
 
-          <div className="chat-card card m-4">
+          <div className="chat-card card my-4 mx-0 m-md-4">
 
             <div className="card-body d-flex p-0">
 
-              <div className="chat-sidebar scrollbar">
+              <div className={"chat-sidebar " + (this.state.sidebarVisible ? 'expand' : '')}>
                 {this.renderMessageContacts()}
 
                 <div className="start-chat">
@@ -463,12 +487,18 @@ class Messages extends Component {
                 </div>
               </div>
 
-              <div className="chat-content">
+              <div className={"chat-content " + (this.state.sidebarVisible ? '' : 'expand')}>
+
+                <div onClick={() => this.setState({sidebarVisible: false})}  className={"content-darken " + (this.state.sidebarVisible ? 'visible' : '')}></div>
 
                 <div className="content-header">
                   <div className="row justify-content-between align-items-center">
 
-                    <div className="col-6 col-sm-8 d-flex align-items-center">
+                    <div className="col-8 col-sm-8 d-flex align-items-center">
+
+                      <button onClick={() => this.setState({sidebarVisible: true})} className="btn btn-articles-light d-md-none mr-3">
+                        <i className="fas fa-chevron-left mr-0"></i>
+                      </button>
 
                       <div className="min-w-0">
                         <div>{focus.fetchedUsers?.filter(user => user.id !== this.props.user_id).map(user => user.name)}</div>
@@ -479,9 +509,11 @@ class Messages extends Component {
 
                     <div className="col-auto">
 
+                    <OverlayTrigger trigger='click' rootClose placement="bottom" overlay={popover}>
                       <button className="btn btn-articles-light">
                         <i class="fas fa-cog mr-0"></i>  
                       </button>
+                    </OverlayTrigger>
 
                     </div>
 
@@ -539,9 +571,6 @@ class Messages extends Component {
                     Auto Scroll
                   </div> 
 
-                  <textarea className="d-none" id="chatMessage" name="chatMessage" value={this.state.chatMessage} onChange={(e) => this.handleChange(e)} type="text"/>
-                  <div onClick={() => this.sendMessage()} className="icon-wrap d-none"><i className="far fa-paper-plane mr-0"></i></div>
-
                   <div className={"thumbnail-container " + (this.state.image === '' ? 'd-none' : '')}>
 
                     <button onClick={() => this.setState({image: '', imageFile: ''})} className="btn btn-sm btn-danger remove">
@@ -567,7 +596,7 @@ class Messages extends Component {
                     <input className="d-none" onFocus={() => (this.props.changeFocus('photo'))} id="file-upload" onChange={this.onImageUpload} accept="image/x-png,image/gif,image/jpeg" type="file" name="myfile" />
                     <label for="file-upload" className="btn btn-sm btn-articles-light mb-0"><i class="fas fa-paperclip"></i>Attach</label>
   
-                    <button className="btn btn-sm btn-articles-light" onClick={() => this.sendMessage()}><i className="far fa-paper-plane"></i>Send</button>
+                    <button disabled={this.state.chatMessage === '' && this.state.image === ''} className="btn btn-sm btn-articles-light" onClick={() => this.sendMessage()}><i className="far fa-paper-plane"></i>Send</button>
                   </div>
 
                 </div>
@@ -579,150 +608,7 @@ class Messages extends Component {
 
         </div>
 
-        <div className="dashboard d-none">
-          <div className={"inbox-messages " + (this.state.focus._id === undefined ? '' : 'active')}>
-
-            <div className="current-spotlight px-4 py-2 d-flex justify-content-between align-items-center">
-
-              <div>
-                <button onClick={() => this.setState({inboxFilter: 'people'})} className={"badge ml-1 " + (this.state.inboxFilter === 'people' ? 'badge-dark' : 'badge-light border')}>
-                  People
-                </button>
-                <button onClick={() => this.setState({inboxFilter: 'newsletters'})} className={"badge ml-1 " + (this.state.inboxFilter === 'newsletters' ? 'badge-dark' : 'badge-light border')}>
-                  Newsletters
-                </button>
-                <button onClick={() => this.setState({inboxFilter: 'rooms'})} className={"badge ml-1 " + (this.state.inboxFilter === 'rooms' ? 'badge-dark' : 'badge-light border')}>
-                  Rooms
-                </button>
-                {/* <p>Inbox - {this.state.messages.length}</p> */}
-              </div>
-
-              {this.state.inboxFilter === 'people' ? 
-              <div onClick={() => this.setState({createChatOverlay: true})} className="create"><i className="far fa-plus-square"></i></div>
-              : 
-              null
-              }
-
-            </div>
-
-            {this.state.messagesLoading ? 
-            <div className="loading-block">
-              <div>
-                <i className="fas fa-spinner fa-spin"></i>
-                Loading
-              </div>
-            </div>
-
-            :
-
-            null
-            // this.renderInboxMessages()
-          }
-   
-          </div>
-
-          <div className={"content " + this.state.colorOption + (this.state.focus._id === undefined ? '' : ' active')}>
-
-            <div className={"header px-2 py-2 " + (focus._id === undefined ? 'd-none' : '')}>
-
-              {focus.group_message ? 
-              <div className="subject">Group Chat: {focus._id}</div>
-              :
-              <div className="subject">Personal Chat: {focus._id}</div>
-              }
-              
-              {focus.sender === undefined ?
-                null
-                :
-                <i className="far fa-trash-alt fa-2x mr-0"></i>
-              }
-            </div>
-
-            {/* <div ref={this.myScrollRef} onScroll={(e) => this.listenToScroll(e)} className={"chat-messages p-3"}> */}
-
-              {focus._id === undefined ?
-
-              <div className="welcome-page">
-                <div>Hello {this.props.user_details.first_name}</div>
-                <div className="card">
-                  <div>0 New Messages!</div>
-                </div>
-              </div>
-
-              :
-
-              focus.messages.map((message) => (
-                message.sender === this.props.user_id ? 
-                  <div className="chat-message mb-3 personal">
-                    <div className="sender">You</div>
-                    <div className="message">{message.message}</div>
-                    <div className="date">{moment(message.date).format("LLL")}</div>
-                  </div>
-                  :
-                  <div className="chat-message mb-3">
-                    <div className="sender">{message.sender}</div>
-                    <div className="message">{message.message}</div>
-                    <div className="date">{moment(message.date).format("LLL")}</div>
-                  </div>
-              ))}
-
-            </div>
-
-            {Object.keys(focus).length === 0 || focus.promotional === true ?
-                null
-                :
-                <div className="response">
-
-                  {/* {this.state.scrollPosition === 1 ? 
-                    <div className="scroll-lock">
-                      Auto Scroll
-                    </div>  
-                    :
-                    null
-                  } */}
-
-                  <div className={"scroll-lock " + (this.state.scrollPosition === 1 ? 'active' : '')}>
-                    Auto Scroll
-                  </div> 
-
-                  <div className="label">Reply:</div>
-
-                  <div className="input-wrap">
-                    <textarea className="" id="chatMessage" name="chatMessage" value={this.state.chatMessage} onChange={(e) => this.handleChange(e)} type="text"/>
-                    <div onClick={() => this.sendMessage()} className="icon-wrap"><i className="far fa-paper-plane mr-0"></i></div>
-                  </div>
-
-                  <div className="security-status w-100 d-flex justify-content-between align-items-center">
-
-                    <div>
-                      <i className="fas fa-lock-open"></i>
-                      <span>This chat is not encrypted</span>
-                    </div>
-
-                    <span className="badge badge-light">Options</span>
-
-                  </div>
-                </div>
-              }
-
-              <div className="color-options">
-                <span className="label">Chat Color</span>
-                <div>
-                  <ColorOption realThis={this} name=""/>
-                  <ColorOption realThis={this} name="gradientBlue"/>
-                  <ColorOption realThis={this} name="gradientGreen"/>
-                  <ColorOption realThis={this} name="gradientRed"/>
-                  <ColorOption realThis={this} name="gradientYellow"/>
-                  <ColorOption realThis={this} name="gradientPurple"/>
-                </div>
-              </div>       
-
-          </div>
-
-          <div className="ad-panel"></div>
-        </div>
-
-      // </div>
+      </div>
     )
   }
 }
