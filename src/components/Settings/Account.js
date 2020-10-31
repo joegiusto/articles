@@ -60,6 +60,7 @@ class Account extends Component {
 
     this.placesToAddress = this.placesToAddress.bind(this);
     this.latLng = this.latLng.bind(this);
+    this.updateUser = this.updateUser.bind(this);
   }
 
   componentDidMount() {
@@ -182,7 +183,6 @@ class Account extends Component {
     })
 
     axios.post('/api/secure/updateUserDetails', {
-      user: self.props.auth.user.id,
       user_details: {
         first_name: this.state.user.first_name,
         last_name: this.state.user.last_name,

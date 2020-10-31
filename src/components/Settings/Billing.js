@@ -307,9 +307,9 @@ class Billing extends Component {
                   </thead>
 
                   <tbody>
-                    {this.props.orders.length > 0 ? 
+                    {this.props.orders?.length > 0 ? 
 
-                      this.props.orders.map(order => 
+                      this.props.orders?.map(order => 
                         <tr className="order" onClick={() => this.redirectToOrder(order._id)}>
                           <th scope="row" className="order-id">{order._id}</th>
                           <td className="date">{moment(order.date).format('LLL')}</td>

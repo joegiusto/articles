@@ -265,14 +265,35 @@ section.myths-section {
         }
 
         .proposal {
-          text-align: center;
+          position: relative;
+          // text-align: center;
           padding: 2rem;
           height: 230px;
           display: flex;
           justify-content: center;
           align-items: center;
-          background-color: black;
-          color: white;
+          // background-color: black;
+          color: black;
+
+          img {
+            z-index: -1;
+            position: absolute;
+            object-fit: cover;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          }
+
+          .title {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 0.5rem;
+            color: white;
+          }
         }
 
       }

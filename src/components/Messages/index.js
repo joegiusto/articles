@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import moment from 'moment'
 import { connect } from 'react-redux';
+import TextareaAutosize from 'react-textarea-autosize';
 
 import io from 'socket.io-client'
 
@@ -23,11 +24,16 @@ class Messages extends Component {
 
       scrollPosition: 0,
       isTyping: false,
+
       chatMessage: '',
+      image: '',
+      imageFile: '',
+
       colorOption: '',
     }
 
     this.myScrollRef = React.createRef()
+    this.onImageUpload = this.onImageUpload.bind(this);
   }
 
   randomIntFromInterval(min, max) { // min and max included 
@@ -82,8 +88,12 @@ class Messages extends Component {
         
         self.setState({
           // messages: messagesCopy,
-          messagesLoading: false
+          messagesLoading: false,
+          focus: self.state.messages[0]
+        }, () => {
+          self.myScrollRef.current.scrollTop = self.myScrollRef.current.scrollHeight;
         })
+
       });
 
       // this.setState({ newsAllLoading: false });
@@ -97,6 +107,21 @@ class Messages extends Component {
   componentWillUnmount() {
     socket.disconnect()
     // window.removeEventListener('scroll', this.listenToScroll)
+  }
+
+  onImageUpload(e) {
+    const self = this;
+    console.log(e.target.files);
+
+    self.setState({
+      imageFile: e.target.files[0],
+      image: URL.createObjectURL(e.target.files[0])
+    });
+  }
+
+  scrollToBottom() {
+    const self = this;
+    self.myScrollRef.current.scrollTop = self.myScrollRef.current.scrollHeight;
   }
 
   listenToScroll = (e) => {
@@ -131,6 +156,7 @@ class Messages extends Component {
       
       this.setState({focus: message}, 
         () => {
+          
           self.myScrollRef.current.scrollTop = self.myScrollRef.current.scrollHeight;
   
           socket.emit( 'join-room', self.state.focus._id )
@@ -159,6 +185,8 @@ class Messages extends Component {
               }
             },
             () => { 
+
+              // self.myScrollRef.current.scrollTop = self.myScrollRef.current.scrollHeight;
   
               if ( willScroll === true ) {
                 // console.log('willScroll was true')
@@ -173,72 +201,60 @@ class Messages extends Component {
 
     }
 
-    
-
   }
 
-  // renderContentBackground(color) {
-
-  //   // This is here because if the user has dark mode selected then display should be different
-
-  //   switch(color) {
-  //     case 'gradientBlue':
-  //       return()
-  //     case y:
-  //       // code block
-  //       break;
-  //     default:
-  //       // code block
-  //   }
-
-  // }
-
-  renderInboxMessages() {
+  renderMessageContacts() {
 
     if (this.state.inboxFilter === 'people') {
       return (
         this.state.messages.map(message => 
-          (
-            <div onClick={() => this.setFocus(message)} className={"inbox-message " + (message.promotional ? 'ad ' : '') + (message._id === this.state.focus._id ? 'active ' : '')} >
-  
-              <div className="message-photo">
-                <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${message.sender}.jpg`} alt=""/>
-              </div>
-  
-              <div className="message-content">
-  
-                {message._id === this.state.focus._id ? 
-                  <div className="active-bullet">
-                    <div className="bullet"></div>
-                  </div>
-                  :
-                  null
-                }
-  
-                <div className="message-sender">
-                  {message.group_message ? 
-                  <div>
-                    <div>Group</div>
-                    <span>
-                      {/* { message.users.map( (user) => <span className="badge badge-articles mr-1">{user}</span> ) } */}
-                      { message.fetchedUsers.map( (user) => <span className={ "badge mr-1 " + ( user === "Deleted User" ? 'badge-danger' : 'badge-dark' ) }>{user}</span> ) }
-                    </span>
-                  </div> 
-                  :
-                  <div>
-                    <div>Person</div>
-                    <span>
-                      {/* { message.users.map( (user) => <span className="badge badge-articles mr-1">{user}</span> ) } */}
-                      { message.fetchedUsers.map( (user) => <span className="badge badge-dark mr-1">{user}</span> ) }
-                    </span>
-                  </div> 
-                  }
-                </div>
-  
-                <div className="message-subject">{message.subject}</div>
-              </div>
+          <div onClick={() => this.setFocus(message)} className={"chat-contact inbox-message " + (message.promotional ? 'ad ' : '') + (message._id === this.state.focus._id ? 'active ' : '')} >
+
+            <div className="contact-photo">
+              <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${ message.fetchedUsers.filter(user => user.id !== this.props.user_id).map(user => user.id) }.jpg`} alt=""/>
             </div>
-          )
+
+            <div className="contact-body message-content">
+
+              {message._id === this.state.focus._id ? 
+                <div className="active-bullet">
+                  <div className="bullet"></div>
+                </div>
+                :
+                null
+              }
+
+              <div className="message-sender">
+                {message.group_message ? 
+                <div>
+                  <div>Group</div>
+                  <span>
+                    {/* { message.users.map( (user) => <span className="badge badge-articles mr-1">{user}</span> ) } */}
+                    { message.fetchedUsers.map( (user) => <span className={ "badge mr-1 " + ( user.name === "Deleted User" ? 'badge-danger' : 'badge-dark' ) }>{user.name}</span> ) }
+                  </span>
+                </div> 
+                :
+                <div>
+                  <div className="contact-name"> { message.fetchedUsers.filter(user => user.id !== this.props.user_id).map(user => user.name) }</div>
+                  <small>
+                    {message.encryption === true ?
+                    <span><i class="fas fa-lock"></i>Encrypted</span>
+                    :
+                    <span>Last message preview</span>
+                    }
+                  </small>
+                  <span>
+                    {/* { message.users.map( (user) => <span className="badge badge-articles mr-1">{user}</span> ) } */}
+                    {/* { message.fetchedUsers.map( (user) => <span className="badge badge-dark mr-1">{user}</span> ) } */}
+                  </span>
+                </div> 
+                }
+              </div>
+
+              {/* <div className="message-subject">{message.subject}</div> */}
+
+            </div>
+          </div>
         )
       ) 
     } 
@@ -286,16 +302,23 @@ class Messages extends Component {
 
   sendMessage() {
     const self = this;
+    const data = new FormData();
+
+    data.append('file', this.state.imageFile);
+    data.append('chat_id', self.state.focus._id);
+    data.append('message', self.state.chatMessage);
+
+    // {
+    //   chat_id: self.state.focus._id,
+    //   message: self.state.chatMessage,
+    //   imageFile: data
+    // }
 
     if ( this.state.focus._id === undefined ) {
       console.log("This should not happen");
     } else {
 
-      axios.post('/api/chatMessage', {
-        chat_id: self.state.focus._id,
-        user_id: self.props.user_id,
-        message: self.state.chatMessage
-      })
+      axios.post('/api/chatMessage', data)
       .then(function (response) {
         console.log(response.data);
 
@@ -309,24 +332,55 @@ class Messages extends Component {
           willScroll = true
         }
 
-        self.setState({
-          focus: {
-            ...self.state.focus,
-            messages: [
-              ...self.state.focus.messages,
-              {
-               date: moment()._d,
-               message: self.state.chatMessage,
-               sender: self.props.user_id
-              }
-            ]
-          },
-          chatMessage: ''
-        }, () => {
-          if ( willScroll === true ) {
-            self.myScrollRef.current.scrollTop = self.myScrollRef.current.scrollHeight;
-          }
-        })
+        if (response.data.type === 'photo') {
+
+          self.setState({
+            focus: {
+              ...self.state.focus,
+              messages: [
+                ...self.state.focus.messages,
+                {
+                 date: moment()._d,
+                 message: '',
+                 sender: self.props.user_id,
+                 media: 'photo',
+                 url: response.data.url
+                }
+              ]
+            },
+            chatMessage: '',
+            image: '',
+            imageFile: ''
+          }, () => {
+            if ( willScroll === true ) {
+              self.myScrollRef.current.scrollTop = self.myScrollRef.current.scrollHeight;
+            }
+          })
+
+        } else {
+
+          self.setState({
+            focus: {
+              ...self.state.focus,
+              messages: [
+                ...self.state.focus.messages,
+                {
+                 date: moment()._d,
+                 message: self.state.chatMessage,
+                 sender: self.props.user_id
+                }
+              ]
+            },
+            chatMessage: '',
+            image: '',
+            imageFile: ''
+          }, () => {
+            if ( willScroll === true ) {
+              self.myScrollRef.current.scrollTop = self.myScrollRef.current.scrollHeight;
+            }
+          })
+
+        }
 
       })
       .catch(function (error) {
@@ -344,7 +398,36 @@ class Messages extends Component {
     return (
       <div className="email-page background">
 
-        <div onClick={() => this.setState({createChatOverlay: false})} className={"create-chat-overlay " + (this.state.createChatOverlay ? 'active' : '')}>
+        <div className={"start-chat-container " + (this.state.createChatOverlay ? 'visible' : '')}>
+
+          <div onClick={() => this.setState({createChatOverlay: false})} className="start-chat-background"></div>
+
+          <div className="start-chat card">
+
+            <div className="card-header">
+              Start Chat
+            </div>
+
+            <div className="card-body">
+
+              <div className="form-group articles">
+                <label for="new-chat-user-id">User's ID or Email Address</label>
+                <input className="form-control with-label" name="new-chat-user-id" id="new-chat-user-id" type="text" value=""/>
+              </div>
+
+              <button className="btn btn-lg w-100 btn-articles-light">Start Chat</button>
+
+            </div>
+
+            <div className="card-footer">
+              <small>Your User ID is <b>{this.props.user_id}</b> provide this to a friend to start a conversation.</small>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div onClick={() => this.setState({createChatOverlay: false})} className={"create-chat-overlay d-none " + (this.state.createChatOverlay ? 'active' : '')}>
 
           <div className="create-chat active">
             <h5>Start Chat</h5>
@@ -352,7 +435,7 @@ class Messages extends Component {
             <input className="" type="text"/>
             <button className="btn btn-articles-light">Start</button>
 
-            <h5 className="mt-3">Quick Chatt</h5>
+            <h5 className="mt-3">Quick Chat</h5>
             <div className="quick-chat-cards">
               <div className="quick-chat-card">Joey Giusto (Founder)</div>
             </div>
@@ -360,20 +443,143 @@ class Messages extends Component {
           </div>
         </div>
         
-        <div className={"nav-bar-sticker " + (this.props.sideMenuOpen ? 'show' : '')}>
+        <div className={"nav-bar-sticker " + (this.props.sideMenuOpen ? '' : '')}>
           <div className="bg"></div>
           <div className="bg bg2"></div>
           <div className="bg bg3"></div>
         </div>
 
-        {/* <div onClick={() => this.setFocus({})} className="page-note">
-          <div className="branding-badge">
-            <span>Mesh</span>
-            <span className="beta">BETA</span>
-          </div>
-        </div> */}
+        <div className="container-fluid">
 
-        <div className="dashboard">
+          <div className="chat-card card m-4">
+
+            <div className="card-body d-flex p-0">
+
+              <div className="chat-sidebar scrollbar">
+                {this.renderMessageContacts()}
+
+                <div className="start-chat">
+                  <button onClick={() => this.setState({createChatOverlay: true})} className="btn btn-articles-light">Start Chat</button>
+                </div>
+              </div>
+
+              <div className="chat-content">
+
+                <div className="content-header">
+                  <div className="row justify-content-between align-items-center">
+
+                    <div className="col-6 col-sm-8 d-flex align-items-center">
+
+                      <div className="min-w-0">
+                        <div>{focus.fetchedUsers?.filter(user => user.id !== this.props.user_id).map(user => user.name)}</div>
+                        <small>Active</small>
+                      </div>
+
+                    </div>
+
+                    <div className="col-auto">
+
+                      <button className="btn btn-articles-light">
+                        <i class="fas fa-cog mr-0"></i>  
+                      </button>
+
+                    </div>
+
+                  </div>
+                </div>
+
+                <div ref={this.myScrollRef} onScroll={(e) => this.listenToScroll(e)} className="content-body scrollbar">
+                  
+                  {focus.encryption === true ? 
+
+                  <div className="chat-encryption-warning">
+
+                    <div>This chat is encrypted, the user who started this chat set a password that you will need to decrypt the messages. This will have to be entered every time to ensure security. For best security obtain this password from the user in person so there is no digital record of it.</div>
+
+                    <div style={{width: 'max-content'}} className="form-group d-inline-block articles mt-3">
+                      <label for="password">Password</label>
+                      <input className="form-control with-label" name="password" id="password" type="text" value=""/>
+                    </div>
+
+                    <button className="btn btn-articles-light">Enter</button>
+
+                  </div>
+
+                  :
+
+                  focus.messages?.map((message) => (
+
+                      <div className={"chat-message p-3 " + ( message.sender === this.props.user_id ? 'personal' : '' )}>
+
+                        <div className={"message-photo " + ( message.sender === this.props.user_id ? 'd-none' : '' )}>
+                          <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${message.sender}.jpg`} alt=""/>
+                        </div>
+
+                        <div className="message-details">
+
+                          {message.media === undefined ?
+                          <div className="message">{message.message}</div>
+                          :
+                          <img className="message photo" src={message.url} alt=""/>
+                          }
+                          
+
+                          <div className="date">{moment(message.date).format("LLL")}</div>
+                        </div>
+
+                      </div>
+
+                  ))}
+
+                </div>
+
+                <div className="content-send">
+
+                  <div onClick={() => this.scrollToBottom()} className={"scroll-lock " + (this.state.scrollPosition === 1 ? 'active' : '')}>
+                    Auto Scroll
+                  </div> 
+
+                  <textarea className="d-none" id="chatMessage" name="chatMessage" value={this.state.chatMessage} onChange={(e) => this.handleChange(e)} type="text"/>
+                  <div onClick={() => this.sendMessage()} className="icon-wrap d-none"><i className="far fa-paper-plane mr-0"></i></div>
+
+                  <div className={"thumbnail-container " + (this.state.image === '' ? 'd-none' : '')}>
+
+                    <button onClick={() => this.setState({image: '', imageFile: ''})} className="btn btn-sm btn-danger remove">
+                      <span><i class="far fa-window-close"></i>Remove</span>
+                    </button>
+
+                    <img id="thumbnail" src={this.state.image}/>
+
+                  </div>
+
+                  {this.state.image === '' ? 
+                  <TextareaAutosize
+                    className="chat-message" 
+                    name="chatMessage"
+                    value={this.state.chatMessage}
+                    onChange={(e) => this.handleChange(e)}
+                    placeholder="Type your message">
+                  </TextareaAutosize>
+                  : 
+                  ''}                  
+
+                  <div className="align-items-start">
+                    <input className="d-none" onFocus={() => (this.props.changeFocus('photo'))} id="file-upload" onChange={this.onImageUpload} accept="image/x-png,image/gif,image/jpeg" type="file" name="myfile" />
+                    <label for="file-upload" className="btn btn-sm btn-articles-light mb-0"><i class="fas fa-paperclip"></i>Attach</label>
+  
+                    <button className="btn btn-sm btn-articles-light" onClick={() => this.sendMessage()}><i className="far fa-paper-plane"></i>Send</button>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <div className="dashboard d-none">
           <div className={"inbox-messages " + (this.state.focus._id === undefined ? '' : 'active')}>
 
             <div className="current-spotlight px-4 py-2 d-flex justify-content-between align-items-center">
@@ -409,7 +615,9 @@ class Messages extends Component {
 
             :
 
-            this.renderInboxMessages()}
+            null
+            // this.renderInboxMessages()
+          }
    
           </div>
 
@@ -430,7 +638,7 @@ class Messages extends Component {
               }
             </div>
 
-            <div ref={this.myScrollRef} onScroll={(e) => this.listenToScroll(e)} className={"chat-messages p-3"}>
+            {/* <div ref={this.myScrollRef} onScroll={(e) => this.listenToScroll(e)} className={"chat-messages p-3"}> */}
 
               {focus._id === undefined ?
 
@@ -514,7 +722,7 @@ class Messages extends Component {
           <div className="ad-panel"></div>
         </div>
 
-      </div>
+      // </div>
     )
   }
 }

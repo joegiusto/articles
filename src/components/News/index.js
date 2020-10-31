@@ -6,7 +6,7 @@ import GoogleMapReact from 'google-map-react';
 import Chart from 'chart.js';
 
 // import Swiper from 'react-id-swiper';
-import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, EffectFade } from 'swiper';
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, EffectFade, Mousewheel } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.scss'
 import 'swiper/components/navigation/navigation.scss';
@@ -129,7 +129,7 @@ class SimpleMap extends React.Component {
   }
 }
 
-SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, EffectFade]);
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, EffectFade, Mousewheel]);
 
 // const transactions = 
 
@@ -416,6 +416,8 @@ class RecentSliders extends Component {
       // slidesPerGroup: 1,
       // navigation: true,
       scrollbar: { draggable: true },
+      // mousewheel: true,
+      // direction: "horizontal",
       navigation: {
         nextEl: '.fa-forward',
         prevEl: '.fa-backward',

@@ -202,7 +202,10 @@ class Myth extends React.Component {
                    <SwiperSlide>
                      <Link to={`${this.renderRoute(proposal.news_type)}/${proposal.url}`}>
                        <div className="proposal">
-                         {proposal.news_title}
+                         <div className="background">
+                           <img src={proposal.hero_url} alt=""/>
+                         </div>
+                         <div className="title">{proposal.news_title}</div>
                        </div>
                      </Link>
                    </SwiperSlide>

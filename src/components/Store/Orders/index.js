@@ -45,7 +45,7 @@ class OrdersPage extends Component {
             <div className="card-body">
 
               <div className="mb-3">
-                <button className="btn btn-articles-light alt">Active - {this.props.orders.length}</button>
+                <button className="btn btn-articles-light alt">Active - {this.props.orders?.length || 0}</button>
                 <button className="btn btn-articles-light">Archived</button>
               </div>
 

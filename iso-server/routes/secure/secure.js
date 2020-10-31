@@ -5,6 +5,14 @@ const stripe = require('stripe')(process.env.STRIPE_TEST_SECRET);
 const mongoose = require("mongoose");
 const axios = require("axios");
 const User = mongoose.model("users");
+const { v4: uuidv4 } = require('uuid');
+
+var AWS = require('aws-sdk');
+
+const s3 = new AWS.S3({
+  accessKeyId: process.env.accessKeyId,
+  secretAccessKey: process.env.secretAccessKey,
+});
 
 // const { resource } = require('../api/users');
 // const { response } = require('express');
@@ -995,17 +1003,11 @@ module.exports = (app, db) => {
             } else {
               fetchedName = subResult.first_name + ' ' + subResult.last_name
             }
-
-            // console.log(fetchedName)
-            // console.log(fetchedUsers)
             
-            fetchedUsers.push(fetchedName);
+            fetchedUsers.push({id: user, name: fetchedName});
             fetchedName = ''
           });
         })
-
-        // console.log("Final List Real")
-        // console.log(fetchedUsers)
 
         result[i].fetchedUsers = fetchedUsers;
         // result[i].userMatch = fetchedUsers;
@@ -1104,11 +1106,13 @@ module.exports = (app, db) => {
 
   });
 
-  app.post('/api/chatMessage', (req, res) => {
+  app.post('/api/chatMessage', passport.authenticate('jwt', {session: false}), (req, res) => {
 
-    if (req.body.chat_id === '' || req.user._id === '' || req.user._id === undefined || req.body.message === '') {
+    console.log(req.body)
 
-      console.log("should End Here")
+    if (req.body.chat_id === '' || req.user._id === '' || req.user._id === undefined || (req.body.message === '' && req.body.file === '') ) {
+
+      console.log("ERROR")
 
       res.status(500)
       res.json({
@@ -1121,22 +1125,72 @@ module.exports = (app, db) => {
 
     } else {
 
-      db.collection("articles_messages").updateOne( {_id: ObjectId(req.body.chat_id) }, 
-      {
-        $push: {
-          messages: {
-            sender: req.user._id,
-            message: req.body.message,
-            date: moment()._d
+      if (req.body.file !== '') {
+        console.log("Message is a file");
+        let uuid = uuidv4();
+        console.log(uuid);
+
+        console.log(req.files.file)
+
+        var params = {Bucket: `articles-website/chat/${req.body.chat_id}`, Key: uuid, ContentType: "image/jpeg", Body: req.files.file.data, ACL: "public-read"};
+
+        s3.upload(params, function(err, data) {
+
+          console.log(err, data);
+
+          if (err) {
+            return res.status(500).send(err);
           }
-        }
-      },
-      function(err, res) {
-        if (err) throw err;
-        console.log(`Call to /api/chatMessage done`);
-      });
-  
-      return res.send('Message Saved');
+
+          db.collection("articles_messages").updateOne( 
+            {_id: ObjectId(req.body.chat_id) }, 
+            {
+              $push: {
+                messages: {
+                  _id: ObjectId(),
+                  sender: req.user._id,
+                  message: '',
+                  media: 'photo',
+                  url: `https://articles-website.s3.amazonaws.com/chat/${req.body.chat_id}/${uuid}`,
+                  date: moment()._d
+                }
+              }
+            },
+            function(err, response) {
+              if (err) throw err;
+              console.log(`Call to /api/chatMessage done`);
+              return res.send({
+                type: 'photo',
+                message: 'Image Uploaded',
+                url: `https://articles-website.s3.amazonaws.com/chat/${req.body.chat_id}/${uuid}`,
+              });
+            }
+          );
+        });
+        
+      } else {
+        console.log("Just message")
+
+        db.collection("articles_messages").updateOne( 
+          {_id: ObjectId(req.body.chat_id) }, 
+          {
+            $push: {
+              messages: {
+                _id: ObjectId(),
+                sender: req.user._id,
+                message: req.body.message,
+                date: moment()._d
+              }
+            }
+          },
+          function(err, response) {
+            if (err) throw err;
+            console.log(`Call to /api/chatMessage done`);
+            return res.send('Message Saved');
+          }
+        );
+    
+      }
 
     }
   });
