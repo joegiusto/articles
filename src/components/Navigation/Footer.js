@@ -9,7 +9,7 @@ function Footer(props) {
   // console.log(`Has is equal to ${has}`)
 
   return (
-    <footer className={"site-footer " + (props.location.pathname === '/messages' || props.location.pathname === '/outset' || has ? 'd-none' : '')}>
+    <footer className={"site-footer " + (props.location.pathname === '/messages' || props.location.pathname === '/messages/' || props.location.pathname === '/outset' || has ? 'd-none' : '')}>
       <div className="container-fluid">
         <div className="row">
 

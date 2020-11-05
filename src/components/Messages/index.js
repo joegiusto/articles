@@ -4,15 +4,13 @@ import moment from 'moment'
 import { connect } from 'react-redux';
 import TextareaAutosize from 'react-textarea-autosize';
 import qs from 'qs'
-
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
-
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
-
 import io from 'socket.io-client'
 
+import * as ROUTES from '../../constants/routes';
 import loadingGif from '../../assets/img/News/loading.gif'
 
 const ENDPOINT = "/";
@@ -70,8 +68,24 @@ class Messages extends Component {
     });
   }
 
+  handleTextareaChange(e) {
+    
+    if ( e.key === "Enter" && !e.shiftKey ) {
+      e.preventDefault();
+
+      if (this.state.chatMessage !== '') {
+        this.sendMessage();
+      }
+    }
+
+  }
+
   componentDidMount() {
     const self = this;
+
+    if (!this.props.auth) {
+      this.props.history.push(ROUTES.SIGN_IN);
+    }
 
     var query = qs.parse(this.props.location.search, { ignoreQueryPrefix: true });
     if ( query.startMsg !== '' && query.startMsg !== undefined && query.startMsg !== null ) {
@@ -218,38 +232,6 @@ class Messages extends Component {
     });
   }
 
-  // setFocus(message) {
-  //   const self = this;
-
-  //   // Think this was here for ads
-  //   if ( message === {} ) {
-
-  //     console.log("Ignore this one")
-  //     // this.setState({
-  //     //   focus: message
-  //     // })
-
-  //   } else {
-      
-  //     this.setState({
-  //       focus: message,
-  //     }, 
-  //       () => {
-
-  //         this.setState({sidebarVisible: false})
-          
-  //         setTimeout(function(){ self.scrollToBottom(); }, 100);
-  
-  //         socket.emit( 'join-room', self.state.focus._id )
-  
-  //         // Socket on message code taken from here
-  //       }
-  //     )
-
-  //   }
-
-  // }
-
   renderMessageContacts() {
 
     if (this.state.inboxFilter === 'people') {
@@ -275,13 +257,30 @@ class Messages extends Component {
               <div className="message-sender">
 
                 <div>
+
                   <div className="contact-name"> { message.fetchedUsers?.filter(user => user.id !== this.props.user_id).map(user => user.name) }</div>
                   <small>
+
                     {message.encryption === true ?
                     <span><i className="fas fa-lock"></i>Encrypted</span>
                     :
-                    <span>{message.messages[message.messages.length - 1].message !== '' ? message.messages[message.messages.length - 1].message : <span><i className="far fa-file-image mr-2"></i>Media</span>}</span>
-                    }
+                    <span>
+                      {message.messages[message.messages.length - 1].message !== '' ? 
+
+                        <span>
+                          {message.messages[message.messages.length - 1].message.substring(0,50)}
+                          {message.messages[message.messages.length - 1].message.length > 50 ? 
+                          <div className="badge badge-light border">{message.messages[message.messages.length - 1].message.length - 50}+ characters</div>
+                          : 
+                          ''}
+                        </span>
+                        : 
+                        <span><i className="far fa-file-image mr-2"></i>Image</span>
+
+                      }
+                    </span>
+                        
+                      }
                   </small>
                 </div> 
  
@@ -842,6 +841,7 @@ class Messages extends Component {
                     className="chat-message" 
                     name="chatMessage"
                     value={this.state.chatMessage}
+                    onKeyPress={(e) => { this.handleTextareaChange(e) }}
                     onChange={(e) => this.handleChange(e)}
                     placeholder="Type your message">
                   </TextareaAutosize>
@@ -883,6 +883,7 @@ const mapStateToProps = (state) => {
   return {
     user_id: state.auth.user.id,
     user_details: state.auth.user_details,
+    auth: state.auth.isAuthenticated,
     sideMenuOpen: state.site.sideMenuOpen
   };
 };

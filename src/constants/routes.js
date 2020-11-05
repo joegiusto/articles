@@ -5,6 +5,7 @@ export const LANDING = '/';
 export const SIGN_UP = '/signup';
 export const SIGN_IN = '/signin';
 export const VERIFY_EMAIL = '/verify-email';
+export const PASSWORD_FORGET = '/password-reset';
 
 // Account Creation
 export const OUTSET = '/outset';
@@ -93,7 +94,6 @@ export const OPEN_SOURCE ='/support/open-source'
 
 // Account
 export const ACCOUNT = '/account';
-export const PASSWORD_FORGET = '/pw-forget';
 
 // Admin
 export const ADMIN = '/admin';

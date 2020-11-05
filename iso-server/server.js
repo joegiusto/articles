@@ -246,8 +246,15 @@ app.get('/', function (req, res) {
 });
 
 app.post('/recover', function (req, res) {
-  console.log("Called")
   password.recover(req, res)
+});
+
+app.post('/reset', function (req, res) {
+  password.reset(req, res)
+});
+
+app.post('/resetPassword', function (req, res) {
+  password.resetPassword(req, res)
 });
 
 app.set('socketio', io);

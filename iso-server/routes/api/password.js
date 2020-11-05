@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('users');
 const express = require("express");
+const bcrypt = require("bcryptjs");
+const moment = require ('moment');
 const app = express();
 const {sendEmail} = require('../../utils/index');
 
@@ -30,7 +32,7 @@ exports.recover = async (req, res) => {
         email: "no-reply@articles.media",
         name: "Articles Media"
       };
-      let link = "http://" + req.headers.host + "/password-reset" + user.resetPasswordToken;
+      let link = "http://" + req.headers.host + "/password-reset?token="+user.resetPasswordToken;
       let html = `<p>Hi ${user.first_name}</p>
                   <p>Please click on the following <a href="${link}">link</a> to reset your password.</p> 
                   <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>`;
@@ -48,14 +50,14 @@ exports.recover = async (req, res) => {
 // @access Public
 exports.reset = async (req, res) => {
   try {
-      const { token } = req.params;
+      const { token } = req.body;
 
       const user = await User.findOne({resetPasswordToken: token, resetPasswordExpires: {$gt: Date.now()}});
 
       if (!user) return res.status(401).json({message: 'Password reset token is invalid or has expired.'});
 
-      //Redirect user to form with the email address
-      res.render('reset', {user});
+      // Let client know call was a success
+      res.end();
   } catch (error) {
       res.status(500).json({message: error.message})
   }
@@ -66,30 +68,38 @@ exports.reset = async (req, res) => {
 // @access Public
 exports.resetPassword = async (req, res) => {
   try {
-      const { token } = req.params;
+      const { token, newPassword } = req.body;
 
       const user = await User.findOne({resetPasswordToken: token, resetPasswordExpires: {$gt: Date.now()}});
 
       if (!user) return res.status(401).json({message: 'Password reset token is invalid or has expired.'});
 
-      //Set the new password
-      user.password = req.body.password;
-      user.resetPasswordToken = undefined;
-      user.resetPasswordExpires = undefined;
-      user.isVerified = true;
+      bcrypt.genSalt(10, (err, salt) => {
 
-      // Save the updated user object
-      await user.save();
+        bcrypt.hash(newPassword, salt, (err, hash) => {
+          if (err) throw err;
 
-      let subject = "Your password has been changed";
-      let to = user.email;
-      let from = process.env.FROM_EMAIL;
-      let html = `<p>Hi ${user.first_name}</p>
-                  <p>This is a confirmation that the password for your account ${user.email} has just been changed.</p>`
+          user.password = hash;
+          user.resetPasswordToken = undefined;
+          user.resetPasswordExpires = undefined;
+          user.password_last_change = moment()._d;
 
-      await sendEmail({to, from, subject, html});
+          user.save().then( async (user) => {
 
-      res.status(200).json({message: 'Your password has been updated.'});
+            let subject = "Your password has been changed";
+            let to = user.email;
+            let from = process.env.FROM_EMAIL;
+            let html = `<p>Hi ${user.first_name}</p>
+                        <p>This is a confirmation that the password for your account ${user.email} has just been changed.</p>`
+
+            await sendEmail({to, from, subject, html});
+
+            res.status(200).json({message: 'Your password has been updated.'});
+
+          })
+
+        });
+      }); 
 
   } catch (error) {
       res.status(500).json({message: error.message})
