@@ -4,6 +4,7 @@ const fileUpload = require('express-fileupload');
 const bodyParser = require('body-parser');
 const passport = require("passport");
 const path = require('path');
+const moment = require('moment');
 const app = express();
 const cors = require('cors');
 var http = require('http').createServer(app);
@@ -249,6 +250,8 @@ app.post('/recover', function (req, res) {
   password.recover(req, res)
 });
 
+app.set('socketio', io);
+
 io.on('connection', (socket) => {
   console.log('User connected');
   
@@ -279,6 +282,30 @@ io.on('connection', (socket) => {
     recieveDonation(data)
 
   });
+
+  // socket.on('5f208af919d23fbf84c7a6aa', function(data){
+  //   console.log("A message was sent in chat 5f208af919d23fbf84c7a6aa")
+  //   console.log(data)
+
+  //   if (data.type === 'image') {
+  //     io.emit('5f208af919d23fbf84c7a6aa', {
+  //       date: moment()._d,
+  //       message: '',
+  //       sender: '5eaa6ceb2371dc8dc9bfa796',
+  //       media: 'photo',
+  //       url: 'https://articles-website.s3.amazonaws.com/chat/5f208af919d23fbf84c7a6aa/b2cca4cd-37ff-490e-a804-a309f49e2e9d'
+  //     });
+  //   }
+
+  //   if (data.type === 'text') {
+  //     io.emit('5f208af919d23fbf84c7a6aa', {
+  //       date: moment()._d,
+  //       message: data.text,
+  //       sender: '5eaa6ceb2371dc8dc9bfa796'
+  //     });
+  //   }
+    
+  // });
 
   socket.on('deleteDonation', (id) => {
 
@@ -324,10 +351,10 @@ io.on('connection', (socket) => {
         // socket.broadcast.to('game').emit('message', 'nice game');
         // io.emit( room, data );
 
-        socket.broadcast.to( room ).emit( room, data );
+        // socket.broadcast.to( room ).emit( room, data );
         // io.to(  room ).emit( data );
 
-        console.log('I should be sending out a message for ' + data + ' to the room ' + room)
+        // console.log('I should be sending out a message for ' + data + ' to the room ' + room)
 
         // console.log("roomListeners");
         // console.log(roomListeners);
@@ -344,13 +371,17 @@ io.on('connection', (socket) => {
     }
   }
 
+  socket.on('log-rooms', function(data){
+    console.log(socket.adapter.rooms)
+  });
+
   socket.on('join-room', function(data){
 
-    // console.log('Creating a room named')
-    // console.log(data)
+    console.log('Socket attempting to join room with the Id of:')
+    console.log(data)
 
     if (socket.id === data) {
-      // This user is in main lobby
+      // This means the socket is trying to join the default room
     } else {
       socket.join(data);
   
@@ -358,12 +389,12 @@ io.on('connection', (socket) => {
   
       console.log(socket.adapter.rooms)
   
-      roomListeners = Object.keys(socket.adapter.rooms);
+      // roomListeners = Object.keys(socket.adapter.rooms);
   
-      console.log("room listeners to open listeners on");
-      console.log(roomListeners);
+      // console.log("room listeners to open listeners on");
+      // console.log(roomListeners);
   
-      createRoomListeners();
+      // createRoomListeners();
     }
     
   }); 

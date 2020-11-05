@@ -95,6 +95,14 @@
         transform: translateX(0rem);
       }
 
+      .loading-conversations {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+      }
+
       .chat-contact {
         position: relative;
         cursor: pointer;
@@ -202,6 +210,17 @@
         transform: translateX(0)!important;
       }
 
+      &.empty {
+        .content-darken {
+          background-color: rgba(0, 0, 0, 0.5);
+          pointer-events: initial;
+          z-index: 1;
+        }
+        .content-header, .content-body, .content-send {
+          display: none;
+        }
+      }
+
       .content-darken {
         background-color: rgba(0, 0, 0, 0);
         transition-duration: 200ms;
@@ -211,6 +230,12 @@
         width: 100%;
         top: 0;
         pointer-events: none;
+
+        &.empty {
+          background-color: rgba(0, 0, 0, 0.5);
+          pointer-events: initial;
+          z-index: 1;
+        }
         
         @include media-breakpoint-down(md) {
 
@@ -252,10 +277,36 @@
             .message-details {
               align-items: flex-end;
               margin-left: 0rem;
+
+              .message {
+
+                .message-extras {
+                  left: 0;
+                  right: initial;
+                }
+
+                
+              }
             }
 
             .message {
               background-color: $accent-color;
+            }
+          }
+
+          &:hover {
+            .message-extras {
+              display: none;
+
+              // opacity: 0!important;
+              // transform: translateX(30px)!important;
+            }
+            &.personal {
+              .message-extras {
+                display: block;
+                opacity: 1!important;
+                transform: translateX(-30px)!important;
+              }
             }
           }
 
@@ -272,11 +323,13 @@
           }
 
           .message-details {
+            position: relative;
             margin-left: 0.5rem;
             display: flex;
             flex-direction: column;
 
             .message {
+              position: relative;
               background-color: #edf2f9;
               padding: 0.5rem;
               width: auto;
@@ -285,6 +338,17 @@
                 width: 33%;
                 height: auto;
                 object-fit: cover;
+              }
+
+              .message-extras {
+                cursor: pointer;
+                opacity: 0;
+                position: absolute;
+                top: 10px;
+                right: 0;
+                left: initial;
+                transform: translateX(0px);
+                transition-duration: 200ms;
               }
             }
   

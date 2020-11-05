@@ -5,14 +5,6 @@ const stripe = require('stripe')(process.env.STRIPE_TEST_SECRET);
 const mongoose = require("mongoose");
 const axios = require("axios");
 const User = mongoose.model("users");
-const { v4: uuidv4 } = require('uuid');
-
-var AWS = require('aws-sdk');
-
-const s3 = new AWS.S3({
-  accessKeyId: process.env.accessKeyId,
-  secretAccessKey: process.env.secretAccessKey,
-});
 
 // const { resource } = require('../api/users');
 // const { response } = require('express');
@@ -970,8 +962,7 @@ module.exports = (app, db) => {
 
     console.log(`Call to /api/getUserMessages made at ${new Date()}`);
 
-    // Get the users Mail
-    db.collection("articles_messages").find( { users: { $in: [req.body._id] } } ).toArray(function(err, result) {
+    db.collection("articles_messages").find( { users: { $in: [`${req.user._id}`] } } ).toArray(function(err, result) {
       if (err) throw err;
 
       for (let i = 0; i < result.length; i++) {
@@ -1029,16 +1020,6 @@ module.exports = (app, db) => {
       // return res.send(result[0].mail)
       
     });
-
-    // return res.end();
-
-    // db.collection("articles_submissions").findOne({_id: ObjectId(req.body._id)}, function(err, res) {
-    //   // if (err) throw err;
-    //   console.log(res);
-    //   // console.log(`Call to /api/tryVote done`);
-    // });
-
-    // return res.end();
 
   });
 
@@ -1106,93 +1087,9 @@ module.exports = (app, db) => {
 
   });
 
-  app.post('/api/chatMessage', passport.authenticate('jwt', {session: false}), (req, res) => {
-
-    console.log(req.body)
-
-    if (req.body.chat_id === '' || req.user._id === '' || req.user._id === undefined || (req.body.message === '' && req.body.file === '') ) {
-
-      console.log("ERROR")
-
-      res.status(500)
-      res.json({
-        message: 'err.message',
-        error: 'err'
-      });
-
-      // res.render('error', { error: '{chat_id: string, user_id: string, message: string }' })
-      // res.send("{chat_id: string, user_id: string, message: string }")
-
-    } else {
-
-      if (req.body.file !== '') {
-        console.log("Message is a file");
-        let uuid = uuidv4();
-        console.log(uuid);
-
-        console.log(req.files.file)
-
-        var params = {Bucket: `articles-website/chat/${req.body.chat_id}`, Key: uuid, ContentType: "image/jpeg", Body: req.files.file.data, ACL: "public-read"};
-
-        s3.upload(params, function(err, data) {
-
-          console.log(err, data);
-
-          if (err) {
-            return res.status(500).send(err);
-          }
-
-          db.collection("articles_messages").updateOne( 
-            {_id: ObjectId(req.body.chat_id) }, 
-            {
-              $push: {
-                messages: {
-                  _id: ObjectId(),
-                  sender: req.user._id,
-                  message: '',
-                  media: 'photo',
-                  url: `https://articles-website.s3.amazonaws.com/chat/${req.body.chat_id}/${uuid}`,
-                  date: moment()._d
-                }
-              }
-            },
-            function(err, response) {
-              if (err) throw err;
-              console.log(`Call to /api/chatMessage done`);
-              return res.send({
-                type: 'photo',
-                message: 'Image Uploaded',
-                url: `https://articles-website.s3.amazonaws.com/chat/${req.body.chat_id}/${uuid}`,
-              });
-            }
-          );
-        });
-        
-      } else {
-        console.log("Just message")
-
-        db.collection("articles_messages").updateOne( 
-          {_id: ObjectId(req.body.chat_id) }, 
-          {
-            $push: {
-              messages: {
-                _id: ObjectId(),
-                sender: req.user._id,
-                message: req.body.message,
-                date: moment()._d
-              }
-            }
-          },
-          function(err, response) {
-            if (err) throw err;
-            console.log(`Call to /api/chatMessage done`);
-            return res.send('Message Saved');
-          }
-        );
-    
-      }
-
-    }
+  app.post('/api/socketTest', passport.authenticate('jwt', {session: false}), (req, res) => {
+    var io = req.app.get('socketio');
+    return res.send('Socket Test');
   });
 
   app.post('/api/addSavedProduct', function (req, res) {
@@ -1509,4 +1406,9 @@ module.exports = (app, db) => {
 
   require('./routes/progressNeedsShipping')(app, db, passport);
   require('./routes/progressShipped')(app, db, passport);
+
+  require('./routes/chatMessage')(app, db, passport);
+  require('./routes/startChat')(app, db, passport);
+  require('./routes/deleteChatMessage')(app, db, passport);
+  require('./routes/deleteChatConversation')(app, db, passport);
 } 

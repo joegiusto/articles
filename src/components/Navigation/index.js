@@ -98,11 +98,7 @@ function Menu(props) {
         </section> */}
 
         <section className={"side-menu-notch-top " + (menuOpen ? "show" : "")}>
-
-            <div className={"side-menu-notch-top-end " + (menuOpen ? "show" : "")}></div>
-
-            
-
+          <div className={"side-menu-notch-top-end " + (menuOpen ? "show" : "")}></div>
         </section>
 
         <section>
@@ -193,7 +189,10 @@ function Menu(props) {
                     <span></span>
                   ) : (
                     // <span>Member Since{moment.unix(props.user?.sign_up_date).format("MMMM Y")}</span>
-                    <span>Member Since {moment(props.user?.sign_up_date).format("MMMM Y") || "Loading..."}</span>
+                    <div>
+                      <div style={{fontSize: '0.8rem'}}>Member Since {moment(props.user?.sign_up_date).format("MMMM Y") || "Loading..."}</div>
+                      {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MESSAGES}><button className="btn btn-sm btn-articles-light">Chat</button></Link> */}
+                    </div>
                   )
                   }
                 </p>

@@ -1,0 +1,11 @@
+.alert{
+  &.alert-articles {
+    background-color: $accent-color;
+
+    .alert-heading {
+      font-family: brandon-grotesque, sans-serif;
+      font-style: normal;
+      font-weight: 900;
+    }
+  }
+}

@@ -3,46 +3,20 @@ import axios from 'axios'
 import moment from 'moment'
 import { connect } from 'react-redux';
 import TextareaAutosize from 'react-textarea-autosize';
+import qs from 'qs'
+
+import Lightbox from 'react-image-lightbox';
+import 'react-image-lightbox/style.css';
 
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 
 import io from 'socket.io-client'
 
+import loadingGif from '../../assets/img/News/loading.gif'
+
 const ENDPOINT = "/";
 let socket = ''
-
-const popover = (
-  <Popover id="popover-basic">
-    <Popover.Title as="h3">Settings</Popover.Title>
-    <Popover.Content>
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <div className="mr-3">Encrypt Chat</div>
-        <div>
-          <button className="btn btn-sm btn-articles-light">
-            Encrypt
-          </button>
-        </div>
-      </div>
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <div className="mr-3">Mute Chat</div>
-        <div>
-          <button className="btn btn-sm btn-articles-light">
-            Yes
-          </button>
-        </div>
-      </div>
-      <div className="d-flex justify-content-between align-items-center">
-        <div className="mr-3">Delete Chat</div>
-        <div>
-          <button className="btn btn-sm btn-danger">
-            Delete
-          </button>
-        </div>
-      </div>
-    </Popover.Content>
-  </Popover>
-);
 
 class Messages extends Component {
   constructor(props) {
@@ -53,7 +27,8 @@ class Messages extends Component {
       messages: [],
 
       inboxFilter: 'people',
-      focus: {},
+      // focus: {},
+      focusedChat: '',
 
       createChatOverlay: false,
 
@@ -63,9 +38,16 @@ class Messages extends Component {
       sidebarVisible: false,
       settingsOpen: false,
 
+      startChatMessage: '',
+      startChatUser: '',
+      startChatError: '',
+
       chatMessage: '',
       image: '',
       imageFile: '',
+
+      lightboxOpen: false,
+      lightboxFocus: '',
 
       colorOption: '',
     }
@@ -90,6 +72,19 @@ class Messages extends Component {
 
   componentDidMount() {
     const self = this;
+
+    var query = qs.parse(this.props.location.search, { ignoreQueryPrefix: true });
+    if ( query.startMsg !== '' && query.startMsg !== undefined && query.startMsg !== null ) {
+      console.log("Has content")
+      console.log(query.startMsg)
+      self.setState({
+        createChatOverlay: true,
+        startChatUser: query.startMsg
+      })
+    } else {
+      console.log("Has no content")
+    }
+
     // window.addEventListener('scroll', this.listenToScroll)
     socket = io(ENDPOINT);
 
@@ -101,35 +96,29 @@ class Messages extends Component {
       console.log("Connected to server!"); // true
     });
 
+    socket.emit( 'online', self.props.user_id )
+
     axios.post('/api/getUserMessages', {
       _id: self.props.user_id
     })
     .then(function (response) {
-
-      // handle success
-      console.log(response.data);
+      // console.log(response.data);
 
       self.setState({
-
-        // Set Ads
         messages: response.data,
-
       }, () => {
-        // const messagesCopy = self.state.messages
 
-        // messagesCopy.splice(1, 0, {
-        //   promotional: true,
-        //   sender: 'Burger King',
-        //   subject: <span className="badge badge-danger">Ad</span>,
-        //   message: '<img src="https://1.bp.blogspot.com/-Vx5R6qB1Aus/XQJGW8egVlI/AAAAAAABF_k/aVq1NlnzvOkJZ18VYFZYRP3COXVkdJavACLcBGAs/s1600/burger-king-whopper-meal-deals.jpg"></img>'
-        // })
+        self.setFocusedChat(self.state.messages[0]._id);
+        // self.setFocus(self.state.messages[0])
         
         self.setState({
-          // messages: messagesCopy,
           messagesLoading: false,
-          focus: self.state.messages[0]
+          // focus: self.state.messages[0]
         }, () => {
-          self.myScrollRef.current.scrollTop = self.myScrollRef.current.scrollHeight;
+          setTimeout(function(){ self.scrollToBottom(); }, 100);
+
+          console.log( self.state.messages.find(m => m._id === self.state.focusedChat).fetchedUsers?.filter(user => user.id !== self.props.user_id).map(user => user.name) )
+
         })
 
       });
@@ -139,6 +128,43 @@ class Messages extends Component {
     })
     .catch(function (error) {
       console.log(error);
+    });
+
+    socket.on('message', function(msg){
+  
+      console.log(`Just received this message from server`);
+      console.log(msg);
+      console.log(`Will be adding message to ${msg.chat_id}`);
+
+      let willScroll = false;
+
+      if ( self.state.scrollPosition === 1 ) {
+        willScroll = true
+      }
+
+      const messages = [...self.state.messages];
+      const index = self.state.messages.findIndex(m => m._id === msg.chat_id);
+      messages[index].messages.push(msg);
+
+      self.setState({
+        // focus: {
+        //   ...self.state.focus,
+        //   messages: [
+        //     ...self.state.focus.messages,
+        //     msg
+        //   ]
+        // },
+        messages: messages
+      },
+      () => { 
+
+        if ( willScroll === true ) {
+          self.scrollToBottom();
+        }
+
+       }
+      )
+
     });
   }
 
@@ -180,122 +206,103 @@ class Messages extends Component {
 
   }
 
-  setFocus(message) {
+  setFocusedChat(chat_id) {
     const self = this;
 
-    if ( message === {} ) {
-
-      console.log("Ignore this one")
-      this.setState({
-        focus: message
-      })
-
-    } else {
-      
-      this.setState({focus: message}, 
-        () => {
-
-          this.setState({sidebarVisible: false})
-          
-          self.myScrollRef.current.scrollTop = self.myScrollRef.current.scrollHeight;
-  
-          socket.emit( 'join-room', self.state.focus._id )
-  
-          socket.on(self.state.focus._id, function(msg){
-  
-            console.log('incoming message');
-  
-            let willScroll = false;
-  
-            if ( self.state.scrollPosition === 1 ) {
-              willScroll = true
-            }
-  
-            self.setState({
-              focus: {
-                ...self.state.focus,
-                messages: [
-                  ...self.state.focus.messages,
-                  {
-                   date: moment._d,
-                   message: msg,
-                   sender: 'TBD'
-                  }
-                ]
-              }
-            },
-            () => { 
-
-              // self.myScrollRef.current.scrollTop = self.myScrollRef.current.scrollHeight;
-  
-              if ( willScroll === true ) {
-                // console.log('willScroll was true')
-                self.myScrollRef.current.scrollTop = self.myScrollRef.current.scrollHeight;
-              }
-  
-             }
-            )
-          });
-        }
-      )
-
-    }
-
+    this.setState({
+      focusedChat: chat_id,
+    }, () => {
+      this.setState({sidebarVisible: false})
+      setTimeout(function(){ self.scrollToBottom(); }, 100);
+      socket.emit( 'join-room', self.state.focusedChat )
+    });
   }
+
+  // setFocus(message) {
+  //   const self = this;
+
+  //   // Think this was here for ads
+  //   if ( message === {} ) {
+
+  //     console.log("Ignore this one")
+  //     // this.setState({
+  //     //   focus: message
+  //     // })
+
+  //   } else {
+      
+  //     this.setState({
+  //       focus: message,
+  //     }, 
+  //       () => {
+
+  //         this.setState({sidebarVisible: false})
+          
+  //         setTimeout(function(){ self.scrollToBottom(); }, 100);
+  
+  //         socket.emit( 'join-room', self.state.focus._id )
+  
+  //         // Socket on message code taken from here
+  //       }
+  //     )
+
+  //   }
+
+  // }
 
   renderMessageContacts() {
 
     if (this.state.inboxFilter === 'people') {
       return (
+        this.state.messagesLoading ?
+        <div className="loading-conversations">
+          <img src={loadingGif} alt="Loading Icon"/>
+          <div className="alert alert-articles mt-3">
+            <span className="alert-heading">Loading Chat</span>
+          </div>
+        </div>
+        :
+        this.state.messages.length > 0 ?
         this.state.messages.map(message => 
-          <div onClick={() => this.setFocus(message)} className={"chat-contact inbox-message " + (message.promotional ? 'ad ' : '') + (message._id === this.state.focus._id ? 'active ' : '')} >
+          <div onClick={() => this.setFocusedChat(message._id)} className={"chat-contact inbox-message " + (message.promotional ? 'ad ' : '') + (message._id === this.state.focusedChat ? 'active ' : '')} >
 
             <div className="contact-photo">
-              <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${ message.fetchedUsers.filter(user => user.id !== this.props.user_id).map(user => user.id) }.jpg`} alt=""/>
+              <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${ message.fetchedUsers?.filter(user => user.id !== this.props.user_id).map(user => user.id) }.jpg`} alt=""/>
             </div>
 
             <div className="contact-body message-content">
 
-              {message._id === this.state.focus._id ? 
-                <div className="active-bullet">
-                  <div className="bullet"></div>
-                </div>
-                :
-                null
-              }
-
               <div className="message-sender">
-                {message.group_message ? 
+
                 <div>
-                  <div>Group</div>
-                  <span>
-                    {/* { message.users.map( (user) => <span className="badge badge-articles mr-1">{user}</span> ) } */}
-                    { message.fetchedUsers.map( (user) => <span className={ "badge mr-1 " + ( user.name === "Deleted User" ? 'badge-danger' : 'badge-dark' ) }>{user.name}</span> ) }
-                  </span>
-                </div> 
-                :
-                <div>
-                  <div className="contact-name"> { message.fetchedUsers.filter(user => user.id !== this.props.user_id).map(user => user.name) }</div>
+                  <div className="contact-name"> { message.fetchedUsers?.filter(user => user.id !== this.props.user_id).map(user => user.name) }</div>
                   <small>
                     {message.encryption === true ?
-                    <span><i class="fas fa-lock"></i>Encrypted</span>
+                    <span><i className="fas fa-lock"></i>Encrypted</span>
                     :
-                    <span>Last message preview</span>
+                    <span>{message.messages[message.messages.length - 1].message !== '' ? message.messages[message.messages.length - 1].message : <span><i className="far fa-file-image mr-2"></i>Media</span>}</span>
                     }
                   </small>
-                  <span>
-                    {/* { message.users.map( (user) => <span className="badge badge-articles mr-1">{user}</span> ) } */}
-                    {/* { message.fetchedUsers.map( (user) => <span className="badge badge-dark mr-1">{user}</span> ) } */}
-                  </span>
                 </div> 
-                }
+ 
               </div>
-
-              {/* <div className="message-subject">{message.subject}</div> */}
 
             </div>
           </div>
         )
+        :
+        <div>
+
+          <div className="loading-conversations">
+            <div className="alert alert-articles mt-3">
+
+              <div className="alert-heading">No Messages</div>
+              <small>Start one by clicking below</small>
+
+            </div>
+          </div>
+
+        </div>
       ) 
     } 
 
@@ -340,12 +347,36 @@ class Messages extends Component {
     }
   }
 
+  sendSocketImage() {
+    const self = this;
+    // console.log("Socket")
+    socket.emit('5f208af919d23fbf84c7a6aa', {
+      type: 'image',
+      url: 'https://articles-website.s3.amazonaws.com/chat/5f208af919d23fbf84c7a6aa/b2cca4cd-37ff-490e-a804-a309f49e2e9d'
+    });
+  }
+
+  sendSocketText() {
+    const self = this;
+    // console.log("Socket")
+    socket.emit('5f208af919d23fbf84c7a6aa', {
+      type: 'text',
+      text: 'Hello there!'
+    });
+  }
+
+  logRooms() {
+    socket.emit('log-rooms');
+  }
+
   sendMessage() {
     const self = this;
     const data = new FormData();
 
+    let focused = this.state.messages?.find(m => m._id === this.state.focusedChat);
+
     data.append('file', this.state.imageFile);
-    data.append('chat_id', self.state.focus._id);
+    data.append('chat_id', self.state.focusedChat);
     data.append('message', self.state.chatMessage);
 
     // {
@@ -354,7 +385,7 @@ class Messages extends Component {
     //   imageFile: data
     // }
 
-    if ( this.state.focus._id === undefined ) {
+    if ( focused?._id === undefined ) {
       console.log("This should not happen");
     } else {
 
@@ -364,7 +395,7 @@ class Messages extends Component {
 
         // socket.to(self.state.focus._id).emit(self.state.chatMessage);
 
-        socket.emit(self.state.focus._id, self.state.chatMessage);
+        socket.emit(focused?._id, self.state.chatMessage);
 
         let willScroll = false;
 
@@ -375,48 +406,49 @@ class Messages extends Component {
         if (response.data.type === 'photo') {
 
           self.setState({
-            focus: {
-              ...self.state.focus,
-              messages: [
-                ...self.state.focus.messages,
-                {
-                 date: moment()._d,
-                 message: '',
-                 sender: self.props.user_id,
-                 media: 'photo',
-                 url: response.data.url
-                }
-              ]
-            },
+            // focus: {
+            //   ...self.state.focus,
+            //   messages: [
+            //     ...self.state.focus.messages,
+            //     {
+            //      date: moment()._d,
+            //      message: '',
+            //      sender: self.props.user_id,
+            //      media: 'photo',
+            //      url: response.data.url
+            //     }
+            //   ]
+            // },
             chatMessage: '',
             image: '',
             imageFile: ''
           }, () => {
             if ( willScroll === true ) {
-              self.myScrollRef.current.scrollTop = self.myScrollRef.current.scrollHeight;
+              // self.scrollToBottom();
             }
           })
 
         } else {
 
           self.setState({
-            focus: {
-              ...self.state.focus,
-              messages: [
-                ...self.state.focus.messages,
-                {
-                 date: moment()._d,
-                 message: self.state.chatMessage,
-                 sender: self.props.user_id
-                }
-              ]
-            },
+            // Leave this out for now and have websockets do all the view working
+            // focus: {
+            //   ...self.state.focus,
+            //   messages: [
+            //     ...self.state.focus.messages,
+            //     {
+            //      date: moment()._d,
+            //      message: self.state.chatMessage,
+            //      sender: self.props.user_id
+            //     }
+            //   ]
+            // },
             chatMessage: '',
             image: '',
             imageFile: ''
           }, () => {
             if ( willScroll === true ) {
-              self.myScrollRef.current.scrollTop = self.myScrollRef.current.scrollHeight;
+              // self.scrollToBottom();
             }
           })
 
@@ -431,12 +463,160 @@ class Messages extends Component {
 
   }
 
-  render() {
+  startChat(user, message) {
+    const self = this;
 
+    axios.post('/api/startChat', {
+      user, message
+    })
+    .then(function (response) {
+      console.log(response.data);
+
+      self.setState({
+        messages: [
+          ...self.state.messages,
+          {
+            _id: response.data.insertedId,
+            users: [
+              user, self.props.user_id
+            ],
+            fetchecUsers: [
+              {
+                id: self.props.user_id
+              },
+              {
+                id: user
+              }
+            ],
+            messages: [
+              {
+                _id: 'will-fill',
+                date: moment()._d,
+                message: message,
+                sender: self.props.user_id
+              }
+            ]
+          }
+        ]
+      })
+
+    })
+    .catch(function (error) {
+      console.log(error.response);
+
+      self.setState({
+        startChatError: error.response.data
+      })
+    });
+
+  }
+
+  deleteMessage(chat_id, message_id) {
+    const self = this;
+
+    // let focused = this.state.messages?.find(m => m._id === this.state.focusedChat);
+    const index = self.state.messages.findIndex(m => m._id === chat_id);
+
+    console.log(`Chat Id: ${chat_id}, Message Id: ${message_id}`);
+
+    axios.post('/api/deleteChatMessage', {
+      chat_id, message_id
+    })
+    .then(function (response) {
+      console.log(response.data);
+
+      console.log( index );
+
+      let tempMessages = [...self.state.messages];
+      tempMessages[index].messages = self.state.messages[index].messages.filter((message) => {return message._id !== message_id});
+      // let tempMessageThread = self.state.messages[index].messages.filter((message) => {return message._id !== message_id});
+
+      // console.log(self.state.messages)
+      // console.log(tempMessages)
+
+      self.setState({
+        messages: tempMessages
+      });
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  deleteConversation = (chat_id) => {
+    const self = this;
+
+    console.log(`Chat Id: ${chat_id}`);
+
+    axios.post('/api/deleteChatConversation', {
+      chat_id
+    })
+    .then(function (response) {
+      console.log(response.data);
+
+      self.setState({
+        // focus: {},
+        focusedChat: '',
+        messages: self.state.messages.filter((message) => {return message._id !== chat_id})
+      })
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+  
+  fakeDeleteConversation = (chat_id) => {
+    const self = this;
+
+    console.log(`Chat Id: ${chat_id}`);
+
+    self.setState({
+      // focus: {},
+      focusedChat: '',
+      messages: self.state.messages.filter((message) => {return message._id !== chat_id})
+    })
+  } 
+
+  render() {
     const { focus } = this.state;
+
+    let focused = this.state.messages?.find(m => m._id === this.state.focusedChat);
+
+    // const index = this.state.messages.findIndex(m => m._id === this.state.focusedChat);
+
+    // const focusedChat = this.state.messages[index]
+
+    // console.log(this.state.focusedChat)
+    // console.log(index)
+
+    // console.log("About to log focusedChat")
+    // console.log(focusedChat)
 
     return (
       <div className="messages-page">
+
+        {this.state.lightboxOpen && (
+          <Lightbox
+            mainSrc={this.state.lightboxFocus}
+            // nextSrc={images[(photoIndex + 1) % images.length]}
+            // prevSrc={images[(photoIndex + images.length - 1) % images.length]}
+            onCloseRequest={() => this.setState({ lightboxOpen: false })}
+
+            // onMovePrevRequest={() =>
+            //   this.setState({
+            //     photoIndex: (photoIndex + images.length - 1) % images.length,
+            //   })
+            // }
+
+            // onMoveNextRequest={() =>
+            //   this.setState({
+            //     photoIndex: (photoIndex + 1) % images.length,
+            //   })
+            // }
+
+          />
+        )}
 
         <div className={"start-chat-container " + (this.state.createChatOverlay ? 'visible' : '')}>
 
@@ -452,10 +632,33 @@ class Messages extends Component {
 
               <div className="form-group articles">
                 <label for="new-chat-user-id">User's ID or Email Address</label>
-                <input className="form-control with-label" name="new-chat-user-id" id="new-chat-user-id" type="text" value=""/>
+                <input 
+                  className="form-control with-label" 
+                  name="startChatUser" 
+                  id="startChatUser" 
+                  value={this.state.startChatUser}
+                  onChange={(e) => this.handleChange(e)}
+                  type="text"/>
               </div>
 
-              <button className="btn btn-lg w-100 btn-articles-light">Start Chat</button>
+              <div className="form-group articles">
+                <label for="startChatMessage">Message</label>
+                <TextareaAutosize
+                  className="form-control with-label"
+                  name="startChatMessage"
+                  value={this.state.startChatMessage}
+                  onChange={(e) => this.handleChange(e)}
+                  placeholder="Type your message">
+                </TextareaAutosize>
+              </div>
+
+              {this.state.startChatError !== '' &&
+                <div className="alert alert-danger">
+                  {this.state.startChatError}
+                </div>
+              }
+
+              <button onClick={() => this.startChat(this.state.startChatUser, this.state.startChatMessage)} disabled={this.state.startChatUser === '' || this.state.startChatMessage === ''} className="btn btn-lg w-100 btn-articles-light">Start Chat</button>
 
             </div>
 
@@ -487,9 +690,9 @@ class Messages extends Component {
                 </div>
               </div>
 
-              <div className={"chat-content " + (this.state.sidebarVisible ? '' : 'expand')}>
+              <div className={"chat-content" + (this.state.sidebarVisible ? '' : ' expand') + (Object.keys( focused || {} ).length === 0 ? ' empty' : '')}>
 
-                <div onClick={() => this.setState({sidebarVisible: false})}  className={"content-darken " + (this.state.sidebarVisible ? 'visible' : '')}></div>
+                <div onClick={() => this.setState({sidebarVisible: false})}  className={"content-darken " + (this.state.sidebarVisible ? 'visible ' : '')}></div>
 
                 <div className="content-header">
                   <div className="row justify-content-between align-items-center">
@@ -501,7 +704,8 @@ class Messages extends Component {
                       </button>
 
                       <div className="min-w-0">
-                        <div>{focus.fetchedUsers?.filter(user => user.id !== this.props.user_id).map(user => user.name)}</div>
+                        {/* <div>{this.state.messages.find(m => m._id === this.state.focusedChat).fetchedUsers?.filter(user => user.id !== this.props.user_id).map(user => user.name)}</div> */}
+                        <div>{focused?.fetchedUsers?.filter(user => user.id !== this.props.user_id).map(user => user.name)}</div>
                         <small>Active</small>
                       </div>
 
@@ -509,9 +713,54 @@ class Messages extends Component {
 
                     <div className="col-auto">
 
-                    <OverlayTrigger trigger='click' rootClose placement="bottom" overlay={popover}>
+                    <OverlayTrigger trigger='click' rootClose placement="bottom" overlay={ 
+                      <Popover id="popover-basic">
+                        <Popover.Title as="h3">Settings</Popover.Title>
+                        <Popover.Content>
+                          <div className="d-flex justify-content-between align-items-center mb-3">
+                            <div className="mr-3">Encrypt Chat</div>
+                            <div>
+                              <button className="btn btn-sm btn-articles-light">
+                                Encrypt
+                              </button>
+                            </div>
+                          </div>
+
+                          <div className="d-flex justify-content-between align-items-center mb-3">
+                            <div className="mr-3">Mute Chat</div>
+                            <div>
+                              <button className="btn btn-radio active btn-sm btn-articles-light">
+                                No
+                              </button>
+                              <button className="btn btn-radio btn-sm btn-articles-light">
+                                Yes
+                              </button>
+                            </div>
+                          </div>
+
+                          <div className="d-flex justify-content-between align-items-center">
+                            <div className="mr-3">Delete Chat</div>
+                            <div>
+                              <button onClick={() => this.deleteConversation(focused?._id)} className="btn btn-sm btn-danger">
+                                Delete
+                              </button>
+                            </div>
+                          </div>
+
+                          <div className="d-flex justify-content-between align-items-center">
+                            <div className="mr-3">Fake Delete Chat</div>
+                            <div>
+                              <button onClick={() => this.fakeDeleteConversation(focused?._id)} className="btn btn-sm btn-danger">
+                                Delete
+                              </button>
+                            </div>
+                          </div>
+
+                        </Popover.Content>
+                      </Popover>
+                     }>
                       <button className="btn btn-articles-light">
-                        <i class="fas fa-cog mr-0"></i>  
+                        <i className="fas fa-cog mr-0"></i>  
                       </button>
                     </OverlayTrigger>
 
@@ -520,9 +769,9 @@ class Messages extends Component {
                   </div>
                 </div>
 
-                <div ref={this.myScrollRef} onScroll={(e) => this.listenToScroll(e)} className="content-body scrollbar">
+                <div ref={this.myScrollRef} onScroll={(e) => this.listenToScroll(e)} className="content-body">
                   
-                  {focus.encryption === true ? 
+                  {focused?.encryption === true ? 
 
                   <div className="chat-encryption-warning">
 
@@ -539,7 +788,7 @@ class Messages extends Component {
 
                   :
 
-                  focus.messages?.map((message) => (
+                  focused?.messages?.map((message) => (
 
                       <div className={"chat-message p-3 " + ( message.sender === this.props.user_id ? 'personal' : '' )}>
 
@@ -549,12 +798,19 @@ class Messages extends Component {
 
                         <div className="message-details">
 
-                          {message.media === undefined ?
-                          <div className="message">{message.message}</div>
-                          :
-                          <img className="message photo" src={message.url} alt=""/>
-                          }
-                          
+                          <div className={"message " + (message.media === 'photo' ? 'photo' : '')}>
+                            {
+                            message.media !== 'photo' ? 
+                            <span>{message.message}</span>
+                            :
+                            <img style={{cursor: 'pointer'}} onClick={() => this.setState({lightboxFocus: message.url, lightboxOpen: true})} className="img-fluid" src={message.url} alt=""/>
+                            }
+
+                            <div className="message-extras">
+                              <i onClick={() => this.deleteMessage(focused?._id, message._id)} className="fas fa-trash-alt mr-0"></i>
+                            </div>
+
+                          </div>
 
                           <div className="date">{moment(message.date).format("LLL")}</div>
                         </div>
@@ -574,7 +830,7 @@ class Messages extends Component {
                   <div className={"thumbnail-container " + (this.state.image === '' ? 'd-none' : '')}>
 
                     <button onClick={() => this.setState({image: '', imageFile: ''})} className="btn btn-sm btn-danger remove">
-                      <span><i class="far fa-window-close"></i>Remove</span>
+                      <span><i className="far fa-window-close"></i>Remove</span>
                     </button>
 
                     <img id="thumbnail" src={this.state.image}/>
@@ -594,9 +850,13 @@ class Messages extends Component {
 
                   <div className="align-items-start">
                     <input className="d-none" onFocus={() => (this.props.changeFocus('photo'))} id="file-upload" onChange={this.onImageUpload} accept="image/x-png,image/gif,image/jpeg" type="file" name="myfile" />
-                    <label for="file-upload" className="btn btn-sm btn-articles-light mb-0"><i class="fas fa-paperclip"></i>Attach</label>
+                    <label for="file-upload" className="btn btn-sm btn-articles-light mb-0"><i className="fas fa-paperclip"></i>Attach</label>
   
                     <button disabled={this.state.chatMessage === '' && this.state.image === ''} className="btn btn-sm btn-articles-light" onClick={() => this.sendMessage()}><i className="far fa-paper-plane"></i>Send</button>
+                    
+                    <button onClick={() => this.sendSocketText()} className={"btn btn-sm btn-articles-light " + (this.props.user_id === '5e90cc96579a17440c5d7d52' ? '' : 'd-none')}>Txt</button>
+                    <button onClick={() => this.sendSocketImage()} className={"btn btn-sm btn-articles-light " + (this.props.user_id === '5e90cc96579a17440c5d7d52' ? '' : 'd-none')}>Img</button>
+                    <button onClick={() => this.logRooms()} className={"btn btn-sm btn-articles-light " + (this.props.user_id === '5e90cc96579a17440c5d7d52' ? '' : 'd-none')}>Room</button>
                   </div>
 
                 </div>
