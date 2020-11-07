@@ -160,6 +160,7 @@
 
         .contact-body {
           margin-left: .5rem;
+          flex-grow: 1;
         }
 
         .contact-name {
@@ -280,6 +281,7 @@
               margin-left: 0rem;
 
               .message {
+                margin-right: initial;
 
                 .message-extras {
                   left: 0;
@@ -298,10 +300,8 @@
           &:hover {
             .message-extras {
               display: none;
-
-              // opacity: 0!important;
-              // transform: translateX(30px)!important;
             }
+
             &.personal {
               .message-extras {
                 display: block;
@@ -334,6 +334,7 @@
               background-color: #edf2f9;
               padding: 0.5rem;
               width: auto;
+              margin-right: auto;
 
               &.photo {
                 width: 33%;

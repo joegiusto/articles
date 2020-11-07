@@ -234,6 +234,11 @@ class Messages extends Component {
 
   renderMessageContacts() {
 
+    function messagesSort( a, b ) {
+      console.log(b.messages[b.messages.length - 1].date);
+      return ( moment(b.messages[b.messages.length - 1].date) - moment(a.messages[a.messages.length - 1].date) )
+    }
+
     if (this.state.inboxFilter === 'people') {
       return (
         this.state.messagesLoading ?
@@ -245,7 +250,7 @@ class Messages extends Component {
         </div>
         :
         this.state.messages.length > 0 ?
-        this.state.messages.map(message => 
+        this.state.messages.sort( messagesSort ).map(message => 
           <div onClick={() => this.setFocusedChat(message._id)} className={"chat-contact inbox-message " + (message.promotional ? 'ad ' : '') + (message._id === this.state.focusedChat ? 'active ' : '')} >
 
             <div className="contact-photo">
@@ -258,7 +263,11 @@ class Messages extends Component {
 
                 <div>
 
-                  <div className="contact-name"> { message.fetchedUsers?.filter(user => user.id !== this.props.user_id).map(user => user.name) }</div>
+                  <div className="contact-name d-flex justify-content-between w-100"> 
+                    <span>{message.fetchedUsers?.filter(user => user.id !== this.props.user_id).map(user => user.name)}</span>
+                    <span style={{fontSize: '0.7rem', fontFamily: 'montserrat, sans-serif', fontWeight: '400'}} className="mute">{ moment( message.messages[message.messages.length - 1].date ).format("MMM Do | h:mm a") }</span>
+                  </div>
+
                   <small>
 
                     {message.encryption === true ?
@@ -268,9 +277,9 @@ class Messages extends Component {
                       {message.messages[message.messages.length - 1].message !== '' ? 
 
                         <span>
-                          {message.messages[message.messages.length - 1].message.substring(0,50)}
-                          {message.messages[message.messages.length - 1].message.length > 50 ? 
-                          <div className="badge badge-light border">{message.messages[message.messages.length - 1].message.length - 50}+ characters</div>
+                          {message.messages[message.messages.length - 1].message.substring(0,35)}
+                          {message.messages[message.messages.length - 1].message.length > 35 ? 
+                          <><span>...</span></>
                           : 
                           ''}
                         </span>
@@ -746,7 +755,7 @@ class Messages extends Component {
                             </div>
                           </div>
 
-                          <div className="d-flex justify-content-between align-items-center">
+                          <div className="d-flex justify-content-between align-items-center d-none">
                             <div className="mr-3">Fake Delete Chat</div>
                             <div>
                               <button onClick={() => this.fakeDeleteConversation(focused?._id)} className="btn btn-sm btn-danger">
@@ -823,7 +832,8 @@ class Messages extends Component {
                 <div className="content-send">
 
                   <div onClick={() => this.scrollToBottom()} className={"scroll-lock " + (this.state.scrollPosition === 1 ? 'active' : '')}>
-                    Auto Scroll
+                    <span>Auto Scroll</span>
+                    <span className={(this.props.user_id === '5e90cc96579a17440c5d7d52' ? '' : 'd-none')}>&nbsp;{this.state.scrollPosition}</span>
                   </div> 
 
                   <div className={"thumbnail-container " + (this.state.image === '' ? 'd-none' : '')}>
