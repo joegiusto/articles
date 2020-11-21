@@ -1,0 +1,48 @@
+.updates-page {
+  font-family: montserrat, sans-serif;
+  font-weight: 400;
+
+  .updates-card {
+
+    .card-header {
+      @import 'landing_background';
+    }
+  }
+
+  .update-card {
+    border-radius: 0;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+
+    .card-body  {
+
+      @include media-breakpoint-up(md) {
+        min-width: 800px;
+
+        // .details {
+        //   max-width: 420px;
+        // }
+      }
+
+      .date {
+        font-size: 12px;
+        color: rgb(88, 88, 88);
+      }
+
+      .title {
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 3rem;
+      }
+
+      .text {
+        margin-top: 1rem;
+      }
+    }
+
+    .update-footer {
+      background-color: black;
+      border-radius: 0;
+    }
+  }
+}

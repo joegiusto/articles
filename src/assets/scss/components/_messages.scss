@@ -265,6 +265,14 @@
         height: 100%;
         overflow-y: scroll;
 
+        .chat-encryption-warning {
+          max-width: 300px;
+          margin-left: auto;
+          margin-right: auto;
+          margin-top: auto;
+          margin-bottom: auto;
+        }
+
         .chat-message {
           display: flex;
           min-width: 0;

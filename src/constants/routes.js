@@ -83,7 +83,10 @@ export const SUPPORT ='/support'
 export const BLOG ='/support/blog'
 export const FAQ ='/support/FAQ'
 export const PRIVACY ='/support/privacy'
+
 export const UPDATES ='/support/updates'
+export const UPDATE = '/support/updates/:id'
+
 export const JOBS ='/support/jobs'
 export const PRESS ='/support/press'
 export const TRANSLATIONS ='/support/translations'

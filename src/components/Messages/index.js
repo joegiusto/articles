@@ -122,7 +122,7 @@ class Messages extends Component {
         messages: response.data,
       }, () => {
 
-        self.setFocusedChat(self.state.messages[0]._id);
+        self.setFocusedChat(self.state.messages.sort( self.messagesSort )[0]._id);
         // self.setFocus(self.state.messages[0])
         
         self.setState({
@@ -232,12 +232,14 @@ class Messages extends Component {
     });
   }
 
+  messagesSort( a, b ) {
+    console.log(b.messages[b.messages.length - 1].date);
+    return ( moment(b.messages[b.messages.length - 1].date) - moment(a.messages[a.messages.length - 1].date) )
+  }
+
   renderMessageContacts() {
 
-    function messagesSort( a, b ) {
-      console.log(b.messages[b.messages.length - 1].date);
-      return ( moment(b.messages[b.messages.length - 1].date) - moment(a.messages[a.messages.length - 1].date) )
-    }
+    
 
     if (this.state.inboxFilter === 'people') {
       return (
@@ -250,7 +252,7 @@ class Messages extends Component {
         </div>
         :
         this.state.messages.length > 0 ?
-        this.state.messages.sort( messagesSort ).map(message => 
+        this.state.messages.sort( this.messagesSort ).map(message => 
           <div onClick={() => this.setFocusedChat(message._id)} className={"chat-contact inbox-message " + (message.promotional ? 'ad ' : '') + (message._id === this.state.focusedChat ? 'active ' : '')} >
 
             <div className="contact-photo">
@@ -755,7 +757,7 @@ class Messages extends Component {
                             </div>
                           </div>
 
-                          <div className="d-flex justify-content-between align-items-center d-none">
+                          <div className={"justify-content-between align-items-center mt-3 " + (this.props.user_id === '5e90cc96579a17440c5d7d52' ? 'd-flex' : 'd-none')}>
                             <div className="mr-3">Fake Delete Chat</div>
                             <div>
                               <button onClick={() => this.fakeDeleteConversation(focused?._id)} className="btn btn-sm btn-danger">
@@ -781,16 +783,22 @@ class Messages extends Component {
                   
                   {focused?.encryption === true ? 
 
-                  <div className="chat-encryption-warning">
+                  <div className="chat-encryption-warning card">
 
-                    <div>This chat is encrypted, the user who started this chat set a password that you will need to decrypt the messages. This will have to be entered every time to ensure security. For best security obtain this password from the user in person so there is no digital record of it.</div>
-
-                    <div style={{width: 'max-content'}} className="form-group d-inline-block articles mt-3">
-                      <label for="password">Password</label>
-                      <input className="form-control with-label" name="password" id="password" type="text" value=""/>
+                    <div className="card-header">
+                      Chat Encrypted
                     </div>
 
-                    <button className="btn btn-articles-light">Enter</button>
+                    <div className="card-body">
+                      <div>The user who started this chat set a password that you will need to decrypt the messages. For best security obtain this password from the user in person.</div>
+  
+                      <div style={{width: '100%'}} className="form-group d-inline-block articles mt-3">
+                        <label for="password">Password</label>
+                        <input className="form-control with-label" name="password" id="password" type="text" value=""/>
+                      </div>
+  
+                      <button className="btn btn-articles-light w-100">Enter</button>
+                    </div>
 
                   </div>
 
@@ -829,7 +837,7 @@ class Messages extends Component {
 
                 </div>
 
-                <div className="content-send">
+                <div className={"content-send " + (focused?.encryption ? 'd-none' : '')}>
 
                   <div onClick={() => this.scrollToBottom()} className={"scroll-lock " + (this.state.scrollPosition === 1 ? 'active' : '')}>
                     <span>Auto Scroll</span>

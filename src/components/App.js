@@ -46,7 +46,6 @@ import MythPage from './News/Myths/single.js'
 import StoriesPage from './News/Stories'
 import StoryPage from './News/Stories/single.js'
 
-
 import PartyPage from './Party'
 import PartyProposalsPage from './Party/Proposals'
 import ProposalSingle from './Party/Proposals/Single'
@@ -58,7 +57,10 @@ import SupportPage from './Support'
 import BlogPage from './Support/Blog'
 import FaqPage from './Support/FAQ'
 import Privacy from './Support/Privacy'
+
 import UpdatesPage from './Support/Updates'
+import UpdatePage from './Support/Updates/single'
+
 import JobsPage from './Support/Jobs'
 import PressPage from './Support/Press'
 import TranslationsPage from './Support/Translations'
@@ -232,6 +234,7 @@ class AppBase extends Component {
               <Route exact path={ROUTES.SUPPORT} component={SupportPage} />
               <Route exact path={ROUTES.BLOG} component={BlogPage} />
               <Route exact path={ROUTES.UPDATES} component={UpdatesPage} />
+              <Route exact path={ROUTES.UPDATE} component={UpdatePage} />
               <Route path={ROUTES.FAQ} component={FaqPage} />
               <Route path={ROUTES.JOBS} component={JobsPage} />
               <Route path={ROUTES.PRESS} component={PressPage} />

@@ -151,6 +151,9 @@ function connectWithRetryMongo() {
     require('./routes/getSubmissions')(app, db);
     require('./routes/getCanSubmit')(app, db);
 
+    require('./routes/updates/getUpdates')(app, db);
+    require('./routes/updates/getUpdate')(app, db);
+
     require('./routes/getDonations')(app, db);
 
     // This grouping is used in Reports
