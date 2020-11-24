@@ -3,7 +3,7 @@ const axios = require('axios')
 module.exports = (app, db, cache) => {
   app.get('/api/getGithubCommits', function (req, res) {
 
-    if ( cache.get('githubCommits') === null) {
+    if ( cache.get('githubCommits') === null ) {
 
       axios.get('https://api.github.com/repos/joegiusto/articles/commits', {
         headers: {
@@ -38,7 +38,7 @@ module.exports = (app, db, cache) => {
         cached: true
       } )
 
-      console.log( '\x1b[33m', '[Cache Engine] Item was stored in cache, will send stored value', '\x1b[0m');
+      console.log( '\x1b[33m', '[Cache Engine] githubCommits was stored in cache, will send stored value', '\x1b[0m');
     }
 
   });

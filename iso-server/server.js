@@ -164,6 +164,8 @@ function connectWithRetryMongo() {
     require('./routes/getMonthlyExpense')(app, db);
     require('./routes/getMonthlyPayrole')(app, db);
 
+    require('./routes/getNewsletterCount')(app, db, cache);
+
     // Deleted
     // require('./routes/jsonNews')(app, db);
   

@@ -8,6 +8,8 @@ import * as ROUTES from '../../../constants/routes';
 import { Switch, Route, Link } from 'react-router-dom';
 import Countdown from 'react-countdown-now';
 import moment from 'moment';
+
+import SubmissionItemNew from './SubmissionItemNew'
 // import SubmissionItem from './SubmissionItem';
 
 class Submissions extends Component {
@@ -284,8 +286,6 @@ class Submissions extends Component {
                           {/* </div> */}
     
                       </div>
-
-                      
     
                       <SubmissionsList/>
                       
@@ -344,53 +344,9 @@ class SubmissionsListBase extends Component {
 
       <div className="submissions-new">
 
-        <div className="submission">
+        <SubmissionItemNew/>
 
-          <div className="vote-controls">
-
-            <div className="voting-bar">
-
-              <div className="like">
-                <i className="far fa-thumbs-up" aria-hidden="true"></i>
-              </div>
-  
-              <div className="dislike">
-                <i className="far fa-thumbs-down" aria-hidden="true"></i>
-              </div>
-
-            </div>
-
-            <div className="visual-bar">
-
-              <div className="like"></div>
-              <div className="dislike"></div>
-
-            </div>
-          </div>
-        </div>
-
-        <div className="submission">
-
-          <div className="vote-controls">
-
-            <div className="voting-bar">
-
-              <div className="like">
-                <i className="far fa-thumbs-up" aria-hidden="true"></i>
-              </div>
-  
-              <div className="dislike">
-                <i className="far fa-thumbs-down" aria-hidden="true"></i>
-              </div>
-              
-            </div>
-
-            <div className="visual-bar">
-              <div className="like"></div>
-              <div className="dislike"></div>
-            </div>
-          </div>
-        </div>
+        {[1,2,3,4,5,6,7,8].map((obj, i) => <SubmissionItemNew/>)}
 
       </div>
 

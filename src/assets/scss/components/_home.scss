@@ -22,6 +22,7 @@
 }
 
 .home-page-four-page {
+  font-family: montserrat, sans-serif;
 
   .container-fluid {
     padding-left: 5%;
@@ -48,9 +49,18 @@
         position: relative;
         width: 100px;
         height: 100px;
-        border-radius: 100px;
+        // border-radius: 100px;
+        border-radius: 5px;
+        border: 2px solid #000;
         overflow: hidden;
         margin-right: 20px;
+        flex-shrink: 0;
+
+        @include media-breakpoint-down(md) {
+          width: 50px;
+          height: 50px;
+          margin-right: 10px;
+        }
   
         img {
           width: 100%;
@@ -85,6 +95,65 @@
 
       }
     }
+
+    .weather  {
+      height: inherit;
+      width: 300px;
+      background-color: rgb(255, 255, 255);
+      border-radius: 5px;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+
+      @include media-breakpoint-down(md) {
+        width: 150px;
+      }
+
+      .icon {
+        
+        img {
+          height: 50px;
+          width: 50px;
+          object-fit: contain;
+        }
+
+      }
+
+      .details {
+        margin-left: 0.5rem;
+        border-right: 1px solid #000;
+        padding-right: 0.5rem;
+        margin-right: 0.25rem;
+
+        .temp {
+          font-size: 2.5rem;
+          display: flex;
+          align-items: flex-start;
+          justify-content: flex-start;
+
+          .deg {
+            margin-top: 0.5rem;
+            font-size: 1rem;
+          }
+        }
+
+      }
+
+      .details-extra {
+        line-height: 1.25;
+        font-size: 0.9rem;
+
+        img {
+          height: 1rem;
+          width: 1rem;
+          object-fit: contain;
+          margin-right: 0.25rem;
+        }
+      }
+    }
     
   }
 
@@ -93,17 +162,32 @@
     flex-direction: row;
     flex-wrap: wrap;
     margin-top: 2rem;
-    margin-bottom: 2rem;
+    // margin-bottom: 2rem;
+
+    .tile-grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      grid-gap: 30px 20px;
+      width: 100%;
+
+      @include media-breakpoint-up(sm) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @include media-breakpoint-up(md) {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
 
     .tile {
       flex-grow: 1;
       height: 200px;
       width: 100%;
-      margin-bottom: 4rem;
-      width: 23%;
+      // margin-bottom: 4rem;
+      // width: 23%;
       height: 360px;
-      margin-left: 1%;
-      margin-right: 1%;
+      // margin-left: 1%;
+      // margin-right: 1%;
 
       &.old-home {
         
@@ -147,12 +231,12 @@
       }
 
       @include media-breakpoint-down(md) {
-        width: 48%;
+        // width: 48%;
         height: 260px;
       }
 
       @include media-breakpoint-down(md) {
-        width: 48%;
+        // width: 48%;
         height: 200px;
       }
 
@@ -175,7 +259,7 @@
         background-color: white;
         box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.05);
         height: 100%;
-        margin-top: 1rem;
+        // margin-top: 1rem;
         transition-duration: 200ms;
         display: flex;
         flex-direction: column;
@@ -184,6 +268,11 @@
         text-align: center;
         overflow: hidden;
         // transition: all 0.5s 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+        // Style overrides because I like this better right now, may change
+        border-radius: 2px;
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
 
         &:after {
           content: "";
@@ -334,6 +423,9 @@
           font-style: normal;
           padding: 0.35rem 0;
 
+          // Override hover so this is always here, might want this back only on hover so leaving this here
+          transform: translateY(0);
+
           @include media-breakpoint-down(md) {
             font-size: 0.85rem;
           }
@@ -449,14 +541,15 @@
             .icon {
               color: white;
               background-color: black;
-              border-radius: 10px;
-              padding: 0.5rem;
+              border-radius: 5px;
+              padding: 0.25rem;
               position: absolute;
-              bottom: 0;
-              left: 0;
-              margin-left: 1rem;
-              margin-bottom: 1rem;
-              font-size: 3.5rem;
+              top: 0;
+              left: 50%;
+              transform: translateX(-50%);
+              // margin-left: 1rem;
+              margin-top: 1.5rem;
+              font-size: 1.5rem;
               margin-right: 0;
               // line-height: 3.5rem;
               display: flex;
@@ -577,6 +670,54 @@
 
     @include media-breakpoint-down(sm) {
       margin-top: 1rem;
+    }
+  }
+
+  .random-quote {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background: linear-gradient(180deg, #ffb7b7, #f9edcd 80%);
+    // border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    // border-radius: 2px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+
+    display: flex;
+    flex-direction: column;
+
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1rem;
+
+    @include media-breakpoint-up(md) {
+
+      // If this ever is a problem then it is here, width needs to be equal to half of the tile count for the row minus the grid gap of .tile-grid
+      max-width: calc(50% - 15px);
+      transform: translateX(0px);
+      // Just ask me if you 
+
+      margin-top: 4rem;
+      margin-bottom: 4rem;
+    }
+
+    .title {
+      font-family: brandon-grotesque, sans-serif;
+      font-style: normal;
+      font-weight: 900;
+      font-size: 2rem;
+    }
+
+    .quote-container {
+
+      .quote {
+        margin-top: 0.25rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .author {
+        margin-bottom: 1rem;
+        font-weight: bold;
+      }
     }
   }
 
