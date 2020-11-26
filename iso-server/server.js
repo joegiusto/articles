@@ -264,6 +264,10 @@ app.post('/resetPassword', function (req, res) {
 
 app.set('socketio', io);
 
+const userSockets = {
+
+};
+
 io.on('connection', (socket) => {
   console.log('User connected');
   
@@ -271,6 +275,33 @@ io.on('connection', (socket) => {
     if (error) throw error;
     console.log(clients);
     io.emit( 'online', clients );
+  });
+
+  socket.on('login', (data) => {
+    console.log(data);
+    userSockets[socket.id] = data.userId;
+  });
+
+  socket.on('refreshOnline', (data) => {
+
+    io.of('/').clients((error, clients) => {
+      if (error) throw error;
+      io.emit( 'online', clients );
+    });
+  });
+
+  socket.on('testNotification', (data) => {
+
+    io.emit('notification', {
+      icon: 'alert',
+      text: 'Test notification please ignore!'
+    });
+
+  });
+
+  socket.on('logUserSockets', (data) => {
+    console.log("User Sockets")
+    console.log(userSockets);
   });
 
   socket.on('adminMessage', (data) => {
@@ -294,30 +325,6 @@ io.on('connection', (socket) => {
     recieveDonation(data)
 
   });
-
-  // socket.on('5f208af919d23fbf84c7a6aa', function(data){
-  //   console.log("A message was sent in chat 5f208af919d23fbf84c7a6aa")
-  //   console.log(data)
-
-  //   if (data.type === 'image') {
-  //     io.emit('5f208af919d23fbf84c7a6aa', {
-  //       date: moment()._d,
-  //       message: '',
-  //       sender: '5eaa6ceb2371dc8dc9bfa796',
-  //       media: 'photo',
-  //       url: 'https://articles-website.s3.amazonaws.com/chat/5f208af919d23fbf84c7a6aa/b2cca4cd-37ff-490e-a804-a309f49e2e9d'
-  //     });
-  //   }
-
-  //   if (data.type === 'text') {
-  //     io.emit('5f208af919d23fbf84c7a6aa', {
-  //       date: moment()._d,
-  //       message: data.text,
-  //       sender: '5eaa6ceb2371dc8dc9bfa796'
-  //     });
-  //   }
-    
-  // });
 
   socket.on('deleteDonation', (id) => {
 
@@ -413,6 +420,8 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     console.log('user disconnected');
+
+    delete userSockets[socket.id];
     
     io.of('/').clients((error, clients) => {
       if (error) throw error;
@@ -527,6 +536,7 @@ app.post('/api/addPhoto', function (req, res) {
   // });
 
   var params = {Bucket: 'articles-website', Key: sampleFile.name, ContentType: "image/jpeg", Body: sampleFile.data, ACL: "public-read"};
+  
   s3.upload(params, function(err, data) {
     console.log(err, data);
     if (err) {

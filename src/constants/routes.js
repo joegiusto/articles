@@ -115,6 +115,7 @@ export const ADMIN_SUBMISSION_DETAILS = '/admin/submissions/:id';
 export const ADMIN_DONATIONS = '/admin/donations';
 export const ADMIN_EXPENSES = '/admin/expenses';
 export const ADMIN_SOCKET = '/admin/socket';
+export const ADMIN_AWS = '/admin/aws';
 export const ADMIN_COMMENTS = '/admin/comments';
 export const ADMIN_REPORTS = '/admin/reports';
 export const ADMIN_ORDERS = '/admin/orders';

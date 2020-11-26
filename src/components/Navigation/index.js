@@ -1,36 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
-// import { AuthUserContext } from '../Session';
-import {ReactModal, customStyles, modalContent} from './Modals';
 import * as ROUTES from '../../constants/routes';
-// import * as ROLES from '../../constants/roles';
-
-// import { Manager, Reference, Popper } from 'react-popper';
-// import { usePopper } from 'react-popper';
-
 import moment from 'moment';
 import Clock from 'react-live-clock';
-
 import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
+
+import SocketContext from '../../utils/socket_context/context'
 
 import CartPreview from './components/CartPreview'
 import NotificationArea from './components/NotificationArea'
-
-import { toggleSideMenuFixed, toggleColorMode, toggleSideMenuOpen } from '../../actions/siteActions'
-
-// import gunIcon from '../../assets/img/icons/gun.svg'
-
-// const Navigation = (props) => (
-//   <AuthUserContext.Consumer>
-//     {authUser =>
-//       <Menu  expensesTotal={props.expenses.length} authUser={authUser}/>
-//       // <Menu authUser={authUser}/>
-//     }
-//   </AuthUserContext.Consumer>
-// );
+import { toggleSideMenuFixed, toggleColorMode, toggleSideMenuOpen } from '../../actions/siteActions';
 
 function Menu(props) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -44,14 +24,65 @@ function Menu(props) {
   const [referenceElement, setReferenceElement] = React.useState(null);
   const [popperElement, setPopperElement] = React.useState(null);
   const [arrowElement, setArrowElement] = React.useState(null);
-  
-  // const { styles, attributes } = usePopper(referenceElement, popperElement, {
-  //   modifiers: [{ name: 'arrow', options: { element: arrowElement } }],
-  // });
 
+  const [connected, setConnected] = useState(false);
+
+  const [notificationVisible, setNotificationVisible] = useState(false);
+  const [notificationProgress, setNotificationProgress] = useState(0);
+  
   const documentWidth = document.documentElement.clientWidth;
   const windowWidth = window.innerWidth;
   const scrollBarWidth = windowWidth - documentWidth;
+  
+  useEffect(() => {
+
+    props.socket.on('connect', () => {
+      console.log("Connected to server!");
+      setConnected(true);
+      props.socket.emit('login', {userId: props.user?._id})
+    });
+
+    props.socket.on('notification', () => {
+      console.log("Notification received");
+      showNotification();
+    });
+
+    props.socket.on('disconnect', () => {
+      console.log("Disconnected from server!");
+      setConnected(false);
+    });
+
+    // return () => {
+    //   socket.current.disconnect();
+    // };
+
+  }, []);
+
+  function showNotification(seconds) {
+    setNotificationVisible(true)
+
+    // let progressBar = setInterval(() => { 
+    //   console.log(`Ran ${notificationProgress}`)
+
+    //   if (notificationProgress < 100) {
+    //     console.log("Less then")
+    //     setNotificationProgress(prevProgress => (101) )
+    //   } else {
+    //     console.log("Not less then")
+    //     clearInterval(progressBar);
+    //     setNotificationProgress(0);
+    //   }
+      
+    // }, 1000 )
+
+    setTimeout(() => { 
+      setNotificationVisible(false)
+    }, 3000);
+  }
+
+  function logUserSockets() {
+    props.socket.emit('logUserSockets', null);
+  }
 
   function menuFixedWarning() {
     console.log("Menu is fixewd so menu can not be collapsed");
@@ -134,26 +165,16 @@ function Menu(props) {
               null
             }
 
-            {/* <div className="mr-1">
-              <DropdownButton
-                // as={}
-                key={'down'}
-                id={`notification-dropdown-button`}
-                drop={'down'}
-                variant="articles-light btn-sm"
-                // className="btn-articles-light btn-sm"
-                title={` 0 `}
-              >
-                <div>Test</div>
-                <div>Test</div>
-                <div>Test</div>
-              </DropdownButton>
-            </div> */}
+            <div className={"notification " + (notificationVisible && 'show')}>
 
-            {/* <div className="weather-badge">
-              <img src="https://icon-library.com/images/cloudy-icon/cloudy-icon-3.jpg" alt=""/>
-              <div>50°F</div>
-            </div> */}
+              <div className="close">
+                <i class="far fa-times-circle mr-0"></i>
+              </div>
+              
+              <div style={{width: notificationProgress + '%'}} className="progress"></div>
+
+              Hello! New Message!
+            </div>
 
             <Dropdown 
               className="weather-badge mr-2"
@@ -183,7 +204,6 @@ function Menu(props) {
 
                 <Dropdown.Divider/>
 
-                {/* <div className='px-2'>{'<WeatherComponent/>'}</div> */}
                 <div class="weather">
 
                   <div class="icon">
@@ -226,7 +246,7 @@ function Menu(props) {
             >
               <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-1">
                 <div className="notification-count">0</div>
-                <div className="message-count bg-success">0</div>
+                <div className={"message-count " + (connected ? 'bg-success' : 'bg-danger')}>0</div>
 
                 <div>{' '} <i className="far fa-bell mr-0"></i> {' '}</div>
               </Dropdown.Toggle>
@@ -248,7 +268,9 @@ function Menu(props) {
                 <Dropdown.Divider />
 
                 <div className="w-100 px-2">
-                  <div className="badge badge-success w-100">0 Messages</div>
+                  <Link to={ROUTES.MESSAGES}>
+                    <div style={{cursor: 'pointer'}} className="badge badge-success w-100" onClick={() => logUserSockets()}>0 Messages</div>
+                  </Link>
                 </div>
 
                 {/* <Dropdown.Item eventKey="4">Manage</Dropdown.Item> */}
@@ -486,18 +508,24 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
 ));
 
 const mapStateToProps = (state) => {
-  // console.log(state.auth.user_details?.user?.first_name)
+
   return {
     expenses: state.expenses,
     expensesTotal: (state.expenses).length,
     site: state.site,
     user: state.auth?.user_details,
-    first_name: state.auth.user_details?.user?.first_name,
     isAuth: state.auth.isAuthenticated
   };
+
 };
+
+const WithSocket = props => (
+  <SocketContext.Consumer>
+      { socket => <Menu {...props} socket={socket}/> }
+  </SocketContext.Consumer>
+)
 
 export default connect(
   mapStateToProps, 
   { toggleSideMenuFixed, toggleColorMode, toggleSideMenuOpen } 
-)(Menu);
+)(WithSocket);

@@ -2,10 +2,8 @@ import React, {Component} from 'react'
 import { connect } from "react-redux";
 import axios from 'axios'
 import moment from 'moment'
-import socketIOClient from 'socket.io-client'
 
-const ENDPOINT = "/";
-let socket = undefined;
+import SocketContext from '../../../utils/socket_context/context'
 
 class Sockets extends Component {
   constructor(props) {
@@ -20,50 +18,33 @@ class Sockets extends Component {
       cacheBust: moment()
     };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.onChange = this.onChange.bind(this);
-    this.onChangeProfile = this.onChangeProfile.bind(this);
+    // this.handleChange = this.handleChange.bind(this);
+    // this.onChange = this.onChange.bind(this);
+    // this.onChangeProfile = this.onChangeProfile.bind(this);
     // this.pushSocket = this.pushSocket.bind(this);
   }
 
   componentDidMount() {
-    socket = socketIOClient(ENDPOINT);
+    // socket = socketIOClient(ENDPOINT);
+    this.props.socket.emit('refreshOnline', null);
 
     this.props.setLocation(this.props.tabLocation);
     const self = this;
     
-    socket.on('online', function(msg){
+    this.props.socket.on('online', function(msg){
       self.setState({
         sockets: msg
       })
     });
 
-    socket.on('adminMessage', function(msg){
+    this.props.socket.on('adminMessage', function(msg){
       console.log(`Admin Message: ${msg}`);
-    });
-
-    axios.get('/api/photos')
-    .then(function (response) {
-
-      console.log(response);
-
-      self.setState({ 
-        photos: response.data,
-      });
-
-    })
-    .catch(function (error) {
-      console.log(error);
-
-      self.setState({
-        photos: [],
-      })
     });
   }
 
   componentWillUnmount() {
     this.props.setLocation('');
-    socket.disconnect();
+    // socket.disconnect();
   }
 
   handleChange(event) {
@@ -76,159 +57,68 @@ class Sockets extends Component {
     });
   }
 
-  pushTestDonation() {
-    socket.emit('recieveDonation', {
-      amount: 1000,
-      date: Math.floor(new Date().getTime()/1000.0),
-      note: 'Fake Donation',
-      uid: Date.now(),
-      name: 'Test',
-      department: 'other',
-      file: 'https://en.wikipedia.org/wiki/Rickrolling'
-    });
+  testNotification() {
+    this.props.socket.emit('testNotification', null);
   }
 
-  pushTestExpense() {
-    socket.emit('recieveExpense', null);
-  }
-
-  pushSocket() {
-    // const self = this;
-    socket.emit('adminMessage', this.state.socketMessage);
-    this.setState({
-      socketMessage: ''
-    })
-  }
-
-  // handleFile(e) {
-
-  //   let file = e.target.files[0];
-
-  //   this.setState({
-  //     file: file
+  // pushTestDonation() {
+  //   socket.emit('recieveDonation', {
+  //     amount: 1000,
+  //     date: Math.floor(new Date().getTime()/1000.0),
+  //     note: 'Fake Donation',
+  //     uid: Date.now(),
+  //     name: 'Test',
+  //     department: 'other',
+  //     file: 'https://en.wikipedia.org/wiki/Rickrolling'
   //   });
   // }
 
-  // handleUpload(e) {
-
-  //   let file = this.state.file
-  //   let formdata= new FormData
-  //   formdata.append('image', file)
+  // pushTestExpense() {
+  //   socket.emit('recieveExpense', null);
   // }
 
-  onChange(e) {
-    console.log(e.target.files);
-    const data = new FormData();
-
-    this.setState({
-      file: e.target.files[0]
-    }, 
-      () => {
-        data.append('file', this.state.file);
-        
-        axios.post("/api/addPhoto", data, { // receive two parameter endpoint url ,form data 
-        
-        })
-        .then(res => { // then print response status
-          console.log(res.statusText)
-          this.setState({
-            photos: [...this.state.photos, this.state.file.name]
-          })
-        })
-      }
-    )
-
-  }
-
-  onChangeProfile(e) {
-    console.log(e.target.files);
-    const data = new FormData();
-
-    this.setState({
-      file: e.target.files[0],
-      newProfilePhotoLoading: true,
-    }, 
-      () => {
-        data.append('file', this.state.file);
-        data.append('user', this.props.user_id);
-        
-        axios.post("/api/addProfilePhoto", data, { // receive two parameter endpoint url ,form data 
-        
-        })
-        .then(res => { // then print response status
-          console.log(res.statusText)
-          this.setState({
-            newProfilePhotoLoading: false,
-            // photos: [...this.state.photos, 'profile_photos/' + this.props.user_id + '.' + this.state.file.name.split('.')[1]],
-            fakeImageHash: this.state.fakeImageHash + 1
-          })
-        })
-      }
-    )
-
-  }
-
-  removePhoto(photo) {
-    this.setState({
-      photos: this.state.photos.filter(arrayPhoto => arrayPhoto !== photo)
-    })
-  }
+  // pushSocket() {
+  //   // const self = this;
+  //   socket.emit('adminMessage', this.state.socketMessage);
+  //   this.setState({
+  //     socketMessage: ''
+  //   })
+  // }
 
   render() {
 
     return (
-      <div className="admin-sockets mt-5">
+      <div className="admin-page admin-sockets">
 
-        <div className="stat">
-          <h5>Socket Info</h5>
-          <div>Connected Sokets: {this.state.sockets.length}</div>
-        </div>
+        <div className="main-panel">
 
-        <div className="stat mt-4">
-          <h5>Limit Sockets (Only logged in users)</h5>
-          <button className="btn btn-articles-light mr-1">Yes</button>
-          <button className="btn btn-articles-light disabled">No</button>
-        </div>
+          <div className="text-center">
 
-        <div className="mt-4">
-          <input type="text" name="socketMessage" id="socketMessage" value={this.state.socketMessage} onChange={this.handleChange}/>
-          <button onClick={() => this.pushSocket()} className="btn btn-articles-light">Send</button>
-        </div>
+            <div><img src="https://cdn.articles.media/sockets/socket-gif.gif" height="100px" alt=""/></div>
+            <div className="badge badge-primary">Connected Sokets: {this.state.sockets.length}</div>
 
-        <div className="mt-3">
-          <button onClick={() => this.pushTestDonation()} className="btn btn-articles-light">Fake Donation</button>
-          <button onClick={() => this.pushTestExpense()} className="btn btn-articles-light">Fake Expense</button>
-        </div>
+            <div className="mt-3">
+              <div><small className="text-muted">Limit to logged in users?</small></div>
 
-        <div className="aws-profile-photo-test">
-
-          <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${this.props.user_id}.jpg?h=${this.state.fakeImageHash}&b=${this.state.cacheBust}`} height="150" width="150" alt=""/>
-
-          <div className="upload-photo-wrap mr-1">
-            <div className="upload-photo noselect">+</div>
-            <input onChange={this.onChangeProfile} accept=".jpg" type="file" name="myfile" />
-          </div>
-        </div>
-
-        <div>{this.state.newProfilePhotoLoading ? 'Uploading' : ''}</div>
-
-        <div className="aws-photo-test">
-
-          <div className="upload-photo-wrap mr-1">
-            <div className="upload-photo noselect">+</div>
-            <input onChange={this.onChange} type="file" name="myfile" />
-          </div>
-
-          {this.state.photos.map((photo, i) => (
-            <span className="image-container">
-
-              <div onClick={() => this.removePhoto(photo)} className="delete noselect">X</div>
-              <a key={i} href={`https://articles-website.s3.amazonaws.com/${photo}`} target="_blank" rel="noopener noreferrer">
-                <img key={i} height="150px" alt="" src={`https://articles-website.s3.amazonaws.com/${photo}`} />
+              <a href="https://www.youtube.com/watch?v=l_lblj8Cq0o&ab_channel=GEazyMusicVEVO" target="_blank">
+                <div className="badge badge-success mb-2">No Limit</div>
               </a>
 
-            </span>
-          ))}
+              <div>
+                <button disabled="true" className="btn btn-articles-light btn-sm">No</button>
+                <button className="btn btn-articles-light btn-sm">Yes</button>
+              </div>
+            </div>
+
+            <hr className="my-3"/>
+
+            <div className="">
+              <button className="btn btn-articles-light" onClick={() => this.testNotification()}>Fake Notification</button>
+              <button className="btn btn-articles-light">Fake Donation</button>
+              <button className="btn btn-articles-light">Fake Expense</button>
+            </div>
+
+          </div>
 
         </div>
 
@@ -243,6 +133,12 @@ const mapStateToProps = state => ({
   user_id: state.auth.user.id
 });
 
+const WithSocket = props => (
+  <SocketContext.Consumer>
+      { socket => <Sockets {...props} socket={socket}/> }
+  </SocketContext.Consumer>
+)
+
 export default connect(
   mapStateToProps,
-)(Sockets);
+)(WithSocket);

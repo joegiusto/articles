@@ -145,7 +145,7 @@ function FlintCounter() {
   );
 }
 
-function SearchHead(props) {
+function NewsHead(props) {
 
   const days = [];
 
@@ -199,185 +199,193 @@ function SearchHead(props) {
   }
 
   return(
-    <div className={"news-head " + (isHome ? 'home' : 'focus')}>
+    <>
+      <div className={"news-head d-none " + (isHome ? 'home' : 'focus')}>
 
-      <div className="frontpage-section-header d-none">
-        <h5>Widgets</h5>
+        <div className="spacer"></div>
 
-        <div className="controls d-none ">
-          <i className="fas fa-backward"></i>
-          <i className="fas fa-forward"></i>
-        </div>
-      </div>
+        <div className={"active-page-panel d-none " + (isHome ? 'home' : 'focus')}>
 
-      <div className="spacer"></div>
+          <h1 className="title">{activePage.title}</h1>
+          <p className="body">{activePage.desc}</p>
 
-      <div className={"active-page-panel " + (isHome ? 'home' : 'focus')}>
+          {activePage.title === "Issues" ? 
+          <div className="filters noselect">
+            <span className="subscription-badges">
+              <span className="bold"><i className="fas fa-th"></i></span>
+              <div onClick={() => props.toggleUserSubscriptions()} className={"badge border " + (props.userSubscriptions === true ? 'badge-dark ' : 'badge-light ')}>Subscribed</div>
+              <div onClick={() => props.toggleUserSubscriptions()} className={"ml-1 badge border " + (props.userSubscriptions === false ? 'badge-dark' : 'badge-light')}>All</div>
+            </span>
 
-        <h1 className="title">{activePage.title}</h1>
-        <p className="body">{activePage.desc}</p>
-
-        {activePage.title === "Issues" ? 
-        <div className="filters noselect">
-          <span className="subscription-badges">
-            <span className="bold"><i className="fas fa-th"></i></span>
-            <div onClick={() => props.toggleUserSubscriptions()} className={"badge border " + (props.userSubscriptions === true ? 'badge-dark ' : 'badge-light ')}>Subscribed</div>
-            <div onClick={() => props.toggleUserSubscriptions()} className={"ml-1 badge border " + (props.userSubscriptions === false ? 'badge-dark' : 'badge-light')}>All</div>
-          </span>
-
-          <span className="subscription-badges">
-            <span className="bold"><i className="fas fa-calendar"></i></span>
-            <div onClick={() => props.filterIssuesDateType()} className={"badge border " + (props.dateType === 'post' ? 'badge-dark ' : 'badge-light ')}>Posted</div>
-            <div onClick={() => props.filterIssuesDateType()} className={"ml-1 badge border " + (props.dateType === 'update' ? 'badge-dark' : 'badge-light')}>Updated</div>
-          </span>
-        </div>
-        :
-        null
-        }
-        
-      </div>
-
-      <div className={"search-panel " + (isHome ? 'home' : 'focus')}>
-  
-        <img src={background} alt="" className="background"/>
-
-        <div onClick={() => props.toggleSearchSettingsOverlay()} className="settings">
-          <i className="fas fa-toolbox mr-0"></i>
-        </div>
-  
-        <h1 className="title">Search</h1>
-  
-        <div className="filter"></div>
-  
-        <div className="search">
-
-          <input 
-          id="search" 
-          name="search" 
-          value={props.searchText} 
-          onChange={props.onChange} 
-          type="text" 
-          className="form-control"
-          // placeholder={props.userSubscriptions ? "Only works on 'All Issues' sort" : ""}
-          />
-
-          <select name="" id="">
-            <option value="all">All</option>
-            <option value="stories">Stories</option>
-            <option value="issues">Issues</option>
-            <option value="myths">Myths</option>
-          </select>
-
-          <div className="btn btn-articles-light">
-            <i className="fas fa-search mr-0"></i>
+            <span className="subscription-badges">
+              <span className="bold"><i className="fas fa-calendar"></i></span>
+              <div onClick={() => props.filterIssuesDateType()} className={"badge border " + (props.dateType === 'post' ? 'badge-dark ' : 'badge-light ')}>Posted</div>
+              <div onClick={() => props.filterIssuesDateType()} className={"ml-1 badge border " + (props.dateType === 'update' ? 'badge-dark' : 'badge-light')}>Updated</div>
+            </span>
           </div>
-
-        </div>
-  
-        {/* <div className="my-2 d-flex justify-content-between">
-
-          <div>
-            <Link to={ROUTES.NEWS}><button className={"search-button mr-1 " + (props.path === "/news" ? 'active' : '')}>All</button></Link>
-            <Link to={ROUTES.STORIES}><button className={"search-button mr-1 " + (props.path === "/news/stories" ? 'active' : '')}>Stories</button></Link>
-            <Link to={ROUTES.ISSUES}><button className={"search-button mr-1 " + (props.path === "/news/issues" ? 'active' : '')}>Issues</button></Link>
-            <Link to={ROUTES.MYTHS}><button className={"search-button mr-1 " + (props.path === "/news/myths" ? 'active' : '')}>Myths</button></Link>
-          </div>
-
-        </div> */}
-  
-        <div className="tags-container">
-
-          <div className="type">Trending</div>
-
-          <div className="tags">
-            <Link to={ROUTES.EXTENDED + '/coronavirus'}><div className="tag badge badge-danger"><i className="fas fa-map-pin mr-1"></i>Coronavirus</div></Link>
-            <Link to={ROUTES.ISSUES + '/2020-election'}><div className="tag badge badge-articles">2020 Elections</div></Link>
-            <Link to={ROUTES.ISSUES + '/global-warming'}><div className="tag badge badge-articles">Global Warming</div></Link>
-            <Link to={ROUTES.ISSUES + '/gun-laws-and-control'}><div className="tag badge badge-articles">Gun Laws And Control</div></Link>
-            {/* <Link to={ROUTES.ISSUES + '/flint-water-crisis'}><div className="tag badge badge-articles">Flint Water Crisis</div></Link> */}
-          </div>
-        </div>
-  
-      </div>
-
-      <div className="extra-panels">
-
-        <div onClick={() => props.toggleWeatherOverlay()} className="extra-panel weather">
-
-          {/* <div className="info">Zip: </div> */}
-          <div className="info"><span className="badge badge-light">{props.zip}</span></div>
-
-          <div className="background">
-            {props.weatherData?.current?.is_day === 'yes' ?
-            <img src="https://cdn.articles.media/weather/partly-cloudy.jpg" alt=""/>
-            :
-            <img src="https://www.cruise1st.co.uk/blog/wp-content/uploads/2017/12/Fotolia_96215836_S-702x336.jpg" alt=""/>
-            }
-          </div>
-
-          <div className="content text-center">
-            <div className="temp"><i className="fas fa-thermometer-empty"></i>{props.weatherData?.current?.temperature}°F</div>
-            <div className="descriptions">{props.weatherData?.current?.weather_descriptions.map(item => <span>{item} </span>)}</div>
-            <div className="time">{moment(props.weatherData?.location?.localtime).format("LLL")}</div>
-          </div>
-
-          <div className="slideup">
-            <div className="days">
-
-              {/* {days} */}
-
-              <div className="py-1">See 7 day forecast</div>
-
-              {/* <div className="badge badge-danger">Test</div> */}
-
-            </div>
-          </div>
-          
-          <div></div>
-
-        </div>
-
-        <a href="https://www.youtube.com/channel/UCeftkiTtcniDx87GqoEmFAg" target="_blank" rel="noopener noreferrer" className="extra-panel youtube d-none">
-
-          <div className="info">
-            <span className="badge badge-light">Last Upload: <span className="badge badge-danger">Never</span></span>
-          </div>
-
-          <div className="background">
-            <img style={{objectFit: 'cover'}} src="https://www.dailydot.com/wp-content/uploads/2019/08/listen_youtube_music_youtube_premium-800x400.jpg" alt=""/>
-          </div>
-
-          <div className="slideup">
-            <div className="py-1">View Channel</div>
-          </div>
-
-          <div className="hover-notice d-none">View Channel</div>
-        </a>
-
-        <div onClick={() => props.toggleBankingOverlay()} className="extra-panel d-none banking">
-          {props.plaidSetup ? 
-          <>
-          <div className="photo"><img src="https://lh3.googleusercontent.com/QruFI-jzHu0gsXrpWsC6gP_DxPs9TjdEzqrr7jhkgIEwPq-fc8-kEmzW79_XhmMxpA2N=s180" alt=""/></div>
-          <div className="info">
-            <div className="branch">HVFCU</div>
-            <div className="amount">$400.00</div>
-          </div>
-          </>
           :
-          <div className="plaid-setup">
-            <i className="fas fa-money-check-alt"></i>
-            <div>Bank Balance</div>
-            <div className="btn btn-articles-light btn-sm">Setup</div>
-          </div>
+          null
           }
           
         </div>
 
+        <div className={"search-panel " + (isHome ? 'home' : 'focus')}>
+    
+          <img src={background} alt="" className="background"/>
+
+          <div onClick={() => props.toggleSearchSettingsOverlay()} className="settings">
+            <i className="fas fa-toolbox mr-0"></i>
+          </div>
+    
+          <h1 className="title">Search</h1>
+    
+          <div className="filter"></div>
+    
+          <div className="search">
+
+            <input 
+            id="search" 
+            name="search" 
+            value={props.searchText} 
+            onChange={props.onChange} 
+            type="text" 
+            className="form-control"
+            // placeholder={props.userSubscriptions ? "Only works on 'All Issues' sort" : ""}
+            />
+
+            <select name="" id="">
+              <option value="all">All</option>
+              <option value="stories">Stories</option>
+              <option value="issues">Issues</option>
+              <option value="myths">Myths</option>
+            </select>
+
+            <div className="btn btn-articles-light">
+              <i className="fas fa-search mr-0"></i>
+            </div>
+
+          </div>
+    
+          <div className="tags-container">
+
+            <div className="type">Trending</div>
+
+            <div className="tags">
+              <Link to={ROUTES.EXTENDED + '/coronavirus'}><div className="tag badge badge-danger"><i className="fas fa-map-pin mr-1"></i>Coronavirus</div></Link>
+              <Link to={ROUTES.ISSUES + '/2020-election'}><div className="tag badge badge-articles">2020 Elections</div></Link>
+              <Link to={ROUTES.ISSUES + '/global-warming'}><div className="tag badge badge-articles">Global Warming</div></Link>
+              <Link to={ROUTES.ISSUES + '/gun-laws-and-control'}><div className="tag badge badge-articles">Gun Laws And Control</div></Link>
+              {/* <Link to={ROUTES.ISSUES + '/flint-water-crisis'}><div className="tag badge badge-articles">Flint Water Crisis</div></Link> */}
+            </div>
+          </div>
+    
+        </div>
+
+        <div className="extra-panels d-none">
+
+          <div onClick={() => props.toggleWeatherOverlay()} className="extra-panel weather">
+
+            {/* <div className="info">Zip: </div> */}
+            <div className="info"><span className="badge badge-light">{props.zip}</span></div>
+
+            <div className="background">
+              {props.weatherData?.current?.is_day === 'yes' ?
+              <img src="https://cdn.articles.media/weather/partly-cloudy.jpg" alt=""/>
+              :
+              <img src="https://www.cruise1st.co.uk/blog/wp-content/uploads/2017/12/Fotolia_96215836_S-702x336.jpg" alt=""/>
+              }
+            </div>
+
+            <div className="content text-center">
+              <div className="temp"><i className="fas fa-thermometer-empty"></i>{props.weatherData?.current?.temperature}°F</div>
+              <div className="descriptions">{props.weatherData?.current?.weather_descriptions.map(item => <span>{item} </span>)}</div>
+              <div className="time">{moment(props.weatherData?.location?.localtime).format("LLL")}</div>
+            </div>
+
+            <div className="slideup">
+              <div className="days">
+
+                {/* {days} */}
+
+                <div className="py-1">See 7 day forecast</div>
+
+                {/* <div className="badge badge-danger">Test</div> */}
+
+              </div>
+            </div>
+            
+            <div></div>
+
+          </div>
+
+          <a href="https://www.youtube.com/channel/UCeftkiTtcniDx87GqoEmFAg" target="_blank" rel="noopener noreferrer" className="extra-panel youtube d-none">
+
+            <div className="info">
+              <span className="badge badge-light">Last Upload: <span className="badge badge-danger">Never</span></span>
+            </div>
+
+            <div className="background">
+              <img style={{objectFit: 'cover'}} src="https://www.dailydot.com/wp-content/uploads/2019/08/listen_youtube_music_youtube_premium-800x400.jpg" alt=""/>
+            </div>
+
+            <div className="slideup">
+              <div className="py-1">View Channel</div>
+            </div>
+
+            <div className="hover-notice d-none">View Channel</div>
+          </a>
+
+          <div onClick={() => props.toggleBankingOverlay()} className="extra-panel d-none banking">
+            {props.plaidSetup ? 
+            <>
+            <div className="photo"><img src="https://lh3.googleusercontent.com/QruFI-jzHu0gsXrpWsC6gP_DxPs9TjdEzqrr7jhkgIEwPq-fc8-kEmzW79_XhmMxpA2N=s180" alt=""/></div>
+            <div className="info">
+              <div className="branch">HVFCU</div>
+              <div className="amount">$400.00</div>
+            </div>
+            </>
+            :
+            <div className="plaid-setup">
+              <i className="fas fa-money-check-alt"></i>
+              <div>Bank Balance</div>
+              <div className="btn btn-articles-light btn-sm">Setup</div>
+            </div>
+            }
+            
+          </div>
+
+        </div>
+
+        <div className="spacer"></div>
+
       </div>
 
-      <div className="spacer"></div>
+      <div className="news-head-new">
+        <img src="https://cdn.vox-cdn.com/thumbor/GxxQX7lKYjQp8CXU0GWtQcWGLDk=/0x0:2000x1333/1200x675/filters:focal(840x507:1160x827)/cdn.vox-cdn.com/uploads/chorus_image/image/66009531/190921_07_18_10_5DS27714__1_.0.jpg" alt=""/>
 
-    </div>
+        <div className="search-bar">
+
+          <div class="input-group mb-1">
+            <input style={{borderRadius: '0', borderBottom: 'solid 2px #000'}} type="text" class="form-control" placeholder="" aria-label="" aria-describedby="button-addon2"/>
+
+            <div class="input-group-append">
+              <button class="btn btn-articles-light" type="button" id="">
+                <i className="fas fa-search mr-0"></i>
+              </button>
+            </div>
+
+          </div>
+
+          <div className="badge badge-articles" style={{fontSize: '1.2rem'}}>Filters</div>
+
+          <div className="trending">
+            {/* <div className="badge badge-articles">Filters</div> */}
+          </div>
+
+        </div>
+
+      </div>
+    </>
   )
 }
 
@@ -813,7 +821,6 @@ class Frontpage extends Component {
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
-
   
   changeTagFocus(tag) {
     const self = this;
@@ -884,11 +891,11 @@ class Frontpage extends Component {
     }
     
     return(
-      <section className="frontpage-section">
+      <section className="news-page">
 
-      <Helmet>
-        <title>News - Articles</title>
-      </Helmet>
+        <Helmet>
+          <title>News - Articles</title>
+        </Helmet>
 
         <div className="side-bar noselect">
 
@@ -1523,7 +1530,23 @@ class Frontpage extends Component {
           
         </div>
 
-        <div className="content">
+        <div className="main-content-container">
+
+          <NewsHead 
+            zip={this.props.user_details.address?.zip || 'None'} 
+            toggleWeatherOverlay={this.toggleWeatherOverlay} 
+            toggleBankingOverlay={this.toggleBankingOverlay}
+            toggleSearchSettingsOverlay={this.toggleSearchSettingsOverlay}
+            toggleUserSubscriptions={this.props.toggleUserSubscriptions}
+            userSubscriptions={this.props.site?.userSubscriptions}
+            filterIssuesDateType={this.props.filterIssuesDateType}
+            dateType={this.props.site.dateType}
+            homeLayout={true} 
+            path={this.props.match.path}
+            plaidSetup={this.state.plaidSetup}
+            weatherData={this.state.weatherData}
+          />
+
           <div className='container-fluid'>
 
             <div className="top-bar">
@@ -1554,21 +1577,6 @@ class Frontpage extends Component {
   
               {/* Left Side */}
               <div className="col-12 col-md-12">
-
-              <SearchHead 
-              zip={this.props.user_details.address?.zip || 'None'} 
-              toggleWeatherOverlay={this.toggleWeatherOverlay} 
-              toggleBankingOverlay={this.toggleBankingOverlay}
-              toggleSearchSettingsOverlay={this.toggleSearchSettingsOverlay}
-              toggleUserSubscriptions={this.props.toggleUserSubscriptions}
-              userSubscriptions={this.props.site?.userSubscriptions}
-              filterIssuesDateType={this.props.filterIssuesDateType}
-              dateType={this.props.site.dateType}
-              homeLayout={true} 
-              path={this.props.match.path}
-              plaidSetup={this.state.plaidSetup}
-              weatherData={this.state.weatherData}
-              />
 
                 <Switch>
                   {/* <Route exact path={ROUTES.NEWS} render={() => <h1>Front</h1>}/> */}
@@ -1608,21 +1616,22 @@ class Frontpage extends Component {
                   )}/>
                 </Switch>
 
-              <div className="load-more-button my-5 d-none">
-                <div onClick={() => this.setState({focusViewLoadingMore: !this.state.focusViewLoadingMore})} className="btn btn-articles-light">
+                <div className="load-more-button my-5 d-none">
+                  <div onClick={() => this.setState({focusViewLoadingMore: !this.state.focusViewLoadingMore})} className="btn btn-articles-light">
 
-                  <i className={"fas fa-pulse fa-spinner " + (this.state.focusViewLoadingMore ? '' : 'd-none')}></i>
-                  <i className={"fas fa-mouse-pointer " + (this.state.focusViewLoadingMore ? 'd-none' : '')}></i>
+                    <i className={"fas fa-pulse fa-spinner " + (this.state.focusViewLoadingMore ? '' : 'd-none')}></i>
+                    <i className={"fas fa-mouse-pointer " + (this.state.focusViewLoadingMore ? 'd-none' : '')}></i>
 
-                  Load More
+                    Load More
+                  </div>
                 </div>
-              </div>
   
               </div>
   
             </div>
   
           </div>
+
         </div>
 
       </section>

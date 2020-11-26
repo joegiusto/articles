@@ -19,6 +19,7 @@ import Submissions from './components/Submissions'
 import Donations from './components/Donations'
 import Expenses from './components/Expenses'
 import Sockets from './components/Socket'
+import AWS from './components/Aws'
 import Comments from './components/Comments'
 import Reports from './components/Reports'
 import Orders from './components/Orders'
@@ -85,6 +86,7 @@ class Admin extends Component {
             <Link to={ROUTES.ADMIN_DONATIONS}><span className={"tab" + (this.state.tab === 'donations' ? ' active' : '')}>Donations</span></Link>
             <Link to={ROUTES.ADMIN_EXPENSES}><span className={"tab" + (this.state.tab === 'expenses' ? ' active' : '')}>Expenses</span></Link>
             <Link to={ROUTES.ADMIN_SOCKET}><span className={"tab" + (this.state.tab === 'sockets' ? ' active' : '')}>Sockets</span></Link>
+            <Link to={ROUTES.ADMIN_AWS}><span className={"tab" + (this.state.tab === 'aws' ? ' active' : '')}>Aws</span></Link>
             <Link to={ROUTES.ADMIN_COMMENTS}><span className={"tab" + (this.state.tab === 'comments' ? ' active' : '')}>Comments</span></Link>
             <Link to={ROUTES.ADMIN_REPORTS}><span className={"tab" + (this.state.tab === 'reports' ? ' active' : '')}>Reports</span></Link>
             <Link to={ROUTES.ADMIN_ORDERS}><span className={"tab" + (this.state.tab === 'orders' ? ' active' : '')}>Orders</span></Link>
@@ -159,6 +161,13 @@ class Admin extends Component {
               tabLocation='sockets'
               setLocation={this.setLocation}
             ></Sockets> 
+            }/>
+
+            <Route exact path={ROUTES.ADMIN_AWS} render={() => <AWS 
+              match={this.props.match}
+              tabLocation='aws'
+              setLocation={this.setLocation}
+            ></AWS> 
             }/>
 
             <Route exact path={ROUTES.ADMIN_COMMENTS} render={() => <Comments 
