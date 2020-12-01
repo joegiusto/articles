@@ -3,13 +3,21 @@ import axios from 'axios'
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import { formatDate, parseDate } from 'react-day-picker/moment';
 
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+
 class Dashboard extends Component {
   constructor(props) {
   super(props);
   
     this.state = {
       start_date: new Date(),
-      end_date: new Date()
+      end_date: new Date(),
+      config: {
+        stripe: {
+          mode: ''
+        }
+      }
     };
 
     this.handleDateChange = this.handleDateChange.bind(this);
@@ -18,6 +26,42 @@ class Dashboard extends Component {
   componentDidMount() {
     const self = this;
     this.props.setLocation(this.props.tabLocation);
+
+    axios.get('/api/mongoConfig')
+    .then((response) => {
+      console.log(response)
+      this.setState({ config: response.data[0] })
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  setStripeMode(mode) {
+    this.setState({
+      config: {
+        ...this.state.config,
+        stripe: {
+          ...this.state.config.stripe,
+          mode: mode
+        }
+      }
+    })
+  }
+
+  renderStripeModeColor(mode) {
+    switch (mode) {
+      case 'Oranges':
+        console.log('Oranges are $0.59 a pound.');
+        break;
+      case 'Mangoes':
+      case 'Papayas':
+        console.log('Mangoes and papayas are $2.79 a pound.');
+        // expected output: "Mangoes and papayas are $2.79 a pound."
+        break;
+      default:
+        return
+    }
   }
 
   componentWillUnmount() {
@@ -45,17 +89,74 @@ class Dashboard extends Component {
             </div>
           </div>
 
+          <div className="card mt-3">
+            <div className="card-header">Status Overview</div>
+            <div className="card-body">
+
+              <div>Stripe: <span className="badge badge-warning">Test</span></div>
+
+              <hr/>
+
+              <div>Sign Up: <span className="badge badge-success">Enabled</span></div>
+              <div>IP Limit: <span className="badge badge-danger">Disabled</span></div>
+
+              <hr/>
+
+              <div>Sockets: <span className="badge badge-primary">No Limit</span></div>
+
+              <hr/>
+
+              <div>Store: <span className="badge badge-success">Enabled</span></div>
+
+              <hr/>
+
+              <div>Submissions: <span className="badge badge-success">Enabled</span></div>
+
+            </div>
+          </div>
+
         </div>
 
         <div className="main-panel">
 
-          <button className="btn btn-danger mb-3">Freeze Store</button>
-          <button className="btn btn-danger mb-3 ml-1">Freeze Sign Ups</button>
-          <button className="btn btn-danger mb-3 ml-1">Freeze Comments</button>
-          <button className="btn btn-danger mb-3 ml-1">Freeze Donations</button>
-          <button className="btn btn-danger mb-3 ml-1">Freeze Google Maps API</button>
-          <button className="btn btn-danger mb-3 ml-1">Freeze SendGrid</button>
-          <button className="btn btn-primary mb-3 ml-1">Unfreeze Submissions</button>
+          <div className="mongo-config">
+
+            <div className="d-flex justify-content-between">
+              <div className="badge badge-warning">Dev</div>
+              {/* <button className="btn btn-warning btn-sm">Refresh Config</button> */}
+            </div>
+
+            <div className="d-flex justify-content-between mt-2">
+              <div>
+                <DropdownButton variant={this.state.config.stripe.mode === 'Test' ? 'warning' : 'success'} style={{verticalAlign: 'middle'}} className="d-inline-block mb-3 " id="dropdown-basic-button" title={`Stripe: ${this.state.config.stripe?.mode}`}>
+                  <Dropdown.Item onClick={() => this.setStripeMode('Live')}>Live</Dropdown.Item>
+                  <Dropdown.Item onClick={() => this.setStripeMode('Test')}>Test</Dropdown.Item>
+                </DropdownButton>
+
+                <DropdownButton variant={'success'} style={{verticalAlign: 'middle'}} className="d-inline-block mb-3 ml-1" id="dropdown-basic-button" title="Store: Enabled">
+                  <Dropdown.Item href="">Enabled</Dropdown.Item>
+                  <Dropdown.Item href="">Disabled</Dropdown.Item>
+                </DropdownButton>
+      
+                <DropdownButton variant={'success'} style={{verticalAlign: 'middle'}} className="d-inline-block mb-3 ml-1" id="dropdown-basic-button" title="Submissions: Enabled">
+                  <Dropdown.Item href="">Enabled</Dropdown.Item>
+                  <Dropdown.Item href="">Disabled</Dropdown.Item>
+                </DropdownButton>
+      
+                <DropdownButton variant={'success'} style={{verticalAlign: 'middle'}} className="d-inline-block mb-3 ml-1" id="dropdown-basic-button" title="Sign Up: Enabled">
+                  <Dropdown.Item href="">Enabled</Dropdown.Item>
+                  <Dropdown.Item href="">Disabled</Dropdown.Item>
+                </DropdownButton>
+      
+                <DropdownButton variant={'success'} style={{verticalAlign: 'middle'}} className="d-inline-block mb-3 ml-1" id="dropdown-basic-button" title="Donations: Enabled">
+                  <Dropdown.Item href="">Enabled</Dropdown.Item>
+                  <Dropdown.Item href="">Disabled</Dropdown.Item>
+                </DropdownButton>
+              </div>
+    
+
+            </div>
+          </div>
 
           <div className="toolbar d-flex align-items-start">
 

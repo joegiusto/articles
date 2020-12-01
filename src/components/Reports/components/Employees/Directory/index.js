@@ -225,7 +225,7 @@ class EmployeePageDetails extends Component {
     
               <div className="employee-header-info">
     
-                <div className='employee-name'>{employee.first_name + ' ' + employee.last_name}</div>
+                <div className='employee-name'>{`${employee.first_name} ${employee.last_name}`}</div>
     
                 <Link to={ROUTES.MESSAGES + '/?startMsg=5e90cc96579a17440c5d7d52'}><div className='employee-action-button btn'>+ MESSAGE</div></Link>
     
@@ -237,7 +237,7 @@ class EmployeePageDetails extends Component {
             </div>
 
             <div className="bio">
-              <div className='employee-bio'>{employee.employee?.bio.replace('<age></age>', moment().from(employee.birth_date, 'years') )}</div>
+              <div className='employee-bio'>{employee.employee?.bio.replace('<age></age>', moment().diff(employee.birth_date, 'years') )}</div>
             </div>
 
          </div>
@@ -306,7 +306,7 @@ class EmployeePageDetails extends Component {
               :
               <div className="commits">
 
-                <a target="_blank" rel="noopener noreferrer" href="https://github.com/">
+                <a target="_blank" rel="noopener noreferrer" href="https://github.com/joegiusto/articles/commits/">
                   <div className="powered-by d-flex align-items-center justify-content-center">
                     <i className="fab fa-github-square fa-3x"></i>
                     <span className="">Powered by Github</span>

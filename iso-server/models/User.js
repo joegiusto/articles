@@ -79,7 +79,7 @@ const UserSchema = new Schema({
     type: Object,
     default: {
       customer_id: '',
-      test: 'test'
+      customer_test_id: ''
     }
   },
   resetPasswordToken: {

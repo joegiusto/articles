@@ -8,13 +8,12 @@ import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
-import io from 'socket.io-client'
+// import io from 'socket.io-client'
 
 import * as ROUTES from '../../constants/routes';
 import loadingGif from '../../assets/img/News/loading.gif'
 
-const ENDPOINT = "/";
-let socket = ''
+import SocketContext from '../../utils/socket_context/context'
 
 class Messages extends Component {
   constructor(props) {
@@ -52,6 +51,7 @@ class Messages extends Component {
 
     this.myScrollRef = React.createRef()
     this.onImageUpload = this.onImageUpload.bind(this);
+    this.socket = this.props.socket;
   }
 
   randomIntFromInterval(min, max) { // min and max included 
@@ -100,17 +100,17 @@ class Messages extends Component {
     }
 
     // window.addEventListener('scroll', this.listenToScroll)
-    socket = io(ENDPOINT);
+    // socket = io(ENDPOINT);
 
     self.setState({
       messagesLoading: true
     })
 
-    socket.on('connect', () => {
+    this.socket.on('connect', () => {
       console.log("Connected to server!"); // true
     });
 
-    socket.emit( 'online', self.props.user_id )
+    this.socket.emit( 'online', self.props.user_id )
 
     axios.post('/api/getUserMessages', {
       _id: self.props.user_id
@@ -144,7 +144,7 @@ class Messages extends Component {
       console.log(error);
     });
 
-    socket.on('message', function(msg){
+    this.socket.on('message', function(msg){
   
       console.log(`Just received this message from server`);
       console.log(msg);
@@ -183,7 +183,7 @@ class Messages extends Component {
   }
 
   componentWillUnmount() {
-    socket.disconnect()
+    // this.socket.disconnect()
     // window.removeEventListener('scroll', this.listenToScroll)
   }
 
@@ -228,7 +228,7 @@ class Messages extends Component {
     }, () => {
       this.setState({sidebarVisible: false})
       setTimeout(function(){ self.scrollToBottom(); }, 100);
-      socket.emit( 'join-room', self.state.focusedChat )
+      this.socket.emit( 'join-room', self.state.focusedChat )
     });
   }
 
@@ -238,8 +238,6 @@ class Messages extends Component {
   }
 
   renderMessageContacts() {
-
-    
 
     if (this.state.inboxFilter === 'people') {
       return (
@@ -256,6 +254,10 @@ class Messages extends Component {
           <div onClick={() => this.setFocusedChat(message._id)} className={"chat-contact inbox-message " + (message.promotional ? 'ad ' : '') + (message._id === this.state.focusedChat ? 'active ' : '')} >
 
             <div className="contact-photo">
+              <div className="status-container">
+                <div className="status"></div>
+              </div>
+
               <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${ message.fetchedUsers?.filter(user => user.id !== this.props.user_id).map(user => user.id) }.jpg`} alt=""/>
             </div>
 
@@ -360,7 +362,7 @@ class Messages extends Component {
   sendSocketImage() {
     const self = this;
     // console.log("Socket")
-    socket.emit('5f208af919d23fbf84c7a6aa', {
+    this.socket.emit('5f208af919d23fbf84c7a6aa', {
       type: 'image',
       url: 'https://articles-website.s3.amazonaws.com/chat/5f208af919d23fbf84c7a6aa/b2cca4cd-37ff-490e-a804-a309f49e2e9d'
     });
@@ -369,14 +371,14 @@ class Messages extends Component {
   sendSocketText() {
     const self = this;
     // console.log("Socket")
-    socket.emit('5f208af919d23fbf84c7a6aa', {
+    this.socket.emit('5f208af919d23fbf84c7a6aa', {
       type: 'text',
       text: 'Hello there!'
     });
   }
 
   logRooms() {
-    socket.emit('log-rooms');
+    this.socket.emit('log-rooms');
   }
 
   sendMessage() {
@@ -405,7 +407,7 @@ class Messages extends Component {
 
         // socket.to(self.state.focus._id).emit(self.state.chatMessage);
 
-        socket.emit(focused?._id, self.state.chatMessage);
+        this.socket.emit(focused?._id, self.state.chatMessage);
 
         let willScroll = false;
 
@@ -510,6 +512,8 @@ class Messages extends Component {
         ]
       })
 
+      // TODO - Not how I want this but has to be for now, fix the setState call, reload messages or anything else!
+      window.location.reload();
     })
     .catch(function (error) {
       console.log(error.response);
@@ -680,19 +684,20 @@ class Messages extends Component {
 
         </div>
         
-        <div className={"nav-bar-sticker " + (this.props.sideMenuOpen ? '' : '')}>
+        <div className={"nav-bar-sticker d-none " + (this.props.sideMenuOpen ? '' : '')}>
           <div className="bg"></div>
           <div className="bg bg2"></div>
           <div className="bg bg3"></div>
         </div>
 
-        <div className="container-fluid">
+        {/* <div className="container-fluid"> */}
 
-          <div className="chat-card card my-4 mx-0 m-md-4">
+          <div className="chat-card card my-0 mx-0">
 
             <div className="card-body d-flex p-0">
 
               <div className={"chat-sidebar " + (this.state.sidebarVisible ? 'expand' : '')}>
+                <div className="alert alert-warning mb-0 p-1" style={{fontSize: '0.8rem'}}>Chat is in development! Articles staff will <span className="badge badge-danger">NEVER</span> ask you for your email or personal info via messages!</div>
                 {this.renderMessageContacts()}
 
                 <div className="start-chat">
@@ -709,14 +714,14 @@ class Messages extends Component {
 
                     <div className="col-8 col-sm-8 d-flex align-items-center">
 
-                      <button onClick={() => this.setState({sidebarVisible: true})} className="btn btn-articles-light d-md-none mr-3">
+                      <button onClick={() => this.setState({sidebarVisible: true})} className="btn btn-articles-light d-lg-none mr-3">
                         <i className="fas fa-chevron-left mr-0"></i>
                       </button>
 
                       <div className="min-w-0">
                         {/* <div>{this.state.messages.find(m => m._id === this.state.focusedChat).fetchedUsers?.filter(user => user.id !== this.props.user_id).map(user => user.name)}</div> */}
                         <div>{focused?.fetchedUsers?.filter(user => user.id !== this.props.user_id).map(user => user.name)}</div>
-                        <small>Active</small>
+                        <div className="badge badge-dark">Offline</div>
                       </div>
 
                     </div>
@@ -856,7 +861,7 @@ class Messages extends Component {
 
                   {this.state.image === '' ? 
                   <TextareaAutosize
-                    className="chat-message" 
+                    className="chat-message mr-1" 
                     name="chatMessage"
                     value={this.state.chatMessage}
                     onKeyPress={(e) => { this.handleTextareaChange(e) }}
@@ -868,13 +873,13 @@ class Messages extends Component {
 
                   <div className="align-items-start">
                     <input className="d-none" onFocus={() => (this.props.changeFocus('photo'))} id="file-upload" onChange={this.onImageUpload} accept="image/x-png,image/gif,image/jpeg" type="file" name="myfile" />
-                    <label for="file-upload" className="btn btn-sm btn-articles-light mb-0"><i className="fas fa-paperclip"></i>Attach</label>
+                    <label for="file-upload" className="btn btn-sm btn-articles-light mb-0"><i className="fas fa-paperclip mr-0 mr-m-1"></i><span className="d-none d-md-inline">Attach</span></label>
   
-                    <button disabled={this.state.chatMessage === '' && this.state.image === ''} className="btn btn-sm btn-articles-light" onClick={() => this.sendMessage()}><i className="far fa-paper-plane"></i>Send</button>
+                    <button disabled={this.state.chatMessage === '' && this.state.image === ''} className="btn btn-sm btn-articles-light" onClick={() => this.sendMessage()}><i className="far fa-paper-plane mr-0 mr-m-1"></i><span className="d-none d-md-inline">Send</span></button>
                     
-                    <button onClick={() => this.sendSocketText()} className={"btn btn-sm btn-articles-light " + (this.props.user_id === '5e90cc96579a17440c5d7d52' ? '' : 'd-none')}>Txt</button>
-                    <button onClick={() => this.sendSocketImage()} className={"btn btn-sm btn-articles-light " + (this.props.user_id === '5e90cc96579a17440c5d7d52' ? '' : 'd-none')}>Img</button>
-                    <button onClick={() => this.logRooms()} className={"btn btn-sm btn-articles-light " + (this.props.user_id === '5e90cc96579a17440c5d7d52' ? '' : 'd-none')}>Room</button>
+                    <button onClick={() => this.sendSocketText()} className={"btn btn-sm btn-articles-light d-none d-md-inline " + (this.props.user_id === '5e90cc96579a17440c5d7d52' ? '' : 'd-none')}>Txt</button>
+                    <button onClick={() => this.sendSocketImage()} className={"btn btn-sm btn-articles-light d-none d-md-inline " + (this.props.user_id === '5e90cc96579a17440c5d7d52' ? '' : 'd-none')}>Img</button>
+                    <button onClick={() => this.logRooms()} className={"btn btn-sm btn-articles-light d-none d-md-inline " + (this.props.user_id === '5e90cc96579a17440c5d7d52' ? '' : 'd-none')}>Room</button>
                   </div>
 
                 </div>
@@ -884,18 +889,12 @@ class Messages extends Component {
             </div>
           </div>
 
-        </div>
+        {/* </div> */}
 
       </div>
     )
   }
 }
-
-const ColorOption = (props) => {
-  return (
-    <div onClick={() => props.realThis.setState({colorOption: props.name})} className={"option " + props.name}></div>
-  )
-};
 
 const mapStateToProps = (state) => {
   return {
@@ -906,6 +905,12 @@ const mapStateToProps = (state) => {
   };
 };
 
+const WithSocket = props => (
+  <SocketContext.Consumer>
+      { socket => <Messages {...props} socket={socket}/> }
+  </SocketContext.Consumer>
+)
+
 export default connect(
   mapStateToProps
-)(Messages );
+)(WithSocket);

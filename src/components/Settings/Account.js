@@ -52,6 +52,8 @@ class Account extends Component {
 
       updatingUserDetails: false,
 
+      requestedUserData: '',
+
       nameExpanded: false,
       genderExpanded: false,
       birthDateExpanded: false,
@@ -210,6 +212,21 @@ class Account extends Component {
 
       self.props.setUserDetails(self.props.auth.user.id);
 
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  requestUserData() {
+    axios.post('/api/secure/requestUserData', {
+
+    })
+    .then( (response) => {
+      console.log(response);
+      this.setState({
+        requestedUserData: JSON.stringify(response.data, undefined, 2)
+      })
     })
     .catch(function (error) {
       console.log(error);
@@ -728,12 +745,28 @@ class Account extends Component {
 
           <div>
             <div className="btn btn-danger">Delete Account</div>
-            <div className="btn btn-articles-light">Request Data</div>
+            {!this.state.requestedUserData && <div className="btn btn-articles-light" onClick={() => this.requestUserData()}>Request Data</div>}
           </div>
 
           <div onClick={this.updateUser} className="btn btn-articles-light">Update</div>
 
         </div>
+
+        {this.state.requestedUserData && 
+          <div className={"card settings-card mt-3"}>
+
+          <div className="card-header">
+            <h5>Requested Account Info</h5>
+            <p>See all the data related to you</p>
+          </div>
+
+          <div className="card-body"></div>
+            <h5>User Account Data</h5>
+            <pre id="json">{this.state.requestedUserData}</pre>
+            <h5>User Message Data</h5>
+            <div><span className="badge badge-warning">In Development</span></div>
+          </div>
+        }
 
       </div>
     );

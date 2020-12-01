@@ -214,7 +214,7 @@ class Account extends Component {
 
                     this.state.userReferrals.map(referral => 
                       <div className="border border-dark p-1">
-                        <div>{moment(referral.date).format("LLL")} </div>
+                        <div>{moment(referral.sign_up_date).format("LLL")} </div>
                         <div>{referral.first_name} {referral.last_name}</div>
                         {/* <div>Outset: {referral.outset ? 'Complete' : 'Not Complete'}</div> */}
                       </div>

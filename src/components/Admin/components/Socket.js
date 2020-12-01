@@ -11,6 +11,7 @@ class Sockets extends Component {
   
     this.state = {
       sockets: [],
+      userSockets: {},
       socketMessage: '',
       photos: [],
       fakeImageHash: 0,
@@ -31,9 +32,12 @@ class Sockets extends Component {
     this.props.setLocation(this.props.tabLocation);
     const self = this;
     
-    this.props.socket.on('online', function(msg){
+    this.props.socket.on('online', function(data){
+      console.log(data)
+
       self.setState({
-        sockets: msg
+        sockets: data.clients || [],
+        userSockets: data.userSockets
       })
     });
 
@@ -95,7 +99,7 @@ class Sockets extends Component {
           <div className="text-center">
 
             <div><img src="https://cdn.articles.media/sockets/socket-gif.gif" height="100px" alt=""/></div>
-            <div className="badge badge-primary">Connected Sokets: {this.state.sockets.length}</div>
+            <div className="badge badge-primary">Connected Sockets: {this.state.sockets.length}</div>
 
             <div className="mt-3">
               <div><small className="text-muted">Limit to logged in users?</small></div>
@@ -116,6 +120,20 @@ class Sockets extends Component {
               <button className="btn btn-articles-light" onClick={() => this.testNotification()}>Fake Notification</button>
               <button className="btn btn-articles-light">Fake Donation</button>
               <button className="btn btn-articles-light">Fake Expense</button>
+            </div>
+
+            <div className="mt-3">
+
+              {Object.keys(this.state.userSockets).map((keyName, i) => (
+
+                <div className="input-label">
+                  <span className="badge badge-primary ml-1">{this.state.userSockets[keyName]}</span>
+                  <div>Socket</div>
+                  <span className="badge badge-warning">{keyName}</span>
+                </div>
+
+              ))}
+
             </div>
 
           </div>

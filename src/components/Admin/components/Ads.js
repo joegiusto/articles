@@ -64,6 +64,13 @@ class Ads extends Component {
           active: false,
           zip: ''
         }
+      },
+      timeFilters: {
+        between:{
+          active: false,
+          timeOne: '',
+          timeTwo: ''
+        }
       }
     };
 
@@ -105,6 +112,19 @@ class Ads extends Component {
       })
 
     });
+
+    axios.post('/api/secure/adminAds')
+    .then(function (response) {
+      console.log(response)
+
+      self.setState({
+        ads: response.data
+      });
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   compileZips() {
@@ -136,6 +156,22 @@ class Ads extends Component {
         ...this.state.zipFilters,
         [key]: {
           ...this.state.zipFilters[key],
+          [option]: e.target.value
+        }
+      }
+    })
+
+  };
+
+  changeTimeFilterOption(key, option, e) {
+
+    console.log(e.target.value)
+    
+    this.setState({
+      timeFilters: {
+        ...this.state.timeFilters,
+        [key]: {
+          ...this.state.timeFilters[key],
           [option]: e.target.value
         }
       }
@@ -190,6 +226,22 @@ class Ads extends Component {
           [option]: {
             ...this.state.zipFilters[option],
             active: !prevState.zipFilters[option].active
+          },
+        }
+  
+      }))
+    } else if (filter === 'timeFilters') {
+      this.setState(prevState => ({
+
+        timeFilters: {
+          ...this.state.timeFilters,
+          between: {
+            ...this.state.zipFilters.list,
+            active: false
+          },
+          [option]: {
+            ...this.state.timeFilters[option],
+            active: !prevState.timeFilters[option].active
           },
         }
   
@@ -424,6 +476,56 @@ class Ads extends Component {
 
                 </Accordion>
 
+                <Accordion>
+
+                  <Card>
+                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                      <div>Time</div>
+                      {
+                        this.state.timeFilters.between.active ?
+                        <i className="fas fa-circle mr-0 d-flex align-items-center"></i>
+                        :
+                        <i className="far fa-circle mr-0 d-flex align-items-center"></i>
+                      }
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey="0">
+                      <Card.Body>
+
+                        <button 
+                        onClick={() => this.changeFilterOption('timeFilters','between')} 
+                        className={"btn btn-articles-light " + (this.state.timeFilters.between.active ? 'alt' : '')}
+                        >
+                          Between
+                        </button>
+
+                        {this.state.timeFilters.between.active ?
+                          <div className="filter-option-dropdown d-flex">
+
+                            <div className="d-flex">
+
+                              <div className="form-group">
+                                <label className="d-flex justify-content-between" for="timeOne">Start Time</label>
+                                <input className="form-control with-label" onChange={(e) => {this.changeTimeFilterOption('between', 'timeOne', e)}} name="timeOne" id="timeOne" type="text" value={this.state.timeFilters.between.timeOne}/>
+                              </div>
+
+                              <div className="form-group">
+                                <label className="d-flex justify-content-between" for="timeTwo">End Time</label>
+                                <input className="form-control with-label" onChange={(e) => {this.changeTimeFilterOption('between', 'timeTwo', e)}} name="timeTwo" id="timeTwo" type="text" value={this.state.timeFilters.between.timeTwo}/>
+                              </div>
+
+                            </div>
+
+                          </div>
+                          :
+                          ''
+                        }
+
+                      </Card.Body>
+                    </Accordion.Collapse>
+                  </Card>
+
+                </Accordion>
+
               </div>
 
               <div className="">
@@ -576,9 +678,12 @@ class Ads extends Component {
             <thead>
               <tr className="table-articles-head">
                 {/* <th scope="col">Order #</th> */}
-                <th scope="col">Dates</th>
+                <th scope="col">Active</th>
                 <th scope="col">Name</th>
-                <th scope="col">Contact</th>
+                <th scope="col">Address</th>
+                <th scope="col">City</th>
+                <th scope="col">State</th>
+                <th scope="col">Zip</th>
                 <th scope="col">Sorts</th>
                 <th scope="col">Reach</th>
                 <th scope="col">Actions</th>
@@ -586,39 +691,49 @@ class Ads extends Component {
             </thead>
             <tbody>
 
-              {this.state.ads.map(order => 
-                <tr key={order._id}>
-                  <td colSpan="1" className="border-right-0 ">{moment(order.date).format("LLL")}</td>
-                  <td colSpan="1" className="border-right-0 ">{order.user_id}</td>
-                  <td colSpan="1" className="border-right-0 ">{order.items.length} Item{order.items.length > 1 ? 's' : ''}</td>
-                  <td colSpan="1" className="border-right-0 ">${(order.payment.trueTotal / 100).toFixed(2)}</td>
-                  <td colSpan="1" width={'150px'} className="border-right-0 "><ConfirmDelete afterConfirm={() => this.removeOrder(order._id)}></ConfirmDelete></td>
+              {this.state.ads.map(ad => 
+                <tr key={ad._id}>
+                  <td colSpan="1" className="border-right-0 text-center" style={{width: 'auto'}}> 
+                    <span className="status status-success"></span>
+                  </td>
+                  <td colSpan="1" className="border-right-0 ">
+                    <span><i className="fas fa-id-card-alt"></i></span>
+                    {ad.website ? <a href={ad.website} target="_blank">{ad.business}</a> : ad.business}
+                  </td>
+                  <td colSpan="1" className="border-right-0 ">{ad.address}</td>
+                  <td colSpan="1" className="border-right-0 ">{ad.city}</td>
+                  <td colSpan="1" className="border-right-0 ">{ad.state}</td>
+                  <td colSpan="1" className="border-right-0 ">{ad.zip}</td>
+                  <td colSpan="1" className="border-right-0 ">1</td>
+                  <td colSpan="1" className="border-right-0 ">0</td>
+                  <td colSpan="1" width={'150px'} className="border-right-0 "><i class="far fa-edit mr-0"></i></td>
                 </tr>
               )}
 
-              <tr>
+              <tr className="d-none">
                 <td colSpan="1" className="border-right-0 ">{moment().format("LL")} - {moment().add(30, 'days').format("LL")}</td>
 
                 <td colSpan="1" className="border-right-0 ">Bank Square</td>
 
                 <td colSpan="1" className="border-right-0 ">Behney</td>
 
-                <td colSpan="1" className="border-right-0 "><span className="badge badge-articles">Age</span> <span className="badge badge-articles">Zip</span></td>
+                <td colSpan="1" className="border-right-0 ">
+                  <span className="badge badge-articles">Age</span>
+                  <span className="badge badge-articles">Zip</span>
+                </td>
 
                 <td colSpan="1" className="border-right-0 ">0</td>
 
                 <td colSpan="1" width={'150px'} className="border-right-0 ">
                   <span className="badge badge-success">Report</span>
-                  <ConfirmDelete className="ml-1" afterConfirm={() => console.log('Remove')}>t</ConfirmDelete>
+                  <ConfirmDelete className="ml-1" afterConfirm={() => console.log('Remove')}></ConfirmDelete>
                 </td>
 
               </tr>
 
-              <tr>
-                <td colSpan="2" className="border-right-0 table-articles-head">
-  
-                </td>
-  
+              <tr className="d-none">
+                <td colSpan="1" className="border-right-0 table-articles-head"></td>
+                <td colSpan="1" className="border-right-0 table-articles-head"></td>
                 <td colSpan="1" className="border-right-0 text-right table-articles-head"></td>
                 <td colSpan="1" className="border-left-0 table-articles-head"></td>
                 <td colSpan="1" className="border-left-0 table-articles-head"></td>
@@ -672,7 +787,8 @@ class Map extends React.Component {
           lat={area.lat} 
           lng={area.lng} 
           zip={area.zip}
-          amount={area.amount}
+          userCount={area.amount}
+          advertiserCount={0}
           name={area.name}
         />
       )}
@@ -682,7 +798,7 @@ class Map extends React.Component {
   }
 }
 
-const Area = ({ zip, amount, name }) => (
+const Area = ({ zip, userCount, advertiserCount, name }) => (
   <div>
     
     <div style={{
@@ -717,11 +833,13 @@ const Area = ({ zip, amount, name }) => (
       fontFamily: 'brandon-grotesque, sans-serif',
       fontWeight: 900
     }}>
-      <div>{zip} - {amount}</div>
-      <div style={{
-        fontSize: '0.5rem',
-        textTransform: 'uppercase'
-      }}>{name}</div>
+      <div>{zip}</div>
+      <div style={{fontSize: '0.5rem', textTransform: 'uppercase'}}>{name}</div>
+      <div className="d-flex justify-content-center">
+        <div><i className="fas fa-male mr-1"></i>{userCount}</div>
+        <div className="mx-1">{' - '}</div>
+        <div><i className="far fa-id-badge mr-1"></i>{advertiserCount}</div>
+      </div>
     </div>
 
   </div>

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import axios from 'axios'
 import moment from 'moment'
 
-class Sockets extends Component {
+class AWS extends Component {
   constructor(props) {
   super(props);
   
@@ -168,4 +168,4 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-)(Sockets);
+)(AWS);

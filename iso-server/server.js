@@ -17,7 +17,21 @@ const mongoose = require('mongoose');
 var ObjectId = require('mongodb').ObjectId;
 var AWS = require('aws-sdk');
 const url = `mongodb+srv://joegiusto:${encodeURIComponent(process.env.MONGODB_PASSWORD)}@articles-xgwnd.mongodb.net/articles_data?retryWrites=true&w=majority`;
-const stripe = require('stripe')(process.env.STRIPE_TEST_SECRET);
+
+const stripe = require('stripe')(process.env.STRIPE_LIVE_SECRET);
+const stripe_test = require('stripe')(process.env.STRIPE_TEST_SECRET);
+
+// if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+//   console.log("This is a development environment")
+//   stripe = require('stripe')(process.env.STRIPE_TEST_SECRET);
+// } else {
+//   console.log("This is a production environment")
+//   stripe = require('stripe')(process.env.STRIPE_LIVE_SECRET);
+// }
+
+app.set('stripe', stripe)
+app.set('stripe_test', stripe_test)
+
 const sharp = require('sharp');
 const cache = require('memory-cache');
 
@@ -104,6 +118,8 @@ function connectWithRetryMongo() {
     };
   
     var db = mongoUtil.getDb();
+
+    require('./routes/mongoConfig')(app, db, cache);
 
     require('./routes/getGithubCommits')(app, db, cache);
     require('./routes/getWeather')(app, db, cache);
@@ -274,19 +290,26 @@ io.on('connection', (socket) => {
   io.of('/').clients((error, clients) => {
     if (error) throw error;
     console.log(clients);
-    io.emit( 'online', clients );
+    io.emit( 'online', {clients, userSockets} );
   });
 
   socket.on('login', (data) => {
     console.log(data);
-    userSockets[socket.id] = data.userId;
+
+    if (data.userId !== undefined) {
+      userSockets[socket.id] = data.userId;
+    } else {
+      userSockets[socket.id] = 'Guest';
+    }
+
   });
 
   socket.on('refreshOnline', (data) => {
 
     io.of('/').clients((error, clients) => {
       if (error) throw error;
-      io.emit( 'online', clients );
+      // io.emit( 'online', clients, userSockets );
+      io.emit( 'online', {clients, userSockets} );
     });
   });
 

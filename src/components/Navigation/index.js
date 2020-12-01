@@ -77,7 +77,7 @@ function Menu(props) {
 
     setTimeout(() => { 
       setNotificationVisible(false)
-    }, 3000);
+    }, 4000);
   }
 
   function logUserSockets() {
@@ -168,7 +168,7 @@ function Menu(props) {
             <div className={"notification " + (notificationVisible && 'show')}>
 
               <div className="close">
-                <i class="far fa-times-circle mr-0"></i>
+                <i className="far fa-times-circle mr-0"></i>
               </div>
               
               <div style={{width: notificationProgress + '%'}} className="progress"></div>
@@ -197,39 +197,39 @@ function Menu(props) {
                   </div>
 
                   <div className="badge badge-dark">
-                    <div><i class="fas fa-cog mr-0"></i></div>
+                    <div><i className="fas fa-cog mr-0"></i></div>
                   </div>
 
                 </div>
 
                 <Dropdown.Divider/>
 
-                <div class="weather">
+                <div className="weather">
 
-                  <div class="icon">
+                  <div className="icon">
                     <img src="https://icon-library.com/images/cloudy-icon/cloudy-icon-3.jpg" alt=""/>
                   </div>
 
-                  <div class="details">
-                    <div class="temp">
+                  <div className="details">
+                    <div className="temp">
                       50
-                      <span class="deg">°F</span>
+                      <span className="deg">°F</span>
                     </div>
                   </div>
 
-                  <div class="details-extra">
+                  <div className="details-extra">
 
-                    <div class="precipitation">
+                    <div className="precipitation">
                       <img src="https://media.istockphoto.com/vectors/water-drop-symbol-vector-rain-drop-icon-vector-id1156487494?k=6&amp;m=1156487494&amp;s=170667a&amp;w=0&amp;h=RD9wBtK827d_3rdeOvSez9bboMBf4_E_0MIEtus9cUo=" alt="Precipitation Symbol"/>
                       0%
                     </div>
 
-                    <div class="humidity">
+                    <div className="humidity">
                       <img src="https://w7.pngwing.com/pngs/65/666/png-transparent-drawing-humidity-indicator-angle-triangle-illustrator-thumbnail.png" alt="Humidity Symbol"/>
                       0%
                     </div>
 
-                    <div class="wind">
+                    <div className="wind">
                       <img src="https://www.pinclipart.com/picdir/middle/140-1405202_windy-weather-icon-wind-weather-symbols-clipart.png" alt="Wind Symbol"/>
                       5 mph
                       </div>
@@ -254,12 +254,12 @@ function Menu(props) {
               <Dropdown.Menu className="super-colors">
 
                 {/* <Dropdown.Item className="px-1" eventKey="2">
-                  <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                  <i className="fas fa-shopping-cart" aria-hidden="true"></i>
                   <span style={{fontSize: '0.8rem'}}>Order shipped</span>
                 </Dropdown.Item> */}
 
                 {/* <Dropdown.Item className="px-1" eventKey="2">
-                  <i class="fas fa-paste" aria-hidden="true"></i>
+                  <i className="fas fa-paste" aria-hidden="true"></i>
                   <span style={{fontSize: '0.8rem'}}>Report Response</span>
                 </Dropdown.Item> */}
 
@@ -281,7 +281,7 @@ function Menu(props) {
 
             {/* <div className="notification-badge">
               <div className="count">2</div>
-              <i class="far fa-bell"></i>
+              <i className="far fa-bell"></i>
             </div> */}
 
           </div>

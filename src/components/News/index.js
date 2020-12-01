@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import axios from 'axios';
 import GoogleMapReact from 'google-map-react';
 import Chart from 'chart.js';
+import qs from 'qs'
 
 // import Swiper from 'react-id-swiper';
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, EffectFade, Mousewheel } from 'swiper';
@@ -30,6 +31,7 @@ import NewsCard from './NewsCard'
 
 import { toggleUserSubscriptions, filterIssuesDateType } from '../../actions/siteActions'
 
+import Search from './Search/index';
 import Stories from './Stories/index';
 import Issues from './Issues/index';
 import Myths from './Myths/index';
@@ -146,8 +148,16 @@ function FlintCounter() {
 }
 
 function NewsHead(props) {
+  const [backgroundIndex, setBackgroundIndex] = useState(0);
+
 
   const days = [];
+
+  const searchBackgrounds = [
+    'https://cdn.vox-cdn.com/thumbor/GxxQX7lKYjQp8CXU0GWtQcWGLDk=/0x0:2000x1333/1200x675/filters:focal(840x507:1160x827)/cdn.vox-cdn.com/uploads/chorus_image/image/66009531/190921_07_18_10_5DS27714__1_.0.jpg',
+    'https://walkway.org/wp-content/uploads/2017/07/HV-Image.jpg',
+    'https://cdn.theculturetrip.com/wp-content/uploads/2020/09/e3y4tn-e1599862024871.jpg'
+  ]
 
   for (let i = 0;  i <= 6; i++ ) {
     days.push(
@@ -360,26 +370,53 @@ function NewsHead(props) {
 
       </div>
 
-      <div className="news-head-new">
-        <img src="https://cdn.vox-cdn.com/thumbor/GxxQX7lKYjQp8CXU0GWtQcWGLDk=/0x0:2000x1333/1200x675/filters:focal(840x507:1160x827)/cdn.vox-cdn.com/uploads/chorus_image/image/66009531/190921_07_18_10_5DS27714__1_.0.jpg" alt=""/>
+      <div className={"news-head-new " + (isHome ? 'home' : 'focus')}>
+        <img src={searchBackgrounds[backgroundIndex]} alt=""/>
 
-        <div className="search-bar">
+        <div className="search-container">
 
-          <div class="input-group mb-1">
-            <input style={{borderRadius: '0', borderBottom: 'solid 2px #000'}} type="text" class="form-control" placeholder="" aria-label="" aria-describedby="button-addon2"/>
+          <div className="title">Search Confidently</div>
 
-            <div class="input-group-append">
-              <button class="btn btn-articles-light" type="button" id="">
+          <div className="input-group w-100">
+            <input style={{borderRadius: '0', borderBottom: 'solid 3px #000', height: 'inherit'}} type="text" id='search' name='search' value={props.search} onChange={props.onChange} className="form-control" placeholder="Try 'Edward Snowden'" aria-label="" aria-describedby="button-addon2"/>
+
+            <div className="input-group-append">
+              <button onClick={() => props.history.push(`${ROUTES.NEWS_SEARCH}?search=${encodeURI(props.search)}`)} className="btn btn-articles-light" type="button" id="">
                 <i className="fas fa-search mr-0"></i>
               </button>
             </div>
 
           </div>
 
-          <div className="badge badge-articles" style={{fontSize: '1.2rem'}}>Filters</div>
+          <div className="filter">Filter<i className="fas fa-caret-down ml-1 mr-0"></i></div>
 
-          <div className="trending">
-            {/* <div className="badge badge-articles">Filters</div> */}
+        </div>
+
+        <div className="bottom">
+
+          <div className="stocks">
+            <span className="detail badge badge-light border-dark">
+              <i className="fas fa-chart-line mr-1"></i>DOW: $29,638.64
+            </span>
+  
+            <span className="detail badge badge-light border-dark ml-1">
+              <i className="fas fa-chart-line mr-1"></i>S&P 500: $3,621.63
+            </span>
+  
+            <span className="detail badge badge-light border-dark ml-1">
+              <i className="fas fa-chart-line mr-1"></i>NASDAQ: $12,198.12
+            </span>
+          </div>
+
+          <div className="photo-credit">
+
+            <span className="detail badge badge-light border-dark">
+              <i className="far fa-image mr-1"></i>Credit: <a href="" target="_blank">Link</a>
+            </span>
+
+            <span onClick={() => setBackgroundIndex( (backgroundIndex === searchBackgrounds.length - 1 ? 0 : backgroundIndex + 1) )} className="detail badge badge-light border-dark">
+              <i className="fas fa-redo-alt mr-0"></i>
+            </span>
           </div>
 
         </div>
@@ -719,8 +756,6 @@ class Frontpage extends Component {
         slide: 0
       },
 
-      
-
       focusViewLoadingMore: false,
     }
 
@@ -758,6 +793,21 @@ class Frontpage extends Component {
     });
 
     this.renderCharts();
+
+    var query = qs.parse(this.props.location.search, { ignoreQueryPrefix: true });
+    if ( query.search ) {
+
+      console.log("Has content")
+      console.log(query)
+      console.log(query.search)
+
+      self.setState({
+        search: decodeURI(query.search)
+      })
+
+    } else {
+      console.log("Has no content")
+    }
   }
 
   renderCharts() {
@@ -1540,11 +1590,14 @@ class Frontpage extends Component {
             toggleUserSubscriptions={this.props.toggleUserSubscriptions}
             userSubscriptions={this.props.site?.userSubscriptions}
             filterIssuesDateType={this.props.filterIssuesDateType}
+            history={this.props.history}
             dateType={this.props.site.dateType}
             homeLayout={true} 
             path={this.props.match.path}
             plaidSetup={this.state.plaidSetup}
             weatherData={this.state.weatherData}
+            onChange={this.onChange}
+            search={this.state.search}
           />
 
           <div className='container-fluid'>
@@ -1576,7 +1629,7 @@ class Frontpage extends Component {
             <div className="row mb-3 justify-content-between">
   
               {/* Left Side */}
-              <div className="col-12 col-md-12">
+              <div className="col-12 col-md-12 pr-0">
 
                 <Switch>
                   {/* <Route exact path={ROUTES.NEWS} render={() => <h1>Front</h1>}/> */}
@@ -1594,6 +1647,7 @@ class Frontpage extends Component {
                     tagSearch={this.state.tagSearch}
                     tagSearchResults={this.state.tagSearchResults}/>
                   }/>
+                  <Route exact path={ROUTES.NEWS_SEARCH} render={() => <Search searchText={this.state.search}></Search>}/>
                   <Route exact path={ROUTES.STORIES} render={() => <Stories searchText={this.state.search}></Stories>}/>
                   <Route exact path={ROUTES.ISSUES} render={() => <Issues searchText={this.state.search}></Issues> }/>
                   <Route exact path={ROUTES.MYTHS} render={() => <Myths searchText={this.state.search}></Myths> }/>

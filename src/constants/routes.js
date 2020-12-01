@@ -52,6 +52,7 @@ export const STORE_MANAGE_DETAILS ='/store/manage/:id'
 
 // News
 export const NEWS ='/news'
+export const NEWS_SEARCH ='/news/search'
 
 export const EXTENDED ='/news/extended'
 export const EXTEND ='/news/extended/:id'
@@ -106,6 +107,8 @@ export const ADMIN_USER_DETAILS = '/admin/users/:id';
 export const ADMIN_NEWS = '/admin/news';
 export const ADMIN_NEWS_DETAILS = '/admin/news/:id';
 
+export const ADMIN_PROPOSALS = '/admin/proposals';
+
 export const ADMIN_PRODUCTS = '/admin/products';
 export const ADMIN_PRODUCT_DETAILS = '/admin/products/:id';
 
@@ -120,7 +123,7 @@ export const ADMIN_COMMENTS = '/admin/comments';
 export const ADMIN_REPORTS = '/admin/reports';
 export const ADMIN_ORDERS = '/admin/orders';
 export const ADMIN_ADS = '/admin/ads';
-export const ADMIN_PROPOSALS = '/admin/proposals';
+export const ADMIN_MESSAGES = '/admin/messages';
 
 // export const ADMIN_DETAILS = '/admin/:id';
 

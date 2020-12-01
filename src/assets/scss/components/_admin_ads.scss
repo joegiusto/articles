@@ -159,5 +159,11 @@
     }
   }
 
-  
+  .status {
+    width: 10px;
+    height: 10px;
+    background-color: $success;
+    display: inline-block;
+    border-radius: 10px;
+  }
 }

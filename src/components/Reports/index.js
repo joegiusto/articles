@@ -79,9 +79,9 @@ class Reports extends Component {
     
     socket = socketIOClient(ENDPOINT);
 
-    socket.on('online', function(msg){
-      console.log(msg)
-    });
+    // socket.on('online', function(msg){
+    //   console.log(msg)
+    // });
 
     socket.on('recieveDonation', function(msg){
       console.log(JSON.stringify(msg));
@@ -500,12 +500,12 @@ class Reports extends Component {
                 </td>
 
                 <td colSpan="1" className="border-right-0 text-right table-articles-head">Total:</td>
-                <td colSpan="1" className="border-left-0 table-articles-head">$00.00</td>
+                <td colSpan="1" className="border-left-0 table-articles-head">${(megaGroup.reduce((a, b) => a + (parseInt(b['unifiedPrice'] || 0)), 0) / 100).toFixed(2)}</td>
               </tr>
 
             </tbody>
 
-            <div className="expandable-row">
+            <div className="expandable-row d-none">
 
               <tr className="w-100">
                 <td colSpan="1" className="border-right-0 ">{moment().format("LLL")}</td>

@@ -110,56 +110,57 @@ class HomePageFour extends Component {
         <title>Home - Articles</title>
       </Helmet>
 
-        <div className="top-bar">
-          <div className="container-fluid d-flex justify-content-between">
+        <div className="home-head-container">
+          <div className="container-fluid ">
+            <div className="home-head">
 
-            <div className="photo-section">
+              <div className="photo-section">
 
-              <div className="photo">
-                <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${this.props?.user?._id}.jpg` || ''} alt=""/>
-                <div className="blank"></div>
+                <div className="photo">
+                  <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${this.props?.user?._id}.jpg` || ''} alt=""/>
+                  <div className="blank"></div>
+                </div>
+
+                <div>
+                  <div className="name">{this.props.user?.first_name} {this.props.user?.last_name}</div>
+                  <Link className="d-none d-md-block" to={ROUTES.MESSAGES}><button className="btn btn-articles-light mt-4">0 Messages</button></Link>
+                </div>
+
               </div>
 
-              <div>
-                <div className="name">{this.props.user?.first_name} {this.props.user?.last_name}</div>
-                {/* <small className="email d-block">{this.props.user?.email}</small> */}
-                <Link to={ROUTES.MESSAGES}><button className="btn btn-articles-light mt-4">0 Messages</button></Link>
+              <div className="weather">
+
+                <div className="icon">
+                  <img src="https://icon-library.com/images/cloudy-icon/cloudy-icon-3.jpg" alt=""/>
+                </div>
+
+                <div className="details">
+                  <div className="temp">
+                    50
+                    <span className="deg">
+                      °F
+                    </span>
+                  </div>
+                </div>
+
+                <div className="details-extra">
+                  <div className="precipitation">
+                    <img src="https://media.istockphoto.com/vectors/water-drop-symbol-vector-rain-drop-icon-vector-id1156487494?k=6&m=1156487494&s=170667a&w=0&h=RD9wBtK827d_3rdeOvSez9bboMBf4_E_0MIEtus9cUo=" alt="Precipitation Symbol"/>
+                    0%
+                  </div>
+                  <div className="humidity">
+                    <img src="https://w7.pngwing.com/pngs/65/666/png-transparent-drawing-humidity-indicator-angle-triangle-illustrator-thumbnail.png" alt="Humidity Symbol"/>
+                    0%
+                  </div>
+                  <div className="wind">
+                    <img src="https://www.pinclipart.com/picdir/middle/140-1405202_windy-weather-icon-wind-weather-symbols-clipart.png" alt="Wind Symbol"/>
+                    5 mph
+                  </div>
+                </div>
+
               </div>
 
             </div>
-
-            <div className="weather">
-
-              <div className="icon">
-                <img src="https://icon-library.com/images/cloudy-icon/cloudy-icon-3.jpg" alt=""/>
-              </div>
-
-              <div className="details">
-                <div className="temp">
-                  50
-                  <span className="deg">
-                    °F
-                  </span>
-                </div>
-              </div>
-
-              <div className="details-extra">
-                <div className="precipitation">
-                  <img src="https://media.istockphoto.com/vectors/water-drop-symbol-vector-rain-drop-icon-vector-id1156487494?k=6&m=1156487494&s=170667a&w=0&h=RD9wBtK827d_3rdeOvSez9bboMBf4_E_0MIEtus9cUo=" alt="Precipitation Symbol"/>
-                  0%
-                </div>
-                <div className="humidity">
-                  <img src="https://w7.pngwing.com/pngs/65/666/png-transparent-drawing-humidity-indicator-angle-triangle-illustrator-thumbnail.png" alt="Humidity Symbol"/>
-                  0%
-                </div>
-                <div className="wind">
-                  <img src="https://www.pinclipart.com/picdir/middle/140-1405202_windy-weather-icon-wind-weather-symbols-clipart.png" alt="Wind Symbol"/>
-                  5 mph
-                </div>
-              </div>
-
-            </div>
-
           </div>
         </div>
 
@@ -208,6 +209,10 @@ class HomePageFour extends Component {
                 <Link to={ROUTES.NEWS}>
                   <div className="tile-content">
 
+                    {/* <div className="corner-notification">
+                      <span className="badge badge-danger">5</span>
+                    </div> */}
+
                     <div className="icons">
 
                       <div className="head-icon">
@@ -226,6 +231,7 @@ class HomePageFour extends Component {
                     <div className="text">Collection of all of our stories, issues and myths.</div>
 
                     <div className="tile-extra">
+                      <div className="status-circle"></div>
                       {this.props.user?.subscriptionsFetched?.length || 0} Updates
                     </div>
 
@@ -494,7 +500,7 @@ class HomePageFour extends Component {
             }
 
             <div className="btn btn-articles-light btn-sm" onClick={() => this.getRandomQuote()}>
-              <i class="fas fa-redo "></i>Read Another
+              <i className="fas fa-redo "></i>Read Another
             </div>
 
           </div>

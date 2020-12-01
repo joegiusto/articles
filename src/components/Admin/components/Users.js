@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import axios from 'axios'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Tooltip from 'react-bootstrap/Tooltip'
 
 class ConfirmDelete extends Component {
   constructor(props) {
@@ -44,6 +46,8 @@ class Users extends Component {
         None: 0
         // The rest of the zips get populated once data loads
       },
+
+      zipsToTown: {},
 
       gender: {
         male: 0,
@@ -206,6 +210,21 @@ class Users extends Component {
 
       }
 
+      axios.post('/api/secure/zipToTown', {
+        zips: self.state.zips,
+        format: 'tally'
+      })
+      .then((response) => {
+        console.log(response.data)
+
+        self.setState({
+          zipsToTown: response.data
+        })
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
     })
     .catch(function (error) {
       console.log(error);
@@ -223,6 +242,8 @@ class Users extends Component {
 
   // TODO - Convert this logic to server side code and use https://www.npmjs.com/package/zipcodes to build local directory as loop goes or after loop is done do one call wuth all zips to get names
   checkZipName(zip) {
+
+    // Old way, MongoDB now has collection of every US Zip code
     const directory = {
       12508: "Beacon",
       12524: 'Fishkill',
@@ -230,9 +251,9 @@ class Users extends Component {
       12561: "New Paltz"
     }
 
-    if ( Object.keys(directory).indexOf(zip) > -1 ) {
+    if ( Object.keys(this.state.zipsToTown).indexOf(zip) > -1 ) {
 
-      return( [Object.values(directory)[Object.keys(directory).indexOf(zip)]] )
+      return(  Object.values(this.state.zipsToTown)[Object.keys(this.state.zipsToTown).indexOf(zip)].city )
 
     } else {
 
@@ -406,11 +427,45 @@ class Users extends Component {
 
                     {/* <td>{user.stripe?.customer_id === undefined ? <span>No<span onClick={() => this.createCustomer(user._id)} className="btn btn-sm btn-articles-light">Create</span></span> : 'Yes'}</td> */}
                     <td>
-                        {user.stripe?.customer_id === undefined || user.stripe?.customer_id === '' 
-                        ? 
-                        <span>No<span onClick={() => this.createCustomer(user._id)} className="btn btn-sm btn-articles-light">Create</span></span> 
-                        : 
-                        user.stripe?.customer_id}
+
+                        {/* Production Customer ID */}
+                        {user.stripe?.customer_id ? 
+
+                          <OverlayTrigger
+                            key={'customer_id'}
+                            placement={'bottom'}
+                            overlay={
+                              <Tooltip id={`tooltip-${'bottom'}`}>
+                                <i class="far fa-clipboard"></i>{user.stripe?.customer_id}
+                              </Tooltip>
+                            }
+                          >
+                            <div style={{cursor: 'pointer'}} onClick={() => {navigator.clipboard.writeText(user.stripe?.customer_id)}} className="badge badge-primary mr-1">Prod</div>
+                          </OverlayTrigger>
+
+                          :
+
+                          <div style={{cursor: 'pointer'}} onClick={() => this.createCustomer(user._id)} className="badge badge-success">Add Customer</div>
+
+                        }
+
+                        {/* Development Customer ID */}
+                        {user.stripe?.customer_test_id && 
+
+                          <OverlayTrigger
+                            key={'customer_test_id'}
+                            placement={'bottom'}
+                            overlay={
+                              <Tooltip id={`tooltip-${'bottom'}`}>
+                                <i class="far fa-clipboard"></i>{user.stripe?.customer_test_id}
+                              </Tooltip>
+                            }
+                          >
+                            <div style={{cursor: 'pointer'}} onClick={() => {navigator.clipboard.writeText(user.stripe?.customer_test_id)}} className="badge badge-warning">Dev</div>
+                          </OverlayTrigger>
+
+                        }
+
                       </td>
 
                     <td>

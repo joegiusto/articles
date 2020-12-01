@@ -24,6 +24,7 @@ import Comments from './components/Comments'
 import Reports from './components/Reports'
 import Orders from './components/Orders'
 import Ads from './components/Ads'
+import Messages from './components/Messages'
 
 const nav_links = [
   [ ROUTES.ADMIN_USERS, 'Users', <i className="fas fa-money-bill fa-3x"></i> ],
@@ -38,7 +39,6 @@ const nav_links = [
   [ ROUTES.ADMIN_ORDERS, 'Orders', <i className="fas fa-money-bill fa-3x"></i> ],
   [ ROUTES.ADMIN_ADS, 'Ads', <i className="fas fa-money-bill fa-3x"></i> ]
 ]
-
 class Admin extends Component {
   constructor(props) {
   super(props);
@@ -91,6 +91,7 @@ class Admin extends Component {
             <Link to={ROUTES.ADMIN_REPORTS}><span className={"tab" + (this.state.tab === 'reports' ? ' active' : '')}>Reports</span></Link>
             <Link to={ROUTES.ADMIN_ORDERS}><span className={"tab" + (this.state.tab === 'orders' ? ' active' : '')}>Orders</span></Link>
             <Link to={ROUTES.ADMIN_ADS}><span className={"tab" + (this.state.tab === 'ads' ? ' active' : '')}>Ads</span></Link>
+            <Link to={ROUTES.ADMIN_MESSAGES}><span className={"tab" + (this.state.tab === 'messages' ? ' active' : '')}>Messages</span></Link>
 
           </div>
         </div>
@@ -196,6 +197,13 @@ class Admin extends Component {
               tabLocation='ads'
               setLocation={this.setLocation}
             ></Ads> 
+            }/>
+
+            <Route exact path={ROUTES.ADMIN_MESSAGES} render={() => <Messages 
+              match={this.props.match}
+              tabLocation='messages'
+              setLocation={this.setLocation}
+            /> 
             }/>
 
           </Switch>

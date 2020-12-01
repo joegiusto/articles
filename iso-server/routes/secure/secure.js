@@ -1,7 +1,6 @@
 const moment = require('moment');
 var ObjectId = require('mongodb').ObjectId; 
 const passport = require("passport");
-const stripe = require('stripe')(process.env.STRIPE_TEST_SECRET);
 const mongoose = require("mongoose");
 const axios = require("axios");
 const User = mongoose.model("users");
@@ -241,6 +240,16 @@ module.exports = (app, db) => {
   app.post("/api/confirmWithPaymentMethod", async (req, res) => {
     console.log(req.body)
 
+    const stripe = req.app.get('stripe');
+
+    // let customer_id = ''
+
+    // if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    //   customer_id = req.user.stripe.customer_test_id
+    // } else {
+    //   customer_id = req.user.stripe.customer_id
+    // }
+
     let payload = await stripe.paymentIntents.confirm(
       req.body.paymentIntentID.toString(),
       {payment_method: req.body.payment_method}
@@ -253,6 +262,16 @@ module.exports = (app, db) => {
 
   app.post("/api/create-payment-intent", async (req, res) => {
     console.log(req.body)
+
+    const stripe = req.app.get('stripe');
+
+    let customer_id = ''
+
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+      customer_id = req.user.stripe.customer_test_id
+    } else {
+      customer_id = req.user.stripe.customer_id
+    }
 
     let isPaymentMethodPurchase = false
 
@@ -270,7 +289,7 @@ module.exports = (app, db) => {
       currency: "usd",
 
       // TODO - This
-      customer: req.body.customer_id,
+      customer: customer_id,
       ...payment_method_purchase,
 
       metadata: {
@@ -295,12 +314,22 @@ module.exports = (app, db) => {
 
     console.log("Attempting to set a default payment method on customer");
 
+    const stripe = req.app.get('stripe');
+
+    let customer_id = ''
+
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+      customer_id = req.user.stripe.customer_test_id
+    } else {
+      customer_id = req.user.stripe.customer_id
+    }
+
     let customer;
 
     try {
 
       customer = await stripe.customers.update(
-        req.user.stripe.customer_id,
+        customer_id,
         {
           invoice_settings: {
             default_payment_method: req.body.payment_method_id
@@ -339,14 +368,19 @@ module.exports = (app, db) => {
   app.post("/api/getUserPaymentMethods", passport.authenticate('jwt', {session: false}), async (req, res) => {
     console.log("Getting user payment methods")
 
-    // const paymentMethods = await stripe.paymentMethods.list({
-    //   customer: req.user.stripe.customer_id,
-    //   type: 'card',
-    // });
+    const stripe = req.app.get('stripe');
+
+    let customer_id = ''
+
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+      customer_id = req.user.stripe.customer_test_id
+    } else {
+      customer_id = req.user.stripe.customer_id
+    }
 
     try {
       const paymentMethods = await stripe.paymentMethods.list({
-        customer: req.user.stripe.customer_id,
+        customer: customer_id,
         type: 'card',
       });
 
@@ -387,6 +421,16 @@ module.exports = (app, db) => {
   app.post("/api/createSubscription", passport.authenticate('jwt', {session: false}), async (req, res) => {
     console.log("Attempting to create a subscription");
 
+    const stripe = req.app.get('stripe');
+
+    let customer_id = ''
+
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+      customer_id = req.user.stripe.customer_test_id
+    } else {
+      customer_id = req.user.stripe.customer_id
+    }
+
     // // Attach the payment method to the customer
     // try {
     //   await stripe.paymentMethods.attach(req.body.paymentMethodId, {
@@ -409,7 +453,7 @@ module.exports = (app, db) => {
     try {
 
       const subscriptions = await stripe.subscriptions.list({
-        customer: req.user.stripe.customer_id,
+        customer: customer_id,
         limit: 1,
       });
 
@@ -420,7 +464,7 @@ module.exports = (app, db) => {
       } else {
 
         const subscription = await stripe.subscriptions.create({
-          customer: req.user.stripe.customer_id,
+          customer: customer_id,
           items: [
             { 
               price: 'price_1HSsAyKMwBfw4SyLEQAkf5zm'
@@ -463,8 +507,18 @@ module.exports = (app, db) => {
   app.post("/api/getStripeCustomer", passport.authenticate('jwt', {session: false}), async (req, res) => {
     console.log("Listing a users subscription");
 
+    const stripe = req.app.get('stripe');
+
+    let customer_id = ''
+
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+      customer_id = req.user.stripe.customer_test_id
+    } else {
+      customer_id = req.user.stripe.customer_id
+    }
+
     const customer = await stripe.customers.retrieve(
-      req.user.stripe.customer_id
+      customer_id
     );
   
     res.send(customer);
@@ -1162,7 +1216,10 @@ module.exports = (app, db) => {
 
   });
 
-  async function addCustomer(email, _id) {
+  async function addCustomer(req, email, _id) {
+
+    const stripe = req.app.get('stripe');
+
     const customer = await stripe.customers.create({
       email: email,
       description: `Customer for the Articles MongoDB user ${_id}`,
@@ -1178,6 +1235,8 @@ module.exports = (app, db) => {
 
     const o_id = new ObjectId(req.body._id);
 
+    // TODO - Add logic to let this be called from prod and dev, not sure if I can have two stripe instances being done at once.
+
     User.findById(req.body._id)
     .then(user => {
       if (user) {
@@ -1185,56 +1244,70 @@ module.exports = (app, db) => {
         console.log(user)
         console.log(user.stripe.customer_id)
 
-        if (typeof user.stripe.customer_id === 'undefined') {
-          console.log("Is not customer yet in Stripe");
-    
-          addCustomer(user.email, req.body._id)
-          .then(response => {
-            console.log(response)
-    
-            db.collection("articles_users").updateOne(
-              {
-                  _id: o_id
-              },
-              {
-                $set: {
-                  stripe: {
-                    customer_id: response.id
+        if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+          // Dev
+          if (!user.stripe.customer_test_id) {
+            console.log("Is not customer yet in Stripe");
+      
+            addCustomer(req, user.email, req.body._id)
+            .then(response => {
+              console.log(response)
+      
+              db.collection("articles_users").updateOne(
+                {
+                    _id: o_id
+                },
+                {
+                  $set: {
+                    "stripe.customer_test_id": response.id
                   }
+                },
+                {
+                  upsert: true
                 }
-              },
-              {
-                upsert: true
-              }
-            );
-    
-          })
-          // .catch(err => res.status(400).send({error: 'User may not be subscribed to more then one plan', stripeError: err}))
-    
+              );
+      
+            })
+            // .catch(err => res.status(400).send({error: 'User may not be subscribed to more then one plan', stripeError: err}))
+      
+          } else {
+            return res.send(`Is already a customer ${user.stripe.customer_test_id}`);
+          }
         } else {
-          return res.send(`Is already a customer ${user.stripe.customer_id}`);
+          // Prod
+          if (!user.stripe.customer_id) {
+            console.log("Is not customer yet in Stripe");
+      
+            addCustomer(req, user.email, req.body._id)
+            .then(response => {
+              console.log(response)
+      
+              db.collection("articles_users").updateOne(
+                {
+                    _id: o_id
+                },
+                {
+                  $set: {
+                    "stripe.customer_id": response.id
+                  }
+                },
+                {
+                  upsert: true
+                }
+              );
+      
+            })
+            // .catch(err => res.status(400).send({error: 'User may not be subscribed to more then one plan', stripeError: err}))
+      
+          } else {
+            return res.send(`Is already a customer ${user.stripe.customer_id}`);
+          }
         }
+
       }
       console.log("Can not find user with");
     })
     .catch(err => console.log(err));
-
-  })
-
-  app.post('/api/getCards', passport.authenticate('jwt', {session: false}), (req, res) => {
-
-    async function listPaymentMethods(_id) {
-      const paymentMethods = await stripe.paymentMethods.list({
-        customer: '{{CUSTOMER_ID}}',
-        type: 'card',
-      });
-
-      return paymentMethods;
-    }
-
-    listPaymentMethods.then((methods) => {
-      console.log(methods)
-    })
 
   })
 
@@ -1393,7 +1466,9 @@ module.exports = (app, db) => {
   require('./routes/removeSubscription')(app, db, passport);
 
   require('./routes/upsertComment')(app, db, passport);
+
   require('./routes/adminComments')(app, db, passport);
+  require('./routes/adminAds')(app, db, passport);
 
   // Gets how many people a user has refereed
   require('./routes/getUserReferrals')(app, db, passport);
@@ -1401,6 +1476,10 @@ module.exports = (app, db) => {
   // Proposal Related
   require('./routes/upsertProposal')(app, db, passport);
   require('./routes/deleteProposal')(app, db, passport);
+
+  require('./routes/zipToTown')(app, db, passport);
+
+  require('./routes/requestUserData')(app, db, passport);
 
   // require('./routes/sendVerificationEmail')(app, db, passport);
 

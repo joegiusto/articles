@@ -68,8 +68,8 @@ import RoadmapPage from './Support/Roadmap'
 import ForumPage from './Support/Forum'
 import OpenSourcePage from './Support/OpenSource'
 
-import EmployeePage from './Employees'
-import EmployeePageDetails from './Employees/Directory'
+// import EmployeePage from './Employees'
+// import EmployeePageDetails from './Employees/Directory'
 
 // import AccountPage from './Account';
 import PasswordForgetPage from './PasswordForget';
@@ -218,6 +218,7 @@ class AppBase extends Component {
                 {/* <Route path={ROUTES.STORE_MANAGE} component={StoreManage} /> */}
           
                 <Route exact path={ROUTES.NEWS} component={NewsPage} />
+                <Route exact path={ROUTES.NEWS_SEARCH} component={NewsPage} />
     
                 <Route path={ROUTES.EXTENDED} component={NewsPage}></Route>
                 <Route path={ROUTES.EXTEND} component={ExtendedPage}></Route>
@@ -261,6 +262,7 @@ class AppBase extends Component {
                 <Route path={ROUTES.ADMIN_USER_DETAILS} component={AdminPage} />
                 <Route exact path={ROUTES.ADMIN_NEWS} component={AdminPage} />
                 <Route path={ROUTES.ADMIN_NEWS_DETAILS} component={AdminPage} />
+                <Route exact path={ROUTES.ADMIN_PROPOSALS} component={AdminPage} />
                 <Route exact path={ROUTES.ADMIN_PRODUCTS} component={AdminPage} />
                 <Route path={ROUTES.ADMIN_PRODUCT_DETAILS} component={AdminPage} />
                 <Route exact path={ROUTES.ADMIN_SUBMISSIONS} component={AdminPage} />
@@ -273,7 +275,7 @@ class AppBase extends Component {
                 <Route exact path={ROUTES.ADMIN_REPORTS} component={AdminPage} />
                 <Route exact path={ROUTES.ADMIN_ORDERS} component={AdminPage} />
                 <Route exact path={ROUTES.ADMIN_ADS} component={AdminPage} />
-                <Route exact path={ROUTES.ADMIN_PROPOSALS} component={AdminPage} />
+                <Route exact path={ROUTES.ADMIN_MESSAGES} component={AdminPage} />
 
                 <Route path={ROUTES.DONATE} component={DonatePage} />
                 <Route path={ROUTES.SUBSCRIBE} component={SubscribePage} />

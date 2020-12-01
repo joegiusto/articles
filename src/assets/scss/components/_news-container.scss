@@ -722,19 +722,91 @@ section.news-page {
     font-weight: 400;
     width: 100%;
     background-color: white;
+    margin-bottom: 1rem;
+
+    &.focus {
+      img {
+        height: 200px;
+      }
+    }
 
     img {
       width: 100%;
+      transition-duration: 500ms;
       height: 400px;
       object-fit: cover;
       opacity: 0.5;
     }
 
-    .search-bar {
+    .bottom {
+      position: absolute;
+      bottom: 0%;
+      left: 0%;
+      padding: 0.5rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+
+      .detail {
+        font-size: 0.85rem;
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 900;
+        border-radius: 0;
+        padding: 0.35rem;
+        border: solid 1px black;
+      }
+
+      .photo-credit {
+        flex-wrap: nowrap;
+        display: flex;
+        align-items: flex-end;
+      }
+    }
+
+    .search-container {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translateX(-50%) translateY(-50%);
+      text-align: center;
+      padding: 1rem;
+      background-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+      width: 100%;
+
+      @include media-breakpoint-up(md) {
+        width: auto;
+      }
+
+      .title {
+        font-size: 3rem;
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 900;
+        line-height: 1;
+        margin-bottom: 1rem;
+      }
+
+      input {
+        outline: none;
+
+        &:focus {
+          box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.5);
+          border-color: #000;
+        }
+      }
+
+      .filter {
+        font-size: 0.7rem;
+        font-weight: 900;
+        width: 100%;
+        padding: 0.25rem;
+        background-color: whitesmoke;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        text-transform: uppercase;
+      }
     }
   }
 
@@ -749,7 +821,7 @@ section.news-page {
       font-size: 1.1rem;
       display: flex;
       flex-direction: row;
-      margin-bottom: 0.5rem;
+      // margin-bottom: 0.5rem;
       padding: 0.5rem 0.5rem;
       padding-left: 1rem;
       border-radius: 0px;
@@ -786,6 +858,7 @@ section.news-page {
     box-shadow: 1px 0px 5px #000;
     width: 100%;
     height: auto;
+    z-index: 1;
 
     @include media-breakpoint-down(md) {
       // padding-left: 1rem;
@@ -1240,16 +1313,17 @@ section.news-page {
             display: flex;
             overflow-x: hidden;
             
-            @include media-breakpoint-down(sm) {
+            @include media-breakpoint-down(md) {
               overflow-x: scroll;
+              grid-template-columns: repeat(1, 1fr);
             }
 
             @include media-breakpoint-up(lg) {
               overflow-x: hidden;
               display: grid;
+              // grid-template-columns: repeat(2, 1fr);
+              grid-gap: 5px 5px;
               grid-template-columns: repeat(2, 1fr);
-              grid-gap: 10px 10px;
-              grid-template-columns: repeat(1, 1fr);
             }
             
             &:not(:first-child) {
@@ -1258,10 +1332,11 @@ section.news-page {
 
             .link {
               border: 1px solid rgba(0, 0, 0, 0.5);
-              margin-left: 0.5rem;
+              // margin-left: 0.5rem;
+              // font-size: 0.9rem;
 
               @include media-breakpoint-up(lg) {
-                margin-left: 0.5rem;
+                // margin-left: 0.5rem;
               }
              
             }
@@ -1295,12 +1370,12 @@ section.news-page {
         font-family: montserrat, sans-serif;
         font-weight: 400;
         font-style: normal;
-        font-size: 1.1rem;
+        font-size: 1rem;
         display: flex;
         flex-direction: row;
-        margin-bottom: 0.5rem;
+        // margin-bottom: 0.5rem;
         padding: 0.5rem 0.5rem;
-        padding-left: 1rem;
+        // padding-left: 1rem;
         border-radius: 0px;
         cursor: pointer;
         max-width: 300px;
@@ -2020,21 +2095,8 @@ section.news-page {
   }
 
   .main-content-container {
-    // margin-top: 1rem;
     width: 100%;
     max-width: 1920px;
-    // padding-left: 1rem;
-    // padding-right: 1rem;
-
-    @include media-breakpoint-down(sm) {
-      margin-top: 1rem;
-      // padding-left: 0rem;
-      // padding-right: 0rem;
-    }
-
-    @include media-breakpoint-up(lg) {
-      // margin: 1rem auto;
-    }
 
     // TODO Figure out why this works the way it does
     overflow-x: hidden;
@@ -2083,7 +2145,7 @@ section.news-page {
 
     .news-preview-container {
       position: relative;
-      margin-top: 1rem;
+      // margin-top: 1rem;
 
       @include media-breakpoint-down(md) {
         
@@ -2094,11 +2156,11 @@ section.news-page {
         border-radius: 0px;
         left: 0;
         width: 100%;
-        // border: 1px solid #000000;
 
         .swiper-scrollbar-drag {
           border: 1px solid #000000;
           cursor: pointer;
+          border-radius: 3px;
         }
       }
 
@@ -2223,7 +2285,8 @@ section.news-page {
 
       .swiper-container {
         padding-bottom: 2rem;
-        margin-top: 2rem;
+        // margin-top: 2rem;
+        margin-bottom: 2rem;
       }
 
       .swiper-slide {
