@@ -51,6 +51,10 @@ import PartyProposalsPage from './Party/Proposals'
 import ProposalSingle from './Party/Proposals/Single'
 import TownHallPage from './Party/TownHall'
 
+import AdvertisingPage from './Advertising';
+import AdvertisingAccessPage from './Advertising/access';
+import AdvertisingManagePage from './Advertising/manage';
+
 import MeshPage from './Mesh'
 
 import SupportPage from './Support'
@@ -237,6 +241,10 @@ class AppBase extends Component {
                 <Route exact path={ROUTES.PARTY} component={PartyPage} />
                 <Route exact path={ROUTES.PROPOSALS} component={PartyProposalsPage} />
                 <Route path={ROUTES.PROPOSAL} component={ProposalSingle} />
+
+                <Route path={ROUTES.ADVERTISING} component={AdvertisingPage} exact={true}/>
+                <Route path={ROUTES.ADVERTISING_ACCESS} component={AdvertisingAccessPage} />
+                <Route path={ROUTES.ADVERTISING_MANAGE} component={AdvertisingManagePage} />
                 
                 <Route path={ROUTES.MESH} component={MeshPage} />
           

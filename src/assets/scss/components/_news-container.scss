@@ -788,8 +788,16 @@ section.news-page {
         margin-bottom: 1rem;
       }
 
+      .input-group-append {
+        .btn {
+          
+        }
+      }
+
       input {
         outline: none;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
 
         &:focus {
           box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.5);
@@ -861,7 +869,9 @@ section.news-page {
     z-index: 1;
 
     @include media-breakpoint-down(md) {
-      // padding-left: 1rem;
+      z-index: 2;
+      position: sticky;
+      top: 50px;
     }
 
     @include media-breakpoint-up(lg) {
@@ -889,6 +899,8 @@ section.news-page {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
+        padding-right: 0rem;
+        padding-left: 0rem;
       }
 
       .trending-map-wrap {
@@ -1120,6 +1132,10 @@ section.news-page {
             width: 100%;
             padding-bottom: 2rem;
             overflow: initial;
+
+            // @include media-breakpoint-down(md) {
+            //   padding-bottom: 3rem;
+            // }
   
             .swiper-slide {
               height: 100%;
@@ -1299,7 +1315,7 @@ section.news-page {
         flex-direction: column;
 
         @include media-breakpoint-down(md) {
-          padding-top: 1rem;
+          // padding-top: 1rem;
         }
 
         .grow {
@@ -1307,6 +1323,16 @@ section.news-page {
         }
 
         .discover-links {
+
+          .title {
+            @include media-breakpoint-down(lg) {
+              margin-top: 0.5rem;
+              font-size: 0.9rem;
+              line-height: 1;
+              margin-left: 0.5rem;
+              display: none;
+            }
+          }
 
           .links {
             // padding-top: 1rem;
@@ -1326,9 +1352,9 @@ section.news-page {
               grid-template-columns: repeat(2, 1fr);
             }
             
-            &:not(:first-child) {
-              margin-left: -0.5rem;
-            }
+            // &:not(:first-child) {
+            //   margin-left: -0.5rem;
+            // }
 
             .link {
               border: 1px solid rgba(0, 0, 0, 0.5);
@@ -1389,7 +1415,7 @@ section.news-page {
 
         &.frontpage {
           &.active {
-            background-color: black;
+            background-color: #212529;
             color: white;
           }
         }
@@ -2157,6 +2183,10 @@ section.news-page {
         left: 0;
         width: 100%;
 
+        @include media-breakpoint-down(md) {
+          height: 18px;
+        }
+
         .swiper-scrollbar-drag {
           border: 1px solid #000000;
           cursor: pointer;
@@ -2287,6 +2317,10 @@ section.news-page {
         padding-bottom: 2rem;
         // margin-top: 2rem;
         margin-bottom: 2rem;
+
+        @include media-breakpoint-down(md) {
+          padding-bottom: 3rem;
+        }
       }
 
       .swiper-slide {

@@ -1,13 +1,388 @@
-import React, {Component} from 'react'
+import React, {Component, useState} from 'react'
 import GoogleMapReact from 'google-map-react';
 import { connect } from "react-redux";
 import axios from 'axios'
 import moment from 'moment'
-
+import { Link } from 'react-router-dom'
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
 
 import ConfirmDelete from './ConfirmDelete'
+import * as ROUTES from '../../../constants/routes'
+
+function Example() {
+  const [show, setShow] = useState(true);
+
+  const [ad, setAd] = useState({
+    _id: '',
+    business: '',
+
+    ageFilters: {
+      range: {
+        active: false,
+        start: 0,
+        end: 0,
+      },
+      above: {
+        active: false,
+        age: 0
+      },
+      below: {
+        active: false,
+        age: 0
+      }
+    },
+
+    zipFilters: {
+      list: {
+        active: false,
+        list: []
+      },
+      nearby: {
+        active: false,
+        zip: ''
+      },
+      around: {
+        active: false,
+        zip: ''
+      }
+    },
+    
+    timeFilters: {
+      between:{
+        active: false,
+        timeOne: '',
+        timeTwo: ''
+      }
+    }
+  });
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  console.log("Test");
+
+  return (
+    <>
+
+      <Button variant="articles-light w-100 mb-2" onClick={handleShow}>
+        Launch Demo
+      </Button>
+
+      <Modal className="admin-ads" show={show} onHide={handleClose}>
+
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+
+          <div class="form-group articles">
+            <label for="address">Business Name</label>
+            <input class="form-control with-label" name="address" id="address" type="text" value=""/>
+          </div>
+
+          <div className="d-flex">
+            <div class="form-group articles flex-grow-1">
+              <label for="address">Address One</label>
+              <input class="form-control with-label" name="address" id="address" type="text" value=""/>
+            </div>
+  
+            <div class="form-group articles flex-grow-1">
+              <label for="address">Address Two (Optional)</label>
+              <input class="form-control with-label" name="address" id="address" type="text" value=""/>
+            </div>
+          </div>
+
+          <div className="d-flex justify-content-between">
+
+            <div style={{width: '100px'}} class="form-group articles">
+              <label for="address">Zip</label>
+              <input class="form-control with-label" name="address" id="address" type="text" value=""/>
+            </div>
+  
+            <div className="d-flex flex-grow-1 ml-3">
+              <div class="form-group articles">
+                <label for="address">City</label>
+                <input class="form-control with-label" disabled name="address" id="address" type="text" value=""/>
+              </div>
+    
+              <div class="form-group articles">
+                <label for="address">State</label>
+                <input class="form-control with-label" disabled name="address" id="address" type="text" value=""/>
+              </div>
+            </div>
+
+          </div>
+
+          <div className="d-flex justify-content-between">
+            <div>Latitude: 28.385233</div>
+            <div>-</div>
+            <div>Longitude: -81.563873</div>
+          </div>
+
+          <div className="text-muted text-center mt-5">Access ID: 1901</div>
+
+        </Modal.Body>
+
+        <Modal.Body className="border-top">
+          <div>
+            <h5><div className="badge badge-pill badge-lg badge-light border">No Sorts</div></h5>
+            <h5><div className="badge badge-pill badge-lg badge-light border ml-1">+</div></h5>
+          </div>
+
+          <div className="filters">
+            <Accordion>
+  
+              <Card>
+                <Accordion.Toggle as={Card.Header} eventKey="0">
+                  <div>Age</div>
+                  {
+                    ad.ageFilters.range.active  || ad.ageFilters.above.active || ad.ageFilters.below.active ?
+                    <i className="fas fa-circle mr-0 d-flex align-items-center"></i>
+                    :
+                    <i className="far fa-circle mr-0 d-flex align-items-center"></i>
+                  }
+                  
+                </Accordion.Toggle>
+                <Accordion.Collapse eventKey="0">
+                  <Card.Body>
+  
+                    <button onClick={() => this.changeFilterOption('ageFilters','range')} className={"btn btn-articles-light " + (ad.ageFilters.range.active ? 'alt' : '')}>
+                      <div>Range</div>
+                    </button>
+  
+                    <button onClick={() => this.changeFilterOption('ageFilters','above')} className={"btn btn-articles-light " + (ad.ageFilters.above.active ? 'alt' : '')}>
+                      Above
+                    </button>
+  
+                    <button onClick={() => this.changeFilterOption('ageFilters','below')} className={"btn btn-articles-light " + (ad.ageFilters.below.active ? 'alt' : '')}>
+                      Below
+                    </button>
+  
+                    <div className={"filter-option-dropdown " + (ad.ageFilters.range.active ? '' : 'd-none')}>
+  
+                      <div className="d-flex">
+                        <div className="form-group">
+                          <label for="address">Start Age</label>
+                          <input className="form-control with-label" onChange={(e) => {this.changeAgeFilterOption('range', 'start', e)}} name="age_range_start" id="age_range_start" type="text" value={ad.age_range_start}/>
+                        </div>
+  
+                        <div className="form-group">
+                          <label for="address">End Age</label>
+                          <input className="form-control with-label" onChange={(e) => {this.changeAgeFilterOption('range', 'end', e)}}  name="age-range-end" id="age-range-end" type="text" value={ad.age_range_end}/>
+                        </div>
+                      </div>
+  
+                    </div>
+  
+                    <div className={"filter-option-dropdown " + (ad.ageFilters.above.active ? '' : 'd-none')}>
+  
+                      <div className="form-group">
+                        <label for="address">Above Age</label>
+                        <input className="form-control with-label" onChange={(e) => {this.changeAgeFilterOption('above', 'age', e)}}  name="address" id="address" type="text" value={ad.age_above}/>
+                      </div>
+  
+                    </div>
+  
+                    <div className={"filter-option-dropdown " + (ad.ageFilters.below.active ? '' : 'd-none')}>
+  
+                      <div className="form-group">
+                        <label for="address">Below Age</label>
+                        <input className="form-control with-label" onChange={(e) => {this.changeAgeFilterOption('below', 'age', e)}}  name="address" id="address" type="text" value={ad.age_below}/>
+                      </div>
+  
+                    </div>
+  
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+  
+            </Accordion>
+  
+            {/* <Accordion>
+  
+              <Card>
+                <Accordion.Toggle as={Card.Header} eventKey="0">
+                  <div>Zip</div>
+                  {
+                    this.state.zipFilters.list.active  || this.state.zipFilters.nearby.active || this.state.zipFilters.around.active ?
+                    <i className="fas fa-circle mr-0 d-flex align-items-center"></i>
+                    :
+                    <i className="far fa-circle mr-0 d-flex align-items-center"></i>
+                  }
+                </Accordion.Toggle>
+                <Accordion.Collapse eventKey="0">
+                  <Card.Body>
+  
+                    <button 
+                    onClick={() => this.changeFilterOption('zipFilters','list')} 
+                    className={"btn btn-articles-light " + (this.state.zipFilters.list.active ? 'alt' : '')}
+                    >
+                      List
+                    </button>
+                    <button 
+                    onClick={() => this.changeFilterOption('zipFilters','nearby')}
+                    className={"btn btn-articles-light " + (this.state.zipFilters.nearby.active ? 'alt' : '')}
+                    >
+                      Nearby
+                    </button>
+                    <button
+                    onClick={() => this.changeFilterOption('zipFilters','around')}
+                    className={"btn btn-articles-light " + (this.state.zipFilters.around.active ? 'alt' : '')}
+                    >
+                      Around
+                    </button>
+  
+                    {this.state.zipFilters.list.active ?
+                      <div className="filter-option-dropdown d-flex">
+  
+                        <small className="w-100">Comma Separated List</small>
+  
+                        <div className="form-group">
+                          <label className="d-flex justify-content-between" for="address">Zips</label>
+                          <input className="form-control with-label" onChange={(e) => {this.changeZipFilterOption('list', 'zip', e)}} name="address" id="address" type="text" value={this.state.zipFilters.list.zip}/>
+                        </div>
+  
+                      </div>
+                      :
+                      ''
+                    }
+  
+                    {this.state.zipFilters.nearby.active ?
+                      <div className="filter-option-dropdown">
+  
+                        <small className="w-100">Specified Distance Around Zip Code (including zip code)</small>
+  
+                        <div className="form-group">
+                          <label for="address">Zip Code</label>
+                          <input className="form-control with-label" name="address" id="address" type="text" value=""/>
+                        </div>
+  
+                        <div className="form-group">
+                          <label for="exampleFormControlSelect1">Miles</label>
+                          <select className="form-control" id="exampleFormControlSelect1">
+                            <option>1</option>
+                            <option>5</option>
+                            <option>10</option>
+                            <option>15</option>
+                            <option>30</option>
+                            <option>50</option>
+                          </select>
+                        </div>
+  
+                      </div>
+                      :
+                      ''
+                    }
+  
+                    {this.state.zipFilters.around.active ?
+                      <div className="filter-option-dropdown">
+  
+                        <small className="w-100">Specified Distance Around Zip Code (not including zip code)</small>
+  
+                        <div className="form-group">
+                          <label for="address">Zip</label>
+                          <input className="form-control with-label" name="address" id="address" type="text" value=""/>
+                        </div>
+  
+                        <div className="form-group">
+                          <label for="exampleFormControlSelect1">Miles</label>
+                          <select className="form-control" id="exampleFormControlSelect1">
+                            <option>1</option>
+                            <option>5</option>
+                            <option>10</option>
+                            <option>15</option>
+                            <option>30</option>
+                            <option>50</option>
+                          </select>
+                        </div>
+  
+                      </div>
+                      :
+                      ''
+                    }
+  
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+  
+            </Accordion>
+  
+            <Accordion>
+  
+              <Card>
+                <Accordion.Toggle as={Card.Header} eventKey="0">
+                  <div>Time</div>
+                  {
+                    this.state.timeFilters.between.active ?
+                    <i className="fas fa-circle mr-0 d-flex align-items-center"></i>
+                    :
+                    <i className="far fa-circle mr-0 d-flex align-items-center"></i>
+                  }
+                </Accordion.Toggle>
+                <Accordion.Collapse eventKey="0">
+                  <Card.Body>
+  
+                    <button 
+                    onClick={() => this.changeFilterOption('timeFilters','between')} 
+                    className={"btn btn-articles-light " + (this.state.timeFilters.between.active ? 'alt' : '')}
+                    >
+                      Between
+                    </button>
+  
+                    {this.state.timeFilters.between.active ?
+                      <div className="filter-option-dropdown d-flex">
+  
+                        <div className="d-flex">
+  
+                          <div className="form-group">
+                            <label className="d-flex justify-content-between" for="timeOne">Start Time</label>
+                            <input className="form-control with-label" onChange={(e) => {this.changeTimeFilterOption('between', 'timeOne', e)}} name="timeOne" id="timeOne" type="text" value={this.state.timeFilters.between.timeOne}/>
+                          </div>
+  
+                          <div className="form-group">
+                            <label className="d-flex justify-content-between" for="timeTwo">End Time</label>
+                            <input className="form-control with-label" onChange={(e) => {this.changeTimeFilterOption('between', 'timeTwo', e)}} name="timeTwo" id="timeTwo" type="text" value={this.state.timeFilters.between.timeTwo}/>
+                          </div>
+  
+                        </div>
+  
+                      </div>
+                      :
+                      ''
+                    }
+  
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+  
+            </Accordion> */}
+          </div>
+
+        </Modal.Body>
+
+        <Modal.Footer className="justify-content-between">
+
+          <div className="btn btn-danger btn-sm">Delete</div>
+
+          <div>
+            <Button variant="link" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={handleClose}>
+              Save Changes
+            </Button>
+          </div>
+
+        </Modal.Footer>
+
+      </Modal>
+    </>
+  );
+}
 
 class Ads extends Component {
   constructor(props) {
@@ -20,21 +395,21 @@ class Ads extends Component {
 
       users: [],
 
-      userAreas:[],
+      userAreas: (localStorage.adPopulation ? JSON.parse(localStorage.adPopulation) : []),
+      adPopulationFetched: (localStorage.adPopulationFetched ? localStorage.adPopulationFetched : ''),
 
       zipsArray: [],
       zips: {
         // Is capital for display purposes, changing this to lowercase will show in reports
         None: 0
-        // The rest of the zips get populated once data loads
+        // The rest of the zips get populated once data loads by fetchPopulation()
       },
 
       ads: [],
-      results: [],
-
+      reachResults: [],
       business: '',
       contact: '',
-      // age: false,
+
       ageFilters: {
         range: {
           active: false,
@@ -50,7 +425,7 @@ class Ads extends Component {
           age: 0
         }
       },
-      // zip: false,
+
       zipFilters: {
         list: {
           active: false,
@@ -65,6 +440,7 @@ class Ads extends Component {
           zip: ''
         }
       },
+
       timeFilters: {
         between:{
           active: false,
@@ -94,25 +470,6 @@ class Ads extends Component {
       }
     );
 
-    axios.post('/api/secure/getAdPopulation')
-    .then(function (response) {
-
-      console.log(response)
-
-      self.setState({
-        userAreas: response.data.data
-      });
-
-    })
-    .catch(function (error) {
-      console.log(error);
-
-      self.setState({
-        // users: []
-      })
-
-    });
-
     axios.post('/api/secure/adminAds')
     .then(function (response) {
       console.log(response)
@@ -127,8 +484,30 @@ class Ads extends Component {
     });
   }
 
-  compileZips() {
-    
+  fetchPopulation() {
+    const self = this;
+
+    axios.post('/api/secure/getAdPopulation')
+    .then(function (response) {
+
+      console.log(response)
+
+      localStorage.setItem( 'adPopulation', JSON.stringify(response.data.data) );
+      localStorage.setItem( 'adPopulationFetched', moment().format("LLL") );
+
+      self.setState({
+        userAreas: response.data.data
+      });
+
+    })
+    .catch(function (error) {
+      console.log(error);
+
+      self.setState({
+        // users: []
+      })
+
+    });
   }
 
   changeAgeFilterOption(key, option, e) {
@@ -261,7 +640,7 @@ class Ads extends Component {
     .then( (obj) => {
       console.log(obj)
       self.setState({
-        results: obj.data
+        reachResults: obj.data
       })
     })
     .catch(function (error) {
@@ -277,7 +656,7 @@ class Ads extends Component {
 
         <div className="side-panel">
 
-          <div className="card">
+          <div className="card mb-3">
             <div className="card-header">Status</div>
             <div className="card-body">
               <div>Pending Ads: 0</div>
@@ -286,9 +665,29 @@ class Ads extends Component {
             </div>
           </div>
 
+          <Example/>
+
+          <Link to={ROUTES.ADVERTISING}>
+            <div className="btn btn-articles-light w-100 mb-2">
+              Advertising
+            </div>
+          </Link>
+
+          <Link to={ROUTES.ADVERTISING_ACCESS}>
+            <div className="btn btn-articles-light w-100 mb-2">
+              Advertising Access
+            </div>
+          </Link>
+
+          <Link to={ROUTES.ADVERTISING_MANAGE}>
+            <div className="btn btn-articles-light w-100 mb-2">
+              Advertising Manage
+            </div>
+          </Link>
+
         </div>
 
-        <div className="creator">
+        <div className="creator filters">
 
           <div className="card">
             <h5 className="card-header">Ad Builder</h5>
@@ -650,11 +1049,11 @@ class Ads extends Component {
           <div className="card mt-2">
             <h5 className="card-header">Reach Report</h5>
             <div className="card-body">
-              <h5 className="card-title">{this.state.results.length} Users</h5>
+              <h5 className="card-title">{this.state.reachResults.length} Users</h5>
               <p className="card-text">The amount of users that will potentially see your ad.</p>
 
               <div className="alert alert-danger">
-                {this.state.results.map(result => 
+                {this.state.reachResults.map(result => 
                   <div className="result">
                     {result.first_name} {result.last_name}
                   </div>
@@ -668,6 +1067,10 @@ class Ads extends Component {
         </div>
 
         <div className="map-container">
+
+          <div className="text-center">
+            <div className="text-muted">{this.state.adPopulationFetched}</div><div onClick={() => this.fetchPopulation()} className="btn btn-articles-light mb-3 mx-auto">Fetch Population (Temp)</div>
+          </div>
 
           <div className="map" style={{width: '100%', height: '400px'}}>
             <Map userAreas={this.state.userAreas} lat={this.state.lat} lng={this.state.lng}/>

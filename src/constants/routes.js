@@ -26,9 +26,15 @@ export const REPORTS = '/reports';
 export const REPORTS_CHARTS = '/reports/charts';
 export const REPORTS_REPORT = '/reports/report';
 export const REPORTS_MANAGE = '/reports/manage';
+
 // Employees
 export const EMPLOYEES = '/reports/employees'
 export const EMPLOYEES_DETAILS = '/reports/employees/:id'
+
+// Advertising
+export const ADVERTISING ='/advertising'
+export const ADVERTISING_ACCESS ='/advertising/access'
+export const ADVERTISING_MANAGE ='/advertising/manage'
 
 // Store
 export const STORE ='/store'

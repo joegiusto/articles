@@ -1629,7 +1629,7 @@ class Frontpage extends Component {
             <div className="row mb-3 justify-content-between">
   
               {/* Left Side */}
-              <div className="col-12 col-md-12 pr-0">
+              <div className="col-12 col-md-12 pr-md-0">
 
                 <Switch>
                   {/* <Route exact path={ROUTES.NEWS} render={() => <h1>Front</h1>}/> */}

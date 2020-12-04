@@ -871,6 +871,7 @@
 
             .comment-text {
               margin-top: 0.25rem;
+              word-break: break-word;
             }
 
             .comment-manage {
@@ -905,7 +906,7 @@
       border: 3px solid #000;
       border-radius: 5px;
       padding: 0.5rem;
-      
+      max-width: 1000px;
       font-family: brandon-grotesque, sans-serif;
       font-style: normal;
       font-weight: 900;
@@ -913,6 +914,7 @@
       display: inline-flex;
       justify-content: center;
       align-items: center;
+      margin-top: 2rem;
 
       transition-duration: 200ms;
       cursor: pointer;
@@ -944,7 +946,7 @@
       }
 
       .text {
-        padding-left: 1rem;
+        // padding-left: 1rem;
         font-size: 2rem;
 
         @include media-breakpoint-down(md) {

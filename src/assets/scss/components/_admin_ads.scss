@@ -73,6 +73,37 @@
       font-size: 1.1rem;
     }
 
+    .sort {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+      transition: box-shadow 200ms;
+      background-color: #fff;
+      border-radius: 2px;
+      position: relative;
+      margin-bottom: 1rem;
+
+      .selected {
+       display: none;   
+      }
+
+      &.active {
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.75), 0 2px 3px rgba(0, 0, 0, 0.4);
+
+        .selected {
+          display: block;
+          position: absolute;
+          top: 0;
+          left: 0;
+          transform: translateY(-50%);
+        }
+      }
+    }
+  }
+
+  .filters {
     .accordion {
       margin-bottom: 0.5rem;
       box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
@@ -108,35 +139,6 @@
           .form-group {
             margin-bottom: 0rem;
           }
-        }
-      }
-    }
-
-    .sort {
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      padding: 1rem;
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
-      transition: box-shadow 200ms;
-      background-color: #fff;
-      border-radius: 2px;
-      position: relative;
-      margin-bottom: 1rem;
-
-      .selected {
-       display: none;   
-      }
-
-      &.active {
-        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.75), 0 2px 3px rgba(0, 0, 0, 0.4);
-
-        .selected {
-          display: block;
-          position: absolute;
-          top: 0;
-          left: 0;
-          transform: translateY(-50%);
         }
       }
     }

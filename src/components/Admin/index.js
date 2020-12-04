@@ -97,7 +97,6 @@ class Admin extends Component {
         </div>
 
         <div className="tab-content">
-          {/* <div className="container-fluid"> */}
 
           <Switch>
 
@@ -208,7 +207,6 @@ class Admin extends Component {
 
           </Switch>
 
-          {/* </div> */}
         </div>
 
       </div>

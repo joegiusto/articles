@@ -433,7 +433,7 @@ class Settings extends Component {
             {this.props.user_details.employee?.bool === true ? 
 
               <Link to={ROUTES.SETTINGS_EMPLOYEE}>
-                <button className={"btn btn-articles-light " + (this.state.settingsTab === 'Employee' ? 'alt' : '')}>Employee</button>
+                <button className={"btn btn-articles-light " + (this.state.settingsTab === 'Employee' ? 'alt' : '')}>Employee<span className="badge badge-warning ml-1">Role</span></button>
               </Link>
 
               :

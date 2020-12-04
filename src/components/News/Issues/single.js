@@ -574,17 +574,18 @@ class Issue extends React.Component {
 
             </div>
 
+            <div className="back-button d-flex" onClick={() => this.props.history.goBack()}>
+              <i className="far fa-caret-square-left mr-1"></i>
+              <div className="text">Back</div>
+            </div>
+
           </div>
 
           {/* <div className="link badge badge-dark w-100 py-2 mb-3" onClick={() => this.props.history.goBack()}>{String.fromCharCode(11148)} Back to Issues</div> */}
 
-          <div className="back-button" onClick={() => this.props.history.goBack()}>
-            <i className="far fa-caret-square-left"></i>
-            <i className="far fa-caret-square-left stacked"></i>
-            <div className="text">Back to Issues</div>
-          </div>
+          
 
-          <div className="card ">
+          <div className="card d-none">
 
             <div className="card-header">
 
