@@ -31,6 +31,8 @@ class Account extends Component {
         photo_url: this.props.user_details?.photo_url || '',
 
         address: {
+          lineOne: this.props.user_details?.address?.lineOne || '',
+          lineTwo: this.props.user_details?.address?.lineTwo || '',
           zip: this.props.user_details?.address?.zip || '',
           city: this.props.user_details?.address?.city || '',
           state: this.props.user_details?.address?.state || '',
@@ -518,6 +520,10 @@ class Account extends Component {
 
                   <div className="py-2">Or</div>
 
+                  <div className="last-changed">Address Line 1</div>
+                  <input className="d-block" value={this.state.user.address.lineOne} type="text"/>
+                  <div className="last-changed">Address Line 2</div>
+                  <input className="d-block" value={this.state.user.address.lineTwo} type="text"/>
                   <div className="last-changed">Town / City</div>
                   <input className="d-block" value={this.state.user.address.city} type="text"/>
                   <div className="last-changed">State</div>

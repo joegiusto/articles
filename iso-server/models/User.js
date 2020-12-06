@@ -30,6 +30,14 @@ const UserSchema = new Schema({
     default: false
   },
   address: {
+    lineOne: {
+      type: String,
+      default: ""
+    },
+    lineTwo: {
+      type: String,
+      default: ""
+    },
     zip: {
       type: Number,
       default: ""
@@ -67,10 +75,6 @@ const UserSchema = new Schema({
       }
     }
   },
-  mail: {
-    type: Array,
-    default: []
-  },
   referral: {
     type: String,
     default: ''
@@ -86,7 +90,6 @@ const UserSchema = new Schema({
     type: String,
     required: false
   },
-
   resetPasswordExpires: {
     type: Date,
     required: false

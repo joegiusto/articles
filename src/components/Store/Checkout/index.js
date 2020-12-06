@@ -8,6 +8,9 @@ import { useForm } from "react-hook-form";
 import { CardElement, useStripe, useElements, Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+
 import { removeExpense, clearExpenses } from '../../../actions/expenses';
 import scrollLogo from '../../../assets/img/logo.png';
 import stripePower from '../../../assets/img/stripe.png'
@@ -81,11 +84,12 @@ const CheckoutForm = (props) => {
   const prevReturnRef = useRef()
   const mounted = useRef();
 
-  const [address, setAddress] = useState(props.user_details?.address?.address || '');
-  const [address_two, setAddressTwo] = useState(props.user_details?.address?.address_two || '');
+  const [lineOne, setLineOne] = useState(props.user_details?.address?.lineOne || '');
+  const [lineTwo, setLineTwo] = useState(props.user_details?.address?.lineTwo || '');
   const [city, setCity] = useState(props.user_details?.address?.city || '');
   const [state, setState] = useState(props.user_details?.address?.state || '');
   const [zip, setZip] = useState(props.user_details?.address?.zip || '');
+
   const [cartEmpty, setCartEmpty] = useState(true);
   const [cartLoading, setCartLoading] = useState(false);
   const [succeeded, setSucceeded] = useState(false);
@@ -102,9 +106,12 @@ const CheckoutForm = (props) => {
   const [checkoutComplete, setCheckoutComplete] = useState('');
 
   const [isSavedPayment, setIsSavedPayment] = useState(false);
+
+  const [isStoreDisabled, setIsStoreDisabled] = useState(false);
+
   const [savedPaymentId, setSavedPaymentId] = useState(null);
 
-  const isValid = (address !== '' && city !== '' && state !== '' && zip !== '' && (isSavedPayment ? true : cardComplete !== false) && (props.productsUser.length > 0) )
+  const isValid = (lineOne !== '' && city !== '' && state !== '' && zip !== '' && (isSavedPayment ? true : cardComplete !== false) && (props.productsUser.length > 0) )
   
   useEffect(() => {
 
@@ -116,6 +123,7 @@ const CheckoutForm = (props) => {
     }
 
     getUserPaymentMethods()
+    storeDisabled()
 
     if (!mounted.current) {
       // do componentDidMount logic
@@ -153,8 +161,33 @@ const CheckoutForm = (props) => {
     })
     .catch(function (error) {
       console.log(error);
-      setError('Could not get valid intent')
+
+      console.log(error.response);
+
+      // TODO - This is GOD AWFUL, need some sort of error code system and a switch case
+
+      if (error.response.data === "Store is temporally disabled, check back later.") {
+        setError('Store is temporally disabled, check back later.')
+      } else {
+        setError('Could not get valid intent')
+      }
+      
     });
+  }
+
+  function storeDisabled() {
+
+    axios.get('/api/storeDisabled')
+    .then(function (response) {
+      console.log(response)
+      if (!response.data) {
+        setIsStoreDisabled(true)
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
   }
 
   function renderCardBrandIcon(brand) {
@@ -391,6 +424,8 @@ const CheckoutForm = (props) => {
             </Link>
 
           </div>
+
+          <StoreDisabledModal isStoreDisabled={isStoreDisabled} setIsStoreDisabled={setIsStoreDisabled}/>
   
           <div className="details card shadow-sm">
   
@@ -416,20 +451,27 @@ const CheckoutForm = (props) => {
                   <h3 className="mb-4">Shipping Info</h3>
     
                   <div className="form-group">
-                    <label htmlFor="address">Address</label>
-                    <input className="form-control with-label" value={address} onChange={e => setAddress(e.target.value)} name="address" id="address" type="text"/>
+                    <label htmlFor="address">Address Line 1</label>
+                    <div className="prefilled">
+                      Prefilled
+                    </div>
+                    <input className="form-control with-label" value={lineOne} onChange={e => setLineOne(e.target.value)} name="lineOne" id="lineOne" type="text"/>
                   </div>
   
                   <div className="form-group">
-                    <label htmlFor="address_two">Address Line Two</label>
-                    <input className="form-control with-label" value={address_two} name="address_two" onChange={e => setAddressTwo(e.target.value)} id="address_two" type="text"/>
+                    <label htmlFor="address_two">Address Line 2</label>
+                    <input className="form-control with-label" value={lineTwo} name="lineTwo" onChange={e => setLineTwo(e.target.value)} id="lineTwo" type="text"/>
                   </div>
   
                   <div className="form-group">
                     <label htmlFor="city">City</label>
-                    <div className="prefilled">
-                      Prefilled
-                    </div>
+
+                    {props.user_details?.address?.city && 
+                      <div className="prefilled">
+                        Prefilled
+                      </div>
+                    }
+
                     <input className="form-control with-label" value={city} onChange={e => setCity(e.target.value)} name="city" id="city" type="text"/>
                   </div>
   
@@ -629,7 +671,8 @@ const CheckoutForm = (props) => {
 
               {/* Show any error that happens when processing the payment */}
               {error && (
-                <div className="card-error" role="alert">
+                <div className="card-error content-info mt-3" role="alert">
+                  <div className="content-info-label">Error</div>
                   {error}
                 </div>
               )}
@@ -654,6 +697,49 @@ const CheckoutForm = (props) => {
         </div>
 
       </div>
+  );
+}
+
+function StoreDisabledModal(props) {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => props.setIsStoreDisabled(false);
+  // const handleShow = () => setShow(true);
+
+  useEffect(() => {
+
+  }, []);
+
+  return (
+    <>
+      {/* <DropdownButton variant={props.config.banner.enabled ? 'success' : 'primary'} style={{verticalAlign: 'middle'}} className="d-inline-block ml-1" id="dropdown-basic-button" title={`Banner: ${props.config.banner.enabled}`}>
+        <Dropdown.Item onClick={() => {
+          props.setConfig({
+            ...props.config,
+            banner: {
+              enabled: false,
+              text: '',
+              last_change: new Date()
+            }
+          });
+        }}>Off</Dropdown.Item>
+        <Dropdown.Item onClick={handleShow}>On</Dropdown.Item>
+      </DropdownButton> */}
+
+      <Modal className="articles-modal" show={props.isStoreDisabled} onHide={handleClose} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Store Notice</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Sorry about this, our store is currently disabled right now while we stock up on products and get the rest of the site working. Sign up for our newsletter to get an alert when the store is open.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 }
   

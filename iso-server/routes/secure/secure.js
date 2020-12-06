@@ -264,6 +264,12 @@ module.exports = (app, db) => {
   app.post("/api/create-payment-intent", async (req, res) => {
     console.log(req.body)
 
+    console.log(req.app.get('mongoConfig').store.enabled)
+    if ( !req.app.get('mongoConfig').store.enabled ) {
+      console.log("STOP HERE")
+      return res.status(403).send('Store is temporally disabled, check back later.');
+    }
+
     const stripe = req.app.get('stripe');
 
     let customer_id = ''

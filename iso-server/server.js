@@ -182,6 +182,8 @@ function connectWithRetryMongo() {
 
     require('./routes/getNewsletterCount')(app, db, cache);
 
+    require('./routes/storeDisabled')(app, db, cache);
+
     // Deleted
     // require('./routes/jsonNews')(app, db);
   
