@@ -124,16 +124,36 @@ class Sockets extends Component {
 
             <div className="mt-3">
 
-              {Object.keys(this.state.userSockets).map((keyName, i) => (
+            </div>
 
-                <div className="input-label">
-                  <span className="badge badge-primary ml-1">{this.state.userSockets[keyName]}</span>
-                  <div>Socket</div>
-                  <span className="badge badge-warning">{keyName}</span>
-                </div>
+            <div className="container mt-3 " style={{maxWidth: '500px'}}>
+              <div className="table-responsive text-left">
+                <table class="border table table-sm bg-white">
+                  <thead>
+                    <tr>
+                      <th scope="col">Name</th>
+                      <th scope="col">Sockets</th>
+                    </tr>
+                  </thead>
+                  <tbody>
 
-              ))}
+                    <tr>
+                      <th scope="row">Guest</th>
+                      <td>0</td>
+                    </tr>
 
+                    {Object.keys(this.state.userSockets).map((keyName, i) => (
+
+                      <tr>
+                        <th scope="row">{this.state.userSockets[keyName]}</th>
+                        <td><span className="badge badge-warning">{keyName}</span></td>
+                      </tr>
+
+                    ))}
+
+                  </tbody>
+                </table>
+              </div>
             </div>
 
           </div>

@@ -4,6 +4,7 @@ const passport = require("passport");
 const mongoose = require("mongoose");
 const axios = require("axios");
 const User = mongoose.model("users");
+var colors = require('colors');
 
 // const { resource } = require('../api/users');
 // const { response } = require('express');
@@ -368,14 +369,15 @@ module.exports = (app, db) => {
   app.post("/api/getUserPaymentMethods", passport.authenticate('jwt', {session: false}), async (req, res) => {
     console.log("Getting user payment methods")
 
-    const stripe = req.app.get('stripe');
-
+    let stripe = '';
     let customer_id = ''
 
     if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
       customer_id = req.user.stripe.customer_test_id
+      stripe = req.app.get('stripe_test');
     } else {
       customer_id = req.user.stripe.customer_id
+      stripe = req.app.get('stripe');
     }
 
     try {
@@ -405,6 +407,17 @@ module.exports = (app, db) => {
 
   app.post("/api/removePaymentMethod", passport.authenticate('jwt', {session: false}), async (req, res) => {
     console.log("Removing a users payment method");
+    
+    let stripe = '';
+    // let customer_id = ''
+
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+      // customer_id = req.user.stripe.customer_test_id
+      stripe = req.app.get('stripe_test');
+    } else {
+      // customer_id = req.user.stripe.customer_id
+      stripe = req.app.get('stripe');
+    }
 
     const paymentMethod = await stripe.paymentMethods.detach(
       req.body.method_id
@@ -507,14 +520,19 @@ module.exports = (app, db) => {
   app.post("/api/getStripeCustomer", passport.authenticate('jwt', {session: false}), async (req, res) => {
     console.log("Listing a users subscription");
 
-    const stripe = req.app.get('stripe');
+    console.log('hello'.green); // outputs green text
+    console.log(`${app.get('mongoConfig').stripe}`.green); // outputs green text
+    console.log(app.get('mongoConfig').stripe); // outputs green text
 
+    let stripe = '';
     let customer_id = ''
 
     if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
       customer_id = req.user.stripe.customer_test_id
+      stripe = req.app.get('stripe_test');
     } else {
       customer_id = req.user.stripe.customer_id
+      stripe = req.app.get('stripe');
     }
 
     const customer = await stripe.customers.retrieve(
@@ -1490,4 +1508,9 @@ module.exports = (app, db) => {
   require('./routes/startChat')(app, db, passport);
   require('./routes/deleteChatMessage')(app, db, passport);
   require('./routes/deleteChatConversation')(app, db, passport);
+
+  require('./routes/logUserOnline')(app, db, passport);
+
+  require('./routes/config/setStripeMode')(app, db, passport);
+  require('./routes/config/setConfig')(app, db, passport);
 } 

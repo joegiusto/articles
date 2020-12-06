@@ -175,6 +175,8 @@ class AppBase extends Component {
 
           <div className={'site-wrap ' + (this.props.site?.sideMenuFixed && this.state.canBeFixed ? 'fixed' : '')}>
 
+            {/* Future Banner */}
+
             <Navigation />
 
             <div className={'content-wrap' + (this.props.site?.sideMenuFixed && this.state.canBeFixed ? ' fixed' : '') + (this.props.site?.colorModeDark ? ' dark-mode' : '')}>

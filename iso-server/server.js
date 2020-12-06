@@ -12,7 +12,7 @@ var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 const allNamespace = io.of('/');
 const history = require('connect-history-api-fallback');
-let mongoUtil = require('./db');
+let mongoUtil = require('./utils/db');
 const mongoose = require('mongoose');
 var ObjectId = require('mongodb').ObjectId;
 var AWS = require('aws-sdk');
@@ -105,7 +105,7 @@ async function listAllObjectsFromS3Bucket(bucket, prefix) {
 }
 
 function connectWithRetryMongo() {
-  mongoUtil.connectToServer( function( err, client ) {
+  mongoUtil.connectToServer( app, function( err, client ) {
 
     if (err) {
       console.log('\x1b[31m%s\x1b[0m', `[Startup] Mongo Failed - Retry attempt ${mongoConnectionAttempts}/${mongoConnectionAttemptsMax}`)
@@ -233,7 +233,6 @@ function connectWithRetryMongoose() {
 }
 
 connectWithRetryMongoose();
-
 
 // const password = require("./routes/api/password");
 

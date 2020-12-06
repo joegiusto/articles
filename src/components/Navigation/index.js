@@ -80,8 +80,22 @@ function Menu(props) {
     }, 4000);
   }
 
-  function logUserSockets() {
-    props.socket.emit('logUserSockets', null);
+  function logUserWasOnline(seconds) {
+
+    // TODO / SUDO
+    // Check if user is logged in or not
+
+    // If user is logged in check if lastLoginDaily cookie is set
+    // If it is then do nothing, if not then set it after logging to database and checking if it exist
+
+    // Else if user is not logged in generate lastLoginDaily cookie along with lastLoginDailyID and log to database
+    // If this ID then logs in, delete the ID from database and log it to proper user.
+    
+    // Check if user has already been online today
+    // if (localStorage.lastLoginDaily <= new Date()) {
+      
+    // }
+
   }
 
   function menuFixedWarning() {
@@ -269,7 +283,7 @@ function Menu(props) {
 
                 <div className="w-100 px-2">
                   <Link to={ROUTES.MESSAGES}>
-                    <div style={{cursor: 'pointer'}} className="badge badge-success w-100" onClick={() => logUserSockets()}>0 Messages</div>
+                    <div style={{cursor: 'pointer'}} className="badge badge-success w-100">0 Messages</div>
                   </Link>
                 </div>
 

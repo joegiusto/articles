@@ -1,6 +1,37 @@
 .admin-dashboard {
   display: flex;
 
+  .main-panel {
+    overflow-x: hidden;
+  }
+
+  .site-config {
+
+    .site-config-wrap {
+      flex-wrap: wrap;
+    }
+  }
+
+  .charts {
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+
+    @include media-breakpoint-up(lg) {
+      flex-direction: row;
+    }
+
+    .chart-container {
+      position: relative;
+      width: 100%;
+      height: 300px;
+
+      @include media-breakpoint-up(lg) {
+        width: 50%;
+      }
+    }
+  }
+
   .tiles {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(164px, 1fr));

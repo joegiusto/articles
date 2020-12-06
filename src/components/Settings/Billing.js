@@ -1,9 +1,13 @@
-import React, {Component} from 'react'
+import React, {Component, useState} from 'react'
 import { connect } from "react-redux";
 import axios from 'axios'
 import moment from 'moment'
 import { Switch, Route, Link } from 'react-router-dom';
 import { withRouter } from "react-router";
+
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 
 import * as ROUTES from '../../constants/routes';
 
@@ -174,6 +178,7 @@ class Billing extends Component {
                       <th scope="col">Last 4</th>
                       <th scope="col">Exp</th>
                       <th scope="col">Primary</th>
+                      <th scope="col">Action</th>
                     </tr>
                   </thead>
 
@@ -186,17 +191,28 @@ class Billing extends Component {
                       :
                       this.state.userPaymentMethods?.map(card => 
                         <tr className="donation">
+
                           <th scope="row" className="" >{card.card.brand}</th>
+
                           <td className="">{card.card.last4}</td>
+
                           <td className="">{card.card.exp_month}/{card.card.exp_year}</td>
+
                           <td className="">
                             {
                             this.state.defaultUserPaymentMethod === card.id ?
-                            <span className="badge badge-primary">Primary</span>
+                            // <span className="badge badge-primary">Primary</span>
+                            <button className="btn btn-sm btn-articles-light alt" disabled>Primary</button>
                             :
-                            <span className="badge badge-secondary" onClick={() => this.setDefaultPaymentMethod(card.id)}>Make Primary</span>
+                            // <span className="badge badge-secondary" onClick={() => this.setDefaultPaymentMethod(card.id)}>Make Primary</span>
+                            <button className="btn btn-articles-light btn-sm" onClick={() => this.setDefaultPaymentMethod(card.id)}>Make Primary</button>
                             }
                           </td>
+
+                          <td className="">
+                            <DeletePaymentMethod card={card} />
+                          </td>
+
                         </tr>  
                       )
                     }
@@ -337,6 +353,99 @@ class Billing extends Component {
       </div>
     );
   }
+}
+
+function DeletePaymentMethod(props) {
+  const [show, setShow] = useState(false);
+
+  const [ad, setAd] = useState({
+    _id: '',
+    business: '',
+
+    ageFilters: {
+      range: {
+        active: false,
+        start: 0,
+        end: 0,
+      },
+      above: {
+        active: false,
+        age: 0
+      },
+      below: {
+        active: false,
+        age: 0
+      }
+    },
+
+    zipFilters: {
+      list: {
+        active: false,
+        list: []
+      },
+      nearby: {
+        active: false,
+        zip: ''
+      },
+      around: {
+        active: false,
+        zip: ''
+      }
+    },
+    
+    timeFilters: {
+      between:{
+        active: false,
+        timeOne: '',
+        timeTwo: ''
+      }
+    }
+  });
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  console.log("Test");
+
+  return (
+    <>
+
+      <Button variant="danger btn-sm" onClick={handleShow}>
+        Delete
+      </Button>
+
+      <Modal className="articles-modal" show={show} onHide={handleClose} centered backdropClassName={'articles-modal-backdrop'}>
+
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Payment Method?</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <div>{`${props.card.card.brand} - ${props.card.card.last4} - ${props.card.card.exp_month}/${props.card.card.exp_year}`}</div>
+          <div style={{fontSize: '0.8rem'}} className="text-muted">{props.card.id}</div>
+
+          <div className="mt-3 content-info">
+            <div className="content-info-label">Attention</div>
+              If this payment method is attached to an active membership link a new card to your membership to avoid cancellation.
+          </div>
+
+        </Modal.Body>
+
+        <Modal.Footer className="">
+
+          {/* <Button variant="link" onClick={handleClose}>
+            Close
+          </Button> */}
+
+          <Button variant="danger btn-sm" onClick={handleClose}>
+            Confirm Delete
+          </Button>
+
+        </Modal.Footer>
+
+      </Modal>
+    </>
+  );
 }
 
 const mapStateToProps = state => ({

@@ -2273,12 +2273,15 @@ section.news-page {
           grid-gap: 10px 10px;
           
           .tag {
+            position: relative;
             // border: 1px solid #000;
             // border-radius: 8px;
             // min-height: 300px;
             cursor: pointer;
             width: 100%;
             background: $accent-color;
+            background: linear-gradient(45deg, #ffb7b7, #f9edcd 80%);
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
             height: 100%;
             transition-duration: 300ms;
 
@@ -2308,6 +2311,22 @@ section.news-page {
               letter-spacing: -.04em;
               overflow-wrap: break-word;
               position: absolute;
+            }
+
+            .icon {
+              position: absolute;
+              margin: 0.6rem;
+              bottom: 0;
+              right: 0;
+              width: 50px;
+              height: 50px;
+              transform: rotate(-7deg);
+
+              img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+              }
             }
           }
         }

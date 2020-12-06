@@ -34,7 +34,10 @@ class Employee extends Component {
             <div className="card-header">
               <h5>Employee Info</h5>
               <p>Info you wish to share with others on your employee page located at:</p>
-              <Link to={ROUTES.EMPLOYEES + `/${this.props.user_id}`}> {`articles.media${ROUTES.EMPLOYEES}/${this.props.user_id}`} </Link>
+
+              <Link to={ROUTES.EMPLOYEES + `/${this.props.user_id}`}> 
+                <div className="mt-2 badge badge-light">{`https://articles.media${ROUTES.EMPLOYEES}/${this.props.user_id}`}</div> 
+              </Link>
             </div>
 
             <div className="card-body m-3">

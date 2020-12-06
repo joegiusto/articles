@@ -633,11 +633,14 @@ class RecentSliders extends Component {
             <h5>Tags</h5>
           </div>
 
-          <div className="tags">
+          <div className="tags mr-3">
 
             {this.state.tags.map(tag => 
               <div onClick={() => this.props.changeTagFocus(tag.tag_name)} className={"tag " + (this.props.tagSearch === tag.tag_name ? 'active' : '')}>
                 <h3>{tag.tag_name}</h3>
+                <div className="icon">
+                  {tag.icon && <img src={tag.icon} alt={`Icon of ${tag.tag_name}`}/>}
+                </div>
               </div>
             )}
 

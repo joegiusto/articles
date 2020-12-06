@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, useState, useEffect} from 'react'
 import axios from 'axios'
 import moment from 'moment'
 import DayPickerInput from 'react-day-picker/DayPickerInput';
@@ -7,6 +7,8 @@ import { formatDate, parseDate } from 'react-day-picker/moment';
 import Chart from 'chart.js';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -15,15 +17,34 @@ class Dashboard extends Component {
     this.state = {
       start_date: new Date(moment().subtract(30, 'days')),
       end_date: new Date(),
+      configLoading: false,
       config: {
         stripe: {
           mode: ''
+        },
+        banner: {
+          enabled: false,
+          text: ''
+        },
+        store: {
+          enabled: Boolean
+        },
+        submissions: {
+          enabled: Boolean
+        },
+        signup: {
+          enabled: Boolean,
+          limitIP: false
+        },
+        donations: {
+          enabled: Boolean,
         }
       }
     };
 
     this.handleStartChange = this.handleStartChange.bind(this);
     this.handleEndChange = this.handleEndChange.bind(this);
+    this.setConfig = this.setConfig.bind(this);
   }
 
   componentDidMount() {
@@ -33,26 +54,18 @@ class Dashboard extends Component {
     this.renderChartUsers();
     this.renderChartSales();
 
+    this.setState({ configLoading: true })
+    
     axios.get('/api/mongoConfig')
     .then((response) => {
       console.log(response)
       this.setState({ config: response.data[0] })
+      this.setState({ configLoading: false })
     })
     .catch(function (error) {
       console.log(error);
+      this.setState({ configLoading: false })
     });
-  }
-
-  setStripeMode(mode) {
-    this.setState({
-      config: {
-        ...this.state.config,
-        stripe: {
-          ...this.state.config.stripe,
-          mode: mode
-        }
-      }
-    })
   }
 
   renderStripeModeColor(mode) {
@@ -94,8 +107,11 @@ class Dashboard extends Component {
 
     let amountOfDays = 30;
     let renderedLabels = [];
-    // let renderedData = [ '0', '5', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55' ];
-    let renderedData = [ 1,1,1,1,1,1,2,1,1,1,3,1,2,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,2 ];
+
+    let fakeMemberData = [ 1,1,1,2,1,1,1,1,2,1,1,1,1,1,2,1,1,1,1,2,1,1,1,1,3,1,1,1,2,1 ];
+    let fakeNonMemberData = [ 0,2,0,0,0,0,0,0,4,0,0,0,0,0,7,0,0,0,0,1,0,0,0,3,0,0,0,2,3,1 ];
+    let fakePremiumData = [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ];
+
     var i;
     for (i = 0; i < amountOfDays; i++) {
       renderedLabels.push( moment().subtract( (amountOfDays - 1) - i, 'days' ).format("MM/DD") );
@@ -105,11 +121,12 @@ class Dashboard extends Component {
         type: 'line',
         data: {
             labels: renderedLabels,
-            datasets: [{
-                label: 'Users Online',
-                data: renderedData ,
+            datasets: [
+              {
+                label: 'Members Online',
+                data: fakeMemberData ,
                 backgroundColor: [
-                  'rgba(0, 0, 0, 0.2)'
+                  'rgba(63, 191, 127, 0.2)'
                 ],
                 borderColor: [
                   'rgba(63, 191, 127, 1)'
@@ -118,7 +135,36 @@ class Dashboard extends Component {
                 pointBorderColor: 'rgba(63, 191, 127, 1)',
                 borderWidth: 1,
                 lineTension: 0.1,
-            }]
+              },
+              {
+                label: 'Non-Members Online',
+                data: fakeNonMemberData ,
+                backgroundColor: [
+                  'rgba(0, 0, 0, 0.2)'
+                ],
+                borderColor: [
+                  'rgba(150, 150, 150, 1)'
+                ],
+                pointBackgroundColor: 'rgba(150, 150, 150, 1)',
+                pointBorderColor: 'rgba(150, 150, 150, 1)',
+                borderWidth: 1,
+                lineTension: 0.1,
+            },
+            {
+              label: 'Premium-Members Online',
+              data: fakePremiumData ,
+              backgroundColor: [
+                'rgba(255, 215, 0, 0.2)'
+              ],
+              borderColor: [
+                'rgba(255, 215, 0, 1)'
+              ],
+              pointBackgroundColor: 'rgba(255, 215, 0, 1)',
+              pointBorderColor: 'rgba(255, 215, 0, 1)',
+              borderWidth: 1,
+              lineTension: 0.1,
+          }
+          ]
         },
         options: {
             responsive: true,
@@ -250,6 +296,54 @@ class Dashboard extends Component {
     });
   }
 
+  setStripeMode(mode) {
+    console.log('change')
+
+    axios.post('/api/secure/config/setStripeMode', {
+      mode: mode
+    })
+    .then((response) => {
+      console.log(response)
+
+      this.setState(prevState => ({
+        config: {
+          ...prevState.config, 
+          stripe: {
+            ...prevState.config.stripe,
+            mode: mode  
+          }
+        }
+      }))
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  setConfig(config) {
+    const self = this;
+
+    console.log(`setConfig was called with the following`)
+    console.log(config)
+
+    axios.post('/api/secure/config/setConfig', {
+      config
+    })
+    .then((response) => {
+      console.log(response)
+
+      this.setState(prevState => ({
+        config: {
+          ...config
+        }
+      }))
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  }
+
   today() {
     this.setState({ 
       start_date: new Date(moment()),
@@ -350,47 +444,106 @@ class Dashboard extends Component {
 
         <div className="main-panel">
 
-          <div className="site-config">
+          <div className={"site-config " + (this.state.configLoading && 'd-none')}>
 
-            {/* <div className="d-flex justify-content-between">
-              <div className="badge badge-warning">Dev</div>
-            </div> */}
+            <div className="site-config-wrap d-flex justify-content-center mb-2 py-3 bg-dark">
 
-            <div className="d-flex justify-content-center mb-2 py-3 bg-dark">
-                <DropdownButton variant={this.state.config.stripe.mode === 'Test' ? 'warning' : 'success'} style={{verticalAlign: 'middle'}} className="d-inline-block " id="dropdown-basic-button" title={`Stripe: ${this.state.config.stripe?.mode}`}>
+                {/* Stripe */}
+                <DropdownButton variant={this.state.config.stripe.mode === 'Test' ? 'primary' : 'success'} style={{verticalAlign: 'middle'}} className="d-inline-block " id="dropdown-basic-button" title={`Stripe: ${this.state.config.stripe?.mode}`}>
                   <Dropdown.Item onClick={() => this.setStripeMode('Live')}>Live</Dropdown.Item>
                   <Dropdown.Item onClick={() => this.setStripeMode('Test')}>Test</Dropdown.Item>
                 </DropdownButton>
 
-                <DropdownButton variant={'success'} style={{verticalAlign: 'middle'}} className="d-inline-block ml-1" id="dropdown-basic-button" title="Store: Enabled">
-                  <Dropdown.Item href="">Enabled</Dropdown.Item>
-                  <Dropdown.Item href="">Disabled</Dropdown.Item>
+                {/* Banner */}
+                <SetBannerModal config={this.state.config} setConfig={this.setConfig} />
+
+                {/* Store */}
+                <DropdownButton variant={this.state.config.store.enabled ? 'success' : 'danger'} style={{verticalAlign: 'middle'}} className="d-inline-block ml-1" id="dropdown-basic-button" title={`Store: ${(this.state.config.store.enabled ? 'Enabled' : 'Disabled')}`}>
+
+                  <Dropdown.Item onClick={() => this.setConfig({
+                    ...this.state.config,
+                    store: {
+                      enabled: true
+                    }
+                  })} href="">Enable</Dropdown.Item>
+
+                  <Dropdown.Item onClick={() => this.setConfig({
+                    ...this.state.config,
+                    store: {
+                      enabled: false
+                    }
+                  })} href="">Disable</Dropdown.Item>
+
                 </DropdownButton>
       
-                <DropdownButton variant={'success'} style={{verticalAlign: 'middle'}} className="d-inline-block ml-1" id="dropdown-basic-button" title="Submissions: Enabled">
-                  <Dropdown.Item href="">Enabled</Dropdown.Item>
-                  <Dropdown.Item href="">Disabled</Dropdown.Item>
+                {/* Submissions */}
+                <DropdownButton variant={this.state.config.submissions.enabled ? 'success' : 'danger'} style={{verticalAlign: 'middle'}} className="d-inline-block ml-1" id="dropdown-basic-button" title={`Submissions: ${(this.state.config.submissions.enabled ? 'Enabled' : 'Disabled')}`}>
+
+                  <Dropdown.Item onClick={() => this.setConfig({
+                    ...this.state.config,
+                    submissions: {
+                      enabled: true
+                    }
+                  })} href="">Enable</Dropdown.Item>
+
+                  <Dropdown.Item onClick={() => this.setConfig({
+                    ...this.state.config,
+                    submissions: {
+                      enabled: false
+                    }
+                  })} href="">Disable</Dropdown.Item>
+
                 </DropdownButton>
       
-                <DropdownButton variant={'success'} style={{verticalAlign: 'middle'}} className="d-inline-block ml-1" id="dropdown-basic-button" title="Sign Up: Enabled">
-                  <Dropdown.Item href="">Enabled</Dropdown.Item>
-                  <Dropdown.Item href="">Disabled</Dropdown.Item>
+                {/* Sign Up */}
+                <DropdownButton variant={this.state.config.signup.enabled ? 'success' : 'danger'} style={{verticalAlign: 'middle'}} className="d-inline-block ml-1" id="dropdown-basic-button" title={`Sign Up: ${(this.state.config.signup.enabled ? 'Enabled' : 'Disabled')}`}>
+
+                  <Dropdown.Item onClick={() => this.setConfig({
+                    ...this.state.config,
+                    signup: {
+                      enabled: true,
+                      limitIP: false
+                    }
+                  })} href="">Enable</Dropdown.Item>
+
+                  <Dropdown.Item onClick={() => this.setConfig({
+                    ...this.state.config,
+                    signup: {
+                      enabled: false,
+                      limitIP: false
+                    }
+                  })} href="">Disable</Dropdown.Item>
+
                 </DropdownButton>
       
-                <DropdownButton variant={'success'} style={{verticalAlign: 'middle'}} className="d-inline-block ml-1" id="dropdown-basic-button" title="Donations: Enabled">
-                  <Dropdown.Item href="">Enabled</Dropdown.Item>
-                  <Dropdown.Item href="">Disabled</Dropdown.Item>
+                {/* Donations */}
+                <DropdownButton variant={this.state.config.donations.enabled ? 'success' : 'danger'} style={{verticalAlign: 'middle'}} className="d-inline-block ml-1" id="dropdown-basic-button" title={`Donations: ${(this.state.config.donations.enabled ? 'Enabled' : 'Disabled')}`}>
+
+                  <Dropdown.Item onClick={() => this.setConfig({
+                    ...this.state.config,
+                    donations: {
+                      enabled: true
+                    }
+                  })} href="">Enable</Dropdown.Item>
+
+                  <Dropdown.Item onClick={() => this.setConfig({
+                    ...this.state.config,
+                    donations: {
+                      enabled: false
+                    }
+                  })} href="">Disable</Dropdown.Item>
+
                 </DropdownButton>
             </div>
 
           </div>
 
-          <div className="charts mb-3 d-flex">
-            <div className="chart-container" style={{height: '300px', width: '50%'}}>
+          <div className="charts mb-3">
+            <div className="chart-container">
               <canvas className="chart" id="chartUsers"></canvas>
             </div>
   
-            <div className="chart-container" style={{height: '300px', width: '50%'}}>
+            <div className="chart-container">
               <canvas className="chart" id="chartSales"></canvas>
             </div>
           </div>
@@ -511,6 +664,81 @@ class Dashboard extends Component {
       </div>
     );
   }
+}
+
+function SetBannerModal(props) {
+  const [show, setShow] = useState(false);
+  const [value, setValue] = useState(props.config?.banner?.text);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const handleSubmit = () => {
+    console.log(props.config.banner.text)
+
+    props.setConfig({
+      ...props.config,
+      banner: {
+        enabled: true,
+        text: value,
+        last_change: new Date()
+      }
+    });
+
+    // TODO - Call these from a callback function on success of props.setConfig
+    handleClose();
+    setValue('');
+  }
+
+  useEffect(() => {
+    // Update the document title using the browser API
+    console.log('setValue')
+    setValue(props.config?.banner?.text)
+  }, [props.config?.banner?.text]);
+
+  // console.log(props.config.banner.text)
+
+  return (
+    <>
+      {/* <Button variant="primary" onClick={handleShow}>
+        Launch demo modal
+      </Button> */}
+      <DropdownButton variant={props.config.banner.enabled ? 'success' : 'primary'} style={{verticalAlign: 'middle'}} className="d-inline-block ml-1" id="dropdown-basic-button" title={`Banner: ${props.config.banner.enabled}`}>
+        <Dropdown.Item onClick={() => {
+          props.setConfig({
+            ...props.config,
+            banner: {
+              enabled: false,
+              text: '',
+              last_change: new Date()
+            }
+          });
+        }}>Off</Dropdown.Item>
+        <Dropdown.Item onClick={handleShow}>On</Dropdown.Item>
+      </DropdownButton>
+
+      <Modal className="articles-modal" show={show} onHide={handleClose} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Site Banner</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          You better have something important to say! This will activate a site wide banner that will show up immediately.
+          <div className="form-group articles mt-3">
+            <label for="bannerText">Banner Text</label>
+            <input className="form-control with-label" onChange={e => setValue(e.target.value)} name="bannerText" id="bannerText" type="text" value={value}/>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleSubmit}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  );
 }
 
 export default Dashboard
