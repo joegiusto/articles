@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 import { connect } from "react-redux";
+import { ScrollPercentage } from 'react-scroll-percentage'
 
 // import { compose } from 'recompose';
 // import { withAuthorization, withEmailVerification } from '../Session';
@@ -25,6 +26,8 @@ import Reports from './components/Reports'
 import Orders from './components/Orders'
 import Ads from './components/Ads'
 import Messages from './components/Messages'
+import Projects from './components/Projects'
+import Newsletter from './components/Newsletter'
 
 const nav_links = [
   [ ROUTES.ADMIN_USERS, 'Users', <i className="fas fa-money-bill fa-3x"></i> ],
@@ -41,18 +44,38 @@ const nav_links = [
 ]
 class Admin extends Component {
   constructor(props) {
-  super(props);
-  this.setLocation = this.setLocation.bind(this)
+    super(props);
+    this.setLocation = this.setLocation.bind(this)
+    this.scrollEvent = this.scrollEvent.bind(this)
+    this.handleResize = this.handleResize.bind(this)
+    this.tabBar = React.createRef();
   
     this.state = {
       tab: '',
+
+      tabBarScrollPosition: 0,
+      tabBarScrollWidth: 0,
+      tabBarWidth: 0
     };
   }
 
   componentDidMount() {
+    window.addEventListener('resize', this.handleResize)
+
     if (!this.props.user?.roles?.isAdmin === true) {
       this.props.history.push("/home");
     }
+
+    this.tabBar.current.scrollLeft = 1;
+    this.tabBar.current.scrollLeft = 0;
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize)
+  }
+
+  handleResize() {
+    this.scrollEvent( {target: this.tabBar.current} )
   }
 
   setLocation(tab) {
@@ -69,31 +92,63 @@ class Admin extends Component {
     })
   }
 
+  scrollEvent(e) {
+    const self = this;
+    const target = e.target;
+
+    self.setState({
+      tabBarScrollPosition: target.scrollLeft,
+      tabBarWidth: target.offsetWidth,
+      tabBarScrollWidth: target.scrollWidth
+    });
+
+    // console.log('Current scroll position:', target.scrollLeft);
+    // console.log('Element width:', target.scrollWidth);
+    // console.log('Current scroll elementWidth:', target.offsetWidth);
+
+    // console.log(target);
+  }
+
   render() {
 
     return (
       <div className="admin-container">
 
-        <div className="tab-bar">
-          <div className="container-fluid">
+        <div className="tab-bar-wrapper">
 
-            <Link to={ROUTES.ADMIN}><span className={"tab" + (this.state.tab === 'dashboard' ? ' active' : '')}>Dashboard</span></Link>
-            <Link to={ROUTES.ADMIN_USERS}><span className={"tab" + (this.state.tab === 'users' ? ' active' : '')}>Users</span></Link>
-            <Link to={ROUTES.ADMIN_NEWS}><span className={"tab" + (this.state.tab === 'news' ? ' active' : '')}>News</span></Link>
-            <Link to={ROUTES.ADMIN_PROPOSALS}><span className={"tab" + (this.state.tab === 'proposals' ? ' active' : '')}>Proposals</span></Link>
-            <Link to={ROUTES.ADMIN_PRODUCTS}><span className={"tab" + (this.state.tab === 'products' ? ' active' : '')}>Products</span></Link>
-            <Link to={ROUTES.ADMIN_SUBMISSIONS}><span className={"tab" + (this.state.tab === 'submissions' ? ' active' : '')}>Submissions</span></Link>
-            <Link to={ROUTES.ADMIN_DONATIONS}><span className={"tab" + (this.state.tab === 'donations' ? ' active' : '')}>Donations</span></Link>
-            <Link to={ROUTES.ADMIN_EXPENSES}><span className={"tab" + (this.state.tab === 'expenses' ? ' active' : '')}>Expenses</span></Link>
-            <Link to={ROUTES.ADMIN_SOCKET}><span className={"tab" + (this.state.tab === 'sockets' ? ' active' : '')}>Sockets</span></Link>
-            <Link to={ROUTES.ADMIN_AWS}><span className={"tab" + (this.state.tab === 'aws' ? ' active' : '')}>Aws</span></Link>
-            <Link to={ROUTES.ADMIN_COMMENTS}><span className={"tab" + (this.state.tab === 'comments' ? ' active' : '')}>Comments</span></Link>
-            <Link to={ROUTES.ADMIN_REPORTS}><span className={"tab" + (this.state.tab === 'reports' ? ' active' : '')}>Reports</span></Link>
-            <Link to={ROUTES.ADMIN_ORDERS}><span className={"tab" + (this.state.tab === 'orders' ? ' active' : '')}>Orders</span></Link>
-            <Link to={ROUTES.ADMIN_ADS}><span className={"tab" + (this.state.tab === 'ads' ? ' active' : '')}>Ads</span></Link>
-            <Link to={ROUTES.ADMIN_MESSAGES}><span className={"tab" + (this.state.tab === 'messages' ? ' active' : '')}>Messages</span></Link>
-
+          <div ref={this.tabBar} onScroll={this.scrollEvent} className="tab-bar">
+  
+            <div className="container-fluid">
+  
+              <Link to={ROUTES.ADMIN}><span className={"tab" + (this.state.tab === 'dashboard' ? ' active' : '')}>Dashboard</span></Link>
+              <Link to={ROUTES.ADMIN_USERS}><span className={"tab" + (this.state.tab === 'users' ? ' active' : '')}>Users</span></Link>
+              <Link to={ROUTES.ADMIN_NEWS}><span className={"tab" + (this.state.tab === 'news' ? ' active' : '')}>News</span></Link>
+              <Link to={ROUTES.ADMIN_PROPOSALS}><span className={"tab" + (this.state.tab === 'proposals' ? ' active' : '')}>Proposals</span></Link>
+              <Link to={ROUTES.ADMIN_PRODUCTS}><span className={"tab" + (this.state.tab === 'products' ? ' active' : '')}>Products</span></Link>
+              <Link to={ROUTES.ADMIN_SUBMISSIONS}><span className={"tab" + (this.state.tab === 'submissions' ? ' active' : '')}>Submissions</span></Link>
+              <Link to={ROUTES.ADMIN_DONATIONS}><span className={"tab" + (this.state.tab === 'donations' ? ' active' : '')}>Donations</span></Link>
+              <Link to={ROUTES.ADMIN_EXPENSES}><span className={"tab" + (this.state.tab === 'expenses' ? ' active' : '')}>Expenses</span></Link>
+              <Link to={ROUTES.ADMIN_SOCKET}><span className={"tab" + (this.state.tab === 'sockets' ? ' active' : '')}>Sockets</span></Link>
+              <Link to={ROUTES.ADMIN_AWS}><span className={"tab" + (this.state.tab === 'aws' ? ' active' : '')}>Aws</span></Link>
+              <Link to={ROUTES.ADMIN_COMMENTS}><span className={"tab" + (this.state.tab === 'comments' ? ' active' : '')}>Comments</span></Link>
+              <Link to={ROUTES.ADMIN_REPORTS}><span className={"tab" + (this.state.tab === 'reports' ? ' active' : '')}>Reports</span></Link>
+              <Link to={ROUTES.ADMIN_ORDERS}><span className={"tab" + (this.state.tab === 'orders' ? ' active' : '')}>Orders</span></Link>
+              <Link to={ROUTES.ADMIN_ADS}><span className={"tab" + (this.state.tab === 'ads' ? ' active' : '')}>Ads</span></Link>
+              <Link to={ROUTES.ADMIN_MESSAGES}><span className={"tab" + (this.state.tab === 'messages' ? ' active' : '')}>Messages</span></Link>
+              <Link to={ROUTES.ADMIN_PROJECTS}><span className={"tab" + (this.state.tab === 'projects' ? ' active' : '')}>Projects</span></Link>
+              <Link to={ROUTES.ADMIN_NEWSLETTER}><span className={"tab" + (this.state.tab === 'newsletter' ? ' active' : '')}>Newsletter</span></Link>
+  
+            </div>
           </div>
+
+          <div className={"scroll-alert scroll-left-alert " + (this.state.tabBarScrollPosition > 80 && 'active')}>
+            <i class="fas fa-caret-left mr-0"></i>
+          </div>
+          
+          <div className={"scroll-alert scroll-right-alert " + (this.state.tabBarScrollPosition < (this.state.tabBarScrollWidth - this.state.tabBarWidth - 80) && 'active')}>
+            <i class="fas fa-caret-right mr-0"></i>
+          </div>
+
         </div>
 
         <div className="tab-content">
@@ -201,6 +256,20 @@ class Admin extends Component {
             <Route exact path={ROUTES.ADMIN_MESSAGES} render={() => <Messages 
               match={this.props.match}
               tabLocation='messages'
+              setLocation={this.setLocation}
+            /> 
+            }/>
+
+            <Route exact path={ROUTES.ADMIN_PROJECTS} render={() => <Projects 
+              match={this.props.match}
+              tabLocation='projects'
+              setLocation={this.setLocation}
+            /> 
+            }/>
+
+            <Route exact path={ROUTES.ADMIN_NEWSLETTER} render={() => <Newsletter 
+              match={this.props.match}
+              tabLocation='newsletter'
               setLocation={this.setLocation}
             /> 
             }/>

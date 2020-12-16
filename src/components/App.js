@@ -286,6 +286,8 @@ class AppBase extends Component {
                 <Route exact path={ROUTES.ADMIN_ORDERS} component={AdminPage} />
                 <Route exact path={ROUTES.ADMIN_ADS} component={AdminPage} />
                 <Route exact path={ROUTES.ADMIN_MESSAGES} component={AdminPage} />
+                <Route exact path={ROUTES.ADMIN_PROJECTS} component={AdminPage} />
+                <Route exact path={ROUTES.ADMIN_NEWSLETTER} component={AdminPage} />
 
                 <Route path={ROUTES.DONATE} component={DonatePage} />
                 <Route path={ROUTES.SUBSCRIBE} component={SubscribePage} />

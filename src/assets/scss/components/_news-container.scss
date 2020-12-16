@@ -21,6 +21,18 @@
     .active-page-panel {
       background-color: $dark-mode-card-color;
     }
+    
+    .news-head-new {
+      background-color: $dark-mode-card-color;
+
+      .search-container {
+        background-color: rgba(0, 0, 0, 0.5);
+
+        .filter {
+          background-color: black;
+        }
+      }
+    }
 
     .search-panel {
 

@@ -496,9 +496,40 @@ function Menu(props) {
               }
             </div>
           )}
+
+          <hr/>
+
+          <p className="subheading-font align-items-center d-flex justify-content-between pb-3" onClick={props.toggleColorMode}>
+
+            <div>
+              {/* <i className="fas fa-code" aria-hidden="true"></i> */}
+              {props.site.colorModeDark ? <i className="far fa-moon"></i> : <i className="fas fa-sun"></i>}
+              <span>Dark Mode</span>
+            </div>
+
+            <label className="articles-switch mb-0" onClick={props.toggleColorMode}>
+              <input type="checkbox" checked={props.site.colorModeDark}/>
+              <span className="slider" onClick={props.toggleColorMode}></span>
+            </label>
+
+          </p>
+
+          <p className="subheading-font align-items-center d-flex justify-content-between pb-3" onClick={props.toggleSideMenuFixed}>
+
+            <div>
+              {/* <div className={'columns-fill-in ' + (props.site.sideMenuFixed ? 'active' : '')}></div> */}
+              {/* <i className="fas fa-columns"></i> */}
+              {props.site.sideMenuFixed ? <i className="fas fa-columns"></i> : <i className="fas fa-columns"></i>}
+              <span>Fixed Menu</span>
+            </div>
+
+            <label className="articles-switch mb-0" onClick={props.toggleSideMenuFixed}>
+              <input type="checkbox" checked={props.site.sideMenuFixed}/>
+              <span className="slider" onClick={props.toggleSideMenuFixed}></span>
+            </label>
+
+          </p>
           
-
-
           <div className='side-menu-bottom-spacer'></div>
 
         </section>

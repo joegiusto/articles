@@ -107,6 +107,7 @@ export const ACCOUNT = '/account';
 
 // Admin
 export const ADMIN = '/admin';
+
 export const ADMIN_USERS = '/admin/users';
 export const ADMIN_USER_DETAILS = '/admin/users/:id';
 
@@ -130,6 +131,8 @@ export const ADMIN_REPORTS = '/admin/reports';
 export const ADMIN_ORDERS = '/admin/orders';
 export const ADMIN_ADS = '/admin/ads';
 export const ADMIN_MESSAGES = '/admin/messages';
+export const ADMIN_PROJECTS = '/admin/projects';
+export const ADMIN_NEWSLETTER = '/admin/newsletter';
 
 // export const ADMIN_DETAILS = '/admin/:id';
 

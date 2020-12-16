@@ -3,6 +3,24 @@
   font-family: montserrat, sans-serif;
   font-weight: 400;
 
+  .settings-header {
+    background-color: $base-color;
+    // height: 200px;
+    width: 100%;
+    // border-bottom: 2px solid #000;
+    box-shadow: inset 0 10px 45px -10px rgba(darken($base-color, 50%), .40);
+    padding: 20px 0;
+
+    .page-title {
+      font-family: brandon-grotesque, sans-serif;
+      font-style: normal;
+      font-weight: 900;
+      font-size: 2.5rem;
+      line-height: 2.5rem;
+      // overflow-y: hidden;
+    }
+  }
+
   .banner {
     position: absolute;
     z-index: -1;

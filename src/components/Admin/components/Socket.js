@@ -128,7 +128,7 @@ class Sockets extends Component {
 
             <div className="container mt-3 " style={{maxWidth: '500px'}}>
               <div className="table-responsive text-left">
-                <table class="border table table-sm bg-white">
+                <table className="border table table-sm bg-white">
                   <thead>
                     <tr>
                       <th scope="col">Name</th>

@@ -436,7 +436,7 @@ class Users extends Component {
                             placement={'bottom'}
                             overlay={
                               <Tooltip id={`tooltip-${'bottom'}`}>
-                                <i class="far fa-clipboard"></i>{user.stripe?.customer_id}
+                                <i className="far fa-clipboard"></i>{user.stripe?.customer_id}
                               </Tooltip>
                             }
                           >
@@ -457,7 +457,7 @@ class Users extends Component {
                             placement={'bottom'}
                             overlay={
                               <Tooltip id={`tooltip-${'bottom'}`}>
-                                <i class="far fa-clipboard"></i>{user.stripe?.customer_test_id}
+                                <i className="far fa-clipboard"></i>{user.stripe?.customer_test_id}
                               </Tooltip>
                             }
                           >

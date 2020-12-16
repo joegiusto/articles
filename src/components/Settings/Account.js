@@ -76,6 +76,8 @@ class Account extends Component {
 
   placesToAddress(geocodeResults) {
 
+    console.log(place);
+
     const place = geocodeResults[0]
 
     var componentForm = {

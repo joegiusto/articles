@@ -45,10 +45,10 @@ const Advertising = () => (
         <div className="text">Articles offers filters so you can hone in on your target market.</div>
   
         <div className="w-100 d-flex justify-content-around align-items-center">
-          <div className="filter"><i class="fas fa-2x fa-user-friends"></i> Age Range</div>
-          <div className="filter"><i class="fas fa-2x fa-map-marked-alt"></i> Location Proximity</div>
-          <div className="filter"><i class="fas fa-2x fa-sun"></i> Time of Day</div>
-          <div className="filter"><i class="fas fa-2x fa-venus-mars"></i> Gender</div>
+          <div className="filter"><i className="fas fa-2x fa-user-friends"></i> Age Range</div>
+          <div className="filter"><i className="fas fa-2x fa-map-marked-alt"></i> Location Proximity</div>
+          <div className="filter"><i className="fas fa-2x fa-sun"></i> Time of Day</div>
+          <div className="filter"><i className="fas fa-2x fa-venus-mars"></i> Gender</div>
         </div>
 
       </div>

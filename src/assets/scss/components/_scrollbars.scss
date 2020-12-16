@@ -1,15 +1,16 @@
 // Site Menu - This is the sites main side menu that extends when pushing the menu button
 // Side Bar New - This is the side bar on the Mission Page
-.side-menu, .reports-list, .steps-box, .side-bar-new, section.frontpage-section .side-bar .content, .email-page .chat-messages, .admin-ads .creator {
+.side-menu, .reports-list, .steps-box, .side-bar-new, section.frontpage-section .side-bar .content, .email-page .chat-messages, .admin-ads .creator, .admin-container .tab-bar {
 
     /* Width */
     &::-webkit-scrollbar {
         width: 10px;
+        height: 10px;
     }
 
     /* Track */
     &::-webkit-scrollbar-track {
-        background: #f3f3f3;;
+        background: rgba(255, 255, 255, 0);
     }
 
     /* Handle */
@@ -26,7 +27,7 @@
 
     /* Handle on hover */
     &::-webkit-scrollbar-thumb:hover {
-        background: gray;
+        background: rgba(128, 128, 128, 0.5);
     }
     
 }

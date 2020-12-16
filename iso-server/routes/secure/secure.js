@@ -1519,4 +1519,7 @@ module.exports = (app, db) => {
 
   require('./routes/config/setStripeMode')(app, db, passport);
   require('./routes/config/setConfig')(app, db, passport);
+
+  require('./routes/projects/getProjects')(app, db, passport);
+  require('./routes/projects/getProject')(app, db, passport);
 } 

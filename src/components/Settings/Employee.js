@@ -36,7 +36,7 @@ class Employee extends Component {
               <p>Info you wish to share with others on your employee page located at:</p>
 
               <Link to={ROUTES.EMPLOYEES + `/${this.props.user_id}`}> 
-                <div className="mt-2 badge badge-light">{`https://articles.media${ROUTES.EMPLOYEES}/${this.props.user_id}`}</div> 
+                <div className="mt-2 badge badge-light hover">{`https://articles.media${ROUTES.EMPLOYEES}/${this.props.user_id}`}</div> 
               </Link>
             </div>
 

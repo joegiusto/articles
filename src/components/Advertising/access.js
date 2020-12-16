@@ -51,16 +51,16 @@ const Access = () => (
         <div className="text">Thanks to advertisers like you, Articles has raised $0.00 for our platform.</div>
   
         <div className="w-100 d-flex justify-content-around align-items-center">
-          <div className="filter"><i class="fas fa-2x fa-user-friends"></i> 1 Employee</div>
-          <div className="filter"><i class="fas fa-2x fa-male"></i> 10 Users</div>
+          <div className="filter"><i className="fas fa-2x fa-user-friends"></i> 1 Employee</div>
+          <div className="filter"><i className="fas fa-2x fa-male"></i> 10 Users</div>
           <div className="filter">
-            <i class="fas fa-2x fa-newspaper"></i>
+            <i className="fas fa-2x fa-newspaper"></i>
             <div className="d-flex flex-column">
               <div>121 News Documents</div>
               <div style={{fontSize: '0.7rem'}}>~ 5 added a week</div>
             </div>
           </div>
-          <div className="filter"><i class="fas fa-2x fa-flag-usa"></i> A Better Future</div>
+          <div className="filter"><i className="fas fa-2x fa-flag-usa"></i> A Better Future</div>
         </div>
 
       </div>

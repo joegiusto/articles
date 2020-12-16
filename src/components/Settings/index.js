@@ -404,6 +404,52 @@ class Settings extends Component {
           <title>Settings - Articles</title>
         </Helmet>
 
+        <div className="settings-header">
+
+          <div className="container">
+
+            <div className="page-title">
+              Account Settings
+            </div>
+            <p className="mb-0 mt-2">Member since {moment(this.props.user_details?.sign_up_date).format('LL')}</p>
+          </div>
+
+        </div>
+
+        <div className="sub-page-nav">
+
+          <div className="container">
+            <div className="tabs mt-3 ">
+  
+              <Link to={ROUTES.SETTINGS_ACCOUNT}>
+                <button className={"btn btn-articles-light " + (this.state.settingsTab === 'Account' ? 'alt' : '')}>Account</button>
+              </Link>
+  
+              <Link to={ROUTES.SETTINGS_MEMBERSHIP}>
+                <button className={"btn btn-articles-light " + (this.state.settingsTab === 'Membership' ? 'alt' : '')}>Membership</button>
+              </Link>
+  
+              <Link to={ROUTES.SETTINGS_BILLING}>
+                <button className={"btn btn-articles-light " + (this.state.settingsTab === 'Billing' ? 'alt' : '')}>Billing</button>
+              </Link>
+  
+              {this.props.user_details.employee?.bool === true ? 
+  
+                <Link to={ROUTES.SETTINGS_EMPLOYEE}>
+                  <button className={"btn btn-articles-light " + (this.state.settingsTab === 'Employee' ? 'alt' : '')}>Employee<span className="badge badge-warning ml-1">Role</span></button>
+                </Link>
+  
+                :
+  
+                null
+  
+              }
+              
+            </div>
+          </div>
+
+        </div>
+
         <div className="container">
 
           <div className="top d-flex justify-content-between align-items-start" style={{maxWidth: '800px', marginRight: 'auto', marginLeft: 'auto'}}>

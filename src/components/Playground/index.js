@@ -2,6 +2,8 @@ import React from 'react';
 import GoogleMapReact from 'google-map-react';
 import moment from 'moment'
 import axios from 'axios'
+import sha256 from 'crypto-js/sha256';
+import CryptoJS from 'crypto-js';
 
 const AnyReactComponent = ({ text }) => (
   <div style={{
@@ -155,6 +157,47 @@ class Playground extends React.Component {
     const fakeSubmissions = [
 
     ]
+
+    const message = 'Hello, lets get to hiding!'
+
+    const project = {
+      title: 'Experimental Prototype Community Of Tomorrow',
+      purpose: '',
+      links: [
+        {
+          title: 'Original E.P.C.O.T Film', 
+          link: 'https://www.youtube.com/watch?v=sLCHg9mUBag&ab_channel=TheOriginalEPCOT'
+        }
+      ]
+    }
+    
+
+    // {
+    //   title: 'Innovate Home',
+    //   purpose: '',
+    //   links: [
+    //     {
+    //       title: 'Better Housing Coalition', 
+    //       link: 'https://www.betterhousingcoalition.org/who-we-are/mission-vision-values/'
+    //     }
+    //   ]
+    // }
+
+    console.log("Message")
+
+    var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(project), 'test' ).toString();
+
+    console.log(ciphertext);
+
+    axios.post('/api/cryptoTest', {
+      ciphertext
+    })
+    .then(function (response) {
+      console.log(response)
+    })
+    .catch(function (error) {
+      console.log(error);
+		});
 
     // if ("geolocation" in navigator) {
     //   console.log("Available");

@@ -79,39 +79,39 @@ function Example() {
 
         <Modal.Body>
 
-          <div class="form-group articles">
+          <div className="form-group articles">
             <label for="address">Business Name</label>
-            <input class="form-control with-label" name="address" id="address" type="text" value=""/>
+            <input className="form-control with-label" name="address" id="address" type="text" value=""/>
           </div>
 
           <div className="d-flex">
-            <div class="form-group articles flex-grow-1">
+            <div className="form-group articles flex-grow-1">
               <label for="address">Address One</label>
-              <input class="form-control with-label" name="address" id="address" type="text" value=""/>
+              <input className="form-control with-label" name="address" id="address" type="text" value=""/>
             </div>
   
-            <div class="form-group articles flex-grow-1">
+            <div className="form-group articles flex-grow-1">
               <label for="address">Address Two (Optional)</label>
-              <input class="form-control with-label" name="address" id="address" type="text" value=""/>
+              <input className="form-control with-label" name="address" id="address" type="text" value=""/>
             </div>
           </div>
 
           <div className="d-flex justify-content-between">
 
-            <div style={{width: '100px'}} class="form-group articles">
+            <div style={{width: '100px'}} className="form-group articles">
               <label for="address">Zip</label>
-              <input class="form-control with-label" name="address" id="address" type="text" value=""/>
+              <input className="form-control with-label" name="address" id="address" type="text" value=""/>
             </div>
   
             <div className="d-flex flex-grow-1 ml-3">
-              <div class="form-group articles">
+              <div className="form-group articles">
                 <label for="address">City</label>
-                <input class="form-control with-label" disabled name="address" id="address" type="text" value=""/>
+                <input className="form-control with-label" disabled name="address" id="address" type="text" value=""/>
               </div>
     
-              <div class="form-group articles">
+              <div className="form-group articles">
                 <label for="address">State</label>
-                <input class="form-control with-label" disabled name="address" id="address" type="text" value=""/>
+                <input className="form-control with-label" disabled name="address" id="address" type="text" value=""/>
               </div>
             </div>
 
@@ -1109,7 +1109,7 @@ class Ads extends Component {
                   <td colSpan="1" className="border-right-0 ">{ad.zip}</td>
                   <td colSpan="1" className="border-right-0 ">1</td>
                   <td colSpan="1" className="border-right-0 ">0</td>
-                  <td colSpan="1" width={'150px'} className="border-right-0 "><i class="far fa-edit mr-0"></i></td>
+                  <td colSpan="1" width={'150px'} className="border-right-0 "><i className="far fa-edit mr-0"></i></td>
                 </tr>
               )}
 
