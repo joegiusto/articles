@@ -14,6 +14,38 @@
       background-color: $dark-mode-element-color;
     }
   }
+
+  .employee-header {
+    background-color: $dark-mode-card-color!important;
+    color: white!important;
+    
+    .employee-name {
+      color: white!important;
+    }
+
+    .employee-header-traits {
+      @include dark-mode-neon-base();
+    }
+
+    .employee-header-traits-title {
+      color: black;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+  }
+
+  .employee-details {
+    background-color: $dark-mode-card-color;
+
+    .payrole-stubs .stub {
+      background-color: $dark-mode-element-color;
+    }
+
+    .employee-get-to-know .get-to-know-block {
+      background-color: $dark-mode-element-color;
+    }
+  }
+
 }
 
 .employees-page {
@@ -34,6 +66,7 @@
     @include media-breakpoint-down(md) {
       overflow-x: scroll;
       justify-content: left;
+      font-size: 1rem;
     }
 
     .search-letter {

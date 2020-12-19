@@ -21,11 +21,18 @@
   }
 
   .home-page-four-page {
+
+    .home-head-container {
+      @include dark-mode-neon-accent();
+    }
+
     .home-head {
+
       .weather {
         background-color: #000;
         color: white;
       }
+
     }
 
     .random-quote {

@@ -2,6 +2,41 @@
 
   .reports-page {
 
+    .fixed-total {
+      @include dark-mode-neon-base();
+
+      .total {
+        background-color: #000;
+        color: white;
+        border-radius: 5px;
+        padding: 0.25rem;
+        line-height: 1.25;
+      }
+    }
+
+    .info {
+      @include dark-mode-neon-accent();
+      color: black;
+      text-shadow: 0 0 7px #ffffff;
+      border: none;
+    }
+
+    .quick-links {
+
+      .btn.btn-articles-light {
+        background-color: rgba(249, 237, 205, 0.3);
+        border-bottom: 3px solid rgba(255, 183, 183, 0.3);
+
+        &:hover, &.active {
+          background-color: #000;
+          color: white;
+          border-bottom: 3px solid #ffb7b7;
+        }
+
+      }
+
+    }
+
     .search {
       background-color: $dark-mode-card-color;
     }

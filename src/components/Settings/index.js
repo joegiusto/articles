@@ -406,12 +406,19 @@ class Settings extends Component {
 
         <div className="settings-header">
 
-          <div className="container">
+          <div className="container d-flex justify-content-between align-items-center">
 
-            <div className="page-title">
-              Account Settings
+            <div>
+              <div className="page-title">
+                Account Settings
+              </div>
+              <p className="mb-0 mt-2">Member since {moment(this.props.user_details?.sign_up_date).format('LL')}</p>
             </div>
-            <p className="mb-0 mt-2">Member since {moment(this.props.user_details?.sign_up_date).format('LL')}</p>
+
+            <div onClick={this.props.logoutUser} className="btn btn-articles-light">
+              Sign Out
+            </div>
+
           </div>
 
         </div>
@@ -452,7 +459,7 @@ class Settings extends Component {
 
         <div className="container">
 
-          <div className="top d-flex justify-content-between align-items-start" style={{maxWidth: '800px', marginRight: 'auto', marginLeft: 'auto'}}>
+          {/* <div className="top d-none justify-content-between align-items-start" style={{maxWidth: '800px', marginRight: 'auto', marginLeft: 'auto'}}>
             <div>
               <div className="title">Account Settings</div>
               <p className="mb-0">User since {moment(this.props.user_details?.sign_up_date).format('LL')}</p>
@@ -460,9 +467,9 @@ class Settings extends Component {
             <div onClick={this.props.logoutUser} className="btn btn-articles-light">
               Sign Out
             </div>
-          </div>
+          </div> */}
 
-          <div className="tabs mt-3 " style={{maxWidth: '800px', marginRight: 'auto', marginLeft: 'auto'}}>
+          {/* <div className="tabs mt-3 d-none " style={{maxWidth: '800px', marginRight: 'auto', marginLeft: 'auto'}}>
 
             <Link to={ROUTES.SETTINGS_ACCOUNT}>
               <button className={"btn btn-articles-light " + (this.state.settingsTab === 'Account' ? 'alt' : '')}>Account</button>
@@ -488,7 +495,7 @@ class Settings extends Component {
 
             }
             
-          </div>
+          </div> */}
 
           <div className="content">
 
@@ -522,56 +529,8 @@ class Settings extends Component {
           
           </div>
 
-          <div className="card settings-card mt-4 d-none">
-
-            <div className="card-header">
-              <h5>Experimental Features</h5>
-              <p>Try out and help us test features that are not released to the public yet.</p>
-            </div>
-
-            <div className="card-body">
-
-              <div className="info-snippet">
-
-                <div className="label">NIGHT MODE</div>
-
-                <div className="info">
-                  <div className="enabled-dot"></div>Enabled
-                </div>
-
-                <div className="arrow"><i className="far fa-hand-point-right"></i></div>
-
-              </div>
-
-              <div className="info-snippet">
-
-                <div className="label">MESSAGES / MAIL</div>
-
-                <div className="info">
-                  <div className="enabled-dot"></div>Enabled
-                </div>
-
-                <div className="arrow"><i className="far fa-hand-point-right"></i></div>
-
-              </div>
-
-              <div className="info-snippet">
-
-                <div className="label">MESH</div>
-
-                <div className="info">
-                  <div className="disabled-dot"></div>Disabled
-                </div>
-
-                <div className="arrow"><i className="far fa-hand-point-right"></i></div>
-
-              </div>
-
-            </div>
-
-          </div>
-
         </div>
+        
       </div>
     )
   }

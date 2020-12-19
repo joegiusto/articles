@@ -1,6 +1,43 @@
 $distance: -10px;
 $decal-color: #b06565;
 
+.dark-mode {
+  .SignInContainer, .SignUpContainer, .ForgotPasswordContainer {
+    background-color: $dark-mode-card-color!important;
+    color: white!important;
+
+    .border-decal {
+      background-color: rgba(255, 183, 183, 0.3)!important;
+      box-shadow: inset 0 0 10px #ffb7b7!important;
+    }
+
+    h1 {
+      color: white!important;
+    }
+
+    .form-label-group {
+      input {
+        background-color: #000000!important;
+        color: white!important;
+  
+        &:focus {
+          border-color: $base-color;
+          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px $base-color;
+          outline: 0 none;
+          color: white!important;
+        }
+      }
+  
+      label {
+        // background-color: #000000!important;
+        // color: white;
+      }
+    }
+
+    
+  }
+}
+
 .SignInPage, .SignUpPage, .ForgotPasswordPage {
   // background-color: $base-color;
   background-image: linear-gradient(0deg, rgba(255, 183, 183, 0.4) 0%, rgba(224, 212, 174, 0.2) 65%);

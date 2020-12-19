@@ -749,7 +749,7 @@ class Account extends Component {
 
         </div>
 
-        <div className="links d-flex justify-content-between mb-3 " style={{maxWidth: '800px', marginRight: 'auto', marginLeft: 'auto'}}>
+        <div className="links d-flex justify-content-between mb-3 " style={{maxWidth: '800px'}}>
 
           <div>
             <div className="btn btn-danger">Delete Account</div>
