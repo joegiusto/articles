@@ -195,7 +195,9 @@ const StoreItem = (props) => {
 
             </div>
             <div className="spacer"></div>
-            <div className="footer"><p className="text-muted text-center subheading-font mb-0 pt-1" onClick={() => changeFlipped(!flipped)}>More details</p></div>
+            <div className="footer">
+              {/* <p className="text-muted text-center subheading-font mb-0 pt-1" onClick={() => changeFlipped(!flipped)}>More details</p> */}
+            </div>
         </div>
 
         <div className="back menu-catalog-item-back pt-3">

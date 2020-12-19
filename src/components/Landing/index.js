@@ -528,14 +528,31 @@ class LandingPage extends Component {
 								<div className="header">Looking for one of the following pages?</div>
 			
 								<div className="links">
-									<Link to={ROUTES.REPORTS}><button className="btn btn-articles-light">Transparency</button></Link>
-									<Link to={ROUTES.STORE}><button className="btn btn-articles-light">Clothing</button></Link>
-									<Link to={ROUTES.NEWS}><button className="btn btn-articles-light">News</button></Link>
-									<Link to={ROUTES.PARTY}><button className="btn btn-articles-light">Politics</button></Link>
-									{/* <span className="link">Transparency</span>
-									<span className="link">Clothing</span>
-									<span className="link">News</span>
-									<span className="link">Politics</span> */}
+
+									<Link to={ROUTES.REPORTS}>
+										<button className="btn btn-articles-light">
+											<i className="fas fa-paste" aria-hidden="true"></i>Transparency
+										</button>
+									</Link>
+
+									<Link to={ROUTES.STORE}>
+										<button className="btn btn-articles-light">
+											<i className="fas fa-shopping-cart" aria-hidden="true"></i>Clothing
+										</button>
+									</Link>
+
+									<Link to={ROUTES.NEWS}>
+										<button className="btn btn-articles-light">
+											<i className="fas fa-newspaper" aria-hidden="true"></i>News
+										</button>
+									</Link>
+
+									<Link to={ROUTES.PARTY}>
+										<button className="btn btn-articles-light">
+											<i className="fas fa-scroll" aria-hidden="true"></i>Politics
+										</button>
+									</Link>
+
 								</div>
 							</div>
 						</div>
@@ -588,28 +605,28 @@ class LandingPage extends Component {
 							</div>
 
 							<div className="tile">
-								Underfunded NASA Programs
+								Underfunded NASA
 								<div className="more">
 									Annual budget of less then half of 1% in 2019 
 								</div>
 							</div>
 
 							<div className="tile">
-								Disproportionate Military Spending
+								Military Spending
 								<div className="more">
 									WIP 
 								</div>
 							</div>
 
 							<div className="tile">
-								Increasing Automation of Jobs
+								Increasing Automation
 								<div className="more">
 									Taxi and tractor trailer drivers are just a fraction of the jobs we are saying goodbye to forever 
 								</div>
 							</div>
 
 							<div className="tile">
-								National Decaying Infrastructure
+								Decaying Infrastructure
 								<div className="more">
 								The ASCE estimates the US needs to spend some $4.5 trillion by 2025 to fix the country's infrastructure.  
 								</div>

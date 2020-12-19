@@ -125,7 +125,8 @@ class AppBase extends Component {
       test: 'test',
       width: 0,
       sideMenuFixedMinWidth: 992,
-      canBeFixed: true
+      canBeFixed: true,
+      askAboutDarkModeOpen: false
     }
 
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
@@ -138,7 +139,12 @@ class AppBase extends Component {
 
     if (this.props.auth.isAuthenticated) {
       this.props.setUserDetails(this.props.auth.user.id);
-    } 
+    }
+
+    if ( window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ) {
+      console.log("User prefers dark mode");
+    }
+    
   }
 
   componentWillUnmount() {

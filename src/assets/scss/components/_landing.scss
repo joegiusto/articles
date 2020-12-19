@@ -1,3 +1,65 @@
+.dark-mode {
+
+  .landing-new {
+
+    .articles-heading {
+      color: black;
+    }
+    
+    .think-about-it {
+      background-color: rgba($accent-color, 0.3);
+      box-shadow: inset 0 0 10px $accent-color;
+      color: black;
+
+      .tile {
+        background-color: $dark-mode-card-color!important;
+        color: white;
+      }
+    }
+
+    .how-we-help {
+      background-color: rgba($base-color, 0.3);
+      box-shadow: inset 0 0 10px $base-color;
+
+      .tile {
+        background-color: $dark-mode-card-color!important;
+
+        .header {
+          background-color: rgba(255, 255, 255, 0)!important;
+        }
+
+        .sale {
+          background-color: black!important;
+
+          .amount {
+
+            &.revenue {
+              background-color: rgba(57, 153, 57, 0.25)!important;
+              // border-color: darken (rgb(57, 153, 57), 30%)!important;
+            }
+            &.expense {
+              background-color: rgba(168, 66, 66, 0.25)!important;
+              // border-color: darken(rgb(168, 66, 66), 30%)!important;
+            }
+  
+          }
+        }
+      }
+    }
+
+    .our-mission {
+      background-image: none;
+      background-color: $dark-mode-card-color!important;
+
+      .link-panel {
+        background-color: $dark-mode-element-color!important;
+      }
+    }
+
+  }
+
+}
+
 .landing-new {
   // TODO Figure out why this is now lagging, first noticed 6/01/2020. After further inspection a reboot of the browser fixed this but want it documented.
   @import 'landing_background';
@@ -10,6 +72,7 @@
     padding: 3rem 0rem;
     margin: 0rem 1rem;
     padding-bottom: 1rem;
+    padding-top: 0rem;
 
     @include media-breakpoint-up(md) {
       padding: 5rem 0rem;
@@ -35,52 +98,80 @@
         flex-shrink: 0;
         // box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
         margin-top: 1rem;
+        order: 1;
 
         @include media-breakpoint-up(md) {
           height: auto;
           margin-top: 0rem;
           width: 550px;
+          order: 2;
+        }
+
+        img {
+          position: absolute;
+          object-fit: cover;
+          width: 100%;
+          height: 100%;
+          box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+          
+  
+          @include media-breakpoint-up(md) {
+            object-fit: initial;
+            
+          }
         }
       }
 
-      img {
-        position: absolute;
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
-        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+      .details {
+        order: 2;
 
         @include media-breakpoint-up(md) {
-          object-fit: initial;
+          order: 1;
         }
+
+        .small {
+          font-family: brandon-grotesque, sans-serif;
+          font-style: normal;
+          font-weight: 900;
+          font-size: 1.2rem;
+          margin-bottom: 1rem;
+          margin-top: 1rem;
+    
+          @include media-breakpoint-up(md) {
+            margin-bottom: 0.5rem;
+            margin-top: 0rem;
+          }
+        }
+    
+        .brand {
+          font-size: 3rem;
+          font-family: forte;
+          font-weight: 400;
+          line-height: 1;
+    
+          @include media-breakpoint-up(md) {
+            font-size: 5rem;
+          }
+        }
+    
+        .text {
+          // text-align: center;
+          max-width: 570px;
+          font-size: 18px;
+          // line-height: 30px;
+          margin-top: 16px;
+          font-family: brandon-grotesque, sans-serif;
+          font-style: normal;
+          font-weight: 400;
+          font-size: 1.4rem;
+    
+          @include media-breakpoint-up(md) {
+            font-size: 22px;
+          }
+        }
+
       }
-    }
 
-    .small {
-      font-family: brandon-grotesque, sans-serif;
-      font-style: normal;
-      font-weight: 900;
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .brand {
-      font-size: 5rem;
-      font-family: forte;
-      font-weight: 400;
-      line-height: 1;
-    }
-
-    .text {
-      // text-align: center;
-      max-width: 570px;
-      font-size: 22px;
-      // line-height: 30px;
-      margin-top: 16px;
-      font-family: brandon-grotesque, sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      font-size: 1.5rem;
     }
 
     .looking-for-section {
@@ -98,28 +189,53 @@
       .btn {
         font-size: 1.2rem;
       }
-    }
 
-    .links {
+      .links {
 
-      .link {
-        font-size: 2rem;
-        background-color: white;
-        padding: 0.25rem 0.1rem;
-
-        &:not(:first-child) {
-          margin-left: 1rem;
+        @include media-breakpoint-down(md) {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          grid-gap: 10px 10px;
         }
+
+        .btn {
+          @include media-breakpoint-down(md) {
+            width: 100%;
+            text-align: left;
+
+            @media only screen and (max-width: 380px) {
+              font-size: 1rem;
+            }
+          }
+        }
+
+        .link {
+          font-size: 2rem;
+          background-color: white;
+          padding: 0.25rem 0.1rem;
+  
+          &:not(:first-child) {
+            margin-left: 1rem;
+          }
+
+        }
+        
       }
+
     }
+
   }
 
-  .articles-heading{
+  .articles-heading {
     font-family: brandon-grotesque, sans-serif;
     font-style: normal;
     font-weight: 900;
-    font-size: 3rem;
+    font-size: 2rem;
     margin-bottom: 0.5rem;
+
+    @include media-breakpoint-up(md) {
+      font-size: 3rem;
+    }
   }
 
   .content {
@@ -136,15 +252,19 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 2rem 1rem;
+    padding: 1rem 1rem;
     box-shadow: inset 0 0 10px;
     // margin: 0rem 1rem;
 
     .tiles {
       margin: 0.25rem;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       grid-gap: 10px 10px;
+
+      @include media-breakpoint-up(md) {
+        grid-template-columns: repeat(4, 1fr);
+      }
 
       .tile {
         cursor: pointer;
@@ -153,17 +273,18 @@
         padding-left: 1rem;
         background-color: white;
         box-shadow: 0px 0px 1px 2px rgba(0, 0, 0, 0.4);
-        // min-height: 30px;
 
         display: flex;
-        // justify-content: center;
         align-items: center;
-
 
         font-family: brandon-grotesque, sans-serif;
         font-style: normal;
         font-weight: 700;
         font-size: 1.5rem;
+
+        @media only screen and (max-width: 380px) {
+          font-size: 0.9rem;
+        }
 
         .more {
           font-size: 1rem;
@@ -218,6 +339,10 @@
       margin-top: 1.8rem;
       padding-top: 1.3rem;
     }
+
+    @include media-breakpoint-up(md) {
+      padding: 2rem 1rem;
+    }
   }
 
   .how-we-help {
@@ -268,8 +393,13 @@
         }
 
         .header {
-          background-color: rgb(214, 214, 214);
           padding: 0.1rem 0.5rem;
+          background-color: rgb(214, 214, 214);
+          margin-bottom: 1rem;
+
+          @include media-breakpoint-up(md) {
+            margin-bottom: 0rem;
+          }
         }
 
         .text {
@@ -288,14 +418,22 @@
           height: 250px;
 
           .icon {
-            width: 30%;
+            width: 15%;
             display: flex;
             justify-content: center;
             align-items: center;
 
+            @include media-breakpoint-up(md) {
+              width: 30%;
+            }
+
             i {
               margin: 0;
-              font-size: 5rem;
+              font-size: 2.5rem;
+
+              @include media-breakpoint-up(md) {
+                font-size: 5rem;
+              }
             }
           }
 
@@ -315,13 +453,17 @@
           }
           
           .fake-sales {
-            width: 70%;
+            width: 85%;
             // margin-right: auto;
             // margin-left: auto;
             // height: 250px;
             // padding: 2rem 0;
             position: relative;
             overflow: hidden;
+
+            @include media-breakpoint-up(md) {
+              width: 70%;
+            }
       
             .sale {
               position: absolute;
@@ -333,9 +475,11 @@
               border: solid 1px gray;
               overflow: hidden;
               transform: translateY(200px);
-              font-size: 1rem;
+              font-size: 13px;
 
-              // margin-top: 0.5rem;
+              @include media-breakpoint-up(md) {
+                font-size: 1rem;
+              }
       
               &.active {
                 animation-name: example;
@@ -676,6 +820,7 @@
     background-image: url('../../img/crossword.png');
     background-repeat: repeat;
     background-size: 1100px;
+
     // height: 500px;
     padding: 2rem 1rem;
     box-shadow: inset 0 0 10px;

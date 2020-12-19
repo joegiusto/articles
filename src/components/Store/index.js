@@ -13,7 +13,7 @@ import OrdersPage from './Orders/index';
 import CheckoutPage from './Checkout/index'
 
 import hero from 'assets/img/Store/head.jpg';
-
+import heroDark from 'assets/img/Store/head-dark.jpg';
 
 class StorePage extends Component {
   constructor(props) {
@@ -198,7 +198,7 @@ class StorePage extends Component {
 						<div>
 							<div className="hero">
 	
-								<img src={hero} alt=""/>
+								<img src={ (this.props.colorModeDark ? heroDark : hero) } alt=""/>
 			
 								<div className="notice">
 								
@@ -518,12 +518,13 @@ class StorePage extends Component {
 const mapStateToProps = state => ({
 	auth: state.auth.isAuthenticated,
 	user_details: state.auth.user_details,
-	cart: state.expenses
+	cart: state.expenses,
+	colorModeDark: state.site.colorModeDark
 });
 
 export default connect(
   mapStateToProps,
-  { } 
+  {  } 
 )(StorePage);
 
 // export default StorePage;
