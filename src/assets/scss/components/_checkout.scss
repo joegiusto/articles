@@ -1,3 +1,43 @@
+.dark-mode {
+
+  .checkout-page {
+
+    .cart {
+      
+      .card {
+        @include dark-mode-neon-accent();
+      }
+
+      .list-group-item {
+        background-color: $dark-mode-card-color;
+      }
+
+      .total {
+        background-color: $dark-mode-card-color!important;
+      }
+
+      .stripe {
+        background-color: $dark-mode-card-color!important;
+      }
+
+      .articles-profit {
+        background-color: $dark-mode-card-color!important;
+      }
+
+    }
+
+    .details {
+      
+      #powered-by-stripe {
+        filter: invert(1);
+      }
+      
+    }
+
+  }
+
+}
+
 .checkout-page {
   font-family: montserrat, sans-serif;
   font-weight: 400;
@@ -65,45 +105,47 @@
 
       .shiping-info {
 
-        .form-group {
-          position: relative;
+        // Is now a global style under .form-group.articles if you are reading this in 2021 then it is safe to remove this
+        // .form-group {
+        //   position: relative;
 
-          label {
-            display: block;
-            background-color: $base-color;
-            // border: 0.5px solid #000;
-            box-shadow: 0px 0px ;
-            border-radius: 0.25rem;
-            border: 1px solid #ced4da;
-            // position: absolute;
-            margin-bottom: 0;
-            top: -0.75rem;
-            left: 0rem;
-            width: 100%;
-            // color: white;
-            padding: 0.0rem 0.25rem;
-            font-size: 0.7rem;
-            // box-shadow: 0 2px 5px rgba( $base-color , 0.7);
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-          }
+        //   label {
+        //     display: block;
+        //     background-color: $base-color;
+        //     // border: 0.5px solid #000;
+        //     box-shadow: 0px 0px ;
+        //     border-radius: 0.25rem;
+        //     border: 1px solid #ced4da;
+        //     // position: absolute;
+        //     margin-bottom: 0;
+        //     top: -0.75rem;
+        //     left: 0rem;
+        //     width: 100%;
+        //     // color: white;
+        //     padding: 0.0rem 0.25rem;
+        //     font-size: 0.7rem;
+        //     // box-shadow: 0 2px 5px rgba( $base-color , 0.7);
+        //     border-bottom-left-radius: 0;
+        //     border-bottom-right-radius: 0;
+        //   }
 
-          input.with-label {
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
-          }
+        //   input.with-label {
+        //     border-top-left-radius: 0;
+        //     border-top-right-radius: 0;
+        //   }
 
-          .prefilled {
-            background-color: white;
-            border: 0.5px solid #000;
-            border-radius: 0.25rem;
-            position: absolute;
-            top: -0.75rem;
-            left: 3.5rem;
-            padding: 0.05rem 0.25rem;
-            font-size: 0.7rem;
-          }
-        }
+        //   .prefilled {
+        //     background-color: white;
+        //     border: 0.5px solid #000;
+        //     border-radius: 0.25rem;
+        //     position: absolute;
+        //     top: -0.75rem;
+        //     left: 3.5rem;
+        //     padding: 0.05rem 0.25rem;
+        //     font-size: 0.7rem;
+        //   }
+        // }
+
       }
 
       .payment-details {

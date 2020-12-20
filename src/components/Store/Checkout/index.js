@@ -436,7 +436,7 @@ const CheckoutForm = (props) => {
                 <span>Checkout Process</span>
 
                 <a href="https://stripe.com/pricing" target="_blank" rel="noopener noreferrer">
-                  <img src={stripePower} height="35px" alt=""/>
+                  <img id="powered-by-stripe" src={stripePower} height="35px" alt=""/>
                 </a>
 
               </h1>
@@ -450,7 +450,8 @@ const CheckoutForm = (props) => {
                 <div className="shiping-info card-body">
                   <h3 className="mb-4">Shipping Info</h3>
     
-                  <div className="form-group">
+                  {/* Address One */}
+                  <div className="form-group articles">
                     <label htmlFor="address">Address Line 1</label>
                     <div className="prefilled">
                       Prefilled
@@ -458,12 +459,14 @@ const CheckoutForm = (props) => {
                     <input className="form-control with-label" value={lineOne} onChange={e => setLineOne(e.target.value)} name="lineOne" id="lineOne" type="text"/>
                   </div>
   
-                  <div className="form-group">
+                  {/* Address Two */}
+                  <div className="form-group articles">
                     <label htmlFor="address_two">Address Line 2</label>
                     <input className="form-control with-label" value={lineTwo} name="lineTwo" onChange={e => setLineTwo(e.target.value)} id="lineTwo" type="text"/>
                   </div>
   
-                  <div className="form-group">
+                  {/* City */}
+                  <div className="form-group articles">
                     <label htmlFor="city">City</label>
 
                     {props.user_details?.address?.city && 
@@ -475,7 +478,8 @@ const CheckoutForm = (props) => {
                     <input className="form-control with-label" value={city} onChange={e => setCity(e.target.value)} name="city" id="city" type="text"/>
                   </div>
   
-                  <div className="form-group">
+                  {/* State */}
+                  <div className="form-group articles">
                     <label htmlFor="state">State</label>
                     <div className="prefilled">
                       Prefilled
@@ -483,7 +487,8 @@ const CheckoutForm = (props) => {
                     <input className="form-control with-label" value={state} onChange={e => setState(e.target.value)} name="state" id="state" type="text"/>
                   </div>
   
-                  <div className="form-group">
+                  {/* Zip */}
+                  <div className="form-group articles">
                     <label htmlFor="zip">Zip</label>
                     <div className="prefilled">
                       Prefilled
@@ -726,7 +731,7 @@ function StoreDisabledModal(props) {
         <Dropdown.Item onClick={handleShow}>On</Dropdown.Item>
       </DropdownButton> */}
 
-      <Modal className="articles-modal" show={props.isStoreDisabled} onHide={handleClose} centered>
+      <Modal className="articles-modal" show={props.isStoreDisabled} onHide={handleClose} centered backdropClassName={'articles-modal-backdrop'}>
         <Modal.Header closeButton>
           <Modal.Title>Store Notice</Modal.Title>
         </Modal.Header>

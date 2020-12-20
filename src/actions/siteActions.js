@@ -48,6 +48,14 @@ export const filterIssuesDateType = () => dispatch => {
   });
 };
 
+export const pendingPWAUpdate = () => dispatch => {
+  console.log(`Tells Redux that a PWA update is awaiting user install`);
+
+  dispatch({
+    type: 'PENDING_PWA_UPDATE',
+  });
+};
+
 export const updateSubscriptionToIssue = subscription => dispatch => {
 
   console.log("Update to Issue last viewed date");

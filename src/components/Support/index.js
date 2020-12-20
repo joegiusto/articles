@@ -21,7 +21,7 @@ const Page = (props) => (
 
       <div className="hub-items">
         {itemsToRender.map((item, i) => 
-          <Link className="item" to={item[0]}>
+          <Link className="item theme-card-background" to={item[0]}>
             <div>
               <div>{item[2]}</div>
               <div>{item[1]}</div>
@@ -38,6 +38,7 @@ const Page = (props) => (
         <Link to={ROUTES.ROADMAP}><li>Roadmap</li></Link>
         <Link to={ROUTES.PRIVACY}><li>Privacy</li></Link>
       </ul> */}
+
     </div>
 
   </div>

@@ -389,30 +389,47 @@ function Menu(props) {
 
           {/* Clothing Section */}
           <div className="dual-header">
+
             <p className="heading-font no-link">
               <b>Articles Clothing</b>
             </p>
-            <span onClick={() => {setCartPreview(!cartPreview)}} to="cart">
+
+            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.CHECKOUT}>
               <span className="ml-auto noselect" id="shopping-card">
                 <i className="fas fa-shopping-basket mr-0"></i>
                 <span id="menu-pill" className="badge badge-pill badge-dark">
                   {props.expensesTotal}
                 </span>
               </span>
-            </span>
+            </Link>
+
+            {/* <span onClick={() => {setCartPreview(!cartPreview)}} to="cart">
+              <span className="ml-auto noselect" id="shopping-card">
+                <i className="fas fa-shopping-basket mr-0"></i>
+                <span id="menu-pill" className="badge badge-pill badge-dark">
+                  {props.expensesTotal}
+                </span>
+              </span>
+            </span> */}
+
           </div>
 
           {cartPreview ? 
+
           <CartPreview
             cart_items={props.expenses}
             setMenuOpen={setMenuOpen}
           />
+
           // <div className="subheading-font text-center mx-4 border border-dark">
           //   <p className="d-inline-block">1</p><p className="d-inline-block">2</p><p className="d-inline-block">3</p>
           //   <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.CHECKOUT}><p className="btn btn-dark subheading-font mb-2">Checkout</p></Link>
           // </div>
-          : 
+
+          :
+
           null
+
           }
 
           <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE}><p className="subheading-font"><i className="fas fa-shopping-cart"></i>Store</p></Link>

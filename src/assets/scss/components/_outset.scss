@@ -1,5 +1,67 @@
 @import 'outset_images';
 
+.dark-mode {
+
+  .outset-page {
+
+    .outset-form {
+      background-color: $dark-mode-card-color;
+
+      .step-focus-panel {
+
+        .intro-title {
+          color: white;
+        }
+
+        .privacy-notice {
+          background-color: $dark-mode-element-color;
+        }
+      }
+
+      .selection-container {
+        @include dark-mode-neon-base;
+        color: black;
+      }
+
+      .issue-recommendation {
+        background-color: $dark-mode-element-color;
+        color: white!important;
+
+        .description {
+          color: white!important;
+        }
+      }
+
+      .politcal-party-card .name {
+        background-color: $dark-mode-element-color;
+        color: white!important;
+      }
+
+      .step-controls {
+        background-color: $dark-mode-element-color;
+
+        .dots {
+
+          .dot {
+            border: solid 0.5px rgba(255, 255, 255, 0.5);
+          }
+        }
+      }
+
+      .clothing-tag {
+        color: black;
+      }
+
+      .female-sign, .male-sign {
+        margin-right: 5px!important;
+      }
+
+    }
+
+  }
+
+}
+
 .outset-page {
   overflow-y: hidden;
   height: calc(100vh - 50px);

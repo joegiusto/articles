@@ -95,6 +95,7 @@ import * as ROUTES from '../constants/routes';
 
 import { connect } from "react-redux";
 import { setUserDetails } from "../actions/authActions";
+import { pendingPWAUpdate } from "../actions/siteActions";
 
 import io from 'socket.io-client'
 import SocketContext from "../utils/socket_context/context";
@@ -182,6 +183,17 @@ class AppBase extends Component {
           <div className={'site-wrap ' + (this.props.site?.sideMenuFixed && this.state.canBeFixed ? 'fixed' : '')}>
 
             {/* Future Banner */}
+
+            {this.props.site.pendingPWAUpdate && 
+            <div className="notification-area">
+              <div className="pwa-message notification show">
+                <p>A new version of this site is available</p>
+                <button className="btn btn-articles-light">
+                  Update
+                </button>
+              </div>
+            </div>
+            }
 
             <Navigation />
 
@@ -331,7 +343,7 @@ const mapStateToProps = state => ({
 
 const App = connect(
   mapStateToProps,
-  { setUserDetails }
+  { setUserDetails,  pendingPWAUpdate}
 )(AppBase);
 
 export default App;

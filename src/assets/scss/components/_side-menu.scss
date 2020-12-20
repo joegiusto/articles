@@ -27,9 +27,25 @@
       a {
         color: rgb(184, 184, 184);
 
+        &:hover {
+          p, i {
+            color: black!important;
+          }
+        }
+
         i {
           color: white;
         }
+
+      }
+
+      #shopping-card {
+        background-color: #141414;
+
+        i {
+          color: white!important;
+        }
+
       }
     }
   }

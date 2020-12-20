@@ -186,6 +186,7 @@ class StorePage extends Component {
 						<Link onClick={() => window.scrollTo(0, 0)} to={ROUTES.STORE_COLLECTIONS} className={this.props.match.path === ROUTES.STORE_COLLECTIONS ? 'active' : ''}>Collections</Link>
 						<Link onClick={() => window.scrollTo(0, 0)} to={ROUTES.STORE_ORDERS} className={this.props.match.path === ROUTES.STORE_ORDERS ? 'active' : ''}>Orders</Link>
 						<Link onClick={() => window.scrollTo(0, 0)} to={ROUTES.STORE_SAVED} className={this.props.match.path === ROUTES.STORE_SAVED ? 'active' : ''}>Saved</Link>
+						<Link onClick={() => window.scrollTo(0, 0)} to={ROUTES.STORE_SUBMISSIONS} className={this.props.match.path === ROUTES.STORE_SUBMISSIONS ? 'active' : ''}>Submissions</Link>
 					</div>
 
 					<div className="right">
@@ -455,7 +456,7 @@ class StorePage extends Component {
 						<div className="store-collections-page">
 							<div className="collections">
 								<div>September 2020</div>
-								<div className="collection shadow">
+								<div className="collection shadow theme-card-background">
 									<h5>Founders Collection</h5>
 									<div>Our first release ever</div>
 									<div className="mt-2">Includes</div>

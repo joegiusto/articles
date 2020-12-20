@@ -3,6 +3,7 @@ const initialState = {
   weatherPin: false,
   sideMenuOpen: false,
   sideMenuFixed: false,
+  pendingPWAUpdate: false,
   userSubscriptions: false,
   dateType: 'post',
   notification: {
@@ -25,6 +26,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         colorModeDark: !state.colorModeDark
+      };
+    case 'PENDING_PWA_UPDATE':
+      return {
+        ...state,
+        pendingPWAUpdate: true
       };
     case 'TOGGLE_WEATHER_PIN':
       return {

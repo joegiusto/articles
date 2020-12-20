@@ -40,6 +40,16 @@
         background-color: rgba(0, 0, 0, 0.75);
       }
     }
+
+    .news-preview-container {
+      &.tags {
+        .tags {
+          .tag {
+            background: linear-gradient(45deg, #000000, #363636b0 80%);
+          }
+        }
+      }
+    }
   }
 }
 

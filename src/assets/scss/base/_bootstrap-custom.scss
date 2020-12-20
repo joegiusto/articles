@@ -10,6 +10,32 @@
   }
 }
 
+.dark {
+
+  .articles-modal {
+
+    .modal-content {
+      background-color: $dark-mode-card-color;
+    }
+
+    .modal-header, .modal-footer {
+      background: linear-gradient(45deg, #000000, #363636b0 80%);
+    }
+
+    .close {
+      color: #fff;
+    }
+
+  }
+
+  .articles-modal-backdrop {
+    &.show {
+      opacity: 0.9;
+    }
+  }
+
+}
+
 .articles-modal {
   font-family: montserrat, sans-serif;
   font-weight: 400;
