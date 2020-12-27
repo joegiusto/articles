@@ -483,7 +483,7 @@ class HomePageFour extends Component {
           </div>
 
           <div className="random-quote">
-            <div className="title">Random Political Quotes</div>
+            <div className="title">Political Quotes</div>
 
             {this.state.randomQuote !== -1 &&
             <div className="quote-container">

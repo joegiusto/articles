@@ -44,7 +44,10 @@ $grid-breakpoints: (
 @import 'components/checkout';
 
 @import 'components/news-container';
+@import 'components/presidents';
+@import 'components/president-item';
 // @import 'components/news-manage';
+
 @import 'components/settings';
 @import 'components/aws-profile-photo-edit';
 
@@ -100,6 +103,7 @@ $grid-breakpoints: (
 @import 'components/admin_ads';
 @import 'components/admin_projects';
 @import 'components/admin_newsletter';
+@import 'components/admin_presidents';
 
 @import 'components/advertising';
 

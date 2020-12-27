@@ -72,7 +72,7 @@ class Account extends Component {
 
         {/* Subscription */}
 
-        <div className={"card membership-card"}>
+        <div className={"card settings-card mt-3"}>
 
             <div className="card-header">
               <h5>Membership Status</h5>

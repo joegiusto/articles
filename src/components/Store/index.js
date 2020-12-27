@@ -12,6 +12,8 @@ import StoreItemBeta from './Items/Beta.js';
 import OrdersPage from './Orders/index';
 import CheckoutPage from './Checkout/index'
 
+import Submissions from './Submissions';
+
 import hero from 'assets/img/Store/head.jpg';
 import heroDark from 'assets/img/Store/head-dark.jpg';
 
@@ -195,6 +197,7 @@ class StorePage extends Component {
 				</div>
 
 				<Switch>
+
 					<Route exact path={[ROUTES.STORE, ROUTES.STORE_VIEW]} render={() => (
 						<div>
 							<div className="hero">
@@ -412,6 +415,7 @@ class StorePage extends Component {
 							</div>
 						</div>
 					)}/>
+
 					<Route exact path={ROUTES.STORE_PRODUCTS} render={() => (
 						<div className="container">
 							<div className="store-products-page">
@@ -452,6 +456,7 @@ class StorePage extends Component {
 							</div>
 						</div>
 					)}/>
+
 					<Route exact path={ROUTES.STORE_COLLECTIONS} render={() => (
 						<div className="store-collections-page">
 							<div className="collections">
@@ -473,7 +478,9 @@ class StorePage extends Component {
 							</div>
 						</div>
 					)}/>
+
 					<Route exact path={ROUTES.STORE_ORDERS} render={() => <OrdersPage/>}/>
+
 					<Route exact path={ROUTES.STORE_SAVED} render={() => 
 						<div className="store-saved-page">
 							<div className="container">
@@ -508,7 +515,11 @@ class StorePage extends Component {
 							</div>
 						</div>
 					}/>
+
 					<Route exact path={ROUTES.CHECKOUT} render={() => <CheckoutPage/>}/>
+
+					<Route exact path={ROUTES.STORE_SUBMISSIONS} render={() => <Submissions/>}/>
+
 				</Switch>
 
 			</section>

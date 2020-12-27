@@ -45,6 +45,7 @@ import MythsPage from './News/Myths'
 import MythPage from './News/Myths/single.js'
 import StoriesPage from './News/Stories'
 import StoryPage from './News/Stories/single.js'
+import PresidentsPage from './News/Presidents'
 
 import PartyPage from './Party'
 import PartyProposalsPage from './Party/Proposals'
@@ -236,7 +237,7 @@ class AppBase extends Component {
 
                 <Route exact path={ROUTES.STORE_SAVED} component={StorePage} />
     
-                <Route path={ROUTES.STORE_SUBMISSIONS} component={StoreSubmissionsPage} />
+                <Route path={ROUTES.STORE_SUBMISSIONS} component={StorePage} />
                 <Route path={ROUTES.STORE_SUBMISSIONS_SUBMIT} component={StoreSubmissionsSubmitPage}/>
     
                 {/* <Route path={ROUTES.STORE_MANAGE} component={StoreManage} /> */}
@@ -255,6 +256,9 @@ class AppBase extends Component {
 
                 <Route path={ROUTES.MYTHS} component={NewsPage} exact={true}/>
                 <Route path={ROUTES.MYTH} component={MythPage}/>
+
+                <Route path={ROUTES.PRESIDENTS} component={PresidentsPage} exact={true}/>
+                <Route path={ROUTES.PRESIDENT} component={PresidentsPage}/>
     
                 <Route path={ROUTES.TOWN_HALL} component={TownHallPage} />
           
@@ -306,6 +310,8 @@ class AppBase extends Component {
                 <Route exact path={ROUTES.ADMIN_MESSAGES} component={AdminPage} />
                 <Route exact path={ROUTES.ADMIN_PROJECTS} component={AdminPage} />
                 <Route exact path={ROUTES.ADMIN_NEWSLETTER} component={AdminPage} />
+                <Route exact path={ROUTES.ADMIN_PRESIDENTS} component={AdminPage} />
+                <Route exact path={ROUTES.ADMIN_PRESIDENTS_DETAILS} component={AdminPage} />
 
                 <Route path={ROUTES.DONATE} component={DonatePage} />
                 <Route path={ROUTES.SUBSCRIBE} component={SubscribePage} />

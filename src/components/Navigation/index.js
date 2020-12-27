@@ -502,6 +502,7 @@ function Menu(props) {
                 <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PLAYGROUND}><p className="subheading-font"><i className="fas fa-code"></i>Playground</p></Link>
                 <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MESH}><p className="subheading-font"><i className="fas fa-chess-board"></i>Mesh</p></Link>
                 <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MESSAGES}><p className="subheading-font"><i className="fas fa-envelope-square"></i>Messages</p></Link>
+                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PRESIDENTS}><p className="subheading-font"><i className="fas fa-envelope-square"></i>Presidents</p></Link>
                 <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.OUTSET}><p className="subheading-font"><i className="fas fa-road"></i>Outset</p></Link>
                 <div className="app-links">
                   <img className="app-badge" src="https://bibibop.com/data/sites/1/media/rewards/Download_badge-apple-white.png" alt=""/>
@@ -521,7 +522,7 @@ function Menu(props) {
             <div>
               {/* <i className="fas fa-code" aria-hidden="true"></i> */}
               {props.site.colorModeDark ? <i className="far fa-moon"></i> : <i className="fas fa-sun"></i>}
-              <span>Dark Mode</span>
+              <span>Dark Mode<span class="badge badge-primary ml-2">Beta</span></span>
             </div>
 
             <label className="articles-switch mb-0" onClick={props.toggleColorMode}>

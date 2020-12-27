@@ -28,6 +28,7 @@ import Ads from './components/Ads'
 import Messages from './components/Messages'
 import Projects from './components/Projects'
 import Newsletter from './components/Newsletter'
+import Presidents from './components/Presidents'
 
 const nav_links = [
   [ ROUTES.ADMIN_USERS, 'Users', <i className="fas fa-money-bill fa-3x"></i> ],
@@ -137,6 +138,7 @@ class Admin extends Component {
               <Link to={ROUTES.ADMIN_MESSAGES}><span className={"tab" + (this.state.tab === 'messages' ? ' active' : '')}>Messages</span></Link>
               <Link to={ROUTES.ADMIN_PROJECTS}><span className={"tab" + (this.state.tab === 'projects' ? ' active' : '')}>Projects</span></Link>
               <Link to={ROUTES.ADMIN_NEWSLETTER}><span className={"tab" + (this.state.tab === 'newsletter' ? ' active' : '')}>Newsletter</span></Link>
+              <Link to={ROUTES.ADMIN_PRESIDENTS}><span className={"tab" + (this.state.tab === 'presidents' ? ' active' : '')}>Presidents</span></Link>
   
             </div>
           </div>
@@ -270,6 +272,20 @@ class Admin extends Component {
             <Route exact path={ROUTES.ADMIN_NEWSLETTER} render={() => <Newsletter 
               match={this.props.match}
               tabLocation='newsletter'
+              setLocation={this.setLocation}
+            /> 
+            }/>
+
+            <Route exact path={ROUTES.ADMIN_PRESIDENTS} render={() => <Presidents 
+              match={this.props.match}
+              tabLocation='presidents'
+              setLocation={this.setLocation}
+            /> 
+            }/>
+
+            <Route exact path={ROUTES.ADMIN_PRESIDENTS_DETAILS} render={() => <Presidents 
+              match={this.props.match}
+              tabLocation='presidents'
               setLocation={this.setLocation}
             /> 
             }/>

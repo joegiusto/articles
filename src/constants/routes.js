@@ -72,8 +72,11 @@ export const ISSUE = '/news/issues/:id'
 export const MYTHS ='/news/myths'
 export const MYTH ='/news/myths/:id'
 
-export const MANAGE ='/news/manage'
-export const MANAGE_DETAILS = '/news/manage/:id';
+export const PRESIDENTS ='/news/presidents'
+export const PRESIDENT ='/news/presidents/:id'
+
+// export const MANAGE ='/news/manage'
+// export const MANAGE_DETAILS = '/news/manage/:id';
 
 // Party
 export const PARTY ='/party'
@@ -133,6 +136,9 @@ export const ADMIN_ADS = '/admin/ads';
 export const ADMIN_MESSAGES = '/admin/messages';
 export const ADMIN_PROJECTS = '/admin/projects';
 export const ADMIN_NEWSLETTER = '/admin/newsletter';
+
+export const ADMIN_PRESIDENTS = '/admin/presidents';
+export const ADMIN_PRESIDENTS_DETAILS = '/admin/presidents/:id';
 
 // export const ADMIN_DETAILS = '/admin/:id';
 
