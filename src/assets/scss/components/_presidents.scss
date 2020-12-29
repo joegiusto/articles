@@ -1,3 +1,61 @@
+.president-modal {
+
+  .modal-dialog {
+    @include media-breakpoint-up(md) {
+      max-width: 720px!important;
+    }
+    @include media-breakpoint-up(lg) {
+      max-width: 960px!important;
+    }
+    @include media-breakpoint-up(xl) {
+      max-width: 1140px!important;
+    }
+
+    .president-photo {
+      position: relative;
+      height: 200px;
+      width: 125px;
+      
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
+
+      .loading-cover {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background-color: black;
+        border-radius: 5px;
+      }
+    }
+
+    .location-photo {
+      position: relative;
+      // height: 200px;
+      // width: 400px;
+      max-width: 400px;
+      
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .text-loading-bar {
+      // width: 100%;
+      width: auto;
+      background-color: black;
+      color: black;
+      border-radius: 5px;
+      margin-bottom: 0.25rem;
+    }
+  }
+
+}
+
 .presidents-page {
 
   .page-header {
@@ -19,7 +77,7 @@
         }
 
         &.search {
-          
+
           input {
             @include media-breakpoint-down(md) {
               width: 100%;
@@ -36,6 +94,11 @@
           font-style: normal;
           font-weight: 900;
           font-size: 1rem;
+        }
+
+        button:not(.active) {
+          filter: grayscale(1);
+          color: darkgray !important;
         }
       }
     }
@@ -61,6 +124,16 @@
     grid-gap: 10px 10px;
 
     @include media-breakpoint-up(md) {
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 15px 15px;
+    }
+
+    @include media-breakpoint-up(lg) {
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 10px 10px;
+    }
+
+    @include media-breakpoint-up(xl) {
       grid-template-columns: repeat(5, 1fr);
       grid-gap: 20px 20px;
     }
