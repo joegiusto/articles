@@ -539,13 +539,15 @@ class Dashboard extends Component {
           </div>
 
           <div className="charts mb-3">
-            <div className="chart-container">
+
+            <div className="card chart-container">
               <canvas className="chart" id="chartUsers"></canvas>
             </div>
   
-            <div className="chart-container">
+            <div className="card chart-container">
               <canvas className="chart" id="chartSales"></canvas>
             </div>
+
           </div>
 
           <div className="date-selection d-flex flex-column align-items-center justify-content-center">

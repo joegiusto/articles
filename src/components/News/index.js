@@ -6,6 +6,10 @@ import GoogleMapReact from 'google-map-react';
 import Chart from 'chart.js';
 import qs from 'qs'
 
+// React Bootstrap Components
+import DropdownButton from 'react-bootstrap/DropdownButton'
+import Dropdown from 'react-bootstrap/Dropdown'
+
 // import Swiper from 'react-id-swiper';
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, EffectFade, Mousewheel } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -371,14 +375,16 @@ function NewsHead(props) {
       </div>
 
       <div className={"news-head-new " + (isHome ? 'home' : 'focus')}>
+
         <img src={searchBackgrounds[backgroundIndex]} alt=""/>
 
         <div className="search-container">
 
-          <div className="title">Search Confidently</div>
+          <h2 className="title">Search Confidently</h2>
 
-          <div className="input-group w-100">
-            <input style={{borderRadius: '0', borderBottom: 'solid 3px #000', height: 'inherit'}} type="text" id='search' name='search' value={props.search} onChange={props.onChange} className="form-control" placeholder="Try 'Edward Snowden'" aria-label="" aria-describedby="button-addon2"/>
+          <div className="input-group w-100 justify-content-lg-center">
+
+            <input type="text" id='search' name='search' value={props.search} onChange={props.onChange} className="form-control" placeholder="Try 'Edward Snowden'" aria-label="" aria-describedby="button-addon2"/>
 
             <div className="input-group-append">
               <button onClick={() => props.history.push(`${ROUTES.NEWS_SEARCH}?search=${encodeURI(props.search)}`)} className="btn btn-articles-light" type="button" id="">
@@ -388,13 +394,44 @@ function NewsHead(props) {
 
           </div>
 
-          <div className="filter">Filter<i className="fas fa-caret-down ml-1 mr-0"></i></div>
+          <div className="modal-items">
+
+          <div className="item">
+              <i className="icon fas fa-street-view mr-0" aria-hidden="true"></i>
+              <div>Local</div>
+            </div>
+
+            <div className="item">
+              <i className="icon fas fa-temperature-low mr-0" aria-hidden="true"></i>
+              <div>Weather</div>
+            </div>
+
+            <div className="item">
+              <i className="icon fas fa-chart-line mr-0" aria-hidden="true"></i>
+              <div>Stocks</div>
+            </div>
+
+            <div className="item">
+              <i className="icon fab fa-bitcoin mr-0" aria-hidden="true"></i>
+              <div>Crypto</div>
+            </div>
+
+            <Link to={ROUTES.PRESIDENTS}>
+              <div className="item text-white">
+                <i className="icon fas fa-archive mr-0" aria-hidden="true"></i>
+                <div>Resources</div>
+              </div>
+            </Link>
+
+          </div>
+
+          <div className="filter d-none">Filter<i className="fas fa-caret-down ml-1 mr-0"></i></div>
 
         </div>
 
         <div className="bottom">
 
-          <div className="stocks">
+          <div className="stocks d-none">
             <span className="detail badge badge-light border-dark">
               <i className="fas fa-chart-line mr-1"></i>DOW: $29,638.64
             </span>
@@ -410,11 +447,17 @@ function NewsHead(props) {
 
           <div className="photo-credit">
 
-            <span className="detail badge badge-light border-dark">
-              <i className="far fa-image mr-1"></i>Credit: <a href="" target="_blank">Link</a>
+            <a className="detail badge badge-light border-dark" href="" target="_blank">
+              <span className="">
+                <i className="far fa-image mr-1"></i>Credit: Link
+              </span>
+            </a>
+
+            <span style={{cursor: 'pointer'}} className="detail badge badge-light border-dark">
+              <i className="fas fa-tools mr-0"></i>
             </span>
 
-            <span onClick={() => setBackgroundIndex( (backgroundIndex === searchBackgrounds.length - 1 ? 0 : backgroundIndex + 1) )} className="detail badge badge-light border-dark">
+            <span style={{cursor: 'pointer'}} onClick={() => setBackgroundIndex( (backgroundIndex === searchBackgrounds.length - 1 ? 0 : backgroundIndex + 1) )} className="detail badge badge-light border-dark">
               <i className="fas fa-redo-alt mr-0"></i>
             </span>
           </div>
@@ -495,6 +538,18 @@ class RecentSliders extends Component {
                   <i className="fas fa-forward"></i>
                 </div>
               </div>
+
+              <div className="stories-filters d-flex mb-3 align-items-center">
+
+                <DropdownButton variant="articles-light" id="dropdown-basic-button" title={ <span><i className="fas fa-filter"></i> Newest</span> }>
+                  <Dropdown.Item href="#/action-1">Newest</Dropdown.Item>
+                  <Dropdown.Item href="#/action-2">Oldest</Dropdown.Item>
+                </DropdownButton>
+
+                <Link onClick={() => window.scrollTo(0, 0)} to={ROUTES.STORIES} className="ml-3 text-muted">View All</Link>
+
+
+              </div>
               
             </span>
 
@@ -524,12 +579,38 @@ class RecentSliders extends Component {
                   <i className="fas fa-backward"></i>
                   <i className="fas fa-forward"></i>
                 </div>
+                
               </div>
 
-              <div className="issue-view-controls">
+              <div className="issue-filters d-flex mb-3 align-items-center">
+
+                <div className="issue-subscription-control noselect">
+                  <div onClick={() => this.props.toggleUserSubscriptions()} className={"control " + (!this.props.userSubscriptions  ? 'active' : '') }>All</div>
+                  <div onClick={() => this.props.toggleUserSubscriptions()} className={"control " + (this.props.userSubscriptions  ? 'active' : '') }>Subscriptions</div>
+                </div>
+  
+                <div className="issue-sort-control ml-3 noselect">
+  
+                  {/* <button className="btn btn-articles-light dropdown">
+                    Newest
+                  </button> */}
+
+                  <DropdownButton variant="articles-light" id="dropdown-basic-button" title={ <span><i className="fas fa-filter"></i> Newest</span> }>
+                    <Dropdown.Item href="#/action-1">Newest</Dropdown.Item>
+                    <Dropdown.Item href="#/action-2">Oldest</Dropdown.Item>
+                    <Dropdown.Item href="#/action-3">Most Subscribed</Dropdown.Item>
+                  </DropdownButton>
+                  
+                </div>
+
+                <Link onClick={() => window.scrollTo(0, 0)} to={ROUTES.ISSUES} className="ml-3 text-muted">View All</Link>
+
+              </div>
+
+              {/* <div className="issue-view-controls d-none">
                 <div onClick={() => this.props.toggleUserSubscriptions()} className={"type-selection " + (!this.props.userSubscriptions  ? 'active' : '') }>All</div>
                 <div onClick={() => this.props.toggleUserSubscriptions()} className={"type-selection " + (this.props.userSubscriptions  ? 'active' : '') }>Subscriptions</div>
-              </div>
+              </div> */}
 
             </span>
 
@@ -578,16 +659,34 @@ class RecentSliders extends Component {
 
             :
 
-            (this.props.issues.issues.map((document, i) => (
+            <>
+              {this.props.issues.issues.map((document, i) => (
+  
+                <SwiperSlide>
+                  <NewsCard 
+                    key={i}
+                    hasUpdate={ moment(document.last_update).isSameOrAfter(document.lastRead) } 
+                    isSub={this.props.user_subscriptions?.filter(sub => sub._id === document._id).length > 0}
+                    document={document}
+                  />
+                </SwiperSlide>
+  
+              ))}
+  
               <SwiperSlide>
-                <NewsCard 
-                  key={i}
-                  hasUpdate={ moment(document.last_update).isSameOrAfter(document.lastRead) } 
-                  isSub={this.props.user_subscriptions?.filter(sub => sub._id === document._id).length > 0}
-                  document={document}
-                />
+
+                <Link onClick={() => window.scrollTo(0, 0)} to={ROUTES.ISSUES}>
+                  <div style={{height: '400px'}} className="bg-dark text-white d-flex flex-column justify-content-center align-items-center">
+                    <h4>View All Issues</h4>
+                    <p>100 total Issues</p>
+                    <i class="fas fa-external-link-alt fa-3x mr-0"></i>
+                  </div>
+                </Link>
+
               </SwiperSlide>
-            )))
+              
+            </>
+
             }
 
           </Swiper>
@@ -633,7 +732,7 @@ class RecentSliders extends Component {
             <h5>Tags</h5>
           </div>
 
-          <div className="tags mr-3">
+          <div className="tags mb-3">
 
             {this.state.tags.map(tag => 
               <div onClick={() => this.props.changeTagFocus(tag.tag_name)} className={"tag " + (this.props.tagSearch === tag.tag_name ? 'active' : '')}>

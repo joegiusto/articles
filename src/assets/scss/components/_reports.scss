@@ -609,15 +609,11 @@
     }
 
     .main {
-      cursor: pointer;
-      display: flex;
       overflow-x: scroll;
       padding: .6rem .6rem;
       border: solid 1px #000;
       background-color: $base-color;
       border-radius: 10px;
-
-
 
       .main-seperation {
         cursor: default;
@@ -647,10 +643,11 @@
       }
 
       .selection:last-child {
-        margin-right: 2rem;
+        // margin-right: 2rem;
       }
 
       .selection {
+        cursor: pointer;
         position: relative;
         text-transform: capitalize;
         // border: solid 2px black;

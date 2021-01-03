@@ -253,9 +253,9 @@ class Submissions extends Component {
                   <Route exact path={ROUTES.STORE_SUBMISSIONS} render={() =>
                     <div className="listings">
 
-                      <h1 className="month text-center">
+                      {/* <h1 className="month text-center">
                         {moment().format('MMMM')} - {moment().add(2, 'months').format('MMMM')} Submissions
-                      </h1>
+                      </h1> */}
     
                       {/* <h5>Next Pick At End of Month <span className="badge badge-danger"><Countdown date={moment().startOf('month').add(1, 'months').format('YYYY-MM-DD')} /></span></h5> */}
     
@@ -275,7 +275,7 @@ class Submissions extends Component {
 
 
                           {/* <div className="other"> */}
-                            <span className="timer badge badge-danger"><Countdown date={moment().startOf('month').add(3, 'months').format('YYYY-MM-DD')} /></span>
+                            {/* <span className="timer badge badge-danger"><Countdown date={moment().startOf('month').add(3, 'months').format('YYYY-MM-DD')} /></span> */}
                             {this.props.isAuth ? null : <div className="login-notice badge badge-danger">Please login or sign up to vote</div>}
                           {/* </div> */}
 

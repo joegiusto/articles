@@ -91,7 +91,7 @@ function Presidents(props) {
 
       <div className="main w-100">
 
-        <div className="presidents-container">
+        <div className="presidents-container card">
   
           <div className="container">
             <h1>Manage Presidents</h1>

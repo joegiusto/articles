@@ -1,3 +1,44 @@
+// 2021
+.dark-mode {
+
+  .video-container {
+    @include dark-mode-neon-base();
+  }
+
+  .scroll-percent {
+    @include dark-mode-neon-accent();
+    color: white!important;
+
+    .scroll-pointer {
+      @include dark-mode-neon-base();
+    }
+  }
+
+}
+
+.mission-page {
+
+  .header-bar {
+    box-shadow: 0px 0px 5px -3px #000;
+  }
+
+  .video-container {
+    background-color: $base-color;
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    box-shadow: inset 0px 0px 5px -3px #000;
+
+    .youtube-video {
+      width: auto;
+      max-width: 500px;
+    }
+  }
+
+}
+
+// 2019 Garbage
+
 .container-mission {
   max-width: 100%;
 }
@@ -79,9 +120,9 @@
     .content {
       padding: 0rem 0.25rem!important;
 
-      .mission-section-container {
-        padding: 0rem .5rem!important;
-      }
+      // .mission-section-container {
+      //   padding: 0rem .5rem!important;
+      // }
 
       h1 {
         font-size: 3rem!important;
@@ -191,9 +232,32 @@
         margin-bottom: 2rem;
       }
 
+      .scroll-percent-container {
+        border-bottom: 1px solid #000;
+      }
+
       .scroll-percent {
-        margin-bottom: 1rem;
-        background-color: rgba($accent-color, .5);
+        position: relative;
+        margin-bottom: 2rem;
+        border: 2px solid #000;
+        background-color: white;
+        color: black;
+        overflow: visible;
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-size: 0.8rem;
+        font-weight: 900;
+
+        .scroll-pointer {
+          position: absolute;
+          width: 0.75rem;
+          height: 1rem;
+          bottom: -1.2rem;
+          left: 0;
+          background-color: black;
+          clip-path: polygon(50% 0, 100% 100%, 50% 80%, 0% 100%);
+          transform: translateX(-50%);
+        }
       }
 
       .links {
@@ -201,15 +265,17 @@
         flex-grow: 2;
 
         .title {
-          font-family: forte;
-          font-size: 2rem;
-          font-weight: bold;
+          font-family: brandon-grotesque, sans-serif;
+          font-style: normal;
+          font-size: 1.5rem;
+          font-weight: 900;
         }
   
         .link {
+          margin-left: 0.5rem;
           font-family: brandon-grotesque, sans-serif;
           font-style: normal;
-          font-size: 1.2rem;
+          font-size: 1.1rem;
           font-weight: 500;
         }
       }
@@ -399,8 +465,8 @@
   }
 
   .content {
-    padding: 0rem 6rem;
     padding-left: 1rem;
+    max-width: 825px;
 
     .font-mission-text {
       font-family: montserrat, sans-serif;
@@ -504,7 +570,7 @@
     .mission-section-container {
       position: relative;
       background-color: white;
-      padding: 0rem 2.75rem;
+      padding: 1rem 1rem;
       box-shadow: 0px 0px 5px -3px #000;
 
       // font-family: montserrat, sans-serif;
@@ -513,8 +579,26 @@
       // font-style: normal;
     }
 
+    .section-title {
+      background-color: black;
+      color: white;
+      padding: 0.25rem;
+    }
+
     .mission-section {
       position: relative;
+
+      .pop-out {
+        display: none;
+        width: 200px;
+        position: absolute;
+        right: calc(-250px);
+
+        @media screen and (min-width: 1650px) {
+          display: block;
+        }
+
+      }
 
       .youtube-banner, .instagram-banner {
         display: inline-block;
@@ -575,6 +659,7 @@
         // letter-spacing: px;
         // font-size: 1.2rem;
       }
+
       .sub-text {
         display: block;
         // padding-top: 3rem;
@@ -648,7 +733,6 @@
       z-index: 1;
     }
     
-
   }
 
 }
@@ -663,19 +747,23 @@
 }
 
 .mission-page {
-  font-size: 1.1rem;
+  font-size: 1rem;
   // font-size:30px;
+
   ul {
     padding-left: 0px;
   }
+
   .responsive-header {
     font-size: 50px;
   }
+
   .quote {
     position: relative;
     color: white;
     text-shadow: #000;
     font-size: 0.8rem;
+
     .quote-background-container {
       border: solid 2px #000;
       z-index: -1;
@@ -724,6 +812,7 @@
       }
     }
   }
+
   .text-indent {
     // margin-top: 1rem;
     margin-left: rem;
@@ -738,6 +827,7 @@
       // background-color: rgba(0, 0, 0, .05);
     }
   }
+
   &-side {
     padding-top: 1.5rem;
     // background-color: rgba(128, 128,128, 0.20);
@@ -765,6 +855,7 @@
       }
     }
   }
+
   &-content {
     height: calc(100vh - 50px);
     overflow-y: scroll;

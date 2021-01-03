@@ -3,6 +3,12 @@
   src: url('../../font/FORTE.TTF') format('truetype');
 }
 
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: brandon-grotesque, sans-serif;
+  font-style: normal;
+  font-weight: 900;
+}
+
 .heading-font {
   // font-family: agenda, sans-serif;
   font-family: forte, sans-serif;
@@ -25,6 +31,7 @@
   font-style: italic;
   // font-size: 5rem;
 }
+
 .top-headline {
   font-family: agenda, sans-serif;
   font-weight: 400;
@@ -49,10 +56,6 @@
   font-weight: 201;
   font-style: italic;
   font-size: 5rem;
-}
-
-.section-title {
-  font-family: 'Merienda One', cursive;
 }
 
 .section-roadmap {

@@ -28,7 +28,7 @@ class Reports extends Component {
         loading: false,
         limit: 5,
         menuExpanded: false,
-        tableSelector: 'donations',
+        tableSelector: 'revenue',
         subtableSelector: '',
         chartPeriodSelector: '1y',
 
@@ -486,7 +486,7 @@ class Reports extends Component {
               {console.log(megaGroup)}
 
               {megaGroup.map(sale => 
-                <tr>
+                <tr onClick={() => this.props.history.push(ROUTES.REPORTS + `?id=${sale._id}&type=revenue`)}>
                   <td colSpan="1" className="border-right-0 ">{moment(sale.date).format("LLL")}</td>
                   <td colSpan="1" className="border-right-0 ">{sale.type}</td>
                   <td colSpan="1" className="border-right-0 "></td>
@@ -754,12 +754,20 @@ class Reports extends Component {
                   <div className="reports-table reports-shadow">
                     <div className="table-selector">
             
-                      <div className="main">
-                        {this.tableSelectorChoice('donations')}
-                        {this.tableSelectorChoice('clothing')}
-                        {this.tableSelectorChoice('payroll')}
-                        {this.tableSelectorChoice('revenue')}
-                        {this.tableSelectorChoice('expenses')}
+                      <div className="main d-flex flex-row justify-content-lg-between">
+
+                        <div className="d-flex">
+                          {this.tableSelectorChoice('revenue')}
+                          {this.tableSelectorChoice('expenses')}
+                        </div>
+
+                        <div className="d-flex">
+                          <i style={{cursor: 'initial'}} class="fas fa-thumbtack d-none d-lg-flex align-items-center mr-2"></i>
+                          {this.tableSelectorChoice('donations')}
+                          {this.tableSelectorChoice('clothing')}
+                          {this.tableSelectorChoice('payroll')}
+                        </div>
+
                       </div>
         
                       <div className={"sub sub-donations " + (this.state.tableSelector === 'donations' ? '' : 'd-none')}>

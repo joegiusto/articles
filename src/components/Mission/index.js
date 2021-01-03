@@ -6,6 +6,8 @@ import Scrollspy from 'react-scrollspy';
 import * as ROUTES from '../../constants/routes';
 import { Link } from 'react-router-dom';
 
+import StoreItemBeta from '../Store/Items/Beta.js';
+
 class Wrapper extends React.Component {
   constructor(props) {
     super(props);
@@ -154,33 +156,42 @@ const Mission = (props) => {
             <div className="side-bar-container-new">
               <div className="side-bar-new">
 
-                <div className="scroll-percent progress">0%</div>
+                <div className="scroll-percent-container">
 
-                <div className="links">
+                  <div className="scroll-percent progress">
+                    0%
+                    <div className="scroll-pointer"></div>
+                  </div>
+
+                </div>
+
+                <div className="links pt-2">
                   <div className="title">Intro</div>
-                  <div className="link">Tldr</div>
+                  <div className="link">Summary (TLDR)</div>
                   <div className="link">About</div>
                   <div className="link">Mission</div>
-                  <div className="link">Transparency</div>
+
+                  <div className="title">Transparency</div>
                   <div className="link">Reports</div>
+                  <div className="link">Charts</div>
+                  <div className="link">Payroll</div>
   
                   <div className="title">Clothing</div>
                   <div className="link">Store</div>
                   <div className="link">Submissions</div>
   
                   <div className="title">News</div>
-                  <div className="link">Store</div>
+                  <div className="link">Stories</div>
                   <div className="link">Issues</div>
                   <div className="link">Myths</div>
+                  <div className="link">Resources</div>
   
                   <div className="title">Party</div>
-                  <div className="link">Sample</div>
-                  <div className="link">Sample</div>
+                  <div className="link">Proposals</div>
   
                   <div className="title">Other</div>
-                  <div className="link">Payrole</div>
-                  <div className="link">Failure</div>
                   <div className="link">Privacy</div>
+                  <div className="link">Failure</div>
                 </div>
 
                 <div className="version-info progress">Version 1 (05/2020)</div>
@@ -238,17 +249,167 @@ const Mission = (props) => {
           </div>
 
           <div className="col-12 col-offset-1 col-md-8 col-lg-9 col-xl-7 my-auto">
-            <div className="content mt-3 mt-xl-5">
 
-              <img height="200px" src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/1280px-Flag_of_the_United_States.svg.png" alt=""/>
+            <div className="content mt-3">
+
+            <div className="alert alert-danger mb-3 rounded-0">This is all placeholder text for the moment</div>
+              
+              <div className="card rounded-0">
+                <div className="card-header w-100 p-3">
+                  <h2 className="mb-0 section-title">Articles Mission</h2>
+                </div>
+              </div>
+
+              <div className="video-container">
+
+                <div className="youtube-video w-100 text-center mt-3">
+
+                  <div class="embed-responsive embed-responsive-16by9">
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/HcXq4eOktIY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                  </div>
+
+                  <p className="text"><b>Introduction Video (January 2021)</b></p>
+
+                  {/* Bootstrap 5 */}
+                  {/* <div class="ratio ratio-16x9">
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/HcXq4eOktIY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                  </div> */}
+                  
+                </div>
+
+              </div>
 
               <div className="mission-section-container">
 
-                <span className="youtube-inline-link special d-block"><i className="fab fa-youtube mx-2"></i>Prefer a video instead? (Video coming soon!)</span>
+                <div className="mission-section pt-3 mb-3">
+                  <h2 className="section-title">Into</h2>
+                  <h5>Summary</h5>
+                  <p>Articles is a political organization and platform, working to make America a better place for the people through avenues of transparency, clothing, news and politics.</p>
+                  <h5>About</h5>
+                  <p>Today we have many leaders aligned with political parties occupying Americas executive branch that care more about their party then the fundamentals behind the laws in which they are trying to pass. We have a terrifying amount of partisan issues that no side wishes to budge on and little has been done to provide compromise to these issues. How do the two political parties in power that speak of the American Dream and fairness for all, allow issues such as school lunch debt, abuse of second amendment rights, sweatshops, offshore accounts, flawed welfare systems and many more to plague this nation?</p>
+                  <h5>Mission</h5>
+                </div>
 
-                <div className="mission-section font-mission-text">
+                <div className="mission-section">
 
-                  <div style={{height: '75px'}} className="mt-5"></div>
+                  <h2 className="section-title">Transparency</h2>
+                  <p>At Articles, everything is transparent from day one. Donations, sales, ad-revenue, payroll, cost of operations, you name it, all available live over at our Reports page.</p>
+
+                  <p>Money corrupts many organizations and leaders so we want to make sure the same does not happen to us, transparency is also one of the most ethical things a company involved in politics can do if done right. Many other companies do this yes, but to acquire this data proves very challenging and can be hard. That data is also sometimes missing bits and pieces as well as delayed to onlookers.</p>
+
+                  <p>Every transaction we process will appear live, just bought a shirt from us? Head over to the reports page and there you will see that purchase as well as the amount of money sitting in our accounts. Whenever we need to take money from that account say for events, resupplying products, or anything really, those transactions show up there too. Each expense of ours includes a Why report on why we spent that money along with a system for supporters to ask more questions about the transaction and flag it if they do not agree with it.</p>
+
+                  <h5>Reports</h5>
+                  <p></p>
+
+                  <h5>Charts</h5>
+                  <p></p>
+
+                  <h5>Payroll</h5>
+                  <p></p>
+
+                </div>
+
+                <div className="mission-section">
+                  
+                  <div className="pop-out">
+
+                    {/* Example of inline element in the mission side bar */}
+
+                    <StoreItemBeta
+                      setPopOutVisible={false}
+                      // product={this.state.products.find(element => element._id === "5eabc20a38584110a044f93e")}
+                      color="articles"
+                      // userSavedProducts={this.props.user_details.saved_products}
+                      // isSaved={this.props.user_details?.saved_products?.find(o => o.product_id === '5eabc20a38584110a044f93e')}
+                    />
+
+                    <div className="card d-none">
+                      <div className="card-header">
+                        <h5>Test</h5>
+                        <p>Test</p>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <h2 className="section-title">Clothing</h2>
+
+                  <h5>Store</h5>
+                  <p>In figuring out how we are going to do all of this, questions had to be asked, how will we raise money? Money again, is one of the things required to run this operation. So what is something that we all have in common that we need? Well that answer was wearing clothes. Many times throughout history and even today clothing is used as a means of expression. Movements like the Flappers and Flower Children used clothing as a way of expression and we plan to do the same. While all of our clothing will not be politically woke, everything we sell will help the platform to a degree. In our store we will be selling four types of products as we develop and grow.</p>
+
+                  <h5>Submissions</h5>
+                  <p>As you can see above, one type of product that appears on our store is a submission product. On the Submissions page users can submit shirt designs to be voted on by the community. At the end of every month we will take the design with the most votes and put it up on the store for people to buy. Every submission is subject to our approval and must meet the guidelines laid out on the submissions page.</p>
+
+                </div>
+
+                <div className="mission-section">
+
+                  <h2 className="section-title">News</h2>
+                  <p>A huge majority of American publishing is owned by just 6 companies, all of which give political donations to our government. Take a look at the image below</p>
+
+                  <img className="news-media-image mb-4" src="https://i.stack.imgur.com/lAT2b.jpg" height="350px" alt=""></img>
+
+                  <p>With current news providers falling out of touch with the average American and providing content not in the interest of the American people, it is time for something to be done. We are developing interactive articles that make news easier to navigate. Source based and trackable issues are a great focus and a huge part of Articles.</p>
+
+                  <p>Online news platforms are so dry with content and littered with ads today. With the help of clothing sales, we will build and maintain a new kind of news platform. A platform that is not biased and does not have to cater to corporations.</p>
+
+                  <h5>Stories</h5>
+                  <p>Stories is the place where we put our more general news and current events. Stories are not subscribable but you can choose to be alerted when edits and updates to one are made.</p>
+
+                  <h5>Issues</h5>
+                  <p>Issues are news you can subscribe to directly. Issues are for events that receive updates to them that need attention. Think about ongoing issues like the Keystone XL Pipeline and Global Warming which are both issues you can subscribe to today!</p>
+
+                  <h5>Myths</h5>
+                  <p>Myths are where users can go to clear up confusion on common misconceptions. This area is home to questions like "Do electric car batteries pollute more than gasoline cars?" and "Do windmills actually cause cancer?". We provide sources and data on all the topics we cover here so users can leave educated and confident, not being fooled by rumors that travel the nations web.</p>
+
+                  <h5>Resources</h5>
+                  <p>For common resources and educational information in general that is hosted by us.</p>
+
+                </div>
+
+                <div className="mission-section">
+
+                  <div className="pop-out">
+                    <div className="card">
+                      <div className="card-header">
+                        <h5>Test</h5>
+                        <p>Test</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <h2 className="section-title">Party</h2>
+                  <h5>Proposals</h5>
+                  <p></p>
+
+                </div>
+
+                <div className="mission-section ">
+
+                  <h2 className="section-title">Other</h2>
+
+                  <h5>Privacy</h5>
+                  <p>Privacy for us will always be a fundamental part of our business. The right for people to have access over the information they share online should be treated in the same respect as data we choose to share in person. </p>
+
+                  <h5>Failure</h5>
+                  <p>Can Articles succeed? We have political, social and religious hurdles that we must overcome or we are doomed to fail.</p>
+
+                  <ul className="ml-5">
+                    <li><b>Political</b> <br/> Sample text</li>
+                    <li><b>Social</b> <br/> Sample text</li>
+                    <li><b>Religious</b> <br/> Sample text</li>
+                  </ul>
+
+                </div>
+
+              </div>
+
+              {/* Old */}
+              <div className="mission-section-container mt-5">
+                                <div className="mission-section font-mission-text">
+
+                  {/* <div style={{height: '75px'}} className="mt-5"></div> */}
 
                   <h1 className="">Intro</h1>
     
@@ -567,7 +728,6 @@ const Mission = (props) => {
                   </div>
 
                 </div>
-
               </div>
 
             </div>

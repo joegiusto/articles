@@ -341,313 +341,312 @@ class Products extends Component {
     };
 
     return (
-      <div className="admin-products">
+      <div className="admin-page admin-products">
 
-        <div className="product-manage">
+        <div className="side-panel">
 
-          <div className="preview d-flex justify-content-center align-items-center store-page pt-4">
-
-            {/* <StoreItemAlpha 
-            setPopOutVisible={this.setPopOut} 
-            catalogId='1' 
-            price={this.state.activeProduct.price}
-            ourCost={this.state.activeProduct.ourCost}
-            title={this.state.activeProduct.title} 
-            material={this.state.activeProduct.material}
-            sale="%15" 
-            banner={this.state.activeProduct.type} 
-            color="articles" 
-            /> */}
-
-            <StoreItemBeta product={this.state.activeProduct} color="articles" />
-
+          <div className="card">
+            <div className="card-header">Clothing</div>
+            <div className="card-body">
+              <div><b>Hoodie: 2</b></div>
+              <div><b>Pins: 2</b></div>
+              <div><b>Shirts: 2</b></div>
+              <div><b>Hats: 1</b></div>
+              <div><b>Other: 1</b></div>
+            </div>
           </div>
 
-          <div className="details">
-
-            <div className="color-bar"></div>
-
-            {
-            this.state.currentProduct === '' ? 
-            '' 
-            : 
-            <div className="d-flex justify-content-between connection-details">
-              <div className="badge badge-dark mb-3">{this.state.currentProduct}</div>
-
-              {/*  */}
-              {this.state.activeProductLoading ? 
-              <div className="badge badge-warning mb-3">Loading</div>
-              :
-              this.state.activeProductError ? 
-              <div className="badge badge-danger mb-3">Error</div>
-              :
-              <div className="badge badge-success mb-3">Success</div>
-              }
+          <div className="card mt-3">
+            <div className="card-header">Other</div>
+            <div className="card-body">
+              <div><b>All: 0</b></div>
             </div>
-            }
+          </div>
 
-            {/* This will be for mobile to toggle between details and card to save screen space */}
-            {/* <div className="btn-group w-100 mb-3" role="group" aria-label="First group">
-              <button type="button" className="btn btn-dark">Details</button>
-              <button type="button" className="btn btn-light border">Preview</button>
-            </div> */}
+        </div>
 
-            <div className="form-group type-group">
+        <div className="main-panel">
 
-              {/* <label for="exampleInputPassword1">Type</label> */}
-
-              <div className="types noselect">
-                <span onClick={() => this.changeType('Original')} className={"type badge shadow-sm border type " + (this.state.activeProduct.type === 'Original' ? 'badge-dark' : 'badge-light')}>Original</span>
-                <span onClick={() => this.changeType('Partnership')} className={"type badge shadow-sm border type " + (this.state.activeProduct.type === 'Partnership' ? 'badge-primary' : 'badge-light')}>Partnership</span>
-                <span onClick={() => this.changeType('Sponsored')} className={"type badge shadow-sm border type " + (this.state.activeProduct.type === 'Sponsored' ? 'badge-warning' : 'badge-light')}>Sponsored</span>
+          {/* OLD MANAGE */}
+          <div className="product-manage d-none">
+  
+            <div className="preview d-flex justify-content-center align-items-center store-page pt-4">
+  
+              {/* <StoreItemAlpha 
+              setPopOutVisible={this.setPopOut} 
+              catalogId='1' 
+              price={this.state.activeProduct.price}
+              ourCost={this.state.activeProduct.ourCost}
+              title={this.state.activeProduct.title} 
+              material={this.state.activeProduct.material}
+              sale="%15" 
+              banner={this.state.activeProduct.type} 
+              color="articles" 
+              /> */}
+  
+              <StoreItemBeta product={this.state.activeProduct} color="articles" />
+  
+            </div>
+  
+            <div className="details">
+  
+              <div className="color-bar"></div>
+  
+              {
+              this.state.currentProduct === '' ? 
+              '' 
+              : 
+              <div className="d-flex justify-content-between connection-details">
+                <div className="badge badge-dark mb-3">{this.state.currentProduct}</div>
+  
+                {/*  */}
+                {this.state.activeProductLoading ? 
+                <div className="badge badge-warning mb-3">Loading</div>
+                :
+                this.state.activeProductError ? 
+                <div className="badge badge-danger mb-3">Error</div>
+                :
+                <div className="badge badge-success mb-3">Success</div>
+                }
               </div>
-            </div>
-
-            <div className="row">
-
-              <div className="col-md-6">
-
-                <div className="form-group">
-                  <label for="title">Title</label>
-                  <input 
+              }
+  
+              {/* This will be for mobile to toggle between details and card to save screen space */}
+              {/* <div className="btn-group w-100 mb-3" role="group" aria-label="First group">
+                <button type="button" className="btn btn-dark">Details</button>
+                <button type="button" className="btn btn-light border">Preview</button>
+              </div> */}
+  
+              <div className="form-group type-group">
+  
+                {/* <label for="exampleInputPassword1">Type</label> */}
+  
+                <div className="types noselect">
+                  <span onClick={() => this.changeType('Original')} className={"type badge shadow-sm border type " + (this.state.activeProduct.type === 'Original' ? 'badge-dark' : 'badge-light')}>Original</span>
+                  <span onClick={() => this.changeType('Partnership')} className={"type badge shadow-sm border type " + (this.state.activeProduct.type === 'Partnership' ? 'badge-primary' : 'badge-light')}>Partnership</span>
+                  <span onClick={() => this.changeType('Sponsored')} className={"type badge shadow-sm border type " + (this.state.activeProduct.type === 'Sponsored' ? 'badge-warning' : 'badge-light')}>Sponsored</span>
+                </div>
+              </div>
+  
+              <div className="row">
+  
+                <div className="col-md-6">
+  
+                  <div className="form-group">
+                    <label for="title">Title</label>
+                    <input 
+                      type="text"
+                      className="form-control"
+                      value={this.state.activeProduct.title}
+                      onChange={this.handleProductChange}
+                      id="title"
+                      name="title"
+                    />
+                  </div>
+        
+                  <div className="form-group">
+                    <label for="price">Price ${(this.state.activeProduct.price / 100).toFixed(2)}</label>
+                    <input 
+                      type="number"
+                      className="form-control"
+                      value={this.state.activeProduct.price} 
+                      onChange={this.handleProductChange}
+                      id="price"
+                      name="price"
+                    />
+                  </div>
+      
+                  <div className="form-group">
+                    <label for="our-cost">Our Cost ${(this.state.activeProduct.ourCost / 100).toFixed(2)}</label>
+                    <input 
+                    type="number" 
+                    className="form-control" 
+                    value={this.state.activeProduct.ourCost}
+                    onChange={this.handleProductChange} 
+                    id="ourCost"
+                    name="ourCost"
+                    />
+                  </div>
+  
+                  <div className="form-group">
+                    <label for="our-cost">Material</label>
+                    <input
                     type="text"
                     className="form-control"
-                    value={this.state.activeProduct.title}
-                    onChange={this.handleProductChange}
-                    id="title"
-                    name="title"
-                  />
+                    value={this.state.activeProduct.material}
+                    onChange={this.handleProductChange} 
+                    id="material"
+                    name="material"
+                    />
+                  </div>
+  
                 </div>
-      
-                <div className="form-group">
-                  <label for="price">Price ${(this.state.activeProduct.price / 100).toFixed(2)}</label>
-                  <input 
+  
+                <div className="col-md-6">
+                  
+                  <div className="photos">
+                    <div className="pb-2">Showcase Photos</div>
+  
+                    <div className="photo">
+                      <span className="number">1</span>
+                      <input
+                      type="text"
+                      value={this.state.activeProduct.photos?.one}
+                      onChange={this.handleProductPhotoChange}
+                      className="form-control"
+                      id="one"
+                      name="one"
+                      />
+                    </div>
+  
+                    <div className="photo">
+                      <span className="number">2</span>
+                      <input
+                      type="text"
+                      value={this.state.activeProduct.photos?.two}
+                      onChange={this.handleProductPhotoChange}
+                      className="form-control"
+                      id="two"
+                      name="two"
+                      />
+                    </div>
+  
+                    <div className="photo">
+                      <span className="number">3</span>
+                      <input
+                      type="text"
+                      value={this.state.activeProduct.photos?.three}
+                      onChange={this.handleProductPhotoChange}
+                      className="form-control"
+                      id="three"
+                      name="three"
+                      />
+                    </div>
+  
+                    <div className="photo">
+                      <span className="number">4</span>
+                      <input
+                      type="text"
+                      value={this.state.activeProduct.photos?.four}
+                      onChange={this.handleProductPhotoChange}
+                      className="form-control"
+                      id="four"
+                      name="four"
+                      />
+                    </div>
+  
+                    <div className="photo">
+                      <span className="number">5</span>
+                      <input
+                      type="text"
+                      value={this.state.activeProduct.photos?.five}
+                      onChange={this.handleProductPhotoChange}
+                      className="form-control"
+                      id="five"
+                      name="five"
+                      />
+                    </div>
+  
+                    <div className="photo">
+                      <span className="number">6</span>
+                      <input
+                      type="text"
+                      value={this.state.activeProduct.photos?.six}
+                      onChange={this.handleProductPhotoChange}
+                      className="form-control"
+                      id="six"
+                      name="six"
+                      />
+                    </div>
+  
+                  </div>
+  
+                  <div className="mt-2">Visible</div>
+  
+                  <div onClick={() => (this.setState({
+                    activeProduct: {
+                      ...this.state.activeProduct,
+                      visible: true
+                    }
+                  }))} className={"badge " + (this.state.activeProduct.visible ? 'badge-dark' : 'badge-light')}>Yes</div>
+  
+                  <div onClick={() => (this.setState({
+                    activeProduct: {
+                      ...this.state.activeProduct,
+                      visible: false
+                    }
+                  }))} className={"badge " + (!this.state.activeProduct.visible ? 'badge-dark' : 'badge-light')}>No</div>
+  
+                  <div className="mt-2">Includes Subscription</div>
+  
+                  <div onClick={() => (this.setState({
+                    activeProduct: {
+                      ...this.state.activeProduct,
+                      includesSubscription: true
+                    }
+                  }))} className={"badge " + (this.state.activeProduct.includesSubscription ? 'badge-dark' : 'badge-light')}>Yes</div>
+  
+                  <div onClick={() => (this.setState({
+                    activeProduct: {
+                      ...this.state.activeProduct,
+                      includesSubscription: false
+                    }
+                  }))} className={"badge " + (!this.state.activeProduct.includesSubscription ? 'badge-dark' : 'badge-light')}>No</div>
+  
+                  {this.state.activeProduct.includesSubscription ? 
+                  <div className="form-group">
+                    <label for="our-cost">Subscription Time (Months)</label>
+                    <input
                     type="number"
                     className="form-control"
-                    value={this.state.activeProduct.price} 
-                    onChange={this.handleProductChange}
-                    id="price"
-                    name="price"
-                  />
+                    value={this.state.activeProduct.subscriptionTime}
+                    onChange={this.handleProductChange} 
+                    id="subscriptionTime"
+                    name="subscriptionTime"
+                    />
+                  </div>
+                  :
+                  null
+                  }
+  
                 </div>
-    
-                <div className="form-group">
-                  <label for="our-cost">Our Cost ${(this.state.activeProduct.ourCost / 100).toFixed(2)}</label>
-                  <input 
-                  type="number" 
-                  className="form-control" 
-                  value={this.state.activeProduct.ourCost}
-                  onChange={this.handleProductChange} 
-                  id="ourCost"
-                  name="ourCost"
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label for="our-cost">Material</label>
-                  <input
-                  type="text"
-                  className="form-control"
-                  value={this.state.activeProduct.material}
-                  onChange={this.handleProductChange} 
-                  id="material"
-                  name="material"
-                  />
-                </div>
-
+  
               </div>
-
-              <div className="col-md-6">
-                
-                <div className="photos">
-                  <div className="pb-2">Showcase Photos</div>
-
-                  <div className="photo">
-                    <span className="number">1</span>
-                    <input
-                    type="text"
-                    value={this.state.activeProduct.photos?.one}
-                    onChange={this.handleProductPhotoChange}
-                    className="form-control"
-                    id="one"
-                    name="one"
-                    />
-                  </div>
-
-                  <div className="photo">
-                    <span className="number">2</span>
-                    <input
-                    type="text"
-                    value={this.state.activeProduct.photos?.two}
-                    onChange={this.handleProductPhotoChange}
-                    className="form-control"
-                    id="two"
-                    name="two"
-                    />
-                  </div>
-
-                  <div className="photo">
-                    <span className="number">3</span>
-                    <input
-                    type="text"
-                    value={this.state.activeProduct.photos?.three}
-                    onChange={this.handleProductPhotoChange}
-                    className="form-control"
-                    id="three"
-                    name="three"
-                    />
-                  </div>
-
-                  <div className="photo">
-                    <span className="number">4</span>
-                    <input
-                    type="text"
-                    value={this.state.activeProduct.photos?.four}
-                    onChange={this.handleProductPhotoChange}
-                    className="form-control"
-                    id="four"
-                    name="four"
-                    />
-                  </div>
-
-                  <div className="photo">
-                    <span className="number">5</span>
-                    <input
-                    type="text"
-                    value={this.state.activeProduct.photos?.five}
-                    onChange={this.handleProductPhotoChange}
-                    className="form-control"
-                    id="five"
-                    name="five"
-                    />
-                  </div>
-
-                  <div className="photo">
-                    <span className="number">6</span>
-                    <input
-                    type="text"
-                    value={this.state.activeProduct.photos?.six}
-                    onChange={this.handleProductPhotoChange}
-                    className="form-control"
-                    id="six"
-                    name="six"
-                    />
-                  </div>
-
-                </div>
-
-                <div className="mt-2">Visible</div>
-
-                <div onClick={() => (this.setState({
-                  activeProduct: {
-                    ...this.state.activeProduct,
-                    visible: true
-                  }
-                }))} className={"badge " + (this.state.activeProduct.visible ? 'badge-dark' : 'badge-light')}>Yes</div>
-
-                <div onClick={() => (this.setState({
-                  activeProduct: {
-                    ...this.state.activeProduct,
-                    visible: false
-                  }
-                }))} className={"badge " + (!this.state.activeProduct.visible ? 'badge-dark' : 'badge-light')}>No</div>
-
-                <div className="mt-2">Includes Subscription</div>
-
-                <div onClick={() => (this.setState({
-                  activeProduct: {
-                    ...this.state.activeProduct,
-                    includesSubscription: true
-                  }
-                }))} className={"badge " + (this.state.activeProduct.includesSubscription ? 'badge-dark' : 'badge-light')}>Yes</div>
-
-                <div onClick={() => (this.setState({
-                  activeProduct: {
-                    ...this.state.activeProduct,
-                    includesSubscription: false
-                  }
-                }))} className={"badge " + (!this.state.activeProduct.includesSubscription ? 'badge-dark' : 'badge-light')}>No</div>
-
-                {this.state.activeProduct.includesSubscription ? 
-                <div className="form-group">
-                  <label for="our-cost">Subscription Time (Months)</label>
-                  <input
-                  type="number"
-                  className="form-control"
-                  value={this.state.activeProduct.subscriptionTime}
-                  onChange={this.handleProductChange} 
-                  id="subscriptionTime"
-                  name="subscriptionTime"
-                  />
-                </div>
-                :
-                null
-                }
-
-              </div>
-
+  
+              {this.state.currentProduct === '' ? 
+              <div onClick={() => this.onSubmit()} className="btn upsert btn-articles-light">Add Product</div>
+              :
+              this.state.activeProductError ?
+              <div className="btn upsert btn-articles-light disabled" style={{cursor: 'not-allowed'}}>Update Product</div>
+              :
+              <div onClick={() => this.onSubmit()} className="btn upsert btn-articles-light">Update Product</div>
+              }
+              
             </div>
+  
+          </div>
+  
+          <div className="p-3 text-center">
+            <h2>Product List</h2>
 
-            {this.state.currentProduct === '' ? 
-            <div onClick={() => this.onSubmit()} className="btn upsert btn-articles-light">Add Product</div>
-            :
-            this.state.activeProductError ?
-            <div className="btn upsert btn-articles-light disabled" style={{cursor: 'not-allowed'}}>Update Product</div>
-            :
-            <div onClick={() => this.onSubmit()} className="btn upsert btn-articles-light">Update Product</div>
-            }
-            
+            <DataTable
+              title="Does not matter"
+              noHeader={true}
+              highlightOnHover={true}
+              columns={columns}
+              data={this.state.products}
+              customStyles={customStyles}
+              className='table table-bordered bg-white'
+              expandableRows={true}
+              expandOnRowClicked={true}
+              expandableRowsComponent={
+                <div>Testing</div>
+              }
+            />
+
           </div>
 
         </div>
-
-        <div className="">
-          <h5>Product Info</h5>
-        </div>
-
-        <DataTable
-          title="Does not matter"
-          noHeader={true}
-          highlightOnHover={true}
-          columns={columns}
-          data={this.state.products}
-          customStyles={customStyles}
-          className='table table-bordered bg-white'
-          expandableRows={true}
-          expandOnRowClicked={true}
-          expandableRowsComponent={
-            <div>Testing</div>
-          }
-        />
-
-        {/* <table className="table table-bordered bg-white mt-3">
-          <thead>
-            <tr>
-              <th scope="col">Item</th>
-              <th scope="col">Type</th>
-              <th scope="col">Price</th>
-              <th scope="col">Card Photos</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-
-            {this.state.products.map(product => (
-
-              <tr>
-                <th scope="row">{product.title}</th>
-                <td>{this.renderType(product.type)}</td>
-                <td>${product.price / 100}</td>
-                <td>{this.renderPhotos(product.photos)}</td>
-                <td><div className="badge badge-articles mr-2" onClick={() => this.setState({currentProduct: product._id})}>Edit</div><div className="badge badge-danger">Delete</div></td>
-              </tr>
-              
-            ))}
-
-          </tbody>
-        </table> */}
-
-        
 
       </div>
     );

@@ -3,6 +3,10 @@ import { connect } from "react-redux";
 import moment from 'moment'
 import { Link } from 'react-router-dom';
 
+// React Bootstrap Components
+import DropdownButton from 'react-bootstrap/DropdownButton'
+import Dropdown from 'react-bootstrap/Dropdown'
+
 // import { NewsCard } from '../index'
 import NewsCard from '../NewsCard'
 import * as ROUTES from '../../../constants/routes'
@@ -92,16 +96,29 @@ class IssuesClass extends Component {
 
         <div className="news-static mb-4">
 
-          <div className="issue-view-controls">
-            {/* <div onClick={() => this.setState({issueSort: 'all'})} className={"type-selection " + (this.state.issueSort === 'all' ? 'active' : '') }>All</div> */}
-            {/* <div onClick={() => this.setState({issueSort: 'user'})} className={"type-selection " + (this.state.issueSort === 'user' ? 'active' : '') }>Subscriptions</div> */}
-            <div onClick={() => this.props.toggleUserSubscriptions()} className={"type-selection " + (!this.props.site.userSubscriptions  ? 'active' : '') }>All</div>
-            <div onClick={() => this.props.toggleUserSubscriptions()} className={"type-selection " + (this.props.site.userSubscriptions  ? 'active' : '') }>Subscriptions</div>
-          </div>
+          <div className="issue-filters d-flex align-items-center mb-3">
 
-          <div className="issue-date-contorls">
+            <div className="issue-subscription-control noselect">
+              <div onClick={() => this.props.toggleUserSubscriptions()} className={"control " + (!this.props.site.userSubscriptions  ? 'active' : '') }>All</div>
+              <div onClick={() => this.props.toggleUserSubscriptions()} className={"control " + (this.props.site.userSubscriptions  ? 'active' : '') }>Subscriptions</div>
+            </div>
+  
+            <div className="issue-sort-control ml-3 noselect">
+  
+              <DropdownButton variant="articles-light" id="dropdown-basic-button" title={ <span><i className="fas fa-filter"></i> Newest</span> }>
+                <Dropdown.Item href="#/action-1">Newest</Dropdown.Item>
+                <Dropdown.Item href="#/action-2">Oldest</Dropdown.Item>
+                <Dropdown.Item href="#/action-3">Most Subscribed</Dropdown.Item>
+              </DropdownButton>
+              
+            </div>
             
           </div>
+
+          {/* <div className="issue-view-controls d-none">
+            <div onClick={() => this.props.toggleUserSubscriptions()} className={"type-selection " + (!this.props.site.userSubscriptions  ? 'active' : '') }>All</div>
+            <div onClick={() => this.props.toggleUserSubscriptions()} className={"type-selection " + (this.props.site.userSubscriptions  ? 'active' : '') }>Subscriptions</div>
+          </div> */}
 
           <div className="news-preview-container issue">
 

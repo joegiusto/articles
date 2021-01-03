@@ -236,9 +236,11 @@
     top: 50px;
     left: 0px;
     width: 100%;
-    border-bottom: 1px solid #dbd9d7;
-    border: 1px solid #edebe9;
-    background-color: #f7f7f7;
+    // border-bottom: 1px solid #dbd9d7;
+    // border: 1px solid #edebe9;
+    // background-color: #f7f7f7;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+    background-color: $base-color;
     font-size: 13px;
     display: flex;
     flex-direction: row;

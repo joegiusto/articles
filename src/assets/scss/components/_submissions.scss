@@ -104,15 +104,10 @@
   .side-menu-one {
     position: relative;
     background-color: white;
-
-    // padding: 1rem;
-    box-shadow: 1px 0px 5px #000;
-    // padding-left: 0.5rem;
     display: flex;
     flex-shrink: 0;
     flex-direction: column;
-    border-bottom: 2px solid #000;
-    // overflow: hidden;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
 
     .background-container {
       position: absolute;
@@ -167,17 +162,16 @@
       @include media-breakpoint-up(md) {
         position: sticky;
         display: flex;
-        top: 50px;
+        top: 50px + 69px;
         flex-direction: column;
         flex-grow: 1;
         height: 100%;
-        max-height: calc(100vh - 50px);
+        max-height: calc(100vh - 50px - 69px);
       }
     }
 
     @include media-breakpoint-up(md) {
       width: 300px;
-      border-right: 2px solid #000;
       border-bottom: none;
     }
 
@@ -584,13 +578,13 @@
       margin-bottom: 1.25rem;
       position: sticky;
       z-index: 1;
-      top: 70px;
+      top: calc(50px + 69px);
       font-size: 20px;
       background-color: white;
       padding: 0.5rem 1rem;
       border: solid 1px #000;
-      margin-left: -5px;
-      margin-right: -5px;
+      // margin-left: -5px;
+      // margin-right: -5px;
       display: flex;
       flex-direction: row;
 
