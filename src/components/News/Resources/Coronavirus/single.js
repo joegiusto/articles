@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-import * as ROUTES from '../../../constants/routes'; 
+import * as ROUTES from '../../../../constants/routes'; 
 
 function Presidents(props) {
   // const [presidents, setPresidents] = useState([]);

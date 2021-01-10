@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from "react-redux";
+import { Helmet } from "react-helmet";
 
 import { NewsCard } from '../index'
 import IssueCard from './components/MythCard';
@@ -9,6 +10,10 @@ function Myths(props) {
 
   return (
  <section className="myths-section">
+
+  <Helmet>
+    <title>Myths - Articles</title>
+  </Helmet>
 
   <div className="news-static">
     <div className="news-preview-container myth">

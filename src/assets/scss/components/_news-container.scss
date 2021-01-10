@@ -969,22 +969,21 @@ section.news-page {
       display: flex;
       flex-direction: column;
       left: 0px;
-      padding-right: 0.75rem;
-      padding-left: 0.75rem;
-      overflow-y: scroll;
+      padding-right: 0rem;
+      padding-left: 0rem;
+      overflow-y: auto;
       overflow-x: hidden;
       max-height: calc(100vh - 50px);
       height: 100%;
 
       @include media-breakpoint-down(lg) {
-        overflow-y: hidden;
-        // padding-right: 0rem;
+        // overflow-y: initial;
         width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        padding-right: 0rem;
-        padding-left: 0rem;
+        // padding-right: 0rem;
+        // padding-left: 0rem;
       }
 
       .trending-map-wrap {
@@ -993,13 +992,14 @@ section.news-page {
         justify-content: center;
         align-items: center;
 
+
         @include media-breakpoint-up(lg) {
           display: flex;
           flex-direction: column;
         }
 
         .map {
-          position: absolute;
+          // position: absolute;
           z-index: 2;
           top: 0;
           left: 0;
@@ -1060,161 +1060,20 @@ section.news-page {
             }
           }
         }
-
-        .states-heatmap {
-          position: relative;
-  
-          @include media-breakpoint-down(md) {
-            width: 30%;
-            // align-self: start;
-          }
-  
-          .live-dots {
-            position: absolute;
-            // top: 50%;
-            // left: 50%;
-            // transform: translateX(-50%) translateY(-50%);
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-  
-            .dot {
-              position: absolute;
-              width: 5px;
-              height: 5px;
-              background-color: red;
-              border-radius: 10px;
-  
-              &.dot-0 {
-                top: 65%;
-                left: 45%;
-                transform: translateX(-50%) translateY(-50%);
-              }
-  
-              &.dot-1 {
-                top: 50%;
-                left: 10%;
-                transform: translateX(-50%) translateY(-50%);
-              }
-  
-              &.dot-2 {
-                top: 34%;
-                left: 83%;
-                transform: translateX(-50%) translateY(-50%);
-              }
-  
-              // &:nth-child(1) {
-              //   transform: translateX(-80px) translateY(-30px);
-              // }
-  
-              &:nth-child(1) {
-                transform: translateX(50%) translateY(50%);
-              }
-  
-              // &:nth-child(3) {
-              //   transform: translateX(65px) translateY(45px);
-              // }
-  
-              &:after {
-                position: absolute;
-                top: 0;
-                left: 0;
-                content: '';
-                width: 100%;
-                height: 100%;
-                animation-name: growFade;
-                animation-duration: 1s;
-                animation-direction: normal;
-                animation-iteration-count: infinite;
-                background-color: red;
-                border-radius: 10px;
-  
-                @keyframes growFade {
-                  from {
-                    transform: scale(1);
-                    opacity: 1;
-                  }
-                  to {
-                    transform: scale(2);
-                    opacity: 0;
-                  }
-                }
-              }
-  
-              &:hover {
-                .expanded {
-                  opacity: 1;
-                  pointer-events: initial;
-                }
-              }
-  
-              .expanded {
-                pointer-events: none;
-                opacity: 0;
-                z-index: 10;
-                position: absolute;
-                bottom: 0rem;
-                left: 50%;
-                transform: translateX(-50%) translateY(100%);
-                width: 150px;
-                background-color: white;
-                box-shadow: 0px 0px 2px 2px #000;
-                padding: 0.25rem;
-                padding-top: 1rem;
-                padding-bottom: 1rem;
-                font-size: 14px;
-  
-                .news {
-                  // padding-bottom: 1rem;
-                }
-  
-                .btn {
-                  padding: 0.1rem 0.25rem;
-  
-                  margin: 0 auto;
-                  margin-top: 1rem;
-                  width: 100%;
-                }
-  
-                .location {
-                  position: absolute;
-                  top: 0rem;
-                  left: 0.5rem;
-                  transform: translateY(-50%);
-                  background-color: black;
-                  color: white;
-                  font-size: 12px;
-                  padding: 0.1rem 0.25rem;
-                  border-radius: 5px;
-                }
-  
-                .date {
-                  position: absolute;
-                  top: 0rem;
-                  right: 0.5rem;
-                  transform: translateY(-50%);
-                  background-color: red;
-                  color: white;
-                  font-size: 12px;
-                  padding: 0.1rem 0.25rem;
-                  border-radius: 5px;
-                }
-              }
-            }
-          }
-        }
         
-        .trending {
+        .trending-slider {
           position: relative;
           display: flex;
           flex-direction: column;
           margin-bottom: 1rem;
           width: 100%;
+          padding: 0rem 0.5rem;
+          background-color: lighten($accent-color, 10%);
+          box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
   
           .swiper-container {
             width: 100%;
-            padding-bottom: 2rem;
+            padding-bottom: 1rem;
             overflow: initial;
 
             // @include media-breakpoint-down(md) {
@@ -1226,7 +1085,11 @@ section.news-page {
             }
   
             .swiper-pagination-bullets {
-              background-origin: -5px;
+              bottom: initial;
+              top: 0;
+              width: auto;
+              left: 50%;
+              transform: translateY(-30px) translateX(-50%);
   
               .swiper-pagination-bullet {
   
@@ -1245,6 +1108,7 @@ section.news-page {
               cursor: pointer;
               padding: 0.30rem;
               border: 2px solid #000;
+              background-color: white;
               // line-height: 0.8rem;
               margin-right: 0rem;
               width: auto;
@@ -1291,12 +1155,15 @@ section.news-page {
             margin-bottom: 1rem;
             position: relative;
             // background-color: #e9e9e9;
-            border: 1px solid rgba(0, 0, 0, 0.5);
+            // border: 1px solid rgba(0, 0, 0, 0.5);
+            background-color: white;
             // min-height: 5rem;
+            height: 100%;
             padding: 1.25rem 0.5rem;
             padding-top: 1.5rem;
             font-size: 0.8rem;
-            box-shadow: -1px -1px 1px 1px rgba(0, 0, 0, 0.25);
+            // box-shadow: -1px -1px 1px 1px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
             // border-radius: 5px;
 
             .type {
@@ -1329,9 +1196,11 @@ section.news-page {
             .view {
               z-index: 2;
               position: absolute;
-              left: 50%;
+              right: 0;
               bottom: 0;
-              transform: translateX(-50%) translateY(50%);
+              transform: translateX(0) translateY(0);
+              border: none;
+              background-color: transparent;
             }
   
             .progress {
@@ -1391,15 +1260,16 @@ section.news-page {
             }
           }
         }
+        
       }
 
       .menu {
         display: flex;
         flex-grow: 1;
         flex-direction: column;
-
-        @include media-breakpoint-down(md) {
-          // padding-top: 1rem;
+        
+        @include media-breakpoint-up(md) {
+          padding: 0rem 0.5rem;
         }
 
         .grow {
@@ -1421,7 +1291,7 @@ section.news-page {
           .links {
             // padding-top: 1rem;
             display: flex;
-            overflow-x: hidden;
+            // overflow-x: hidden;
             
             @include media-breakpoint-down(md) {
               overflow-x: scroll;
@@ -1442,13 +1312,7 @@ section.news-page {
 
             .link {
               border: 1px solid rgba(0, 0, 0, 0.5);
-              // margin-left: 0.5rem;
-              // font-size: 0.9rem;
-
-              @include media-breakpoint-up(lg) {
-                // margin-left: 0.5rem;
-              }
-             
+              font-size: 0.9rem;
             }
 
           }

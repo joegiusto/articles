@@ -9,7 +9,7 @@ function Footer(props) {
   // console.log(`Has is equal to ${has}`)
 
   return (
-    <footer className={"site-footer " + (props.location.pathname === '/messages' || props.location.pathname === '/messages/' || props.location.pathname === '/outset' || has ? 'd-none' : '')}>
+    <footer className={"site-footer " + (props.location.pathname === '/mission' || props.location.pathname === '/messages' || props.location.pathname === '/messages/' || props.location.pathname === '/outset' || has ? 'd-none' : '')}>
       <div className="container-fluid">
         <div className="row">
 
@@ -23,7 +23,7 @@ function Footer(props) {
           <div className="col-6 col-md-auto flex-fill">
             <div className="footer-panel">
               <div className="title">Main</div>
-              <Link to={ROUTES.REPORTS}>Reports</Link>
+              <Link to={ROUTES.TRANSPARENCY_REPORTS}>Reports</Link>
               <Link to={ROUTES.PRIVACY}>Privacy</Link>
               <Link to={ROUTES.STORE}>Store</Link>
             </div>

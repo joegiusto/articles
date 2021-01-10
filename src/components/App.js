@@ -45,7 +45,9 @@ import MythsPage from './News/Myths'
 import MythPage from './News/Myths/single.js'
 import StoriesPage from './News/Stories'
 import StoryPage from './News/Stories/single.js'
-import PresidentsPage from './News/Presidents'
+import ResourcesPage from './News/Resources'
+import PresidentsPage from './News/Resources/Presidents'
+import CoronavirusPage from './News/Resources/Coronavirus'
 
 import PartyPage from './Party'
 import PartyProposalsPage from './Party/Proposals'
@@ -219,11 +221,14 @@ class AppBase extends Component {
                 <Route path={ROUTES.HOME_OLD} component={HomePageOld} />
     
                 <Route path={ROUTES.MISSION} component={MissionPage} />
-                <Route path={ROUTES.REPORTS} component={ReportsPage} exact={true}/>
-                <Route path={ROUTES.REPORTS_CHARTS} component={ReportsPage} exact={true}/>
-                <Route path={ROUTES.REPORTS_REPORT} component={ReportsPage} exact={true}/>
-                <Route path={ROUTES.EMPLOYEES} component={ReportsPage} exact={true}/>
-                <Route path={ROUTES.EMPLOYEES_DETAILS} component={ReportsPage} />
+
+                {/* Transparency */}
+                <Route path={ROUTES.TRANSPARENCY} component={ReportsPage} exact={true}/>
+                <Route path={ROUTES.TRANSPARENCY_REPORTS} component={ReportsPage} exact={true}/>
+                <Route path={ROUTES.TRANSPARENCY_CHARTS} component={ReportsPage} exact={true}/>
+                <Route path={ROUTES.TRANSPARENCY_EMPLOYEES} component={ReportsPage} exact={true}/>
+                <Route path={ROUTES.TRANSPARENCY_EMPLOYEES_DETAILS} component={ReportsPage} exact={true}/>
+                <Route path={ROUTES.TRANSPARENCY_FLAG} component={ReportsPage} exact={true}/>
           
                 <Route exact path={ROUTES.STORE} component={StorePage} />
                 <Route path={ROUTES.STORE_VIEW} component={StorePage} />
@@ -244,6 +249,9 @@ class AppBase extends Component {
           
                 <Route exact path={ROUTES.NEWS} component={NewsPage} />
                 <Route exact path={ROUTES.NEWS_SEARCH} component={NewsPage} />
+                <Route exact path={ROUTES.NEWS_LOCAL} component={NewsPage} />
+                <Route exact path={ROUTES.NEWS_STOCKS} component={NewsPage} />
+                <Route exact path={ROUTES.NEWS_CRYPTO} component={NewsPage} />
     
                 <Route path={ROUTES.EXTENDED} component={NewsPage}></Route>
                 <Route path={ROUTES.EXTEND} component={ExtendedPage}></Route>
@@ -257,8 +265,10 @@ class AppBase extends Component {
                 <Route path={ROUTES.MYTHS} component={NewsPage} exact={true}/>
                 <Route path={ROUTES.MYTH} component={MythPage}/>
 
-                <Route path={ROUTES.PRESIDENTS} component={PresidentsPage} exact={true}/>
-                <Route path={ROUTES.PRESIDENT} component={PresidentsPage}/>
+                <Route path={ROUTES.RESOURCES} component={NewsPage} exact={true}/>
+                <Route path={ROUTES.RESOURCES_PRESIDENTS} component={PresidentsPage} exact={true}/>
+                <Route path={ROUTES.RESOURCES_PRESIDENT} component={PresidentsPage}/>
+                <Route path={ROUTES.RESOURCES_CORONAVIRUS} component={CoronavirusPage}/>
     
                 <Route path={ROUTES.TOWN_HALL} component={TownHallPage} />
           

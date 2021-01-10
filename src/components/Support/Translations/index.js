@@ -20,7 +20,7 @@ const Page = () => (
             
             <h1>Translations</h1>
 
-            <p className="mt-2">We currently do not have a language setting on our site but this is something we have in mind for the near future. Articles is an American focused company, which means we want any American to be able to use our site and gather news and information at ease.</p>
+            <p className="mt-2">We currently do not have a language setting on our site but this is something we have in mind for the near future. We want any American to be able to use our site and gather news and information at ease, no matter the language.</p>
             <p>In the meantime we recommend a browser extension like this one (Chrome users)</p>
 
             <div>
@@ -30,7 +30,7 @@ const Page = () => (
 
             <hr className="mt-4"/>
 
-            <p className="mt-3">Below is a chart to remind people of just how diverse this country is.</p>
+            <p className="mt-3">Below is a chart to remind people of just how diverse this country is...</p>
 
             <h3 className="info-title">US Census Bureau Data</h3>
 

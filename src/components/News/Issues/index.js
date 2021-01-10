@@ -2,6 +2,7 @@ import React,  {Component } from 'react';
 import { connect } from "react-redux";
 import moment from 'moment'
 import { Link } from 'react-router-dom';
+import { Helmet } from "react-helmet";
 
 // React Bootstrap Components
 import DropdownButton from 'react-bootstrap/DropdownButton'
@@ -71,6 +72,10 @@ class IssuesClass extends Component {
 
     return (
       <section className="issues-section issues-page">
+
+        <Helmet>
+          <title>Issues - Articles</title>
+        </Helmet>
 
         <div className="issues-head d-none">
           <h1 className="title">Issues</h1>

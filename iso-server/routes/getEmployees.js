@@ -30,19 +30,41 @@ module.exports = (app, db) => {
   });
 
   app.get('/api/getEmployee', function (req, res) {
+
     console.log(`Call to /api/getEmployee made at ${new Date()}`);
 
-    var o_id = new ObjectId(req.query._id);
-  
-    db.collection("articles_users").findOne( o_id, function(err, result) {
-      if (err) throw err;
-      console.log("Call to /api/getEmployee done")
+    console.log(ObjectId.isValid(req.query._id));
 
-      // TODO - Build this into a universal functions file for all routes to use
-      const safeResult = safeSendUserDocument(result);
-   
-      return res.send( safeResult ) ;
-    });
+    if ( ObjectId.isValid(req.query._id) ) {
+
+      console.log(`NO FRIENDLY URL FOR EMPLOYEE ${req.query._id}`)
+
+      var o_id = new ObjectId(req.query._id);
+
+      db.collection("articles_users").findOne( o_id, function(err, result) {
+        if (err) throw err;
+        console.log("Call to /api/getEmployee done")
+  
+        // TODO - Build this into a universal functions file for all routes to use
+        const safeResult = safeSendUserDocument(result);
+     
+        return res.send( safeResult ) ;
+      });
+
+    } else {
+      // If not an ObjectID then maybe a friendly_url
+
+      db.collection("articles_users").findOne( { "employee.friendly_url": req.query._id }, function(err, result) {
+        if (err) throw err;
+        console.log("Call to /api/getEmployee done")
+  
+        // TODO - Build this into a universal functions file for all routes to use
+        const safeResult = safeSendUserDocument(result);
+     
+        return res.send( safeResult ) ;
+      });
+
+    }
   
   });
 

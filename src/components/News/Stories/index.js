@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from "react-redux";
+import { Helmet } from "react-helmet";
 
 import StoryCard from './components/StoryCard';
 import { NewsCard } from '../index'
@@ -17,6 +18,10 @@ function Myths(props) {
       </div> */}
   
       {/* <p>Myths - example - See reddit saved post, "<a href="https://www.reddit.com/r/technology/comments/bj2h83/enough_with_the_actually_electric_cars_pollute/">Actually Electric Cars Pollute More</a>" Take the top common myths in this country at the moment and debunk them. Everything from electric cars to global warming and just explain them in a deteiled fact based/source-cited way that eveyone can easily reference and understand.</p> */}
+
+      <Helmet>
+        <title>Stories - Articles</title>
+      </Helmet>
   
       <div className="news-static">
         <div className="news-preview-container story">

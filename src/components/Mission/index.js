@@ -22,6 +22,7 @@ class Wrapper extends React.Component {
   
   componentDidMount() {
     var titleLocations  = {
+
       tldr: getPosition(document.getElementById('title-tldr')),
       about: getPosition(document.getElementById('title-about')),
       mission: getPosition(document.getElementById('title-mission')),
@@ -39,7 +40,7 @@ class Wrapper extends React.Component {
       privacy: getPosition(document.getElementById('title-privacy')),
       failure: getPosition(document.getElementById('title-failure')),
       payrole: getPosition(document.getElementById('title-payrole')),
-  }
+    }
 
     for (var location in titleLocations) {
       titleLocations[location].passed = false;
@@ -149,18 +150,18 @@ const Mission = (props) => {
       </Helmet>
 
       <div className="mission-page">
-        <div className="row h-100 justify-content-center">
+        <div className="row h-100 justify-content-md-center">
 
-          <div className="col-12 col-md-3">
+          <div className="col-12 col-md-3 d-none d-md-flex">
 
             <div className="side-bar-container-new">
               <div className="side-bar-new">
 
                 <div className="scroll-percent-container">
 
-                  <div className="scroll-percent progress">
-                    0%
-                    <div className="scroll-pointer"></div>
+                  <div className="scroll-percent progress" style={{ background: `linear-gradient( to right, rgba(249, 237, 205, 0.8), rgba(255, 183, 183, 0.8), ${props.theposition * 100}% , transparent  0)` }}>
+                    {Math.round(props.theposition * 100)}%
+                    <div style={{left: `${ Math.round(props.theposition * 100) }%` }} className="scroll-pointer"></div>
                   </div>
 
                 </div>
@@ -246,13 +247,14 @@ const Mission = (props) => {
               </div>
 
             </div>
+            
           </div>
 
-          <div className="col-12 col-offset-1 col-md-8 col-lg-9 col-xl-7 my-auto">
+          <div className="col-12 col-offset-1 col-md-8 col-lg-9 col-xl-7 my-auto pl-lg-0">
 
             <div className="content mt-3">
 
-            <div className="alert alert-danger mb-3 rounded-0">This is all placeholder text for the moment</div>
+              {/* <div className="alert alert-danger mb-3 rounded-0">This is all placeholder text for the moment</div> */}
               
               <div className="card rounded-0">
                 <div className="card-header w-100 p-3">
@@ -265,7 +267,8 @@ const Mission = (props) => {
                 <div className="youtube-video w-100 text-center mt-3">
 
                   <div class="embed-responsive embed-responsive-16by9">
-                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/HcXq4eOktIY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                  {/* https://www.youtube.com/watch?v=&ab_channel=DreamyPines */}
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/Fq-i0t9R2QU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                   </div>
 
                   <p className="text"><b>Introduction Video (January 2021)</b></p>
@@ -279,15 +282,24 @@ const Mission = (props) => {
 
               </div>
 
-              <div className="mission-section-container">
+              <div className="mission-section-container mb-5">
 
-                <div className="mission-section pt-3 mb-3">
+                <div className="mission-section mb-3">
+
                   <h2 className="section-title">Into</h2>
-                  <h5>Summary</h5>
+
+                  <h4>Summary</h4>
                   <p>Articles is a political organization and platform, working to make America a better place for the people through avenues of transparency, clothing, news and politics.</p>
-                  <h5>About</h5>
+
+                  <h4>About</h4>
                   <p>Today we have many leaders aligned with political parties occupying Americas executive branch that care more about their party then the fundamentals behind the laws in which they are trying to pass. We have a terrifying amount of partisan issues that no side wishes to budge on and little has been done to provide compromise to these issues. How do the two political parties in power that speak of the American Dream and fairness for all, allow issues such as school lunch debt, abuse of second amendment rights, sweatshops, offshore accounts, flawed welfare systems and many more to plague this nation?</p>
-                  <h5>Mission</h5>
+
+                  <h4>Mission</h4>
+                  <div className="dream-quote p-3">
+                    <h5><b>The American Dream</b></h5>
+                    <p><i>“The ideal by which equality of opportunity is available to any American, allowing the highest aspirations and goals to be achieved.”</i></p>
+                  </div>
+
                 </div>
 
                 <div className="mission-section">
@@ -299,14 +311,14 @@ const Mission = (props) => {
 
                   <p>Every transaction we process will appear live, just bought a shirt from us? Head over to the reports page and there you will see that purchase as well as the amount of money sitting in our accounts. Whenever we need to take money from that account say for events, resupplying products, or anything really, those transactions show up there too. Each expense of ours includes a Why report on why we spent that money along with a system for supporters to ask more questions about the transaction and flag it if they do not agree with it.</p>
 
-                  <h5>Reports</h5>
+                  <h4>Reports</h4>
+                  <p>To expand on the Reports page a little more we have broken down everything into Revenue and Expenses along with hot-links into popular sub pages. In real time you can look at our bank balance and everything that includes. Supporters that have signed up with Articles can see this data live and at times of increase traffic people who are not supporters (users who signed up) may receive delayed results. In the event of severe increased traffic or DDOS attacks this data may be delayed for all users but we will do our best to mitigate these issues.</p>
+
+                  <h4>Charts</h4>
                   <p></p>
 
-                  <h5>Charts</h5>
-                  <p></p>
-
-                  <h5>Payroll</h5>
-                  <p></p>
+                  <h4>Payroll</h4>
+                  <p>At this time no one at Articles is receiving any sort of pay until things pick up a little bit. This will not always be the case and we want people to know that from day one. All information on how much is being given to employees and statistics on that can be found at the Reports Page and the .</p>
 
                 </div>
 
@@ -335,10 +347,10 @@ const Mission = (props) => {
 
                   <h2 className="section-title">Clothing</h2>
 
-                  <h5>Store</h5>
+                  <h4>Store</h4>
                   <p>In figuring out how we are going to do all of this, questions had to be asked, how will we raise money? Money again, is one of the things required to run this operation. So what is something that we all have in common that we need? Well that answer was wearing clothes. Many times throughout history and even today clothing is used as a means of expression. Movements like the Flappers and Flower Children used clothing as a way of expression and we plan to do the same. While all of our clothing will not be politically woke, everything we sell will help the platform to a degree. In our store we will be selling four types of products as we develop and grow.</p>
 
-                  <h5>Submissions</h5>
+                  <h4>Submissions</h4>
                   <p>As you can see above, one type of product that appears on our store is a submission product. On the Submissions page users can submit shirt designs to be voted on by the community. At the end of every month we will take the design with the most votes and put it up on the store for people to buy. Every submission is subject to our approval and must meet the guidelines laid out on the submissions page.</p>
 
                 </div>
@@ -406,10 +418,9 @@ const Mission = (props) => {
               </div>
 
               {/* Old */}
-              <div className="mission-section-container mt-5">
-                                <div className="mission-section font-mission-text">
+              <div className="mission-section-container mt-5 mb-5">
 
-                  {/* <div style={{height: '75px'}} className="mt-5"></div> */}
+                <div className="mission-section">
 
                   <h1 className="">Intro</h1>
     

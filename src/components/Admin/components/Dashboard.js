@@ -410,11 +410,11 @@ class Dashboard extends Component {
           <div className="card">
             <div className="card-header">Todays Message</div>
             <div className="card-body">
-              <div>Hello, one day there will be employees to relay messages and events to!</div>
+              <div>None</div>
             </div>
           </div>
 
-          <div className="card mt-3">
+          <div className="card mt-3 d-none">
             <div className="card-header">Status Overview</div>
             <div className="card-body">
 

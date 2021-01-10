@@ -22,10 +22,18 @@ export const HOME = '/home';
 export const HOME_OLD = '/home/old';
 
 export const MISSION = '/mission';
+
 export const REPORTS = '/reports';
 export const REPORTS_CHARTS = '/reports/charts';
 export const REPORTS_REPORT = '/reports/report';
-export const REPORTS_MANAGE = '/reports/manage';
+
+// Transparency
+export const TRANSPARENCY = '/transparency';
+export const TRANSPARENCY_REPORTS = '/transparency/reports';
+export const TRANSPARENCY_CHARTS = '/transparency/charts';
+export const TRANSPARENCY_FLAG = '/transparency/flag';
+export const TRANSPARENCY_EMPLOYEES = '/transparency/employees';
+export const TRANSPARENCY_EMPLOYEES_DETAILS = '/transparency/employees/:id';
 
 // Employees
 export const EMPLOYEES = '/reports/employees'
@@ -60,20 +68,32 @@ export const STORE_MANAGE_DETAILS ='/store/manage/:id'
 export const NEWS ='/news'
 export const NEWS_SEARCH ='/news/search'
 
+// News Extras
+export const NEWS_LOCAL ='/news/local'
+export const RESOURCES ='/news/resources'
+export const NEWS_STOCKS ='/news/stocks'
+export const NEWS_CRYPTO ='/news/crypto'
+
+// News Extended, Trying to get rid of this and maybe everything can be a resource?
 export const EXTENDED ='/news/extended'
 export const EXTEND ='/news/extended/:id'
 
+// News Stories
 export const STORIES ='/news/stories'
 export const STORY ='/news/stories/:id'
 
+// News Issues
 export const ISSUES ='/news/issues'
 export const ISSUE = '/news/issues/:id'
 
+// News Myths
 export const MYTHS ='/news/myths'
 export const MYTH ='/news/myths/:id'
 
-export const PRESIDENTS ='/news/presidents'
-export const PRESIDENT ='/news/presidents/:id'
+// News Resources
+export const RESOURCES_PRESIDENTS ='/news/resources/presidents'
+export const RESOURCES_PRESIDENT ='/news/resources/presidents/:id'
+export const RESOURCES_CORONAVIRUS ='/news/resources/coronavirus'
 
 // export const MANAGE ='/news/manage'
 // export const MANAGE_DETAILS = '/news/manage/:id';

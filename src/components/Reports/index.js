@@ -486,7 +486,7 @@ class Reports extends Component {
               {console.log(megaGroup)}
 
               {megaGroup.map(sale => 
-                <tr onClick={() => this.props.history.push(ROUTES.REPORTS + `?id=${sale._id}&type=revenue`)}>
+                <tr onClick={() => this.props.history.push(ROUTES.TRANSPARENCY_REPORTS + `?id=${sale._id}&type=revenue`)}>
                   <td colSpan="1" className="border-right-0 ">{moment(sale.date).format("LLL")}</td>
                   <td colSpan="1" className="border-right-0 ">{sale.type}</td>
                   <td colSpan="1" className="border-right-0 "></td>
@@ -571,7 +571,7 @@ class Reports extends Component {
       <div className="reports-page">
 
         <Helmet>
-          <title>Reports - Articles</title>
+          <title>Transparency - Articles</title>
         </Helmet>
 
         <div className="fixed-total dual-header">
@@ -591,12 +591,10 @@ class Reports extends Component {
 
                 <div className="static-wrapper">
 
-                  <Route exact path={ROUTES.REPORTS} render={() => 
-                    <div className="live">
+                  <div className="live">
                       <span className="recording-dot d-inline-block"></span>
                       <span>Live</span>
                     </div>
-                  }/>
       
                   <div id='info' className={"info " + (this.state.menuExpanded ? 'expanded' : '')}>
       
@@ -654,8 +652,8 @@ class Reports extends Component {
                 <div className="quick-links">
 
                   <div className="report-link mt-3">
-                    <Link to={ROUTES.REPORTS}>
-                      <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (this.props.location.pathname === ROUTES.REPORTS ? 'active' : null)}>
+                    <Link to={ROUTES.TRANSPARENCY_REPORTS}>
+                      <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (this.props.location.pathname === ROUTES.TRANSPARENCY_REPORTS ? 'active ' : null) + (this.props.location.pathname === ROUTES.TRANSPARENCY ? ' active' : null)}>
                         <div>
                           <i className="fas fa-paste" aria-hidden="true"></i>
                           <span className="text">Reports</span>
@@ -665,33 +663,33 @@ class Reports extends Component {
                   </div>
 
                   <div className="report-link mt-3">
-                    <Link to={ROUTES.REPORTS_CHARTS}>
-                      <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (this.props.location.pathname === ROUTES.REPORTS_CHARTS ? 'active' : null)}>
+                    <Link to={ROUTES.TRANSPARENCY_CHARTS}>
+                      <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (this.props.location.pathname === ROUTES.TRANSPARENCY_CHARTS ? 'active' : null)}>
                         <div>
                           <i className="fas fa-chart-line"></i>
-                          <span className="text">Data Charts</span>
+                          <span className="text">Charts</span>
+                        </div>
+                      </button>
+                    </Link>
+                  </div>
+                  
+                  <div className="report-link mt-3">
+                    <Link to={ROUTES.TRANSPARENCY_EMPLOYEES}>
+                      <button className={"btn btn-articles-light btn-lg w-100 report-quick-links" + (this.props.location.pathname === ROUTES.TRANSPARENCY_EMPLOYEES ? ' active' : '') + ( matchPath(this.props.location.pathname, ROUTES.TRANSPARENCY_EMPLOYEES_DETAILS ) ? ' active' : '')}>
+                        <div>
+                          <i className="fas fa-paste" aria-hidden="true"></i>
+                          <span className="text">Employees</span>
                         </div>
                       </button>
                     </Link>
                   </div>
       
                   <div className="report-link mt-3">
-                    <Link to={ROUTES.REPORTS_REPORT}>
-                      <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (this.props.location.pathname === ROUTES.REPORTS_REPORT ? 'active' : null)}>
+                    <Link to={ROUTES.TRANSPARENCY_FLAG}>
+                      <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (this.props.location.pathname === ROUTES.TRANSPARENCY_FLAG ? 'active' : null)}>
                         <div>
                           <i className="fas fa-flag"></i>
-                          <span className="text">Report Expense</span>
-                        </div>
-                      </button>
-                    </Link>
-                  </div>
-
-                  <div className="report-link mt-3">
-                    <Link to={ROUTES.EMPLOYEES}>
-                      <button className={"btn btn-articles-light btn-lg w-100 report-quick-links" + (this.props.location.pathname === ROUTES.EMPLOYEES ? ' active' : '') + (matchPath(this.props.location.pathname, ROUTES.EMPLOYEES_DETAILS) ? ' active' : '')}>
-                        <div>
-                          <i className="fas fa-paste" aria-hidden="true"></i>
-                          <span className="text">Employee Data</span>
+                          <span className="text">Comment & Flag</span>
                         </div>
                       </button>
                     </Link>
@@ -702,10 +700,10 @@ class Reports extends Component {
               </div>
               
             </div>
-    
+
             <Switch>
 
-              <Route exact={true} path={ROUTES.REPORTS} render={() => 
+              <Route exact={true} path={[ROUTES.TRANSPARENCY, ROUTES.TRANSPARENCY_REPORTS]} render={() => 
                 <div className="col-12 col-md-8 col-lg-8">
 
                   <div className="search reports-shadow">
@@ -818,16 +816,48 @@ class Reports extends Component {
                 </div>
               }/>
 
-              <Route path={ROUTES.REPORTS_CHARTS} render={() => 
+              <Route path={ROUTES.TRANSPARENCY_CHARTS} render={() => 
                 <div className="col-12 col-md-8 col-lg-8">
                   <DataCharts data={this.state.reportsData.revenue.donations} setChartPeriodSelector={this.setChartPeriodSelector} chartPeriodSelector={this.state.chartPeriodSelector}></DataCharts>
                 </div>
               }/>
 
-              <Route path={ROUTES.REPORTS_REPORT} render={() => 
+              <Route exact path={ROUTES.TRANSPARENCY_EMPLOYEES} render={() => 
+                <div className="col-12 col-md-8 col-lg-8 mb-3">
+
+                  <Link to={ROUTES.TRANSPARENCY_REPORTS}>
+                    <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1 d-none d-md-inline-block">
+                      <i className="far fa-hand-point-left"></i>
+                      <span>Back to Reports</span>
+                    </div>
+                  </Link>
+
+                  <EmployeePage></EmployeePage>
+
+                </div>
+              }/>
+
+              <Route exact path={ROUTES.TRANSPARENCY_EMPLOYEES_DETAILS} render={() => 
+                <div className="col-12 col-md-8 col-lg-8 mb-3">
+
+                  <Link to={ROUTES.TRANSPARENCY_REPORTS}>
+                    {/* <div className="border d-inline-block"> */}
+                      <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1 d-none d-md-inline-block">
+                        <i className="far fa-hand-point-left"></i>
+                        <span>Back to Reports</span>
+                      </div>
+                    {/* </div> */}
+                  </Link>
+
+                  <EmployeeDetailsPage match={this.props.match}></EmployeeDetailsPage>
+
+                </div>
+              }/>
+
+              <Route path={ROUTES.TRANSPARENCY_FLAG} render={() => 
                 <div className="col-12 col-md-8 col-lg-8">
 
-                  <Link to={ROUTES.REPORTS}>
+                  <Link to={ROUTES.TRANSPARENCY_REPORTS}>
                     <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1 d-none d-md-inline-block">
                       <i className="far fa-hand-point-left"></i>
                       <span>Back to Reports</span>
@@ -841,38 +871,6 @@ class Reports extends Component {
                     user_id={this.props.user_id}
                     last_report={this.props.last_report}
                   />
-
-                </div>
-              }/>
-
-              <Route exact path={ROUTES.EMPLOYEES} render={() => 
-                <div className="col-12 col-md-8 col-lg-8 mb-3">
-
-                  <Link to={ROUTES.REPORTS}>
-                    <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1 d-none d-md-inline-block">
-                      <i className="far fa-hand-point-left"></i>
-                      <span>Back to Reports</span>
-                    </div>
-                  </Link>
-
-                  <EmployeePage></EmployeePage>
-
-                </div>
-              }/>
-
-              <Route exact path={ROUTES.EMPLOYEES_DETAILS} render={() => 
-                <div className="col-12 col-md-8 col-lg-8 mb-3">
-
-                  <Link to={ROUTES.REPORTS}>
-                    {/* <div className="border d-inline-block"> */}
-                      <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1 d-none d-md-inline-block">
-                        <i className="far fa-hand-point-left"></i>
-                        <span>Back to Reports</span>
-                      </div>
-                    {/* </div> */}
-                  </Link>
-
-                  <EmployeeDetailsPage match={this.props.match}></EmployeeDetailsPage>
 
                 </div>
               }/>
@@ -1754,7 +1752,7 @@ class DataCharts extends Component {
     return (
       <div className="chart-component">
 
-        <Link to={ROUTES.REPORTS}>
+        <Link to={ROUTES.TRANSPARENCY_REPORTS}>
           <div style={{marginTop: '2rem'}} className="btn btn-articles-light py-1 d-none d-md-inline-block">
             <i className="far fa-hand-point-left"></i>
             <span>Back to Reports</span>

@@ -9,7 +9,43 @@ class FAQ extends Component {
     super(props)
 
     this.state = {
-
+      items: [
+        {
+          question: 'What is Articles?',
+          answer: 'Questions like this are better answered in our mission statement which can be read here.',
+          focus: 'General'
+        },
+        {
+          question: 'How do we plan to use the platform to fix issues in America?',
+          answer: '',
+          focus: 'General'
+        },
+        {
+          question: 'Which political party does Articles align with?',
+          answer: '',
+          focus: 'General'
+        },
+        {
+          question: 'Where is your clothing sourced from?',
+          answer: '',
+          focus: 'Clothing'
+        },
+        {
+          question: 'Do you ship worldwide?',
+          answer: 'Yes, but we do charge extra for shipments outside the United States',
+          focus: 'Clothing'
+        },
+        {
+          question: 'Does Articles have a code of ethics for your journalists to follow?',
+          answer: '',
+          focus: 'News'
+        },
+        {
+          question: 'Which political party does Articles align with?',
+          answer: '',
+          focus: 'Party'
+        },
+      ]
     }
   }
 
@@ -22,103 +58,46 @@ class FAQ extends Component {
       <div className="faq-page">
         <div className="container">
 
-          <h1>FAQ</h1>
-          <p className="lead">Our most asked questions answered</p>
+          <h1 className="mb-0">Frequently Asked Questions</h1>
+          <p className="lead mb-3">Our most asked questions answered</p>
 
-          <Accordion defaultActiveKey="0">
+          <div class="filter-section">
+            <h5 class="label">Focus:</h5>
 
-            <Card>
-              <Card.Header>
-                <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                  What is Articles?
-                </Accordion.Toggle>
-              </Card.Header>
-              <Accordion.Collapse eventKey="0">
-                <Card.Body>Questions like this are better answered in our mission statement which can be read <a target="_blank" className="border-bottom" href="/mission">here.</a></Card.Body>
-              </Accordion.Collapse>
-            </Card>
+            <div>
+              <button class="btn btn-articles-light btn-sm ">General</button>
+              <button class="btn btn-articles-light btn-sm ">Clothing</button>
+              <button class="btn btn-articles-light btn-sm ">News</button>
+              <button class="btn btn-articles-light btn-sm ">Party</button>
+            </div>
+          </div>
 
-            <Card>
-              <Card.Header>
-                <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                  Is Articles a Non Profit?
-                </Accordion.Toggle>
-              </Card.Header>
-              <Accordion.Collapse eventKey="1">
-                <Card.Body>Hello! I'm another body</Card.Body>
-              </Accordion.Collapse>
-            </Card>
+          <hr className="my-3"/>
 
-            <Card>
-              <Card.Header>
-                <Accordion.Toggle as={Button} variant="link" eventKey="2">
-                  How do we plan to use the platform to fix issues in America?
-                </Accordion.Toggle>
-              </Card.Header>
-              <Accordion.Collapse eventKey="2">
-                <Card.Body>Hello! I'm another body</Card.Body>
-              </Accordion.Collapse>
-            </Card>
+          <div className="row align-items-start">
 
-            <Card>
-              <Card.Header>
-                <Accordion.Toggle as={Button} variant="link" eventKey="3">
-                  Which political party do you align with?
-                </Accordion.Toggle>
-              </Card.Header>
-              <Accordion.Collapse eventKey="3">
-                <Card.Body>Hello! I'm another body</Card.Body>
-              </Accordion.Collapse>
-            </Card>
-
-          </Accordion>
-
-          <div className="accordion d-none" id="accordionExample">
-
-            <div className="card">
-              <div className="card-header" id="headingOne">
-                <h2 className="mb-0">
-                  <button className="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    Collapsible Group Item #1
-                  </button>
-                </h2>
-              </div>
-
-              <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                <div className="card-body">
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                </div>
-              </div>
+            <div className="col-lg-9">
+              <Accordion defaultActiveKey={1}>
+    
+                {this.state.items.map( (item, i) => (
+                  <Card>
+                    <Accordion.Toggle className="d-flex justify-content-between" as={Card.Header} variant="link" eventKey={i + 1}>
+                      <h5 className="mb-0">{item.question}</h5>
+                      <div className="badge badge-sm badge-articles-light">{item.focus}</div>
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey={i + 1}>
+                      <Card.Body>
+                        {item.answer}
+                      </Card.Body>
+                    </Accordion.Collapse>
+                  </Card>
+                ))}
+    
+              </Accordion>
             </div>
 
-            <div className="card">
-              <div className="card-header" id="headingTwo">
-                <h2 className="mb-0">
-                  <button className="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    Collapsible Group Item #2
-                  </button>
-                </h2>
-              </div>
-              <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                <div className="card-body">
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                </div>
-              </div>
-            </div>
-
-            <div className="card">
-              <div className="card-header" id="headingThree">
-                <h2 className="mb-0">
-                  <button className="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    Collapsible Group Item #3
-                  </button>
-                </h2>
-              </div>
-              <div id="collapseThree" className="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                <div className="card-body">
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                </div>
-              </div>
+            <div className="col-lg-3">
+              <button className="btn btn-articles-light w-100">Have a question?</button>
             </div>
 
           </div>

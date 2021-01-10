@@ -279,7 +279,7 @@ class HomePageFour extends Component {
                   <div className="tile-update"></div>
                 </div> */}
 
-                <Link to={ROUTES.REPORTS}>
+                <Link to={ROUTES.TRANSPARENCY_REPORTS}>
                   <div className="tile-content">
 
                     <div className="icons">

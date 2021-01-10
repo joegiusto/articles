@@ -36,6 +36,10 @@ import NewsCard from './NewsCard'
 import { toggleUserSubscriptions, filterIssuesDateType } from '../../actions/siteActions'
 
 import Search from './Search/index';
+import Local from './Local';
+import Stocks from './Stocks';
+import Crypto from './Crypto';
+
 import Stories from './Stories/index';
 import Issues from './Issues/index';
 import Myths from './Myths/index';
@@ -46,6 +50,7 @@ import background from '../../assets/img/card-1.png'
 
 import * as ROUTES from '../../constants/routes';
 import { Link, Switch, Route } from 'react-router-dom';
+import ResourcesPage from './Resources';
 
 const AnyReactComponent = ({ text }) => (
   <div>
@@ -396,27 +401,33 @@ function NewsHead(props) {
 
           <div className="modal-items">
 
-          <div className="item">
-              <i className="icon fas fa-street-view mr-0" aria-hidden="true"></i>
-              <div>Local</div>
-            </div>
+            <Link to={ROUTES.NEWS_LOCAL}>
+              <div className="item text-white">
+                <i className="icon fas fa-street-view mr-0" aria-hidden="true"></i>
+                <div>Local</div>
+              </div>
+            </Link>
 
-            <div className="item">
+            {/* <div className="item text-white">
               <i className="icon fas fa-temperature-low mr-0" aria-hidden="true"></i>
               <div>Weather</div>
-            </div>
+            </div> */}
 
-            <div className="item">
-              <i className="icon fas fa-chart-line mr-0" aria-hidden="true"></i>
-              <div>Stocks</div>
-            </div>
+            <Link to={ROUTES.NEWS_STOCKS}>
+              <div className="item text-white">
+                <i className="icon fas fa-chart-line mr-0" aria-hidden="true"></i>
+                <div>Stocks</div>
+              </div>
+            </Link>
 
-            <div className="item">
-              <i className="icon fab fa-bitcoin mr-0" aria-hidden="true"></i>
-              <div>Crypto</div>
-            </div>
+            <Link to={ROUTES.NEWS_CRYPTO}>
+              <div className="item text-white">
+                <i className="icon fab fa-bitcoin mr-0" aria-hidden="true"></i>
+                <div>Crypto</div>
+              </div>
+            </Link>
 
-            <Link to={ROUTES.PRESIDENTS}>
+            <Link to={ROUTES.RESOURCES}>
               <div className="item text-white">
                 <i className="icon fas fa-archive mr-0" aria-hidden="true"></i>
                 <div>Resources</div>
@@ -726,7 +737,7 @@ class RecentSliders extends Component {
   
         </div>
 
-        <div className="news-preview-container tags">
+        <div className="news-preview-container tags mr-2">
 
           <div className="frontpage-section-header">
             <h5>Tags</h5>
@@ -1077,34 +1088,14 @@ class Frontpage extends Component {
                 />
 
               </div>
-
-              <div className="states-heatmap">
-                <img src={statesImage} className="head-image" alt=""/>
-                <div className="live-dots">
   
-                  <div className={"dot dot-" + this.state.trending.slide}>
-                    <div className="expanded">
-                      
-                      <div className="location">Austin, TX</div>
-                      <div className="date">{moment().format("MM/DD")}</div>
-  
-                      <div className="news">Tesla will build its next Gigafactory near Austin, Texas</div>
-                      
-                      <div className="btn btn-articles-light">View</div>
-                    </div>
-                  </div>
-  
-                </div>
-              </div>
-  
-              <div className="trending">
+              <div className="trending-slider">
   
                 <div className="title">Trending</div>
   
-                <Swiper
-                  // effect="fade"
-                  {...swiper_settings}
-                >
+                  <Swiper
+                    {...swiper_settings}
+                  >
   
                   {/* See slots https://swiperjs.com/react/ */}
                   <span slot="container-start">
@@ -1117,36 +1108,42 @@ class Frontpage extends Component {
                   </div>
   
                   <SwiperSlide>
-                    <div className="trending-card">
-                      <div className="type story">Story</div>
-                      <Link to={`${ROUTES.STORIES}/tesla-new-gigafactory-austin-texas`}>
-                      <div className="view btn btn-articles-light btn-sm">View</div>
-                      </Link>
-                      Tesla will build its next Gigafactory near Austin, Texas
-                      <div className="progress"></div>
-                    </div>
+                    <Link to={`${ROUTES.STORIES}/tesla-new-gigafactory-austin-texas`}>
+                      <div className="trending-card">
+                        <div className="type story">Story</div>
+                        <Link to={`${ROUTES.STORIES}/tesla-new-gigafactory-austin-texas`}>
+                        <div className="view btn btn-articles-light btn-sm">Read</div>
+                        </Link>
+                        Tesla will build its next Gigafactory near Austin, Texas
+                        <div className="progress"></div>
+                      </div>
+                    </Link>
                   </SwiperSlide>
   
                   <SwiperSlide>
-                    <div className="trending-card">
-                      <div className="type story">Story</div>
-                      <Link to={`${ROUTES.STORIES}/meet-cybertruck`}>
-                      <div className="view btn btn-articles-light btn-sm">View</div>
-                      </Link>
-                      Meet Cybertruck
-                      <div className="progress"></div>
-                    </div>
+                    <Link to={`${ROUTES.STORIES}/meet-cybertruck`}>
+                      <div className="trending-card">
+                        <div className="type story">Story</div>
+                        <Link to={`${ROUTES.STORIES}/meet-cybertruck`}>
+                        <div className="view btn btn-articles-light btn-sm">Read</div>
+                        </Link>
+                        Meet Cybertruck
+                        <div className="progress"></div>
+                      </div>
+                    </Link>
                   </SwiperSlide>
   
                   <SwiperSlide>
+                    <Link to={`${ROUTES.STORIES}/meet-cybertruck`}>
                       <div className="trending-card">
                         <div className="type story">Story</div>
                         <Link to={`${ROUTES.STORIES}/jeffery-epstein-arrested`}>
-                          <div className="view btn btn-articles-light btn-sm">View</div>
+                          <div className="view btn btn-articles-light btn-sm">Read</div>
                         </Link>
                         Jeffery Epstein Arrested
                         <div className="progress"></div>
                       </div>
+                      </Link>
                   </SwiperSlide>
   
                 </Swiper>
@@ -1195,12 +1192,45 @@ class Frontpage extends Component {
                       <div className="text">Myths</div>
                     </div>
                   </Link>
+
+                  <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS_LOCAL}>
+                    <div className={"link frontpage " + (this.props.location.pathname === "/news/local" ? 'active' : null)}>
+                      <i class="fas fa-school"></i>
+                      <div className="text">Local</div>
+                    </div>
+                  </Link>
+
+                  <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.RESOURCES}>
+                    <div className={"link frontpage " + (this.props.location.pathname === "/news/resources" ? 'active' : null)}>
+                      {/* <i className="fas fa-ghost"></i> */}
+                      <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="books" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-books fa-w-16 fa-fw mr-2"><path fill="currentColor" d="M575.11 443.25L461.51 19.06C458.2 6.7 445.61-3.18 430.15.96L414.7 5.1c-6.18 1.66-11.53 6.4-16.06 14.24-14.03 6.94-52.3 17.21-68 18.22-7.84-4.53-14.85-5.96-21.03-4.3l-15.46 4.14c-2.42.65-4.2 1.95-6.15 3.08V32c0-17.67-14.33-32-32-32h-64c-17.67 0-32 14.33-32 32v64h128l101.66 396.94c3.31 12.36 15.9 22.24 31.36 18.1l15.45-4.14c6.18-1.66 11.53-6.4 16.06-14.24 13.91-6.88 52.18-17.2 68-18.22 7.84 4.53 14.85 5.96 21.03 4.3l15.46-4.14c15.45-4.14 21.41-18.99 18.09-31.35zm-134.4-7.06L348.64 92.37l61.82-16.56 92.07 343.82-61.82 16.56zM0 384h128V128H0v256zM96 0H32C14.33 0 0 14.33 0 32v64h128V32c0-17.67-14.33-32-32-32zM0 480c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64H0v64zm160-96h128V128H160v256zm0 96c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64H160v64z" class=""></path></svg>
+                      <div className="text">Resources</div>
+                    </div>
+                  </Link>
+
+                  <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS_STOCKS}>
+                    <div className={"link frontpage " + (this.props.location.pathname === "/news/stocks" ? 'active' : null)}>
+                      {/* <i className="fas fa-ghost"></i> */}
+                      <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chart-area" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-chart-area fa-w-16 fa-fw mr-2"><path fill="currentColor" d="M500 384c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H12c-6.6 0-12-5.4-12-12V76c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v308h436zM372.7 159.5L288 216l-85.3-113.7c-5.1-6.8-15.5-6.3-19.9 1L96 248v104h384l-89.9-187.8c-3.2-6.5-11.4-8.7-17.4-4.7z" class=""></path></svg>
+                      <div className="text">Stocks</div>
+                    </div>
+                  </Link>
+
+                  <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS_CRYPTO}>
+                    <div className={"link frontpage " + (this.props.location.pathname === "/news/crypto" ? 'active' : null)}>
+                      {/* <i className="fas fa-ghost"></i> */}
+                      <i class="fab fa-bitcoin"></i>
+                      <div className="text">Crypto</div>
+                    </div>
+                  </Link>
+
                 </div>
+
               </div>
 
               <div className="grow"></div>
 
-              <div className="feature-links">
+              <div className="feature-links d-none">
                 <h5 className="title mt-3">Feature</h5>
   
                 <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.EXTENDED + '/coronavirus'}>
@@ -1750,6 +1780,10 @@ class Frontpage extends Component {
                     tagSearchResults={this.state.tagSearchResults}/>
                   }/>
                   <Route exact path={ROUTES.NEWS_SEARCH} render={() => <Search searchText={this.state.search}></Search>}/>
+                  <Route exact path={ROUTES.NEWS_LOCAL} render={() => <Local searchText={this.state.search}></Local>}/>
+                  <Route exact path={ROUTES.RESOURCES} render={() => <ResourcesPage searchText={this.state.search}></ResourcesPage>}/>
+                  <Route exact path={ROUTES.NEWS_STOCKS} render={() => <Stocks searchText={this.state.search}></Stocks>}/>
+                  <Route exact path={ROUTES.NEWS_CRYPTO} render={() => <Crypto searchText={this.state.search}></Crypto>}/>
                   <Route exact path={ROUTES.STORIES} render={() => <Stories searchText={this.state.search}></Stories>}/>
                   <Route exact path={ROUTES.ISSUES} render={() => <Issues searchText={this.state.search}></Issues> }/>
                   <Route exact path={ROUTES.MYTHS} render={() => <Myths searchText={this.state.search}></Myths> }/>

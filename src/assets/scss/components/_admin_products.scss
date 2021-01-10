@@ -119,4 +119,17 @@
     }
     
   }
+
+  .rdt_TableHeadRow {
+    background-color: $base-color;
+    font-family: brandon-grotesque, sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-weight: bold;
+
+    .rdt_TableCol {
+      font-size: 1rem;
+      padding: 0.5rem;
+    }
+  }
 }

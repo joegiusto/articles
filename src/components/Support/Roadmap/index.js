@@ -4,6 +4,10 @@ import * as ROUTES from '../../../constants/routes'
 
 const Page = () => (
   <div className="roadmap-page">
+
+    <img className="roadmap-trail-image" src="https://cdn.onlinewebfonts.com/svg/img_446438.png" alt=""/>
+    <img className="roadmap-map-image" src="https://ddo0fzhfvians.cloudfront.net/uploads/icons/png/568635131536669843-512.png" alt=""/>
+
     <div className="container">
       <div className="row h-100 justify-content-center">
         <div className="col-sm-6 my-auto">
@@ -16,7 +20,7 @@ const Page = () => (
 
             <div className="roadmap-cards">
 
-              <div className="roadmap-card">
+              <div className="roadmap-card d-none">
                 <div className="title">August 2020</div>
                 <div className="text">
                   <ul>
@@ -28,7 +32,7 @@ const Page = () => (
                 </div>
               </div>
 
-              <div className="roadmap-card">
+              <div className="roadmap-card d-none">
                 <div className="title">September 2020</div>
                 <div className="text">
                   <ul>
@@ -39,7 +43,7 @@ const Page = () => (
                 </div>
               </div>
 
-              <div className="roadmap-card">
+              <div className="roadmap-card d-none">
                 <div className="title">October 2020</div>
                 <div className="text">
                   <ul>
@@ -50,7 +54,7 @@ const Page = () => (
                 </div>
               </div>
   
-              <div className="roadmap-card">
+              <div className="roadmap-card d-none">
                 <div className="title">2020</div>
                 <div className="text">
                   <ul>
@@ -61,12 +65,20 @@ const Page = () => (
                 </div>
               </div>
 
-              <div className="roadmap-card">
+              <div className="roadmap-card mb-5">
                 <div className="title">2021</div>
                 <div className="text">
                   <ul>
-                    <li>Start production of weekly Youtube videos.</li>
-                    <li>Show Github commits of Development roles inside of their employee data.</li>
+                    <li>Grow advertiser count to 5</li>
+                    <li>Implement "Real ID" system to allow access to a separate comment channel for users that have verified they are a human and have citizenship in the United States.</li>
+                    <li>Weekly general update videos and newsletters about whats happening at Articles</li>
+                    <li>Weekly development update videos and newsletters about our website</li>
+                    <li>Weekly news update videos and newsletters about whats happening in the country</li>
+                    <li>Add the ability for users to subscribe to tags</li>
+                    <li>Begin clothing sales</li>
+                    <li>Grow users to 5,000</li>
+                    <li>Add a system/api for other services to integrate widgets for the users home screen. Upcoming flights, bank account balance, notepads, etc.</li>
+                    <li>Add the ability to encrypt Messages with custom passphrase (PGP).</li>
                   </ul>
                 </div>
               </div>
@@ -75,7 +87,7 @@ const Page = () => (
                 <div className="title">2022</div>
                 <div className="text">
                   <ul>
-                    <li>Phase out use of the Google Maps JavaScript API Places Autocomplete Service with custom in house solution. This is currenly used in the Outset and Settings pages to insure proper format of address details.</li>
+                    <li>To be announced</li>
                   </ul>
                 </div>
               </div>
@@ -90,6 +102,7 @@ const Page = () => (
         </div>
       </div>
     </div>
+
   </div>
 );
 

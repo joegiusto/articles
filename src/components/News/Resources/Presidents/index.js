@@ -9,7 +9,7 @@ import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 
-import * as ROUTES from '../../../constants/routes'; 
+import * as ROUTES from '../../../../constants/routes'; 
 import PresidentCard from './single'
 
 function Presidents(props) {
@@ -25,7 +25,7 @@ function Presidents(props) {
 
   const [show, setShow] = useState(false);
 
-  const handleClose = () => {setShow(false); setActivePresidentID(''); setActivePresident({}); props.history.push(ROUTES.PRESIDENTS);}
+  const handleClose = () => {setShow(false); setActivePresidentID(''); setActivePresident({}); props.history.push(ROUTES.RESOURCES_PRESIDENTS);}
   const handleShow = () => setShow(true);
   const handlePresidentSelect = (id) => setActivePresidentID(id);
 
@@ -356,7 +356,7 @@ function Presidents(props) {
         <div className="presidents-grid py-3">
 
           {filterOrderRules(presidents).map((president) => 
-            <Link onClick={ () => { setShow(true); setActivePresidentID(president._id); } } to={`${ROUTES.PRESIDENTS}/${president._id}`}>
+            <Link onClick={ () => { setShow(true); setActivePresidentID(president._id); } } to={`${ROUTES.RESOURCES_PRESIDENTS}/${president._id}`}>
               <PresidentCard president={president}/>
             </Link>
           )}

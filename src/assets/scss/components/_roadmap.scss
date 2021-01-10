@@ -15,6 +15,20 @@
   font-family: montserrat, sans-serif;
   font-weight: 400;
 
+  .roadmap-trail-image {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    width: 200px;
+  }
+
+  .roadmap-map-image {
+    position: fixed;
+    top: calc(50px + 1rem);
+    right: 1rem;
+    width: 200px;
+  }
+
   @include media-breakpoint-up(md) {
     flex-grow: 1;
     display: flex;

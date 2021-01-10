@@ -9,7 +9,7 @@ class Blog extends Component {
     super(props)
 
     this.state = {
-      tab: 'Posts'
+      tab: 'General'
     }
   }
 
@@ -23,13 +23,13 @@ class Blog extends Component {
 
         <div className="header">
           <img className="d-block" src="https://cdn.articles.media/email/logo.jpg" alt=""/>
-          <div className="heading-font">The Articles Blog</div>
+          <h1 className="heading-font">Articles Updates</h1>
         </div>
 
         <div className="blog-nav">
-          <div onClick={() => this.setState({tab: 'Posts'})} className={"link " + (this.state.tab === 'Posts' ? 'active' : '')}>Posts</div>
-          <div onClick={() => this.setState({tab: 'Archive'})} className={"link " + (this.state.tab === 'Archive' ? 'active' : '')}>Archive</div>
-          <div onClick={() => this.setState({tab: 'Videos'})} className={"link " + (this.state.tab === 'Videos' ? 'active' : '')}>Videos</div>
+          {/* <div onClick={() => this.setState({tab: 'Posts'})} className={"link " + (this.state.tab === 'Posts' ? 'active' : '')}>All</div> */}
+          <div onClick={() => this.setState({tab: 'General'})} className={"link " + (this.state.tab === 'General' ? 'active' : '')}>General</div>
+          <div onClick={() => this.setState({tab: 'Development'})} className={"link " + (this.state.tab === 'Development' ? 'active' : '')}>Development</div>
         </div>
 
         <div className="main">

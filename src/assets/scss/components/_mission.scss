@@ -202,13 +202,15 @@
   }
 
   .side-bar-container-new {
+    margin-top: 1rem;
     position: sticky;
-    top: 50px;
+    top: calc(50px + 1rem);
     height: calc(100vh - 50px);
-
+    width: 100%;
     display: flex;
     justify-content: flex-end;
-    align-items: center;
+    // align-items: center;
+    align-items: start;
 
     @include media-breakpoint-down(md) {
       height: 100%;
@@ -216,8 +218,9 @@
     }
 
     .side-bar-new {
-      height: 95%;
-      width: 300px;
+      height: auto;
+      width: 100%;
+      max-width: 300px;
       padding: 1rem;
       background-color: white;
       box-shadow: 0 1px #FFFFFF inset, 0 1px 3px rgba(34, 25, 25, 0.4);
@@ -465,7 +468,7 @@
   }
 
   .content {
-    padding-left: 1rem;
+    padding-left: 0rem;
     max-width: 825px;
 
     .font-mission-text {
@@ -590,9 +593,10 @@
 
       .pop-out {
         display: none;
-        width: 200px;
+        width: 250px;
         position: absolute;
-        right: calc(-250px);
+        right: calc(-2rem);
+        transform: translateX(100%);
 
         @media screen and (min-width: 1650px) {
           display: block;
@@ -635,9 +639,9 @@
       .dream-quote {
         background-color: whitesmoke;
         margin-bottom: 1rem;
+
         p {
           margin-bottom: 0rem;
-          
         }
       }
 

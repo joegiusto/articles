@@ -81,7 +81,7 @@ class EmployeesPage extends Component {
             }
           )
           .map(employee => (
-            <Link to={ROUTES.EMPLOYEES + '/' + employee._id}>
+            <Link to={ROUTES.TRANSPARENCY_EMPLOYEES + '/' + (employee.employee.friendly_url ? employee.employee.friendly_url : employee._id)}>
 
               <div className="employee-card">
                 <div>{employee.last_name + (employee.first_name !== 'Anonymous' ? ', ' + employee.first_name : ' Anonymous')}</div>

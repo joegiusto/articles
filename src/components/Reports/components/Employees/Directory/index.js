@@ -14,8 +14,7 @@ class EmployeePageDetails extends Component {
       employee: {},
       employeeAgr: [],
 
-      // Can be 'stubs' or 'charts' 
-      filter: 'stubs',
+      filter: 'get-to-know',
 
       expandedPhoto: false,
 
@@ -242,7 +241,6 @@ class EmployeePageDetails extends Component {
 
          </div>
 
-
           <div className='employee-header-traits'>
             <p className="employee-header-traits-title">Location</p>
             <p className="employee-header-traits-details">{employee.address.state}</p>
@@ -257,10 +255,10 @@ class EmployeePageDetails extends Component {
         <div className="employee-details">
 
           <div className="filters noselect">
+            <div onClick={() => this.setState({filter: 'get-to-know'})} className={"filter " + ( this.state.filter === 'get-to-know' ? 'active' : '' ) }>Get To Know</div>
             <div onClick={() => this.setState({filter: 'stubs'})} className={"filter " + ( this.state.filter === 'stubs' ? 'active' : '' ) }>Pay Stubs</div>
             <div onClick={() => this.setState({filter: 'charts'})} className={"filter " + ( this.state.filter === 'charts' ? 'active' : '' ) }>Data Charts</div>
-            <div onClick={() => this.setState({filter: 'get-to-know'})} className={"filter " + ( this.state.filter === 'get-to-know' ? 'active' : '' ) }>Get To Know</div>
-            <div onClick={() => this.setState({filter: 'proposals'})} className={"filter " + ( this.state.filter === 'proposals' ? 'active' : '' ) }>Proposals</div>
+            <div onClick={() => this.setState({filter: 'proposals'})} className={"filter " + ( this.state.filter === 'proposals' ? 'active' : '' ) }>Proposals<span className="badge badge-dark ml-1">Politics</span></div>
             <div onClick={() => this.setState({filter: 'commits'})} className={"filter " + ( this.state.filter === 'commits' ? 'active' : '' ) }>Commits<span className="badge badge-dark ml-1">Developer</span></div>
             <div onClick={() => this.setState({filter: 'news'})} className={"filter " + ( this.state.filter === 'news' ? 'active' : '' ) }>News<span className="badge badge-dark ml-1">Writer</span></div>
           </div>

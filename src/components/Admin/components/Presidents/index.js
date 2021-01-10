@@ -3,7 +3,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { Link, withRouter } from 'react-router-dom';
 import * as ROUTES from '../../../../constants/routes';
-import PresidentCard from '../../../News/Presidents/single'
+import PresidentCard from '../../../News/Resources/Presidents/single'
 
 function Presidents(props) {
   const [presidents, setPresidents] = useState([]);

@@ -58,7 +58,7 @@ class LandingPage extends Component {
 					<div className="fake-sales">
 						{this.startSalesAnimation()}
 
-						<div className="fake-note">This data is for display purposes only, live data on <Link to={ROUTES.REPORTS}>report page</Link></div>
+						<div className="fake-note">This data is for display purposes only, live data on <Link to={ROUTES.TRANSPARENCY_REPORTS}>report page</Link></div>
 
 						<div className="sale active" style={{'animationDelay': '0s'}}>
 							<div className="amount revenue">$20</div>
@@ -529,7 +529,7 @@ class LandingPage extends Component {
 			
 								<div className="links">
 
-									<Link to={ROUTES.REPORTS}>
+									<Link to={ROUTES.TRANSPARENCY_REPORTS}>
 										<button className="btn btn-articles-light">
 											<i className="fas fa-paste" aria-hidden="true"></i>Transparency
 										</button>
@@ -743,7 +743,7 @@ class LandingPage extends Component {
 										<i className="fas fa-paste" aria-hidden="true"></i>
 									</div>
 
-									<div className="fake-note">This data is for display purposes only, live data available on the <Link style={{textDecoration: 'underline'}} to={ROUTES.REPORTS}>Reports Page</Link></div>
+									<div className="fake-note">This data is for display purposes only, live data available on the <Link style={{textDecoration: 'underline'}} to={ROUTES.TRANSPARENCY_REPORTS}>Reports Page</Link></div>
 
 									<div className="fake-sales">
 										{this.startSalesAnimation()}
@@ -1013,7 +1013,7 @@ class LandingPage extends Component {
 								</div>
 							</Link>
 				
-							<Link to={ROUTES.REPORTS}>
+							<Link to={ROUTES.TRANSPARENCY_REPORTS}>
 								<div className="link-panel">
 									<div className="title">Reports</div>
 									<div className="text">An inside look into our finances. We believe transparency is key to ending corruption.</div>
@@ -1249,76 +1249,6 @@ class LandingPage extends Component {
 					<img className="text-center d-block ml-auto mr-auto" src={logo} height="35px" alt=""/>
 
 				</div>
-
-				<section className="intro-section d-none">
-
-					<div className="background"></div>
-
-					<div className="content link-panels-wrap">
-						<div className="container">
-
-							<div className="mission-snippet">
-								<div className="title">Read about our mission</div>
-								<div className="text">All the details about what we are doing and the direction we want to take this company.</div>
-								<Link to={ROUTES.MISSION}><div className="btn btn-articles-light">Mission</div></Link>
-							</div>
-
-							<div className="link-panels">
-
-								<Link to={ROUTES.STORE}>
-									<div className="link-panel">
-										<div className="title">Store</div>
-										<div className="text">Shop our collection of clothing, as well as products made in collaboration with other brands.</div>
-										<div className="arrow">></div>
-									</div>
-								</Link>
-				
-								<Link to={ROUTES.NEWS}>
-									<div className="link-panel">
-										<div className="title">News</div>
-										<div className="text">Our take on the truth, source based facts, clear stated opinions.</div>
-										<div className="arrow">></div>
-									</div>
-								</Link>
-					
-								<Link to={ROUTES.STORE_SUBMISSIONS}>
-									<div className="link-panel">
-										<div className="title">Submissions</div>
-										<div className="text">Submit designs you have for a chance to get them printed and make some money.</div>
-										<div className="arrow">></div>
-									</div>
-								</Link>
-					
-								<Link to={ROUTES.REPORTS}>
-									<div className="link-panel">
-										<div className="title">Reports</div>
-										<div className="text">An inside look into our finances. We believe transparency is key to ending corruption.</div>
-										<div className="arrow">></div>
-									</div>
-								</Link>
-						
-								<Link to={ROUTES.SIGN_UP}>
-									<div className="link-panel">
-										<div className="title">Sign Up</div>
-										<div className="text">Create an account for all sorts of benifits and access to the entire site.</div>
-										<div className="arrow">></div>
-									</div>
-								</Link>
-						
-								<Link to={ROUTES.PRESS}>
-									<div className="link-panel">
-										<div className="title">Press and Buisness</div>
-										<div className="text">To reach out with questions or any other inquires</div>
-										<div className="arrow">></div>
-									</div>
-								</Link>				
-
-							</div>
-
-						</div>
-					</div>
-
-				</section>
 
 				<div className="section-break d-none">
 					<img className="text-center d-block ml-auto mr-auto" src={flag} height="35px" alt=""/>

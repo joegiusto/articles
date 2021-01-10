@@ -383,7 +383,7 @@ function Menu(props) {
           <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.LANDING}><p className="subheading-font"><i className="fas fa-map-pin"></i>Landing</p></Link>
           }
           <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MISSION}><p className="subheading-font"><i className="fas fa-flag-usa"></i>Mission</p></Link>
-          <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.REPORTS}><p className="subheading-font"><i className="fas fa-paste"></i>Reports</p></Link>
+          <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.TRANSPARENCY_REPORTS}><p className="subheading-font"><i className="fas fa-paste"></i>Transparency</p></Link>
 
           <hr/>
 
@@ -443,8 +443,14 @@ function Menu(props) {
           <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORIES}><p className="subheading-font"><i className="fas fa-bullhorn"></i>Stories</p></Link>
           <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ISSUES}><p className="subheading-font"><i className="fas fa-balance-scale"></i>Issues</p></Link>
           <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MYTHS}><p className="subheading-font"><i className="fas fa-ghost"></i>Myths</p></Link>
-          {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.TOWN_HALL}><p className="subheading-font"><i className="fas fa-bell"></i>Town Hall</p></Link> */}
-
+          <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.RESOURCES}>
+            <p className="subheading-font">
+              {/* TODO Convert to paid Font Awesome! */}
+              <svg style={{height: '1rem', width: '25px', marginRight: '10px', justifyContent: 'center'}} aria-hidden="true" focusable="false" data-prefix="fas" data-icon="books" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="d-flex svg-inline--fa fa-books fa"><path fill="currentColor" d="M575.11 443.25L461.51 19.06C458.2 6.7 445.61-3.18 430.15.96L414.7 5.1c-6.18 1.66-11.53 6.4-16.06 14.24-14.03 6.94-52.3 17.21-68 18.22-7.84-4.53-14.85-5.96-21.03-4.3l-15.46 4.14c-2.42.65-4.2 1.95-6.15 3.08V32c0-17.67-14.33-32-32-32h-64c-17.67 0-32 14.33-32 32v64h128l101.66 396.94c3.31 12.36 15.9 22.24 31.36 18.1l15.45-4.14c6.18-1.66 11.53-6.4 16.06-14.24 13.91-6.88 52.18-17.2 68-18.22 7.84 4.53 14.85 5.96 21.03 4.3l15.46-4.14c15.45-4.14 21.41-18.99 18.09-31.35zm-134.4-7.06L348.64 92.37l61.82-16.56 92.07 343.82-61.82 16.56zM0 384h128V128H0v256zM96 0H32C14.33 0 0 14.33 0 32v64h128V32c0-17.67-14.33-32-32-32zM0 480c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64H0v64zm160-96h128V128H160v256zm0 96c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64H160v64z" class=""></path></svg>
+              {/* <i className="fas fa-ghost"></i> */}
+              Resources
+            </p>
+          </Link>
           <hr/>
 
           {/* Party Section */}
@@ -458,6 +464,7 @@ function Menu(props) {
           <div className={"tab-content " + (partySectionOpen ? "" : "")}>
             <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PARTY}><p className="subheading-font"><i className="fas fa-users"></i>Info</p></Link>
             <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PROPOSALS}><p className="subheading-font"><i className="fas fa-scroll"></i>Proposals</p></Link>
+            {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.TOWN_HALL}><p className="subheading-font"><i className="fas fa-bell"></i>Town Hall</p></Link> */}
           </div>
           
           {/* Support Section */}
@@ -485,7 +492,6 @@ function Menu(props) {
               <>
               <p className="heading-font no-link"><b>Admin &nbsp;</b><span className="badge badge-warning">Role</span></p>
               <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ADMIN}><p className="subheading-font"><i className="fas fa-toolbox"></i>Admin Portal</p></Link>
-              {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.REPORTS_MANAGE}><p className="subheading-font"><i className="fas fa-toolbox"></i>Reports Manage</p></Link> */}
               {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE_MANAGE}><p className="subheading-font"><i className="fas fa-toolbox"></i>Clothing Manage</p></Link> */}
               {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MANAGE}><p className="subheading-font"><i className="fas fa-toolbox"></i>News Manage</p></Link> */}
               {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.DONATE}><p className="subheading-font"><i className="fas fa-toolbox"></i>Donation Manage</p></Link> */}
@@ -502,7 +508,7 @@ function Menu(props) {
                 <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PLAYGROUND}><p className="subheading-font"><i className="fas fa-code"></i>Playground</p></Link>
                 <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MESH}><p className="subheading-font"><i className="fas fa-chess-board"></i>Mesh</p></Link>
                 <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MESSAGES}><p className="subheading-font"><i className="fas fa-envelope-square"></i>Messages</p></Link>
-                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PRESIDENTS}><p className="subheading-font"><i className="fas fa-envelope-square"></i>Presidents</p></Link>
+                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.RESOURCES_PRESIDENTS}><p className="subheading-font"><i className="fas fa-envelope-square"></i>Presidents</p></Link>
                 <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.OUTSET}><p className="subheading-font"><i className="fas fa-road"></i>Outset</p></Link>
                 <div className="app-links">
                   <img className="app-badge" src="https://bibibop.com/data/sites/1/media/rewards/Download_badge-apple-white.png" alt=""/>

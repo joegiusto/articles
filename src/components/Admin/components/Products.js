@@ -346,8 +346,10 @@ class Products extends Component {
         <div className="side-panel">
 
           <div className="card">
-            <div className="card-header">Clothing</div>
+            <div className="card-header">Originals</div>
             <div className="card-body">
+              <div><b>Total: 8</b></div>
+              <hr/>
               <div><b>Hoodie: 2</b></div>
               <div><b>Pins: 2</b></div>
               <div><b>Shirts: 2</b></div>
@@ -357,9 +359,23 @@ class Products extends Component {
           </div>
 
           <div className="card mt-3">
-            <div className="card-header">Other</div>
+            <div className="card-header">Partnerships</div>
             <div className="card-body">
-              <div><b>All: 0</b></div>
+              <div><b>Total: 2</b></div>
+            </div>
+          </div>
+
+          <div className="card mt-3">
+            <div className="card-header">Sponsored</div>
+            <div className="card-body">
+              <div><b>Total: 1</b></div>
+            </div>
+          </div>
+
+          <div className="card mt-3">
+            <div className="card-header">Submissions</div>
+            <div className="card-body">
+              <div><b>Total: 0</b></div>
             </div>
           </div>
 
@@ -626,8 +642,8 @@ class Products extends Component {
   
           </div>
   
-          <div className="p-3 text-center">
-            <h2>Product List</h2>
+          <div className="">
+            <h1>Products List</h1>
 
             <DataTable
               title="Does not matter"
@@ -637,11 +653,11 @@ class Products extends Component {
               data={this.state.products}
               customStyles={customStyles}
               className='table table-bordered bg-white'
-              expandableRows={true}
-              expandOnRowClicked={true}
-              expandableRowsComponent={
-                <div>Testing</div>
-              }
+              // expandableRows={true}
+              // expandOnRowClicked={true}
+              // expandableRowsComponent={
+              //   <div>Testing</div>
+              // }
             />
 
           </div>
