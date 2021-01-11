@@ -95,9 +95,6 @@ export const RESOURCES_PRESIDENTS ='/news/resources/presidents'
 export const RESOURCES_PRESIDENT ='/news/resources/presidents/:id'
 export const RESOURCES_CORONAVIRUS ='/news/resources/coronavirus'
 
-// export const MANAGE ='/news/manage'
-// export const MANAGE_DETAILS = '/news/manage/:id';
-
 // Party
 export const PARTY ='/party'
 export const POLICY ='/party/policy'
@@ -160,15 +157,13 @@ export const ADMIN_NEWSLETTER = '/admin/newsletter';
 export const ADMIN_PRESIDENTS = '/admin/presidents';
 export const ADMIN_PRESIDENTS_DETAILS = '/admin/presidents/:id';
 
-// export const ADMIN_DETAILS = '/admin/:id';
-
 // Donate
 export const DONATE = '/donate';
 export const DONATE_DETAILS = '/donate/:id';
 
 export const SUBSCRIBE = '/subscribe';
 
-// Mail PROTOTYPE
+// Messages
 export const MESSAGES = '/messages';
 
 // Playground

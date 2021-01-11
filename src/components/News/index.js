@@ -1070,7 +1070,7 @@ class Frontpage extends Component {
 
                 <div className="beta-warning">WIP</div>
 
-                <div className="zoom-controls">
+                <div className="zoom-controls d-none">
 
                   <div className="zoom-in">
                     <i className="fas fa-plus mr-0"></i>
@@ -1217,7 +1217,7 @@ class Frontpage extends Component {
                   </Link>
 
                   <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS_CRYPTO}>
-                    <div className={"link frontpage " + (this.props.location.pathname === "/news/crypto" ? 'active' : null)}>
+                    <div className={"link crypto " + (this.props.location.pathname === "/news/crypto" ? 'active' : null)}>
                       {/* <i className="fas fa-ghost"></i> */}
                       <i class="fab fa-bitcoin"></i>
                       <div className="text">Crypto</div>

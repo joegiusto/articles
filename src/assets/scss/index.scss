@@ -68,7 +68,6 @@ $grid-breakpoints: (
 
 // Support Related
 @import 'components/support';
-@import 'components/blog';
 @import 'components/press';
 @import 'components/privacy';
 @import 'components/translations';
@@ -92,22 +91,24 @@ $grid-breakpoints: (
 @import 'components/footer';
 @import 'components/playground';
 
-@import 'components/admin';
-@import 'components/admin_dashboard';
-@import 'components/admin_users';
-@import 'components/admin_news';
-@import 'components/admin_proposals';
-@import 'components/admin_products';
-@import 'components/admin_expenses';
-@import 'components/admin_sockets';
-@import 'components/admin_aws';
-@import 'components/admin_reports';
-@import 'components/admin_orders';
-@import 'components/admin_ads';
-@import 'components/admin_projects';
-@import 'components/admin_newsletter';
-@import 'components/admin_presidents';
+// Admin Portal
+@import 'components/Admin/admin';
+@import 'components/Admin/admin_dashboard';
+@import 'components/Admin/admin_users';
+@import 'components/Admin/admin_news';
+@import 'components/Admin/admin_proposals';
+@import 'components/Admin/admin_products';
+@import 'components/Admin/admin_expenses';
+@import 'components/Admin/admin_sockets';
+@import 'components/Admin/admin_aws';
+@import 'components/Admin/admin_reports';
+@import 'components/Admin/admin_orders';
+@import 'components/Admin/admin_ads';
+@import 'components/Admin/admin_projects';
+@import 'components/Admin/admin_newsletter';
+@import 'components/Admin/admin_presidents';
 
+// Public Advertising Info Page
 @import 'components/advertising';
 
 @import 'components/membership';
