@@ -16,14 +16,28 @@ import logo from '../../assets/img/logo.png'
 import flag from '../../assets/img/flag.png'
 import newsWave from '../../assets/gif/news-wave.gif'
 
+import dream from '../../assets/img/landing/hero-dream.jpg'
+import voting  from '../../assets/img/landing/hero-voting.jpg'
+import corporate from '../../assets/img/landing/hero-corporate.jpg'
+import school from '../../assets/img/landing/hero-school.jpg'
+
 class LandingPage extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+
 			// Time Progress is used for keeping track of current slide time and showing visuals
 			timeProgress: 0,
 			// Time at which the time progress will be set t 0 and next slide will be displayed
 			timeToNextTime: 100,
+
+			welcomeBlockPhoto: 0,
+			welcomeBlockPhotos: [
+				<img src={dream} alt=""/>,
+				<img src={voting} alt=""/>,
+				<img src={corporate} alt=""/>,
+				<img src={school} alt=""/>
+			],
 
 			newsTotals: {
 				stories: 0,
@@ -43,12 +57,14 @@ class LandingPage extends Component {
 			newsShowcaseIssues: 0,
 			newsShowcaseMyths: 0,
 
+			// 
 			doesTheListReallyGoOn: false,
 
 			products: [],
 
 			avenueTab: 0,
 			avenueScroll: false,
+
 			// avenueControls
 			avenueTabDetails: [
 				{
@@ -387,16 +403,16 @@ class LandingPage extends Component {
 							thisCopy.setState({
 								avenueTabDetails: avenues
 							});
-						}, 500);
+						}, 200);
 				
 						
 					}, 0);
 
 				}, 0)
 
-			}, 500)
+			}, 200)
 
-		}, 500);
+		}, 200);
 
 	}
 
@@ -463,16 +479,16 @@ class LandingPage extends Component {
 							thisCopy.setState({
 								avenueTabDetails: avenues
 							});
-						}, 500);
+						}, 100);
 				
 						
 					}, 0);
 
 				}, 0)
 
-			}, 500)
+			}, 100)
 
-		}, 500);
+		}, 100);
 
 		// this.state.avenueTab === 3 ? 
 		// this.setState( {avenueTab: 0} ) 
@@ -518,7 +534,16 @@ class LandingPage extends Component {
 						<div className="details">
 							<div className="small">Welcome To</div>
 		
-							<div className="brand">Articles Media</div>
+							<div className="brand d-flex flex-column justify-content-center">
+
+								{/* <img height="200px" width="200px" src="https://cdn.articles.media/email/logo.jpg" alt=""/> */}
+								
+								<div className="">
+									<div className="main">Articles</div>
+									<div className="sub">Media</div>
+								</div>
+
+							</div>
 		
 							<div className="text">
 								A political organization and platform, working to make America a better place for the people through avenues of transparency, clothing, news and politics.
@@ -558,7 +583,21 @@ class LandingPage extends Component {
 						</div>
 
 						<div className="image">
-							<img src="https://www.economist.com/sites/default/files/images/print-edition/20130921_USD000_0.jpg" alt=""/>
+
+							<div className="controls d-flex justify-content-end">
+
+								<div onClick={() => { this.setState({welcomeBlockPhoto: this.state.welcomeBlockPhoto - 1}) }} className={"prev " + (this.state.welcomeBlockPhoto === 0 && 'freeze')}>
+									<i className={"fas fa-2x fa-caret-square-left"}></i>
+								</div>
+
+								<div onClick={() => { this.setState({welcomeBlockPhoto: this.state.welcomeBlockPhoto + 1}) }} className={"prev " + (this.state.welcomeBlockPhoto === 3 && 'freeze')}>
+									<i className={"fas fa-2x fa-caret-square-right"}></i>
+								</div>
+
+							</div>
+
+							{this.state.welcomeBlockPhotos[this.state.welcomeBlockPhoto]}
+
 						</div>
 						
 					</div>
@@ -570,7 +609,7 @@ class LandingPage extends Component {
 
 					<div className="content">
 
-						<div className="articles-heading">
+						<div className="articles-heading text-center">
 							Think about it
 						</div>
 
@@ -716,11 +755,85 @@ class LandingPage extends Component {
 							}
 						</div>
 
-						<div className="bottom-text">Is our nations media outlets and leaders tackling any of the problems that plague this nation as well as we need them to?</div>
+						<div className="bottom-text text-center">Is our nations media outlets and leaders tackling any of the problems that plague this nation as well as we need them to?</div>
 
 					</div>
 
 				</div>
+
+				{/* How we help January 2020 */}
+				<section className="tour-section-overhaul">
+					
+					<div className="content">
+
+						<div className="container px-0 mx-0">
+
+							<div className="articles-heading text-center">
+								How we help
+							</div>
+
+							<NewCustomPanel identifier={this.state.avenueTabDetails[this.state.avenueTab]}/>
+
+							<div className="controls noselect d-flex justify-content-center">
+								
+								<div className="avenue-selector">
+									<div onClick={() => this.jumpTo( (avenueTab === 0 ? avenueTabDetails.length - 1 : avenueTab - 1) )} className="avenue avenue-control prev"> { '<' } </div>
+
+									<div className="center d-flex">
+
+										{/* <span className="avenue-filler"></span> */}
+
+										<div onClick={() => this.jumpTo(0, true)} className={"avenue avenue-selection transparency ml-0 " + (avenueTab === 0 ? 'active' : '')}>
+											<div className="beak"></div>
+											<i class="fas fa-paste" aria-hidden="true"></i>
+											Transparency
+										</div>
+
+										<div onClick={() => this.jumpTo(1, true)} className={"avenue avenue-selection clothing " + (avenueTab === 1 ? 'active' : '')}>
+											<div className="beak"></div>
+											<i class="fas fa-shopping-cart" aria-hidden="true"></i>
+											Clothing
+										</div>
+
+										<div onClick={() => this.jumpTo(2, true)} className={"avenue avenue-selection news " + (avenueTab === 2 ? 'active' : '')}>
+											<div className="beak"></div>
+											<i class="fas fa-newspaper" aria-hidden="true"></i>
+											News
+										</div>
+
+										<div onClick={() => this.jumpTo(3, true)} className={"avenue avenue-selection politics " + (avenueTab === 3 ? 'active' : '')}>
+											<div className="beak"></div>
+											<i class="fas fa-scroll" aria-hidden="true"></i>
+											Politics
+										</div>
+
+										{/* <span className="avenue-filler"></span> */}
+
+									</div>
+
+									<div onClick={() => this.jumpTo( (avenueTab === avenueTabDetails.length - 1 ? 0 : avenueTab + 1) )} className="avenue avenue-control next"> > </div>
+								</div>
+
+								{/* TODO - Once site is done, finish this and get it working for mobile, to much to do right now with just myself working on this :( ) */}
+								<div className="timer ">
+									
+									{/* <div className="time">{ 10 }</div> */}
+
+									<div onClick={() => this.toggleAvenueScroll()} className="pause-play"><i className={"far mr-0 " + (avenueScroll === true ? 'fa-pause-circle' : 'fa-play-circle')}></i></div>
+
+									<div className="progress">
+										<div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style={{width: timeProgress + "%"}}></div>
+									</div>
+
+								</div>
+								
+							</div>
+
+						</div>
+
+					</div>
+
+				</section>
 
 				{/* How we help - October 2020 Remodel */}
 				<div className="how-we-help">
@@ -982,21 +1095,49 @@ class LandingPage extends Component {
 					<div className="content">
 
 						<div className="mission-snippet">
-							<div className="title">Read about our mission</div>
+							
+							<img className="shadow-articles" height="200px" width="200px" src="https://cdn.articles.media/email/logo.jpg" alt=""/>
+
+							<div style={{ fontSize: '3rem' }} className="title mt-3 ">Read about our mission</div>
 							<div className="text">All the details about what we are doing and the direction we want to take this company.</div>
 							<Link to={ROUTES.MISSION}><div className="btn btn-articles-light">Mission</div></Link>
+
 						</div>
 	
-						<div className="link-panels">
-	
+						<div className="link-panels d-none">
+
+							<Link to={ROUTES.SIGN_UP}>
+								<div className="link-panel">
+									<div className="title">Sign Up</div>
+									<div className="text">Create an account to unlock access to the entire site.</div>
+									<div className="arrow">></div>
+								</div>
+							</Link>
+
+							<Link to={ROUTES.SIGN_IN}>
+								<div className="link-panel">
+									<div className="title">Sign In</div>
+									<div className="text">Existing members click here to access the site.</div>
+									<div className="arrow">></div>
+								</div>
+							</Link>
+
+							<Link to={ROUTES.TRANSPARENCY}>
+								<div className="link-panel">
+									<div className="title">Transparency</div>
+									<div className="text">An inside look into our finances and more. We believe transparency is key to preventing corruption.</div>
+									<div className="arrow">></div>
+								</div>
+							</Link>
+
 							<Link to={ROUTES.STORE}>
 								<div className="link-panel">
-									<div className="title">Store</div>
+									<div className="title">Clothing</div>
 									<div className="text">Shop our collection of clothing, as well as products made in collaboration with other brands.</div>
 									<div className="arrow">></div>
 								</div>
 							</Link>
-			
+
 							<Link to={ROUTES.NEWS}>
 								<div className="link-panel">
 									<div className="title">News</div>
@@ -1004,30 +1145,54 @@ class LandingPage extends Component {
 									<div className="arrow">></div>
 								</div>
 							</Link>
+
+							<Link to={ROUTES.PARTY}>
+								<div className="link-panel">
+									<div className="title">Politics</div>
+									<div className="text">Shop our collection of clothing, as well as products made in collaboration with other brands.</div>
+									<div className="arrow">></div>
+								</div>
+							</Link>
+	
+							{/* <Link to={ROUTES.STORE}>
+								<div className="link-panel">
+									<div className="title">Store</div>
+									<div className="text">Shop our collection of clothing, as well as products made in collaboration with other brands.</div>
+									<div className="arrow">></div>
+								</div>
+							</Link> */}
+			
+							{/* <Link to={ROUTES.NEWS}>
+								<div className="link-panel">
+									<div className="title">News</div>
+									<div className="text">Our take on the truth, source based facts, clear stated opinions.</div>
+									<div className="arrow">></div>
+								</div>
+							</Link> */}
 				
-							<Link to={ROUTES.STORE_SUBMISSIONS}>
+							{/* <Link to={ROUTES.STORE_SUBMISSIONS}>
 								<div className="link-panel">
 									<div className="title">Submissions</div>
 									<div className="text">Submit designs you have for a chance to get them printed and make some money.</div>
 									<div className="arrow">></div>
 								</div>
-							</Link>
+							</Link> */}
 				
-							<Link to={ROUTES.TRANSPARENCY_REPORTS}>
+							{/* <Link to={ROUTES.TRANSPARENCY_REPORTS}>
 								<div className="link-panel">
 									<div className="title">Reports</div>
 									<div className="text">An inside look into our finances. We believe transparency is key to ending corruption.</div>
 									<div className="arrow">></div>
 								</div>
-							</Link>
+							</Link> */}
 					
-							<Link to={ROUTES.SIGN_UP}>
+							{/* <Link to={ROUTES.SIGN_UP}>
 								<div className="link-panel">
 									<div className="title">Sign Up</div>
-									<div className="text">Create an account for all sorts of benifits and access to the entire site.</div>
+									<div className="text">Create an account for all sorts of benefits and access to the entire site.</div>
 									<div className="arrow">></div>
 								</div>
-							</Link>
+							</Link> */}
 					
 							<Link to={ROUTES.PRESS}>
 								<div className="link-panel">
@@ -1037,6 +1202,118 @@ class LandingPage extends Component {
 								</div>
 							</Link>				
 	
+						</div>
+						
+					</div>
+
+				</div>
+
+				<div className="common-links">
+
+					<div className="content">
+
+						<div className="articles-heading">
+							Quick links
+						</div>
+
+						<div className="link-panels">
+
+							<Link to={ROUTES.SIGN_UP}>
+								<div className="link-panel">
+									<div className="title">Sign Up</div>
+									<div className="text">Create an account to unlock access to the entire site.</div>
+									<div className="arrow">></div>
+								</div>
+							</Link>
+
+							<Link to={ROUTES.SIGN_IN}>
+								<div className="link-panel">
+									<div className="title">Sign In</div>
+									<div className="text">Existing members click here to access the site.</div>
+									<div className="arrow">></div>
+								</div>
+							</Link>
+
+							<Link to={ROUTES.TRANSPARENCY}>
+								<div className="link-panel">
+									<div className="title">Transparency</div>
+									<div className="text">An inside look into our finances and more. We believe transparency is key to preventing corruption.</div>
+									<div className="arrow">></div>
+								</div>
+							</Link>
+
+							<Link to={ROUTES.STORE}>
+								<div className="link-panel">
+									<div className="title">Clothing</div>
+									<div className="text">Shop our collection of clothing, as well as products made in collaboration with other brands.</div>
+									<div className="arrow">></div>
+								</div>
+							</Link>
+
+							<Link to={ROUTES.NEWS}>
+								<div className="link-panel">
+									<div className="title">News</div>
+									<div className="text">Our take on the truth, source based facts, clear stated opinions.</div>
+									<div className="arrow">></div>
+								</div>
+							</Link>
+
+							<Link to={ROUTES.PARTY}>
+								<div className="link-panel">
+									<div className="title">Politics</div>
+									<div className="text">Shop our collection of clothing, as well as products made in collaboration with other brands.</div>
+									<div className="arrow">></div>
+								</div>
+							</Link>
+
+							{/* <Link to={ROUTES.STORE}>
+								<div className="link-panel">
+									<div className="title">Store</div>
+									<div className="text">Shop our collection of clothing, as well as products made in collaboration with other brands.</div>
+									<div className="arrow">></div>
+								</div>
+							</Link> */}
+
+							{/* <Link to={ROUTES.NEWS}>
+								<div className="link-panel">
+									<div className="title">News</div>
+									<div className="text">Our take on the truth, source based facts, clear stated opinions.</div>
+									<div className="arrow">></div>
+								</div>
+							</Link> */}
+
+							{/* <Link to={ROUTES.STORE_SUBMISSIONS}>
+								<div className="link-panel">
+									<div className="title">Submissions</div>
+									<div className="text">Submit designs you have for a chance to get them printed and make some money.</div>
+									<div className="arrow">></div>
+								</div>
+							</Link> */}
+
+							{/* <Link to={ROUTES.TRANSPARENCY_REPORTS}>
+								<div className="link-panel">
+									<div className="title">Reports</div>
+									<div className="text">An inside look into our finances. We believe transparency is key to ending corruption.</div>
+									<div className="arrow">></div>
+								</div>
+							</Link> */}
+
+							{/* <Link to={ROUTES.SIGN_UP}>
+								<div className="link-panel">
+									<div className="title">Sign Up</div>
+									<div className="text">Create an account for all sorts of benefits and access to the entire site.</div>
+									<div className="arrow">></div>
+								</div>
+							</Link> */}
+
+							<Link to={ROUTES.PRESS}>
+								<div className="link-panel">
+									<div className="title">Press and Buisness</div>
+									<div className="text">To reach out with questions or any other inquires</div>
+									<div className="arrow">></div>
+								</div>
+							</Link>				
+
 						</div>
 						
 					</div>
@@ -1182,7 +1459,7 @@ class LandingPage extends Component {
 
 				</section>
 
-				<section className="more-section">
+				<section className="more-section d-none">
 					<div className="background"></div>
 					<div className="content">
 
@@ -1206,7 +1483,7 @@ class LandingPage extends Component {
 						
 					</div>
 				</section>
-				
+
 				<section className="intro-section d-none accent">
 					<div className="background"></div>
 					<div className="content">
@@ -1266,9 +1543,48 @@ function NewCustomPanel(props) {
   return (
 		<div className={"new-custom-panel " + (avenueVisible ? 'visible' : '')}>
 
-			<div className="one">
-				<div className="content-title" style={{lineHeight: "45px"}}>{title}</div>
-				<div className="content-text">{description}</div>
+			<div className="one shadow-articles">
+
+				<div className="content-title mt-0 mb-2" style={{lineHeight: "45px"}}>{title}</div>
+
+				<div style={{lineHeight: '1.25'}} className="content-text">{description}</div>
+
+				<div className="d-flex justify-content-center align-items-center align-self-stretch flex-grow-1">
+
+					<div class="quick-links">
+
+						<div class="report-link">
+							<a class="btn btn-articles-light btn-lg w-100 report-quick-links active null" href="/transparency/reports">
+								<i class="fas fa-paste" aria-hidden="true"></i>
+								<span class="text">Reports</span>
+							</a>
+						</div>
+
+						<div class="report-link">
+							<a class="btn btn-articles-light btn-lg w-100 report-quick-links null" href="/transparency/charts">
+								<i class="fas fa-chart-line" aria-hidden="true"></i>
+								<span class="text">Charts</span>
+							</a>
+						</div>
+
+						<div class="report-link">
+							<a class="btn btn-articles-light btn-lg w-100 report-quick-links" href="/transparency/employees">
+								<i class="fas fa-paste" aria-hidden="true"></i>
+								<span class="text">Employees</span>
+							</a>
+						</div>
+
+						<div class="report-link">
+							<a class="btn btn-articles-light btn-lg w-100 report-quick-links null" href="/transparency/flag">
+								<i class="fas fa-flag" aria-hidden="true"></i>
+								<span class="text">Flag</span>
+							</a>
+						</div>
+						
+					</div>
+
+				</div>
+
 			</div>
 			
 			<div className="slide-out-sleeve-wrap">
@@ -1278,7 +1594,7 @@ function NewCustomPanel(props) {
 					{component}
 				</div>
 	
-				<div className="end-cap">
+				<div className="end-cap shadow-articles">
 					{/* Just CSS */}
 				</div>
 

@@ -251,6 +251,17 @@
     }
   }
 
+  .landing-page-link {
+    margin-top: -10px;
+    padding: 0 0.3rem;
+    // position: absolute;
+    // left: 50%;
+    margin: auto;
+    transform: translateY(-50%) translateX(-50%);
+    background-color: $accent-color;
+    color: black;
+  }
+
   .menu-cart-preview {
 
     .tiles {

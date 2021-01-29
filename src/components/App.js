@@ -213,6 +213,7 @@ class AppBase extends Component {
     
                 <PrivateRoute path={ROUTES.SETTINGS_ACCOUNT} component={SettingsPage} />
                 <PrivateRoute path={ROUTES.SETTINGS_MEMBERSHIP} component={SettingsPage} />
+                <PrivateRoute path={ROUTES.SETTINGS_NEWSLETTER} component={SettingsPage} />
                 <PrivateRoute path={ROUTES.SETTINGS_BILLING} component={SettingsPage} />
                 <PrivateRoute path={ROUTES.SETTINGS_EMPLOYEE} component={SettingsPage} />
                 

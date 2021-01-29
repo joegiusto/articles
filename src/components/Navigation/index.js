@@ -523,6 +523,10 @@ function Menu(props) {
 
           <hr/>
 
+          <div className="landing-page-link d-none">
+            Landing Page
+          </div>
+
           <p className="subheading-font align-items-center d-flex justify-content-between pb-3" onClick={props.toggleColorMode}>
 
             <div>

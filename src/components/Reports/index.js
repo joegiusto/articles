@@ -689,7 +689,7 @@ class Reports extends Component {
                       <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (this.props.location.pathname === ROUTES.TRANSPARENCY_FLAG ? 'active' : null)}>
                         <div>
                           <i className="fas fa-flag"></i>
-                          <span className="text">Comment & Flag</span>
+                          <span className="text">Flag</span>
                         </div>
                       </button>
                     </Link>

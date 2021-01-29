@@ -394,3 +394,7 @@ code {
     font-size: 0.7rem;
   }
 }
+
+.shadow-articles {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 15%), 0 2px 3px rgba(0, 0, 0, 20%);
+}

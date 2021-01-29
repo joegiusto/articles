@@ -11,7 +11,7 @@ class Newsletter extends Component {
   super(props);
   
     this.state = {
-      projects: []
+      newsletter_results: []
     };
 
   }
@@ -20,16 +20,17 @@ class Newsletter extends Component {
     const self = this;
     this.props.setLocation(this.props.tabLocation);
 
-    // axios.post('/api/secure/getProjects', {
+    axios.post('/api/secure/getNewsletterList', {
 
-    // })
-    // .then( (response) => {
-    //   console.log(response)
-    //   this.setState({projects: response.data})
-    // })
-    // .catch( (error) => {
-    //   console.log(error);
-		// });
+    })
+    .then( (response) => {
+      this.setState({newsletter_results: response.data})
+      console.log(response.data)
+    })
+    .catch( (error) => {
+      console.log(error);
+    });
+    
   }
 
   render() {
@@ -42,11 +43,8 @@ class Newsletter extends Component {
           <div className="card">
             <div className="card-header">Metrics</div>
             <div className="card-body">
-              <div><b>General Subscribers: 0</b></div>
-              <div><b>Dev Subscribers: 0</b></div>
-              <div><b>Money Subscribers: 0</b></div>
-              {/* <hr/> */}
-              {/* <div><b>Encrypted Chats: 0</b></div> */}
+              <div><b>General Newsletter: 0</b></div>
+              <div><b>Dev Newsletter: 0</b></div>
             </div>
           </div>
 
@@ -54,7 +52,28 @@ class Newsletter extends Component {
 
         <div className="main-panel">
 
-          <h1 className="text-center mt-4"></h1>
+          <h1 className="mt-3">List</h1>
+
+          <div>
+            {
+              this.state.newsletter_results.map( (result) => (
+              <div className="mb-3">
+                <div><b>{result.email}</b></div>
+                <div>{result.first_name}</div>
+                <button className="btn btn-danger btn-sm">Delete</button>
+              </div>
+            ))}
+          </div>
+
+          <h1 className="mt-3">Compose</h1>
+
+          <input className="mb-3" type="text" placeholder="Subject"/>
+
+          <textarea className="d-block mb-3" placeholder="Content">
+
+          </textarea>
+          
+          <button className="btn btn-articles-light">Schedule</button>
 
         </div>
 

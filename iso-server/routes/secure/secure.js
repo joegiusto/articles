@@ -1524,4 +1524,6 @@ module.exports = (app, db) => {
   require('./routes/projects/getProject')(app, db, passport);
 
   require('./routes/addPresident')(app, db, passport);
+
+  require('./routes/getNewsletterList')(app, db, passport);
 } 

@@ -41,9 +41,6 @@ const users = require("./routes/api/users");
 // const password = require('./routes/api/password');
 const password = require('./routes/api/password');
 
-// var React = require('react');
-// var ReactDOMServer = require('react-dom/server');
-
 let mongooseConnectionAttempts = 1
 const mongooseConnectionAttemptsMax = 5
 

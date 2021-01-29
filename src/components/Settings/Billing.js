@@ -189,32 +189,50 @@ class Billing extends Component {
                         <th>Payment Methods Loading...</th>
                       </tr>
                       :
-                      this.state.userPaymentMethods?.map(card => 
-                        <tr className="donation">
+                      this.state.userPaymentMethods?.map(card => {
 
-                          <th scope="row" className="" >{card.card.brand}</th>
+                        function renderedBrandImage(card_brand) {
 
-                          <td className="">{card.card.last4}</td>
+                          switch( card_brand ) {
+                            case 'visa':
+                              // code block
+                              return <i class="fab fa-2x fa-cc-visa"></i>
+                              // break;
+                            default:
+                              // code block
+                              return card_brand
+                          }
 
-                          <td className="">{card.card.exp_month}/{card.card.exp_year}</td>
+                        }
+                                                              
+                        return (
+                          <tr className="donation">
 
-                          <td className="">
-                            {
-                            this.state.defaultUserPaymentMethod === card.id ?
-                            // <span className="badge badge-primary">Primary</span>
-                            <button className="btn btn-sm btn-articles-light alt" disabled>Primary</button>
-                            :
-                            // <span className="badge badge-secondary" onClick={() => this.setDefaultPaymentMethod(card.id)}>Make Primary</span>
-                            <button className="btn btn-articles-light btn-sm" onClick={() => this.setDefaultPaymentMethod(card.id)}>Make Primary</button>
-                            }
-                          </td>
+                            <th scope="row" className="" >{renderedBrandImage(card.card.brand)}</th>
 
-                          <td className="">
-                            <DeletePaymentMethod card={card} />
-                          </td>
+                            <td className="">{card.card.last4}</td>
 
-                        </tr>  
-                      )
+                            <td className="">{card.card.exp_month}/{card.card.exp_year}</td>
+
+                            <td className="">
+                              {
+                              this.state.defaultUserPaymentMethod === card.id ?
+                              // <span className="badge badge-primary">Primary</span>
+                              <button className="btn btn-sm btn-articles-light alt" disabled>Primary</button>
+                              :
+                              // <span className="badge badge-secondary" onClick={() => this.setDefaultPaymentMethod(card.id)}>Make Primary</span>
+                              <button className="btn btn-articles-light btn-sm" onClick={() => this.setDefaultPaymentMethod(card.id)}>Make Primary</button>
+                              }
+                            </td>
+
+                            <td className="">
+                              <DeletePaymentMethod card={card} />
+                            </td>
+
+                          </tr>
+                        )
+
+                      })
                     }
                     
                   </tbody>

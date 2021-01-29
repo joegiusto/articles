@@ -13,9 +13,9 @@ import { loadStripe } from '@stripe/stripe-js';
 
 import * as ROUTES from '../../constants/routes';
 
-
 import Account from './Account'
 import Membership from './Membership'
+import Newsletter from './Newsletter'
 import Billing from './Billing'
 import Employee from './Employee'
 
@@ -334,6 +334,9 @@ class Settings extends Component {
 
       // userReferrals: [],
 
+      newsletterGeneral: false,
+      newsletterDev: false,
+
       subscriptions: [],
 
       user: {
@@ -435,20 +438,20 @@ class Settings extends Component {
               <Link to={ROUTES.SETTINGS_MEMBERSHIP}>
                 <button className={"btn btn-articles-light " + (this.state.settingsTab === 'Membership' ? 'alt' : '')}>Membership</button>
               </Link>
+
+              <Link to={ROUTES.SETTINGS_NEWSLETTER}>
+                <button className={"btn btn-articles-light " + (this.state.settingsTab === 'Newsletter' ? 'alt' : '')}>Newsletter</button>
+              </Link>
   
               <Link to={ROUTES.SETTINGS_BILLING}>
                 <button className={"btn btn-articles-light " + (this.state.settingsTab === 'Billing' ? 'alt' : '')}>Billing</button>
               </Link>
   
-              {this.props.user_details.employee?.bool === true ? 
+              {this.props.user_details.employee?.bool === true && 
   
                 <Link to={ROUTES.SETTINGS_EMPLOYEE}>
                   <button className={"btn btn-articles-light " + (this.state.settingsTab === 'Employee' ? 'alt' : '')}>Employee<span className="badge badge-warning ml-1">Role</span></button>
                 </Link>
-  
-                :
-  
-                null
   
               }
               
@@ -459,74 +462,106 @@ class Settings extends Component {
 
         <div className="container">
 
-          {/* <div className="top d-none justify-content-between align-items-start" style={{maxWidth: '800px', marginRight: 'auto', marginLeft: 'auto'}}>
-            <div>
-              <div className="title">Account Settings</div>
-              <p className="mb-0">User since {moment(this.props.user_details?.sign_up_date).format('LL')}</p>
+          <div className="row">
+
+            <div className="col-lg-8">
+
+              <div className="content">
+
+                <Switch>
+
+                  <Route path={ROUTES.SETTINGS_ACCOUNT} render={() => <Account 
+                    match={this.props.match} 
+                    tabLocation='Account' 
+                    setLocation={this.setLocation}
+                  ></Account>}/>
+
+                  <Route exact path={ROUTES.SETTINGS_MEMBERSHIP} render={() => <Membership 
+                    match={this.props.match} 
+                    tabLocation='Membership'
+                    setLocation={this.setLocation}
+                  ></Membership> }/>
+
+                  <Route exact path={ROUTES.SETTINGS_BILLING} render={() => <Billing 
+                    match={this.props.match} 
+                    tabLocation='Billing' 
+                    setLocation={this.setLocation}
+                  ></Billing> }/>
+
+                  <Route exact path={ROUTES.SETTINGS_NEWSLETTER} render={() => <Newsletter 
+                    match={this.props.match} 
+                    tabLocation='Newsletter' 
+                    setLocation={this.setLocation}
+                  ></Newsletter> }/>
+
+                  <Route exact path={ROUTES.SETTINGS_EMPLOYEE} render={() => <Employee 
+                    match={this.props.match} 
+                    tabLocation='Employee' 
+                    setLocation={this.setLocation}
+                  ></Employee> }/>
+
+                </Switch>
+
+              </div>
+
             </div>
-            <div onClick={this.props.logoutUser} className="btn btn-articles-light">
-              Sign Out
+
+            <div className="col-lg-4">
+              
+              <div className="card settings-card w-100 mt-3">
+
+                <div className="card-header">
+                  <h5>Newsletter Settings</h5>
+                  <p>‎‎Manage your Newsletter settings here</p>
+                </div>
+
+                <div className="card-body p-3">
+
+                  <div className="newsletter-options">
+
+                    <div className="newsletter-option-wrapper noselect">
+
+                      <div onClick={() => this.setState({newsletterGeneral: !this.state.newsletterGeneral})} className={"newsletter-option " + (this.state.newsletterGeneral && 'checked')}>
+
+                        General
+
+                        <div className="box">
+                          <i class="fas fa-check mr-0"></i>
+                        </div>
+                        
+                      </div>
+
+                      <div className="badge badge-articles">Every Tuesday</div>
+
+                    </div>
+  
+                    <div className="newsletter-option-wrapper noselect">
+
+                      <div onClick={() => this.setState({newsletterDev: !this.state.newsletterDev})} className={"newsletter-option " + (this.state.newsletterDev && 'checked')}>
+
+                        Dev
+
+                        <div className="box">
+                          <i class="fas fa-check mr-0"></i>
+                        </div>
+
+                      </div>
+
+                      <div className="badge badge-articles">Every Sunday</div>
+
+                    </div>
+                    
+                  </div>
+
+                  <p><b>General:</b> Newsletter focused on general updates about Articles. Financial status, added content, announcements all to your inbox once a week.</p>
+                  <p><b>Dev:</b> Newsletter geared around the more technical side of things, website development, news internal tools an upcoming features.</p>
+
+                </div>
+
+              </div>
+
             </div>
-          </div> */}
 
-          {/* <div className="tabs mt-3 d-none " style={{maxWidth: '800px', marginRight: 'auto', marginLeft: 'auto'}}>
-
-            <Link to={ROUTES.SETTINGS_ACCOUNT}>
-              <button className={"btn btn-articles-light " + (this.state.settingsTab === 'Account' ? 'alt' : '')}>Account</button>
-            </Link>
-
-            <Link to={ROUTES.SETTINGS_MEMBERSHIP}>
-              <button className={"btn btn-articles-light " + (this.state.settingsTab === 'Membership' ? 'alt' : '')}>Membership</button>
-            </Link>
-
-            <Link to={ROUTES.SETTINGS_BILLING}>
-              <button className={"btn btn-articles-light " + (this.state.settingsTab === 'Billing' ? 'alt' : '')}>Billing</button>
-            </Link>
-
-            {this.props.user_details.employee?.bool === true ? 
-
-              <Link to={ROUTES.SETTINGS_EMPLOYEE}>
-                <button className={"btn btn-articles-light " + (this.state.settingsTab === 'Employee' ? 'alt' : '')}>Employee<span className="badge badge-warning ml-1">Role</span></button>
-              </Link>
-
-              :
-
-              null
-
-            }
-            
-          </div> */}
-
-          <div className="content">
-
-            <Switch>
-
-              <Route path={ROUTES.SETTINGS_ACCOUNT} render={() => <Account 
-                match={this.props.match} 
-                tabLocation='Account' 
-                setLocation={this.setLocation}
-              ></Account>}/>
-
-              <Route exact path={ROUTES.SETTINGS_MEMBERSHIP} render={() => <Membership 
-                match={this.props.match} 
-                tabLocation='Membership'
-                setLocation={this.setLocation}
-              ></Membership> }/>
-
-              <Route exact path={ROUTES.SETTINGS_BILLING} render={() => <Billing 
-                match={this.props.match} 
-                tabLocation='Billing' 
-                setLocation={this.setLocation}
-              ></Billing> }/>
-
-              <Route exact path={ROUTES.SETTINGS_EMPLOYEE} render={() => <Employee 
-                match={this.props.match} 
-                tabLocation='Employee' 
-                setLocation={this.setLocation}
-              ></Employee> }/>
-
-            </Switch>
-          
           </div>
 
         </div>

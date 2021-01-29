@@ -13,6 +13,7 @@ export const OUTSET = '/outset';
 // Settings
 export const SETTINGS_ACCOUNT = '/settings/account';
 export const SETTINGS_MEMBERSHIP = '/settings/membership';
+export const SETTINGS_NEWSLETTER = '/settings/newsletter';
 export const SETTINGS_BILLING = '/settings/billing';
 export const SETTINGS_EMPLOYEE = '/settings/employee';
 

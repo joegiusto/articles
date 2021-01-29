@@ -10,6 +10,7 @@
   background-color: white;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
   padding: 0.25rem;
+  height: 100%;
 
   .elections {
     position: absolute;
@@ -21,6 +22,12 @@
     }
   }
 
+  .number {
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+  }
+
   .name {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
@@ -30,6 +37,47 @@
     font-style: normal;
     font-weight: 900;
     font-size: 1rem;
+  }
+
+  .party {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    width: max-content;
+
+    &.Federalist {
+      background-color: #EA9978;
+      color: white;
+    }
+
+    &.Democratic-Republican {
+      background-color: #008000;
+      color: white;
+    }
+
+    &.National-Republican {
+      background: #ffecd7;
+    }
+
+    &.Democratic {
+      background-color: #3333FF;
+      color: white;
+    }
+
+    &.Whig {
+      background-color: #F0C862;
+      color: white;
+    }
+
+    &.Republican {
+      background-color: #E81B23;
+      color: white;
+    }
+
+    &.National-Union {
+      background-color: #B22222;
+      color: white;
+    }
+
   }
 
   img {

@@ -355,9 +355,9 @@ function Presidents(props) {
 
         <div className="presidents-grid py-3">
 
-          {filterOrderRules(presidents).map((president) => 
+          {filterOrderRules(presidents).map((president, i) => 
             <Link onClick={ () => { setShow(true); setActivePresidentID(president._id); } } to={`${ROUTES.RESOURCES_PRESIDENTS}/${president._id}`}>
-              <PresidentCard president={president}/>
+              <PresidentCard i={i} president={president}/>
             </Link>
           )}
 
