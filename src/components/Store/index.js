@@ -11,6 +11,8 @@ import StoreItemBeta from './Items/Beta.js';
 
 import OrdersPage from './Orders/index';
 import CheckoutPage from './Checkout/index'
+import SavedPage from './Saved/index';
+import CollectionsPage from './Collections/index';
 
 import Submissions from './Submissions';
 
@@ -22,15 +24,15 @@ class StorePage extends Component {
   super(props);
 
     this.state = {
-      loadingProducts: false,
-			products: [],
-			userSavedProducts: [],
-			popOutVisible: false,
-			currentPopOut: "",
-			currentPopOutPhoto: ""
-		};
+		loadingProducts: false,
+		products: [],
+		userSavedProducts: [],
+		popOutVisible: false,
+		currentPopOut: "",
+		currentPopOutPhoto: ""
+	};
 		
-		this.setPopOut = this.setPopOut.bind(this);
+	this.setPopOut = this.setPopOut.bind(this);
 
 	}
 
@@ -46,53 +48,23 @@ class StorePage extends Component {
 	}
 
 	componentDidMount() {
+
 		const self = this;
 		this.setState({ loadingProducts: true });
 
 		axios.get('/api/getProducts')
-    .then(function (response) {
-
-			// handle success
-			console.log('Got Products')
-      console.log(response.data.news);
-
-      self.setState({
+		.then(function (response) {
+			console.log(response.data.news);
+			self.setState({
 				products: response.data,
 				loadingProducts: false
-      });
-
-      // self.setState({ resultsLoading: false });
-
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-
-      self.setState({ loadingProducts: true });
-      self.setState({ resultsLoadingError: error });
+			});
+		})
+		.catch(function (error) {
+			console.log(error);
+			self.setState({ loadingProducts: true });
+			self.setState({ resultsLoadingError: error });
 		});
-
-		// axios.get('/api/getUserSavedProducts')
-    // .then(function (response) {
-
-		// 	// handle success
-		// 	console.log('Got Saved Products')
-
-    //   self.setState({
-		// 		products: response.data,
-		// 		loadingProducts: false
-    //   });
-
-    //   // self.setState({ resultsLoading: false });
-
-    // })
-    // .catch(function (error) {
-    //   // handle error
-    //   console.log(error);
-
-    //   self.setState({ loadingProducts: true });
-    //   self.setState({ resultsLoadingError: error });
-		// });
 
 	}
 	
@@ -457,64 +429,11 @@ class StorePage extends Component {
 						</div>
 					)}/>
 
-					<Route exact path={ROUTES.STORE_COLLECTIONS} render={() => (
-						<div className="store-collections-page">
-							<div className="collections">
-								<div>September 2020</div>
-								<div className="collection shadow theme-card-background">
-									<h5>Founders Collection</h5>
-									<div>Our first release ever</div>
-									<div className="mt-2">Includes</div>
-									<div className="items">
-										<div className="item">Wolf Hoodie</div>
-										<div className="item">Sheep Hoodie</div>
-										<div className="item">Black Tee</div>
-										<div className="item">White Tee</div>
-										<div className="item">Logo Pin</div>
-										<div className="item">Scroll Pin</div>
-										<div className="item">Rain Jacket</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					)}/>
+					<Route exact path={ROUTES.STORE_COLLECTIONS} render={() => <CollectionsPage/>}/>
 
 					<Route exact path={ROUTES.STORE_ORDERS} render={() => <OrdersPage/>}/>
 
-					<Route exact path={ROUTES.STORE_SAVED} render={() => 
-						<div className="store-saved-page">
-							<div className="container">
-
-								<h3>Saved</h3>
-								<p>Any products you save will be displayed here.</p>
-
-								<div className="items pb-5">
-
-									{this.props.auth ? 
-
-									this.props.user_details?.saved_products?.map((item) => (
-										// <div>{item.product_id}</div>
-										<StoreItemBeta
-											setPopOutVisible={this.setPopOut}
-											product={this.state.products?.find(element => element._id === item.product_id)}
-											color="articles"
-											isSaved={this.props.user_details?.saved_products.find(o => o.product_id === item.product_id)}
-										/>
-									))
-
-									:
-
-									<div className="sign-in-required-global-tag">
-										<div>Please Sign In to see saved products</div>
-										<Link to={ROUTES.SIGN_IN + `?directTo=${ROUTES.STORE_SAVED}`}><button className="btn btn-articles-light mt-3">Sign In</button></Link>
-									</div>
-									}
-
-								</div>
-
-							</div>
-						</div>
-					}/>
+					<Route exact path={ROUTES.STORE_SAVED} render={() => <SavedPage/> }/>
 
 					<Route exact path={ROUTES.CHECKOUT} render={() => <CheckoutPage/>}/>
 

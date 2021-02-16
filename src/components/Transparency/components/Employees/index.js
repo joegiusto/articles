@@ -95,7 +95,7 @@ class EmployeesPage extends Component {
           ))}
         </div>
 
-        <div className="w-100 text-center mt-2"><small>Showing {employeeList.length} of {employeeList.length} Results</small></div>
+        {/* <div className="w-100 text-center mt-2"><small>Showing {employeeList.length} of {employeeList.length} Results</small></div> */}
 
       </div>
     )

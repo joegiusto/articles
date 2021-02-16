@@ -82,6 +82,8 @@ $grid-breakpoints: (
 @import 'components/issues';
 @import 'components/stories';
 
+@import 'components/tag';
+
 @import 'components/donate';
 @import 'components/subscribe';
 
@@ -394,6 +396,8 @@ code {
     font-size: 0.7rem;
   }
 }
+
+$shadow-articles: 0 0 0 1px rgba(0, 0, 0, 15%), 0 2px 3px rgba(0, 0, 0, 20%);
 
 .shadow-articles {
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 15%), 0 2px 3px rgba(0, 0, 0, 20%);

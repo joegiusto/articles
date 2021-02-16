@@ -14,6 +14,7 @@ export const OUTSET = '/outset';
 export const SETTINGS_ACCOUNT = '/settings/account';
 export const SETTINGS_MEMBERSHIP = '/settings/membership';
 export const SETTINGS_NEWSLETTER = '/settings/newsletter';
+export const SETTINGS_CONNECTIONS = '/settings/connections';
 export const SETTINGS_BILLING = '/settings/billing';
 export const SETTINGS_EMPLOYEE = '/settings/employee';
 
@@ -24,9 +25,9 @@ export const HOME_OLD = '/home/old';
 
 export const MISSION = '/mission';
 
-export const REPORTS = '/reports';
-export const REPORTS_CHARTS = '/reports/charts';
-export const REPORTS_REPORT = '/reports/report';
+// export const REPORTS = '/reports';
+// export const REPORTS_CHARTS = '/reports/charts';
+// export const REPORTS_REPORT = '/reports/report';
 
 // Transparency
 export const TRANSPARENCY = '/transparency';
@@ -68,6 +69,8 @@ export const STORE_MANAGE_DETAILS ='/store/manage/:id'
 // News
 export const NEWS ='/news'
 export const NEWS_SEARCH ='/news/search'
+export const NEWS_TAG ='/news/tag'
+export const NEWS_TAG_DETAILS ='/news/tag/:id'
 
 // News Extras
 export const NEWS_LOCAL ='/news/local'

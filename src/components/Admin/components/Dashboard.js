@@ -286,9 +286,9 @@ class Dashboard extends Component {
                   },
                   ticks: {
                     fontFamily: "brandon-grotesque",
-                    callback: function(value, index, values) {
-                      return '$' + value;
-                    }
+                    // callback: function(value, index, values) {
+                    //   return '$' + value;
+                    // }
                   }
                 }]
             }

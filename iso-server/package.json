@@ -37,6 +37,7 @@
     "mongodb": "^3.6.3",
     "mongoose": "^5.11.12",
     "passport": "^0.4.1",
+    "passport-google-oauth": "^2.0.0",
     "passport-jwt": "^4.0.0",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",

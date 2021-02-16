@@ -36,6 +36,7 @@ import NewsCard from './NewsCard'
 import { toggleUserSubscriptions, filterIssuesDateType } from '../../actions/siteActions'
 
 import Search from './Search/index';
+import Tag from './Tag/index';
 import Local from './Local';
 import Stocks from './Stocks';
 import Crypto from './Crypto';
@@ -737,6 +738,7 @@ class RecentSliders extends Component {
   
         </div>
 
+        {/* Tags */}
         <div className="news-preview-container tags mr-2">
 
           <div className="frontpage-section-header">
@@ -746,12 +748,16 @@ class RecentSliders extends Component {
           <div className="tags mb-3">
 
             {this.state.tags.map(tag => 
-              <div onClick={() => this.props.changeTagFocus(tag.tag_name)} className={"tag " + (this.props.tagSearch === tag.tag_name ? 'active' : '')}>
-                <h3>{tag.tag_name}</h3>
-                <div className="icon">
-                  {tag.icon && <img src={tag.icon} alt={`Icon of ${tag.tag_name}`}/>}
+
+              <Link to={`${ROUTES.NEWS_TAG}/${tag.tag_name}`}>
+                <div className={"tag " + (this.props.tagSearch === tag.tag_name ? 'active' : '')}>
+                  <h3>{tag.tag_name}</h3>
+                  <div className="icon">
+                    {tag.icon && <img src={tag.icon} alt={`Icon of ${tag.tag_name}`}/>}
+                  </div>
                 </div>
-              </div>
+              </Link>
+
             )}
 
           </div>
@@ -1780,6 +1786,7 @@ class Frontpage extends Component {
                     tagSearchResults={this.state.tagSearchResults}/>
                   }/>
                   <Route exact path={ROUTES.NEWS_SEARCH} render={() => <Search searchText={this.state.search}></Search>}/>
+                  <Route exact path={ROUTES.NEWS_TAG_DETAILS} render={() => <Tag searchText={this.state.search}></Tag>}/>
                   <Route exact path={ROUTES.NEWS_LOCAL} render={() => <Local searchText={this.state.search}></Local>}/>
                   <Route exact path={ROUTES.RESOURCES} render={() => <ResourcesPage searchText={this.state.search}></ResourcesPage>}/>
                   <Route exact path={ROUTES.NEWS_STOCKS} render={() => <Stocks searchText={this.state.search}></Stocks>}/>

@@ -12,6 +12,8 @@ import StoreItemBeta from '../Store/Items/Beta.js';
 
 import * as ROUTES from '../../constants/routes'
 import { Link } from 'react-router-dom'
+import USAMap from "react-usa-map";
+
 import logo from '../../assets/img/logo.png'
 import flag from '../../assets/img/flag.png'
 import newsWave from '../../assets/gif/news-wave.gif'
@@ -25,6 +27,8 @@ class LandingPage extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+
+			youtubeVideoID: 'c5yvBK5SDWI',
 
 			// Time Progress is used for keeping track of current slide time and showing visuals
 			timeProgress: 0,
@@ -74,41 +78,88 @@ class LandingPage extends Component {
 					<div className="fake-sales">
 						{this.startSalesAnimation()}
 
-						<div className="fake-note">This data is for display purposes only, live data on <Link to={ROUTES.TRANSPARENCY_REPORTS}>report page</Link></div>
+						{/* <div className="fake-note">This data is for display purposes only, live data on <Link to={ROUTES.TRANSPARENCY_REPORTS}>report page</Link></div> */}
 
-						<div className="sale active" style={{'animationDelay': '0s'}}>
-							<div className="amount revenue">$20</div>
-							<div className="person">Casey Newton</div>
-						</div>
+						<div className="d-flex">
 
-						<div className="sale active" style={{'animationDelay': '0.7s'}}>
-							<div className="amount revenue">$30</div>
-							<div className="person">Frank Walker</div>
-						</div>
+							<div className="revenue">
 
-						<div className="sale active" style={{'animationDelay': '1.4s'}}>
-							<div className="amount expense">$10</div>
-							<div className="person">User Memberships</div>
-						</div>
+								<div className="sale active" style={{'animationDelay': '0s'}}>
+									<div className="amount revenue">$20</div>
+									<div className="person">Casey Newton</div>
+								</div>
 
-						<div className="sale active" style={{'animationDelay': '2.1s'}}>
-							<div className="amount revenue">$10</div>
-							<div className="person">Athena A.A</div>
-						</div>
+								<div className="sale active" style={{'animationDelay': '0.7s'}}>
+									<div className="amount revenue">$30</div>
+									<div className="person">Frank Walker</div>
+								</div>
 
-						<div className="sale active" style={{'animationDelay': '2.8s'}}>
-							<div className="amount expense">$50</div>
-							<div className="person">Website Servers</div>
-						</div>
+								<div className="sale active" style={{'animationDelay': '1.4s'}}>
+									<div className="amount expense">$10</div>
+									<div className="person">User Memberships</div>
+								</div>
 
-						<div className="sale active" style={{'animationDelay': '3.5s'}}>
-							<div className="amount expense">$10</div>
-							<div className="person">Mileage Reimbursement</div>
-						</div>
+								<div className="sale active" style={{'animationDelay': '2.1s'}}>
+									<div className="amount revenue">$10</div>
+									<div className="person">Athena A.A</div>
+								</div>
 
-						<div className="sale active" style={{'animationDelay': '4.2s'}}>
-							<div className="amount revenue">$10</div>
-							<div className="person">Mileage Reimbursement</div>
+								<div className="sale active" style={{'animationDelay': '2.8s'}}>
+									<div className="amount expense">$50</div>
+									<div className="person">Website Servers</div>
+								</div>
+
+								<div className="sale active" style={{'animationDelay': '3.5s'}}>
+									<div className="amount expense">$10</div>
+									<div className="person">Mileage Reimbursement</div>
+								</div>
+
+								<div className="sale active" style={{'animationDelay': '4.2s'}}>
+									<div className="amount revenue">$10</div>
+									<div className="person">Mileage Reimbursement</div>
+								</div>
+
+							</div>
+
+							<div className="expense">
+
+								<div className="sale active" style={{'animationDelay': '0s'}}>
+									<div className="amount revenue">$20</div>
+									<div className="person">Casey Newton</div>
+								</div>
+
+								<div className="sale active" style={{'animationDelay': '0.7s'}}>
+									<div className="amount revenue">$30</div>
+									<div className="person">Frank Walker</div>
+								</div>
+
+								<div className="sale active" style={{'animationDelay': '1.4s'}}>
+									<div className="amount expense">$10</div>
+									<div className="person">User Memberships</div>
+								</div>
+
+								<div className="sale active" style={{'animationDelay': '2.1s'}}>
+									<div className="amount revenue">$10</div>
+									<div className="person">Athena A.A</div>
+								</div>
+
+								<div className="sale active" style={{'animationDelay': '2.8s'}}>
+									<div className="amount expense">$50</div>
+									<div className="person">Website Servers</div>
+								</div>
+
+								<div className="sale active" style={{'animationDelay': '3.5s'}}>
+									<div className="amount expense">$10</div>
+									<div className="person">Mileage Reimbursement</div>
+								</div>
+
+								<div className="sale active" style={{'animationDelay': '4.2s'}}>
+									<div className="amount revenue">$10</div>
+									<div className="person">Mileage Reimbursement</div>
+								</div>
+
+							</div>
+
 						</div>
 
 					</div>,
@@ -514,16 +565,48 @@ class LandingPage extends Component {
 		}
 	}
 
+	mapHandler = (event) => {
+		console.log(event.target.dataset)
+		// alert(event.target.dataset.name);
+	};
+
+	statesCustomConfig = () => {
+		return {
+		  "NJ": {
+			// fill: "navy",
+		  },
+		  "NY": {
+			fill: "#ffb7b7",
+			onMouseEnter: (event) => console.log('7 Users!'),
+			clickHandler: (event) => console.log('7 Users!')
+		  }
+		};
+	};
+
 	render() {
 		const {timeToNextTime, avenueTab, avenueScroll, avenueTabDetails, timeProgress} = this.state
 
 		return (
 			<div className="landing-page landing-new">
 
+				<style>
+
+				</style>
+
 				{/* Welcome Block - October 2020 Remodel */}
 				<div className="welcome-block">
 
-					<div className="background">
+					<div className="video-background-container">
+						<div className="video-background-wrapper">
+							<iframe style={{pointerEvents: 'none'}} src={`https://youtube.com/embed/${this.state.youtubeVideoID}?autoplay=1&mute=1&controls=0&loop=1&rel=0&playlist=${this.state.youtubeVideoID}&modestbranding=1`} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						</div>
+					</div>
+
+					<div className="image-background-container">
+						<img src={dream} alt=""/>
+					</div>
+
+					<div className="background d-none">
 						<div className="bg"></div>
 						<div className="bg bg2"></div>
 						<div className="bg bg3"></div>
@@ -582,7 +665,7 @@ class LandingPage extends Component {
 							</div>
 						</div>
 
-						<div className="image">
+						<div className="image d-none">
 
 							<div className="controls d-flex justify-content-end">
 
@@ -1095,115 +1178,24 @@ class LandingPage extends Component {
 					<div className="content">
 
 						<div className="mission-snippet">
+
+							<div className="background-image-wrapper">
+
+								{/* <img src="https://www.talkgraphics.com/attachment.php?s=5b43aa6afd5966310212abbd189cd4b9&attachmentid=15581&stc=1&d=0" alt=""/> */}
+
+							</div>
 							
-							<img className="shadow-articles" height="200px" width="200px" src="https://cdn.articles.media/email/logo.jpg" alt=""/>
+							<img className="" height="200px" width="200px" src="https://cdn.articles.media/email/logo.jpg" alt=""/>
 
 							<div style={{ fontSize: '3rem' }} className="title mt-3 ">Read about our mission</div>
 							<div className="text">All the details about what we are doing and the direction we want to take this company.</div>
+
+							{/* <i class="fas fa-glasses"></i> */}
+
 							<Link to={ROUTES.MISSION}><div className="btn btn-articles-light">Mission</div></Link>
 
 						</div>
-	
-						<div className="link-panels d-none">
 
-							<Link to={ROUTES.SIGN_UP}>
-								<div className="link-panel">
-									<div className="title">Sign Up</div>
-									<div className="text">Create an account to unlock access to the entire site.</div>
-									<div className="arrow">></div>
-								</div>
-							</Link>
-
-							<Link to={ROUTES.SIGN_IN}>
-								<div className="link-panel">
-									<div className="title">Sign In</div>
-									<div className="text">Existing members click here to access the site.</div>
-									<div className="arrow">></div>
-								</div>
-							</Link>
-
-							<Link to={ROUTES.TRANSPARENCY}>
-								<div className="link-panel">
-									<div className="title">Transparency</div>
-									<div className="text">An inside look into our finances and more. We believe transparency is key to preventing corruption.</div>
-									<div className="arrow">></div>
-								</div>
-							</Link>
-
-							<Link to={ROUTES.STORE}>
-								<div className="link-panel">
-									<div className="title">Clothing</div>
-									<div className="text">Shop our collection of clothing, as well as products made in collaboration with other brands.</div>
-									<div className="arrow">></div>
-								</div>
-							</Link>
-
-							<Link to={ROUTES.NEWS}>
-								<div className="link-panel">
-									<div className="title">News</div>
-									<div className="text">Our take on the truth, source based facts, clear stated opinions.</div>
-									<div className="arrow">></div>
-								</div>
-							</Link>
-
-							<Link to={ROUTES.PARTY}>
-								<div className="link-panel">
-									<div className="title">Politics</div>
-									<div className="text">Shop our collection of clothing, as well as products made in collaboration with other brands.</div>
-									<div className="arrow">></div>
-								</div>
-							</Link>
-	
-							{/* <Link to={ROUTES.STORE}>
-								<div className="link-panel">
-									<div className="title">Store</div>
-									<div className="text">Shop our collection of clothing, as well as products made in collaboration with other brands.</div>
-									<div className="arrow">></div>
-								</div>
-							</Link> */}
-			
-							{/* <Link to={ROUTES.NEWS}>
-								<div className="link-panel">
-									<div className="title">News</div>
-									<div className="text">Our take on the truth, source based facts, clear stated opinions.</div>
-									<div className="arrow">></div>
-								</div>
-							</Link> */}
-				
-							{/* <Link to={ROUTES.STORE_SUBMISSIONS}>
-								<div className="link-panel">
-									<div className="title">Submissions</div>
-									<div className="text">Submit designs you have for a chance to get them printed and make some money.</div>
-									<div className="arrow">></div>
-								</div>
-							</Link> */}
-				
-							{/* <Link to={ROUTES.TRANSPARENCY_REPORTS}>
-								<div className="link-panel">
-									<div className="title">Reports</div>
-									<div className="text">An inside look into our finances. We believe transparency is key to ending corruption.</div>
-									<div className="arrow">></div>
-								</div>
-							</Link> */}
-					
-							{/* <Link to={ROUTES.SIGN_UP}>
-								<div className="link-panel">
-									<div className="title">Sign Up</div>
-									<div className="text">Create an account for all sorts of benefits and access to the entire site.</div>
-									<div className="arrow">></div>
-								</div>
-							</Link> */}
-					
-							<Link to={ROUTES.PRESS}>
-								<div className="link-panel">
-									<div className="title">Press and Buisness</div>
-									<div className="text">To reach out with questions or any other inquires</div>
-									<div className="arrow">></div>
-								</div>
-							</Link>				
-	
-						</div>
-						
 					</div>
 
 				</div>
@@ -1529,6 +1521,22 @@ class LandingPage extends Component {
 
 				<div className="section-break d-none">
 					<img className="text-center d-block ml-auto mr-auto" src={flag} height="35px" alt=""/>
+				</div>
+
+				<div className="section-map py-5">
+					
+					<div className="container">
+
+						<div className="articles-heading">
+							We are growing!
+						</div>
+	
+						<USAMap customize={this.statesCustomConfig()} onMouseEnter={() => console.log('test')} onClick={this.mapHandler} />
+
+						<p>8 Users across 1 state</p>
+
+					</div>
+
 				</div>
 
 			</div>

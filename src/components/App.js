@@ -22,7 +22,7 @@ import HomePage from './Home';
 import HomePageOld from './Home/components/HomePageThree'
 
 import MissionPage from './Mission';
-import ReportsPage from './Reports';
+import TransparencyPage from './Transparency';
 
 import StorePage from './Store'
 import StoreCheckoutPage from './Store/Checkout'
@@ -214,6 +214,7 @@ class AppBase extends Component {
                 <PrivateRoute path={ROUTES.SETTINGS_ACCOUNT} component={SettingsPage} />
                 <PrivateRoute path={ROUTES.SETTINGS_MEMBERSHIP} component={SettingsPage} />
                 <PrivateRoute path={ROUTES.SETTINGS_NEWSLETTER} component={SettingsPage} />
+                <PrivateRoute path={ROUTES.SETTINGS_CONNECTIONS} component={SettingsPage} />
                 <PrivateRoute path={ROUTES.SETTINGS_BILLING} component={SettingsPage} />
                 <PrivateRoute path={ROUTES.SETTINGS_EMPLOYEE} component={SettingsPage} />
                 
@@ -223,12 +224,12 @@ class AppBase extends Component {
                 <Route path={ROUTES.MISSION} component={MissionPage} />
 
                 {/* Transparency */}
-                <Route path={ROUTES.TRANSPARENCY} component={ReportsPage} exact={true}/>
-                <Route path={ROUTES.TRANSPARENCY_REPORTS} component={ReportsPage} exact={true}/>
-                <Route path={ROUTES.TRANSPARENCY_CHARTS} component={ReportsPage} exact={true}/>
-                <Route path={ROUTES.TRANSPARENCY_EMPLOYEES} component={ReportsPage} exact={true}/>
-                <Route path={ROUTES.TRANSPARENCY_EMPLOYEES_DETAILS} component={ReportsPage} exact={true}/>
-                <Route path={ROUTES.TRANSPARENCY_FLAG} component={ReportsPage} exact={true}/>
+                <Route path={ROUTES.TRANSPARENCY} component={TransparencyPage} exact={true}/>
+                <Route path={ROUTES.TRANSPARENCY_REPORTS} component={TransparencyPage} exact={true}/>
+                <Route path={ROUTES.TRANSPARENCY_CHARTS} component={TransparencyPage} exact={true}/>
+                <Route path={ROUTES.TRANSPARENCY_EMPLOYEES} component={TransparencyPage} exact={true}/>
+                <Route path={ROUTES.TRANSPARENCY_EMPLOYEES_DETAILS} component={TransparencyPage} exact={true}/>
+                <Route path={ROUTES.TRANSPARENCY_FLAG} component={TransparencyPage} exact={true}/>
           
                 <Route exact path={ROUTES.STORE} component={StorePage} />
                 <Route path={ROUTES.STORE_VIEW} component={StorePage} />
@@ -249,6 +250,7 @@ class AppBase extends Component {
           
                 <Route exact path={ROUTES.NEWS} component={NewsPage} />
                 <Route exact path={ROUTES.NEWS_SEARCH} component={NewsPage} />
+                <Route exact path={ROUTES.NEWS_TAG_DETAILS} component={NewsPage} />
                 <Route exact path={ROUTES.NEWS_LOCAL} component={NewsPage} />
                 <Route exact path={ROUTES.NEWS_STOCKS} component={NewsPage} />
                 <Route exact path={ROUTES.NEWS_CRYPTO} component={NewsPage} />

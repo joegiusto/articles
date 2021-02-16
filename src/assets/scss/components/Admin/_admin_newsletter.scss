@@ -1,3 +1,85 @@
 .admin-newsletter {
-  
+
+  .main-panel {
+      padding: 0rem;
+      display: flex;
+      flex-direction: row;
+
+        .panel {
+            padding: 0 1rem 0 1rem;
+
+            h1 {
+                background-color: rgba(0, 0, 0, 0.75);
+                color: white;
+                margin: 0rem -1rem;
+                margin-bottom: 1rem;
+                // padding: 1rem;
+                padding: 0.5rem;
+                font-size: 1.5rem;
+            }
+
+            .list-wrap {
+                margin-bottom: 1rem;
+            }
+        }
+
+        .list {
+            flex-basis: 300px;
+            flex-shrink: 0;
+            border-right: 1px solid black;
+        }
+
+        .compose {
+            flex-grow: 1;
+            border-right: 1px solid black;
+        }
+
+        .preview {
+            flex-shrink: 0;
+            flex-basis: 600px;
+
+            .email-wrap {
+                margin-bottom: 3rem;
+
+                .card {
+                    border: none;
+                    border-radius: 0;
+    
+                    .card-header {
+                        border-radius: 0;
+                        background: linear-gradient(45deg, $accent-color, $base-color 80%);       
+                    }
+    
+                    .card-body {
+                        padding: 1rem 3rem;
+    
+                        .ongoing-details-section {
+                            background-color: gainsboro;
+    
+                            .ongoing-details-section {
+                                margin-bottom: 1rem;
+                            }
+                        }
+                    }
+                }
+
+                .bottom-details {
+                    margin-top: 1rem;
+                    text-align: center;
+
+                    a {
+                        display: block;
+                        margin-top: 1rem;
+                        font-weight: bold;
+                        font-size: 1.25rem;
+                        text-transform: uppercase;
+                    }
+                }
+
+            }
+
+        }
+
+    }
+
 }

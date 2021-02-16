@@ -65,18 +65,63 @@
   @import 'landing_background';
 
   .welcome-block {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 3rem 1rem;
     margin: 0rem 0rem;
-    padding-bottom: 1rem;
+    padding-bottom: 0rem;
     padding-top: 0rem;
     box-shadow: inset 0 0 10px;
 
     @include media-breakpoint-up(md) {
-      padding: 5rem 0rem;
+      // padding: 5rem 0rem;
+    }
+
+    .image-background-container {
+      top: 0;
+      left: 0;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      z-index: -1;
+      
+      img {
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        object-fit: cover;
+      }
+    }
+
+    .video-background-container {
+      max-height: 70vh;
+      overflow: hidden;
+      z-index: -1;
+
+      .video-background-wrapper {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
+        height: 0;
+        padding-bottom: 56.25%;
+  
+        @include media-breakpoint-up(lg) {
+          
+        }
+  
+        iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+        }
+      }
     }
 
     .content {
@@ -157,6 +202,8 @@
 
         @include media-breakpoint-up(md) {
           order: 1;
+          padding: 5rem 2rem;
+          background-color: rgba(255, 255, 255, .7);
         }
 
         .small {
@@ -205,7 +252,7 @@
           margin-top: 16px;
           font-family: brandon-grotesque, sans-serif;
           font-style: normal;
-          font-weight: 400;
+          font-weight: 700;
           font-size: 1.4rem;
     
           @include media-breakpoint-up(md) {
@@ -867,6 +914,8 @@
 
   .our-mission{
     background-color: $base-color;
+    background-color: white;
+    background-color: whitesmoke;
 
     // height: 500px;
     padding: 2rem 1rem;
@@ -906,6 +955,7 @@
     }
 
     .mission-snippet {
+      position: relative;
       display: block;
       width: 100%;
       max-width: 500px;
@@ -915,6 +965,19 @@
       @include media-breakpoint-up(lg) {
         margin-top: 2.5rem;
         margin-bottom: 7.5rem;
+      }
+
+      .background-image-wrapper {
+        // position: absolute;
+        // width: 100%;
+        // top: 0;
+        // left: 50%;
+        // z-index: 1;
+        // opacity: 0.25;
+        // transform: translateX(-50%);
+        // max-width: 500px;
+        // height: 100%;
+        // background-color: rgba(0, 128, 0, 0.3);
       }
 
       .title {
@@ -1121,6 +1184,7 @@
 
   .tour-section-overhaul {
     background-color: whitesmoke;
+    background-color: $base-color;
     padding: 3rem 0rem;
     display: flex;
     justify-content: center;
@@ -2549,7 +2613,7 @@
       font-family: brandon-grotesque, sans-serif;
       font-style: normal;
       font-weight: 400;
-      font-size: 1.5rem;
+      font-size: 1.25rem;
 
       @include media-breakpoint-down(md) {
         font-size: 1rem;
@@ -2949,5 +3013,34 @@
       background-image: url(https://www.aggman.com/wp-content/uploads/sites/3/2017/09/Capitol-4.jpg);
     }
   }  
+
+  .section-map {
+    background-image: url(https://articles.media/static/media/crossword.29f1d2ea.png);
+    background-repeat: repeat;
+    background-size: 1100px;
+    
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+  
+      .us-state-map {
+        width: 100%;
+        max-width: 600px;
+        height: auto;
+  
+        path {
+          pointer-events: all;
+        
+          &:hover {
+            opacity: .5;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+
 }
 

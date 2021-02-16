@@ -1,12 +1,274 @@
-import React, {Component} from 'react'
+import React, { Component, useState } from 'react'
 import { connect } from "react-redux";
 import axios from 'axios'
 import moment from 'moment'
 import Cleave from 'cleave.js/react';
 import PlacesAutocomplete, { geocodeByAddress, geocodeByPlaceId, getLatLng } from 'react-places-autocomplete';
 
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+
 import { StepOneProfilePhoto } from '../Outset/StepOne'
 import { logoutUser, setUserDetails } from "../../actions/authActions";
+
+function ManageAccountNameModal() {
+	const [show, setShow] = useState(false);
+  
+	const [ad, setAd] = useState({
+	  _id: '',
+	  business: '',
+  
+	  ageFilters: {
+		range: {
+		  active: false,
+		  start: 0,
+		  end: 0,
+		},
+		above: {
+		  active: false,
+		  age: 0
+		},
+		below: {
+		  active: false,
+		  age: 0
+		}
+	  },
+  
+	  zipFilters: {
+		list: {
+		  active: false,
+		  list: []
+		},
+		nearby: {
+		  active: false,
+		  zip: ''
+		},
+		around: {
+		  active: false,
+		  zip: ''
+		}
+	  },
+	  
+	  timeFilters: {
+		between:{
+		  active: false,
+		  timeOne: '',
+		  timeTwo: ''
+		}
+	  }
+	});
+  
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
+  
+	console.log("Test");
+  
+	return (
+	  <>
+		
+		<div className="info-snippet" onClick={handleShow}>
+
+			<div className="label">NAME</div>
+
+			<div className="info">
+				Joey Giusto
+			</div>
+
+		</div>
+  
+		<Modal className="articles-modal account-modal" show={show} centered onHide={handleClose}>
+  
+		  <Modal.Header closeButton>
+			  <Modal.Title>Edit Account</Modal.Title>
+		  </Modal.Header>
+  
+		  <Modal.Body className="px-lg-5">
+
+			<p className="mb-5">Your public profile appears in collaborations across Adobe products and services and on public-facing sites.</p>
+
+			<div className="row justify-content-center">
+				<div className="col-lg-12">
+					<div className="form-group articles">
+						<label for="address">First Name</label>
+						<input className="form-control with-label" name="address" id="address" type="text" value=""/>
+					</div>
+				</div>
+	
+				<div className="col-lg-12">
+					<div className="form-group articles">
+						<label for="address">Last Name</label>
+						<input className="form-control with-label" name="address" id="address" type="text" value=""/>
+					</div>
+				</div>
+			</div>
+
+			{/* <div className="text-muted text-center mt-5">Access ID: 1901</div> */}
+  
+		  </Modal.Body>
+  
+		  <Modal.Footer className="justify-content-between">
+  
+        {/* <div className="btn btn-danger btn-sm">Delete</div> */}
+        <Button variant="outline-dark" onClick={handleClose}>
+            Cancel
+        </Button>
+    
+        <div>
+          {/* <Button variant="link" onClick={handleClose}>
+            Cancel
+          </Button> */}
+          <Button variant="articles-light" onClick={handleClose}>
+            Save
+          </Button>
+        </div>
+  
+		  </Modal.Footer>
+  
+		</Modal>
+	  </>
+	);
+}
+
+function ManageAccountBirthdayModal() {
+	const [show, setShow] = useState(false);
+  
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
+  
+	return (
+	  <>
+		
+		<div className="info-snippet" onClick={handleShow}>
+
+			<div className="label">BIRTHDAY</div>
+
+			<div className="info">
+				May 5 1998
+			</div>
+
+		</div>
+  
+		<Modal className="articles-modal account-modal" show={show} centered onHide={handleClose}>
+  
+		  <Modal.Header closeButton>
+			  <Modal.Title>Edit Account</Modal.Title>
+		  </Modal.Header>
+  
+		  <Modal.Body className="px-lg-5">
+
+			<p className="mb-5">Your public profile appears in collaborations across Adobe products and services and on public-facing sites.</p>
+
+			<div className="row justify-content-center">
+				<div className="col-lg-12">
+					<div className="form-group articles">
+						<label for="address">Birthday</label>
+						{/* <input className="form-control with-label" name="address" id="address" type="text" value=""/> */}
+						<Cleave
+							placeholder=""
+							options={{date: true, delimiter: '/', datePattern: ['m','d','Y']}}
+							className={"form-control"}
+							// onChange={(e) => this.handleUserChange(e)}
+							// value={this.state.user.age}
+							name="age"
+						/>
+					</div>
+				</div>
+			</div>
+
+			{/* <div className="text-muted text-center mt-5">Access ID: 1901</div> */}
+  
+		  </Modal.Body>
+  
+		  <Modal.Footer className="justify-content-between">
+  
+        {/* <div className="btn btn-danger btn-sm">Delete</div> */}
+        <Button variant="outline-dark" onClick={handleClose}>
+            Cancel
+        </Button>
+    
+        <div>
+          {/* <Button variant="link" onClick={handleClose}>
+            Cancel
+          </Button> */}
+          <Button variant="articles-light" onClick={handleClose}>
+            Save
+          </Button>
+        </div>
+  
+		  </Modal.Footer>
+  
+		</Modal>
+	  </>
+	);
+}
+
+function ManageAccountGenderModal() {
+	const [show, setShow] = useState(false);
+  
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
+  
+	return (
+	  <>
+		
+		<div className="info-snippet" onClick={handleShow}>
+
+			<div className="label">GENDER</div>
+
+			<div className="info">
+				Male
+			</div>
+
+		</div>
+  
+		<Modal className="articles-modal account-modal" show={show} centered onHide={handleClose}>
+  
+		  <Modal.Header closeButton>
+			  <Modal.Title>Edit Account</Modal.Title>
+		  </Modal.Header>
+  
+		  <Modal.Body className="px-lg-5">
+
+			<p className="mb-5">Your public profile appears in collaborations across Adobe products and services and on public-facing sites.</p>
+
+			<div className="row justify-content-center">
+				<div className="col-lg-12">
+
+					<div className="form-group articles">
+						<label for="address">Gender</label>
+						
+						
+					</div>
+
+				</div>
+			</div>
+
+			{/* <div className="text-muted text-center mt-5">Access ID: 1901</div> */}
+  
+		  </Modal.Body>
+  
+		  <Modal.Footer className="justify-content-between">
+  
+        {/* <div className="btn btn-danger btn-sm">Delete</div> */}
+        <Button variant="outline-dark" onClick={handleClose}>
+            Cancel
+        </Button>
+    
+        <div>
+          {/* <Button variant="link" onClick={handleClose}>
+            Cancel
+          </Button> */}
+          <Button variant="articles-light" onClick={handleClose}>
+            Save
+          </Button>
+        </div>
+  
+		  </Modal.Footer>
+  
+		</Modal>
+	  </>
+	);
+}
 
 class Account extends Component {
   constructor(props) {
@@ -222,21 +484,6 @@ class Account extends Component {
     });
   }
 
-  requestUserData() {
-    axios.post('/api/secure/requestUserData', {
-
-    })
-    .then( (response) => {
-      console.log(response);
-      this.setState({
-        requestedUserData: JSON.stringify(response.data, undefined, 2)
-      })
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  }
-
   updateDetail(detail) {
     const self = this;
 
@@ -353,6 +600,25 @@ class Account extends Component {
       <div className="settings-account mb-3">
 
         {/* Account */}
+
+        <div className={"card settings-card mt-3"}>
+
+			<div className="card-header">
+				<h5>Profile Info</h5>
+				<p>Basic info, like your name and photo, that you use on Articles</p>
+			</div>
+
+			<div className="card-body">
+
+				<ManageAccountNameModal/>
+
+				<ManageAccountBirthdayModal/>
+
+        <ManageAccountGenderModal/>
+				
+			</div>
+
+        </div>
 
         <div className={"card settings-card mt-3"}>
 
@@ -748,7 +1014,7 @@ class Account extends Component {
           </div>
 
         </div>
-
+        
         <div className="links d-flex justify-content-between mb-3 " style={{maxWidth: '800px'}}>
 
           <div>

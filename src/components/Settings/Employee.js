@@ -35,16 +35,17 @@ class Employee extends Component {
               <h5>Employee Info</h5>
               <p>Info you wish to share with others on your employee page located at:</p>
 
-              <Link to={ROUTES.EMPLOYEES + `/${this.props.user_id}`}> 
-                <div className="mt-2 badge badge-light hover">{`https://articles.media${ROUTES.EMPLOYEES}/${this.props.user_id}`}</div> 
+              <Link to={ROUTES.TRANSPARENCY_EMPLOYEES + `/${this.props.user_id}`}> 
+                <div className="mt-2 badge badge-light hover">{`https://articles.media${ROUTES.TRANSPARENCY_EMPLOYEES}/${this.props.user_id}`}</div> 
               </Link>
             </div>
 
             <div className="card-body m-3">
 
               <div className="mb-3">
-                <button className="btn btn-articles-light alt">Visible</button>
-                <button className="btn btn-articles-light">Hidden</button>
+                {/* <div className="text-muted">If you wish to hide </div> */}
+                {/* <button className="btn btn-articles-light alt">Visible</button>
+                <button className="btn btn-articles-light">Hidden</button> */}
               </div>
 
               <div className="form-group articles">

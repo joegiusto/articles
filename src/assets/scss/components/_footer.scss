@@ -15,6 +15,7 @@ footer.site-footer {
   height: 100%;
   min-height: 175px;
   display: flex;
+  flex-direction: column;
   align-items: center;
 
   .footer-panel {
@@ -28,22 +29,17 @@ footer.site-footer {
       font-family: brandon-grotesque, sans-serif;
       font-style: normal;
       font-weight: 900;
-      font-size: 1rem;
+      font-size: 1.25rem;
     }
 
     a {
       display: block;
       font-family: montserrat, sans-serif;
       font-weight: 400;
-      font-size: 12px;
+      font-size: 15px;
     }
 
     &.first {
-      .copyright {
-        font-family: montserrat, sans-serif;
-        font-weight: 400;
-        font-size: 12px;
-      }
 
       @include media-breakpoint-down(md) {
         margin: 1rem 0;
@@ -51,12 +47,7 @@ footer.site-footer {
     }
 
     &.fourth {
-      .icons {
-        a {
-          font-size: 2rem;
-          display: inline-block;
-        }
-      }
+      
     }
 
     &.fifth {
@@ -72,5 +63,19 @@ footer.site-footer {
         }
       }
     }
+
+    .icons {
+      a {
+        font-size: 2rem;
+        display: inline-block;
+      }
+    }
+
+    &.copyright {
+      font-family: montserrat, sans-serif;
+      font-weight: 400;
+      font-size: 15px;
+    }
+
   }
 }

@@ -152,7 +152,20 @@ class SignInFormBase extends Component {
 
         {error && <p className="errorMessage">{error.message}</p>}
 
-        <div className="dual-header mt-5">
+        <div className="connections mt-4">
+
+          <div className="text-muted">Or sign in with:</div>
+
+          <div className="connection mt-2">
+            <i className="fab fa-2x fa-google"></i>
+            <i className="fab fa-2x fa-apple ml-2"></i>
+            <i className="fab fa-2x fa-linkedin ml-2"></i>
+            <i className="fab fa-2x fa-twitter ml-2"></i>
+          </div>
+
+        </div>
+
+        <div className="dual-header mt-4">
           <PasswordForgetLink />
           <SignUpLink />
         </div>

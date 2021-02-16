@@ -16,6 +16,7 @@ import * as ROUTES from '../../constants/routes';
 import Account from './Account'
 import Membership from './Membership'
 import Newsletter from './Newsletter'
+import Connections from './Connections'
 import Billing from './Billing'
 import Employee from './Employee'
 
@@ -365,6 +366,21 @@ class Settings extends Component {
     this.props.setUserDetails(self.props.auth.user.id);
   }
 
+  requestUserData() {
+    axios.post('/api/secure/requestUserData', {
+
+    })
+    .then( (response) => {
+      console.log(response);
+      this.setState({
+        requestedUserData: JSON.stringify(response.data, undefined, 2)
+      })
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
   // handleChange(event) {
   //   const target = event.target;
   //   const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -413,7 +429,7 @@ class Settings extends Component {
 
             <div>
               <div className="page-title">
-                Account Settings
+            	Settings
               </div>
               <p className="mb-0 mt-2">Member since {moment(this.props.user_details?.sign_up_date).format('LL')}</p>
             </div>
@@ -442,17 +458,20 @@ class Settings extends Component {
               <Link to={ROUTES.SETTINGS_NEWSLETTER}>
                 <button className={"btn btn-articles-light " + (this.state.settingsTab === 'Newsletter' ? 'alt' : '')}>Newsletter</button>
               </Link>
+
+			        <Link to={ROUTES.SETTINGS_CONNECTIONS}>
+                <button className={"btn btn-articles-light " + (this.state.settingsTab === 'Connections' ? 'alt' : '')}>Connections</button>
+              </Link>
   
               <Link to={ROUTES.SETTINGS_BILLING}>
                 <button className={"btn btn-articles-light " + (this.state.settingsTab === 'Billing' ? 'alt' : '')}>Billing</button>
               </Link>
   
+              {/* Employee Only */}
               {this.props.user_details.employee?.bool === true && 
-  
                 <Link to={ROUTES.SETTINGS_EMPLOYEE}>
                   <button className={"btn btn-articles-light " + (this.state.settingsTab === 'Employee' ? 'alt' : '')}>Employee<span className="badge badge-warning ml-1">Role</span></button>
                 </Link>
-  
               }
               
             </div>
@@ -488,6 +507,12 @@ class Settings extends Component {
                     setLocation={this.setLocation}
                   ></Billing> }/>
 
+                  <Route exact path={ROUTES.SETTINGS_CONNECTIONS} render={() => <Connections 
+                    match={this.props.match} 
+                    tabLocation='Connections' 
+                    setLocation={this.setLocation}
+                  ></Connections> }/>
+
                   <Route exact path={ROUTES.SETTINGS_NEWSLETTER} render={() => <Newsletter 
                     match={this.props.match} 
                     tabLocation='Newsletter' 
@@ -507,56 +532,12 @@ class Settings extends Component {
             </div>
 
             <div className="col-lg-4">
-              
-              <div className="card settings-card w-100 mt-3">
 
-                <div className="card-header">
-                  <h5>Newsletter Settings</h5>
-                  <p>‎‎Manage your Newsletter settings here</p>
-                </div>
+              <div className="mt-lg-3">
 
-                <div className="card-body p-3">
+                {!this.state.requestedUserData && <div className="btn btn-articles-light w-50" onClick={() => this.requestUserData()}>Request Data</div>}
 
-                  <div className="newsletter-options">
-
-                    <div className="newsletter-option-wrapper noselect">
-
-                      <div onClick={() => this.setState({newsletterGeneral: !this.state.newsletterGeneral})} className={"newsletter-option " + (this.state.newsletterGeneral && 'checked')}>
-
-                        General
-
-                        <div className="box">
-                          <i class="fas fa-check mr-0"></i>
-                        </div>
-                        
-                      </div>
-
-                      <div className="badge badge-articles">Every Tuesday</div>
-
-                    </div>
-  
-                    <div className="newsletter-option-wrapper noselect">
-
-                      <div onClick={() => this.setState({newsletterDev: !this.state.newsletterDev})} className={"newsletter-option " + (this.state.newsletterDev && 'checked')}>
-
-                        Dev
-
-                        <div className="box">
-                          <i class="fas fa-check mr-0"></i>
-                        </div>
-
-                      </div>
-
-                      <div className="badge badge-articles">Every Sunday</div>
-
-                    </div>
-                    
-                  </div>
-
-                  <p><b>General:</b> Newsletter focused on general updates about Articles. Financial status, added content, announcements all to your inbox once a week.</p>
-                  <p><b>Dev:</b> Newsletter geared around the more technical side of things, website development, news internal tools an upcoming features.</p>
-
-                </div>
+                <div className="btn btn-danger w-50">Delete Account</div>
 
               </div>
 

@@ -81,8 +81,8 @@ class Account extends Component {
 
             <div className="card-body">
 
-              <div className="">
-                You are not a member, consider supporting Articles to become a member and recieve benifits such as ad free browsing expreience and store discounts.
+              <div className="p-3">
+                You are not a member, consider supporting Articles to become a member and receive benefits such as ad free browsing experience and store discounts.
               </div>
 
               <div className="plans d-flex justify-content-center">

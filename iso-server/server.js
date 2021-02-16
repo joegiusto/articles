@@ -186,6 +186,8 @@ function connectWithRetryMongo() {
 
     require('./routes/cryptoTest')(app, db);
 
+    require('./routes/getBlacklistURL')(app, db, cache);
+
     // Deleted
     // require('./routes/jsonNews')(app, db);
   

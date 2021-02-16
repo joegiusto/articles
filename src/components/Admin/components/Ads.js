@@ -12,7 +12,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import ConfirmDelete from './ConfirmDelete'
 import * as ROUTES from '../../../constants/routes'
 
-function Example() {
+function ManageAdModal() {
   const [show, setShow] = useState(true);
 
   const [ad, setAd] = useState({
@@ -74,7 +74,7 @@ function Example() {
       <Modal className="admin-ads" show={show} onHide={handleClose}>
 
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Manage Ad</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
@@ -665,7 +665,7 @@ class Ads extends Component {
             </div>
           </div>
 
-          <Example/>
+          <ManageAdModal/>
 
           <Link to={ROUTES.ADVERTISING}>
             <div className="btn btn-articles-light w-100 mb-2">

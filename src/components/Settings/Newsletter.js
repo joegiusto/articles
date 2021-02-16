@@ -27,24 +27,58 @@ class Newsletter extends Component {
     return (
       <div className="settings-account mb-3">
 
-        {/* Subscription */}
+        <div className="card settings-card w-100 mt-3">
 
-        <div className={"card settings-card mt-3"}>
+        <div className="card-header">
+          <h5>Newsletter Settings</h5>
+          <p>‎‎Manage your Newsletter settings here</p>
+        </div>
 
-            <div className="card-header">
-              <h5>Newsletter Options</h5>
-              <p>Details about your newsletter alerts</p>
-            </div>
+        <div className="card-body p-3">
 
-            <div className="card-body">
+          <div className="newsletter-options">
 
-              <div className="p-3">
-                Newsletter.
+            <div className="newsletter-option-wrapper noselect">
+
+              <div onClick={() => this.setState({newsletterGeneral: !this.state.newsletterGeneral})} className={"newsletter-option " + (this.state.newsletterGeneral && 'checked')}>
+
+                General
+
+                <div className="box">
+                  <i class="fas fa-check mr-0"></i>
+                </div>
+                
               </div>
 
+              <div className="badge badge-articles">Every Tuesday</div>
+
             </div>
 
+            <div className="newsletter-option-wrapper noselect">
+
+              <div onClick={() => this.setState({newsletterDev: !this.state.newsletterDev})} className={"newsletter-option " + (this.state.newsletterDev && 'checked')}>
+
+                Dev
+
+                <div className="box">
+                  <i class="fas fa-check mr-0"></i>
+                </div>
+
+              </div>
+
+              <div className="badge badge-articles">Every Sunday</div>
+
+            </div>
+            
           </div>
+
+          <p><b>General:</b> Newsletter focused on general updates about Articles. Financial status, added content, announcements all to your inbox once a week.</p>
+          <p><b>Dev:</b> Newsletter geared around the more technical side of things, website development, news internal tools an upcoming features.</p>
+
+        </div>
+
+        </div>
+     
       </div>
     );
   }

@@ -28,8 +28,11 @@ class Reports extends Component {
         loading: false,
         limit: 5,
         menuExpanded: false,
+
         tableSelector: 'revenue',
-        subtableSelector: '',
+        subtableSelector: 'revenue-all',
+		subClothingTableSelector: 'clothing-all',
+
         chartPeriodSelector: '1y',
 
         expenses_inventory: [],
@@ -162,6 +165,8 @@ class Reports extends Component {
     //   })
     // });
 
+	console.log("Did mount os revenue should be displayed");
+
     axios.get('/api/getRevenuesDonations', {
       params: {
         fromDate: '',
@@ -177,7 +182,8 @@ class Reports extends Component {
       self.setState({
         revenues_donations: response.data
       }, () => {
-        console.log("Done")
+
+        console.log("revenues_donations was set!")
 
         let total = 0
 
@@ -407,6 +413,7 @@ class Reports extends Component {
 
   getTableComponent(tableSelector, subtableSelector) {
     switch(tableSelector) {
+
       case 'donations':
         return(<DonationTable reportsData={this.state.reportsData} fetch="donations"/>)
       case 'clothing':
@@ -451,87 +458,26 @@ class Reports extends Component {
           default:
             return(<ClothingTable/>)
         }
-      case 'expenses':
-        return(<ExpenseTable reportsData={this.state.reportsData} fetch="expenses"/>)
       case 'payroll':
-        return(<PayrollTable/>)
+        return <PayrollTable/>
+
+      case 'expenses':
+        return(<ExpenseTable subtableSelector={this.state.subtableSelector} reportsData={this.state.reportsData} fetch="expenses"/>)
       case 'revenue':
-        const megaGroup = [...this.state.revenues_clothing.map(order => {
-          // var o = Object.assign({}, order);
-          order.type = 'Store Sale';
-          order.unifiedPrice = order.payment.trueTotal
-          return order;
-        }), ...this.state.reportsData.revenue.donations.map(order => {
-          // var o = Object.assign({}, order);
-          order.type = 'Donation';
-          order.unifiedPrice = order.amount
-          return order;
-        })]
-
         return(
-          <table className='table articles-table table-sm table-hover table-bordered'>
-            <thead>
-              <tr className="table-articles-head">
-                {/* <th scope="col">Order #</th> */}
-                <th scope="col">Date</th>
-                <th scope="col">Type</th>
-                {/* <th scope="col">Name</th> */}
-                <th scope="col">Order Summary</th>
-                <th className='text-right' scope="col">Total</th>
-              </tr>
-            </thead>
-            <tbody>
+			<RevenueTable 
+				subClothingTableSelector={this.state.subClothingTableSelector}
+				subtableSelector={this.state.subtableSelector} 
+				revenues_clothing={this.state.revenues_clothing} 
+				reportsData={this.state.reportsData} 
+				fetch="expenses"
+			/>
+		)
 
-              {console.log("Logging mega")}
-              {console.log(megaGroup)}
-
-              {megaGroup.map(sale => 
-                <tr onClick={() => this.props.history.push(ROUTES.TRANSPARENCY_REPORTS + `?id=${sale._id}&type=revenue`)}>
-                  <td colSpan="1" className="border-right-0 ">{moment(sale.date).format("LLL")}</td>
-                  <td colSpan="1" className="border-right-0 ">{sale.type}</td>
-                  <td colSpan="1" className="border-right-0 "></td>
-                  <td colSpan="1" className="border-right-0 ">${(sale.unifiedPrice / 100).toFixed(2)}</td>
-                </tr>
-              )}
-
-              <tr>
-                <td colSpan="2" className="border-right-0 table-articles-head">
-
-                </td>
-
-                <td colSpan="1" className="border-right-0 text-right table-articles-head">Total:</td>
-                <td colSpan="1" className="border-left-0 table-articles-head">${(megaGroup.reduce((a, b) => a + (parseInt(b['unifiedPrice'] || 0)), 0) / 100).toFixed(2)}</td>
-              </tr>
-
-            </tbody>
-
-            <div className="expandable-row d-none">
-
-              <tr className="w-100">
-                <td colSpan="1" className="border-right-0 ">{moment().format("LLL")}</td>
-                <td colSpan="1" className="border-right-0 ">Sale</td>
-                <td colSpan="1" className="border-right-0 "></td>
-                <td colSpan="1" className="border-right-0 ">$10.00</td>
-              </tr>
-
-              <tr className="big">
-                Big
-              </tr>
-
-            </div>
-
-          </table>
-        )
       default:
         // Useless because tableSelector state always starts at something
     };
   }
-
-  // TODO
-  // this.state.reportsData -> reportsData
-
-  // DonationTable -> expenseTable
-  // DonationTable -> revenueTable
 
   setSubTableSelector(newSelector, redirect, location) {
     if ( redirect === true ) {
@@ -545,6 +491,12 @@ class Reports extends Component {
     }
   }
 
+  setSubClothingTableSelector(newSelector) {
+	this.setState({
+		subClothingTableSelector:  newSelector
+	});
+  }
+
   tableSelectorChoice(dataValue) {
     return(
       <div onClick={() => this.setTableSelector(dataValue)} className={"selection d-inline-block " + (this.state.tableSelector === dataValue ? 'selection-active' : '')}>{dataValue}</div>
@@ -554,6 +506,12 @@ class Reports extends Component {
   subTableSelectorChoice(dataValue, printValue, redirect, location) {
     return(
       <span onClick={() => this.setSubTableSelector(dataValue, redirect, location)} className={"selection " + (this.state.subtableSelector === dataValue ? 'selection-active' : '')}>{redirect ? <i style={{marginRight: '2.5px'}} className="fas fa-link"></i> : ''}{printValue}</span>
+    )
+  }
+
+  subClothingTableSelectorChoice(dataValue, printValue) {
+    return(
+      <span onClick={() => this.setSubClothingTableSelector(dataValue)} className={"selection " + (this.state.subClothingTableSelector === dataValue ? 'selection-active' : '')}>{printValue}</span>
     )
   }
 
@@ -601,7 +559,7 @@ class Reports extends Component {
                     <div className="normal">
                       <div className="px-2 pt-4">
       
-                        <div>Current Balance:</div>
+                        <div className="balance-label">Current Balance:</div>
                         <h2>${((this.state.totals.donations - this.state.totals.recurring + this.state.totals.clothing) / 100 ).toFixed(2)}</h2>
       
                         <div className="time-container">
@@ -752,61 +710,56 @@ class Reports extends Component {
                   <div className="reports-table reports-shadow">
                     <div className="table-selector">
             
-                      <div className="main d-flex flex-row justify-content-lg-between">
+						<div className="main d-flex flex-row justify-content-lg-between align-items-center">
 
-                        <div className="d-flex">
-                          {this.tableSelectorChoice('revenue')}
-                          {this.tableSelectorChoice('expenses')}
-                        </div>
+							<div className="d-flex">
+								{this.tableSelectorChoice('revenue')}
+								{this.tableSelectorChoice('expenses')}
+							</div>
 
-                        <div className="d-flex">
-                          <i style={{cursor: 'initial'}} class="fas fa-thumbtack d-none d-lg-flex align-items-center mr-2"></i>
-                          {this.tableSelectorChoice('donations')}
-                          {this.tableSelectorChoice('clothing')}
-                          {this.tableSelectorChoice('payroll')}
-                        </div>
+							<div className="d-flex">
+								<div className="btn btn-articles-light btn-sm"><i class="fas fa-filter"></i>Filter</div>
+							</div>
 
-                      </div>
-        
-                      <div className={"sub sub-donations " + (this.state.tableSelector === 'donations' ? '' : 'd-none')}>
-                        {/* For the future */}
-                      </div>
-        
-                      <div className={"sub sub-clothing dual-header " + (this.state.tableSelector === 'clothing' ? '' : 'd-none')}>
-                        <div>
-                          {this.subTableSelectorChoice('clothing-all', 'all')}
-                          {this.subTableSelectorChoice('clothing-originals', 'originals')}
-                          {this.subTableSelectorChoice('clothing-partnerships', 'partnerships')}
-                          {this.subTableSelectorChoice('clothing-submissions', 'submissions')}
-                          {this.subTableSelectorChoice('clothing-sponsored', 'sponsored')}
-                        </div>
-                        <div>
-                          {this.subTableSelectorChoice('clothing-preorders', 'preorders')}
-                        </div>
-                      </div>
+						</div>
             
-                      <div className={"sub sub-expenses " + (this.state.tableSelector === 'expenses' ? '' : 'd-none')}>
-                        {this.subTableSelectorChoice('expenses-all', 'all')}
-                        {this.subTableSelectorChoice('expenses-payroll', 'payroll', true, {tableSelector: 'payroll'})}
-                        {this.subTableSelectorChoice('expenses-production-inventory', 'inventory')}
-                        {this.subTableSelectorChoice('expenses-reoccuring', 'reoccuring')}
-                        {this.subTableSelectorChoice('expenses-utilities', 'utilities')}
-                        {this.subTableSelectorChoice('expenses-other', 'other')}
-                      </div>
+						{/* Expenses Sub Nav */}
+						<div className={"sub sub-expenses " + (this.state.tableSelector === 'expenses' ? '' : 'd-none')}>
+							{this.subTableSelectorChoice('expenses-all', 'all')}
+							{this.subTableSelectorChoice('expenses-payroll', 'payroll')}
+							{this.subTableSelectorChoice('expenses-inventory', 'inventory')}
+							{this.subTableSelectorChoice('expenses-recurring', 'recurring')}
+							{this.subTableSelectorChoice('expenses-utilities', 'utilities')}
+							{this.subTableSelectorChoice('expenses-other', 'other')}
+						</div>
+						  
+						{/* Revenue Sub Nav */}
+						<div className={"sub sub-revenue " + (this.state.tableSelector === 'revenue' ? '' : 'd-none')}>
+							{this.subTableSelectorChoice('revenue-all', 'all')}
+							{this.subTableSelectorChoice('revenue-donations', 'donations')}
+							{this.subTableSelectorChoice('revenue-clothing', 'clothing')}
+							{this.subTableSelectorChoice('revenue-ads', 'ads')}
+							{this.subTableSelectorChoice('revenue-memberships', 'memberships')}
+							{/* {this.subTableSelectorChoice('revenue-grants', 'grants')} */}
+							{/* {this.subTableSelectorChoice('revenue-sponsorships', 'sponsorships')} */}
+						</div>
+
+						{/* Clothing Sub Nav */}
+						<div className={"sub sub-clothing dual-header " + (this.state.subtableSelector === 'revenue-clothing' ? '' : 'd-none')}>
+							<div>
+								{this.subClothingTableSelectorChoice('clothing-all', 'all')}
+								{this.subClothingTableSelectorChoice('clothing-originals', 'originals')}
+								{this.subClothingTableSelectorChoice('clothing-partnerships', 'partnerships')}
+								{this.subClothingTableSelectorChoice('clothing-submissions', 'submissions')}
+								{this.subClothingTableSelectorChoice('clothing-sponsored', 'sponsored')}
+							</div>
+                      	</div>
             
-                      <div className={"sub sub-payroll " + (this.state.tableSelector === 'payroll' ? '' : 'd-none')}>
-                        {/* For the future */}
-                      </div>
-            
-                      <div className={"sub sub-revenue " + (this.state.tableSelector === 'revenue' ? '' : 'd-none')}>
-                        {this.subTableSelectorChoice('revenue-all', 'all')}
-                        {this.subTableSelectorChoice('revenue-donations', 'donations', true, {tableSelector: 'donations'})}
-                        {this.subTableSelectorChoice('revenue-clothing', 'clothing', true, {tableSelector: 'clothing'})}
-                        {this.subTableSelectorChoice('revenue-grants', 'grants')}
-                        {this.subTableSelectorChoice('revenue-ads', 'ads')}
-                        {this.subTableSelectorChoice('revenue-sponsorships', 'sponsorships')}
-                      </div>
-            
+						{/* Future Payroll Sub Nav */}
+					  	<div className={"sub sub-payroll " + (this.state.tableSelector === 'payroll' ? '' : 'd-none')}>
+							{/* For the future */}
+						</div>
+
                     </div>
             
                     {this.getTableComponent(this.state.tableSelector, this.state.subtableSelector)}
@@ -818,7 +771,7 @@ class Reports extends Component {
 
               <Route path={ROUTES.TRANSPARENCY_CHARTS} render={() => 
                 <div className="col-12 col-md-8 col-lg-8">
-                  <DataCharts data={this.state.reportsData.revenue.donations} setChartPeriodSelector={this.setChartPeriodSelector} chartPeriodSelector={this.state.chartPeriodSelector}></DataCharts>
+                  <DataCharts reportsData={this.state.reportsData} data={this.state.reportsData.revenue.donations} setChartPeriodSelector={this.setChartPeriodSelector} chartPeriodSelector={this.state.chartPeriodSelector}></DataCharts>
                 </div>
               }/>
 
@@ -977,7 +930,7 @@ function PayrollTable () {
           )} */}
 
           <tr>
-            <th scope="row"><Link to={ROUTES.EMPLOYEES + '/5e90cc96579a17440c5d7d52'}>Joey Giusto</Link></th>
+            <th scope="row"><Link to={ROUTES.TRANSPARENCY_EMPLOYEES + '/5e90cc96579a17440c5d7d52'}>Joey Giusto</Link></th>
             <td>Admin</td>
             <td>$0.00</td>
           </tr>
@@ -1076,158 +1029,304 @@ class DonationTable extends Component {
 }
 
 class RevenueTable extends Component {
-  constructor(props) {
-    super(props);
+  	constructor(props) {
 
-     this.state = {
-       text: '',
-       loading: false,
-       donationsFirebase: [],
-       expensesFirebase: [],
-       limit: 10,
-       page: 1,
-     };
-     this.changeLimit = this.changeLimit.bind(this);
-     this.changePage = this.changePage.bind(this);
-  }
+		super(props);
 
- changeLimit(limit) {
-   this.setState({
-     limit: limit
-   });
- }
+		this.state = {
+			text: '',
+			loading: false,
+			donationsFirebase: [],
+			expensesFirebase: [],
+			limit: 10,
+			page: 1,
 
- changePage(page) {
-   this.setState({
-     page: page
-   });
- }
+			// all: [...props.revenues_clothing.map(order => {
+			// 	// var o = Object.assign({}, order);
+			// 	order.type = 'Store Sale';
+			// 	order.unifiedPrice = order.payment.trueTotal
+			// 	return order;
+			// }), ...props.reportsData.revenue.donations.map(order => {
+			// 	// var o = Object.assign({}, order);
+			// 	order.type = 'Donation';
+			// 	order.unifiedPrice = order.amount
+			// 	return order;
+			// })]
 
- render () {
-   const { donationsFirebase, loading, limit, page } = this.state;
+			all: []
 
-  //  var render = undefined
+		};
 
-   const render = this.props.reportsData.revenue.donations;
+		this.changeLimit = this.changeLimit.bind(this);
+		this.changePage = this.changePage.bind(this);
+  	}
 
-   return (
-     <div>
-       {loading && <div className="p-2">Loading data...</div>}
-       {donationsFirebase ? (
-       <div>
-         <StyledDonationList
-           donationsFirebase={render}
-           changeLimit={this.changeLimit}
-           changePage={this.changePage}
-           limit={limit}
-           page={page}
-           fetch={this.props.fetch}
-         />
-       </div>
-       ) : (
-       <div>There are no {this.props.fetch} yet ...</div>
-       )}
+    componentDidUpdate(prevProps) {
+		if (this.props.reportsData.revenue.donations !== prevProps.reportsData.revenue.donations) { // check if your props is changed
 
-     </div>
-   )
+			console.log(`reportsData.revenue.donations received an update`);
+
+			this.setState({
+				all: [...this.props.reportsData.revenue.donations.map(order => {
+					order.type = 'Donation';
+					order.unifiedPrice = order.amount
+					return order;
+				})]
+			});
+
+		}
+    }
+
+	componentDidMount() {
+		console.log(`RevenueTable was mounted!`)
+
+		this.setState({
+			all: [...this.props.reportsData.revenue.donations.map(order => {
+				order.type = 'Donation';
+				order.unifiedPrice = order.amount
+				return order;
+			})]
+		});
+	}
+
+	changeLimit(limit) {
+		this.setState({
+			limit: limit
+		});
+	}
+
+	changePage(page) {
+	this.setState({
+		page: page
+	});
+	}
+
+	renderTable() {
+
+		const megaGroup = [...this.props.revenues_clothing.map(order => {
+			// var o = Object.assign({}, order);
+			order.type = 'Store Sale';
+			order.unifiedPrice = order.payment.trueTotal
+			return order;
+		}), ...this.props.reportsData.revenue.donations.map(order => {
+			// var o = Object.assign({}, order);
+			order.type = 'Donation';
+			order.unifiedPrice = order.amount
+			return order;
+		})]
+
+		switch(this.props.subtableSelector) {
+			case 'revenue-donations':
+				return(<div className="p-3">There are no donation revenue yet.</div>)
+			case 'revenue-clothing':
+
+				switch(this.props.subClothingTableSelector) {
+					case 'clothing-all':
+						return(<div className="p-3">There is no clothing revenue yet.</div>)
+					case 'clothing-originals':
+						return(<div className="p-3">There is no original clothing revenue yet.</div>)
+					case 'clothing-partnerships':
+						return(<div className="p-3">There is no partnership clothing revenue yet.</div>)
+					case 'clothing-submissions':
+						return(<div className="p-3">There is no submission clothing revenue yet.</div>)
+					case 'clothing-sponsored':
+						return(<div className="p-3">There is no sponsored clothing revenue yet.</div>)
+				}
+				
+			case 'revenue-ads':
+				return(<div className="p-3">There is no ad revenue yet.</div>)
+			case 'revenue-memberships':
+				return(<div className="p-3">There is no membership revenue yet.</div>)
+			// case 'revenue-grants':
+			// 	return(<div className="p-3">There is no grant revenue yet.</div>)
+			// case 'revenue-sponsorships':
+			// 	return(<div className="p-3">There is no sponsorship revenue yet.</div>)
+
+			default:
+				return (
+				<table className={`table articles-table table-sm table-hover table-bordered`}>
+
+					<thead>
+						<tr className="table-articles-head">
+						{/* <th scope="col">Order #</th> */}
+						<th scope="col">Date</th>
+						<th scope="col">Type</th>
+						{/* <th scope="col">Name</th> */}
+						<th scope="col">Order Summary</th>
+						<th className='text-right' scope="col">Total</th>
+						</tr>
+					</thead>
+
+					<tbody>
+
+						{/* {console.log("Logging mega")}
+						{console.log(megaGroup)} */}
+
+						{this.state.all
+						.sort((a, b) => new Date(b.date) - new Date(a.date))
+						.map(sale => 
+						<tr onClick={() => this.props.history.push(ROUTES.TRANSPARENCY_REPORTS + `?id=${sale._id}&type=revenue`)}>
+							<td colSpan="1" className="border-right-0 ">{moment(sale.date).format("LLL")}</td>
+							<td colSpan="1" className="border-right-0 ">{sale.type}</td>
+							<td colSpan="1" className="border-right-0 "></td>
+							<td colSpan="1" className="border-right-0 ">${(sale.unifiedPrice / 100).toFixed(2)}</td>
+						</tr>
+						)}
+
+						<tr>
+							<td colSpan="2" className="border-right-0 table-articles-head">
+
+							</td>
+
+							<td colSpan="1" className="border-right-0 text-right table-articles-head">Total:</td>
+							<td colSpan="1" className="border-left-0 table-articles-head">${(this.state.all.reduce((a, b) => a + (parseInt(b['unifiedPrice'] || 0)), 0) / 100).toFixed(2)}</td>
+						</tr>
+
+					</tbody>
+
+				</table>
+				)
+		};
+
+	}
+
+ 	render () {
+
+   	// const { donationsFirebase, loading, limit, page } = this.state;
+
+   	// const render = this.props.reportsData.revenue.donations;
+
+	return (
+		<div>
+
+			{/* {loading && <div className="p-2">Loading data...</div>} */}
+
+			{this.renderTable()}
+
+		</div>
+   	)
  }
 }
 
 class ExpenseTable extends Component {
   constructor(props) {
-     super(props);
+    super(props);
 
-      this.state = {
-        text: '',
-        loading: false,
-        donationsFirebase: [],
-        expenses: [],
-        limit: 10,
-        page: 1,
-      };
-      this.changeLimit = this.changeLimit.bind(this);
-      this.changePage = this.changePage.bind(this);
-   }
+		this.state = {
+			text: '',
+			loading: false,
+			donationsFirebase: [],
+			expenses: [],
+			limit: 10,
+			page: 1,
+		};
+		this.changeLimit = this.changeLimit.bind(this);
+		this.changePage = this.changePage.bind(this);
+   	}
 
-  changeLimit(limit) {
-    this.setState({
-      limit: limit
-    });
-  }
+	changeLimit(limit) {
+		this.setState({
+		limit: limit
+		});
+	}
 
-  changePage(page) {
-    this.setState({
-      page: page
-    });
-  }
+	changePage(page) {
+		this.setState({
+		page: page
+		});
+	}
 
-  render () {
-    const { donationsFirebase, loading, limit, page } = this.state;
+  	renderTable() {
 
-    return (
-      <div>
-        {loading && <div className="p-2">Loading data...</div>}
-        {donationsFirebase ? 
+	switch(this.props.subtableSelector) {
 
-        <table className="table articles-table table-sm table-hover table-bordered">
-          <thead>
-            <tr className="table-articles-head">
-              <th scope="col">File</th>
-              <th scope="col">DATE</th>
-              <th scope="col">TYPE</th>
-              <th scope="col">FOR</th>
-              <th scope="col">AMOUNT</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.props.reportsData.expenses.other
-            .sort((a, b) => new Date(b.date) - new Date(a.date))
-            .map(donation => (
+		case 'expenses-payroll':
+			return(<PayrollTable/>)
+		case 'expenses-inventory':
+			return(<div className="p-3">There is no inventory expenses yet.</div>)
+		case 'expenses-recurring':
+			return(<div className="p-3">There is no ad revenue yet.</div>)
+		case 'expenses-utilities':
+			return(<div className="p-3">There is no utility expenses yet.</div>)
+		case 'expenses-other':
+			return(<div className="p-3">There is no other expenses yet.</div>)
 
-              <tr>
-                <td><a rel="noopener noreferrer" target="_blank" href={donation.file}><i className="fas fa-file-invoice mr-0"></i></a></td>
-                <td>{moment(donation.date).format('LL')}</td>
-                <td>Recurring</td>
-                <td>{donation.reason}</td>
-                <td>${(donation.amount / 100).toFixed(2)}</td>
-              </tr>
+		// All Expenses
+		default:
+			return (
+				<table className="table articles-table table-sm table-hover table-bordered">
 
-            ))}
-            <tr>
-              <td colSpan='3' className="border-right-0 table-articles-head">
+					<thead>
+						<tr className="table-articles-head">
+							<th scope="col">File</th>
+							<th scope="col">DATE</th>
+							<th scope="col">TYPE</th>
+							<th scope="col">FOR</th>
+							<th scope="col">AMOUNT</th>
+						</tr>
+					</thead>
 
-                  <div className="results-dual-header">
+					<tbody>
+						{this.props.reportsData.expenses.other
+						.sort((a, b) => new Date(b.date) - new Date(a.date))
+						.map(donation => (
+			
+							<tr>
+							<td><a rel="noopener noreferrer" target="_blank" href={donation.file}><i className="fas fa-file-invoice mr-0"></i></a></td>
+							<td>{moment(donation.date).format('LL')}</td>
+							<td>Recurring</td>
+							<td>{donation.reason}</td>
+							<td>${(donation.amount / 100).toFixed(2)}</td>
+							</tr>
+			
+						))}
+						<tr>
+							<td colSpan='3' className="border-right-0 table-articles-head">
+			
+								<div className="results-dual-header">
+			
+								{/* <div className="page noselect">
+									<i onClick={() => props.changePage(props.page - 1)} className="fas fa-chevron-circle-left"></i>
+									Page {props.page}/1
+									<i onClick={() => props.changePage(props.page + 1)} style={{marginLeft: '10px'}} className="fas fa-chevron-circle-right"></i>
+								</div> */}
+								
+								{/* <span className="results noselect">
+									<span>Results:</span>
+									<span onClick={() => props.changeLimit(10)} className={"result" + (props.limit === 10 ? ' result-active' : '')}>10</span>
+									<span onClick={() => props.changeLimit(50)} className={"result" + (props.limit === 50 ? ' result-active' : '')}>50</span>
+									<span onClick={() => props.changeLimit(100)} className={"result" + (props.limit === 100 ? ' result-active' : '')}>100</span>
+									<span onClick={() => props.changeLimit(250)} className={"result" + (props.limit === 250 ? ' result-active' : '')}>250</span>
+								</span> */}
+			
+								</div>
+			
+							</td>
+			
+							<td colSpan="1" className="border-right-0 text-right table-articles-head">Total:</td>
+							<td colSpan="1" className="border-left-0 table-articles-head">${(this.props.reportsData.expenses.other.reduce((a, b) => a + (parseInt(b['amount'] || 0)), 0) / 100).toFixed(2)}</td>
+						</tr>
+					</tbody>
 
-                    {/* <div className="page noselect">
-                      <i onClick={() => props.changePage(props.page - 1)} className="fas fa-chevron-circle-left"></i>
-                      Page {props.page}/1
-                      <i onClick={() => props.changePage(props.page + 1)} style={{marginLeft: '10px'}} className="fas fa-chevron-circle-right"></i>
-                    </div> */}
-                  
-                    {/* <span className="results noselect">
-                      <span>Results:</span>
-                      <span onClick={() => props.changeLimit(10)} className={"result" + (props.limit === 10 ? ' result-active' : '')}>10</span>
-                      <span onClick={() => props.changeLimit(50)} className={"result" + (props.limit === 50 ? ' result-active' : '')}>50</span>
-                      <span onClick={() => props.changeLimit(100)} className={"result" + (props.limit === 100 ? ' result-active' : '')}>100</span>
-                      <span onClick={() => props.changeLimit(250)} className={"result" + (props.limit === 250 ? ' result-active' : '')}>250</span>
-                    </span> */}
+			  	</table>
+			)
+	};
 
-                  </div>
+	}
 
-              </td>
+	render () {
+		const { donationsFirebase, loading, limit, page } = this.state;
 
-              <td colSpan="1" className="border-right-0 text-right table-articles-head">Total:</td>
-              <td colSpan="1" className="border-left-0 table-articles-head">${(this.props.reportsData.expenses.other.reduce((a, b) => a + (parseInt(b['amount'] || 0)), 0) / 100).toFixed(2)}</td>
-            </tr>
-          </tbody>
-        </table>
-        : (
-        <div>Error</div>
-        )}
+		return (
+		<div>
 
-      </div>
-    )
-  }
+			{loading && <div className="p-2">Loading data...</div>}
+			
+			{this.renderTable()}
+
+		</div>
+		)
+	}
 }
 
 const StyledDonationList = (props) => (
@@ -1403,22 +1502,29 @@ class DataCharts extends Component {
 
   getBreakdownTotal(type, month, year) {
     if (type === "expenses") {
-      console.log(`Trying to return ${type} that occured in ${month} of ${year}`);
 
+      console.log(`Trying to return ${type} that occured in ${month} of ${year}`);
       console.log("This will be the result")
 
       let result = this.state.monthBreakdown.filter(singleMonth => {
         return singleMonth._id.month === month && singleMonth._id.year === year;
-        // month._id ===  {month: 8, year: 2020} 
-        // let menu = month._id.some(({dish_has_categories}) => dish_has_categories.some(({CategoryId}) => CategoryId === '8'))
-        // return menu
       } );
 
       console.log(result[0])
       return result[0]
 
-    } else {
-      return "We can only handle expenses at this time"
+    } else if (type === "revenues") {
+
+		console.log(`Trying to return ${type} that occured in ${month} of ${year}`);
+		console.log("This will be the result")
+  
+		let result = this.state.monthBreakdown.filter(singleMonth => {
+		  return singleMonth._id.month === month && singleMonth._id.year === year;
+		} );
+  
+		console.log(result[0])
+		return result[0]
+
     }
   }
 
@@ -1428,15 +1534,25 @@ class DataCharts extends Component {
       return Array.from({length: back}, (v, i) => year - back + i + 1);
     }
 
-    var expenseMonths = [];
-    var lastExpenses = []
+    var revenueMonths = [];
+	var expenseMonths = [];
+
+    var lastRevenues = [];
+	var lastExpenses = [];
+
+	var monthsCount = 12;
 
     var months = [];
-    var totals = [];
-    var realTotals = [];
-    ;
 
-    for (let i = 0; i < 12; i++) {
+    var totalsRevenues = [];
+	var totalsExpenses = [];
+
+	var realExpensesTotals = [];
+	var realRevenuesTotals = [];
+    var realTotals = [];
+    
+    for (let i = 0; i < monthsCount; i++) {
+
       expenseMonths.push({
         month: parseInt(moment().subtract(i, 'months').format('MM')),
         year: parseInt(moment().subtract(i, 'months').format('Y'))
@@ -1450,27 +1566,65 @@ class DataCharts extends Component {
 
     }
 
-    console.log(expenseMonths)
-    console.log(lastExpenses)
+	for (let i = 0; i < monthsCount; i++) {
+		revenueMonths.push({
+		  month: parseInt(moment().subtract(i, 'months').format('MM')),
+		  year: parseInt(moment().subtract(i, 'months').format('Y'))
+		});
+		
+		lastRevenues.push(this.getBreakdownTotal(
+		  'revenues', 
+		  parseInt(moment().subtract(i, 'months').format('MM')),  
+		  parseInt(moment().subtract(i, 'months').format('Y')) 
+		));
+  
+	}
 
-    for (let i = 0; i < 12; i++) {
+	console.log("Look here")
+	console.log(revenueMonths)
+
+	console.log(this.props.data)
+	console.log(this.props.reportsData.expenses.other)
+
+    console.log(lastRevenues)
+
+    // console.log(expenseMonths)
+    // console.log(lastExpenses)
+
+	// Revenues
+    for (let i = 0; i < monthsCount; i++) {
       months.push(moment().subtract(i, 'months').format('MMM'))
 
       var temp = this.props.data.filter((item) => {
         return moment(item.date).isSame(moment().subtract(i, 'months'), 'month');
       })
 
-      totals.push(temp.reduce((a, b) => a + (b['amount'] || 0), 0))
+      totalsRevenues.push(temp.reduce((a, b) => a + (b['amount'] || 0), 0))
 
-      realTotals = totals.map(function(item) {return item / 100})
+      realRevenuesTotals = totalsRevenues.map(function(item) {return item / 100})
 
     }
 
+	// Expenses
+	for (let i = 0; i < monthsCount; i++) {
+		// months.push(moment().subtract(i, 'months').format('MMM'))
+  
+		var temp = this.props.reportsData.expenses.other.filter((item) => {
+		  return moment(item.date).isSame(moment().subtract(i, 'months'), 'month');
+		})
+  
+		totalsExpenses.push(temp.reduce((a, b) => a + (b['amount'] || 0), 0))
+  
+		realExpensesTotals = totalsExpenses.map(function(item) {return item / 100})
+  
+	}
+
     this.setState({
-      monthTotals: realTotals,
+      monthRevenuesTotals: realRevenuesTotals,
+	  monthExpensesTotals: realExpensesTotals,
     }, () => {
 
-      if (this.state.monthTotals.length !== 0) {
+      if (this.state.monthRevenuesTotals.length !== 0) {
 
         var vsReveneueExpense = document.getElementById(this.state.chartRevenueExpense);
 
@@ -1479,8 +1633,10 @@ class DataCharts extends Component {
             data: {
                 labels: [ ...months.reverse() ],
                 datasets: [{
-                    label: 'Donations',
-                    data: [...this.state.monthTotals.reverse()],
+                    label: 'Revenues',
+                    data: [
+						...this.state.monthRevenuesTotals.reverse()
+					],
                     backgroundColor: [
                       'rgba(63, 191, 127, 0.2)'
                     ],
@@ -1494,19 +1650,20 @@ class DataCharts extends Component {
                 },
                 {
                   label: 'Expenses',
-                  data: [ 
-                    ( (lastExpenses[11]?.total / 100) || 0 ), 
-                    ( (lastExpenses[10]?.total / 100) || 0 ), 
-                    ( (lastExpenses[9]?.total / 100) || 0 ),
-                    ( (lastExpenses[8]?.total / 100) || 0 ), 
-                    ( (lastExpenses[7]?.total / 100) || 0 ), 
-                    ( (lastExpenses[6]?.total / 100) || 0 ), 
-                    ( (lastExpenses[5]?.total / 100) || 0 ), 
-                    ( (lastExpenses[4]?.total / 100) || 0 ), 
-                    ( (lastExpenses[3]?.total / 100) || 0 ), 
-                    ( (lastExpenses[2]?.total / 100) || 0 ), 
-                    ( (lastExpenses[1]?.total / 100) || 0 ), 
-                    ( (lastExpenses[0]?.total / 100) || 0 ) 
+                  data: [
+					...this.state.monthExpensesTotals.reverse()
+                    // ( (lastExpenses[11]?.total / 100) || 0 ), 
+                    // ( (lastExpenses[10]?.total / 100) || 0 ), 
+                    // ( (lastExpenses[9]?.total / 100) || 0 ),
+                    // ( (lastExpenses[8]?.total / 100) || 0 ), 
+                    // ( (lastExpenses[7]?.total / 100) || 0 ), 
+                    // ( (lastExpenses[6]?.total / 100) || 0 ), 
+                    // ( (lastExpenses[5]?.total / 100) || 0 ), 
+                    // ( (lastExpenses[4]?.total / 100) || 0 ), 
+                    // ( (lastExpenses[3]?.total / 100) || 0 ), 
+                    // ( (lastExpenses[2]?.total / 100) || 0 ), 
+                    // ( (lastExpenses[1]?.total / 100) || 0 ), 
+                    // ( (lastExpenses[0]?.total / 100) || 0 ) 
                   ],
                   backgroundColor: [
                       'rgba(255, 99, 132, 0.2)'
@@ -1526,6 +1683,19 @@ class DataCharts extends Component {
                       ticks: {
                         fontFamily: "brandon-grotesque",
                         beginAtZero: true,
+						callback: function(value, index, values) {
+
+							if (value % 1 === 0) {
+	  
+							  if(parseInt(value) >= 1000){
+								return '$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+							  } else {
+								return '$' + value;
+							  }
+	  
+							}
+							
+						  }
                       }
                     }],
                     xAxes: [{
@@ -1536,7 +1706,20 @@ class DataCharts extends Component {
                         fontFamily: "brandon-grotesque",
                       }
                     }]
-                }
+                },
+                hover: {
+                  mode: 'nearest',
+                  intersect: true
+                },
+				tooltips: {
+					mode: 'index',
+					intersect: false,
+					callbacks: {
+						label: function(tooltipItems, data) { 
+							return '$' + tooltipItems.yLabel.toFixed(2) ;
+						}
+					}
+				},
             }
         });
 
@@ -1568,6 +1751,10 @@ class DataCharts extends Component {
           ]
         },
         options: {
+          hover: {
+            mode: 'nearest',
+            intersect: true
+          },
           // scales: {
           //     yAxes: [{
           //       ticks: {
@@ -1653,7 +1840,11 @@ class DataCharts extends Component {
                     fontFamily: "brandon-grotesque",
                   }
                 }]
-            }
+            },
+            hover: {
+              mode: 'nearest',
+              intersect: true
+            },
         }
     });
 
@@ -1737,7 +1928,11 @@ class DataCharts extends Component {
                     fontFamily: "brandon-grotesque",
                   }
                 }]
-            }
+            },
+            hover: {
+              mode: 'nearest',
+              intersect: true
+            },
         }
     });
   }
@@ -1776,6 +1971,31 @@ class DataCharts extends Component {
   
             <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} />
             <canvas className='chart mb-3 bg-white' id={this.state.chartPayroleExpenses} width="100%" height="45px"></canvas>
+          </div>
+
+          <div className="row">
+
+            <div className="col-lg-4">
+              <div className="chart-block">
+                <h5>Employee Average Pay</h5>
+                <h3 className="mb-0">$0</h3>
+              </div>
+            </div>
+
+            <div className="col-lg-4">
+              <div className="chart-block">
+                <h5>CEO Pay</h5>
+                <h3 className="mb-0">$0</h3>
+              </div>
+            </div>
+
+            <div className="col-lg-4">
+              <div className="chart-block">
+                <h5>Percent Difference</h5>
+                <h3 className="mb-0">0.00%</h3>
+              </div>
+            </div>
+
           </div>
   
           <div className="chart-block">
@@ -1835,14 +2055,15 @@ class DataCharts extends Component {
 }
 
 function ChartBlockTimeFrame (props) {
-  return (
-    <div className="scale">
-      <span onClick={() => props.setChartPeriodSelector('1y')} className={"badge border mr-1 " + (props.chartPeriodSelector === "1y" ? 'badge-dark' : 'badge-light')}>1 Year</span>
-      <span onClick={() => props.setChartPeriodSelector('6m')} className={"badge border mr-1 " + (props.chartPeriodSelector === "6m" ? 'badge-dark' : 'badge-light')}>6 Months</span>
-      <span onClick={() => props.setChartPeriodSelector('1m')} className={"badge border mr-1 " + (props.chartPeriodSelector === "1m" ? 'badge-dark' : 'badge-light')}>1 Month</span>
-      <span onClick={() => props.setChartPeriodSelector('1w')} className={"badge border " + (props.chartPeriodSelector === "1w" ? 'badge-dark' : 'badge-light')}>1 Week</span>
-    </div>
-  )
+  	return (
+		<div className="scale">
+			{/* <span onClick={() => props.setChartPeriodSelector('all')} className={"badge border mr-1 " + (props.chartPeriodSelector === "all" ? 'badge-dark' : 'badge-light')}>All</span> */}
+			<span onClick={() => props.setChartPeriodSelector('1y')} className={"badge border mr-1 " + (props.chartPeriodSelector === "1y" ? 'badge-dark' : 'badge-light')}>1 Year</span>
+			{/* <span onClick={() => props.setChartPeriodSelector('6m')} className={"badge border mr-1 " + (props.chartPeriodSelector === "6m" ? 'badge-dark' : 'badge-light')}>6 Months</span>
+			<span onClick={() => props.setChartPeriodSelector('1m')} className={"badge border mr-1 " + (props.chartPeriodSelector === "1m" ? 'badge-dark' : 'badge-light')}>1 Month</span>
+			<span onClick={() => props.setChartPeriodSelector('1w')} className={"badge border " + (props.chartPeriodSelector === "1w" ? 'badge-dark' : 'badge-light')}>1 Week</span> */}
+		</div>
+  	)
 }
 
 const mapStateToProps = (state) => {
