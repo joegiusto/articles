@@ -13,21 +13,71 @@ class AWS extends Component {
       photos: [],
       fakeImageHash: 0,
       newProfilePhotoLoading: false,
-      cacheBust: moment()
+      cacheBust: moment(),
+	    directories: []
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.onChange = this.onChange.bind(this);
-    this.onChangeProfile = this.onChangeProfile.bind(this);
+  	this.getDirectoryPhotos = this.getDirectoryPhotos.bind(this);
+    // this.onChangeProfile = this.onChangeProfile.bind(this);
     // this.pushSocket = this.pushSocket.bind(this);
   }
 
   componentDidMount() {
     this.props.setLocation(this.props.tabLocation);
     const self = this;
-    
 
-    axios.get('/api/photos')
+    // axios.get('/api/photos')
+    // .then(function (response) {
+
+    //   console.log(response);
+
+    //   self.setState({ 
+    //     photos: response.data,
+    //   });
+
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+
+    //   self.setState({
+    //     photos: [],
+    //   })
+    // });
+
+	axios.post('/api/secure/aws/directories')
+    .then(function (response) {
+
+      console.log(response);
+
+      self.setState({ 
+        directories: response.data.CommonPrefixes,
+      });
+
+    })
+    .catch(function (error) {
+      console.log(error);
+
+    //   self.setState({
+    //     directories: [],
+    //   })
+
+    });
+  }
+
+  componentWillUnmount() {
+    this.props.setLocation('');
+  }
+
+  getDirectoryPhotos(directory) {
+
+    const self = this;
+    console.log(`getDirectory called with ${directory}`)
+
+    axios.post('/api/secure/aws/getDirectoryPhotos', {
+      prefix: directory
+    })
     .then(function (response) {
 
       console.log(response);
@@ -44,10 +94,7 @@ class AWS extends Component {
         photos: [],
       })
     });
-  }
 
-  componentWillUnmount() {
-    this.props.setLocation('');
   }
 
   handleChange(event) {
@@ -70,7 +117,7 @@ class AWS extends Component {
       () => {
         data.append('file', this.state.file);
         
-        axios.post("/api/addPhoto", data, { // receive two parameter endpoint url ,form data 
+        axios.post("/api/secure/aws/addPhoto", data, { // receive two parameter endpoint url ,form data 
         
         })
         .then(res => { // then print response status
@@ -84,76 +131,104 @@ class AWS extends Component {
 
   }
 
-  onChangeProfile(e) {
-    console.log(e.target.files);
-    const data = new FormData();
-
-    this.setState({
-      file: e.target.files[0],
-      newProfilePhotoLoading: true,
-    }, 
-      () => {
-        data.append('file', this.state.file);
-        data.append('user', this.props.user_id);
-        
-        axios.post("/api/addProfilePhoto", data, { // receive two parameter endpoint url ,form data 
-        
-        })
-        .then(res => { // then print response status
-          console.log(res.statusText)
-          this.setState({
-            newProfilePhotoLoading: false,
-            // photos: [...this.state.photos, 'profile_photos/' + this.props.user_id + '.' + this.state.file.name.split('.')[1]],
-            fakeImageHash: this.state.fakeImageHash + 1
-          })
-        })
-      }
-    )
-
-  }
-
   removePhoto(photo) {
-    this.setState({
-      photos: this.state.photos.filter(arrayPhoto => arrayPhoto !== photo)
+
+    // this.setState({
+    //   photos: this.state.photos.filter(arrayPhoto => arrayPhoto !== photo)
+    // })
+
+    const self = this;
+    console.log(`photo-manage called with ${photo}`)
+
+    axios.post('/api/secure/aws/removePhoto', {
+      key: photo
     })
+    .then(function (response) {
+
+      console.log(response);
+
+      self.setState({
+        photos: self.state.photos.filter(arrayPhoto => arrayPhoto !== photo)
+      })
+
+      // self.setState({ 
+      //   photos: response.data,
+      // });
+
+    })
+    .catch(function (error) {
+      console.log(error);
+
+      // self.setState({
+      //   photos: [],
+      // })
+
+    });
+
   }
 
   render() {
 
     return (
-      <div className="admin-aws mt-5">
+      <div className="admin-page admin-aws">
 
-        <div className="aws-profile-photo-test">
+        <div className="side-panel">
 
-          <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${this.props.user_id}.jpg?h=${this.state.fakeImageHash}&b=${this.state.cacheBust}`} height="150" width="150" alt=""/>
+        	<div className="card">
 
-          <div className="upload-photo-wrap mr-1">
-            <div className="upload-photo noselect">+</div>
-            <input onChange={this.onChangeProfile} accept=".jpg" type="file" name="myfile" />
-          </div>
+            	<div className="card-header">Directories</div>
+
+				<div className="card-body">
+
+					{this.state.directories.map(directory => (
+						<div className="directory-link" onClick={() => this.getDirectoryPhotos(directory.Prefix)}>{directory.Prefix}</div>
+					))}
+
+				</div>
+
+          	</div>
         </div>
 
-        <div>{this.state.newProfilePhotoLoading ? 'Uploading' : ''}</div>
+        <div className="main-panel">
 
-        <div className="aws-photo-test">
+			<div>{this.state.newProfilePhotoLoading ? 'Uploading' : ''}</div>
 
-          <div className="upload-photo-wrap mr-1">
-            <div className="upload-photo noselect">+</div>
-            <input onChange={this.onChange} type="file" name="myfile" />
-          </div>
+			<css className="aws-photo-test">
+				<div className="upload-container">
+					<div className="upload-photo-wrap mr-1">
+						<div className="upload-photo noselect">+</div>
+						<input onChange={this.onChange} type="file" name="myfile" />
+					</div>
+				</div>
+			</css>
 
-          {this.state.photos.map((photo, i) => (
-            <span className="image-container">
+			<div className="aws-photo-test mt-3 text-center mb-3">
 
-              <div onClick={() => this.removePhoto(photo)} className="delete noselect">X</div>
-              <a key={i} href={`https://articles-website.s3.amazonaws.com/${photo}`} target="_blank" rel="noopener noreferrer">
-                <img key={i} height="150px" alt="" src={`https://articles-website.s3.amazonaws.com/${photo}`} />
-              </a>
+				<h3 className="text-muted my-3 w-100">Please select a directory!</h3>
 
-            </span>
-          ))}
+				<div className="directory-squares container">
+          <div className="square" onClick={() => this.getDirectoryPhotos('')}>{'/'}</div>
+					{this.state.directories.map(directory => (
+						<div className="square" onClick={() => this.getDirectoryPhotos(directory.Prefix)}>{directory.Prefix}</div>
+					))}
+				</div>
+
+			</div>
+
+			{this.state.photos.map((photo, i) => (
+
+				<div className="aws-photo-test image-container">
+					<div onClick={() => this.removePhoto(photo)} className="delete noselect">X</div>
+
+					<a key={i} href={`https://articles-website.s3.amazonaws.com/${photo}`} target="_blank" rel="noopener noreferrer">
+						<img key={i} height="150px" alt="" src={`https://articles-website.s3.amazonaws.com/${photo}`} />
+					</a>
+				</div>
+
+			))}
 
         </div>
+
 
       </div>
     );

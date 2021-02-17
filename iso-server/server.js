@@ -15,7 +15,6 @@ const history = require('connect-history-api-fallback');
 let mongoUtil = require('./utils/db');
 const mongoose = require('mongoose');
 var ObjectId = require('mongodb').ObjectId;
-var AWS = require('aws-sdk');
 const url = `mongodb+srv://joegiusto:${encodeURIComponent(process.env.MONGODB_PASSWORD)}@articles-xgwnd.mongodb.net/articles_data?retryWrites=true&w=majority`;
 
 const stripe = require('stripe')(process.env.STRIPE_LIVE_SECRET);
@@ -63,43 +62,6 @@ app.use(
   })
 
 );
-
-const s3 = new AWS.S3({
-  accessKeyId: process.env.accessKeyId,
-  secretAccessKey: process.env.secretAccessKey,
-});
-
-async function listAllObjectsFromS3Bucket(bucket, prefix) {
-  let isTruncated = true;
-  let marker;
-  let photos = [];
-  while(isTruncated) {
-    let params = { Bucket: bucket };
-    if (prefix) params.Prefix = prefix;
-    if (marker) params.Marker = marker;
-    try {
-      const response = await s3.listObjects(params).promise();
-
-      response.Contents.forEach(item => {
-        // console.log(item.Key);
-        photos.push(item.Key)
-      });
-
-      isTruncated = response.IsTruncated;
-
-      if (isTruncated) {
-        marker = response.Contents.slice(-1)[0].Key;
-      }
-
-      // console.log(photos)
-      return(photos);
-  } catch(error) {
-      // throw error;
-      console.log(error);
-      isTruncated = false;
-    }
-  }
-}
 
 function connectWithRetryMongo() {
   mongoUtil.connectToServer( app, function( err, client ) {
@@ -463,117 +425,6 @@ io.on('connection', (socket) => {
 // Used to make sure server is up in one place, though this was in MySQL days
 app.get('/api/ping', function (req, res) {
   return res.send('pong');
-});
-
-app.get('/api/photos', function (req, res) {
-  listAllObjectsFromS3Bucket('articles-website', '').then(results => {
-    console.log("Call to /api/photos/ done");
-    return res.send(results);
-  })
-});
-
-app.post('/api/addPhoto', function (req, res) {
-
-  if (!req.files || Object.keys(req.files).length === 0) {
-    return res.status(400).send('No files were uploaded.');
-  }
-
-  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-  let sampleFile = req.files.file;
-
-  var explodedSampleFileName = sampleFile.name.split('.');
-
-  explodedSampleFileName[1] = explodedSampleFileName[1].toLowerCase();
-
-  var strictFileName = explodedSampleFileName[0] + explodedSampleFileName[1]
-  
-
-  // Use the mv() method to place the file somewhere on your server
-  // sampleFile.mv(__dirname + '/photos/' + req.files.file.name, function(err) {
-  //   if (err)
-  //     // return res.status(500).send(err);
-  //     console.log(err);
-  //   console.log("Complete");
-  //   // res.send('File uploaded!');
-
-  // });
-
-  // let albumName = 'articles-website'
-  // var base64data = Buffer(sampleFile, 'binary');
-
-  var resizedPhoto = Buffer
-
-  // sharp(sampleFile.data)
-  // .resize(300, 300)
-  // .toFile(__dirname + '/photos/' + sampleFile.name.split('.')[0] + '_1.' + sampleFile.name.split('.')[1], (err, info) => { 
-  //   resizedPhoto = info;
-  //   console.log("Done");
-  //   console.log(info);
-
-  //   var params = {Bucket: 'articles-website', Key: sampleFile.name, ContentType: "image/jpeg", Body: info, ACL: "public-read"};
-  //   s3.upload(params, function(err, data) {
-  //     console.log(err, data);
-  //     if (err) {
-  //       return res.status(500).send(err);
-  //     }
-        
-  //     res.send('File uploaded!');
-  //   });
-  // });
-
-  // sharp(sampleFile.data)
-  // .resize(200, 200)
-  // .toBuffer()
-  // .then( data => {
-  //   // console.log(resizedPhoto);
-  //   // console.log("-")
-  //   // console.log(sampleFile.data)
-
-  //   var params = {Bucket: 'articles-website', Key: sampleFile.name, ContentType: "image/jpeg", Body: data, ACL: "public-read"};
-  //   s3.upload(params, function(err, data) {
-  //     console.log(err, data);
-  //     if (err) {
-  //       return res.status(500).send(err);
-  //     }
-        
-  //     res.send('File uploaded!');
-  //   });
-  // })
-  // .catch( err => { 
-  //   console.log("Fail");
-  //   console.log(err);
-  // });
-
-  // sharp(sampleFile.data)
-  // .resize(200, 200)
-  // .toBuffer()
-  // .then( data => {
-  //   console.log(resizedPhoto);
-  //   console.log("-")
-  //   console.log(sampleFile.data)
-
-  //   resizedPhoto.mv(__dirname + '/photos/' + req.files.file.name.split('.')[0] + '-1' + req.files.file.name.split('.')[1], function(err) {
-  //     if (err)
-  //       console.log(err);
-  //     console.log("Complete");
-  //   });
-  // })
-  // .catch( err => { 
-  //   console.log("Fail");
-  //   console.log(err);
-  // });
-
-  var params = {Bucket: 'articles-website', Key: sampleFile.name, ContentType: "image/jpeg", Body: sampleFile.data, ACL: "public-read"};
-  
-  s3.upload(params, function(err, data) {
-    console.log(err, data);
-    if (err) {
-      return res.status(500).send(err);
-    }
-      
-    res.send('File uploaded!');
-  });
-  
 });
 
 app.post('/api/charge', function (req, res) {

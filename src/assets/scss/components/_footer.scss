@@ -72,9 +72,35 @@ footer.site-footer {
     }
 
     &.copyright {
-      font-family: montserrat, sans-serif;
-      font-weight: 400;
-      font-size: 15px;
+		font-family: montserrat, sans-serif;
+		font-weight: 400;
+		font-size: 15px;
+
+		.dark-mode {
+			padding: 0.5rem;
+			position: relative;
+			cursor: pointer;
+			min-width: 140px;
+			// text-align: center;
+			justify-content: center;
+
+			&:hover {
+				background-color: black;
+				color: white;
+
+				.beta {
+					transform: scale(1.2) translateX(3px) translateY(70%);
+				}
+			}
+
+			.beta {
+				position: absolute;
+				left: 0;
+				transform: translateX(3px) translateY(70%);
+				bottom: 0;
+				transition: 200ms;
+			}
+		}
     }
 
   }

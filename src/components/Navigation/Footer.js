@@ -1,15 +1,16 @@
 import React from 'react'
-import * as ROUTES from '../../constants/routes'
+import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom'
 
-function Footer(props) {
-  const has =  props.location.pathname.toString().includes("/admin/news") 
+import * as ROUTES from '../../constants/routes'
+import { toggleColorMode } from '../../actions/siteActions';
 
-  // console.log(props.location)
-  // console.log(`Has is equal to ${has}`)
+function FooterBase(props) {
+//   const has =  props.location.pathname.toString().includes("/admin/news") 
 
   return (
-    <footer className={"site-footer " + (props.location.pathname === '/mission' || props.location.pathname === '/messages' || props.location.pathname === '/messages/' || props.location.pathname === '/outset' || has ? 'd-none' : '')}>
+    <footer className={"site-footer"}>
+	{/* <footer className={"site-footer " + (props.location.pathname === '/mission' || props.location.pathname === '/messages' || props.location.pathname === '/messages/' || props.location.pathname === '/outset' || has ? 'd-none' : '')}></footer> */}
 
       {/* New February 2021 */}      
       <div className="container py-4">
@@ -80,10 +81,20 @@ function Footer(props) {
 
         </div>
 
-        <div style={{lineHeight: '1'}} className="row border-top footer-panel copyright pt-3 px-3">
-          <span>©2021 Articles Media</span>
-          <span className="ml-1 pl-1 border-left border-dark"><Link to={ROUTES.PRIVACY}>Terms</Link></span>
-          <span className="ml-1 pl-1 border-left border-dark"><Link to={ROUTES.PRIVACY}>Privacy</Link></span>
+        <div style={{lineHeight: '1'}} className="row border-top footer-panel copyright pt-3 px-3 d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
+
+			<div className="d-flex flex-shrink-0">
+				<span>©2021 Articles Media</span>
+				<span className="ml-1 pl-1 border-left border-dark"><Link to={ROUTES.PRIVACY}>Terms</Link></span>
+				<span className="ml-1 pl-1 border-left border-dark"><Link to={ROUTES.PRIVACY}>Privacy</Link></span>
+			</div>
+
+			<div onClick={props.toggleColorMode} className="dark-mode d-flex flex-shrink-0 mt-3 mt-lg-0 border border-dark noselect">
+				{ (props.site?.colorModeDark ? "Light Theme" : "Dark Theme") }
+				{ (props.site?.colorModeDark ? <i class="fas fa-sun ml-2 mr-0"></i> : <i class="fas fa-moon ml-2 mr-0"></i>) }
+				<div className="beta badge badge-articles">Beta!</div>
+			</div>
+
         </div>
 
       </div>
@@ -151,4 +162,17 @@ function Footer(props) {
   )
 }
 
-export default withRouter(Footer);
+const mapStateToProps = (state) => {
+
+	return {
+		site: state.site,
+	};
+  
+};
+
+const Footer = withRouter(FooterBase);
+
+export default connect(
+	mapStateToProps, 
+	{ toggleColorMode } 
+)(Footer);

@@ -1479,6 +1479,18 @@ module.exports = (app, db) => {
 
   })
 
+  // Clean ones up here!
+  require('./routes/aws/index')(app, db, passport);
+
+  require('./routes/config/setStripeMode')(app, db, passport);
+  require('./routes/config/setConfig')(app, db, passport);
+
+  require('./routes/projects/getProjects')(app, db, passport);
+  require('./routes/projects/getProject')(app, db, passport);
+
+  // ----------------------------------------------------------
+
+  // TODO - Sort these outs to be better organized 
   require('./routes/updateLastRead')(app, db, passport);
   require('./routes/outsetUpdate')(app, db, passport);
   require('./routes/addProfilePhoto')(app, db, passport);
@@ -1516,12 +1528,6 @@ module.exports = (app, db) => {
   require('./routes/deleteChatConversation')(app, db, passport);
 
   require('./routes/logUserOnline')(app, db, passport);
-
-  require('./routes/config/setStripeMode')(app, db, passport);
-  require('./routes/config/setConfig')(app, db, passport);
-
-  require('./routes/projects/getProjects')(app, db, passport);
-  require('./routes/projects/getProject')(app, db, passport);
 
   require('./routes/addPresident')(app, db, passport);
 

@@ -442,7 +442,7 @@ class EmployeePageDetails extends Component {
                 <div className="get-to-know-block__header">Favorite Music Artists:</div>
 
                 <div className="get-to-know-subheader">Present</div>
-                <div className="get-to-know-content">G-Eazy, Russ, Olivia O'Brian, Blackbear, Skizzy Mars, Joyner Lucas, Bryce Vine, Kyle, Claire Laffut, Halsey</div>
+                <div className="get-to-know-content">G-Eazy, Russ, Olivia O'Brian, Blackbear, Skizzy Mars, Joyner Lucas, Bryce Vine, Kyle, Claire Laffut, Halsey, Hoodie Allen, Post Malone</div>
 
                 <div className="get-to-know-subheader">~70's - 90's</div>
                 <div className="get-to-know-content">Billy Joel, Queen, The Beatles, Aerosmith, Pink Floyd, Elton John, </div>

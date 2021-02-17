@@ -535,9 +535,62 @@ class Settings extends Component {
 
               <div className="mt-lg-3">
 
-                {!this.state.requestedUserData && <div className="btn btn-articles-light w-50" onClick={() => this.requestUserData()}>Request Data</div>}
+                <div className={`newsletter-extra-card card mb-3 `}>
 
-                <div className="btn btn-danger w-50">Delete Account</div>
+					<div className="card-header">
+						<i class="fas fa-envelope"></i>Like Articles?
+					</div>
+
+					<div className="card-body p-3">
+
+						<p>Get the <b>weekly newsletter!</b> In it, you'll get:</p>
+
+						<ul className="pl-4 mb-3">
+						<li>Transparency report outlines</li>
+						<li>Important announcements</li>
+						<li>Questions that need answers</li>
+						</ul>
+
+						<div className="d-flex justify-content-center align-items-center mb-3">
+						<Link to={ROUTES.SETTINGS_NEWSLETTER}><div className="btn btn-articles-light">Sign Up</div></Link>
+						</div>
+
+						<div style={{fontSize: '0.9rem'}} className="text-muted text-center newsletter-extra-card-link">see an example newsletter</div>
+
+					</div>
+
+                </div>
+
+				<div className={`newsletter-extra-card card mb-3 `}>
+
+					<div className="card-header">
+						<i class="fas fa-link"></i>Faster Login?
+					</div>
+
+					<div className="card-body p-3">
+
+						<p>Connect your account:</p>
+
+						<ul className="pl-4 mb-3">
+							<li>No password to login</li>
+							<li>Google, Apple, LinkedIn, Twitter</li>
+						</ul>
+
+						<div className="d-flex justify-content-center align-items-center mb-1">
+							<Link to={ROUTES.SETTINGS_CONNECTIONS}><div className="btn btn-articles-light">Connect</div></Link>
+						</div>
+
+						{/* <div style={{fontSize: '0.9rem'}} className="text-muted text-center newsletter-extra-card-link">see an example newsletter</div> */}
+
+					</div>
+
+                </div>
+
+                <div className="mb-3">
+                	{!this.state.requestedUserData && <div className="btn btn-articles-light w-50" onClick={() => this.requestUserData()}>Request Data</div>}
+	
+	                <div className="btn btn-danger w-50">Delete Account</div>
+                </div>
 
               </div>
 
