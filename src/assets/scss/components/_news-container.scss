@@ -2130,12 +2130,16 @@ section.news-page {
     .news-preview-container {
       position: relative;
 
-      @include media-breakpoint-up(lg) {
-        padding-left: 15%;
-      }
+      &.frontpage-indent {
+        // padding-right: 0 !important;
+        
+        @include media-breakpoint-up(lg) {
+          padding-left: 15%;
+        }
 
-      @include media-breakpoint-up(xl) {
-        padding-left: 20%;
+        @include media-breakpoint-up(xl) {
+          padding-left: 20%;
+        }
       }
 
       .swiper-scrollbar {

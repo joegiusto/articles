@@ -533,7 +533,7 @@ class RecentSliders extends Component {
       <div className="news-sliders">
 
         {/* Recent Stories */}
-        <div className="news-preview-container story">
+        <div className="news-preview-container frontpage-indent story">
     
           <Swiper
             {...swiper_settings}
@@ -544,6 +544,7 @@ class RecentSliders extends Component {
 
               <div className="frontpage-section-header">
                 <h5>Recent Stories</h5>
+                <Link onClick={() => window.scrollTo(0, 0)} to={ROUTES.STORIES} className="ml-3 text-muted">View All</Link>
 
                 <div className="controls ">
                   <i className="fas fa-backward"></i>
@@ -551,7 +552,7 @@ class RecentSliders extends Component {
                 </div>
               </div>
 
-              <div className="stories-filters d-flex mb-3 align-items-center">
+              <div className="stories-filters d-flex mb-3 align-items-center d-none">
 
                 <DropdownButton variant="articles-light" id="dropdown-basic-button" title={ <span><i className="fas fa-filter"></i> Newest</span> }>
                   <Dropdown.Item href="#/action-1">Newest</Dropdown.Item>
@@ -559,7 +560,6 @@ class RecentSliders extends Component {
                 </DropdownButton>
 
                 <Link onClick={() => window.scrollTo(0, 0)} to={ROUTES.STORIES} className="ml-3 text-muted">View All</Link>
-
 
               </div>
               
@@ -575,7 +575,7 @@ class RecentSliders extends Component {
         </div>
   
         {/* Recent Issues */}
-        <div className="news-preview-container issue">
+        <div className="news-preview-container frontpage-indent issue">
   
           <Swiper
             {...swiper_settings} 
@@ -706,7 +706,7 @@ class RecentSliders extends Component {
         </div>
   
         {/* Recent Myths */}
-        <div className="news-preview-container myth">
+        <div className="news-preview-container frontpage-indent myth">
   
           <Swiper
             {...swiper_settings}

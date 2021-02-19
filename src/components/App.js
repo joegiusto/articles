@@ -1,7 +1,7 @@
-import React, {Component, useEffect, withRouter} from 'react';
+import React, {Component, useEffect, Fragment} from 'react';
 import { Helmet } from "react-helmet";
 
-import { BrowserRouter as Router, Route, Switch, } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, withRouter } from 'react-router-dom';
 import { useLocation } from "react-router-dom";
 
 import PrivateRoute from "./private-route/PrivateRoute";
@@ -105,20 +105,48 @@ import SocketContext from "../utils/socket_context/context";
 const ENDPOINT = "/";
 const socket = io(ENDPOINT);
 
-function ScrollToTop() {
-  const { pathname } = useLocation();
-  const parts = pathname.split('/');
+// function ScrollToTop() {
+//   const { pathname } = useLocation();
+//   const parts = pathname.split('/');
 
+//   useEffect(() => {
+//     if ( parts[1] === 'news' || parts[1] === 'store' || parts[1] === 'reports') {
+//       // Was a page where router changes within like admin lookups
+//     } else {
+//       window.scrollTo(0, 0);
+//     }
+//   }, [pathname]);
+
+//   return null;
+// }
+
+// function ScrollToTop({ history }) {
+//   useEffect(() => {
+//     const unlisten = history.listen(() => {
+//       window.scrollTo(0, 0);
+//     });
+//     return () => {
+//       unlisten();
+//     }
+//   }, []);
+
+//   return (null);
+// }
+
+function ScrollToTopBase({ history, children }) {
   useEffect(() => {
-    if ( parts[1] === 'news' || parts[1] === 'store' || parts[1] === 'reports') {
-      // Was a page where router changes within like admin lookups
-    } else {
+    const unlisten = history.listen(() => {
       window.scrollTo(0, 0);
+    });
+    return () => {
+      unlisten();
     }
-  }, [pathname]);
+  }, []);
 
-  return null;
+  return <Fragment>{children}</Fragment>;
 }
+
+const ScrollToTop = withRouter(ScrollToTopBase)
 
 class AppBase extends Component {
   constructor(props) {
@@ -171,181 +199,181 @@ class AppBase extends Component {
 
   render(props) {
     return (
-      <Router onUpdate={() => window.scrollTo(0, 0)}>
+      <Router>
 
         {/* Fallback if page does not have a Helemet element inside it */}
         <Helmet>
           <title>Articles</title>
         </Helmet>
 
-        <ScrollToTop />
+        <ScrollToTop>
 
-        <SocketContext.Provider value={socket}>
+          <SocketContext.Provider value={socket}>
 
-          <div className={'site-wrap ' + (this.props.site?.sideMenuFixed && this.state.canBeFixed ? 'fixed' : '')}>
+            <div className={'site-wrap ' + (this.props.site?.sideMenuFixed && this.state.canBeFixed ? 'fixed' : '')}>
 
-            {/* Future Banner */}
+              {/* Future Banner */}
 
-            {this.props.site.pendingPWAUpdate && 
-            <div className="notification-area">
-              <div className="pwa-message notification show">
-                <p>A new version of this site is available</p>
-                <button className="btn btn-articles-light">
-                  Update
-                </button>
+              {this.props.site.pendingPWAUpdate && 
+              <div className="notification-area">
+                <div className="pwa-message notification show">
+                  <p>A new version of this site is available</p>
+                  <button className="btn btn-articles-light">
+                    Update
+                  </button>
+                </div>
               </div>
-            </div>
-            }
-
-            <Navigation />
-
-            <div className={'content-wrap' + (this.props.site?.sideMenuFixed && this.state.canBeFixed ? ' fixed' : '') + (this.props.site?.colorModeDark ? ' dark-mode' : '')}>
-
-              <Switch>
-                <Route exact path={ROUTES.LANDING} component={LandingPage} />
-          
-                <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
-                <Route path={ROUTES.SIGN_IN} component={SignInPage} />
-                
-                <Route path={ROUTES.VERIFY_EMAIL} component={VerifyEmailPage} />
-    
-                <Route path={ROUTES.OUTSET} component={OutsetPage} />
-    
-                <PrivateRoute path={ROUTES.SETTINGS_ACCOUNT} component={SettingsPage} />
-                <PrivateRoute path={ROUTES.SETTINGS_MEMBERSHIP} component={SettingsPage} />
-                <PrivateRoute path={ROUTES.SETTINGS_NEWSLETTER} component={SettingsPage} />
-                <PrivateRoute path={ROUTES.SETTINGS_CONNECTIONS} component={SettingsPage} />
-                <PrivateRoute path={ROUTES.SETTINGS_BILLING} component={SettingsPage} />
-                <PrivateRoute path={ROUTES.SETTINGS_EMPLOYEE} component={SettingsPage} />
-                
-                <Route exact path={ROUTES.HOME} component={HomePage} />
-                <Route path={ROUTES.HOME_OLD} component={HomePageOld} />
-    
-                <Route path={ROUTES.MISSION} component={MissionPage} />
-
-                {/* Transparency */}
-                <Route path={ROUTES.TRANSPARENCY} component={TransparencyPage} exact={true}/>
-                <Route path={ROUTES.TRANSPARENCY_REPORTS} component={TransparencyPage} exact={true}/>
-                <Route path={ROUTES.TRANSPARENCY_CHARTS} component={TransparencyPage} exact={true}/>
-                <Route path={ROUTES.TRANSPARENCY_EMPLOYEES} component={TransparencyPage} exact={true}/>
-                <Route path={ROUTES.TRANSPARENCY_EMPLOYEES_DETAILS} component={TransparencyPage} exact={true}/>
-                <Route path={ROUTES.TRANSPARENCY_FLAG} component={TransparencyPage} exact={true}/>
-          
-                <Route exact path={ROUTES.STORE} component={StorePage} />
-                <Route path={ROUTES.STORE_VIEW} component={StorePage} />
-                <Route path={ROUTES.CHECKOUT} component={StorePage} />
-
-                <Route exact path={ROUTES.STORE_PRODUCTS} component={StorePage} />
-                <Route exact path={ROUTES.STORE_COLLECTIONS} component={StorePage} />
-    
-                <Route exact path={ROUTES.STORE_ORDERS} component={StorePage}/>
-                <Route path={ROUTES.STORE_ORDERS_DETAILS} component={SingleOrderPage}/>
-
-                <Route exact path={ROUTES.STORE_SAVED} component={StorePage} />
-    
-                <Route path={ROUTES.STORE_SUBMISSIONS} component={StorePage} />
-                <Route path={ROUTES.STORE_SUBMISSIONS_SUBMIT} component={StoreSubmissionsSubmitPage}/>
-    
-                {/* <Route path={ROUTES.STORE_MANAGE} component={StoreManage} /> */}
-          
-                <Route exact path={ROUTES.NEWS} component={NewsPage} />
-                <Route exact path={ROUTES.NEWS_SEARCH} component={NewsPage} />
-                <Route exact path={ROUTES.NEWS_TAG_DETAILS} component={NewsPage} />
-                <Route exact path={ROUTES.NEWS_LOCAL} component={NewsPage} />
-                <Route exact path={ROUTES.NEWS_STOCKS} component={NewsPage} />
-                <Route exact path={ROUTES.NEWS_CRYPTO} component={NewsPage} />
-    
-                <Route path={ROUTES.EXTENDED} component={NewsPage}></Route>
-                <Route path={ROUTES.EXTEND} component={ExtendedPage}></Route>
-
-                <Route path={ROUTES.STORIES} component={NewsPage} exact={true}/>
-                <Route path={ROUTES.STORY} component={StoryPage}/>
-
-                <Route path={ROUTES.ISSUES} component={NewsPage} exact={true}/>
-                <Route path={ROUTES.ISSUE} component={IssuePage}/>
-
-                <Route path={ROUTES.MYTHS} component={NewsPage} exact={true}/>
-                <Route path={ROUTES.MYTH} component={MythPage}/>
-
-                <Route path={ROUTES.RESOURCES} component={NewsPage} exact={true}/>
-                <Route path={ROUTES.RESOURCES_PRESIDENTS} component={PresidentsPage} exact={true}/>
-                <Route path={ROUTES.RESOURCES_PRESIDENT} component={PresidentsPage}/>
-                <Route path={ROUTES.RESOURCES_CORONAVIRUS} component={CoronavirusPage}/>
-    
-                <Route path={ROUTES.TOWN_HALL} component={TownHallPage} />
-          
-                <Route exact path={ROUTES.PARTY} component={PartyPage} />
-                <Route exact path={ROUTES.PROPOSALS} component={PartyProposalsPage} />
-                <Route path={ROUTES.PROPOSAL} component={ProposalSingle} />
-
-                <Route path={ROUTES.ADVERTISING} component={AdvertisingPage} exact={true}/>
-                <Route path={ROUTES.ADVERTISING_ACCESS} component={AdvertisingAccessPage} />
-                <Route path={ROUTES.ADVERTISING_MANAGE} component={AdvertisingManagePage} />
-                
-                <Route path={ROUTES.MESH} component={MeshPage} />
-          
-                <Route exact path={ROUTES.SUPPORT} component={SupportPage} />
-                <Route exact path={ROUTES.UPDATES} component={UpdatesPage} />
-                <Route exact path={ROUTES.UPDATE} component={UpdatePage} />
-                <Route path={ROUTES.FAQ} component={FaqPage} />
-                <Route path={ROUTES.JOBS} component={JobsPage} />
-                <Route path={ROUTES.PRESS} component={PressPage} />
-                <Route path={ROUTES.TRANSLATIONS} component={TranslationsPage} />
-                <Route path={ROUTES.ROADMAP} component={RoadmapPage} />
-                <Route path={ROUTES.FORUM} component={ForumPage} />
-                <Route path={ROUTES.OPEN_SOURCE} component={OpenSourcePage} />
-          
-                {/* <Route path={ROUTES.ACCOUNT} component={AccountPage} /> */}
-                <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
-                
-                <Route path={ROUTES.PRIVACY} component={Privacy} />
-
-                <Route exact path={ROUTES.ADMIN} component={AdminPage} />
-                <Route exact path={ROUTES.ADMIN_USERS} component={AdminPage} />
-                <Route path={ROUTES.ADMIN_USER_DETAILS} component={AdminPage} />
-                <Route exact path={ROUTES.ADMIN_NEWS} component={AdminPage} />
-                <Route path={ROUTES.ADMIN_NEWS_DETAILS} component={AdminPage} />
-                <Route exact path={ROUTES.ADMIN_PROPOSALS} component={AdminPage} />
-                <Route exact path={ROUTES.ADMIN_PRODUCTS} component={AdminPage} />
-                <Route path={ROUTES.ADMIN_PRODUCT_DETAILS} component={AdminPage} />
-                <Route exact path={ROUTES.ADMIN_SUBMISSIONS} component={AdminPage} />
-                <Route path={ROUTES.ADMIN_SUBMISSION_DETAILS} component={AdminPage} />
-                <Route exact path={ROUTES.ADMIN_DONATIONS} component={AdminPage} />
-                <Route exact path={ROUTES.ADMIN_EXPENSES} component={AdminPage} />
-                <Route exact path={ROUTES.ADMIN_SOCKET} component={AdminPage} />
-                <Route exact path={ROUTES.ADMIN_AWS} component={AdminPage} />
-                <Route exact path={ROUTES.ADMIN_COMMENTS} component={AdminPage} />
-                <Route exact path={ROUTES.ADMIN_REPORTS} component={AdminPage} />
-                <Route exact path={ROUTES.ADMIN_ORDERS} component={AdminPage} />
-                <Route exact path={ROUTES.ADMIN_ADS} component={AdminPage} />
-                <Route exact path={ROUTES.ADMIN_MESSAGES} component={AdminPage} />
-                <Route exact path={ROUTES.ADMIN_PROJECTS} component={AdminPage} />
-                <Route exact path={ROUTES.ADMIN_NEWSLETTER} component={AdminPage} />
-                <Route exact path={ROUTES.ADMIN_PRESIDENTS} component={AdminPage} />
-                <Route exact path={ROUTES.ADMIN_PRESIDENTS_DETAILS} component={AdminPage} />
-
-                <Route path={ROUTES.DONATE} component={DonatePage} />
-                <Route path={ROUTES.SUBSCRIBE} component={SubscribePage} />
-    
-                <Route path={ROUTES.MESSAGES} component={MessagesPage} />
-                <Route path={ROUTES.MESH} component={MeshPage} />
-                <Route path={ROUTES.PLAYGROUND} component={PlaygroundPage} />
-                {/* <Route path={ROUTES.CHAT} component={Chat} /> */}
-    
-                <Route component={NotFoundPage} />
-              </Switch>
-
-              <Footer />
-              
-              {
-                // props.location.pathname!=='/messages' ? null : <Footer />
               }
 
+              <Navigation />
+
+              <div className={'content-wrap' + (this.props.site?.sideMenuFixed && this.state.canBeFixed ? ' fixed' : '') + (this.props.site?.colorModeDark ? ' dark-mode' : '')}>
+
+                <ScrollToTop />
+
+                <Switch>
+                  <Route exact path={ROUTES.LANDING} component={LandingPage} />
+            
+                  <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
+                  <Route path={ROUTES.SIGN_IN} component={SignInPage} />
+                  
+                  <Route path={ROUTES.VERIFY_EMAIL} component={VerifyEmailPage} />
+      
+                  <Route path={ROUTES.OUTSET} component={OutsetPage} />
+      
+                  <PrivateRoute path={ROUTES.SETTINGS_ACCOUNT} component={SettingsPage} />
+                  <PrivateRoute path={ROUTES.SETTINGS_MEMBERSHIP} component={SettingsPage} />
+                  <PrivateRoute path={ROUTES.SETTINGS_NEWSLETTER} component={SettingsPage} />
+                  <PrivateRoute path={ROUTES.SETTINGS_CONNECTIONS} component={SettingsPage} />
+                  <PrivateRoute path={ROUTES.SETTINGS_BILLING} component={SettingsPage} />
+                  <PrivateRoute path={ROUTES.SETTINGS_EMPLOYEE} component={SettingsPage} />
+                  
+                  <Route exact path={ROUTES.HOME} component={HomePage} />
+                  <Route path={ROUTES.HOME_OLD} component={HomePageOld} />
+      
+                  <Route path={ROUTES.MISSION} component={MissionPage} />
+
+                  {/* Transparency */}
+                  <Route path={ROUTES.TRANSPARENCY} component={TransparencyPage} exact={true}/>
+                  <Route path={ROUTES.TRANSPARENCY_REPORTS} component={TransparencyPage} exact={true}/>
+                  <Route path={ROUTES.TRANSPARENCY_CHARTS} component={TransparencyPage} exact={true}/>
+                  <Route path={ROUTES.TRANSPARENCY_EMPLOYEES} component={TransparencyPage} exact={true}/>
+                  <Route path={ROUTES.TRANSPARENCY_EMPLOYEES_DETAILS} component={TransparencyPage} exact={true}/>
+                  <Route path={ROUTES.TRANSPARENCY_FLAG} component={TransparencyPage} exact={true}/>
+            
+                  <Route exact path={ROUTES.STORE} component={StorePage} />
+                  <Route path={ROUTES.STORE_VIEW} component={StorePage} />
+                  <Route path={ROUTES.CHECKOUT} component={StorePage} />
+
+                  <Route exact path={ROUTES.STORE_PRODUCTS} component={StorePage} />
+                  <Route exact path={ROUTES.STORE_COLLECTIONS} component={StorePage} />
+      
+                  <Route exact path={ROUTES.STORE_ORDERS} component={StorePage}/>
+                  <Route path={ROUTES.STORE_ORDERS_DETAILS} component={SingleOrderPage}/>
+
+                  <Route exact path={ROUTES.STORE_SAVED} component={StorePage} />
+      
+                  <Route path={ROUTES.STORE_SUBMISSIONS} component={StorePage} />
+                  <Route path={ROUTES.STORE_SUBMISSIONS_SUBMIT} component={StoreSubmissionsSubmitPage}/>
+      
+                  {/* <Route path={ROUTES.STORE_MANAGE} component={StoreManage} /> */}
+            
+                  <Route exact path={ROUTES.NEWS} component={NewsPage} />
+                  <Route exact path={ROUTES.NEWS_SEARCH} component={NewsPage} />
+                  <Route exact path={ROUTES.NEWS_TAG_DETAILS} component={NewsPage} />
+                  <Route exact path={ROUTES.NEWS_LOCAL} component={NewsPage} />
+                  <Route exact path={ROUTES.NEWS_STOCKS} component={NewsPage} />
+                  <Route exact path={ROUTES.NEWS_CRYPTO} component={NewsPage} />
+      
+                  <Route path={ROUTES.EXTENDED} component={NewsPage}></Route>
+                  <Route path={ROUTES.EXTEND} component={ExtendedPage}></Route>
+
+                  <Route path={ROUTES.STORIES} component={NewsPage} exact={true}/>
+                  <Route path={ROUTES.STORY} component={StoryPage}/>
+
+                  <Route path={ROUTES.ISSUES} component={NewsPage} exact={true}/>
+                  <Route path={ROUTES.ISSUE} component={IssuePage}/>
+
+                  <Route path={ROUTES.MYTHS} component={NewsPage} exact={true}/>
+                  <Route path={ROUTES.MYTH} component={MythPage}/>
+
+                  <Route path={ROUTES.RESOURCES} component={NewsPage} exact={true}/>
+                  <Route path={ROUTES.RESOURCES_PRESIDENTS} component={PresidentsPage} exact={true}/>
+                  <Route path={ROUTES.RESOURCES_PRESIDENT} component={PresidentsPage}/>
+                  <Route path={ROUTES.RESOURCES_CORONAVIRUS} component={CoronavirusPage}/>
+      
+                  <Route path={ROUTES.TOWN_HALL} component={TownHallPage} />
+            
+                  <Route exact path={ROUTES.PARTY} component={PartyPage} />
+                  <Route exact path={ROUTES.PROPOSALS} component={PartyProposalsPage} />
+                  <Route path={ROUTES.PROPOSAL} component={ProposalSingle} />
+
+                  <Route path={ROUTES.ADVERTISING} component={AdvertisingPage} exact={true}/>
+                  <Route path={ROUTES.ADVERTISING_ACCESS} component={AdvertisingAccessPage} />
+                  <Route path={ROUTES.ADVERTISING_MANAGE} component={AdvertisingManagePage} />
+                  
+                  <Route path={ROUTES.MESH} component={MeshPage} />
+            
+                  <Route exact path={ROUTES.SUPPORT} component={SupportPage} />
+                  <Route exact path={ROUTES.UPDATES} component={UpdatesPage} />
+                  <Route exact path={ROUTES.UPDATE} component={UpdatePage} />
+                  <Route path={ROUTES.FAQ} component={FaqPage} />
+                  <Route path={ROUTES.JOBS} component={JobsPage} />
+                  <Route path={ROUTES.PRESS} component={PressPage} />
+                  <Route path={ROUTES.TRANSLATIONS} component={TranslationsPage} />
+                  <Route path={ROUTES.ROADMAP} component={RoadmapPage} />
+                  <Route path={ROUTES.FORUM} component={ForumPage} />
+                  <Route path={ROUTES.OPEN_SOURCE} component={OpenSourcePage} />
+            
+                  {/* <Route path={ROUTES.ACCOUNT} component={AccountPage} /> */}
+                  <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
+                  
+                  <Route path={ROUTES.PRIVACY} component={Privacy} />
+
+                  <Route exact path={ROUTES.ADMIN} component={AdminPage} />
+                  <Route exact path={ROUTES.ADMIN_USERS} component={AdminPage} />
+                  <Route path={ROUTES.ADMIN_USER_DETAILS} component={AdminPage} />
+                  <Route exact path={ROUTES.ADMIN_NEWS} component={AdminPage} />
+                  <Route path={ROUTES.ADMIN_NEWS_DETAILS} component={AdminPage} />
+                  <Route exact path={ROUTES.ADMIN_PROPOSALS} component={AdminPage} />
+                  <Route exact path={ROUTES.ADMIN_PRODUCTS} component={AdminPage} />
+                  <Route path={ROUTES.ADMIN_PRODUCT_DETAILS} component={AdminPage} />
+                  <Route exact path={ROUTES.ADMIN_SUBMISSIONS} component={AdminPage} />
+                  <Route path={ROUTES.ADMIN_SUBMISSION_DETAILS} component={AdminPage} />
+                  <Route exact path={ROUTES.ADMIN_DONATIONS} component={AdminPage} />
+                  <Route exact path={ROUTES.ADMIN_EXPENSES} component={AdminPage} />
+                  <Route exact path={ROUTES.ADMIN_SOCKET} component={AdminPage} />
+                  <Route exact path={ROUTES.ADMIN_AWS} component={AdminPage} />
+                  <Route exact path={ROUTES.ADMIN_COMMENTS} component={AdminPage} />
+                  <Route exact path={ROUTES.ADMIN_REPORTS} component={AdminPage} />
+                  <Route exact path={ROUTES.ADMIN_ORDERS} component={AdminPage} />
+                  <Route exact path={ROUTES.ADMIN_ADS} component={AdminPage} />
+                  <Route exact path={ROUTES.ADMIN_MESSAGES} component={AdminPage} />
+                  <Route exact path={ROUTES.ADMIN_PROJECTS} component={AdminPage} />
+                  <Route exact path={ROUTES.ADMIN_NEWSLETTER} component={AdminPage} />
+                  <Route exact path={ROUTES.ADMIN_PRESIDENTS} component={AdminPage} />
+                  <Route exact path={ROUTES.ADMIN_PRESIDENTS_DETAILS} component={AdminPage} />
+
+                  <Route path={ROUTES.DONATE} component={DonatePage} />
+                  <Route path={ROUTES.SUBSCRIBE} component={SubscribePage} />
+      
+                  <Route path={ROUTES.MESSAGES} component={MessagesPage} />
+                  <Route path={ROUTES.MESH} component={MeshPage} />
+                  <Route path={ROUTES.PLAYGROUND} component={PlaygroundPage} />
+                  {/* <Route path={ROUTES.CHAT} component={Chat} /> */}
+      
+                  <Route component={NotFoundPage} />
+                </Switch>
+
+                <Footer />
+
+              </div>
+
             </div>
 
-          </div>
+          </SocketContext.Provider>
 
-        </SocketContext.Provider>
+        </ScrollToTop>
         
       </Router>
     )

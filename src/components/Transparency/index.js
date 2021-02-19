@@ -15,6 +15,7 @@ import {ClothingTable} from "./table.js"
 import EmployeePage from './components/Employees';
 import EmployeeDetailsPage from './components/Employees/Directory';
 import ReportExpenseCards from './components/Reporting';
+import BalanceHistoryChart from './components/Charts/BalanceHistory';
 
 const ENDPOINT = "/";
 let socket = ''
@@ -1957,6 +1958,12 @@ class DataCharts extends Component {
         {/* <div className="alert alert-danger border mt-3">Warning: This section is still in development and will not be ready unitll <b>August 8th 2020</b></div> */}
 
         <div className="chart-blocks">
+
+          <div className="chart-block">
+            <h5>Balance History</h5>
+            <BalanceHistoryChart/>
+          </div>
+
           <div className="chart-block">
             <h5>Revenue vs Expenses</h5>
             <p>How much we are spending a month compared to how much we are making.</p>

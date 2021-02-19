@@ -150,6 +150,8 @@ function connectWithRetryMongo() {
 
     require('./routes/getBlacklistURL')(app, db, cache);
 
+	require('./routes/getBalanceHistory')(app, db);
+
     // Deleted
     // require('./routes/jsonNews')(app, db);
   
