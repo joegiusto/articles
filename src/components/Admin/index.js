@@ -144,11 +144,11 @@ class Admin extends Component {
           </div>
 
           <div className={"scroll-alert scroll-left-alert " + (this.state.tabBarScrollPosition > 80 && 'active')}>
-            <i class="fas fa-caret-left mr-0"></i>
+            <i className="fas fa-caret-left mr-0"></i>
           </div>
           
           <div className={"scroll-alert scroll-right-alert " + (this.state.tabBarScrollPosition < (this.state.tabBarScrollWidth - this.state.tabBarWidth - 80) && 'active')}>
-            <i class="fas fa-caret-right mr-0"></i>
+            <i className="fas fa-caret-right mr-0"></i>
           </div>
 
         </div>

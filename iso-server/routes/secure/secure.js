@@ -1491,6 +1491,9 @@ module.exports = (app, db) => {
   // ----------------------------------------------------------
 
   // TODO - Sort these outs to be better organized 
+  require('./routes/donation/addDonation')(app, db, passport);
+  require('./routes/donation/deleteDonation')(app, db, passport);
+
   require('./routes/updateLastRead')(app, db, passport);
   require('./routes/outsetUpdate')(app, db, passport);
   require('./routes/addProfilePhoto')(app, db, passport);
@@ -1505,6 +1508,7 @@ module.exports = (app, db) => {
 
   require('./routes/adminComments')(app, db, passport);
   require('./routes/adminAds')(app, db, passport);
+  require('./routes/adminGetUser')(app, db, passport);
 
   // Gets how many people a user has refereed
   require('./routes/getUserReferrals')(app, db, passport);

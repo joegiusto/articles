@@ -719,7 +719,7 @@ class Reports extends Component {
 							</div>
 
 							<div className="d-flex">
-								<div className="btn btn-articles-light btn-sm"><i class="fas fa-filter"></i>Filter</div>
+								<div className="btn btn-articles-light btn-sm"><i className="fas fa-filter"></i>Filter</div>
 							</div>
 
 						</div>

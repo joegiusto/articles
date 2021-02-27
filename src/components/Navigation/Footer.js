@@ -89,10 +89,12 @@ function FooterBase(props) {
 				<span className="ml-1 pl-1 border-left border-dark"><Link to={ROUTES.PRIVACY}>Privacy</Link></span>
 			</div>
 
-			<div onClick={props.toggleColorMode} className="dark-mode d-flex flex-shrink-0 mt-3 mt-lg-0 border border-dark noselect">
-				{ (props.site?.colorModeDark ? "Light Theme" : "Dark Theme") }
-				{ (props.site?.colorModeDark ? <i class="fas fa-sun ml-2 mr-0"></i> : <i class="fas fa-moon ml-2 mr-0"></i>) }
-				<div className="beta badge badge-articles">Beta!</div>
+			<div>
+			    <div onClick={props.toggleColorMode} className="dark-mode d-inline-flex flex-shrink-0 mt-3 mt-lg-0 border border-dark noselect">
+    				{ (props.site?.colorModeDark ? "Light Theme" : "Dark Theme") }
+    				{ (props.site?.colorModeDark ? <i className="fas fa-sun ml-2 mr-0"></i> : <i className="fas fa-moon ml-2 mr-0"></i>) }
+    				<div className="beta badge badge-articles">Beta!</div>
+    			</div>
 			</div>
 
         </div>

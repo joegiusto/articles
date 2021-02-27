@@ -61,14 +61,14 @@ class FAQ extends Component {
           <h1 className="mb-0">Frequently Asked Questions</h1>
           <p className="lead mb-3">Our most asked questions answered</p>
 
-          <div class="filter-section">
-            <h5 class="label">Focus:</h5>
+          <div className="filter-section">
+            <h5 className="label">Focus:</h5>
 
             <div>
-              <button class="btn btn-articles-light btn-sm ">General</button>
-              <button class="btn btn-articles-light btn-sm ">Clothing</button>
-              <button class="btn btn-articles-light btn-sm ">News</button>
-              <button class="btn btn-articles-light btn-sm ">Party</button>
+              <button className="btn btn-articles-light btn-sm ">General</button>
+              <button className="btn btn-articles-light btn-sm ">Clothing</button>
+              <button className="btn btn-articles-light btn-sm ">News</button>
+              <button className="btn btn-articles-light btn-sm ">Party</button>
             </div>
           </div>
 

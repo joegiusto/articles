@@ -42,9 +42,9 @@ class Connections extends Component {
                     <span>Google</span>
                 </div>
 
-                <button type="button" class="btn btn-outline-secondary btn-sm">
+                <button type="button" className="btn btn-outline-secondary btn-sm">
                     <span>Not Connected</span>
-                    <i class="far fa-plus-square mx-2"></i>
+                    <i className="far fa-plus-square mx-2"></i>
                 </button>
 
               </div>
@@ -56,9 +56,9 @@ class Connections extends Component {
                     <span>Apple</span>
                 </div>
 
-                <button type="button" class="btn btn-outline-secondary btn-sm">
+                <button type="button" className="btn btn-outline-secondary btn-sm">
                     <span>Not Connected</span>
-                    <i class="far fa-plus-square mx-2"></i>
+                    <i className="far fa-plus-square mx-2"></i>
                 </button>
 
               </div>
@@ -70,9 +70,9 @@ class Connections extends Component {
                         <span>LinkedIn</span>
                     </div>
 
-                    <button type="button" class="btn btn-outline-secondary btn-sm">
+                    <button type="button" className="btn btn-outline-secondary btn-sm">
                         <span>Not Connected</span>
-                        <i class="far fa-plus-square mx-2"></i>
+                        <i className="far fa-plus-square mx-2"></i>
                     </button>
 
                 </div>
@@ -84,9 +84,9 @@ class Connections extends Component {
                         <span>Twitter</span>
                     </div>
 
-                    <button type="button" class="btn btn-outline-secondary btn-sm">
+                    <button type="button" className="btn btn-outline-secondary btn-sm">
                         <span>Not Connected</span>
-                        <i class="far fa-plus-square mx-2"></i>
+                        <i className="far fa-plus-square mx-2"></i>
                     </button>
 
                 </div>

@@ -80,6 +80,14 @@
 		}
 	}
 
+    .settings-side {
+        @include media-breakpoint-up(lg) {
+            top: calc(50px + 1rem);
+            position: sticky;
+            z-index: 1;
+        }
+    }
+
 	.newsletter-extra-card {
 		border-radius: 0;
 		font-size: 15px;

@@ -82,10 +82,10 @@ function Crypto(props) {
 
           <div className="row download-links mt-2">
             <div className="col-6">
-              <img class="app-badge" height="40px" src={appStore} alt=""/>
+              <img className="app-badge" height="40px" src={appStore} alt=""/>
             </div>
             <div className="col-6">
-              <img class="app-badge" height="40px" src={playStore} alt=""/>
+              <img className="app-badge" height="40px" src={playStore} alt=""/>
             </div>
           </div>
 

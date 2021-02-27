@@ -691,7 +691,7 @@ class RecentSliders extends Component {
                   <div style={{height: '400px'}} className="bg-dark text-white d-flex flex-column justify-content-center align-items-center">
                     <h4>View All Issues</h4>
                     <p>100 total Issues</p>
-                    <i class="fas fa-external-link-alt fa-3x mr-0"></i>
+                    <i className="fas fa-external-link-alt fa-3x mr-0"></i>
                   </div>
                 </Link>
 
@@ -1201,7 +1201,7 @@ class Frontpage extends Component {
 
                   <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS_LOCAL}>
                     <div className={"link frontpage " + (this.props.location.pathname === "/news/local" ? 'active' : null)}>
-                      <i class="fas fa-school"></i>
+                      <i className="fas fa-school"></i>
                       <div className="text">Local</div>
                     </div>
                   </Link>
@@ -1209,7 +1209,7 @@ class Frontpage extends Component {
                   <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.RESOURCES}>
                     <div className={"link frontpage " + (this.props.location.pathname === "/news/resources" ? 'active' : null)}>
                       {/* <i className="fas fa-ghost"></i> */}
-                      <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="books" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-books fa-w-16 fa-fw mr-2"><path fill="currentColor" d="M575.11 443.25L461.51 19.06C458.2 6.7 445.61-3.18 430.15.96L414.7 5.1c-6.18 1.66-11.53 6.4-16.06 14.24-14.03 6.94-52.3 17.21-68 18.22-7.84-4.53-14.85-5.96-21.03-4.3l-15.46 4.14c-2.42.65-4.2 1.95-6.15 3.08V32c0-17.67-14.33-32-32-32h-64c-17.67 0-32 14.33-32 32v64h128l101.66 396.94c3.31 12.36 15.9 22.24 31.36 18.1l15.45-4.14c6.18-1.66 11.53-6.4 16.06-14.24 13.91-6.88 52.18-17.2 68-18.22 7.84 4.53 14.85 5.96 21.03 4.3l15.46-4.14c15.45-4.14 21.41-18.99 18.09-31.35zm-134.4-7.06L348.64 92.37l61.82-16.56 92.07 343.82-61.82 16.56zM0 384h128V128H0v256zM96 0H32C14.33 0 0 14.33 0 32v64h128V32c0-17.67-14.33-32-32-32zM0 480c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64H0v64zm160-96h128V128H160v256zm0 96c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64H160v64z" class=""></path></svg>
+                      <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="books" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" className="svg-inline--fa fa-books fa-w-16 fa-fw mr-2"><path fill="currentColor" d="M575.11 443.25L461.51 19.06C458.2 6.7 445.61-3.18 430.15.96L414.7 5.1c-6.18 1.66-11.53 6.4-16.06 14.24-14.03 6.94-52.3 17.21-68 18.22-7.84-4.53-14.85-5.96-21.03-4.3l-15.46 4.14c-2.42.65-4.2 1.95-6.15 3.08V32c0-17.67-14.33-32-32-32h-64c-17.67 0-32 14.33-32 32v64h128l101.66 396.94c3.31 12.36 15.9 22.24 31.36 18.1l15.45-4.14c6.18-1.66 11.53-6.4 16.06-14.24 13.91-6.88 52.18-17.2 68-18.22 7.84 4.53 14.85 5.96 21.03 4.3l15.46-4.14c15.45-4.14 21.41-18.99 18.09-31.35zm-134.4-7.06L348.64 92.37l61.82-16.56 92.07 343.82-61.82 16.56zM0 384h128V128H0v256zM96 0H32C14.33 0 0 14.33 0 32v64h128V32c0-17.67-14.33-32-32-32zM0 480c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64H0v64zm160-96h128V128H160v256zm0 96c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64H160v64z" className=""></path></svg>
                       <div className="text">Resources</div>
                     </div>
                   </Link>
@@ -1217,7 +1217,7 @@ class Frontpage extends Component {
                   <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS_STOCKS}>
                     <div className={"link frontpage " + (this.props.location.pathname === "/news/stocks" ? 'active' : null)}>
                       {/* <i className="fas fa-ghost"></i> */}
-                      <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chart-area" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-chart-area fa-w-16 fa-fw mr-2"><path fill="currentColor" d="M500 384c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H12c-6.6 0-12-5.4-12-12V76c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v308h436zM372.7 159.5L288 216l-85.3-113.7c-5.1-6.8-15.5-6.3-19.9 1L96 248v104h384l-89.9-187.8c-3.2-6.5-11.4-8.7-17.4-4.7z" class=""></path></svg>
+                      <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chart-area" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="svg-inline--fa fa-chart-area fa-w-16 fa-fw mr-2"><path fill="currentColor" d="M500 384c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H12c-6.6 0-12-5.4-12-12V76c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v308h436zM372.7 159.5L288 216l-85.3-113.7c-5.1-6.8-15.5-6.3-19.9 1L96 248v104h384l-89.9-187.8c-3.2-6.5-11.4-8.7-17.4-4.7z" className=""></path></svg>
                       <div className="text">Stocks</div>
                     </div>
                   </Link>
@@ -1225,7 +1225,7 @@ class Frontpage extends Component {
                   <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS_CRYPTO}>
                     <div className={"link crypto " + (this.props.location.pathname === "/news/crypto" ? 'active' : null)}>
                       {/* <i className="fas fa-ghost"></i> */}
-                      <i class="fab fa-bitcoin"></i>
+                      <i className="fab fa-bitcoin"></i>
                       <div className="text">Crypto</div>
                     </div>
                   </Link>

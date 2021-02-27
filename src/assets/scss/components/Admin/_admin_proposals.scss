@@ -1,14 +1,43 @@
 .admin-proposals {
 
+  .proposal-filters {
+    margin-top: 1rem;
+  }
+
   .proposals {
+    margin-top: 2rem;
 
     .proposal {
+      margin-bottom: 1rem;
+      position: relative;
+      padding: 1rem 0.5rem;
+      background-color: white;
+      border: 1px solid #000;
 
       .title {
         font-weight: bold;
       }
-    }
-    
-  }
 
+      ._id {
+        background-color: $base-color;
+        padding: 0rem 0.5rem;
+        text-transform: capitalize;
+        position: absolute;
+        right: 0.5rem;
+        top: 0;
+        transform: translateY(-50%);
+      }
+
+      .type {
+        background-color: $base-color;
+        padding: 0rem 0.5rem;
+        text-transform: capitalize;
+        position: absolute;
+        left: 0.5rem;
+        top: 0;
+        transform: translateY(-50%);
+      }
+    }
+  }
+  
 }

@@ -45,7 +45,7 @@ class Newsletter extends Component {
                 General
 
                 <div className="box">
-                  <i class="fas fa-check mr-0"></i>
+                  <i className="fas fa-check mr-0"></i>
                 </div>
                 
               </div>
@@ -61,7 +61,7 @@ class Newsletter extends Component {
                 Dev
 
                 <div className="box">
-                  <i class="fas fa-check mr-0"></i>
+                  <i className="fas fa-check mr-0"></i>
                 </div>
 
               </div>

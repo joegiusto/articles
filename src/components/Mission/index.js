@@ -266,7 +266,7 @@ const Mission = (props) => {
 
                 <div className="youtube-video w-100 text-center mt-3">
 
-                  <div class="embed-responsive embed-responsive-16by9">
+                  <div className="embed-responsive embed-responsive-16by9">
                   {/* https://www.youtube.com/watch?v=&ab_channel=DreamyPines */}
                     <iframe width="100%" height="100%" src="https://www.youtube.com/embed/Fq-i0t9R2QU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                   </div>
@@ -274,7 +274,7 @@ const Mission = (props) => {
                   <p className="text"><b>Introduction Video (January 2021)</b></p>
 
                   {/* Bootstrap 5 */}
-                  {/* <div class="ratio ratio-16x9">
+                  {/* <div className="ratio ratio-16x9">
                     <iframe width="100%" height="100%" src="https://www.youtube.com/embed/HcXq4eOktIY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                   </div> */}
                   

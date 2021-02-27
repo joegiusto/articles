@@ -196,7 +196,7 @@ class Billing extends Component {
                           switch( card_brand ) {
                             case 'visa':
                               // code block
-                              return <i class="fab fa-2x fa-cc-visa"></i>
+                              return <i className="fab fa-2x fa-cc-visa"></i>
                               // break;
                             default:
                               // code block

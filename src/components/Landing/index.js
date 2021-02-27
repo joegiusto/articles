@@ -849,7 +849,7 @@ class LandingPage extends Component {
 					
 					<div className="content">
 
-						<div className="container px-0 mx-0">
+						<div className="container mx-0">
 
 							<div className="articles-heading text-center">
 								How we help
@@ -868,25 +868,25 @@ class LandingPage extends Component {
 
 										<div onClick={() => this.jumpTo(0, true)} className={"avenue avenue-selection transparency ml-0 " + (avenueTab === 0 ? 'active' : '')}>
 											<div className="beak"></div>
-											<i class="fas fa-paste" aria-hidden="true"></i>
+											<i className="fas fa-paste" aria-hidden="true"></i>
 											Transparency
 										</div>
 
 										<div onClick={() => this.jumpTo(1, true)} className={"avenue avenue-selection clothing " + (avenueTab === 1 ? 'active' : '')}>
 											<div className="beak"></div>
-											<i class="fas fa-shopping-cart" aria-hidden="true"></i>
+											<i className="fas fa-shopping-cart" aria-hidden="true"></i>
 											Clothing
 										</div>
 
 										<div onClick={() => this.jumpTo(2, true)} className={"avenue avenue-selection news " + (avenueTab === 2 ? 'active' : '')}>
 											<div className="beak"></div>
-											<i class="fas fa-newspaper" aria-hidden="true"></i>
+											<i className="fas fa-newspaper" aria-hidden="true"></i>
 											News
 										</div>
 
 										<div onClick={() => this.jumpTo(3, true)} className={"avenue avenue-selection politics " + (avenueTab === 3 ? 'active' : '')}>
 											<div className="beak"></div>
-											<i class="fas fa-scroll" aria-hidden="true"></i>
+											<i className="fas fa-scroll" aria-hidden="true"></i>
 											Politics
 										</div>
 
@@ -1190,7 +1190,7 @@ class LandingPage extends Component {
 							<div style={{ fontSize: '3rem' }} className="title mt-3 ">Read about our mission</div>
 							<div className="text">All the details about what we are doing and the direction we want to take this company.</div>
 
-							{/* <i class="fas fa-glasses"></i> */}
+							{/* <i className="fas fa-glasses"></i> */}
 
 							<Link to={ROUTES.MISSION}><div className="btn btn-articles-light">Mission</div></Link>
 
@@ -1559,33 +1559,33 @@ function NewCustomPanel(props) {
 
 				<div className="d-flex justify-content-center align-items-center align-self-stretch flex-grow-1">
 
-					<div class="quick-links">
+					<div className="quick-links">
 
-						<div class="report-link">
-							<a class="btn btn-articles-light btn-lg w-100 report-quick-links active null" href="/transparency/reports">
-								<i class="fas fa-paste" aria-hidden="true"></i>
-								<span class="text">Reports</span>
+						<div className="report-link">
+							<a className="btn btn-articles-light btn-lg w-100 report-quick-links active null" href="/transparency/reports">
+								<i className="fas fa-paste" aria-hidden="true"></i>
+								<span className="text">Reports</span>
 							</a>
 						</div>
 
-						<div class="report-link">
-							<a class="btn btn-articles-light btn-lg w-100 report-quick-links null" href="/transparency/charts">
-								<i class="fas fa-chart-line" aria-hidden="true"></i>
-								<span class="text">Charts</span>
+						<div className="report-link">
+							<a className="btn btn-articles-light btn-lg w-100 report-quick-links null" href="/transparency/charts">
+								<i className="fas fa-chart-line" aria-hidden="true"></i>
+								<span className="text">Charts</span>
 							</a>
 						</div>
 
-						<div class="report-link">
-							<a class="btn btn-articles-light btn-lg w-100 report-quick-links" href="/transparency/employees">
-								<i class="fas fa-paste" aria-hidden="true"></i>
-								<span class="text">Employees</span>
+						<div className="report-link">
+							<a className="btn btn-articles-light btn-lg w-100 report-quick-links" href="/transparency/employees">
+								<i className="fas fa-paste" aria-hidden="true"></i>
+								<span className="text">Employees</span>
 							</a>
 						</div>
 
-						<div class="report-link">
-							<a class="btn btn-articles-light btn-lg w-100 report-quick-links null" href="/transparency/flag">
-								<i class="fas fa-flag" aria-hidden="true"></i>
-								<span class="text">Flag</span>
+						<div className="report-link">
+							<a className="btn btn-articles-light btn-lg w-100 report-quick-links null" href="/transparency/flag">
+								<i className="fas fa-flag" aria-hidden="true"></i>
+								<span className="text">Flag</span>
 							</a>
 						</div>
 						

@@ -474,10 +474,10 @@ class EmployeePageDetails extends Component {
                 <div><a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Walt_Disney">Walt Disney</a></div>
               </div>
 
-              <div className="get-to-know-block">
+              {/* <div className="get-to-know-block">
                 <div className="get-to-know-block__header">Favorite Foods: </div>
                 <div>Strawberries, Grapes</div>
-              </div>
+              </div> */}
 
               {/* <div className="get-to-know-header">Stress Relief: </div> */}
 

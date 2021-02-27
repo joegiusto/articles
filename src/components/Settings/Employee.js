@@ -84,10 +84,10 @@ class Employee extends Component {
                 <input className="form-control with-label" name="content" id="content" type="text" value={""} onChange={(e) => {this.handleNewProposalChange(e)}} cols="30" rows="3"/>
               </div>
 
-              <div className="form-group articles">
+              {/* <div className="form-group articles">
                 <label htmlFor="">Favorite Foods</label>
                 <input className="form-control with-label" name="content" id="content" type="text" value={""} onChange={(e) => {this.handleNewProposalChange(e)}} cols="30" rows="3"/>
-              </div>
+              </div> */}
 
             </div>
 

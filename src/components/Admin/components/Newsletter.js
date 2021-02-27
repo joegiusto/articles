@@ -124,7 +124,7 @@ class Newsletter extends Component {
 
 			<div className="d-flex justify-content-center py-5">
 				<button onClick={this.handleShow} className="btn btn-lg btn-articles-light mb-3">
-					<i class="fas fa-file-download mr-2"></i>
+					<i className="fas fa-file-download mr-2"></i>
 					Load Draft
 				</button>
 			</div>
@@ -150,8 +150,8 @@ class Newsletter extends Component {
 			</div>
 
             <div className="d-flex justify-content-center pt-5">
-            	<button className="btn btn-lg btn-articles-light"><i class="fas fa-paper-plane mr-2"></i>Send</button>
-				<button className="btn btn-lg btn-success"><i class="fas fa-file-upload mr-2"></i> Save</button>
+            	<button className="btn btn-lg btn-articles-light"><i className="fas fa-paper-plane mr-2"></i>Send</button>
+				<button className="btn btn-lg btn-success"><i className="fas fa-file-upload mr-2"></i> Save</button>
             </div>
 
           </div>
@@ -170,7 +170,7 @@ class Newsletter extends Component {
 	
 					<div className="card-body">
 	
-						<img height="150px" width="150px" class="d-block mx-auto" src="https://cdn.articles.media/email/logo.jpg" alt=""/>
+						<img height="150px" width="150px" className="d-block mx-auto" src="https://cdn.articles.media/email/logo.jpg" alt=""/>
 	
 						<h4 className="text-center mt-3"><b>Hello {`{user}`}</b></h4>
 	

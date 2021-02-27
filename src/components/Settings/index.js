@@ -5,6 +5,9 @@ import { connect } from "react-redux";
 import axios from 'axios';
 import moment from 'moment';
 
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+
 import { logoutUser, setUserDetails } from "../../actions/authActions";
 import { CardElement, useStripe, useElements, Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
@@ -322,7 +325,113 @@ const CheckoutForm = (props) => {
   );
 }
 
+function DeleteAccountModal() {
+	const [show, setShow] = useState(false);
+  
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
+  
+	return (
+	  <>
+        <div onClick={handleShow} className="btn btn-danger w-50">Delete Account</div>
+  
+		<Modal className="articles-modal account-modal" show={show} centered onHide={handleClose}>
+    
+            <Modal.Header closeButton>
+                <Modal.Title>Delete Account?</Modal.Title>
+            </Modal.Header>
+  
+            <Modal.Body className="px-lg-5">
 
+                <p className="mb-3"><b>Are you sure you want to delete your account?</b></p>
+
+                <p>After typing "Delete Account" and pressing the button you will be signed out and sent a confirmation email. After 7 days of inactivity we will delete your account, if you login at any point during the 7 days this process will be canceled.</p>
+
+                <div className="form-group articles">
+                    <label for="confirm-delete">Type "Delete Account"</label>
+                    <input className="form-control with-label" name="confirm-delete" id="confirm-delete" type="text" value=""/>
+                </div>
+    
+            </Modal.Body>
+  
+            <Modal.Footer className="justify-content-between">
+
+                <Button variant="outline-dark" onClick={handleClose}>
+                    Cancel
+                </Button>
+
+                <Button variant="danger" disabled onClick={handleClose}>
+                    Delete Account
+                </Button>
+
+            </Modal.Footer>
+  
+		</Modal>
+	  </>
+	);
+}
+
+function RequestDataModal() {
+	const [show, setShow] = useState(false);
+
+    const [requestedData, setRequestedData] = useState(null);
+  
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
+
+    function requestUserData() {
+        axios.post('/api/secure/requestUserData', {
+    
+        })
+        .then( (response) => {
+          console.log(response);
+          setRequestedData(response.data)
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+  
+	return (
+	  <>
+        <div onClick={handleShow} className="btn btn-articles-light w-50">Request Data</div>
+  
+		<Modal className="articles-modal account-modal" show={show} centered onHide={handleClose}>
+    
+            <Modal.Header closeButton>
+                <Modal.Title>Account Data</Modal.Title>
+            </Modal.Header>
+  
+            <Modal.Body className="px-lg-5">
+
+                {!requestedData &&
+                    <button className="btn btn-articles-light" onClick={() => requestUserData()}>Load</button>
+                }
+
+                {requestedData && 
+                    <div className={""}>
+
+                        <p>Data related to you</p>
+
+                        <div><pre>{JSON.stringify(requestedData, null, 2) }</pre></div>
+
+                    </div>
+                }
+
+            </Modal.Body>
+  
+            <Modal.Footer className="justify-content-between">
+
+                <Button variant="outline-dark" onClick={handleClose}>
+                    Cancel
+                </Button>
+
+            </Modal.Footer>
+  
+		</Modal>
+	  </>
+	);
+}
 
 class Settings extends Component {
   constructor(props) {
@@ -364,21 +473,6 @@ class Settings extends Component {
 
     // Refresh for the newest info!
     this.props.setUserDetails(self.props.auth.user.id);
-  }
-
-  requestUserData() {
-    axios.post('/api/secure/requestUserData', {
-
-    })
-    .then( (response) => {
-      console.log(response);
-      this.setState({
-        requestedUserData: JSON.stringify(response.data, undefined, 2)
-      })
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
   }
 
   // handleChange(event) {
@@ -469,8 +563,10 @@ class Settings extends Component {
   
               {/* Employee Only */}
               {this.props.user_details.employee?.bool === true && 
-                <Link to={ROUTES.SETTINGS_EMPLOYEE}>
-                  <button className={"btn btn-articles-light " + (this.state.settingsTab === 'Employee' ? 'alt' : '')}>Employee<span className="badge badge-warning ml-1">Role</span></button>
+                <Link className="ml-lg-3" to={ROUTES.SETTINGS_EMPLOYEE}>
+                  <button className={"btn btn-articles-light " + (this.state.settingsTab === 'Employee' ? 'alt' : '')}>
+                      Employee<span className="badge badge-warning ml-1"><i className="fas fa-star mr-0"></i></span>
+                    </button>
                 </Link>
               }
               
@@ -531,14 +627,14 @@ class Settings extends Component {
 
             </div>
 
-            <div className="col-lg-4">
+            <div className="col-lg-4 mb-3">
 
-              <div className="mt-lg-3">
+              <div className="settings-side mt-lg-3">
 
                 <div className={`newsletter-extra-card card mb-3 `}>
 
 					<div className="card-header">
-						<i class="fas fa-envelope"></i>Like Articles?
+						<i className="fas fa-envelope"></i>Like Articles?
 					</div>
 
 					<div className="card-body p-3">
@@ -564,7 +660,7 @@ class Settings extends Component {
 				<div className={`newsletter-extra-card card mb-3 `}>
 
 					<div className="card-header">
-						<i class="fas fa-link"></i>Faster Login?
+						<i className="fas fa-link"></i>Faster Login?
 					</div>
 
 					<div className="card-body p-3">
@@ -587,9 +683,10 @@ class Settings extends Component {
                 </div>
 
                 <div className="mb-3">
-                	{!this.state.requestedUserData && <div className="btn btn-articles-light w-50" onClick={() => this.requestUserData()}>Request Data</div>}
-	
-	                <div className="btn btn-danger w-50">Delete Account</div>
+                	{/* {!this.state.requestedUserData && <div className="btn btn-articles-light w-50" onClick={() => this.requestUserData()}>Request Data</div>} */}
+	                {/* <div className="btn btn-danger w-50">Delete Account</div> */}
+                    <RequestDataModal/>
+                    <DeleteAccountModal/>
                 </div>
 
               </div>
