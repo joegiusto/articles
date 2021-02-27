@@ -380,7 +380,7 @@ function DonationsAdmin(props) {
 
             <div className="card manage-card">
 
-            <div className="card-header d-flex justify-content-lg-between align-items-center">
+            <div className="card-header">
 
                 <div className="d-flex align-items-center">
                 <i className="fas fa-edit fa-2x"></i>
@@ -395,7 +395,7 @@ function DonationsAdmin(props) {
             <div className="card-body p-0">
 
                 <div className="table-responsive">
-                <table className="table table-sm bg-white mb-0">
+                <table className="table table-sm mb-0">
                     <thead className="thead-dark">
                     <tr>
                         <th scope="col">Date</th>
@@ -824,7 +824,7 @@ class Donations extends Component {
 
           <div className="card manage-card mb-5">
 
-            <div className="card-header d-flex justify-content-lg-between align-items-center">
+            <div className="card-header">
 
               <div className="d-flex align-items-center">
                 <i className="fas fa-edit fa-2x"></i>
@@ -838,7 +838,7 @@ class Donations extends Component {
 
             <div className="card-body p-0">
               <div className="table-responsive">
-                <table className="table table-sm table-bordered bg-white mb-0">
+                <table className="table table-sm table-bordered mb-0">
                   <thead className="thead-dark">
                     <tr>
                       <th scope="col">Date</th>

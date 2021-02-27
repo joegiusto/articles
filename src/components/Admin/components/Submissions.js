@@ -88,7 +88,7 @@ function SubmissionsAdmin(props) {
                 
                 <div className="card manage-card">
 
-                    <div className="card-header d-flex justify-content-lg-between align-items-center">
+                    <div className="card-header">
 
                     <div className="d-flex align-items-center">
                         <i className="fas fa-edit fa-2x"></i>

@@ -1,3 +1,21 @@
+// import express from 'express';
+// import fileUpload  from 'express-fileupload'
+// import bodyParser  from 'body-parser'
+// import passport  from "passport"
+// import path  from 'path'
+// import moment  from 'moment'
+// const app = express();
+// import cors  from 'cors'
+// import http from 'http').createServer(app);
+// var http = require('http').createServer(app);
+// // var io = require('socket.io')(http);
+// var io = require('socket.io')(http);
+// const allNamespace = io.of('/');
+// import history from 'connect-history-api-fallback');
+// import mongoUtil from './utils/db');
+// import mongoose from 'mongoose');
+// import ObjectId from 'mongodb').ObjectId;
+
 require('dotenv').config()
 const express = require('express');
 const fileUpload = require('express-fileupload');

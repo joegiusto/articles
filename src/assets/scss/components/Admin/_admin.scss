@@ -381,8 +381,22 @@
         border: solid 1px rgba(0, 0, 0, 0.5);
     }
 
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        @include media-breakpoint-down(xs) {
+            padding: 0.5rem 0.5rem;
+            
+            h3, .total {
+                font-size: 1rem;
+            }
+        }
+    }
+
     .card-footer {
-     font-size: 0.8rem;   
+        font-size: 0.8rem;   
     }
 
     .total {
@@ -420,11 +434,8 @@
     }
 
     .table {
-        // th {
-        //     color: black;
-        //     background-color: $accent-color;
-        //     border: none;
-        //     padding: 0.3rem;
-        // }
+        @include media-breakpoint-down(xs) {
+            white-space: nowrap;
+        } 
     }
 }

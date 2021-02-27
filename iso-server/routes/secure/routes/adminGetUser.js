@@ -1,15 +1,5 @@
-var ObjectId = require('mongodb').ObjectId; 
-
-// Will return a true only if user is Joey!
-function isJoey(id) {
-    if ( id == "5e90cc96579a17440c5d7d52" ) {
-        console.log('[Admin] Was Joey'.red);
-        return true
-    } else {
-        console.log('[Admin] Was not Joey'.yellow);
-        return false
-    }
-}
+var ObjectId = require('mongodb').ObjectId;
+const isJoey = require("./functions/isJoey");
 
 module.exports = (app, db, passport) => {
 

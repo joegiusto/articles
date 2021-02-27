@@ -1,5 +1,6 @@
 var AWS = require('aws-sdk');
-var colors = require('colors')
+var colors = require('colors');
+const isJoey = require("../functions/isJoey");
 
 const s3 = new AWS.S3({
     accessKeyId: process.env.accessKeyId,
@@ -67,17 +68,6 @@ async function listAllObjectsFromS3Bucket(bucket, prefix) {
         console.log(error);
         isTruncated = false;
     }
-    }
-}
-
-// Will return a true only if user is Joey!
-function isJoey(id) {
-    if ( id == "5e90cc96579a17440c5d7d52" ) {
-        console.log('[Admin] Was Joey'.red);
-        return true
-    } else {
-        console.log('[Admin] Was not Joey'.yellow);
-        return false
     }
 }
 
