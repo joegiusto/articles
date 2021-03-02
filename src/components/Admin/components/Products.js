@@ -383,8 +383,8 @@ class Products extends Component {
 
         <div className="main-panel">
 
-          {/* OLD MANAGE */}
-          <div className="product-manage d-none">
+            {/* OLD MANAGE */}
+            <div className="product-manage d-none">
   
             <div className="preview d-flex justify-content-center align-items-center store-page pt-4">
   
@@ -642,25 +642,39 @@ class Products extends Component {
   
           </div>
   
-          <div className="">
-            <h1>Products List</h1>
+            <div className="card manage-card">
 
-            <DataTable
-              title="Does not matter"
-              noHeader={true}
-              highlightOnHover={true}
-              columns={columns}
-              data={this.state.products}
-              customStyles={customStyles}
-              className='table table-bordered bg-white'
-              // expandableRows={true}
-              // expandOnRowClicked={true}
-              // expandableRowsComponent={
-              //   <div>Testing</div>
-              // }
-            />
+                <div className="card-header">
 
-          </div>
+                    {/* <h1>Products List</h1> */}
+
+                    <div className="d-flex align-items-center">
+                        <i className="fas fa-edit fa-2x"></i>
+                        <h3 className="mb-0">Manage Products</h3>
+                        <div className="total">({this.state.products.length})</div>
+                    </div>
+
+                    <button onClick={() => /* setModalShow(true) */ null} className="btn btn-articles-light btn-sm">Add Product</button>
+                </div>
+
+                <div className="card-body">
+                    <DataTable
+                        title="Does not matter"
+                        noHeader={true}
+                        highlightOnHover={true}
+                        columns={columns}
+                        data={this.state.products}
+                        customStyles={customStyles}
+                        className='table table-sm mb-0'
+                        // expandableRows={true}
+                        // expandOnRowClicked={true}
+                        // expandableRowsComponent={
+                        //   <div>Testing</div>
+                        // }
+                    />
+                </div>
+
+            </div>
 
         </div>
 

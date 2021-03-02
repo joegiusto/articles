@@ -114,7 +114,7 @@ function connectWithRetryMongo() {
 
     require('./routes/getRevenue')(app, db);
 
-    require('./routes/getSubmissionsMongoose')(app, db);
+    require('./routes/getSubmissionsMongoose')(app, db, cache);
     require('./routes/getRevenueMongoose')(app, db);
 
     require('./routes/getExpenses')(app, db);

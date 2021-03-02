@@ -26,7 +26,7 @@ function SubmissionsAdmin(props) {
         axios.get('/api/getSubmissionsMongoose')
         .then(function (response) {
             console.log(response);
-            setSubmissions(response.data);
+            setSubmissions(response.data.submissions);
         })
         .catch(function (error) {
             console.log(error);

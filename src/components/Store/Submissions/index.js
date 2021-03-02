@@ -321,7 +321,7 @@ class SubmissionsListBase extends Component {
         .then( res => {
 
             self.setState({
-                submissions: res.data
+                submissions: res.data.submissions
             })
         
         }) 
@@ -331,7 +331,7 @@ class SubmissionsListBase extends Component {
 
         setTimeout(() => {
             this.setState({loading: false });
-        }, 2000);
+        }, 1000);
 
     }
 
