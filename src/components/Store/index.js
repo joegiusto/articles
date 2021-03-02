@@ -439,6 +439,8 @@ class StorePage extends Component {
 
 					<Route exact path={ROUTES.STORE_SUBMISSIONS} render={() => <Submissions/>}/>
 
+                    <Route exact path={ROUTES.STORE_SUBMISSIONS_SUBMIT} render={() => <Submissions/>}/>
+
 				</Switch>
 
 			</section>

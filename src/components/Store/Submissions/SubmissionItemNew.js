@@ -28,50 +28,57 @@ class SubmissionItemNew extends Component {
   render(props) {
 
     return(
-      <div className="submission">
+        <div className="submission">
 
-        <div className="title d-flex justify-content-lg-between">
+            <div className="title d-flex justify-content-between">
 
-            <div>{`${this.props.submission?.user_id?.first_name} ${this.props.submission?.user_id?.last_name}`}</div>
+                <div>{`${this.props.submission?.user_id?.first_name} ${this.props.submission?.user_id?.last_name}`}</div>
 
-            <div>{this.props.submission?.user_id?.address?.state}</div>
+                <div>{this.props.submission?.user_id?.address?.state}</div>
 
-        </div>
+            </div>
 
-        <div className="photo">
-            <img src={this.state.photos[Math.floor(Math.random() * this.state.photos.length)]} alt=""/>
-        </div>
+            <div className="photo">
+                <img src={this.state.photos[Math.floor(Math.random() * this.state.photos.length)]} alt=""/>
+            </div>
 
-        <div className="vote-controls">
+            <div className="vote-controls">
 
-          <div className="voting-bar">
+                <div className="voting-bar">
 
-            <button className="dislike btn btn-articles-light btn-sm">
-              <i className="far fa-thumbs-down" aria-hidden="true"></i>
-            </button>
+                    <button className="dislike btn btn-articles-light btn-sm">
+                        <i className="far fa-thumbs-down" aria-hidden="true"></i>
+                    </button>
 
-            <button className="like btn btn-articles-light btn-sm">
-              <i className="far fa-thumbs-up" aria-hidden="true"></i>
-            </button>
+                    <button className="like btn btn-articles-light btn-sm">
+                        <i className="far fa-thumbs-up" aria-hidden="true"></i>
+                    </button>
 
-            {/* <div className="like">
-              <i className="far fa-thumbs-up" aria-hidden="true"></i>
-            </div> */}
+                    {/* <div className="like">
+                    <i className="far fa-thumbs-up" aria-hidden="true"></i>
+                    </div> */}
 
-            {/* <div className="dislike">
-              <i className="far fa-thumbs-down" aria-hidden="true"></i>
-            </div> */}
+                    {/* <div className="dislike">
+                    <i className="far fa-thumbs-down" aria-hidden="true"></i>
+                    </div> */}
 
-          </div>
+                </div>
 
-          <div className="visual-bar">
+                <div class="progress">
+                    <div class="progress-bar dislike w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50% (1)</div>
+                    <div class="progress-bar like w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50% (1)</div>
+                </div>
 
-            <div className="like"></div>
-            <div className="dislike"></div>
+                {/* <div className="visual-bar d-none">
+                    <div className="like"></div>
+                    <div className="dislike"></div>
+                </div> */}
 
-          </div>
+                <div className="view-button">
+                    <button className="btn btn-articles-light btn-sm">View</button>
+                </div>
 
-        </div>
+            </div>
 
       </div>
     )

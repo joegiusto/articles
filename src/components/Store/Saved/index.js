@@ -51,8 +51,8 @@ class SavedPage extends Component {
 
             <div className="container">
 
-                <h3>Saved</h3>
-                <p>Any products you save will be displayed here.</p>
+                <h2>Saved</h2>
+                <p className="mb-3">Any products you save will be displayed here.</p>
 
                 <div className="items pb-5">
 

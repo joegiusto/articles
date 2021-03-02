@@ -147,23 +147,25 @@ class Submissions extends Component {
             <div className="info">Current Period Info</div>
 
             <div className="tile">
-              <div className="label">Submited</div>
-              <div className="square">{this.props.submissions?.submissions.length}</div>
+                <div className="label">Submitted</div>
+                {/* <div className="square">{this.state.submissions.length}</div> */}
+                <div className="square">{0}</div>
             </div>
 
             <div className="tile">
-              <div className="label">Voters</div>
-              <div className="square">1</div>
+                <div className="label">Voters</div>
+                <div className="square">0</div>
             </div>
 
             <div className="tile">
-              <div className="label">Votes Cast</div>
-              <div className="square">1</div>
+                <div className="label">Votes Cast</div>
+                {/* <div className="square">{this.state.submissions.length}</div> */}
+                <div className="square">{0}</div>
             </div>
 
             <div className="tile">
-              <div className="label">Earned By Users</div>
-              <div className="square">$0.00</div>
+                <div className="label">Earned By Users</div>
+                <div className="square">$0.00</div>
             </div>
 
             </div>
