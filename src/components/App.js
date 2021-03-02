@@ -48,6 +48,9 @@ import StoryPage from './News/Stories/single.js'
 import ResourcesPage from './News/Resources'
 import PresidentsPage from './News/Resources/Presidents'
 import CoronavirusPage from './News/Resources/Coronavirus'
+import PoliticiansPage from './News/Resources/Politicians'
+import PoliticiansHousePage from './News/Resources/Politicians/house'
+import PoliticiansSenatePage from './News/Resources/Politicians/senate'
 
 import PartyPage from './Party'
 import PartyProposalsPage from './Party/Proposals'
@@ -301,6 +304,10 @@ class AppBase extends Component {
                   <Route path={ROUTES.RESOURCES_PRESIDENTS} component={PresidentsPage} exact={true}/>
                   <Route path={ROUTES.RESOURCES_PRESIDENT} component={PresidentsPage}/>
                   <Route path={ROUTES.RESOURCES_CORONAVIRUS} component={CoronavirusPage}/>
+                  
+                  <Route exact path={ROUTES.RESOURCES_POLITICIANS} component={PoliticiansPage}/>
+                  <Route path={ROUTES.RESOURCES_POLITICIANS_HOUSE} component={PoliticiansHousePage}/>
+                  <Route path={ROUTES.RESOURCES_POLITICIANS_SENATE} component={PoliticiansSenatePage}/>
       
                   <Route path={ROUTES.TOWN_HALL} component={TownHallPage} />
             

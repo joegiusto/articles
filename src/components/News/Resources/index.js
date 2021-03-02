@@ -140,9 +140,9 @@ const ResourcesPage = ({match}) => (
 
                   </div>
 
-                  {/* <Link to={ROUTES.RESOURCES_PRESIDENTS}> */}
-                    <button disabled className="btn btn-articles-light">Access</button>
-                  {/* </Link> */}
+                  <Link to={ROUTES.RESOURCES_POLITICIANS}>
+                    <button className="btn btn-articles-light">Access</button>
+                  </Link>
                   
                 </div>
 

@@ -5,12 +5,13 @@ class SubmissionItemNew extends Component {
   super(props);
 
     this.state = {
-
+        photos: ['https://cdn.articles.media/submissions/fake/america.jpg', 'https://cdn.articles.media/submissions/fake/demand.jpg', 'https://cdn.articles.media/submissions/fake/neutral.jpg', 'https://cdn.articles.media/submissions/fake/rich.jpg', 'https://cdn.articles.media/submissions/fake/swallow.jpg', 'https://cdn.articles.media/submissions/fake/truth.jpg', 'https://cdn.articles.media/submissions/fake/vote.jpg']
     };
 
   }
 
   renderRandom() {
+    //   remove this garbage
     // console.log('Ran')
     var random_boolean = Math.random() <= 0.5;
 
@@ -21,6 +22,7 @@ class SubmissionItemNew extends Component {
       // console.log('Two')
       return 'https://cdn.articles.media/submissions/fake/rich.jpg'
     }
+
   }
 
   render(props) {
@@ -28,12 +30,16 @@ class SubmissionItemNew extends Component {
     return(
       <div className="submission">
 
-        <div className="title">
-          Sample Design
+        <div className="title d-flex justify-content-lg-between">
+
+            <div>{`${this.props.submission?.user_id?.first_name} ${this.props.submission?.user_id?.last_name}`}</div>
+
+            <div>{this.props.submission?.user_id?.address?.state}</div>
+
         </div>
 
         <div className="photo">
-          <img src={this.renderRandom()} alt=""/>
+            <img src={this.state.photos[Math.floor(Math.random() * this.state.photos.length)]} alt=""/>
         </div>
 
         <div className="vote-controls">

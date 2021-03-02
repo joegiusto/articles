@@ -68,7 +68,7 @@ function ExpensesAdmin(props) {
                     <div className="card-body p-0">
 
                     <div className="table-responsive">
-                        <table className="table table-sm bg-white mb-0">
+                        <table className="table table-sm mb-0">
                         <thead className="thead-dark">
 
                             {/* <tr>

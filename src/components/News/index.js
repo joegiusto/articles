@@ -487,11 +487,41 @@ class RecentSliders extends Component {
 
     this.state = {
       issueSort: 'all',
-      tags: []
+      tags: [],
+      shiftPressed: false,
     }
+
+    this.shiftScrollFunction = this.shiftScrollFunction.bind(this);
+    this.shiftScrollUpFunction = this.shiftScrollUpFunction.bind(this);
+  }
+
+  shiftScrollFunction(e) {
+    if ( e.shiftKey ) {
+        e.preventDefault();
+
+        if (this.state.shiftPressed == false) {
+            console.log("SHIFT pushed down");
+            this.setState({shiftPressed: true});
+        }
+    }
+
+  }
+
+  shiftScrollUpFunction(e) {
+    if ( e.shiftKey ) {
+        e.preventDefault();
+
+        if (this.state.shiftPressed == true) {
+            console.log("SHIFT let up");
+            this.setState({shiftPressed: false});
+        }
+    }
+
   }
 
   componentDidMount() {
+    document.addEventListener("keydown", this.shiftScrollFunction, false);
+    document.addEventListener("keyup", this.shiftScrollUpFunction, false);
     const self = this;
 
     axios.get('/api/getNewsTags')
@@ -508,26 +538,32 @@ class RecentSliders extends Component {
 
   }
 
+  componentWillUnmount(){
+    document.removeEventListener("keydown", this.shiftScrollFunction, false);
+    document.removeEventListener("keyup", this.shiftScrollUpFunction, false);
+  }
+
   render() {
 
     const swiper_settings = {
-      spaceBetween: 10,
-      slidesPerView: 'auto',
-      // slidesPerGroup: 1,
-      // navigation: true,
-      scrollbar: { draggable: true },
-      // mousewheel: true,
-      // direction: "horizontal",
-      navigation: {
-        nextEl: '.fa-forward',
-        prevEl: '.fa-backward',
-      },
+        spaceBetween: 10,
+        slidesPerView: 'auto',
+        // slidesPerGroup: 1,
+        // navigation: true,
+        scrollbar: { draggable: true },
+        //   mousewheel: true,
+        // direction: "horizontal",
+        navigation: {
+            nextEl: '.fa-forward',
+            prevEl: '.fa-backward',
+        },
 
-      // onSlideChange: () => console.log('slide change'),
-      // onSwiper: (swiper) => console.log(swiper),
+        // TODO Using the below OnScroll we need to detect if the shift key is pressed and then enable mousewheel scrolling
+        // onScroll: (s) => console.log(s),
+        // onSlideChange: () => console.log('slide change'),
+        // onSliderMove: (s) => console.log(s),
+        // onSwiper: (swiper) => console.log(swiper.mousewheel),
     }
-
-
 
     return (
       <div className="news-sliders">
@@ -535,42 +571,43 @@ class RecentSliders extends Component {
         {/* Recent Stories */}
         <div className="news-preview-container frontpage-indent story">
     
-          <Swiper
-            {...swiper_settings}
-          >
+            <Swiper
+                {...swiper_settings}
+            >
 
-            {/* See slots https://swiperjs.com/react/ */}
-            <span slot="container-start">
+                {/* See slots https://swiperjs.com/react/ */}
+                <span slot="container-start">
 
-              <div className="frontpage-section-header">
-                <h5>Recent Stories</h5>
-                <Link onClick={() => window.scrollTo(0, 0)} to={ROUTES.STORIES} className="ml-3 text-muted">View All</Link>
+                    <div className="frontpage-section-header">
+                        <h5>Recent Stories</h5>
+                        <Link onClick={() => window.scrollTo(0, 0)} to={ROUTES.STORIES} className="ml-3 text-muted">View All</Link>
 
-                <div className="controls ">
-                  <i className="fas fa-backward"></i>
-                  <i className="fas fa-forward"></i>
-                </div>
-              </div>
+                        <div className="controls ">
+                        <i className="fas fa-backward"></i>
+                        <i className="fas fa-forward"></i>
+                        </div>
+                    </div>
 
-              <div className="stories-filters d-flex mb-3 align-items-center d-none">
+                    <div className="stories-filters d-flex mb-3 align-items-center d-none">
 
-                <DropdownButton variant="articles-light" id="dropdown-basic-button" title={ <span><i className="fas fa-filter"></i> Newest</span> }>
-                  <Dropdown.Item href="#/action-1">Newest</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2">Oldest</Dropdown.Item>
-                </DropdownButton>
+                        <DropdownButton variant="articles-light" id="dropdown-basic-button" title={ <span><i className="fas fa-filter"></i> Newest</span> }>
+                        <Dropdown.Item href="#/action-1">Newest</Dropdown.Item>
+                        <Dropdown.Item href="#/action-2">Oldest</Dropdown.Item>
+                        </DropdownButton>
 
-                <Link onClick={() => window.scrollTo(0, 0)} to={ROUTES.STORIES} className="ml-3 text-muted">View All</Link>
+                        <Link onClick={() => window.scrollTo(0, 0)} to={ROUTES.STORIES} className="ml-3 text-muted">View All</Link>
 
-              </div>
-              
-            </span>
+                    </div>
+                
+                </span>
 
-            {this.props.stories.stories.map((story) => (
-              <SwiperSlide>
-                <NewsCard document={story}/>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+                {this.props.stories.stories.map((story) => (
+                    <SwiperSlide>
+                        <NewsCard document={story}/>
+                    </SwiperSlide>
+                ))}
+
+            </Swiper>
   
         </div>
   

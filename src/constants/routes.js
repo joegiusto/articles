@@ -99,6 +99,10 @@ export const RESOURCES_PRESIDENTS ='/news/resources/presidents'
 export const RESOURCES_PRESIDENT ='/news/resources/presidents/:id'
 export const RESOURCES_CORONAVIRUS ='/news/resources/coronavirus'
 
+export const RESOURCES_POLITICIANS ='/news/resources/politicians'
+export const RESOURCES_POLITICIANS_HOUSE ='/news/resources/politicians/house'
+export const RESOURCES_POLITICIANS_SENATE ='/news/resources/politicians/senate'
+
 // Party
 export const PARTY ='/party'
 export const POLICY ='/party/policy'
