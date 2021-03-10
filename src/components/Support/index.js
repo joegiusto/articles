@@ -15,10 +15,10 @@ const itemsToRender = [
 ]
 
 const Page = (props) => (
-  <div className="support-page">
+  <div className="community-page">
 
     <div className="container">
-      <h1>Support Hub</h1>
+      <h1>Community Hub</h1>
       {/* <p>Various pages that carry out different tasks for the site</p> */}
 
       <div className="hub-items">

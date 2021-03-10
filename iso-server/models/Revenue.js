@@ -30,25 +30,6 @@ const revenueSchema = new Schema({
         required: true,
     },
 
-    // createdBy: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   required: true,
-    //   ref: User
-    // },
-
-    // user_id: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     required: true,
-    //     ref: User
-    // },
-
-    // createdAt: {
-    //   type: Date,
-    //   required: true,
-    //   default: Date.now,
-    //   expires: 43200
-    // }
-
 }, {timestamps: true});
 
 var Token = mongoose.model('revenues', revenueSchema, 'revenues_donations');

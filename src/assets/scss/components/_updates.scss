@@ -4,8 +4,7 @@ section.updates-page {
   
   .header {
     background: linear-gradient(45deg,$accent-color, $base-color 80%);
-    height: 300px;
-
+    padding: 2rem 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,7 +39,7 @@ section.updates-page {
       font-size: 1.2rem;
 
       &:not(:first-child) {
-        margin-left: 0.75rem;
+        margin-left: 1rem;
       }
 
       &.active {
@@ -65,16 +64,9 @@ section.updates-page {
   .update-card {
     border-radius: 0;
     box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
 
     .card-body  {
-
-      @include media-breakpoint-up(md) {
-        min-width: 800px;
-
-        // .details {
-        //   max-width: 420px;
-        // }
-      }
 
       .date {
         font-size: 12px;

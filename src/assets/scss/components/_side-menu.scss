@@ -134,7 +134,8 @@
 
   .profile {
     display: flex;
-    padding-top: 17px;
+    padding: 0.75rem 0rem;
+    padding-bottom: 0.25rem;
 
     .color-mode-button {
       position: absolute;
@@ -343,6 +344,177 @@
       max-height: 0px;
     }
   }
+
+    .side-menu-section-header {
+        // margin: 0.5rem 0;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.1);
+        padding: .4rem 1.5rem;
+        padding-right: 0.75rem;
+
+        &.header-admin {
+            // background-color: rgb(255, 51, 51);
+            background-color: rgb(0, 0, 0);
+            background: url(https://thumbs.gfycat.com/SecondPhonyBlesbok-small.gif);
+            color: rgb(255, 255, 255);
+        }
+
+        &.header-developer {
+            background-color: rgb(0, 0, 0);
+            background: url(https://res.cloudinary.com/practicaldev/image/fetch/s---1w4VnJR--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_66%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/n9b2p3j0h1mdqvms3ogc.gif);
+            color: rgb(255, 255, 255);
+        }
+
+        .side-menu-section-header-title {
+            font-family: brandon-grotesque, sans-serif;
+            font-style: normal;
+            font-size: 1.2rem;
+            font-weight: 900;
+        }
+
+        #shopping-cart-button {
+            line-height: 1.2;
+            position: relative;
+
+            @include media-breakpoint-up(lg) {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            #shopping-cart-amount {
+                position: absolute;
+                top: 0;
+                right: 0;
+                transform: translateX(50%) translateY(-50%);
+            }
+        }
+    }
+
+    .side-menu-section-links {
+
+        .link {
+            color: rgb(71, 71, 71);
+            overflow: hidden;
+            position: relative;
+            font-family: agenda, sans-serif;
+            font-weight: 600;
+            // font-style: italic;
+            margin: 0px;
+            // padding: .6rem 1.5rem;
+
+            padding: .6rem 1.5rem;
+            // font-size: 1.2rem;
+
+            display: flex;
+            align-items: center;
+
+            &:hover {
+                color: rgb(0, 0, 0);
+                // font-weight: 700;
+                // font-weight: 600;
+                text-decoration: none;
+
+                &:before {
+                    opacity: 1;
+                    transform: translateX(0%);
+                }
+            }
+
+            &:before {
+                content: "";
+                z-index: -1;
+                position: absolute;
+                width: 100%;
+                left: 0;
+                top: 0;
+                height: 100%;
+                // opacity: 0;
+                transform: translateX(-100%);
+                transition-duration: 500ms;
+                background-color: lighten($accent-color, 0%);
+                // background-color: rgba(0, 0, 0, 0.05);
+            }
+
+            // > i, > svg {
+            //     min-width: 30px;
+            // }
+
+            .icon {
+                // color: $accent-color;
+                // fill: $accent-color;
+                position: relative;
+                height: 1.25rem;
+                width: 1.25rem;
+                margin-right: 1rem;
+            }
+
+            &.messages-link {
+
+                &:after {
+                    content: '';
+                    z-index: -1;
+                    position: absolute;
+                    top: 50%;
+                    // left: 1.25rem;
+                    left: 1.094rem;
+                    height: 1.95rem;
+                    width: 1.95rem;
+                    transform: translateY(-50%);
+                    background-color: rgb(90, 169, 253);
+                    // background-color: $accent-color;
+                    border-radius: 50px;
+                    font-size: 0.75rem;
+                }
+
+                .icon {
+                    fill: rgb(255, 255, 255);
+                    color: rgb(255, 255, 255);
+                }
+
+                .fa-secondary {
+                    opacity: 1;
+                }
+            }
+
+            #messages-button {
+                font-size: 1rem;
+                color: rgb(0, 0, 0);
+
+                #messages-button-count {
+                    padding: 0.1rem;
+                    font-size: 1rem;
+                    margin-left: 0.5rem;
+                }
+            }
+
+        }
+
+    }
+
+  .dual-header, .heading-font {
+    display: flex;
+    justify-content: space-between;
+    background-color: black;
+    font-family: brandon-grotesque, sans-serif;
+    font-style: normal;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: white;
+    padding: .5rem 1.5rem;
+
+    .no-link {
+        padding: 0;
+        margin: 0;
+        // background-color: black;
+        font-family: brandon-grotesque, sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 1.2rem;
+    }
+  }
 }
 
 #nav-sign-in {
@@ -362,24 +534,22 @@
   z-index: 202;
 }
 
-
-
 .section-collapse {
-  cursor: pointer;
-  margin-top: -5px;
-  // background-color: #ffb7b7;
-  height: 16px;
-  width: 16px;
-  position: relative;
-  transition-duration: 200ms;
-  transform: translateX(-50%) translateY(50%) rotate(180deg);
-  i {
-    position: absolute;
-    margin: 0px;
-  }
-  &.hide {
-    transform: translateX(-50%) translateY(50%) rotate(0deg);
-  }
+    cursor: pointer;
+    margin-top: -5px;
+    // background-color: #ffb7b7;
+    height: 16px;
+    width: 16px;
+    position: relative;
+    transition-duration: 200ms;
+    transform: translateX(-50%) translateY(50%) rotate(180deg);
+    i {
+        position: absolute;
+        margin: 0px;
+    }
+    &.hide {
+        transform: translateX(-50%) translateY(50%) rotate(0deg);
+    }
 }
 
 .side-pin-notch-top {
@@ -783,4 +953,3 @@ hr {
     object-fit: contain;
   }
 }
-

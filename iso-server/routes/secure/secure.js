@@ -1494,6 +1494,9 @@ module.exports = (app, db) => {
   require('./routes/donation/addDonation')(app, db, passport);
   require('./routes/donation/deleteDonation')(app, db, passport);
 
+  require('./routes/expenses/upsertExpense')(app, db, passport);
+  require('./routes/expenses/deleteExpense')(app, db, passport);
+
   require('./routes/updateLastRead')(app, db, passport);
   require('./routes/outsetUpdate')(app, db, passport);
   require('./routes/addProfilePhoto')(app, db, passport);

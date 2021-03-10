@@ -8,6 +8,35 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 import SocketContext from '../../utils/socket_context/context'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome' 
+// import Books from '../FontAwesome/duotone/books.svg' 
+
+import { ReactComponent as IconHome } from '../FontAwesome/duotone/home.svg';
+import { ReactComponent as IconFlagUsa } from '../FontAwesome/duotone/flag-usa.svg';
+import { ReactComponent as IconFileChartLine } from '../FontAwesome/duotone/file-chart-line.svg';
+
+import { ReactComponent as IconShoppingCart } from '../FontAwesome/duotone/shopping-cart.svg';
+import { ReactComponent as IconLightbulb } from '../FontAwesome/duotone/lightbulb.svg';
+
+import { ReactComponent as IconBooks } from '../FontAwesome/duotone/books.svg';
+import { ReactComponent as IconNewspaper } from '../FontAwesome/duotone/newspaper.svg';
+import { ReactComponent as IconGhost } from '../FontAwesome/duotone/ghost.svg';
+import { ReactComponent as IconBalanceScale } from '../FontAwesome/duotone/balance-scale.svg';
+import { ReactComponent as IconBullhorn } from '../FontAwesome/duotone/bullhorn.svg';
+
+import { ReactComponent as IconHandsHelping } from '../FontAwesome/duotone/hands-helping.svg';
+import { ReactComponent as IconScroll } from '../FontAwesome/duotone/scroll.svg';
+import { ReactComponent as IconBell } from '../FontAwesome/duotone/bell.svg';
+
+import { ReactComponent as IconSitemap } from '../FontAwesome/duotone/sitemap.svg';
+import { ReactComponent as IconPaperPlane } from '../FontAwesome/duotone/paper-plane.svg';
+import { ReactComponent as IconComment } from '../FontAwesome/duotone/comment.svg';
+
+import { ReactComponent as IconToolbox } from '../FontAwesome/duotone/toolbox.svg';
+
+import { ReactComponent as IconAlarmExclamation } from '../FontAwesome/duotone/alarm-exclamation.svg';
+import { ReactComponent as IconDraftingCompass } from '../FontAwesome/duotone/drafting-compass.svg';
+
 import CartPreview from './components/CartPreview'
 import NotificationArea from './components/NotificationArea'
 import { toggleSideMenuFixed, toggleColorMode, toggleSideMenuOpen } from '../../actions/siteActions';
@@ -128,25 +157,17 @@ function Menu(props) {
         <NotificationArea/>
 
         <section>
-          <div className="nav-tab">
-            <button className={'hamburger hamburger--spin' + (props.site?.sideMenuFixed ? ' is-active' : menuOpen ? " is-active" : "")} type="button" onClick={() => props.site?.sideMenuFixed ? (props.toggleSideMenuFixed(), setMenuOpen(!menuOpen), props.toggleSideMenuOpen() ) : ( setMenuOpen(!menuOpen), props.toggleSideMenuOpen() ) }>
-                <span className="hamburger-box">
-                <span className="hamburger-inner"></span>
-                </span>
-            </button> 
-          </div> 
-        </section>
-
-        {/* <section>
-            <div className="pin-tab d-none">
-                <button className={'pin' + (menuOpen ? " is-active" : "")} type="button" onClick={() => {setPinOpen(true)}}>
-                    <i className="fas fa-thumbtack text-danger"></i>
+            <div className="nav-tab">
+                <button className={'hamburger hamburger--spin' + (props.site?.sideMenuFixed ? ' is-active' : menuOpen ? " is-active" : "")} type="button" onClick={() => props.site?.sideMenuFixed ? (props.toggleSideMenuFixed(), setMenuOpen(!menuOpen), props.toggleSideMenuOpen() ) : ( setMenuOpen(!menuOpen), props.toggleSideMenuOpen() ) }>
+                    <span className="hamburger-box">
+                    <span className="hamburger-inner"></span>
+                    </span>
                 </button> 
             </div> 
-        </section> */}
+        </section>
 
         <section className={"side-menu-notch-top " + (menuOpen ? "show" : "")}>
-          <div className={"side-menu-notch-top-end " + (menuOpen ? "show" : "")}></div>
+            <div className={"side-menu-notch-top-end " + (menuOpen ? "show" : "")}></div>
         </section>
 
         <section>
@@ -299,7 +320,6 @@ function Menu(props) {
             </div> */}
 
           </div>
-            
         </section>
 
         {/* Pinned storys for mobile users, get desktop site working first */}
@@ -316,216 +336,274 @@ function Menu(props) {
 
         <section className={"side-menu " + (menuOpen ? "show" : "")}>
 
-          {/* Profile Photo and Account Section */}
-          <div className="profile">
+            {/* Profile Photo and Account Section */}
+            <div className="profile">
 
-              <div className="menu-pin-button" onClick={props.toggleSideMenuFixed}>
-                <i className="fas fa-columns"></i>
-                <div className={'columns-fill-in ' + (props.site.sideMenuFixed ? 'active' : '')}></div>
-              </div>
+                <div className="profile-photo" >
+                    {props?.user?.photo_url === undefined ? 
+                    null
+                    :
+                    <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SETTINGS_ACCOUNT}><img alt="" className="" style={{borderRadius: '0px'}} width="100%" height="100%" src={`https://articles-website.s3.amazonaws.com/profile_photos/${props?.user?._id}.jpg` || ''}/></Link>
+                    }
+                    <i className={props?.user?.photo_url ? '':'fas fa-question'}></i>
+                </div> 
 
-              <div className="color-mode-button" onClick={props.toggleColorMode}>
-                {props.site.colorModeDark ? <i className="far fa-moon"></i> : <i className="fas fa-sun"></i>}
-                {/* <i className="fas fa-columns"></i> */}
-                {/* <div className={'columns-fill-in ' + (props.site.colorModeDark ? 'active' : '')}></div> */}
-              </div>
+                <div className="profile-welcome">
 
-              <div className="profile-photo" >
-                  {props?.user?.photo_url === undefined ? 
-                  null
-                  :
-                  <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SETTINGS_ACCOUNT}><img alt="" className="" style={{borderRadius: '0px'}} width="100%" height="100%" src={`https://articles-website.s3.amazonaws.com/profile_photos/${props?.user?._id}.jpg` || ''}/></Link>
-                  }
-                  <i className={props?.user?.photo_url ? '':'fas fa-question'}></i>
-              </div> 
+                    <p id="nav-welcome" className="subheading-font m-0 pl-2 py-0">
+                    <span>Hello,&nbsp;
+                    {!props.isAuth ? (
+                    <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SIGN_IN} id='nav-sign-in'>Log In / Sign Up</Link>
+                    ) : (
+                    <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SETTINGS_ACCOUNT} id='nav-sign-in'>{props?.user?.first_name} {props?.user?.last_name}</Link>
+                    )}
+                    </span>
+                    </p>
 
-              <div className="profile-welcome">
+                    <p id="nav-member-message" className='subheading-font m-0 pl-2 py-0'>
+                    {!props.isAuth ? (
+                        <span></span>
+                    ) : (
+                        // <span>Member Since{moment.unix(props.user?.sign_up_date).format("MMMM Y")}</span>
+                        <div>
+                        <div style={{fontSize: '0.8rem'}}>Member Since {moment(props.user?.sign_up_date).format("MMMM Y") || "Loading..."}</div>
+                        {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MESSAGES}><button className="btn btn-sm btn-articles-light">Chat</button></Link> */}
+                        </div>
+                    )
+                    }
+                    </p>
 
-                <p id="nav-welcome" className="subheading-font m-0 pl-2 py-0">
-                  <span>Hello,&nbsp;
-                  {!props.isAuth ? (
-                  <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SIGN_IN} id='nav-sign-in'>Log In / Sign Up</Link>
-                  ) : (
-                  <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SETTINGS_ACCOUNT} id='nav-sign-in'>{props?.user?.first_name} {props?.user?.last_name}</Link>
-                  )}
-                  </span>
-                </p>
-
-                <p id="nav-member-message" className='subheading-font m-0 pl-2 py-0'>
-                  {!props.isAuth ? (
-                    <span></span>
-                  ) : (
-                    // <span>Member Since{moment.unix(props.user?.sign_up_date).format("MMMM Y")}</span>
-                    <div>
-                      <div style={{fontSize: '0.8rem'}}>Member Since {moment(props.user?.sign_up_date).format("MMMM Y") || "Loading..."}</div>
-                      {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MESSAGES}><button className="btn btn-sm btn-articles-light">Chat</button></Link> */}
-                    </div>
-                  )
-                  }
-                </p>
-
-              </div>
-
-          </div>
-
-          <hr/>
-
-          {/* Clock and Today Info Section  */}
-          <p className="subheading-font m-0 py-0"><span id="date">{moment().format('dddd MMMM Do, YYYY')}</span></p>
-          <p className="subheading-font m-0 py-0"><Clock format={'h:mm:ss A'} ticking={true} /></p>
-      
-          <hr/>
-
-          {/* Main Links Section */}
-          {props.isAuth?
-          <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.HOME}><p className="subheading-font"><i className="fas fa-home"></i>Home</p></Link>
-          :
-          <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.LANDING}><p className="subheading-font"><i className="fas fa-map-pin"></i>Landing</p></Link>
-          }
-          <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MISSION}><p className="subheading-font"><i className="fas fa-flag-usa"></i>Mission</p></Link>
-          <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.TRANSPARENCY_REPORTS}><p className="subheading-font"><i className="fas fa-paste"></i>Transparency</p></Link>
-
-          <hr/>
-
-          {/* Clothing Section */}
-          <div className="dual-header">
-
-            <p className="heading-font no-link">
-              <b>Articles Clothing</b>
-            </p>
-
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.CHECKOUT}>
-              <span className="ml-auto noselect" id="shopping-card">
-                <i className="fas fa-shopping-basket mr-0"></i>
-                <span id="menu-pill" className="badge badge-pill badge-dark">
-                  {props.expensesTotal}
-                </span>
-              </span>
-            </Link>
-
-            {/* <span onClick={() => {setCartPreview(!cartPreview)}} to="cart">
-              <span className="ml-auto noselect" id="shopping-card">
-                <i className="fas fa-shopping-basket mr-0"></i>
-                <span id="menu-pill" className="badge badge-pill badge-dark">
-                  {props.expensesTotal}
-                </span>
-              </span>
-            </span> */}
-
-          </div>
-
-          {cartPreview ? 
-
-          <CartPreview
-            cart_items={props.expenses}
-            setMenuOpen={setMenuOpen}
-          />
-
-          // <div className="subheading-font text-center mx-4 border border-dark">
-          //   <p className="d-inline-block">1</p><p className="d-inline-block">2</p><p className="d-inline-block">3</p>
-          //   <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.CHECKOUT}><p className="btn btn-dark subheading-font mb-2">Checkout</p></Link>
-          // </div>
-
-          :
-
-          null
-
-          }
-
-          <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE}><p className="subheading-font"><i className="fas fa-shopping-cart"></i>Store</p></Link>
-          <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE_SUBMISSIONS}><p className="subheading-font"><i className="fas fa-lightbulb"></i>Submissions</p></Link>
-          
-          <hr/> 
-
-          {/* New Section */}
-          <p className="heading-font no-link"><b>Articles News</b></p>
-          <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.NEWS}><p className="subheading-font"><i className="fas fa-newspaper"></i> Frontpage</p></Link>
-          <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORIES}><p className="subheading-font"><i className="fas fa-bullhorn"></i>Stories</p></Link>
-          <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ISSUES}><p className="subheading-font"><i className="fas fa-balance-scale"></i>Issues</p></Link>
-          <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MYTHS}><p className="subheading-font"><i className="fas fa-ghost"></i>Myths</p></Link>
-          <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.RESOURCES}>
-            <p className="subheading-font">
-              {/* TODO Convert to paid Font Awesome! */}
-              <svg style={{height: '1rem', width: '25px', marginRight: '10px', justifyContent: 'center'}} aria-hidden="true" focusable="false" data-prefix="fas" data-icon="books" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" className="d-flex svg-inline--fa fa-books fa"><path fill="currentColor" d="M575.11 443.25L461.51 19.06C458.2 6.7 445.61-3.18 430.15.96L414.7 5.1c-6.18 1.66-11.53 6.4-16.06 14.24-14.03 6.94-52.3 17.21-68 18.22-7.84-4.53-14.85-5.96-21.03-4.3l-15.46 4.14c-2.42.65-4.2 1.95-6.15 3.08V32c0-17.67-14.33-32-32-32h-64c-17.67 0-32 14.33-32 32v64h128l101.66 396.94c3.31 12.36 15.9 22.24 31.36 18.1l15.45-4.14c6.18-1.66 11.53-6.4 16.06-14.24 13.91-6.88 52.18-17.2 68-18.22 7.84 4.53 14.85 5.96 21.03 4.3l15.46-4.14c15.45-4.14 21.41-18.99 18.09-31.35zm-134.4-7.06L348.64 92.37l61.82-16.56 92.07 343.82-61.82 16.56zM0 384h128V128H0v256zM96 0H32C14.33 0 0 14.33 0 32v64h128V32c0-17.67-14.33-32-32-32zM0 480c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64H0v64zm160-96h128V128H160v256zm0 96c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64H160v64z" className=""></path></svg>
-              {/* <i className="fas fa-ghost"></i> */}
-              Resources
-            </p>
-          </Link>
-          <hr/>
-
-          {/* Party Section */}
-          <div className="dual-header">
-            <p className="heading-font no-link">
-              <b>Articles Party</b>
-            </p>
-            {/* <div onClick={() => {setPartySectionOpen(!partySectionOpen)}} className={"section-collapse " + (partySectionOpen ? "" : "hide")}><i className="fas fa-chevron-circle-down"></i></div> */}
-          </div>
-
-          <div className={"tab-content " + (partySectionOpen ? "" : "")}>
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PARTY}><p className="subheading-font"><i className="fas fa-users"></i>Info</p></Link>
-            <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PROPOSALS}><p className="subheading-font"><i className="fas fa-scroll"></i>Proposals</p></Link>
-            {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.TOWN_HALL}><p className="subheading-font"><i className="fas fa-bell"></i>Town Hall</p></Link> */}
-          </div>
-          
-          {/* Support Section */}
-          <hr/>
-          <p className="heading-font no-link"><b>Support</b></p>
-          <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.SUPPORT}><p className="subheading-font"><i className="fas fa-hands-helping"></i>Hub</p></Link>
-          {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.JOBS}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Jobs</p></Link> */}
-          {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PRESS}><p className="subheading-font"><i className="far fa-address-card"></i>Press</p></Link> */}
-          {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.TRANSLATIONS}><p className="subheading-font"><i className="fas fa-spinner fa-pulse"></i>Translations</p></Link> */}
-          {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.LANDING}><p className="subheading-font"><i className="fas fa-map-pin"></i>Landing</p></Link> */}
-          {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.OUTSET}><p className="subheading-font"><i className="fas fa-horse"></i>Outset</p></Link> */}
-
-          {/* Donate Section */}
-          <hr/>
-          <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.DONATE}><div className="btn btn-articles-light w-100 ml-4" style={{maxWidth: '90%'}}>Donate</div></Link>
-          
-          {!props.isAuth ? (
-            null
-          ) : (
-            <div>
-              <hr/>
-
-              {/* Admin */}
-              {props.user?.roles?.isAdmin === true ?
-              <>
-              <p className="heading-font no-link"><b>Admin &nbsp;</b><span className="badge badge-warning">Role</span></p>
-              <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ADMIN}><p className="subheading-font"><i className="fas fa-toolbox"></i>Admin Portal</p></Link>
-              {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE_MANAGE}><p className="subheading-font"><i className="fas fa-toolbox"></i>Clothing Manage</p></Link> */}
-              {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MANAGE}><p className="subheading-font"><i className="fas fa-toolbox"></i>News Manage</p></Link> */}
-              {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.DONATE}><p className="subheading-font"><i className="fas fa-toolbox"></i>Donation Manage</p></Link> */}
-              <hr/>
-              </>
-              :
-              null
-              }
-
-              {/* Playground */}
-              {props.user?.roles?.isDev === true ?
-              <>
-                <p className="heading-font no-link"><b>Dev &nbsp;</b><span className="badge badge-warning">Role</span></p>
-                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PLAYGROUND}><p className="subheading-font"><i className="fas fa-code"></i>Playground</p></Link>
-                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MESH}><p className="subheading-font"><i className="fas fa-chess-board"></i>Mesh</p></Link>
-                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MESSAGES}><p className="subheading-font"><i className="fas fa-envelope-square"></i>Messages</p></Link>
-                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.RESOURCES_PRESIDENTS}><p className="subheading-font"><i className="fas fa-envelope-square"></i>Presidents</p></Link>
-                <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.OUTSET}><p className="subheading-font"><i className="fas fa-road"></i>Outset</p></Link>
-                <div className="app-links">
-                  <img className="app-badge" src="https://bibibop.com/data/sites/1/media/rewards/Download_badge-apple-white.png" alt=""/>
-                  <img className="app-badge" src="https://www.prorehab-pc.com/wp-content/uploads/2017/12/google-play-button.svg_.hi_.png" alt=""/>
                 </div>
-              </>
-              :
-              null
-              }
+
             </div>
-          )}
+
+            <hr/>
+
+            {/* Clock and Today Info Section  */}
+            <p className="subheading-font m-0 py-0"><span id="date">{moment().format('dddd MMMM Do, YYYY')}</span></p>
+            <p className="subheading-font m-0 py-0"><Clock format={'h:mm:ss A'} ticking={true} /></p>
+      
+            <hr/>
+
+            {/* Main Links Section */}
+            <div className="side-menu-section-links">
+
+                {props.isAuth?
+                <Link className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.HOME}>
+                    <IconHome className="icon"/>
+                    <span>Home</span>
+                </Link>
+                :
+                <Link className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.HOME}>
+                    <IconHome className="icon"/>
+                    <span>Landing</span>
+                </Link>
+                }
+
+                <Link className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.MISSION}>
+                    <IconFlagUsa className="icon"/>
+                    <span>Mission</span>
+                </Link>
+
+                <Link className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.TRANSPARENCY}>
+                    <IconFileChartLine className="icon"/>
+                    <span>Transparency</span>
+                </Link>
+
+            </div>
+
+            {/* Clothing Section */}
+            <div className="side-menu-section-header">
+
+                <div className="side-menu-section-header-title">Clothing</div>
+
+                <Link id="shopping-cart-button" className="btn btn-articles-light btn-sm align-self-center" onClick={() => {setMenuOpen(false)}} to={ROUTES.CHECKOUT}>
+                    <i className="fas fa-shopping-basket mr-0"></i>
+                    <span id="shopping-cart-amount" className="badge badge-pill badge-dark">
+                        {props.expensesTotal}
+                    </span>
+                </Link>
+
+            </div>
+
+            <div className="side-menu-section-links">
+
+                <Link className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE}>
+                    <IconShoppingCart className="icon"/>
+                    <span>Store</span>
+                </Link>
+
+                <Link className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.STORE_SUBMISSIONS}>
+                    <IconLightbulb className="icon"/>
+                    <span>Submissions</span>
+                </Link>
+
+            </div>
+
+            {/* News Section */}
+            <div className="side-menu-section-header">
+
+                <div className="side-menu-section-header-title">News</div>
+
+                <span id="shopping-cart-amount" className="badge badge-pill badge-dark">
+                    3
+                </span>
+
+            </div>
+
+            <div className="side-menu-section-links">
+
+                <Link className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.NEWS}>
+                    <IconNewspaper className="icon"/>
+                    <span>Frontpage</span>
+                </Link>
+
+                <Link className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.STORIES}>
+                    {/* <i className="fas fa-bullhorn"></i> */}
+                    <IconBullhorn className="icon"/>
+                    <span>Stories</span>
+                </Link>
+
+                <Link className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.ISSUES}>
+                    {/* <i className="fas fa-balance-scale"></i> */}
+                    <IconBalanceScale className="icon"/>
+                    <span>Issues</span>
+                </Link>
+
+                <Link className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.MYTHS}>
+                    {/* <i className="fas fa-newspaper"></i> */}
+                    <IconGhost className="icon"/>
+                    <span>Myths</span>
+                </Link>
+
+                <Link className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.RESOURCES}>
+                    <IconBooks className="icon"/>
+                    <span>Resources</span>
+                </Link>
+
+            </div>    
+
+            {/* Politics Section */}
+            <div className="side-menu-section-header">
+
+                <div className="side-menu-section-header-title">Politics</div>
+
+            </div>
+
+            <div className="side-menu-section-links">
+
+                <Link className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.PARTY}>
+                    <IconHandsHelping className="icon"/>
+                    <span>Info</span>
+                </Link>
+
+                <Link className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.PROPOSALS}>
+                    <IconScroll className="icon"/>
+                    <span>Proposals</span>
+                </Link>
+
+                <Link className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.TOWN_HALL}>
+                    <IconBell className="icon"/>
+                    <span>Town Hall</span>
+                </Link>
+
+            </div>
+
+            {/* Community Section */}
+            <div className="side-menu-section-header">
+
+                <div className="side-menu-section-header-title">Community</div>
+
+            </div>
+
+            <div className="side-menu-section-links">
+
+                <Link className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.COMMUNITY}>
+                    <IconSitemap className="icon"/>
+                    <span>Hub</span>
+                </Link>
+
+                <Link className="link messages-link" onClick={() => {setMenuOpen(false)}} to={ROUTES.MESSAGES}>
+                    <IconComment className="icon messages-icon"/>
+                    <span>
+                        Messages
+                    </span>
+                </Link>
+
+            </div>
+          
+            {props.isAuth && (
+
+                <>
+
+                    {/* Admin */}
+                    {props.user?.roles?.isAdmin &&
+                        <>
+                            {/* Admin Section */}
+                            <div className="side-menu-section-header header-admin">
+
+                                <div className="side-menu-section-header-title">Admin</div>
+
+                                <span className="badge badge-warning"><i class="fas fa-star mr-0" aria-hidden="true"></i></span>
+
+                            </div>
+
+                            <div className="side-menu-section-links">
+
+                                <Link className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.ADMIN}>
+                                    <IconToolbox  className="icon"/>
+                                    <span>Portal</span>
+                                </Link>
+
+                            </div>
+
+                            {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ADMIN}><p className="subheading-font"><i className="fas fa-toolbox"></i>Admin Portal</p></Link> */}
+
+                        </>
+                    }
+
+                    {/* Playground */}
+                    {props.user?.roles?.isDev === true ?
+                    <>
+                        {/* Admin Section */}
+                        <div className="side-menu-section-header header-developer">
+
+                            <div className="side-menu-section-header-title">Developer</div>
+                            <span className="badge badge-warning"><i class="fas fa-star mr-0" aria-hidden="true"></i></span>
+
+                        </div>
+
+                        <div className="side-menu-section-links">
+
+                            <Link className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.PLAYGROUND}>
+                                <IconDraftingCompass className="icon"/>
+                                <span>Playground</span>
+                            </Link>
+
+                            <Link className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.OUTSET}>
+                                <IconAlarmExclamation className="icon"/>
+                                <span>Outset</span>
+                            </Link>
+
+                        </div>
+
+                        {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PLAYGROUND}><p className="subheading-font"><i className="fas fa-code"></i>Playground</p></Link> */}
+                        {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.OUTSET}><p className="subheading-font"><i className="fas fa-road"></i>Outset</p></Link> */}
+
+                        {/* One Day! */}
+                        {/* <div className="app-links">
+                            <img className="app-badge" src="https://bibibop.com/data/sites/1/media/rewards/Download_badge-apple-white.png" alt=""/>
+                            <img className="app-badge" src="https://www.prorehab-pc.com/wp-content/uploads/2017/12/google-play-button.svg_.hi_.png" alt=""/>
+                        </div> */}
+                    </>
+                    :
+                    null
+                    }
+                </>
+            
+            )}
 
           <hr/>
-
-          <div className="landing-page-link d-none">
-            Landing Page
-          </div>
 
           <p className="subheading-font align-items-center d-flex justify-content-between pb-3" onClick={props.toggleColorMode}>
 

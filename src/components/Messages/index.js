@@ -15,6 +15,8 @@ import loadingGif from '../../assets/img/News/loading.gif'
 
 import SocketContext from '../../utils/socket_context/context'
 
+// TODO - Convert this to Hooks :) ? 
+
 class Messages extends Component {
   constructor(props) {
     super(props);
@@ -47,6 +49,9 @@ class Messages extends Component {
       lightboxFocus: '',
 
       colorOption: '',
+
+      showMessagePreview: true,
+      showOnlineActivity: true,
     }
 
     this.myScrollRef = React.createRef()
@@ -122,17 +127,15 @@ class Messages extends Component {
         messages: response.data,
       }, () => {
 
-        self.setFocusedChat(self.state.messages.sort( self.messagesSort )[0]._id);
+        // self.setFocusedChat(self.state.messages.sort( self.messagesSort )[0]._id);
         // self.setFocus(self.state.messages[0])
         
         self.setState({
           messagesLoading: false,
           // focus: self.state.messages[0]
         }, () => {
-          setTimeout(function(){ self.scrollToBottom(); }, 100);
-
-          console.log( self.state.messages.find(m => m._id === self.state.focusedChat).fetchedUsers?.filter(user => user.id !== self.props.user_id).map(user => user.name) )
-
+        //   setTimeout(function(){ self.scrollToBottom(); }, 100);
+        //   console.log( self.state.messages.find(m => m._id === self.state.focusedChat).fetchedUsers?.filter(user => user.id !== self.props.user_id).map(user => user.name) )
         })
 
       });
@@ -272,29 +275,31 @@ class Messages extends Component {
                     <span style={{fontSize: '0.7rem', fontFamily: 'montserrat, sans-serif', fontWeight: '400'}} className="mute">{ moment( message.messages[message.messages.length - 1].date ).format("MMM Do | h:mm a") }</span>
                   </div>
 
-                  <small>
+                    <small>
 
-                    {message.encryption === true ?
-                    <span><i className="fas fa-lock"></i>Encrypted</span>
-                    :
-                    <span>
-                      {message.messages[message.messages.length - 1].message !== '' ? 
+                        {message.encryption === true ?
+                        <span><i className="fas fa-lock"></i>Encrypted</span>
+                        :
+                        (this.state.showMessagePreview &&
+                            <span>
+                                {message.messages[message.messages.length - 1].message !== '' ? 
 
-                        <span>
-                          {message.messages[message.messages.length - 1].message.substring(0,35)}
-                          {message.messages[message.messages.length - 1].message.length > 35 ? 
-                          <><span>...</span></>
-                          : 
-                          ''}
-                        </span>
-                        : 
-                        <span><i className="far fa-file-image mr-2"></i>Image</span>
+                                    <span>
+                                    {message.messages[message.messages.length - 1].message.substring(0,35)}
+                                    {message.messages[message.messages.length - 1].message.length > 35 ? 
+                                    <><span>...</span></>
+                                    : 
+                                    ''}
+                                    </span>
+                                    : 
+                                    <span><i className="far fa-file-image mr-2"></i>Image</span>
 
-                      }
-                    </span>
-                        
-                      }
-                  </small>
+                                }
+                            </span>
+                        )    
+                        }
+
+                    </small>
                 </div> 
  
               </div>
@@ -692,12 +697,23 @@ class Messages extends Component {
 
         {/* <div className="container-fluid"> */}
 
-          <div className="chat-card card my-0 mx-0">
+          <div className="chat-card card my-0 mx-0 border-0">
 
             <div className="card-body d-flex p-0">
 
               <div className={"chat-sidebar " + (this.state.sidebarVisible ? 'expand' : '')}>
-                <div className="alert alert-warning mb-0 p-1" style={{fontSize: '0.8rem'}}>Chat is in development! Articles staff will <span className="badge badge-danger">NEVER</span> ask you for your email or personal info via messages!</div>
+
+                {/* <div className="alert alert-warning mb-0 p-1" style={{fontSize: '0.8rem'}}>Chat is in development! Articles staff will <span className="badge badge-danger">NEVER</span> ask you for your email or personal info via messages!</div>\ */}
+
+                {/* <div className="d-flex justify-content-center align-self-center"> */}
+
+                <button onClick={() => this.setFocusedChat('')} className="home-button btn btn-articles-light d-flex m-2 mb-0">
+                    <i className="fas fa-home"></i>
+                    <div>Messages Home</div>
+                </button>
+
+                {/* </div> */}
+
                 {this.renderMessageContacts()}
 
                 <div className="start-chat">
@@ -707,6 +723,67 @@ class Messages extends Component {
 
               <div className={"chat-content" + (this.state.sidebarVisible ? '' : ' expand') + (Object.keys( focused || {} ).length === 0 ? ' empty' : '')}>
 
+                  <div className="content-home">
+
+                        <h2>Messages Home</h2>
+                        <div className="mb-5" style={{fontSize: '1rem'}}>Articles staff will <span style={{fontSize: '1.0em'}} className="badge badge-danger">NEVER</span> ask you for personal info such as your email, address, password, etc via messages!</div>
+
+                        <div className="container">
+                            <div className="message-settings-cards">
+    
+                                {/* Message Previews */}
+                                <div className="card p-3 d-flex">
+        
+                                    <div className="d-flex justify-content-between mb-2">
+                                        <div>Message Preview</div>
+        
+                                        <label 
+                                            className="articles-switch mb-0" 
+                                            onClick={ () => this.setState(prevState => ({showMessagePreview: !prevState.showMessagePreview})) }
+                                        >
+                                            <input type="checkbox" checked={this.state.showMessagePreview}/>
+                                            <span className="slider" onClick={ () => this.setState(prevState => ({showMessagePreview: !prevState.showMessagePreview})) }></span>
+                                        </label>
+                                    </div>
+        
+                                    <hr/>
+        
+                                    <div className="mt-2 d-flex">
+                                        <div className="fake-profile-photo mr-2"></div>
+                                        <div>
+                                            <div><b>Sender</b></div>
+                                            {this.state.showMessagePreview && <div className="message-preview">A short preview of the message</div> }
+                                        </div>
+                                    </div>
+        
+                                </div>
+        
+                                {/* Online Status */}
+                                <div className="card p-3 d-flex">
+        
+                                    <div className="d-flex justify-content-between mb-2">
+                                        <div>Online Activity</div>
+        
+                                        <label className="articles-switch mb-0" onClick={ () => this.setState(prevState => ({showOnlineActivity: !prevState.showOnlineActivity})) }>
+                                            <input type="checkbox" checked={this.state.showOnlineActivity}/>
+                                            <span className="slider" onClick={ () => this.setState(prevState => ({showOnlineActivity: !prevState.showOnlineActivity})) }></span>
+                                        </label>
+                                    </div>
+        
+                                    <hr/>
+        
+                                    <div className="mt-2">
+                                        {this.state.showOnlineActivity ? <div className="badge badge-success mr-2">Online</div> : <div className="badge badge-dark mr-2">Offline</div>}  
+                                        <div>Displays whether you are online or not</div>
+                                    </div>
+        
+                                </div>
+                            
+                            </div>
+                        </div>
+
+                  </div>
+
                 <div onClick={() => this.setState({sidebarVisible: false})}  className={"content-darken " + (this.state.sidebarVisible ? 'visible ' : '')}></div>
 
                 <div className="content-header">
@@ -714,15 +791,14 @@ class Messages extends Component {
 
                     <div className="col-8 col-sm-8 d-flex align-items-center">
 
-                      <button onClick={() => this.setState({sidebarVisible: true})} className="btn btn-articles-light d-lg-none mr-3">
-                        <i className="fas fa-chevron-left mr-0"></i>
-                      </button>
+                        <button onClick={() => this.setState({sidebarVisible: true})} className="btn btn-articles-light d-lg-none mr-3">
+                            <i className="fas fa-chevron-left mr-0"></i>
+                        </button>
 
-                      <div className="min-w-0">
-                        {/* <div>{this.state.messages.find(m => m._id === this.state.focusedChat).fetchedUsers?.filter(user => user.id !== this.props.user_id).map(user => user.name)}</div> */}
-                        <div>{focused?.fetchedUsers?.filter(user => user.id !== this.props.user_id).map(user => user.name)}</div>
-                        <div className="badge badge-dark">Offline</div>
-                      </div>
+                        <div className="d-flex align-items-center">
+                            <div className="badge badge-dark mr-2">Offline</div>
+                            <div>{focused?.fetchedUsers?.filter(user => user.id !== this.props.user_id).map(user => user.name)}</div>
+                        </div>
 
                     </div>
 

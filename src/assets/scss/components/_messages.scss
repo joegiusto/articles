@@ -6,7 +6,7 @@
       background-color: $dark-mode-card-color!important;
     }
 
-    .header, .color-options, .chat-message, textarea, .icon-wrap{
+    .header, .color-options, .chat-message, textarea, .icon-wrap, .content-home {
       background-color: $dark-mode-element-color!important;
     }
 
@@ -78,158 +78,164 @@
     height: calc(100vh - 50px);
 
     .chat-sidebar {
-      position: relative;
-      border-right: 1px solid #d8e2ef;
-      flex: 0 0 17.5rem;
-      max-width: 17.5rem;
-      transform: translateX(-17.5rem);
-      transition-duration: 200ms;
-      z-index: 1;
-      background-color: white;
-
-      &.expand {
-        transform: translateX(0rem);
-      }
-
-      @include media-breakpoint-up(lg) {
-        flex: 0 0 21.88rem;
-        max-width: 21.88rem;
-        transform: translateX(0rem);
-      }
-
-      .loading-conversations {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .chat-contact {
         position: relative;
-        cursor: pointer;
-        display: flex;
-        padding: 1rem;
+        border-right: 1px solid #d8e2ef;
+        flex: 0 0 17.5rem;
+        max-width: 17.5rem;
+        transform: translateX(-17.5rem);
+        transition-duration: 200ms;
+        z-index: 1;
+        // background-color: white;
 
-        border-top: 1px solid transparent;
-        border-bottom: 1px solid transparent;
-
-        &.active {
-          border-top: 1px solid #d8e2ef;
-          border-bottom: 1px solid #d8e2ef;
-
-          &:after {
-            position: absolute;
-            content: "";
-            height: 100%;
-            width: .25rem;
-            left: 0;
-            top: 0;
-            background-color: black;
-          }
-
-          &:hover {
-            &:after {
-              background-color: black;
-            }
-          }
-
-          .contact-photo {
-            img {
-              filter: grayscale(0%);
-            }
-          }
+        &.expand {
+            transform: translateX(0rem);
         }
 
-        &:hover {
-
-          &:after {
-            position: absolute;
-            content: "";
-            height: 100%;
-            width: .25rem;
-            left: 0;
-            top: 0;
-            background-color: $accent-color;
-          }
-
-          .contact-photo {
-            img {
-              filter: grayscale(0%);
-            }
-          }
+        @include media-breakpoint-up(lg) {
+            flex: 0 0 21.88rem;
+            max-width: 21.88rem;
+            transform: translateX(0rem);
         }
 
-        .contact-photo {
-          position: relative;
-          width: 50px;
-          height: 50px;
-          flex-shrink: 0;
+        .home-button {
+            width: -webkit-fill-available;
+            align-items: center;
+            justify-content: center;
+        }
 
-          img {
-            object-fit: cover;
+        .loading-conversations {
+            display: flex;
+            flex-direction: column;
             width: 100%;
-            height: 100%;
-            filter: grayscale(100%);
-          }
+            justify-content: center;
+            align-items: center;
+        }
 
-          .status-container {
+        .chat-contact {
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            padding: 1rem;
+
+            border-top: 1px solid transparent;
+            border-bottom: 1px solid transparent;
+
+            &.active {
+            border-top: 1px solid #d8e2ef;
+            border-bottom: 1px solid #d8e2ef;
+
+            &:after {
+                position: absolute;
+                content: "";
+                height: 100%;
+                width: .25rem;
+                left: 0;
+                top: 0;
+                background-color: black;
+            }
+
+            &:hover {
+                &:after {
+                background-color: black;
+                }
+            }
+
+            .contact-photo {
+                img {
+                filter: grayscale(0%);
+                }
+            }
+            }
+
+            &:hover {
+
+            &:after {
+                position: absolute;
+                content: "";
+                height: 100%;
+                width: .25rem;
+                left: 0;
+                top: 0;
+                background-color: $accent-color;
+            }
+
+            .contact-photo {
+                img {
+                filter: grayscale(0%);
+                }
+            }
+            }
+
+            .contact-photo {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            flex-shrink: 0;
+
+            img {
+                object-fit: cover;
+                width: 100%;
+                height: 100%;
+                filter: grayscale(100%);
+            }
+
+            .status-container {
+                position: absolute;
+                width: 15px;
+                height: 15px;
+                bottom: 0;
+                right: 0;
+                // margin: 0.25rem;
+                transform: translateX(50%) translateY(50%);
+                background-color: white;
+                border-radius: 50px;
+                z-index: 5;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .status {
+                width: 10px;
+                height: 10px;
+                border-radius: 50px;
+
+                background-color: $black;
+
+                &.online {
+                    background-color: $success;
+                }
+                }
+            }
+            }
+
+            .contact-body {
+            margin-left: .5rem;
+            flex-grow: 1;
+            }
+
+            .contact-name {
+            font-family: brandon-grotesque, sans-serif;
+            font-style: normal;
+            font-weight: 900;
+            font-size: 1rem;
+            }
+        }
+
+        .start-chat {
             position: absolute;
-            width: 15px;
-            height: 15px;
             bottom: 0;
-            right: 0;
-            // margin: 0.25rem;
-            transform: translateX(50%) translateY(50%);
-            background-color: white;
-            border-radius: 50px;
-            z-index: 5;
-
+            width: 100%;
+            left: 0;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 1rem;
 
-            .status {
-              width: 10px;
-              height: 10px;
-              border-radius: 50px;
-
-              background-color: $black;
-
-              &.online {
-                background-color: $success;
-              }
+            button {
+            width: 100%;
             }
-          }
         }
-
-        .contact-body {
-          margin-left: .5rem;
-          flex-grow: 1;
-        }
-
-        .contact-name {
-          font-family: brandon-grotesque, sans-serif;
-          font-style: normal;
-          font-weight: 900;
-          font-size: 1rem;
-        }
-      }
-
-      .start-chat {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        left: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 1rem;
-
-        button {
-          width: 100%;
-        }
-      }
     }
 
     .chat-content {
@@ -257,16 +263,55 @@
         transform: translateX(0)!important;
       }
 
-      &.empty {
-        .content-darken {
-          background-color: rgba(0, 0, 0, 0.5);
-          pointer-events: initial;
-          z-index: 1;
+        &.empty {
+
+            .content-darken {
+                background-color: rgba(0, 0, 0, 0.5);
+                pointer-events: initial;
+                z-index: 1;
+            }
+
+            .content-header, .content-body, .content-send {
+                display: none;
+            }
+
+            .content-home {
+                display: flex;
+                pointer-events: initial;
+                z-index: 2;
+            }
         }
-        .content-header, .content-body, .content-send {
-          display: none;
+
+        .content-home {
+            display: none;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            background-color: $base-color;
+
+            .message-settings-cards {
+                display: grid;
+                justify-content: center;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 400px));
+                grid-gap: 20px 20px;
+
+                .fake-profile-photo {
+                    width: 50px;
+                    height: 50px;
+                    background-color: $accent-color;
+                }
+
+                b {
+                    font-family: brandon-grotesque, sans-serif;
+                    font-style: normal;
+                    font-weight: 900;
+                    font-size: 1rem;
+                }
+            }
         }
-      }
 
       .content-darken {
         background-color: rgba(0, 0, 0, 0);
@@ -296,7 +341,7 @@
       }
 
       .content-header {
-        padding: 1rem;
+        padding: 0.5rem 1rem;
         border-bottom: 1px solid #d8e2ef;        
       }
 

@@ -164,7 +164,7 @@ class StorePage extends Component {
 					</div>
 
 					<div className="right">
-						<Link onClick={() => window.scrollTo(0, 0)} to={ROUTES.CHECKOUT} className={'btn btn-articles-light ' + (this.props.match.path === ROUTES.CHECKOUT ? 'active' : '')}>Checkout ({this.props.cart.length})</Link>
+						<Link onClick={() => window.scrollTo(0, 0)} to={ROUTES.CHECKOUT} className={'btn btn-articles-light align-items-center ' + (this.props.match.path === ROUTES.CHECKOUT ? 'active' : '')}><i className="fas fa-shopping-basket mr-2"></i>Checkout ({this.props.cart.length})</Link>
 					</div>
 				</div>
 

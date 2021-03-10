@@ -533,9 +533,10 @@ class Reports extends Component {
           <title>Transparency - Articles</title>
         </Helmet>
 
-        <div className="fixed-total dual-header">
-          {/* <span className="help">Help <i className="far fa-question-circle"></i></span> */}
-          <span className="total">+${((this.state.totals.donations - this.state.totals.recurring + this.state.totals.clothing) / 100 ).toFixed(2)}</span>
+        <div className="fixed-total">
+          {/* <span className="total">+${((this.state.totals.donations - this.state.totals.recurring + this.state.totals.clothing) / 100 ).toFixed(2)}</span> */}
+          <div className="card py-1 px-2">Most Recent Donation: $50.00 - Joey G - New York</div>
+          <div className="card py-1 px-2">Most Recent Expense: $7.57 - Server Hosting</div>
         </div>
 
         <div className="fixed-componsation-50"></div>

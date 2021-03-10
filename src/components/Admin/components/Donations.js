@@ -20,69 +20,15 @@ import { connect } from 'react-redux';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 import { DateTimePicker } from "@material-ui/pickers";
-import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 
 import AdminViewUserModal from './Shared/AdminViewUserModal'
+import materialTheme from './Shared/Material-UI-Theme'
 
 import * as ROUTES from '../../../constants/routes'; 
 import { pushNotification } from '../../../actions/notificationArea';
 
-const materialTheme = createMuiTheme({
-    overrides: {
-      MuiPickersToolbar: {
-        toolbar: {
-          backgroundColor: 'rgb(255 183 183)',
-        },
-      },
-      MuiPickerDTTabs: {
-        tabs: {
-            backgroundColor: 'rgb(255 183 183)',
-        },
-      },
-      MuiPickersCalendarHeader: {
-        switchHeader: {
-          // backgroundColor: lightBlue.A200,
-          // color: "white",
-        },
-      },
-      MuiPickersDay: {
-        day: {
-          color: '#000',
-        },
-        daySelected: {
-          backgroundColor: '#000',
-        },
-        dayDisabled: {
-          color: 'rgb(255 183 183)',
-        },
-        current: {
-          color: '#000',
-        },
-      },
-      MuiPickersModal: {
-        dialogAction: {
-          color: '#000',
-        },
-      },
-      MuiPickersClock: {
-        pin: {
-            backgroundColor: 'rgb(255 183 183)',
-        },
-      },
-      MuiPickersClockPointer: {
-        noPoint : {
-            backgroundColor: 'rgb(255 183 183)',
-        },
-        thumb: {
-            border: '14px solid #ffb7b7',
-        },
-        pointer : {
-            backgroundColor: 'rgb(255 183 183)',
-        },
-      },
-    },
-  });
+
 
 const ENDPOINT = "/";
 let socket = undefined;
@@ -178,11 +124,11 @@ function DonationsAdmin(props) {
 
 		})
 		.then( (response) => {
-		console.log(response)
-		setDonations(response.data);
+            console.log(response)
+            setDonations(response.data);
 		})
 		.catch( (error) => {
-		console.log(error);
+		    console.log(error);
 		});
 
 		if (props.match.params.id) {
@@ -242,6 +188,32 @@ function DonationsAdmin(props) {
 		});
 	}
 
+    const editDonation = (id) => {
+		console.log(id);
+
+        setModalShow(true);
+
+        // setExpense(prevState => ({
+		// 	...prevState,
+		// 	_id: id
+		// }));
+
+		// axios.post('/api/secure/deleteDonation', {
+		// 	id
+		// })
+		// .then( (response) => {
+		// 	console.log(response)
+		// 	setDonations(donations.filter(item => item._id !== response.data.removed_id));
+		// })
+		// .catch( (error) => {
+		// 	console.log(error);
+		// });
+	}
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
   return (
     <div className="admin-donations admin-page">
 
@@ -266,7 +238,7 @@ function DonationsAdmin(props) {
 										inputVariant="outlined"
 										value={selectedDate}
 										onChange={handleDateChange}
-										className="form-group articles"
+										className="form-group articles mb-3 w-100"
 									/>
 								</MuiPickersUtilsProvider>
 							</ThemeProvider>
@@ -287,10 +259,13 @@ function DonationsAdmin(props) {
 							</div>
 						</div>
 
-						<div className="col-lg-12">
+						<div className="col-lg-6">
 
-							<div className="form-group articles mx-auto" style={{maxWidth: "200px"}}>
-								<label for="address">Amount</label>
+							<div className="form-group articles">
+                                <label className="d-flex justify-content-between" for="address">
+                                    <span>Amount</span>
+                                    <span>${ numberWithCommas( (donation.amount / 100).toFixed(2) ) }</span>
+                                </label>
 								<input 
 									className="form-control with-label"
 									onChange={handleDonationChange}
@@ -301,22 +276,9 @@ function DonationsAdmin(props) {
 								/>
 							</div>
 
-							<div className="mb-3 d-flex justify-content-center">
-								<button onClick={() => handleDonationAmountChange(100)} className="btn btn-articles-light btn-sm">$1.00</button>
-								<button onClick={() => handleDonationAmountChange(500)} className="btn btn-articles-light btn-sm">$5.00</button>
-								<button onClick={() => handleDonationAmountChange(1000)} className="btn btn-articles-light btn-sm">$10.00</button>
-								<button onClick={() => handleDonationAmountChange(2000)} className="btn btn-articles-light btn-sm">$20.00</button>
-								<button onClick={() => handleDonationAmountChange(5000)} className="btn btn-articles-light btn-sm">$50.00</button>
-								<button onClick={() => handleDonationAmountChange(10000)} className="btn btn-articles-light btn-sm">$100.00</button>
-							</div>
-
 						</div>
 
-						<div className="col-12">
-							<hr className="mt-0 mb-3"/>
-						</div>
-
-						<div className="col-lg-6 mx-auto">
+                        <div className="col-lg-6">
 							<div className="form-group articles">
 								<label for="address">User</label>
 								<input 
@@ -329,6 +291,23 @@ function DonationsAdmin(props) {
 								/>
 							</div>
 						</div>
+
+                        <div className="col-12">
+                        <   div className="mb-3 d-flex justify-content-center">
+								<button onClick={() => handleDonationAmountChange(100)} className="flex-grow-1 btn btn-articles-light btn-sm">$1.00</button>
+								<button onClick={() => handleDonationAmountChange(500)} className="flex-grow-1 btn btn-articles-light btn-sm">$5.00</button>
+								<button onClick={() => handleDonationAmountChange(1000)} className="flex-grow-1 btn btn-articles-light btn-sm">$10.00</button>
+                                <button onClick={() => handleDonationAmountChange(1000)} className="flex-grow-1 btn btn-articles-light btn-sm">$15.00</button>
+								<button onClick={() => handleDonationAmountChange(2000)} className="flex-grow-1 btn btn-articles-light btn-sm">$20.00</button>
+                                <button onClick={() => handleDonationAmountChange(2000)} className="flex-grow-1 btn btn-articles-light btn-sm">$30.00</button>
+								<button onClick={() => handleDonationAmountChange(5000)} className="flex-grow-1 btn btn-articles-light btn-sm">$50.00</button>
+								<button onClick={() => handleDonationAmountChange(10000)} className="flex-grow-1 btn btn-articles-light btn-sm">$100.00</button>
+							</div>
+						</div>
+
+						{/* <div className="col-12">
+							<hr className="mt-0 mb-3"/>
+						</div> */}
 
 						<div className="col-lg-12">
 							<div className="form-group articles">
@@ -383,9 +362,9 @@ function DonationsAdmin(props) {
             <div className="card-header">
 
                 <div className="d-flex align-items-center">
-                <i className="fas fa-edit fa-2x"></i>
-                <h3 className="mb-0">Manage Donations</h3>
-                <div className="total">({donations.length})</div>
+                    <i className="fas fa-edit fa-2x"></i>
+                    <h3 className="mb-0">Manage Donations</h3>
+                    <div className="total">({donations.length})</div>
                 </div>
 
                 <button onClick={() => setModalShow(true)} className="btn btn-articles-light btn-sm">Add Donation</button>
@@ -433,7 +412,7 @@ function DonationsAdmin(props) {
                             <td>{donation.matched ? 'True' : 'False'}</td>
                             <td>
                                 <ConfirmDelete afterConfirm={() => deleteDonation(donation._id)}></ConfirmDelete>
-                                <div style={{cursor: 'pointer'}} onClick={() => this.editDonation(donation._id)} className="badge badge-dark noselect ml-1">Edit</div>
+                                <div style={{cursor: 'pointer'}} onClick={() => editDonation(donation._id)} className="badge badge-dark noselect ml-1">Edit</div>
                             </td>
                         </tr>
                         

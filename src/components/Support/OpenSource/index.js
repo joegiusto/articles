@@ -42,7 +42,7 @@ const Page = () => (
             </div>
 
             <div style={{backgroundColor: 'rgb(49 49 49);'}} className="card-footer py-2 text-center">
-              <Link to={ROUTES.SUPPORT}><button className="btn btn-articles-light alt">Support Hub</button></Link>
+              <Link to={ROUTES.COMMUNITY}><button className="btn btn-articles-light alt">Support Hub</button></Link>
             </div>
 
           </div>

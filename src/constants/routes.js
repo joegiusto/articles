@@ -114,9 +114,12 @@ export const PROPOSAL ='/party/proposals/:id'
 export const MESH ='/mesh'
 
 // Support
-export const SUPPORT ='/support'
-export const BLOG ='/support/blog'
-export const FAQ ='/support/FAQ'
+export const COMMUNITY ='/community'
+
+// export const SUPPORT ='/support'
+// export const BLOG ='/support/blog'
+
+export const FAQ =`${COMMUNITY}/FAQ`
 export const PRIVACY ='/support/privacy'
 
 export const UPDATES ='/support/updates'

@@ -321,7 +321,7 @@ class AppBase extends Component {
                   
                   <Route path={ROUTES.MESH} component={MeshPage} />
             
-                  <Route exact path={ROUTES.SUPPORT} component={SupportPage} />
+                  <Route exact path={ROUTES.COMMUNITY} component={SupportPage} />
                   <Route exact path={ROUTES.UPDATES} component={UpdatesPage} />
                   <Route exact path={ROUTES.UPDATE} component={UpdatePage} />
                   <Route path={ROUTES.FAQ} component={FaqPage} />

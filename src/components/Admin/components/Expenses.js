@@ -2,15 +2,39 @@ import React, { Component, useState, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
+import { DateTimePicker } from "@material-ui/pickers";
+import { createMuiTheme } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/styles";
+
+import AdminViewUserModal from './Shared/AdminViewUserModal'
+import materialTheme from './Shared/Material-UI-Theme'
+
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import { formatDate, parseDate } from 'react-day-picker/moment';
+
+import TextareaAutosize from 'react-textarea-autosize';
 
 import ConfirmDelete from './ConfirmDelete';
 
 function ExpensesAdmin(props) {
     const [expenses, setExpenses] = useState([]);
     const [modalShow, setModalShow] = useState(false);
+
+    const [expense, setExpense] = useState({
+		// createdBy: '5e90cc96579a17440c5d7d52',
+		// amount: 100,
+		// user_id: '',
+		// message: '',
+        // _id: ''
+	});
+
+    const [selectedDate, handleDateChange] = useState(new Date());
 
     useEffect(() => {
         props.setLocation(props.tabLocation);
@@ -28,13 +52,276 @@ function ExpensesAdmin(props) {
 
     const handleClose = () => {
         setModalShow(false); 
+        setExpense(prevState => ({}));
+        handleDateChange(new Date())
         // setActiveDonationID(''); 
         // setActivePresident({}); 
         // props.history.push(ROUTES.ADMIN_DONATIONS);
     }
 
+    const handleExpenseChange = e => {
+		const { name, value } = e.target;
+		setExpense(prevState => ({
+			...prevState,
+			[name]: value
+		}));
+	};
+
+    const handleExpenseAmountChange = e => {
+		const { name, value } = e.target;
+		setExpense(prevState => ({
+			...prevState,
+			[name]: value
+		}));
+	};
+
+    const addExpense = () => {
+
+		// if (donation.user_id == '') {
+		// 	delete donation.user_id;
+		// }
+
+		// axios.post('/api/secure/addDonation', {
+		// 	donation,
+		// 	selectedDate
+		// })
+		// .then( (response) => {
+		// 	console.log(response)
+		// 	// setDonations(donations.filter(item => item._id !== response.data.removed_id));
+		// 	setDonations(prevState => ([
+		// 		...prevState,
+		// 		response.data.populatedDonation
+		// 	]));
+		// })
+		// .catch( (error) => {
+		// 	console.log(error);
+		// });
+	}
+
+	const deleteExpense = (id) => {
+		console.log(id)
+
+		axios.post('/api/secure/deleteExpense', {
+			id
+		})
+		.then( (response) => {
+			console.log(response)
+			setExpenses(expenses.filter(item => item._id !== response.data.removed_id));
+		})
+		.catch( (error) => {
+			console.log(error);
+		});
+	}
+
+    const editExpense = (id) => {
+		console.log(id);
+
+        setModalShow(true);
+
+        const expenseToSet = expenses.find(item => item._id == id);
+        handleDateChange(expenseToSet.date)
+        console.log(expenseToSet)
+
+        setExpense( prevState => ( {
+            ...prevState,
+            ...expenseToSet
+        } ) );
+
+        // setExpense(prevState => ({
+		// 	...prevState,
+		// 	_id: id
+		// }));
+
+	}
+
+    const upsertExpense = (id) => {
+        console.log('upsertExpense called')
+
+        const expenseToSend = {
+            ...expense,
+            date: selectedDate,
+        }
+
+        console.log(expenseToSend)
+
+        axios.post('/api/secure/upsertExpense', expenseToSend)
+		.then( (response) => {
+
+			console.log(response.data.result._id)
+            console.log(response)
+
+            // setExpenses();
+
+            // filter out newResponsesOldResults
+            const expensesToSet = [
+                ...expenses.filter(item => item._id != response.data.result._id),
+                response.data.result
+            ]
+
+            console.log(expensesToSet)
+
+            setExpenses( prevState => ( expensesToSet ) );
+
+            handleClose()
+			// setDonations(donations.filter(item => item._id !== response.data.removed_id));
+			// setDonations(prevState => ([
+			// 	...prevState,
+			// 	response.data.populatedDonation
+			// ]));
+		})
+		.catch( (error) => {
+			console.log(error);
+		});
+    }
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
     return(
         <div className="admin-page admin-expenses">
+
+            {/* Add Donation Modal */}
+            <Modal show={modalShow} className="donations-modal articles-modal" centered onHide={handleClose}>
+
+                <Modal.Header closeButton>
+                    <Modal.Title>Expense Info</Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>
+
+                    <div className="donate-form">
+
+                        <div className="row">
+
+                            <div className="col-lg-6">
+                                <ThemeProvider theme={materialTheme}>
+                                    <MuiPickersUtilsProvider utils={MomentUtils}>
+                                        <DateTimePicker
+                                            label="Date"
+                                            inputVariant="outlined"
+                                            value={selectedDate}
+                                            onChange={handleDateChange}
+                                            className="form-group articles mb-3 w-100"
+                                        />
+                                    </MuiPickersUtilsProvider>
+                                </ThemeProvider>
+                            </div>
+
+                            <div className="col-lg-6">
+                                <div className="form-group articles">
+                                    <label className="d-flex justify-content-between" for="address">
+                                        <span>Amount</span>
+                                        <span>${ numberWithCommas( (expense.amount / 100).toFixed(2) ) }</span>
+                                    </label>
+                                    <input 
+                                        className="form-control with-label"
+                                        onChange={handleExpenseAmountChange}
+                                        name="amount"
+                                        id="amount" 
+                                        type="text" 
+                                        value={ expense.amount }
+                                    />
+                                </div>
+                            </div>
+
+                            {/* <div className="col-lg-12">
+
+                                <div className="form-group articles mx-auto" style={{maxWidth: "200px"}}>
+                                    <label for="address">Amount</label>
+                                    <input 
+                                        className="form-control with-label"
+                                        onChange={handleDonationChange}
+                                        name="amount"
+                                        id="amount" 
+                                        type="text" 
+                                        value={donation.amount}
+                                    />
+                                </div>
+
+                                <div className="mb-3 d-flex justify-content-center">
+                                    <button onClick={() => handleDonationAmountChange(100)} className="btn btn-articles-light btn-sm">$1.00</button>
+                                    <button onClick={() => handleDonationAmountChange(500)} className="btn btn-articles-light btn-sm">$5.00</button>
+                                    <button onClick={() => handleDonationAmountChange(1000)} className="btn btn-articles-light btn-sm">$10.00</button>
+                                    <button onClick={() => handleDonationAmountChange(2000)} className="btn btn-articles-light btn-sm">$20.00</button>
+                                    <button onClick={() => handleDonationAmountChange(5000)} className="btn btn-articles-light btn-sm">$50.00</button>
+                                    <button onClick={() => handleDonationAmountChange(10000)} className="btn btn-articles-light btn-sm">$100.00</button>
+                                </div>
+
+                            </div>
+
+                            <div className="col-12">
+                                <hr className="mt-0 mb-3"/>
+                            </div>
+                            */}
+
+                            <div className="col-lg-12 mx-auto">
+                                <div className="form-group articles">
+                                    <label for="address">Reason</label>
+                                    <input 
+                                        className="form-control with-label"
+                                        onChange={handleExpenseChange}
+                                        name="reason" 
+                                        id="reason" 
+                                        type="text" 
+                                        value={expense.reason}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="col-lg-12 mx-auto">
+                                <div className="form-group articles">
+                                    <label for="file">File</label>
+                                    <input 
+                                        className="form-control with-label"
+                                        onChange={handleExpenseChange}
+                                        name="file" 
+                                        id="file" 
+                                        type="text" 
+                                        value={expense.file}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="col-lg-12">
+                                <div className="form-group articles">
+                                    <label for="note">Note</label>
+                                    {/* <textarea className="form-control with-label" rows="" onChange={handleExpenseChange} name="note" id="note" type="text">
+                                        {expense.note}
+                                    </textarea> */}
+                                    <TextareaAutosize 
+                                        className="form-control with-label" 
+                                        name="note" 
+                                        id="note" 
+                                        type="text"
+                                        minRows='4'
+                                        value={expense.note}
+                                        onChange={handleExpenseChange} 
+                                    />
+                                </div>
+                            </div>
+
+                            
+
+                        </div>
+
+                    </div>
+
+                </Modal.Body>
+
+                <Modal.Footer className="d-flex justify-content-between">
+
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+
+                    <Button variant="articles-light" onClick={upsertExpense}>
+                        {expense._id === '' ? 'Add' : 'Save'} Expense
+                    </Button>
+
+                </Modal.Footer>
+
+            </Modal>
 
             <div className="side-panel">
                 <div className="card">
@@ -102,9 +389,9 @@ function ExpensesAdmin(props) {
                                     <td>${(expense.amount / 100).toFixed(2)}</td>
                                     <td>{expense.note}</td>
                                     <td><a target="_blank" rel="noopener noreferrer" href={expense.file}><i className="far fa-file-pdf"></i></a></td>
-                                    <td>
-                                        <ConfirmDelete afterConfirm={() => this.removeDonation(expense._id)}></ConfirmDelete>
-                                        <div style={{cursor: 'pointer'}} onClick={() => this.editDonation(expense._id)} className="badge badge-dark noselect ml-1">Edit</div>
+                                    <td className="actions-cell">
+                                        <ConfirmDelete afterConfirm={() => deleteExpense(expense._id)}></ConfirmDelete>
+                                        <div style={{cursor: 'pointer'}} onClick={() =>editExpense(expense._id)} className="badge badge-dark noselect ml-1">Edit</div>
                                     </td>
                                 </tr>
 
