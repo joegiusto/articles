@@ -271,7 +271,7 @@
                 z-index: 1;
             }
 
-            .content-header, .content-body, .content-send {
+            .content-body, .content-send {
                 display: none;
             }
 
@@ -340,10 +340,14 @@
         }
       }
 
-      .content-header {
-        padding: 0.5rem 1rem;
-        border-bottom: 1px solid #d8e2ef;        
-      }
+        .content-header {
+            padding: 0.5rem 1rem;
+            border-bottom: 1px solid #d8e2ef;
+
+            #conversations-menu-button {
+                z-index: 2;
+            }
+        }
 
       .content-body {
         padding: 1rem;

@@ -119,19 +119,19 @@ export const COMMUNITY ='/community'
 // export const SUPPORT ='/support'
 // export const BLOG ='/support/blog'
 
-export const FAQ =`${COMMUNITY}/FAQ`
-export const PRIVACY ='/support/privacy'
+export const FAQ =`${COMMUNITY}/faqs`
+export const PRIVACY =`${COMMUNITY}/privacy`
 
-export const UPDATES ='/support/updates'
-export const UPDATE = '/support/updates/:id'
+export const UPDATES =`${COMMUNITY}/updates`
+export const UPDATE = `${COMMUNITY}/updates/:id`
 
-export const JOBS ='/support/jobs'
-export const PRESS ='/support/press'
-export const TRANSLATIONS ='/support/translations'
-export const ROADMAP ='/support/roadmap'
-export const FORUM ='/support/forum'
-export const FORUM_THREAD ='/support/forum/:id'
-export const OPEN_SOURCE ='/support/open-source'
+export const JOBS =`${COMMUNITY}/jobs`
+export const PRESS =`${COMMUNITY}/press`
+export const TRANSLATIONS =`${COMMUNITY}/translations`
+export const ROADMAP =`${COMMUNITY}/roadmap`
+export const FORUM =`${COMMUNITY}/forum`
+export const FORUM_THREAD =`${COMMUNITY}/forum/:id`
+export const OPEN_SOURCE =`${COMMUNITY}/open-source`
 
 // Account
 export const ACCOUNT = '/account';
