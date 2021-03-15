@@ -98,6 +98,8 @@ function connectWithRetryMongo() {
 
     require('./routes/mongoConfig')(app, db, cache);
 
+    require('./routes/getAd')(app, db);
+
     require('./routes/getGithubCommits')(app, db, cache);
     require('./routes/getWeather')(app, db, cache);
   
@@ -116,6 +118,7 @@ function connectWithRetryMongo() {
 
     require('./routes/getSubmissionsMongoose')(app, db, cache);
     require('./routes/getRevenueMongoose')(app, db);
+    require('./routes/getRevenueOrdersMongoose')(app, db);
 
     require('./routes/getExpenses')(app, db);
   

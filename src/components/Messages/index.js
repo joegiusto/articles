@@ -639,60 +639,60 @@ class Messages extends Component {
 
         <div className={"start-chat-container " + (this.state.createChatOverlay ? 'visible' : '')}>
 
-          <div onClick={() => this.setState({createChatOverlay: false})} className="start-chat-background"></div>
+            <div onClick={() => this.setState({createChatOverlay: false})} className="start-chat-background"></div>
 
-          <div className="start-chat card">
+            <div className="start-chat card">
 
-            <div className="card-header">
-              Start Chat
-            </div>
-
-            <div className="card-body">
-
-              <div className="form-group articles">
-                <label for="new-chat-user-id">User's ID or Email Address</label>
-                <input 
-                  className="form-control with-label" 
-                  name="startChatUser" 
-                  id="startChatUser" 
-                  value={this.state.startChatUser}
-                  onChange={(e) => this.handleChange(e)}
-                  type="text"/>
-              </div>
-
-              <div className="form-group articles">
-                <label for="startChatMessage">Message</label>
-                <TextareaAutosize
-                  className="form-control with-label"
-                  name="startChatMessage"
-                  value={this.state.startChatMessage}
-                  onChange={(e) => this.handleChange(e)}
-                  placeholder="Type your message">
-                </TextareaAutosize>
-              </div>
-
-              {this.state.startChatError !== '' &&
-                <div className="alert alert-danger">
-                  {this.state.startChatError}
+                <div className="card-header">
+                Start Chat
                 </div>
-              }
 
-              <button onClick={() => this.startChat(this.state.startChatUser, this.state.startChatMessage)} disabled={this.state.startChatUser === '' || this.state.startChatMessage === ''} className="btn btn-lg w-100 btn-articles-light">Start Chat</button>
+                <div className="card-body">
+
+                <div className="form-group articles">
+                    <label for="new-chat-user-id">User's ID or Email Address</label>
+                    <input 
+                    className="form-control with-label" 
+                    name="startChatUser" 
+                    id="startChatUser" 
+                    value={this.state.startChatUser}
+                    onChange={(e) => this.handleChange(e)}
+                    type="text"/>
+                </div>
+
+                <div className="form-group articles">
+                    <label for="startChatMessage">Message</label>
+                    <TextareaAutosize
+                    className="form-control with-label"
+                    name="startChatMessage"
+                    value={this.state.startChatMessage}
+                    onChange={(e) => this.handleChange(e)}
+                    placeholder="Type your message">
+                    </TextareaAutosize>
+                </div>
+
+                {this.state.startChatError !== '' &&
+                    <div className="alert alert-danger">
+                    {this.state.startChatError}
+                    </div>
+                }
+
+                <button onClick={() => this.startChat(this.state.startChatUser, this.state.startChatMessage)} disabled={this.state.startChatUser === '' || this.state.startChatMessage === ''} className="btn btn-lg w-100 btn-articles-light">Start Chat</button>
+
+                </div>
+
+                <div className="card-footer">
+                <small>Your User ID is <b>{this.props.user_id}</b> provide this to a friend to start a conversation.</small>
+                </div>
 
             </div>
-
-            <div className="card-footer">
-              <small>Your User ID is <b>{this.props.user_id}</b> provide this to a friend to start a conversation.</small>
-            </div>
-
-          </div>
 
         </div>
         
         <div className={"nav-bar-sticker d-none " + (this.props.sideMenuOpen ? '' : '')}>
-          <div className="bg"></div>
-          <div className="bg bg2"></div>
-          <div className="bg bg3"></div>
+            <div className="bg"></div>
+            <div className="bg bg2"></div>
+            <div className="bg bg3"></div>
         </div>
 
         {/* <div className="container-fluid"> */}

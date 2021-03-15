@@ -43,7 +43,7 @@ class StepFourNew extends Component {
           display_name="Articles Party"
           backend_name="articles"
           fullImage={articlesCard}
-          logo={articlesLogo}
+          logo={'https://cdn.articles.media/email/logo.jpg'}
         />
 
         <PolitcalPartyCard 
@@ -187,7 +187,7 @@ const StepFour = (props) => (
       display_name="Articles Party"
       backend_name="articles"
       fullImage={articlesCard}
-      logo={articlesLogo}
+      logo={'https://cdn.articles.media/email/logo.jpg'}
     />
 
     <PolitcalPartyCard 

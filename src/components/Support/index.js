@@ -11,7 +11,7 @@ const itemsToRender = [
   [ROUTES.TRANSLATIONS, 'Translations', <i className="fas fa-language"></i>],
   [ROUTES.FORUM, 'Forum', <i className="far fa-comments"></i>],
   [ROUTES.FORUM, 'Jobs', <i className="fas fa-briefcase"></i>],
-  [ROUTES.FORUM, 'Beta Testing', <span className="badge badge-dark">!</span>],
+  [ROUTES.BETA, 'Beta Testing', <span className="badge badge-dark">!</span>],
 ]
 
 const Page = (props) => (

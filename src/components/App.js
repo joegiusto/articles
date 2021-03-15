@@ -75,6 +75,7 @@ import PressPage from './Support/Press'
 import TranslationsPage from './Support/Translations'
 import RoadmapPage from './Support/Roadmap'
 import ForumPage from './Support/Forum'
+import BetaPage from './Support/Beta'
 import OpenSourcePage from './Support/OpenSource'
 
 // import EmployeePage from './Employees'
@@ -330,6 +331,7 @@ class AppBase extends Component {
                   <Route path={ROUTES.TRANSLATIONS} component={TranslationsPage} />
                   <Route path={ROUTES.ROADMAP} component={RoadmapPage} />
                   <Route path={ROUTES.FORUM} component={ForumPage} />
+                  <Route path={ROUTES.BETA} component={BetaPage} />
                   <Route path={ROUTES.OPEN_SOURCE} component={OpenSourcePage} />
             
                   {/* <Route path={ROUTES.ACCOUNT} component={AccountPage} /> */}

@@ -56,6 +56,7 @@ class Reports extends Component {
           revenue: {
             clothing: [],
             donations: [],
+            orders: [],
           },
 
         },
@@ -252,6 +253,29 @@ class Reports extends Component {
     .catch(function (error) {
       console.log(error);
     });
+
+    axios.get('/api/getRevenueOrdersMongoose', {
+        params: {}
+      })
+      .then(function (response) {
+        console.log(response);
+  
+        self.setState({
+            reportsData: {
+                ...self.state.reportsData,
+                revenue: {
+                    ...self.state.reportsData.revenue,
+                    orders: response.data
+                }
+            }
+          }, () => {
+            console.log("Done")
+        })
+  
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 
     axios.get('/api/getExpensesRecurring', {
       params: {
@@ -1069,11 +1093,18 @@ class RevenueTable extends Component {
 			console.log(`reportsData.revenue.donations received an update`);
 
 			this.setState({
-				all: [...this.props.reportsData.revenue.donations.map(order => {
-					order.type = 'Donation';
-					order.unifiedPrice = order.amount
-					return order;
-				})]
+				all: [
+                    ...this.props.reportsData.revenue.donations.map(order => {
+                        order.type = 'Donation';
+                        order.unifiedPrice = order.amount
+                        return order;
+				    }),
+                    ...this.props.reportsData.revenue.orders.map(order => {
+                        order.type = 'Store Order';
+                        order.unifiedPrice = order.amount
+                        return order;
+                    })
+                ]
 			});
 
 		}
@@ -1083,11 +1114,18 @@ class RevenueTable extends Component {
 		console.log(`RevenueTable was mounted!`)
 
 		this.setState({
-			all: [...this.props.reportsData.revenue.donations.map(order => {
-				order.type = 'Donation';
-				order.unifiedPrice = order.amount
-				return order;
-			})]
+			all: [
+                ...this.props.reportsData.revenue.donations.map(order => {
+                    order.type = 'Donation';
+                    order.unifiedPrice = order.amount
+                    return order;
+			    }),
+                ...this.props.reportsData.revenue.orders.map(order => {
+                    order.type = 'Store Order';
+                    order.unifiedPrice = order.amount
+                    return order;
+			    })
+            ]
 		});
 	}
 

@@ -130,6 +130,7 @@ export const PRESS =`${COMMUNITY}/press`
 export const TRANSLATIONS =`${COMMUNITY}/translations`
 export const ROADMAP =`${COMMUNITY}/roadmap`
 export const FORUM =`${COMMUNITY}/forum`
+export const BETA =`${COMMUNITY}/beta`
 export const FORUM_THREAD =`${COMMUNITY}/forum/:id`
 export const OPEN_SOURCE =`${COMMUNITY}/open-source`
 
