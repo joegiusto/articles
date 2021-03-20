@@ -301,21 +301,21 @@ section.myths-section {
     }
 
     .related {
-      margin-top: 1rem;
-      background: white;
-      padding: 0.5rem;
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+        margin-top: 1rem;
+        background: white;
+        padding: 0.5rem;
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
 
-      .news-card {
-        height: 200px;
-        width: 100%;
-        background-color: black;
-      }
+        .news-card {
+            height: 200px;
+            width: 100%;
+            background-color: black;
+        }
 
-      .count {
-        font-size: 14px;
-        text-align: center;
-      }
+        .count {
+            font-size: 14px;
+            text-align: center;
+        }
     }
 
     .recommendation {

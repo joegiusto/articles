@@ -170,55 +170,57 @@ class Myth extends React.Component {
             <button className="btn btn-articles-light w-100">Share</button>
 
             <div className="related">
-              <h5 className="title">Related Content</h5>
-              <div className="tags">
-                {this.state.news_tags.length > 0 ?
-                this.state.news_tags.map((tag) => 
-                  <div className="tag badge badge-dark">{tag.tag_name}</div>
-                )
+
+                <h5 className="title">Related Content</h5>
+                
+                <div className="tags">
+                    {this.state.news_tags.length > 0 ?
+                    this.state.news_tags.map((tag) => 
+                    <div className="tag badge badge-dark">{tag.tag_name}</div>
+                    )
+                    :
+                    <div className="badge badge-light">No Tags</div>
+                    }
+                </div>
+
+                {this.state.relatedContentLoading ? 
+                <div>Loading</div>
                 :
-                <div className="badge badge-light">No Tags</div>
+                this.state.relatedContent.length === 0 ?
+                    <div>No related content</div>
+    
+                    :
+    
+                <Swiper 
+                    className="proposals"
+                    {...swiper_settings}
+                    onSlideChange={(swiper) => this.setState({relatedContentIndex: swiper.activeIndex })}
+                >
+    
+                    <i className="fas fa-backward"></i>
+                    <i className="fas fa-forward"></i>
+    
+                    {this.state.relatedContent.map( (proposal) => 
+                    <SwiperSlide>
+                        <Link to={`${this.renderRoute(proposal.news_type)}/${proposal.url}`}>
+                        <div className="proposal">
+                            <div className="background">
+                            <img src={proposal.hero_url} alt=""/>
+                            </div>
+                            <div className="title">{proposal.news_title}</div>
+                        </div>
+                        </Link>
+                    </SwiperSlide>
+                    )}
+    
+                </Swiper>
+    
                 }
-              </div>
 
-              {this.state.relatedContentLoading ? 
-              <div>Loading</div>
-              :
-              this.state.relatedContent.length === 0 ?
-                <div>No related content</div>
- 
-                :
- 
-               <Swiper 
-                 className="proposals"
-                 {...swiper_settings}
-                 onSlideChange={(swiper) => this.setState({relatedContentIndex: swiper.activeIndex })}
-               >
- 
-                 <i className="fas fa-backward"></i>
-                 <i className="fas fa-forward"></i>
- 
-                 {this.state.relatedContent.map( (proposal) => 
-                   <SwiperSlide>
-                     <Link to={`${this.renderRoute(proposal.news_type)}/${proposal.url}`}>
-                       <div className="proposal">
-                         <div className="background">
-                           <img src={proposal.hero_url} alt=""/>
-                         </div>
-                         <div className="title">{proposal.news_title}</div>
-                       </div>
-                     </Link>
-                   </SwiperSlide>
-                 )}
- 
-               </Swiper>
- 
-              }
-
-              {this.state.relatedContent.length === 0 ?
-              null:
-              <div className="count">{this.state.relatedContentIndex + 1}/{this.state.relatedContent.length}</div>
-              }
+                {this.state.relatedContent.length === 0 ?
+                null:
+                <div className="count">{this.state.relatedContentIndex + 1}/{this.state.relatedContent.length}</div>
+                }
               
             </div>
 

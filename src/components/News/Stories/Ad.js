@@ -1,8 +1,11 @@
 import React, { useState, useEffect, Component } from 'react';
 import axios from 'axios'
 import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom'
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+
+import * as ROUTES from '../../../constants/routes'
 
 function AdNew(props) {
 	// props.setLocation(props.tabLocation);
@@ -105,16 +108,37 @@ function AdNew(props) {
     }
 
     const popover = (
-        <Popover id="popover-basic">
+        <Popover className="hours-popover " id="popover-basic">
             <Popover.Title as="h3">Store Hours</Popover.Title>
             <Popover.Content>
-                <div>Sunday: 6:30AM–8PM</div>
-                <div><b>Monday: 6:30AM–8PM</b></div>
-                <div>Tuesday: 6:30AM–8PM</div>
-                <div>Wednesday: 6:30AM–8PM</div>
-                <div>Thursday: 6:30AM–8PM</div>
-                <div>Friday: 6:30AM–8PM</div>
-                <div>Saturday: 6:30AM–8PM</div>
+                <div className="day-wrap">
+                    <div className="day">Sunday:</div> 
+                    <div className="hours">6:30AM–8PM</div>
+                </div>
+                <div className="day-wrap active">
+                    <div className="day"><b>Monday:</b></div>
+                    <div className="hours">6:30AM–8PM</div>
+                </div>
+                <div className="day-wrap">
+                    <div className="day">Tuesday:</div>
+                    <div className="hours">6:30AM–8PM</div>
+                </div>
+                <div className="day-wrap">
+                    <div className="day">Wednesday:</div>
+                    <div className="hours">6:30AM–8PM</div>
+                </div>
+                <div className="day-wrap">
+                    <div className="day">Thursday:</div>
+                    <div className="hours">6:30AM–8PM</div>
+                </div>
+                <div className="day-wrap">
+                    <div className="day">Friday:</div>
+                    <div className="hours">6:30AM–8PM</div>
+                </div>
+                <div className="day-wrap">
+                    <div className="day">Saturday:</div>
+                    <div className="hours">6:30AM–8PM</div>
+                </div>
             </Popover.Content>
         </Popover>
     );
@@ -141,27 +165,39 @@ function AdNew(props) {
                 }
             } className={"details-slide-out " + (adDetailsExpanded ? 'expand' : '')}>
 
-            <div>This ad is being shown to you for the following reasons</div>
-            <hr/>
-            <div className="badge badge-light">{ad.business}</div>
-            <div>Is advertising to all zip codes within a</div>
-            <span><div className="badge badge-light">15 Mile Radius</div></span>
-            <div>of it's business</div>
-            <hr/>
-            <div>Your Zip code</div>
-            <span><div className="badge badge-light">12524</div></span>
-            <div>is</div>
-            <div className="badge badge-light">1.7 miles away</div>
+                <div>This ad is being shown to you for the following reasons</div>
 
-            <hr/>
+                <hr className="border w-50 border-white"/>
 
-            <div className="grow"></div>
+                <div className="badge badge-light">{ad.business}</div>
+                <div>Is advertising to all zip codes within a</div>
+                <span><div className="badge badge-light">15 Mile Radius</div></span>
+                <div>of it's business</div>
 
-            <div className="reason">As always all ads we display to you will be completely transparent and follow our privacy policy.To change your Zip code settings click here (Note to testers this is hard edited in so this page is not working yet)</div>
+                <hr className="border w-50 border-white"/>
 
-            <div onClick={() => adDetailsExpandedToggle()} className="explanation">
-                Ad Details
-            </div>
+                <div className="d-flex align-items-center">
+                    <div>Your Zip code</div>
+                    <div className="badge badge-light ml-2">12524</div>
+                    <div className="ml-2">is</div>
+                    <div className="badge badge-light ml-2">1.7 miles away</div>
+                </div>
+
+                <hr className="w-501"/>
+
+                <div className="grow"></div>
+
+                {/* <div className="reason">Details about this ads financial impact can be found <Link>Here</Link>.</div> */}
+
+                <div className="reason">As always all ads we display to you will be completely transparent and follow our privacy policy. To change your Zip code settings.</div>
+
+                <Link to={ROUTES.SETTINGS_ACCOUNT} className="btn btn-articles-light btn-sm">Settings</Link>
+
+                <p className="text-center mb-0 mt-2">Ad ID: <b>{ad._id}</b></p>
+
+                {/* <div onClick={() => adDetailsExpandedToggle()} className="explanation">
+                    Ad Details
+                </div> */}
 
             </div>
 
@@ -174,7 +210,7 @@ function AdNew(props) {
                 className="main-panel"
             >
                 
-                <div className="ad-warning">Advertisement</div>
+                <div className="ad-warning text-center">Local Advertisement</div>
 
                 <div className="photo-banner">
     
@@ -192,7 +228,7 @@ function AdNew(props) {
     
                 <div className="detail-title">
                     <div className="detail w-100">
-                        <span className="icon"><i className="fas fa-store-alt"></i></span>
+                        {/* <span className="icon"><i className="fas fa-store-alt"></i></span> */}
                         <span>{ad.business}</span>
                     </div>
                 </div>

@@ -1,5 +1,6 @@
 const initialState = {
   colorModeDark: false,
+  animatedSideMenuSectionHeaders: false,
   weatherPin: false,
   sideMenuOpen: false,
   sideMenuFixed: false,
@@ -13,10 +14,15 @@ const initialState = {
 export default function(state = initialState, action) {
   switch (action.type) {
     case 'TOGGLE_SIDE_MENU_OPEN':
-      return {
-        ...state,
-        sideMenuOpen: !state.sideMenuOpen
-      };
+        return {
+                ...state,
+                sideMenuOpen: !state.sideMenuOpen
+        };
+    case 'TOGGLE_ANIMATED_SIDE_MENU_SECTION_HEADERS':
+        return {
+            ...state,
+            animatedSideMenuSectionHeaders: !state.animatedSideMenuSectionHeaders
+        };
     case 'TOGGLE_SIDE_MENU_FIXED':
       return {
         ...state,

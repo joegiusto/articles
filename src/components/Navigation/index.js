@@ -413,7 +413,7 @@ function Menu(props) {
             </div>
 
             {/* Clothing Section */}
-            <div className="side-menu-section-header">
+            <div className={`side-menu-section-header header-clothing ${props.site.animatedSideMenuSectionHeaders ? 'animated' : ''}`}>
 
                 <div className="side-menu-section-header-title">Clothing</div>
 
@@ -441,7 +441,7 @@ function Menu(props) {
             </div>
 
             {/* News Section */}
-            <div className="side-menu-section-header">
+            <div className={`side-menu-section-header header-news ${props.site.animatedSideMenuSectionHeaders ? 'animated' : ''}`}>
 
                 <div className="side-menu-section-header-title">News</div>
 
@@ -484,7 +484,7 @@ function Menu(props) {
             </div>    
 
             {/* Politics Section */}
-            <div className="side-menu-section-header">
+            <div className={`side-menu-section-header header-politics ${props.site.animatedSideMenuSectionHeaders ? 'animated' : ''}`}>
 
                 <div className="side-menu-section-header-title">Politics</div>
 
@@ -510,7 +510,7 @@ function Menu(props) {
             </div>
 
             {/* Community Section */}
-            <div className="side-menu-section-header">
+            <div className={`side-menu-section-header header-community ${props.site.animatedSideMenuSectionHeaders ? 'animated' : ''}`}>
 
                 <div className="side-menu-section-header-title">Community</div>
 

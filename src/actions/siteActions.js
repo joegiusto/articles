@@ -24,6 +24,14 @@ export const toggleSideMenuOpen = () => dispatch => {
   });
 };
 
+export const toggleAnimatedSideMenuSectionHeaders = () => dispatch => {
+    console.log(`Toggling the animation on the side menu section headers!`);
+  
+    dispatch({
+      type: 'TOGGLE_ANIMATED_SIDE_MENU_SECTION_HEADERS',
+    });
+};
+
 export const toggleSideMenuFixed = () => dispatch => {
   console.log(`Toggling the side menu fixed option!`);
 

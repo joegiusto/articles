@@ -192,3 +192,22 @@ a {
     border-radius: 50%;
   }
 }
+
+.hours-popover {
+
+    .day-wrap {
+        display: flex;
+
+        &.active {
+
+            .day, .hours {
+                font-weight: bold;
+            }
+        }
+
+        .day {
+            width: 100px;
+        }
+
+    }
+}
