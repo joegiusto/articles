@@ -384,9 +384,11 @@ function NewsHead(props) {
 
         <img src={searchBackgrounds[backgroundIndex]} alt=""/>
 
+        <div className="background-gradient"></div>
+
         <div className="search-container">
 
-          <h2 className="title">Search Confidently</h2>
+          <h2 className="title">Search</h2>
 
           <div className="input-group w-100 justify-content-lg-center">
 

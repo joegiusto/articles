@@ -7,11 +7,13 @@ import moment from 'moment';
 import Chart from 'chart.js';
 import socketIOClient from 'socket.io-client'
  
-import { sales } from "../../sample_data/sampleData";
 import * as ROUTES from '../../constants/routes';
 import {ClothingTable} from "./table.js"
 
 // import DataCharts from './components/Charts'
+import RevenueTable from './components/Reports/RevenueTable';
+import ExpenseTable from './components/Reports/ExpenseTable';
+
 import EmployeePage from './components/Employees';
 import EmployeeDetailsPage from './components/Employees/Directory';
 import ReportExpenseCards from './components/Reporting';
@@ -21,63 +23,70 @@ const ENDPOINT = "/";
 let socket = ''
 
 class Reports extends Component {
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-     this.state = {
-        searchText: '',
-        loading: false,
-        limit: 5,
-        menuExpanded: false,
+        this.state = {
+            searchText: '',
+            loading: false,
+            limit: 5,
+            menuExpanded: false,
 
-        tableSelector: 'revenue',
-        subtableSelector: 'revenue-all',
-		subClothingTableSelector: 'clothing-all',
+            tableSelector: 'revenue',
+            subtableSelector: 'revenue-all',
+            subClothingTableSelector: 'clothing-all',
 
-        chartPeriodSelector: '1y',
+            chartPeriodSelector: '1y',
 
-        expenses_inventory: [],
-        expenses_payrole: [],
-        expenses_recurring: [],
+            expenses_inventory: [],
+            expenses_payrole: [],
+            expenses_recurring: [],
 
-        revenues_ads: [],
-        revenues_clothing: [],
-        revenues_clothing_total: 0,
-        revenues_donations: [],
-        revenues_memberships: [],
+            revenues_ads: [],
+            revenues_clothing: [],
+            revenues_clothing_total: 0,
+            revenues_donations: [],
+            revenues_memberships: [],
 
-        reportsData: {
+            reportsData: {
 
-          expenses: {
-            other: [],
-            payroll: [],
-          },
+                expenses: {
+                    other: [],
+                    payroll: [],
+                    recurring: [],
+                    utilities: [],
+                    inventory: []
+                },
 
-          revenue: {
-            clothing: [],
-            donations: [],
-            orders: [],
-          },
+                revenue: {
+                    clothing: [],
+                    donations: [],
+                    orders: [],
+                    ads: [],
+                    memberships: []
+                },
 
-        },
+            },
 
-       totals: {
-        clothing: 0,
-        donations: 0,
-        memberships: 0,
-        
-        ads: 0,
-        inventory: 0,
-        payrole: 0,
-        recurring: 0
-       },
+            totals: {
+                revenue: 0,
 
-       monthBreakdown: []
+                clothing: 0,
+                donations: 0,
+                memberships: 0,
+                
+                ads: 0,
+                inventory: 0,
+                payrole: 0,
+                recurring: 0
+            },
 
-     };
+            monthBreakdown: []
 
-     this.setChartPeriodSelector = this.setChartPeriodSelector.bind(this);
-  }
+        };
+
+        this.setChartPeriodSelector = this.setChartPeriodSelector.bind(this);
+    }
 
   componentDidMount() {
     const self = this;
@@ -169,97 +178,97 @@ class Reports extends Component {
 
 	console.log("Did mount os revenue should be displayed");
 
-    axios.get('/api/getRevenuesDonations', {
-      params: {
-        fromDate: '',
-        toDate: '',
-        limit: '100',
-        page: '1',
-        user_id: self.props.user_id || ''
-      }
-    })
-    .then(function (response) {
-      console.log(response);
+    // axios.get('/api/getRevenuesDonations', {
+    //   params: {
+    //     fromDate: '',
+    //     toDate: '',
+    //     limit: '100',
+    //     page: '1',
+    //     user_id: self.props.user_id || ''
+    //   }
+    // })
+    // .then(function (response) {
+    //   console.log(response);
 
-      self.setState({
-        revenues_donations: response.data
-      }, () => {
+    //   self.setState({
+    //     revenues_donations: response.data
+    //   }, () => {
 
-        console.log("revenues_donations was set!")
+    //     console.log("revenues_donations was set!")
 
-        let total = 0
+    //     let total = 0
 
-        var val = self.state.revenues_donations.map(function(item) {
-          return total += item.amount
-        });
+    //     var val = self.state.revenues_donations.map(function(item) {
+    //       return total += item.amount
+    //     });
 
-        console.log(val);
+    //     console.log(val);
 
-        self.setState({
+    //     self.setState({
 
-          totals: {
-            ...self.state.totals,
-            donations: total
-          } 
+    //       totals: {
+    //         ...self.state.totals,
+    //         donations: total
+    //       } 
 
-        })
+    //     })
 
-      })
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+    //   })
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    // });
 
-    axios.get('/api/getRevenuesClothing', {
-      params: {
-        fromDate: '',
-        toDate: '',
-        limit: '100',
-        page: '1',
-        user_id: self.props.user_id || ''
-      }
-    })
-    .then(function (response) {
-      console.log(response);
+    // axios.get('/api/getRevenuesClothing', {
+    //   params: {
+    //     fromDate: '',
+    //     toDate: '',
+    //     limit: '100',
+    //     page: '1',
+    //     user_id: self.props.user_id || ''
+    //   }
+    // })
+    // .then(function (response) {
+    //   console.log(response);
 
-      self.setState({
-        revenues_clothing: response.data
-      }, () => {
-        console.log("Done")
+    //   self.setState({
+    //     revenues_clothing: response.data
+    //   }, () => {
+    //     console.log("Done")
 
-        let total = 0
+    //     let total = 0
 
-        var val = self.state.revenues_clothing.map(function(item) {
-          return total += item.payment.trueTotal
-        });
+    //     var val = self.state.revenues_clothing.map(function(item) {
+    //       return total += item.payment.trueTotal
+    //     });
 
-        // console.log(val);
+    //     // console.log(val);
 
-        self.setState({
+    //     self.setState({
 
-          totals: {
-            ...self.state.totals,
-            // clothing: self.state.revenues_clothing.reduce(function(previousValue, currentValue) {
-            //   return previousValue.payment.trueTotal + currentValue.payment.trueTotal
-            // })
-            clothing: total
-          } 
+    //       totals: {
+    //         ...self.state.totals,
+    //         // clothing: self.state.revenues_clothing.reduce(function(previousValue, currentValue) {
+    //         //   return previousValue.payment.trueTotal + currentValue.payment.trueTotal
+    //         // })
+    //         clothing: total
+    //       } 
 
-        })
+    //     })
 
-      })
+    //   })
 
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    // });
 
     axios.get('/api/getRevenueOrdersMongoose', {
         params: {}
       })
-      .then(function (response) {
+    .then(function (response) {
         console.log(response);
-  
+
         self.setState({
             reportsData: {
                 ...self.state.reportsData,
@@ -268,14 +277,60 @@ class Reports extends Component {
                     orders: response.data
                 }
             }
-          }, () => {
+            }, () => {
             console.log("Done")
         })
-  
-      })
-      .catch(function (error) {
+
+    })
+    .catch(function (error) {
         console.log(error);
-      });
+    });
+
+    axios.get('/api/getExpenseInventoryMongoose', {
+        params: {}
+      })
+    .then(function (response) {
+        console.log(response);
+
+        self.setState({
+            reportsData: {
+                ...self.state.reportsData,
+                expenses: {
+                    ...self.state.reportsData.expenses,
+                    inventory: response.data
+                }
+            }
+            }, () => {
+            console.log("Done")
+        })
+
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+
+    axios.get('/api/getExpenseRecurringMongoose', {
+        params: {}
+      })
+    .then(function (response) {
+        console.log(response);
+
+        self.setState({
+            reportsData: {
+                ...self.state.reportsData,
+                expenses: {
+                    ...self.state.reportsData.expenses,
+                    recurring: response.data
+                }
+            }
+            }, () => {
+            console.log("Done")
+        })
+
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
 
     axios.get('/api/getExpensesRecurring', {
       params: {
@@ -361,39 +416,26 @@ class Reports extends Component {
     });
   }
 
-  getSnapshotBeforeUpdate(prevProps, prevState) {
-
-    // if (prevState.reportsData.revenue.donations !== this.state.reportsData.revenue.donations ) {
-    //   console.log("New math needed!");
-
-    //   var total = 0;
-
-    //   for (var i=0; i<this.state.reportsData.revenue.donations.length; i++) {
-    //     total += parseInt(this.state.reportsData.revenue.donations[i].amount);
-    //   }
-
-    //   this.setState({totals: {
-    //     ...this.state.totals,
-    //     donations: total
-    //   }});
-
-    // }
-
-  //   if (prevState.reportsData.expenses.other !== this.state.reportsData.expenses.other ) {
-
-  //     var total = 0;
-
-  //     for (var i=0; i<this.state.reportsData.expenses.other.length; i++) {
-  //       total += this.state.reportsData.expenses.other[i].amount;
-  //     }
-
-  //     this.setState({totals: {
-  //       ...this.state.totals,
-  //       expenses: total
-  //     }})
-
-  //   }
-  }
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.reportsData !== prevState.reportsData) {
+            this.setState({
+                ...this.state.reportsData,
+                totals: {
+                    ...this.state.reportsData.totals,
+                    expenses: (
+                        parseInt( this.state.reportsData.expenses.inventory.reduce( (a, b) => a + parseInt( b['amount'] / 100 ), 0 ).toFixed(2) )
+                        +
+                        parseInt( this.state.reportsData.expenses.recurring.reduce( (a, b) => a + parseInt( b['amount'] / 100 ), 0 ).toFixed(2) )
+                    ),
+                    revenue: (
+                        parseInt( this.state.reportsData.revenue.donations.reduce( (a, b) => a + parseInt( b['amount'] / 100 ), 0 ).toFixed(2) )
+                        +
+                        parseInt( this.state.reportsData.revenue.orders.reduce( (a, b) => a + parseInt( b['amount'] / 100 ), 0 ).toFixed(2) )
+                    )
+                }
+            })
+        }
+    }
 
   componentWillUnmount() {
     socket.disconnect();
@@ -439,55 +481,13 @@ class Reports extends Component {
   getTableComponent(tableSelector, subtableSelector) {
     switch(tableSelector) {
 
-      case 'donations':
-        return(<DonationTable reportsData={this.state.reportsData} fetch="donations"/>)
-      case 'clothing':
-        switch (subtableSelector) {
-          case 'clothing-all':
-
-            // console.log(val)
-
-            return (
-              <table className='table articles-table table-sm table-hover table-bordered'>
-
-                <thead>
-                  <tr className="table-articles-head">
-                    <th scope="col">Date</th>
-                    {/* <th scope="col">Name</th> */}
-                    <th scope="col">Order Summary</th>
-                    <th className='text-right' scope="col">Total</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  
-                  {this.state.revenues_clothing.map(sale => 
-                    <tr>
-                      <td colSpan="1" className="border-right-0 ">{moment(sale.date).format("LLL")}</td>
-                      <td colSpan="1" className="border-right-0 ">{sale.for}</td>
-                      <td colSpan="1" className="">${(sale.payment.trueTotal / 100).toFixed(2)}</td>
-                    </tr> 
-                  )}
-
-                  <tr>
-                    <td colSpan="1" className="border-right-0 table-articles-head"></td>
-                    <td colSpan="1" className="border-right-0 text-right table-articles-head">Total:</td>
-                    <td colSpan="1" className="border-left-0 table-articles-head">${(this.state.totals.clothing / 100).toFixed(2)}</td>
-                  </tr>
-
-                </tbody>
-              </table>
-            )
-          case 'clothing-preorders':
-            return(<PreorderTable/>)
-          default:
-            return(<ClothingTable/>)
-        }
-      case 'payroll':
-        return <PayrollTable/>
-
       case 'expenses':
-        return(<ExpenseTable subtableSelector={this.state.subtableSelector} reportsData={this.state.reportsData} fetch="expenses"/>)
+        return(
+            <ExpenseTable 
+                subtableSelector={this.state.subtableSelector} 
+                reportsData={this.state.reportsData} 
+                fetch="expenses"
+            />)
       case 'revenue':
         return(
 			<RevenueTable 
@@ -592,7 +592,7 @@ class Reports extends Component {
                           <div className="progress">
                             <div className="progress-bar bg-rev" role="progressbar" 
                             style={{
-                              width: ((this.state.totals.donations + this.state.totals.clothing) / ((this.state.totals.donations + this.state.totals.recurring + this.state.totals.clothing) / 100) ).toFixed(0) +"%"
+                              width: ( this.state.totals.revenue / ( ( this.state.totals.revenue + this.state.totals.recurring ) / 100 ) ).toFixed(0) + "%"
                             }}
                             aria-valuenow="15" 
                             aria-valuemin="0" 
@@ -612,13 +612,13 @@ class Reports extends Component {
         
                               <div className="col-12 col-xl-6 pr-xl-1">
                                 <div className="snippet positive">
-                                Revenue: ${ ( this.state.totals.donations + this.state.totals.clothing ) / 100}
+                                Revenue: ${ this.state.totals.revenue }
                                 </div>
                               </div>
         
                               <div className="col-12 col-xl-6 pl-xl-1">
                                 <div className="snippet negative">
-                                Expenses: -${this.state.totals.recurring / 100}
+                                Expenses: -${ this.state.totals.expenses }
                                 </div>
                               </div>
         
@@ -763,7 +763,7 @@ class Reports extends Component {
 						<div className={"sub sub-revenue " + (this.state.tableSelector === 'revenue' ? '' : 'd-none')}>
 							{this.subTableSelectorChoice('revenue-all', 'all')}
 							{this.subTableSelectorChoice('revenue-donations', 'donations')}
-							{this.subTableSelectorChoice('revenue-clothing', 'clothing')}
+							{this.subTableSelectorChoice('revenue-store', 'store')}
 							{this.subTableSelectorChoice('revenue-ads', 'ads')}
 							{this.subTableSelectorChoice('revenue-memberships', 'memberships')}
 							{/* {this.subTableSelectorChoice('revenue-grants', 'grants')} */}
@@ -864,137 +864,6 @@ class Reports extends Component {
   }
 }
 
-function PreorderTable () {
-  return (
-    <>
-    <div className="full-table">
-      <table className='table articles-table table-bordered'>
-        <thead>
-          <tr className="table-articles-head">
-            <th scope="col">Date</th>
-            <th scope="col">Name</th>
-            <th scope="col">Order Summary</th>
-            <th className='text-right' scope="col">Total</th>
-          </tr>
-        </thead>
-        <tbody>
-
-          {sales.map((object, i) =>
-
-            <tr key={i} className="bg-light">
-              <td>{object.date || 'test'}</td>
-              <td>{object.name}</td>
-              <td>{object.note}</td>
-              <td className='text-right'>${object.total.toFixed(2)}</td>
-            </tr>
-
-          )}
-
-          <tr>
-            <td colSpan="2" className="border-right-0 table-articles-head">
-
-                <div className="results-dual-header">
-
-                  {/* <div className="page noselect">
-                    <i className="fas fa-chevron-circle-left"></i>
-                    Page 0/0
-                    <i style={{marginLeft: '10px'}} className="fas fa-chevron-circle-right"></i>
-                  </div> */}
-                
-                  {/* <span className="results noselect">
-                    <span>Results:</span>
-                    <span className={"result result-active"}>10</span>
-                    <span className={"result"}>50</span>
-                    <span className={"result"}>100</span>
-                    <span className={"result"}>250</span>
-                  </span> */}
-
-                </div>
-
-            </td>
-
-            <td colSpan="1" className="border-right-0 text-right table-articles-head">Total:</td>
-            <td colSpan="1" className="border-left-0 table-articles-head">$180.00</td>
-          </tr>
-
-        </tbody>
-
-      </table>
-    </div>
-
-    <div style={{paddingBottom: '0.25rem'}}>
-      <div className="alert alert-warning pl-2 pb-2 m-2">Preorder and unfinalized sales are not included in any reports.</div>
-    </div>
-
-    </>
-  )
-}
-
-function PayrollTable () {
-  return (
-    <div>
-      <table className='table articles-table table-sm table-bordered'>
-        <thead>
-          <tr className="table-articles-head">
-            <th scope="col">Name</th>
-            <th scope="col">Role</th>
-            <th scope="col">Total</th>
-            {/* <th className='text-right' scope="col">Total</th> */}
-          </tr>
-        </thead>
-        <tbody>
-
-          {/* {sales.map((object, i) =>
-
-            <tr key={i} className="bg-light">
-              <td>{object.date || 'test'}</td>
-              <td>{object.name}</td>
-              <td>{object.note}</td>
-              <td className='text-right'>${object.total.toFixed(2)}</td>
-            </tr>
-
-          )} */}
-
-          <tr>
-            <th scope="row"><Link to={ROUTES.TRANSPARENCY_EMPLOYEES + '/5e90cc96579a17440c5d7d52'}>Joey Giusto</Link></th>
-            <td>Admin</td>
-            <td>$0.00</td>
-          </tr>
-
-          <tr>
-            <td colSpan="1" className="border-right-0 table-articles-head">
-
-                <div className="results-dual-header">
-
-                  {/* <div className="page noselect">
-                    <i className="fas fa-chevron-circle-left"></i>
-                    Page 0/0
-                    <i style={{marginLeft: '10px'}} className="fas fa-chevron-circle-right"></i>
-                  </div> */}
-                
-                  {/* <span className="results noselect">
-                    <span>Results:</span>
-                    <span className={"result result-active"}>10</span>
-                    <span className={"result"}>50</span>
-                    <span className={"result"}>100</span>
-                    <span className={"result"}>250</span>
-                  </span> */}
-
-                </div>
-
-            </td>
-
-            <td colSpan="1" className="border-right-0 text-right table-articles-head">Total:</td>
-            <td colSpan="1" className="border-left-0 table-articles-head">$0.00</td>
-          </tr>
-
-        </tbody>
-
-      </table>
-    </div>
-  )
-}
-
 class DonationTable extends Component {
   constructor(props) {
     super(props);
@@ -1054,320 +923,7 @@ class DonationTable extends Component {
  }
 }
 
-class RevenueTable extends Component {
-  	constructor(props) {
 
-		super(props);
-
-		this.state = {
-			text: '',
-			loading: false,
-			donationsFirebase: [],
-			expensesFirebase: [],
-			limit: 10,
-			page: 1,
-
-			// all: [...props.revenues_clothing.map(order => {
-			// 	// var o = Object.assign({}, order);
-			// 	order.type = 'Store Sale';
-			// 	order.unifiedPrice = order.payment.trueTotal
-			// 	return order;
-			// }), ...props.reportsData.revenue.donations.map(order => {
-			// 	// var o = Object.assign({}, order);
-			// 	order.type = 'Donation';
-			// 	order.unifiedPrice = order.amount
-			// 	return order;
-			// })]
-
-			all: []
-
-		};
-
-		this.changeLimit = this.changeLimit.bind(this);
-		this.changePage = this.changePage.bind(this);
-  	}
-
-    componentDidUpdate(prevProps) {
-		if (this.props.reportsData.revenue.donations !== prevProps.reportsData.revenue.donations) { // check if your props is changed
-
-			console.log(`reportsData.revenue.donations received an update`);
-
-			this.setState({
-				all: [
-                    ...this.props.reportsData.revenue.donations.map(order => {
-                        order.type = 'Donation';
-                        order.unifiedPrice = order.amount
-                        return order;
-				    }),
-                    ...this.props.reportsData.revenue.orders.map(order => {
-                        order.type = 'Store Order';
-                        order.unifiedPrice = order.amount
-                        return order;
-                    })
-                ]
-			});
-
-		}
-    }
-
-	componentDidMount() {
-		console.log(`RevenueTable was mounted!`)
-
-		this.setState({
-			all: [
-                ...this.props.reportsData.revenue.donations.map(order => {
-                    order.type = 'Donation';
-                    order.unifiedPrice = order.amount
-                    return order;
-			    }),
-                ...this.props.reportsData.revenue.orders.map(order => {
-                    order.type = 'Store Order';
-                    order.unifiedPrice = order.amount
-                    return order;
-			    })
-            ]
-		});
-	}
-
-	changeLimit(limit) {
-		this.setState({
-			limit: limit
-		});
-	}
-
-	changePage(page) {
-	this.setState({
-		page: page
-	});
-	}
-
-	renderTable() {
-
-		const megaGroup = [...this.props.revenues_clothing.map(order => {
-			// var o = Object.assign({}, order);
-			order.type = 'Store Sale';
-			order.unifiedPrice = order.payment.trueTotal
-			return order;
-		}), ...this.props.reportsData.revenue.donations.map(order => {
-			// var o = Object.assign({}, order);
-			order.type = 'Donation';
-			order.unifiedPrice = order.amount
-			return order;
-		})]
-
-		switch(this.props.subtableSelector) {
-			case 'revenue-donations':
-				return(<div className="p-3">There are no donation revenue yet.</div>)
-			case 'revenue-clothing':
-
-				switch(this.props.subClothingTableSelector) {
-					case 'clothing-all':
-						return(<div className="p-3">There is no clothing revenue yet.</div>)
-					case 'clothing-originals':
-						return(<div className="p-3">There is no original clothing revenue yet.</div>)
-					case 'clothing-partnerships':
-						return(<div className="p-3">There is no partnership clothing revenue yet.</div>)
-					case 'clothing-submissions':
-						return(<div className="p-3">There is no submission clothing revenue yet.</div>)
-					case 'clothing-sponsored':
-						return(<div className="p-3">There is no sponsored clothing revenue yet.</div>)
-				}
-				
-			case 'revenue-ads':
-				return(<div className="p-3">There is no ad revenue yet.</div>)
-			case 'revenue-memberships':
-				return(<div className="p-3">There is no membership revenue yet.</div>)
-			// case 'revenue-grants':
-			// 	return(<div className="p-3">There is no grant revenue yet.</div>)
-			// case 'revenue-sponsorships':
-			// 	return(<div className="p-3">There is no sponsorship revenue yet.</div>)
-
-			default:
-				return (
-				<table className={`table articles-table table-sm table-hover table-bordered`}>
-
-					<thead>
-						<tr className="table-articles-head">
-						{/* <th scope="col">Order #</th> */}
-						<th scope="col">Date</th>
-						<th scope="col">Type</th>
-						{/* <th scope="col">Name</th> */}
-						<th scope="col">Order Summary</th>
-						<th className='text-right' scope="col">Total</th>
-						</tr>
-					</thead>
-
-					<tbody>
-
-						{/* {console.log("Logging mega")}
-						{console.log(megaGroup)} */}
-
-						{this.state.all
-						.sort((a, b) => new Date(b.date) - new Date(a.date))
-						.map(sale => 
-						<tr onClick={() => this.props.history.push(ROUTES.TRANSPARENCY_REPORTS + `?id=${sale._id}&type=revenue`)}>
-							<td colSpan="1" className="border-right-0 ">{moment(sale.date).format("LLL")}</td>
-							<td colSpan="1" className="border-right-0 ">{sale.type}</td>
-							<td colSpan="1" className="border-right-0 "></td>
-							<td colSpan="1" className="border-right-0 ">${(sale.unifiedPrice / 100).toFixed(2)}</td>
-						</tr>
-						)}
-
-						<tr>
-							<td colSpan="2" className="border-right-0 table-articles-head">
-
-							</td>
-
-							<td colSpan="1" className="border-right-0 text-right table-articles-head">Total:</td>
-							<td colSpan="1" className="border-left-0 table-articles-head">${(this.state.all.reduce((a, b) => a + (parseInt(b['unifiedPrice'] || 0)), 0) / 100).toFixed(2)}</td>
-						</tr>
-
-					</tbody>
-
-				</table>
-				)
-		};
-
-	}
-
- 	render () {
-
-   	// const { donationsFirebase, loading, limit, page } = this.state;
-
-   	// const render = this.props.reportsData.revenue.donations;
-
-	return (
-		<div>
-
-			{/* {loading && <div className="p-2">Loading data...</div>} */}
-
-			{this.renderTable()}
-
-		</div>
-   	)
- }
-}
-
-class ExpenseTable extends Component {
-  constructor(props) {
-    super(props);
-
-		this.state = {
-			text: '',
-			loading: false,
-			donationsFirebase: [],
-			expenses: [],
-			limit: 10,
-			page: 1,
-		};
-		this.changeLimit = this.changeLimit.bind(this);
-		this.changePage = this.changePage.bind(this);
-   	}
-
-	changeLimit(limit) {
-		this.setState({
-		limit: limit
-		});
-	}
-
-	changePage(page) {
-		this.setState({
-		page: page
-		});
-	}
-
-  	renderTable() {
-
-	switch(this.props.subtableSelector) {
-
-		case 'expenses-payroll':
-			return(<PayrollTable/>)
-		case 'expenses-inventory':
-			return(<div className="p-3">There is no inventory expenses yet.</div>)
-		case 'expenses-recurring':
-			return(<div className="p-3">There is no ad revenue yet.</div>)
-		case 'expenses-utilities':
-			return(<div className="p-3">There is no utility expenses yet.</div>)
-		case 'expenses-other':
-			return(<div className="p-3">There is no other expenses yet.</div>)
-
-		// All Expenses
-		default:
-			return (
-				<table className="table articles-table table-sm table-hover table-bordered">
-
-					<thead>
-						<tr className="table-articles-head">
-							<th scope="col">File</th>
-							<th scope="col">DATE</th>
-							<th scope="col">TYPE</th>
-							<th scope="col">FOR</th>
-							<th scope="col">AMOUNT</th>
-						</tr>
-					</thead>
-
-					<tbody>
-						{this.props.reportsData.expenses.other
-						.sort((a, b) => new Date(b.date) - new Date(a.date))
-						.map(donation => (
-			
-							<tr>
-							<td><a rel="noopener noreferrer" target="_blank" href={donation.file}><i className="fas fa-file-invoice mr-0"></i></a></td>
-							<td>{moment(donation.date).format('LL')}</td>
-							<td>Recurring</td>
-							<td>{donation.reason}</td>
-							<td>${(donation.amount / 100).toFixed(2)}</td>
-							</tr>
-			
-						))}
-						<tr>
-							<td colSpan='3' className="border-right-0 table-articles-head">
-			
-								<div className="results-dual-header">
-			
-								{/* <div className="page noselect">
-									<i onClick={() => props.changePage(props.page - 1)} className="fas fa-chevron-circle-left"></i>
-									Page {props.page}/1
-									<i onClick={() => props.changePage(props.page + 1)} style={{marginLeft: '10px'}} className="fas fa-chevron-circle-right"></i>
-								</div> */}
-								
-								{/* <span className="results noselect">
-									<span>Results:</span>
-									<span onClick={() => props.changeLimit(10)} className={"result" + (props.limit === 10 ? ' result-active' : '')}>10</span>
-									<span onClick={() => props.changeLimit(50)} className={"result" + (props.limit === 50 ? ' result-active' : '')}>50</span>
-									<span onClick={() => props.changeLimit(100)} className={"result" + (props.limit === 100 ? ' result-active' : '')}>100</span>
-									<span onClick={() => props.changeLimit(250)} className={"result" + (props.limit === 250 ? ' result-active' : '')}>250</span>
-								</span> */}
-			
-								</div>
-			
-							</td>
-			
-							<td colSpan="1" className="border-right-0 text-right table-articles-head">Total:</td>
-							<td colSpan="1" className="border-left-0 table-articles-head">${(this.props.reportsData.expenses.other.reduce((a, b) => a + (parseInt(b['amount'] || 0)), 0) / 100).toFixed(2)}</td>
-						</tr>
-					</tbody>
-
-			  	</table>
-			)
-	};
-
-	}
-
-	render () {
-		const { donationsFirebase, loading, limit, page } = this.state;
-
-		return (
-		<div>
-
-			{loading && <div className="p-2">Loading data...</div>}
-			
-			{this.renderTable()}
-
-		</div>
-		)
-	}
-}
 
 const StyledDonationList = (props) => (
   <div className="full-table">

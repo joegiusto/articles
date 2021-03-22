@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 
 import * as ROUTES from '../../../../constants/routes';
-import { employeeList } from "../../../../sample_data/sampleData";
 
 class EmployeesPage extends Component {
   constructor(props) {

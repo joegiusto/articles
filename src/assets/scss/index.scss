@@ -158,100 +158,100 @@ body {
 
 .site-wrap {
 
-  &.fixed {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .menu-wrap {
-
     &.fixed {
-
-      .side-menu {
-        position: fixed;
-        top: 50px;
-        transform: translate3d(0%, 0, 0)!important;
-        margin-top: 0px;
-        height: calc(100vh - 50px);
-        border-right: 2px solid #000;
-      }
-
-      .side-menu-notch-top {
-        transform: translate3d(0%, 0, 0)!important;
-      }
-
-      .side-menu-overlay {
-        display: none;
-      }
-    }
-  }
-
-  .content-wrap {
-    height: 100%;
-    min-height: calc(100vh - 50px);
-    display: flex;
-    flex-direction: column;
-
-    &.fixed {
-      // margin-top: 50px;
-      padding-left: 300px;
-      width: 100%;
+        display: flex;
+        flex-direction: column;
     }
 
-    &.dark-mode {
-      // background-color: black;
-    }
-  }
+    .menu-wrap {
 
-  .pwa-message{
-    background-color: white;
-    padding: 1rem;
-    position: absolute;
-    bottom: 1rem;
-    width: 200px;
-    left: 0;
-    transform: translateX(-50%);
-  }
+        &.fixed {
 
-  .notification {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    margin: 1rem;
-    width: 250px;
-    padding: 1rem;
-    z-index: 1;
-    background-color: $accent-color;
-    border-radius: 0.25rem;
-    // border-bottom: 2px solid white;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
-    transform: translateX(-50%) translateY(-100px);
-    opacity: 0;
-    transition-duration: 500ms;
+        .side-menu {
+            position: fixed;
+            top: 50px;
+            transform: translate3d(0%, 0, 0)!important;
+            margin-top: 0px;
+            height: calc(100vh - 50px);
+            border-right: 2px solid #000;
+        }
 
-    &.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0px);
+        .side-menu-notch-top {
+            transform: translate3d(0%, 0, 0)!important;
+        }
+
+        .side-menu-overlay {
+            display: none;
+        }
+        }
     }
 
-    .progress {
-      position: absolute;
-      top: -1px;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background-color: $base-color;
+    .content-wrap {
+        height: 100%;
+        min-height: calc(100vh - 50px);
+        display: flex;
+        flex-direction: column;
+
+        &.fixed {
+        // margin-top: 50px;
+        padding-left: 300px;
+        width: 100%;
+        }
+
+        &.dark-mode {
+        // background-color: black;
+        }
     }
 
-    .close {
-      cursor: pointer;
-      margin: 0.5rem;
-      font-size: 1.2rem;
-      position: absolute;
-      top: 0;
-      right: 0;
-    }
-  }
+    // .pwa-message{
+    //     background-color: white;
+    //     padding: 1rem;
+    //     position: absolute;
+    //     bottom: 1rem;
+    //     width: 200px;
+    //     left: 0;
+    //     transform: translateX(-50%);
+    // }
+
+    // .notification {
+    //     position: absolute;
+    //     top: 0;
+    //     left: 50%;
+    //     margin: 1rem;
+    //     width: 250px;
+    //     padding: 1rem;
+    //     z-index: 1;
+    //     background-color: $accent-color;
+    //     border-radius: 0.25rem;
+    //     // border-bottom: 2px solid white;
+    //     box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+    //     transform: translateX(-50%) translateY(-100px);
+    //     opacity: 0;
+    //     transition-duration: 500ms;
+
+    //     &.show {
+    //         opacity: 1;
+    //         transform: translateX(-50%) translateY(0px);
+    //     }
+
+    //     .progress {
+    //         position: absolute;
+    //         top: -1px;
+    //         left: 0;
+    //         width: 100%;
+    //         height: 4px;
+    //         background-color: $base-color;
+    //     }
+
+    //     .close {
+    //         cursor: pointer;
+    //         margin: 0.5rem;
+    //         font-size: 1.2rem;
+    //         position: absolute;
+    //         top: 0;
+    //         right: 0;
+    //     }
+    // }
 
 } 
 

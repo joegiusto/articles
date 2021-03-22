@@ -64,6 +64,15 @@ export const pendingPWAUpdate = () => dispatch => {
   });
 };
 
+export const setPWAUpdate = (value) => dispatch => {
+    // console.log(`Tells Redux that a PWA update is awaiting user install`);
+  
+    dispatch({
+      type: 'SET_PWA_UPDATE',
+      value
+    });
+  };
+
 export const updateSubscriptionToIssue = subscription => dispatch => {
 
   console.log("Update to Issue last viewed date");

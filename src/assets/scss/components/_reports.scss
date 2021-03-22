@@ -928,13 +928,20 @@
 }
 
 .articles-table {
-  table-layout: auto;
-  // box-shadow: 5px 5px 4px -4.5px $accent-color, -5px -5px 7px -7.5px #000000, 0 0 .15rem 2px rgba(0, 0, 0, 0.075);
+    table-layout: auto;
+    border: 0;
+    // box-shadow: 5px 5px 4px -4.5px $accent-color, -5px -5px 7px -7.5px #000000, 0 0 .15rem 2px rgba(0, 0, 0, 0.075);
 
-  a {
-    color: $accent-color;
-    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.7);
-  }
+    thead {
+        th {
+            border: 0;
+        }
+    }
+
+    a {
+        // color: $accent-color;
+        // text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.7);
+    }
 }
 
 .table-articles-head {

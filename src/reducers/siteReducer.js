@@ -34,10 +34,15 @@ export default function(state = initialState, action) {
         colorModeDark: !state.colorModeDark
       };
     case 'PENDING_PWA_UPDATE':
-      return {
-        ...state,
-        pendingPWAUpdate: true
-      };
+        return {
+            ...state,
+            pendingPWAUpdate: true
+        };
+    case 'SET_PWA_UPDATE':
+        return {
+            ...state,
+            pendingPWAUpdate: action.value
+        };
     case 'TOGGLE_WEATHER_PIN':
       return {
         ...state,

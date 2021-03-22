@@ -3,7 +3,6 @@ import axios from 'axios';
 import moment from 'moment';
 import { Link } from "react-router-dom";
 
-// import { employeeList } from "../../../sample_data/sampleData";
 import * as ROUTES from "../../../../../constants/routes"
 
 class EmployeePageDetails extends Component {
