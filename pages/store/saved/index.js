@@ -3,9 +3,10 @@ import Link from 'next/link'
 import React, { Component, useState } from 'react';
 import { useRouter } from 'next/router'
 
-import StoreLayout from '../../components/layouts/store.js';
+import StoreLayout from '../../../components/layouts/store.js';
+import ROUTES from '../../../components/constants/routes';
 
-function Home() {
+function SavedPage() {
     const router = useRouter()
     const { param } = router.query
 
@@ -15,15 +16,18 @@ function Home() {
     return(
         <section className="submissions-page">
             <Head>
-                <title>Store - Articles</title>
+                <title>Saved - Articles</title>
             </Head>
             <div className="container py-3">
-                <h2>Store Home Page</h2>
+                <h2>Saved Page</h2>
                 <p>This is the products page with the StoreLayout set.</p>
+                <Link href={ROUTES.STORE_PRODUCTS}>
+                    <button className="btn btn-articles-light">Browse All Products</button>
+                </Link>
             </div>
         </section>
     )
 }
 
-Home.Layout = StoreLayout;
-export default Home;
+SavedPage.Layout = StoreLayout;
+export default SavedPage;

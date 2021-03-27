@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@svgr/webpack": "^5.5.0",
+    "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.33",

@@ -3,9 +3,9 @@ import Link from 'next/link'
 import React, { Component, useState } from 'react';
 import { useRouter } from 'next/router'
 
-import StoreLayout from '../../components/layouts/store.js';
+// import NewsLayout from '../../components/layouts/news.js';
 
-function Home() {
+function PartyHomePage() {
     const router = useRouter()
     const { param } = router.query
 
@@ -13,17 +13,20 @@ function Home() {
     console.log(param);
   
     return(
-        <section className="submissions-page">
+        <section className="party-page">
+
             <Head>
-                <title>Store - Articles</title>
+                <title>Town Hall - Articles</title>
             </Head>
+
             <div className="container py-3">
-                <h2>Store Home Page</h2>
-                <p>This is the products page with the StoreLayout set.</p>
+                <h2>Town Hall Page</h2>
+                <p>This is the Town Hall Page of the party section.</p>
             </div>
+            
         </section>
     )
 }
 
-Home.Layout = StoreLayout;
-export default Home;
+// PartyHomePage.Layout = NewsLayout;
+export default PartyHomePage;

@@ -3,9 +3,9 @@ import Link from 'next/link'
 import React, { Component, useState } from 'react';
 import { useRouter } from 'next/router'
 
-import StoreLayout from '../../components/layouts/store.js';
+import StoreLayout from '../../../components/layouts/store.js';
 
-function Home() {
+function Collections() {
     const router = useRouter()
     const { param } = router.query
 
@@ -15,15 +15,15 @@ function Home() {
     return(
         <section className="submissions-page">
             <Head>
-                <title>Store - Articles</title>
+                <title>Submissions - Articles</title>
             </Head>
             <div className="container py-3">
-                <h2>Store Home Page</h2>
+                <h2>Submissions Page</h2>
                 <p>This is the products page with the StoreLayout set.</p>
             </div>
         </section>
     )
 }
 
-Home.Layout = StoreLayout;
-export default Home;
+Collections.Layout = StoreLayout;
+export default Collections;

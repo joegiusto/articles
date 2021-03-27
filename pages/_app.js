@@ -3,7 +3,8 @@ import { useStore } from '../redux/store'
 import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
 
-import Layout from '../components/layout'
+import MainLayout from '../components/layout'
+import DefaultLayout from '../components/layouts/default'
 
 import '../assets/scss/index.scss';
 
@@ -12,14 +13,17 @@ function MyApp({ Component, pageProps }) {
     const persistor = persistStore(store, {}, function () {
         persistor.persist()
     })
+    const Layout = Component.Layout || DefaultLayout;
 
     return ( 
         <Provider store={store}>
-            <PersistGate loading={<div>loading</div>} persistor={persistor}>
+            {/* <PersistGate loading={<div>loading</div>} persistor={persistor}> */}
+            <MainLayout>
                 <Layout>
                     <Component {...pageProps} />
                 </Layout>
-            </PersistGate>
+            </MainLayout>
+            {/* </PersistGate> */}
         </Provider>
     )
 }

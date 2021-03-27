@@ -3,7 +3,7 @@ import Link from 'next/link'
 import React, { Component, useState } from 'react';
 import { useRouter } from 'next/router'
 
-import StoreLayout from '../../components/layouts/store.js';
+import NewsLayout from '../../../components/layouts/news.js';
 
 function Home() {
     const router = useRouter()
@@ -15,15 +15,15 @@ function Home() {
     return(
         <section className="submissions-page">
             <Head>
-                <title>Store - Articles</title>
+                <title>Issues - Articles</title>
             </Head>
             <div className="container py-3">
-                <h2>Store Home Page</h2>
-                <p>This is the products page with the StoreLayout set.</p>
+                <h2>Issues Page</h2>
+                <p>This is the Issues Page of the news section.</p>
             </div>
         </section>
     )
 }
 
-Home.Layout = StoreLayout;
+Home.Layout = NewsLayout;
 export default Home;

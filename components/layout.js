@@ -26,6 +26,9 @@ export default function Layout(
                 <meta charSet="utf-8" />
                 <link rel="icon" href="/favicon.ico" />
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+                {/* <script src="https://kit.fontawesome.com/d1a2586c98.js" crossorigin="anonymous"></script> */}
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+                <link rel="stylesheet" href="https://use.typekit.net/wvo0uze.css"/>
                 <script src="https://kit.fontawesome.com/d1a2586c98.js" crossorigin="anonymous"></script>
             </Head>
 

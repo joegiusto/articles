@@ -29,7 +29,8 @@ import IconDraftingCompass from './components/FontAwesome/duotone/drafting-compa
 
 const useCounter = () => {
     const sideMenuOpen = useSelector((state) => state.sideMenuOpen)
-    return { sideMenuOpen }
+    const colorModeDark = useSelector((state) => state.colorModeDark)
+    return { sideMenuOpen, colorModeDark }
 }
 
 export default function Layout(props) {
@@ -38,7 +39,7 @@ export default function Layout(props) {
     const [notificationVisible, setNotificationVisible] = useState(false);
     const [pinOpen, setPinOpen] = useState(false);
     const dispatch = useDispatch()
-    const { sideMenuOpen } = useCounter()
+    const { sideMenuOpen, colorModeDark } = useCounter()
     
     return ( <div className={'menu-wrap noselect' + (props.site?.sideMenuFixed ? ' fixed' : '') + (props.site?.colorModeDark ? ' dark-mode' : '')}>
 
@@ -396,8 +397,8 @@ export default function Layout(props) {
                     </a>
                 </Link>
 
-                <Link href={ROUTES.RESOURCES} className="link" >
-                    <a className="link" onClick={() => {setMenuOpen(false)}}>
+                <Link href={ROUTES.RESOURCES}>
+                    <a className="link">
                         <IconBooks className="icon"/>
                         <span>Resources</span>
                     </a>
@@ -543,7 +544,7 @@ export default function Layout(props) {
 
         <hr/>
 
-        <p className="subheading-font align-items-center d-flex justify-content-between pb-3" onClick={props.toggleColorMode}>
+        <p className="subheading-font align-items-center d-flex justify-content-between pb-3" onClick={() => dispatch({type: 'TOGGLE_COLOR_MODE'})}>
 
             <div>
             {/* <i className="fas fa-code" aria-hidden="true"></i> */}
@@ -551,14 +552,14 @@ export default function Layout(props) {
             <span>Dark Mode<span className="badge badge-primary ml-2">Beta</span></span>
             </div>
 
-            <label className="articles-switch mb-0" onClick={props.toggleColorMode}>
-            <input type="checkbox" checked={props.site.colorModeDark}/>
-            <span className="slider" onClick={props.toggleColorMode}></span>
+            <label className="articles-switch mb-0" onClick={() => dispatch({type: 'TOGGLE_COLOR_MODE'})}>
+            <input type="checkbox" checked={colorModeDark}/>
+            <span className="slider" onClick={() => dispatch({type: 'TOGGLE_COLOR_MODE'})}></span>
             </label>
 
         </p>
 
-        <p className="subheading-font align-items-center d-flex justify-content-between pb-3" onClick={props.toggleSideMenuFixed}>
+        <p className="subheading-font align-items-center d-flex justify-content-between pb-3" onClick={() => dispatch({type: 'TOGGLE_COLOR_MODE'})}>
 
             <div>
             {/* <div className={'columns-fill-in ' + (props.site.sideMenuFixed ? 'active' : '')}></div> */}
@@ -567,9 +568,9 @@ export default function Layout(props) {
             <span>Fixed Menu</span>
             </div>
 
-            <label className="articles-switch mb-0" onClick={props.toggleSideMenuFixed}>
-            <input type="checkbox" checked={props.site.sideMenuFixed}/>
-            <span className="slider" onClick={props.toggleSideMenuFixed}></span>
+            <label className="articles-switch mb-0" onClick={() => dispatch({type: 'TOGGLE_COLOR_MODE'})}>
+                <input type="checkbox" checked={colorModeDark}/>
+                <span className="slider" onClick={() => dispatch({type: 'TOGGLE_COLOR_MODE'})}></span>
             </label>
 
         </p>

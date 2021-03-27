@@ -56,7 +56,7 @@ function FooterBase(props) {
                     <div className="row">
 
                     <div className="col-6">
-                        <Link href={ROUTES.TRANSPARENCY_REPORTS}><a>Transparency</a></Link>
+                        <Link href={ROUTES.TRANSPARENCY}><a>Transparency</a></Link>
                         <Link href={ROUTES.STORE}>Store</Link>
                         <Link href={ROUTES.PARTY}>Politics</Link>
                     </div>

@@ -2,36 +2,40 @@ import Head from 'next/head'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { connectToDatabase } from '../../util/mongodb'
+import TransparencyLayout from '../../components/layouts/transparency';
 
-export default function Home({ isConnected }) {
+function TransparencyHomePage({ isConnected }) {
 
     return (
-        <div className={`container`}>
-
+        <div className="transparency-page">
+                
             <Head>
-                {/* <title>Create Next App</title> */}
-                {/* <link rel="icon" href="/favicon.ico" /> */}
+                <title>Transparency - Articles</title>
             </Head>
 
-            <main>
-                <h1 className="title">
+            {/* <div className={`container py-3`}> */}
+    
+                <h2 className="title">
                     Transparency
-                </h1>
+                </h2>
 
                 {isConnected ? (
-                <h2 className="subtitle">You are connected to MongoDB</h2>
+                <div className="text-muted subtitle">You are connected to MongoDB</div>
                 ) : (
-                <h2 className="subtitle">
+                <div className="text-muted subtitle">
                     You are NOT connected to MongoDB. Check the <code>README.md</code>{' '}
                     for instructions.
-                </h2>
+                </div>
                 )}
-
-            </main>
-        
+    
+            {/* </div> */}
+            
         </div>
     )
 }
+
+TransparencyHomePage.Layout = TransparencyLayout;
+export default TransparencyHomePage;
 
 export async function getServerSideProps(context) {
   const { client } = await connectToDatabase()
