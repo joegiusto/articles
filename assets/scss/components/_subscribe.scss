@@ -1,0 +1,105 @@
+.subscribe-page {
+  margin-top: 2rem;
+  font-family: montserrat, sans-serif;
+  font-weight: 400;
+
+  @include media-breakpoint-up(md) {
+    margin-top: 4rem;
+  }
+
+  h1 {
+    font-family: brandon-grotesque, sans-serif;
+    font-style: normal;
+    font-weight: 900;
+
+    @include media-breakpoint-up(md) {
+      font-size: 3rem;
+    }
+  }
+
+  .intro-section {
+
+    .shadow {
+      -webkit-border-radius: 0% 0% 100% 100% / 0% 0% 8px 8px;
+      -webkit-box-shadow: rgba(0, 0, 0,.30) 0 2px 3px;
+    }
+
+    .tiles {
+      display: flex;
+      justify-content: space-evenly;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      flex-wrap: wrap;
+
+      display: grid;
+      grid-template-columns: repeat(2, 200px);
+      grid-gap: 10px 10px;
+
+      @include media-breakpoint-up(md) {
+        grid-template-columns: repeat(4, 200px);
+      }
+
+      .tile {
+        width: 200px;
+        height: 200px;
+        border-radius: 5px;
+        border: 1px solid rgb(211, 211, 211);
+        box-shadow: 1px 1px 2px #fff inset,
+              -1px -1px 2px #fff inset;
+        border-radius: 3px/6px;
+        background: #F2F2F2;
+        border: 1px solid #ccc;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+
+
+        i {
+          margin-right: 0rem;
+          margin-bottom: 0.5rem;
+          font-size: 2rem;
+        }
+      }
+    }
+  }
+  
+  .plans-section {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-top: 3px solid #000;
+    border-bottom: 3px solid #000;
+
+    .plans {
+      display: flex;
+      justify-content: space-evenly;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+
+      .plan {
+        background-color: $base-color;
+        padding: 0.5rem 1rem;
+        padding-top: 1rem;
+        width: 100%;
+        max-width: 300px;
+        border: 2px solid #000;
+        box-shadow: 2px 2px 2px 2px $accent-color;
+
+        .commit-button {
+          width: 100%;
+          margin-top: 1rem;
+        }
+      }
+    }
+  }
+
+  .subscription-faq-section {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+  }
+
+}

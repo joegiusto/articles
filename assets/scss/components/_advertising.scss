@@ -1,0 +1,124 @@
+.advertising-page {
+  font-family: montserrat, sans-serif;
+  font-weight: 400;
+
+  .top-block-container {
+    background-color: white;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+
+    .top-block {
+      max-width: 650px;
+      margin: 0 auto;
+    }
+  }
+
+  .video-block {
+
+    .video-action {
+      width: 500px;
+      margin-left: 2rem;
+
+      .card {
+        text-align: center;
+        position: relative;
+
+        .starting-at {
+          font-family: brandon-grotesque, sans-serif;
+          font-style: normal;
+          font-weight: 900;
+          font-size: 2.25rem;
+          text-transform: uppercase;
+          margin: 0;
+          padding: 1.5rem;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+        }
+
+        .price {
+          font-family: brandon-grotesque, sans-serif;
+          font-style: normal;
+          font-weight: 900;
+          font-size: 1rem;
+          text-transform: uppercase;
+          margin: 0;
+          padding: 1.5rem;
+          padding-bottom: 0;
+
+          .enlarge {
+            font-size: 2.25rem;
+          }
+        }
+
+        .text-muted {
+          font-size: 0.8rem;
+          margin-bottom: 1.5rem;
+        }
+
+        .arrow  {
+          position: absolute;
+          bottom: 0px;
+          left: 50%;
+          transform: translateX(-50%) translateY(50%);
+          font-size: 3rem;
+        }
+
+      }
+
+      .btn-link {
+        font-size: 1rem;
+      }
+    }
+
+  }
+
+  .regular-heading {
+    font-family: brandon-grotesque, sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 4rem;
+  }
+
+  .filters-container {
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    padding: 2rem 0rem;
+    background-color: #212529;
+    color: white;
+
+    .filters-content {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      // max-width: 1300px;
+      margin: 0 auto;
+
+      .text {
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 2rem;
+        margin-bottom: 2rem;
+      }
+  
+      .filter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+  }
+
+}
+
+.advertising-access-page {
+
+  .card {
+    width: 300px;
+    margin: auto;
+  }
+
+}
+
+.advertising-manage-page {
+  
+}

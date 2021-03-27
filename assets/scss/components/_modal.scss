@@ -1,0 +1,55 @@
+// .ReactModal__Overlay {
+//   background-color: rgba(0, 0, 0, 0.5)!important;
+//   animation-name: modalFade;
+//   animation-duration: .3s;
+//   transition: all;
+// }
+
+// .ReactModal__Content {
+//   background-color: $accent-color!important;
+//   border: solid 2px #000!important;
+//   border-radius: 0px;
+//   position: relative;
+//   animation-name: modalFade;
+//   animation-duration: .3s;
+//   transition: all;
+//   top: calc(50% + 50px);
+
+//   h2 {
+//     color: black;
+//   }
+
+//   .close-reminder {
+//     z-index: -100;
+//     position: absolute;
+//     text-transform: uppercase;
+//     font-size: 4rem;
+//     width: 200vw;
+//     font-weight: bold;
+//     top: -800%;
+//     left: 130%;
+//     color: rgba(255, 255, 255, 0.7);
+//     transform: translateX(-50%) rotate(-15deg);
+//   }
+
+//   .close-modal {
+//     position: absolute;
+//     top: -15px;
+//     right: 15px;
+//     padding: 0px 1rem;
+//     background-color: red;
+//     border: solid 2px #000;
+//     color: white;
+
+//     &:hover {
+//       background-color: white;
+      
+//       color: black;
+//     }
+//   }
+// }
+
+// @keyframes modalFade {
+//   from {opacity: 0;}
+//   to {opacity: 1;}
+// }

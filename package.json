@@ -2,15 +2,27 @@
   "name": "with-mongodb",
   "version": "0.1.0",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
+    "@svgr/webpack": "^5.5.0",
+    "bootstrap": "^4.6.0",
+    "moment": "^2.29.1",
+    "moment-timezone": "^0.5.33",
     "mongodb": "^3.5.9",
     "next": "latest",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react": "^17.0.2",
+    "react-bootstrap": "^1.5.2",
+    "react-dom": "^17.0.2",
+    "react-live-clock": "^5.0.16",
+    "react-moment": "^1.1.1",
+    "react-redux": "^7.2.3",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-persist": "^6.0.0",
+    "sass": "^1.32.8"
   },
   "license": "MIT"
 }

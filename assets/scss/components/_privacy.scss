@@ -1,0 +1,43 @@
+.privacy-page {
+  font-family: montserrat, sans-serif;
+  font-weight: 400;
+
+  .card-wrap {
+    position: relative;
+    
+    .watcher {
+      position: absolute;
+      top: 0;
+      transform: translateY(-100%);
+      left: 1rem;
+    }
+  }
+
+  .card {
+    margin-bottom: 2rem;
+
+    .card-header {
+      background-color: black;
+      color: white;
+      border-radius: 0;
+      font-family: brandon-grotesque, sans-serif;
+      font-style: normal;
+      font-weight: 900;
+      font-size: 2.5rem;
+
+      @include media-breakpoint-down(md) {
+        font-size: 1.5rem;
+      }
+    }
+
+    .card-body {
+
+    }
+
+    .card-footer {
+      background-color: black;
+      color: white;
+      border-radius: 0;
+    }
+  }
+}

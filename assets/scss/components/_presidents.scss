@@ -1,0 +1,142 @@
+.president-modal {
+
+  .modal-dialog {
+    @include media-breakpoint-up(md) {
+      max-width: 720px!important;
+    }
+    @include media-breakpoint-up(lg) {
+      max-width: 960px!important;
+    }
+    @include media-breakpoint-up(xl) {
+      max-width: 1140px!important;
+    }
+
+    .president-photo {
+      position: relative;
+      height: 200px;
+      width: 125px;
+      
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
+
+      .loading-cover {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background-color: black;
+        border-radius: 5px;
+      }
+    }
+
+    .location-photo {
+      position: relative;
+      // height: 200px;
+      // width: 400px;
+      max-width: 400px;
+      
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .text-loading-bar {
+      // width: 100%;
+      width: auto;
+      background-color: black;
+      color: black;
+      border-radius: 5px;
+      margin-bottom: 0.25rem;
+    }
+  }
+
+}
+
+.presidents-page {
+
+  .page-header {
+    width: 100%;
+    background-color: $accent-color;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15), inset 0 2px 3px rgba(0, 0, 0, 0.2);
+
+    .filter-bar {
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+      background-color: white;
+      padding: 1rem;
+      border-bottom: 2px solid #000;
+
+      .filter-section {
+        margin-bottom: 0.5rem;
+
+        @include media-breakpoint-up(lg) {
+          margin-bottom: 0rem;
+        }
+
+        &.search {
+
+          input {
+            @include media-breakpoint-down(md) {
+              width: 100%;
+            }
+          }
+
+        }
+
+        .label {
+          // padding-top: 0.5rem;
+          padding-bottom: 0.25rem;
+          // padding-left: 0.25rem;
+          font-family: brandon-grotesque, sans-serif;
+          font-style: normal;
+          font-weight: 900;
+          font-size: 1rem;
+        }
+
+        button:not(.active) {
+          filter: grayscale(1);
+          color: darkgray !important;
+        }
+      }
+    }
+
+    h1 {
+      font-family: brandon-grotesque, sans-serif;
+      font-style: normal;
+      font-weight: 900;
+      font-size: 2rem;
+    }
+
+    p {
+      font-family: montserrat, sans-serif;
+      font-weight: 400;
+      font-size: 22px;
+    }
+
+  }
+
+  .presidents-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px 10px;
+
+    @include media-breakpoint-up(md) {
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 15px 15px;
+    }
+
+    @include media-breakpoint-up(lg) {
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 10px 10px;
+    }
+
+    @include media-breakpoint-up(xl) {
+      grid-template-columns: repeat(5, 1fr);
+      grid-gap: 20px 20px;
+    }
+
+  }
+}

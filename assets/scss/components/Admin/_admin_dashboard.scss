@@ -1,0 +1,82 @@
+.admin-dashboard {
+  display: flex;
+
+  .main-panel {
+    overflow-x: hidden;
+  }
+
+  .site-config {
+
+    .site-config-wrap {
+      flex-wrap: wrap;
+    }
+  }
+
+  .charts {
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+
+    @include media-breakpoint-up(lg) {
+      flex-direction: row;
+    }
+
+    .chart-container {
+      position: relative;
+      width: 100%;
+      height: 300px;
+
+      @include media-breakpoint-up(lg) {
+        width: 50%;
+      }
+    }
+  }
+
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(164px, 1fr));
+    grid-template-rows: auto 1fr;
+    grid-auto-rows: auto;
+    grid-gap: 10px 10px;
+
+    .tile {
+      position: relative;
+      // cursor: pointer;
+      width: 100%;
+      background: #ffffff;
+      border: solid 3px #000;
+      height: 100%;
+      transition-duration: 300ms;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      .detail {
+        position: absolute;
+        padding-bottom: 1rem;
+        top: 0;
+        left: 0;
+        margin: 0.25rem;
+        font-family: brandon-grotesque, sans-serif;
+        font-weight: 900;
+        font-style: normal;
+        font-size: 1rem;
+      }
+
+      .stat {
+        position: absolute;
+        font-family: brandon-grotesque, sans-serif;
+        font-weight: 900;
+        font-style: normal;
+        font-size: 3rem;
+      }
+
+      &:after {
+        content: "";
+        display: block;
+        padding-bottom: 100%;
+      }
+    }
+  }
+}

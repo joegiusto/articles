@@ -1,0 +1,94 @@
+section.updates-page {
+  font-family: montserrat, sans-serif;
+  font-weight: 400;
+  
+  .header {
+    background: linear-gradient(45deg,$accent-color, $base-color 80%);
+    padding: 2rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    img {
+      height: 110px;
+    }
+
+    .heading-font {
+      margin-top: 0.5rem;
+
+      @include media-breakpoint-up(md) {
+        font-size: 4rem;
+      }
+    }
+  }
+
+  .blog-nav {
+    background-color: rgba(255,255,255,0.75);
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.05), inset 0 -1px 0 rgba(0,0,0,0.15);
+    padding: 1rem 0;
+
+    display: flex;
+    justify-content: center;
+
+    .link {
+      cursor: pointer;
+      font-family: brandon-grotesque, sans-serif;
+      font-style: normal;
+      font-weight: 900;
+      font-size: 1.2rem;
+
+      &:not(:first-child) {
+        margin-left: 1rem;
+      }
+
+      &.active {
+        border-bottom: solid 1px #000;
+      }
+    }
+  }
+
+  .main {
+    padding: 1rem 0;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    i {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  .update-card {
+    border-radius: 0;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+
+    .card-body  {
+
+      .date {
+        font-size: 12px;
+        color: rgb(88, 88, 88);
+      }
+
+      .title {
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 3rem;
+      }
+
+      .text {
+        // margin-top: 1rem;
+      }
+    }
+
+    .update-footer {
+      background-color: black;
+      border-radius: 0;
+    }
+  }
+
+}

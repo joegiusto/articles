@@ -1,0 +1,63 @@
+.functionality-card {
+  position: relative;
+  padding: 1rem;
+  background-color: gainsboro;
+  // margin-top: 1.5rem;
+  // border-bottom: solid 1px #dadada;
+
+  box-shadow: inset 0px -2px 2px #000;
+
+  background-image: linear-gradient(to top right, $base-color 0%, white 100%);
+
+  // &:first-child {
+    box-shadow: inset 0px -2px 2px #000, 0px -2px 2px #000;;
+  // }
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .confirm-unsubscribe {
+    position: absolute;
+    padding: 1rem;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    // justify-content: center;
+    align-self: flex-start;
+    color: white;
+    
+  }
+
+  .count-container {
+    align-items: flex-end;
+    // width: 100px;
+    // height: 100%;
+    // background-color: $accent-color;
+    // align-self: stretch;
+    // position: relative;
+    // .count {
+    //   position: absolute;
+    //   top: 50%;
+    //   left: 50%;
+    //   transform: translateX(-50%) translateY(-50%);
+    //   font-weight: bold;
+    //   font-size: 2rem;
+    // }
+  }
+
+  .content-container {
+    padding-left: 1rem;
+  }
+
+  h1 {
+    // font-size: ;
+  }
+}

@@ -1,0 +1,61 @@
+.resources-page {
+
+  .card {
+    
+    button {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%) translateY(50%);
+    }
+  }
+
+  .book-wrapper {
+    height: auto;
+
+    .book{
+      $book-icon-scale: 3;
+  
+      transform: scale(1);
+  
+      position: relative;
+      width: calc(280px / #{$book-icon-scale});
+      height: calc(420px / #{$book-icon-scale});
+      // transform: translate(-50%, -50%);
+      // top:50%;
+      // left: 50%;  
+      background: $accent-color;
+      border-radius: calc(20px / #{$book-icon-scale}) calc(16px / #{$book-icon-scale}) calc(12px / #{$book-icon-scale}) calc(32px / #{$book-icon-scale});
+      background-image: linear-gradient(to right, darken($accent-color, 10%) calc(48px / #{$book-icon-scale}), $accent-color calc(50px / #{$book-icon-scale}), transparent calc(50px / #{$book-icon-scale}));  
+       //box-shadow:  2px 6px 40px 0px #FEA600
+  
+       &:after, &:before {
+         position: absolute;
+         content: '';
+       }
+  
+       &:after{
+        height: calc(52px / #{$book-icon-scale});
+        width: calc(274px / #{$book-icon-scale}); 
+        bottom: calc(6px / #{$book-icon-scale});
+        right: calc(0px / #{$book-icon-scale});
+        background: white;
+        border-radius: 32px 4px 4px 32px;
+        box-shadow: inset 4px 6px 0px 0px #E4E0CE;  
+        background-image: linear-gradient(to bottom, transparent calc(6px / #{$book-icon-scale}), #E4E0CE calc(8px / #{$book-icon-scale}), transparent calc(8px / #{$book-icon-scale}), transparent calc(12px / #{$book-icon-scale}), #E4E0CE calc(12px / #{$book-icon-scale}), transparent calc(14px / #{$book-icon-scale}), transparent calc(18px / #{$book-icon-scale}), #E4E0CE calc(18px / #{$book-icon-scale}), transparent calc(20px / #{$book-icon-scale}), transparent calc(24px / #{$book-icon-scale}), #E4E0CE calc(24px / #{$book-icon-scale}), transparent calc(26px / #{$book-icon-scale}), transparent calc(30px / #{$book-icon-scale}), #E4E0CE calc(30px / #{$book-icon-scale}), transparent calc(32px / #{$book-icon-scale}), transparent calc(36px / #{$book-icon-scale}), #E4E0CE calc(36px / #{$book-icon-scale}), transparent calc(38px / #{$book-icon-scale}), transparent calc(42px / #{$book-icon-scale}), #E4E0CE calc(42px / #{$book-icon-scale}), transparent calc(44px / #{$book-icon-scale}), transparent calc(48px / #{$book-icon-scale}), #E4E0CE calc(48px / #{$book-icon-scale}), transparent calc(50px / #{$book-icon-scale}) );     
+      }
+  
+      &:before{
+        height: calc(20px / #{$book-icon-scale});
+        width: calc(160px / #{$book-icon-scale}); 
+        right: calc(40px / #{$book-icon-scale});
+        top: calc(72px / #{$book-icon-scale}); 
+        background: darken($accent-color, 10%);
+        border-radius: calc(20px / #{$book-icon-scale});
+        box-shadow: 0px calc(36px/ #{$book-icon-scale}) darken($accent-color, 10%);
+          
+      }
+    }
+  }
+
+}

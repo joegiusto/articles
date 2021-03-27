@@ -1,0 +1,122 @@
+.chat-wrapper {
+  margin-top: 50px;
+  background-color: white;
+  padding: 1rem;
+  border: solid 4px #000;
+  box-shadow: 6px 6px 0px $accent-color;
+
+  .dual-header {
+    // background-color: black;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-bottom: solid 2px #000;
+
+    div {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      font-size: 1rem;
+      vertical-align: middle;
+    }
+
+    .show-more {
+      font-size: 1rem;
+      font-weight: bold;
+      text-transform: uppercase;
+
+      vertical-align: middle;
+      background-color: $base-color;
+      border: solid 2px #000;
+      border-radius: 0rem;
+      padding: 0.1rem 0.6rem;
+    }
+
+  } 
+
+  .message-list {
+    max-height: 300px;
+    overflow-y: scroll;
+    padding-right: 2px; 
+    padding-left: 2px; 
+
+    li {
+      list-style: none;
+      span {
+        background-color: $base-color;
+        border-radius: 10px;
+        margin-bottom: 0.5rem;
+      }
+      input {
+        flex-grow: 1;
+
+        padding: .375rem .75rem;
+        margin: 0px;
+        border: solid 3px $accent-color;
+        font-size: 0.85rem;
+
+        vertical-align: middle;
+
+        border-radius: 10px;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
+    }
+  }
+
+  .edit-message, .delete-message {
+    background-color: #000;
+    color: white;
+    font-size: 1rem;
+  }
+
+  .save-message, .reset-message {
+    background-color: #000;
+    color: white;
+    font-size: 1rem;
+  }
+
+  .edit-message {
+
+  }
+
+  .delete-message {
+
+  }
+
+  .user-message {
+
+  }
+
+  .content-message {
+
+  }
+  
+  form {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+  }
+
+  .message-input {
+    flex-grow: 1;
+
+    padding: .375rem .75rem;
+    margin: 0px;
+    border: solid 3px #000;
+    font-size: 0.85rem;
+
+    vertical-align: middle;
+
+    border-radius: 10px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+  .submit-input {
+    border-radius: 10px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    background-color: #000;
+    color: white;
+  }
+}

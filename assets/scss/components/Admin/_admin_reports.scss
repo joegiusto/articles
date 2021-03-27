@@ -1,0 +1,67 @@
+.admin-reports {
+  display: flex;
+
+  .reports {
+    padding: 1rem;
+
+    .report {
+      padding: 1rem;
+      box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
+      transition: box-shadow 83ms;
+      background-color: #fff;
+      border-radius: 2px;
+
+      position: relative;
+      // border-left: 2px solid #000;
+      // padding-left: 0.25rem;
+      margin-bottom: 2rem;
+      // margin-left: 1rem;
+
+      .actions {
+        margin-top: 1rem;
+        // color: black!important;
+      }
+
+      .delete {
+        color: black!important;
+        cursor: pointer;
+        // color: red;
+        // position: absolute;
+        // left: -1.25rem;
+        // top: 0;
+      }
+
+      .responses {
+
+        .response {
+          position: relative;
+          margin-top: 1rem;
+          background-color: rgba(0, 0, 0, 0.2);
+          padding: 1rem 0.5rem;
+
+          .employee {
+            background-color: black;
+            color: white;
+            font-size: 0.8rem;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translateY(-50%);
+          }
+
+          .date {
+            font-family: brandon-grotesque, sans-serif;
+            font-weight: 900;
+            font-style: normal;
+            font-size: 1.1rem;
+          }
+        }
+      }
+
+      .response {
+        margin-top: 1rem;
+      }
+      
+    }
+  }
+}
