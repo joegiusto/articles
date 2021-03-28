@@ -7,7 +7,10 @@ import ROUTES from '../../components/constants/routes';
 function TransparencyLayout({ children }) {
     const router = useRouter()
     const { param } = router.query
-    const [totals, setTotals] = useState({})
+    const [totals, setTotals] = useState({
+        revenue: 100,
+        expenses: 100
+    })
     const [reportsData, setReportsData] = useState({})
 
     return (

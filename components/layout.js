@@ -19,7 +19,7 @@ export default function Layout(
     const { colorModeDark } = useCounter();
 
     return (
-        <div className={` ${colorModeDark ? 'dark-mode' : ''} `}>
+        <div style={{minHeight: '100vh'}} className={`d-flex flex-column ${colorModeDark ? 'dark-mode' : ''} `}>
 
             <Head>
                 <title>{title}</title>
@@ -27,9 +27,9 @@ export default function Layout(
                 <link rel="icon" href="/favicon.ico" />
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
                 {/* <script src="https://kit.fontawesome.com/d1a2586c98.js" crossorigin="anonymous"></script> */}
-                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
                 <link rel="stylesheet" href="https://use.typekit.net/wvo0uze.css"/>
-                <script src="https://kit.fontawesome.com/d1a2586c98.js" crossorigin="anonymous"></script>
+                <script src="https://kit.fontawesome.com/d1a2586c98.js" crossOrigin="anonymous"></script>
             </Head>
 
             <SideMenu

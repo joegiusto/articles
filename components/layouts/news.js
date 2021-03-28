@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link'
 import ROUTES from '../../components/constants/routes';
 import { useRouter } from 'next/router'
@@ -6,6 +7,10 @@ function StoreLayout({ children }) {
 // const StoreLayout = ({ children }) => (
     const router = useRouter()
     const { param } = router.query
+
+    useEffect(() => {
+        console.log("News layout")
+	}, []);
 
     return (
 

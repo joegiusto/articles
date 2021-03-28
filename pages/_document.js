@@ -11,9 +11,9 @@ class MyDocument extends Document {
         <Html>
 
             <Head>
-                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
                 <link rel="stylesheet" href="https://use.typekit.net/wvo0uze.css"/>
-                <script src="https://kit.fontawesome.com/d1a2586c98.js" crossorigin="anonymous"></script>
+                <script src="https://kit.fontawesome.com/d1a2586c98.js" crossOrigin="anonymous"></script>
             </Head>
 
             <body>

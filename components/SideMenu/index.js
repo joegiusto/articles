@@ -553,7 +553,7 @@ export default function Layout(props) {
             </div>
 
             <label className="articles-switch mb-0" onClick={() => dispatch({type: 'TOGGLE_COLOR_MODE'})}>
-            <input type="checkbox" checked={colorModeDark}/>
+            <input type="checkbox" defaultChecked={colorModeDark}/>
             <span className="slider" onClick={() => dispatch({type: 'TOGGLE_COLOR_MODE'})}></span>
             </label>
 
@@ -569,7 +569,7 @@ export default function Layout(props) {
             </div>
 
             <label className="articles-switch mb-0" onClick={() => dispatch({type: 'TOGGLE_COLOR_MODE'})}>
-                <input type="checkbox" checked={colorModeDark}/>
+                <input type="checkbox" defaultChecked={colorModeDark}/>
                 <span className="slider" onClick={() => dispatch({type: 'TOGGLE_COLOR_MODE'})}></span>
             </label>
 
