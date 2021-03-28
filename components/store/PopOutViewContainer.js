@@ -1,4 +1,4 @@
-<div className={"pop-out-viewer-container " + (this.props.match.params.id ? ' active' : '')}>
+{/* <div className={"pop-out-viewer-container " + (this.props.match.params.id ? ' active' : '')}>
 
     <Link to={ROUTES.STORE} onClick={() => this.setPopOut(false)}>
         <div className="background"></div>
@@ -67,4 +67,4 @@
 
     </div>
 
-</div>
+</div> */}
