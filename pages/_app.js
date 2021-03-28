@@ -7,6 +7,7 @@ import MainLayout from '../components/layout'
 import DefaultLayout from '../components/layouts/default'
 
 import '../assets/scss/index.scss';
+import '../assets/fontawsome/css/all.min.css';
 
 function MyApp({ Component, pageProps }) {
     const store = useStore(pageProps.initialReduxState)

@@ -7,25 +7,25 @@ import Clock from 'react-live-clock';
 
 import ROUTES from '../constants/routes'
 
-import IconHome from './components/FontAwesome/duotone/home.svg';
-import IconFlagUsa from './components/FontAwesome/duotone/flag-usa.svg';
-import IconFileChartLine from './components/FontAwesome/duotone/file-chart-line.svg';
-import IconShoppingCart from './components/FontAwesome/duotone/shopping-cart.svg';
-import IconLightbulb from './components/FontAwesome/duotone/lightbulb.svg';
-import IconBooks from './components/FontAwesome/duotone/books.svg';
-import IconNewspaper from './components/FontAwesome/duotone/newspaper.svg';
-import IconGhost from './components/FontAwesome/duotone/ghost.svg';
-import IconBalanceScale from './components/FontAwesome/duotone/balance-scale.svg';
-import IconBullhorn from './components/FontAwesome/duotone/bullhorn.svg';
-import IconHandsHelping from './components/FontAwesome/duotone/hands-helping.svg';
-import IconScroll from './components/FontAwesome/duotone/scroll.svg';
-import IconBell from './components/FontAwesome/duotone/bell.svg';
-import IconSitemap from './components/FontAwesome/duotone/sitemap.svg';
-import IconPaperPlane from './components/FontAwesome/duotone/paper-plane.svg';
-import IconComment from './components/FontAwesome/duotone/comment.svg';
-import IconToolbox from './components/FontAwesome/duotone/toolbox.svg';
-import IconAlarmExclamation from './components/FontAwesome/duotone/alarm-exclamation.svg';
-import IconDraftingCompass from './components/FontAwesome/duotone/drafting-compass.svg';
+// import IconHome from './components/FontAwesome/duotone/home.svg';
+// import IconFlagUsa from './components/FontAwesome/duotone/flag-usa.svg';
+// import IconFileChartLine from './components/FontAwesome/duotone/file-chart-line.svg';
+// import IconShoppingCart from './components/FontAwesome/duotone/shopping-cart.svg';
+// import IconLightbulb from './components/FontAwesome/duotone/lightbulb.svg';
+// import IconBooks from './components/FontAwesome/duotone/books.svg';
+// import IconNewspaper from './components/FontAwesome/duotone/newspaper.svg';
+// import IconGhost from './components/FontAwesome/duotone/ghost.svg';
+// import IconBalanceScale from './components/FontAwesome/duotone/balance-scale.svg';
+// import IconBullhorn from './components/FontAwesome/duotone/bullhorn.svg';
+// import IconHandsHelping from './components/FontAwesome/duotone/hands-helping.svg';
+// import IconScroll from './components/FontAwesome/duotone/scroll.svg';
+// import IconBell from './components/FontAwesome/duotone/bell.svg';
+// import IconSitemap from './components/FontAwesome/duotone/sitemap.svg';
+// import IconPaperPlane from './components/FontAwesome/duotone/paper-plane.svg';
+// import IconComment from './components/FontAwesome/duotone/comment.svg';
+// import IconToolbox from './components/FontAwesome/duotone/toolbox.svg';
+// import IconAlarmExclamation from './components/FontAwesome/duotone/alarm-exclamation.svg';
+// import IconDraftingCompass from './components/FontAwesome/duotone/drafting-compass.svg';
 
 const useCounter = () => {
     const sideMenuOpen = useSelector((state) => state.sideMenuOpen)
@@ -290,14 +290,15 @@ export default function Layout(props) {
                 {props.isAuth?
                 <Link href={ROUTES.ROUTES.HOME}>
                     <a className="link">
-                        <IconHome className="icon"/>
+                        <i className="fad fa-home"></i>
                         <span>Home</span>
                     </a>
                 </Link>
                 :
                 <Link href={ROUTES.HOME}>
                     <a className="link">
-                        <IconHome className="icon"/>
+                        {/* <IconHome className="icon"/> */}
+                        <i className="icon fad fa-home"></i>
                         <span>Landing</span>
                     </a>
                 </Link>
@@ -305,14 +306,16 @@ export default function Layout(props) {
 
                 <Link href={ROUTES.MISSION}>
                     <a className="link">
-                        <IconFlagUsa className="icon"/>
+                        {/* <IconFlagUsa className="icon"/> */}
+                        <i className="icon fad fa-flag-usa"></i>
                         <span>Mission</span>
                     </a>
                 </Link>
 
                 <Link href={ROUTES.TRANSPARENCY}>
                     <a className="link">
-                        <IconFileChartLine className="icon"/>
+                        {/* <IconFileChartLine className="icon"/> */}
+                        <i className="icon fad fa-file-chart-line"></i>
                         <span>Transparency</span>
                     </a>
                 </Link>
@@ -339,14 +342,16 @@ export default function Layout(props) {
 
                 <Link href={ROUTES.STORE}>
                     <a className="link">
-                        <IconShoppingCart className="icon"/>
+                        {/* <IconShoppingCart className="icon"/> */}
+                        <i className="icon fad fa-shopping-cart fa-lg"></i>
                         <span>Store</span>
                     </a>
                 </Link>
 
                 <Link href={ROUTES.STORE_SUBMISSIONS}>
                     <a className="link">
-                        <IconLightbulb className="icon"/>
+                        {/* <IconLightbulb className="icon"/> */}
+                        <i className="icon fad fa-lightbulb fa-lg"></i>
                         <span>Submissions</span>
                     </a>
                 </Link>
@@ -368,7 +373,8 @@ export default function Layout(props) {
 
                 <Link href={ROUTES.NEWS}>
                     <a className="link">
-                        <IconNewspaper className="icon"/>
+                        {/* <IconNewspaper className="icon"/> */}
+                        <i className="icon fad fa-newspaper fa-lg"></i>
                         <span>Frontpage</span>
                     </a>
                 </Link>
@@ -376,7 +382,8 @@ export default function Layout(props) {
                 <Link href={ROUTES.STORIES}>
                     {/* <i className="fas fa-bullhorn"></i> */}
                     <a className="link">
-                        <IconBullhorn className="icon"/>
+                        {/* <IconBullhorn className="icon"/> */}
+                        <i className="icon fad fa-bullhorn fa-lg"></i>
                         <span>Stories</span>
                     </a>
                 </Link>
@@ -384,7 +391,8 @@ export default function Layout(props) {
                 <Link href={ROUTES.ISSUES}>
                     {/* <i className="fas fa-balance-scale"></i> */}
                     <a className="link">
-                        <IconBalanceScale className="icon"/>
+                        {/* <IconBalanceScale className="icon"/> */}
+                        <i className="icon fad fa-balance-scale fa-lg"></i>
                         <span>Issues</span>
                     </a>
                 </Link>
@@ -392,14 +400,16 @@ export default function Layout(props) {
                 <Link href={ROUTES.MYTHS}>
                     {/* <i className="fas fa-newspaper"></i> */}
                     <a className="link">
-                        <IconGhost className="icon"/>
+                        {/* <IconGhost className="icon"/> */}
+                        <i className="icon fad fa-ghost fa-lg"></i>
                         <span>Myths</span>
                     </a>
                 </Link>
 
                 <Link href={ROUTES.RESOURCES}>
                     <a className="link">
-                        <IconBooks className="icon"/>
+                        {/* <IconBooks className="icon"/> */}
+                        <i className="icon fad fa-books fa-lg"></i>
                         <span>Resources</span>
                     </a>
                 </Link>
@@ -417,21 +427,24 @@ export default function Layout(props) {
 
                 <Link href={ROUTES.PARTY}>
                     <a className="link">
-                        <IconHandsHelping className="icon"/>
+                        {/* <IconHandsHelping className="icon"/> */}
+                        <i className="icon fad fa-hands-helping fa-lg"></i>
                         <span>Info</span>
                     </a>
                 </Link>
 
                 <Link href={ROUTES.PROPOSALS}>
                     <a className="link">
-                        <IconScroll className="icon"/>
+                        {/* <IconScroll className="icon"/> */}
+                        <i className="icon fad fa-scroll fa-lg"></i>
                         <span>Proposals</span>
                     </a>
                 </Link>
 
                 <Link href={ROUTES.TOWN_HALL}>
                     <a className="link">
-                        <IconBell className="icon"/>
+                        {/* <IconBell className="icon"/> */}
+                        <i className="icon fad fa-bell fa-lg"></i>
                         <span>Town Hall</span>
                     </a>
                 </Link>
@@ -449,14 +462,16 @@ export default function Layout(props) {
 
                 <Link href={ROUTES.COMMUNITY} className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.COMMUNITY}>
                     <a className="link">
-                        <IconSitemap className="icon"/>
+                        {/* <IconSitemap className="icon"/> */}
+                        <i className="icon fad fa-sitemap fa-lg"></i>
                         <span>Hub</span>
                     </a>
                 </Link>
 
                 <Link href={ROUTES.MESSAGES} className="link messages-link" onClick={() => {setMenuOpen(false)}} to={ROUTES.MESSAGES}>
                     <a className="link">
-                        <IconComment className="icon messages-icon"/>
+                        {/* <IconComment className="icon messages-icon"/> */}
+                        <i className="icon fad fa-comment fa-lg"></i>
                         <span>
                             Messages
                         </span>
@@ -485,7 +500,8 @@ export default function Layout(props) {
 
                                 <Link href={ROUTES.ADMIN} className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.ADMIN}>
                                     <a className="link">
-                                        <IconToolbox  className="icon"/>
+                                        {/* <IconToolbox  className="icon"/> */}
+                                        <i className="icon fad fa-toolbox fa-lg"></i>
                                         <span>Portal</span>
                                     </a>
                                 </Link>
@@ -512,14 +528,16 @@ export default function Layout(props) {
 
                             <Link href={ROUTES.PLAYGROUND} className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.PLAYGROUND}>
                                 <a className="link">
-                                    <IconDraftingCompass className="icon"/>
+                                    {/* <IconDraftingCompass className="icon"/> */}
+                                    <i className="icon fad fa-compass fa-lg"></i>
                                     <span>Playground</span>
                                 </a>
                             </Link>
 
                             <Link href={ROUTES.OUTSET} className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.OUTSET}>
                                 <a className="">
-                                    <IconAlarmExclamation className="icon"/>
+                                    {/* <IconAlarmExclamation className="icon"/> */}
+                                    <i className="icon fad fa-alarm-exclamation fa-lg"></i>
                                     <span>Outset</span>
                                 </a>
                             </Link>
