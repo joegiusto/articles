@@ -25,7 +25,7 @@ function FooterBase(props) {
 
                 <div className="col-lg-3 footer-panel first">
 
-                    <Link href={ROUTES.LANDING}><div className="brand">Articles Media</div></Link>
+                    <Link href={ROUTES.LANDING}><a className="brand">Articles Media</a></Link>
 
                     <div className="icons">
 

@@ -187,7 +187,7 @@
       position: relative;
     // position: sticky;
     // top: calc(1rem + 50px);
-    align-self: start;
+    align-self: flex-start;
     // width: 250px;
     width: 90%;
     // border: 3px solid #955408;
@@ -459,7 +459,7 @@
 
     @include media-breakpoint-up(lg) {
         flex-direction: row;
-        align-items: start;
+        align-items: flex-start;
     }
 
     // The Ad
