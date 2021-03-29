@@ -29,19 +29,19 @@ class Proposals extends Component {
     }
   
     componentDidMount() {
-      const self = this;
-  
-      axios.get('/api/proposals')
-      .then(function (response) {
-        console.log(response);
-  
-        self.setState({
-          proposals: response.data
-        })
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+        // const self = this;
+    
+        // axios.get('/api/proposals')
+        // .then(function (response) {
+        //     console.log(response);
+    
+        //     self.setState({
+        //     proposals: response.data
+        //     })
+        // })
+        // .catch(function (error) {
+        //     console.log(error);
+        // });
     }
   
     render(props) {
@@ -112,7 +112,7 @@ class Proposals extends Component {
               </div>
   
               {
-                this.state.proposals.filter(proposal => proposal.type === 'fundamental').map(proposal => 
+                this.props.proposals.filter(proposal => proposal.type === 'fundamental').map(proposal => 
                   <Proposal
                     proposal={proposal}
                   />
@@ -129,7 +129,7 @@ class Proposals extends Component {
               </div>
   
               {
-                this.state.proposals.filter(proposal => proposal.type === 'social').map(proposal => 
+                this.props.proposals.filter(proposal => proposal.type === 'social').map(proposal => 
                   <Proposal
                     proposal={proposal}
                   />
@@ -146,7 +146,7 @@ class Proposals extends Component {
               </div>
   
               {
-                this.state.proposals.filter(proposal => proposal.type === 'financial').map(proposal => 
+                this.props.proposals.filter(proposal => proposal.type === 'financial').map(proposal => 
                   <Proposal
                     proposal={proposal}
                   />
@@ -163,7 +163,7 @@ class Proposals extends Component {
               </div>
   
               {
-                this.state.proposals.filter(proposal => proposal.type === 'education').map(proposal => 
+                this.props.proposals.filter(proposal => proposal.type === 'education').map(proposal => 
                   <Proposal
                     proposal={proposal}
                   />
@@ -178,20 +178,46 @@ class Proposals extends Component {
     }
   }
   
-  const Proposal = (props) => {
-    const { proposal } = props
-  
-    return (
-    <Link href={ROUTES.PROPOSALS + '/' + proposal.url}>
-      <div className="proposal">
+const Proposal = (props) => {
+const { proposal } = props
+
+return (
+<Link href={ROUTES.PROPOSALS + '/' + proposal.url}>
+    <a>
+        <div className="proposal">
         <div className="title">{proposal.title}</div>
         <div className="the-short">
-          <div className="label">Summary:</div>
-          <div className="description">{proposal.description}</div>
+            <div className="label">Summary:</div>
+            <div className="description">{proposal.description}</div>
         </div>
-      </div>
-    </Link>
-    )
-  }  
+        </div>
+    </a>
+</Link>
+)
+}  
+
+  // This gets called on every request
+export async function getServerSideProps() {
+    // Fetch data from external API
+    const res = await fetch(`https://beta.articles.media/api/proposals`)
+    const proposals = await res.json()
+
+    // console.log(data)
+
+    // axios.get('/api/proposals')
+    // .then(function (response) {
+    //     console.log(response);
+
+    //     self.setState({
+    //     proposals: response.data
+    //     })
+    // })
+    // .catch(function (error) {
+    //     console.log(error);
+    // });
   
-  export default Proposals
+    // Pass data to the page via props
+    return { props: { proposals } }
+}
+  
+export default Proposals

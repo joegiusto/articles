@@ -27,7 +27,7 @@ export default function Layout(
                 <meta charSet="utf-8" />
                 {/* <meta name="description" content="Description" /> */}
                 <meta name="description" content="A political organization and platform working to make America a better place for the people through avenues of transparency, clothing, news, and politics."/>
-                {/* <link rel="icon" href="/favicon.ico" /> */}
+                <link rel="icon" href="/favicon.ico" />
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
 
                 {/* <script src="https://kit.fontawesome.com/d1a2586c98.js" crossorigin="anonymous"></script> */}
