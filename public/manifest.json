@@ -3,7 +3,7 @@
   "short_name": "Articles",
   "theme_color": "#ffffff",
   "background_color": "#000000",
-  "display": "fullscreen",
+  "display": "standalone",
   "orientation": "portrait",
   "scope": "/",
   "start_url": "/home",
