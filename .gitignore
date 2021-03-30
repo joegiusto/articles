@@ -15,6 +15,10 @@
 # production
 /build
 
+# pwa
+public/sw.js.map
+public/sw.js
+
 # misc
 .DS_Store
 

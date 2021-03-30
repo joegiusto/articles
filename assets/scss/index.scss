@@ -133,6 +133,17 @@ a {
   }
 }
 
+.dark-mode {
+    a {
+        color: white;
+      
+        &:hover {
+          text-decoration: underline;
+          color: white;
+        }
+      }
+}
+
 body {
   margin: 0;
   

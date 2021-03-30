@@ -64,6 +64,8 @@ class Products extends Component {
 
                     <div className="store-products-page">
 
+                        {this.state.loadingProducts && <div>Loading</div>}
+
                         {this.state.products.filter((o) => o.type === 'Original').map((product) => (
                             product.visible === true ?
                             <StoreItemBeta

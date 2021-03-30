@@ -18,6 +18,14 @@ export default function Layout(
 ) {
     const { colorModeDark } = useCounter();
 
+    if (process.browser) {
+        if ( colorModeDark === true ) {
+            document.body.classList.add('dark')
+        } else {
+            document.body.classList.remove('dark')
+        }
+    }
+
     return (
         <div style={{minHeight: '100vh'}} className={`d-flex flex-column ${colorModeDark ? 'dark-mode' : ''} `}>
 
