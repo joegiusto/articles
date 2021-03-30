@@ -196,25 +196,12 @@ return (
 )
 }  
 
-  // This gets called on every request
-export async function getServerSideProps() {
+// This gets called on every request
+// export async function getServerSideProps() {
+export async function getStaticProps() {
     // Fetch data from external API
     const res = await fetch(`https://beta.articles.media/api/proposals`)
     const proposals = await res.json()
-
-    // console.log(data)
-
-    // axios.get('/api/proposals')
-    // .then(function (response) {
-    //     console.log(response);
-
-    //     self.setState({
-    //     proposals: response.data
-    //     })
-    // })
-    // .catch(function (error) {
-    //     console.log(error);
-    // });
   
     // Pass data to the page via props
     return { props: { proposals } }

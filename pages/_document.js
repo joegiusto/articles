@@ -13,7 +13,7 @@ class MyDocument extends Document {
             <Head>
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
                 <link rel="stylesheet" href="https://use.typekit.net/wvo0uze.css"/>
-                <script src="https://kit.fontawesome.com/d1a2586c98.js" crossOrigin="anonymous"></script>
+                {/* <script src="https://kit.fontawesome.com/d1a2586c98.js" crossOrigin="anonymous"></script> */}
             </Head>
 
             <body>

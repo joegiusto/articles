@@ -32,8 +32,8 @@ export default function Layout(
 
                 {/* <script src="https://kit.fontawesome.com/d1a2586c98.js" crossorigin="anonymous"></script> */}
 
-                <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
-                <link rel="stylesheet" href="https://use.typekit.net/wvo0uze.css"/>
+                {/* <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
+                <link rel="stylesheet" href="https://use.typekit.net/wvo0uze.css"/> */}
 
                 <link rel="manifest" href="/manifest.json" />
                 <link
