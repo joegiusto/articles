@@ -313,7 +313,7 @@ export default function Layout(props) {
                 </Link>
 
                 <Link href={ROUTES.TRANSPARENCY}>
-                    <a className="link">
+                    <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
                         {/* <IconFileChartLine className="icon"/> */}
                         <i className="icon fad fa-file-chart-line"></i>
                         <span>Transparency</span>
