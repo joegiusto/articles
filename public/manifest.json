@@ -6,7 +6,7 @@
     "display": "standalone",
     "orientation": "portrait",
     "scope": "/",
-    "start_url": "/home",
+    "start_url": "/",
     "description": "A political organization and platform, working to make America a better place for the people through avenues of transparency, clothing, news and politics.",
     "screenshots": [
         {
