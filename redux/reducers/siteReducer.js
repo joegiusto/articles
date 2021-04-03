@@ -1,15 +1,15 @@
 const initialState = {
-  colorModeDark: false,
-  animatedSideMenuSectionHeaders: false,
-  weatherPin: false,
-  sideMenuOpen: false,
-  sideMenuFixed: false,
-  pendingPWAUpdate: false,
-  userSubscriptions: false,
-  dateType: 'post',
-  notification: {
-    text: 'Test'
-  }
+    colorModeDark: false,
+    animatedSideMenuSectionHeaders: false,
+    weatherPin: false,
+    sideMenuOpen: false,
+    sideMenuFixed: false,
+    pendingPWAUpdate: false,
+    userSubscriptions: false,
+    dateType: 'post',
+    notification: {
+        text: 'Test'
+    }
 };
 export default function(state = initialState, action) {
   switch (action.type) {

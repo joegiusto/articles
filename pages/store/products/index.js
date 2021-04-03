@@ -60,6 +60,11 @@ class Products extends Component {
     render() {
         return(
             <section className="store-page">
+
+                <Head>
+                    <title>Products - Articles</title>
+                </Head>
+
                 <div className="container">
 
                     <div className="store-products-page">

@@ -113,7 +113,7 @@ class Proposals extends Component {
   
               {
                 this.props.proposals.filter(proposal => proposal.type === 'fundamental').map(proposal => 
-                  <Proposal
+                  <Proposal key={proposal._id}
                     proposal={proposal}
                   />
                 )
@@ -130,7 +130,7 @@ class Proposals extends Component {
   
               {
                 this.props.proposals.filter(proposal => proposal.type === 'social').map(proposal => 
-                  <Proposal
+                  <Proposal key={proposal._id}
                     proposal={proposal}
                   />
                 )
@@ -147,7 +147,7 @@ class Proposals extends Component {
   
               {
                 this.props.proposals.filter(proposal => proposal.type === 'financial').map(proposal => 
-                  <Proposal
+                  <Proposal key={proposal._id}
                     proposal={proposal}
                   />
                 )
@@ -164,7 +164,7 @@ class Proposals extends Component {
   
               {
                 this.props.proposals.filter(proposal => proposal.type === 'education').map(proposal => 
-                  <Proposal
+                  <Proposal key={proposal._id}
                     proposal={proposal}
                   />
                 )
@@ -204,7 +204,7 @@ export async function getStaticProps() {
     const proposals = await res.json()
   
     // Pass data to the page via props
-    return { props: { proposals } }
+    return { props: { proposals }, revalidate: (60 * 10) }
 }
   
 export default Proposals

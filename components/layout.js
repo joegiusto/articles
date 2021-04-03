@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { useSelector, useDispatch } from 'react-redux'
 
 import SideMenu from './SideMenu/'
-import Footer from './Footer'
+import Footer from './layouts/footer'
 
 const useCounter = () => {
     const colorModeDark = useSelector((state) => state.colorModeDark)

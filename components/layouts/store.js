@@ -26,7 +26,7 @@ function StoreLayout({ children }) {
 
             <div className="right">
                 <Link href={ROUTES.CHECKOUT}>
-                    <a className={'btn btn-articles-light align-items-center ' + (router.asPath === ROUTES.CHECKOUT ? 'active' : '')}><i className="fas fa-shopping-basket mr-2"></i>Checkout ({0})</a>
+                    <a className={'btn align-items-center ' + (router.asPath === ROUTES.CHECKOUT ? 'btn-articles-light alt' : 'btn-articles-light')}><i className="fas fa-shopping-basket mr-2"></i>Checkout ({0})</a>
                 </Link>
             </div>
 

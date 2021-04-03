@@ -10,4 +10,7 @@ module.exports = withPWA({
     future: {
         webpack5: true,
     },
+    images: {
+        domains: ['cdn.articles.media'],
+    },
 })

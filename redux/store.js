@@ -1,30 +1,33 @@
 import { useMemo } from 'react'
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
+import expensesReducer from "./reducers/expensesReducer";
+import siteReducer from "./reducers/siteReducer";
+
 let store
 
 const exampleInitialState = {
-  lastUpdate: 0,
-  light: false,
-  count: 0,
-  exampleData: [],
-  error: null,
-  colorModeDark: false,
-  sideMenuOpen: false,
+    lastUpdate: 0,
+    light: false,
+    count: 0,
+    exampleData: [],
+    error: null,
+    colorModeDark: false,
+    sideMenuOpen: false,
 }
 
 export const actionTypes = {
-  TICK: 'TICK',
-  INCREMENT: 'INCREMENT',
-  DECREMENT: 'DECREMENT',
-  RESET: 'RESET',
-  LOAD_EXAMPLE_DATA: 'LOAD_EXAMPLE_DATA',
-  LOADING_DATA_FAILURE: 'LOADING_DATA_FAILURE',
-  TOGGLE_COLOR_MODE: 'TOGGLE_COLOR_MODE',
-  TOGGLE_SIDE_MENU_OPEN: 'TOGGLE_SIDE_MENU_OPEN'
+    TICK: 'TICK',
+    INCREMENT: 'INCREMENT',
+    DECREMENT: 'DECREMENT',
+    RESET: 'RESET',
+    LOAD_EXAMPLE_DATA: 'LOAD_EXAMPLE_DATA',
+    LOADING_DATA_FAILURE: 'LOADING_DATA_FAILURE',
+    TOGGLE_COLOR_MODE: 'TOGGLE_COLOR_MODE',
+    TOGGLE_SIDE_MENU_OPEN: 'TOGGLE_SIDE_MENU_OPEN'
 }
 
 // REDUCERS
@@ -116,7 +119,14 @@ const persistConfig = {
     //   whitelist: ['exampleData'], // place to select which state you want to persist
 }
 
-const persistedReducer = persistReducer(persistConfig, reducer)
+const persistedReducer = persistReducer(
+    persistConfig, 
+    // combineReducers({
+    //     expenses: expensesReducer,
+    //     site: siteReducer
+    // })
+    reducer
+)
 
 function makeStore(initialState = exampleInitialState) {
   return createStore(

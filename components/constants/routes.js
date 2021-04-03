@@ -6,7 +6,7 @@ export default {
 
     // Access
     SIGN_UP: '/signup',
-    SIGN_IN: '/signin',
+    SIGN_IN: '/login',
     VERIFY_EMAIL: '/verify-email',
     PASSWORD_FORGET: '/password-reset',
 

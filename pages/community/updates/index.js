@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Head from 'next/head'
+import Image from 'next/image'
 
 const Page = (props) => (
   <div className="updates-page">
@@ -41,7 +42,17 @@ function Updates(props) {
             </Head>
 
             <div className="header">
-            <img className="d-block mb-3" src="https://cdn.articles.media/email/logo.jpg" alt=""/>
+
+            {/* <img className="d-block mb-3" src="https://cdn.articles.media/email/logo.jpg" alt=""/> */}
+            <div className="mb-1">
+                <Image
+                    src="https://cdn.articles.media/email/logo.jpg"
+                    alt="Articles Media Logo"
+                    width="110px"
+                    height="110xp"
+                />
+            </div>
+
             <h2 className="">Updates</h2>
             </div>
 

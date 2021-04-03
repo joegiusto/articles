@@ -65,7 +65,7 @@ class StorePage extends Component {
                 <section className="store-page">
 
                     <Head>
-                        <title>Store Products - Articles</title>
+                        <title>Store Home - Articles</title>
                     </Head>
     
                     {/* <Route exact path={[ROUTES.STORE, ROUTES.STORE_VIEW]} render={() => ( */}

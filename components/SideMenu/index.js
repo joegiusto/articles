@@ -1,31 +1,16 @@
 import Link from 'next/link'
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useEffect, useState } from 'react';
+import { connect, useSelector, useDispatch } from 'react-redux'
 import moment from 'moment';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Clock from 'react-live-clock';
 
 import ROUTES from '../constants/routes'
 
-// import IconHome from './components/FontAwesome/duotone/home.svg';
-// import IconFlagUsa from './components/FontAwesome/duotone/flag-usa.svg';
-// import IconFileChartLine from './components/FontAwesome/duotone/file-chart-line.svg';
-// import IconShoppingCart from './components/FontAwesome/duotone/shopping-cart.svg';
-// import IconLightbulb from './components/FontAwesome/duotone/lightbulb.svg';
-// import IconBooks from './components/FontAwesome/duotone/books.svg';
-// import IconNewspaper from './components/FontAwesome/duotone/newspaper.svg';
-// import IconGhost from './components/FontAwesome/duotone/ghost.svg';
-// import IconBalanceScale from './components/FontAwesome/duotone/balance-scale.svg';
-// import IconBullhorn from './components/FontAwesome/duotone/bullhorn.svg';
-// import IconHandsHelping from './components/FontAwesome/duotone/hands-helping.svg';
-// import IconScroll from './components/FontAwesome/duotone/scroll.svg';
-// import IconBell from './components/FontAwesome/duotone/bell.svg';
-// import IconSitemap from './components/FontAwesome/duotone/sitemap.svg';
-// import IconPaperPlane from './components/FontAwesome/duotone/paper-plane.svg';
-// import IconComment from './components/FontAwesome/duotone/comment.svg';
-// import IconToolbox from './components/FontAwesome/duotone/toolbox.svg';
-// import IconAlarmExclamation from './components/FontAwesome/duotone/alarm-exclamation.svg';
-// import IconDraftingCompass from './components/FontAwesome/duotone/drafting-compass.svg';
+// Import a context for socket
+import SocketContext from '../context/socket'
+
+import { toggleSideMenuFixed, toggleColorMode, toggleSideMenuOpen } from '../../redux/actions/siteActions';
 
 const useCounter = () => {
     const sideMenuOpen = useSelector((state) => state.sideMenuOpen)
@@ -33,13 +18,30 @@ const useCounter = () => {
     return { sideMenuOpen, colorModeDark }
 }
 
-export default function Layout(props) {
+function SideMenuBase(props) {
     const [connected, setConnected] = useState(false);
+    
     const [notificationProgress, setNotificationProgress] = useState(0);
     const [notificationVisible, setNotificationVisible] = useState(false);
     const [pinOpen, setPinOpen] = useState(false);
+
     const dispatch = useDispatch()
     const { sideMenuOpen, colorModeDark } = useCounter()
+
+    useEffect(() => {
+
+        props.socket.on('connect', () => {
+            console.log("Connected to server!");
+            setConnected(true);
+            // props.socket.emit('login', {userId: props.user?._id})
+        });
+
+        props.socket.on('disconnect', () => {
+            console.log("Disconnected from server!");
+            setConnected(false);
+        });
+
+    })
     
     return ( <div className={'menu-wrap noselect' + (props.site?.sideMenuFixed ? ' fixed' : '') + (props.site?.colorModeDark ? ' dark-mode' : '')}>
 
@@ -249,10 +251,13 @@ export default function Layout(props) {
 
                     <p id="nav-welcome" className="subheading-font m-0 pl-2 py-0">
                     <span>Hello,&nbsp;
-                    {!props.isAuth ? (
-                        null
-                    // <Link href={ROUTES.SIGN_IN} onClick={() => {setMenuOpen(false)}} to={ROUTES.SIGN_IN} id='nav-sign-in'>Log In / Sign Up</Link>
-                    ) : (
+                    {!props.isAuth ? 
+                        
+                    <Link href={`${ROUTES.SIGN_IN}`}>
+                        <a id='nav-sign-in' onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>Log In / Sign Up</a>
+                    </Link>
+                    
+                     : (
                         null
                     // <Link href={ROUTES.SETTINGS_ACCOUNT} onClick={() => {setMenuOpen(false)}} to={ROUTES.SETTINGS_ACCOUNT} id='nav-sign-in'>{props?.user?.first_name} {props?.user?.last_name}</Link>
                     )}
@@ -289,14 +294,14 @@ export default function Layout(props) {
 
                 {props.isAuth?
                 <Link href={ROUTES.ROUTES.HOME}>
-                    <a className="link">
+                    <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
                         <i className="fad fa-home"></i>
                         <span>Home</span>
                     </a>
                 </Link>
                 :
                 <Link href={ROUTES.HOME}>
-                    <a className="link">
+                    <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
                         {/* <IconHome className="icon"/> */}
                         <i className="icon fad fa-home"></i>
                         <span>Landing</span>
@@ -305,7 +310,7 @@ export default function Layout(props) {
                 }
 
                 <Link href={ROUTES.MISSION}>
-                    <a className="link">
+                    <a className="link" onClick={ () => props.toggleSideMenuOpen() }>
                         {/* <IconFlagUsa className="icon"/> */}
                         <i className="icon fad fa-flag-usa"></i>
                         <span>Mission</span>
@@ -341,7 +346,7 @@ export default function Layout(props) {
             <div className="side-menu-section-links">
 
                 <Link href={ROUTES.STORE}>
-                    <a className="link">
+                    <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
                         {/* <IconShoppingCart className="icon"/> */}
                         <i className="icon fad fa-shopping-cart fa-lg"></i>
                         <span>Store</span>
@@ -349,7 +354,7 @@ export default function Layout(props) {
                 </Link>
 
                 <Link href={ROUTES.STORE_SUBMISSIONS}>
-                    <a className="link">
+                    <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
                         {/* <IconLightbulb className="icon"/> */}
                         <i className="icon fad fa-lightbulb fa-lg"></i>
                         <span>Submissions</span>
@@ -372,7 +377,7 @@ export default function Layout(props) {
             <div className="side-menu-section-links">
 
                 <Link href={ROUTES.NEWS}>
-                    <a className="link">
+                    <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
                         {/* <IconNewspaper className="icon"/> */}
                         <i className="icon fad fa-newspaper fa-lg"></i>
                         <span>Frontpage</span>
@@ -381,7 +386,7 @@ export default function Layout(props) {
 
                 <Link href={ROUTES.STORIES}>
                     {/* <i className="fas fa-bullhorn"></i> */}
-                    <a className="link">
+                    <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
                         {/* <IconBullhorn className="icon"/> */}
                         <i className="icon fad fa-bullhorn fa-lg"></i>
                         <span>Stories</span>
@@ -390,7 +395,7 @@ export default function Layout(props) {
 
                 <Link href={ROUTES.ISSUES}>
                     {/* <i className="fas fa-balance-scale"></i> */}
-                    <a className="link">
+                    <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
                         {/* <IconBalanceScale className="icon"/> */}
                         <i className="icon fad fa-balance-scale fa-lg"></i>
                         <span>Issues</span>
@@ -399,7 +404,7 @@ export default function Layout(props) {
 
                 <Link href={ROUTES.MYTHS}>
                     {/* <i className="fas fa-newspaper"></i> */}
-                    <a className="link">
+                    <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
                         {/* <IconGhost className="icon"/> */}
                         <i className="icon fad fa-ghost fa-lg"></i>
                         <span>Myths</span>
@@ -407,7 +412,7 @@ export default function Layout(props) {
                 </Link>
 
                 <Link href={ROUTES.RESOURCES}>
-                    <a className="link">
+                    <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
                         {/* <IconBooks className="icon"/> */}
                         <i className="icon fad fa-books fa-lg"></i>
                         <span>Resources</span>
@@ -426,7 +431,7 @@ export default function Layout(props) {
             <div className="side-menu-section-links">
 
                 <Link href={ROUTES.PARTY}>
-                    <a className="link">
+                    <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
                         {/* <IconHandsHelping className="icon"/> */}
                         <i className="icon fad fa-hands-helping fa-lg"></i>
                         <span>Info</span>
@@ -434,7 +439,7 @@ export default function Layout(props) {
                 </Link>
 
                 <Link href={ROUTES.PROPOSALS}>
-                    <a className="link">
+                    <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
                         {/* <IconScroll className="icon"/> */}
                         <i className="icon fad fa-scroll fa-lg"></i>
                         <span>Proposals</span>
@@ -442,7 +447,7 @@ export default function Layout(props) {
                 </Link>
 
                 <Link href={ROUTES.TOWN_HALL}>
-                    <a className="link">
+                    <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
                         {/* <IconBell className="icon"/> */}
                         <i className="icon fad fa-bell fa-lg"></i>
                         <span>Town Hall</span>
@@ -461,7 +466,7 @@ export default function Layout(props) {
             <div className="side-menu-section-links">
 
                 <Link href={ROUTES.COMMUNITY} className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.COMMUNITY}>
-                    <a className="link">
+                    <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
                         {/* <IconSitemap className="icon"/> */}
                         <i className="icon fad fa-sitemap fa-lg"></i>
                         <span>Hub</span>
@@ -469,7 +474,7 @@ export default function Layout(props) {
                 </Link>
 
                 <Link href={ROUTES.MESSAGES} className="link messages-link" onClick={() => {setMenuOpen(false)}} to={ROUTES.MESSAGES}>
-                    <a className="link">
+                    <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
                         {/* <IconComment className="icon messages-icon"/> */}
                         <i className="icon fad fa-comment fa-lg"></i>
                         <span>
@@ -499,7 +504,7 @@ export default function Layout(props) {
                             <div className="side-menu-section-links">
 
                                 <Link href={ROUTES.ADMIN} className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.ADMIN}>
-                                    <a className="link">
+                                    <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
                                         {/* <IconToolbox  className="icon"/> */}
                                         <i className="icon fad fa-toolbox fa-lg"></i>
                                         <span>Portal</span>
@@ -527,7 +532,7 @@ export default function Layout(props) {
                         <div className="side-menu-section-links">
 
                             <Link href={ROUTES.PLAYGROUND} className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.PLAYGROUND}>
-                                <a className="link">
+                                <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
                                     {/* <IconDraftingCompass className="icon"/> */}
                                     <i className="icon fad fa-compass fa-lg"></i>
                                     <span>Playground</span>
@@ -535,7 +540,7 @@ export default function Layout(props) {
                             </Link>
 
                             <Link href={ROUTES.OUTSET} className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.OUTSET}>
-                                <a className="">
+                                <a className="" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
                                     {/* <IconAlarmExclamation className="icon"/> */}
                                     <i className="icon fad fa-alarm-exclamation fa-lg"></i>
                                     <span>Outset</span>
@@ -614,3 +619,24 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
         {children}
     </a>
 ));
+
+const SideMenu = props => (
+    <SocketContext.Consumer>
+        { socket => <SideMenuBase {...props} socket={socket}/> }
+    </SocketContext.Consumer>
+)
+
+const mapStateToProps = (state) => {
+    return {
+        // expenses: state.expenses,
+        // expensesTotal: (state.expenses).length,
+        // site: state.site,
+        // user: state.auth?.user_details,
+        // isAuth: state.auth.isAuthenticated
+    };  
+};
+
+export default connect(
+    mapStateToProps, 
+    { toggleSideMenuOpen } 
+)(SideMenu);

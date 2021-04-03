@@ -19,9 +19,9 @@ export const toggleWeatherPin = () => dispatch => {
 export const toggleSideMenuOpen = () => dispatch => {
   console.log(`Toggling the side menu open option!`);
 
-  dispatch({
-    type: 'TOGGLE_SIDE_MENU_OPEN',
-  });
+//   dispatch({
+//     type: 'TOGGLE_SIDE_MENU_OPEN',
+//   });
 };
 
 export const toggleAnimatedSideMenuSectionHeaders = () => dispatch => {
