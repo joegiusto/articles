@@ -3,7 +3,7 @@ import Link from 'next/link'
 import React, { Component, useState } from 'react';
 import { useRouter } from 'next/router'
 
-import * as ROUTES from '../../../components/constants/routes';
+import ROUTES from '../../../components/constants/routes';
 import NewsLayout from '../../../components/layouts/news.js';
 
 function Home() {

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 // import Scrollspy from 'react-scrollspy';
 
-import * as ROUTES from '../../components/constants/routes';
+import ROUTES from '../../components/constants/routes';
 import Link from 'next/link'
 
 
