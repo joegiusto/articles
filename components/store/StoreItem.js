@@ -10,9 +10,6 @@ import ROUTES from '../../components/constants/routes';
 // import { connect } from 'react-redux';
 // import { addExpense } from '../../../actions/expenses';
 import moment from 'moment';
-
-// import * as ROUTES from '../../../constants/routes';
-// import { Link } from 'react-router-dom';
 // import { usePopper } from 'react-popper';
 
 const IncludedSubscriptionInfoPopper = (props) => {

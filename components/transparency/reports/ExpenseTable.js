@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import { Link } from "next/link";
+import Link from 'next/link';
 
 import ROUTES from '../../../components/constants/routes';
 
