@@ -1,19 +1,19 @@
 .content-wrap.dark-mode {
 
-  .employees-page {
+    .employees-page {
 
-    .employees-list-head {
-      background-color: $dark-mode-card-color;
-    }
-  
-    .employees-list {
-      background-color: $dark-mode-card-color;
-    }
+        .employees-list-head {
+        background-color: $dark-mode-card-color;
+        }
+    
+        .employees-list {
+        background-color: $dark-mode-card-color;
+        }
 
-    .employee-card {
-      background-color: $dark-mode-element-color;
+        .employee-card {
+        background-color: $dark-mode-element-color;
+        }
     }
-  }
 
   .employee-header {
     background-color: $dark-mode-card-color!important;
@@ -49,66 +49,76 @@
 }
 
 .employees-page {
-  // height: calc(100vh - 150px);
+    // height: calc(100vh - 150px);
+    margin-top: 2rem;
 
-  .search-bar {
-    // padding-top: 2rem;
-    text-align: center;
-    font-family: Forte;
-    height: 40px;
-    font-size: 1.4rem;
-    // line-height: 1.4rem;
-    display: inline-flex;
-    width: 100%;
-    margin: 1rem 0;
-    justify-content: center;
+    .search-bar {
+        // padding-top: 2rem;
+        text-align: center;
+        // font-family: Forte;
+        height: 40px;
+        font-size: 1.4rem;
+        // line-height: 1.4rem;
+        display: inline-flex;
+        width: 100%;
+        margin-bottom: 1rem;
+        justify-content: center;
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 900;
+        overflow-x: auto;
+        overflow-y: hidden;
 
-    @include media-breakpoint-down(md) {
-      overflow-x: scroll;
-      justify-content: left;
-      font-size: 1rem;
+        @include media-breakpoint-down(md) {
+        overflow-x: scroll;
+        justify-content: left;
+        font-size: 1rem;
+        }
+
+        .search-letter {
+        text-transform: uppercase;
+        padding: 0rem 0.3rem;
+        cursor: pointer;
+        transition-duration: 200ms;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &.active {
+            background-color: $accent-color;
+        }
+
+        i {
+            margin-right: 0;
+        }
+
+        &:hover {
+            // background-color: $accent-color;
+            font-size: 2.2rem;
+        }
+        }
     }
 
-    .search-letter {
-      text-transform: uppercase;
-      padding: 0rem 0.3rem;
-      cursor: pointer;
-      transition-duration: 200ms;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      &.active {
-        background-color: $accent-color;
-      }
-
-      i {
-        margin-right: 0;
-      }
-
-      &:hover {
-        // background-color: $accent-color;
-        font-size: 2.2rem;
-      }
+    .employees-list-head {
+        background-color: white;
+        padding: 2.5rem;
     }
-  }
 
-  .employees-list-head {
-    background-color: white;
-    padding: 2.5rem;
-  }
+    .employees-list {
 
-  .employees-list {
-
-    .employee-card {
-      border: 1px solid rgba(0, 0, 0, 0.125);
-      padding: 2.5rem;
-      background-color: white;
-      display: flex;
-      justify-content: space-between;
+        .employee-card {
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            padding: 2.5rem;
+            background-color: white;
+            display: flex;
+            justify-content: space-between;
+        }
     }
-  }
   
+}
+
+.employee-page {
+    margin-top: 2rem;
 }
 
 .employee-directory-card {
@@ -574,66 +584,65 @@
     }
   }
 
-  &-action-button {
-    cursor: pointer;
-    background-color: $accent-color;
-    box-shadow: 3px 4px 0px darken($accent-color, 100%);
-    // font-size: 22px;
-    padding: 4px 8px;
-    vertical-align: 12px;
-    border-radius: 5px;
-    font-stretch: condensed;
-    font-weight: bold;
-    margin-top: 5px;
-
-    @include media-breakpoint-up(lg) {
-      font-size: 22px;
-      margin-top: 15px;
-    }
-  }
-
-  &-bio {
-    margin-top: 10px;
-    font-style: italic;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  }
-
-  &-social {
-    margin-top: 20px;
-    font-size: 1.7rem;
-
-    .fa-instagram, .fa-facebook, .mesh, .fa-github-square {
-      cursor: pointer;
-      color: #000!important;
-      padding-bottom: 2px;
-      position: relative;
-
-      &:after {
-        content: "";
-        position: absolute;
-        left: 0px;
-        bottom: -7px;
+    &-action-button {
+        cursor: pointer;
         background-color: $accent-color;
-        border-top: 1px solid #000;
-        width: 25px;
-        height: 5px;
+        box-shadow: 3px 4px 0px darken($accent-color, 100%);
+        // font-size: 22px;
+        padding: 4px 8px;
+        vertical-align: 12px;
+        border-radius: 5px;
+        font-stretch: condensed;
+        font-weight: bold;
+        margin-top: 5px;
 
-        // -webkit-clip-path: polygon(50% 100%, 0 0, 100% 0);
-        // clip-path: polygon(50% 100%, 0 0, 100% 0);
-      }
+        @include media-breakpoint-up(lg) {
+        font-size: 22px;
+        margin-top: 15px;
+        }
     }
-    .fa-instagram {
-      color: purple;
+
+    &-bio {
+        margin-top: 10px;
     }
-    .fa-facebook {
-      color: #007bff;
+
+    &-social {
+        margin-top: 20px;
+        font-size: 1.7rem;
+
+        .fa-instagram, .fa-facebook, .mesh, .fa-github-square {
+        cursor: pointer;
+        color: #000!important;
+        padding-bottom: 2px;
+        position: relative;
+
+        &:after {
+            content: "";
+            position: absolute;
+            left: 0px;
+            bottom: -7px;
+            background-color: $accent-color;
+            border-top: 1px solid #000;
+            width: 25px;
+            height: 5px;
+
+            // -webkit-clip-path: polygon(50% 100%, 0 0, 100% 0);
+            // clip-path: polygon(50% 100%, 0 0, 100% 0);
+        }
+        }
+        .fa-instagram {
+        color: purple;
+        }
+        .fa-facebook {
+        color: #007bff;
+        }
+        .mesh {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        color: orangered;
+        // font-size: 1.9rem;
+        }
     }
-    .mesh {
-      font-family: Verdana, Geneva, Tahoma, sans-serif;
-      color: orangered;
-      // font-size: 1.9rem;
-    }
-  }
+
 }
 
 @media (min-width: 768px) {

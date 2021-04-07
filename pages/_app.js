@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Provider as AuthProvider } from 'next-auth/client'
 import { Provider } from 'react-redux'
 import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -38,17 +39,19 @@ function MyApp({ Component, pageProps }) {
 	}, []);
 
     return ( 
-        <SocketContext.Provider value={socket}>
-        <Provider store={store}>
-            {/* <PersistGate loading={<div>loading</div>} persistor={persistor}> */}
-            <MainLayout>
-                <Layout>
-                    <Component {...pageProps} />
-                </Layout>
-            </MainLayout>
-            {/* </PersistGate> */}
-        </Provider>
-        </SocketContext.Provider>
+        <AuthProvider options={ {clientMaxAge: 0, keepAlive: 0} } session={ pageProps.session }>
+            <SocketContext.Provider value={socket}>
+                <Provider store={store}>
+                    {/* <PersistGate loading={<div>loading</div>} persistor={persistor}> */}
+                    <MainLayout>
+                        <Layout>
+                            <Component {...pageProps} />
+                        </Layout>
+                    </MainLayout>
+                    {/* </PersistGate> */}
+                </Provider>
+            </SocketContext.Provider>
+        </AuthProvider>
     )
 }
 

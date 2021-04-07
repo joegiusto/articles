@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import axios from 'axios'
 
 import ROUTES from '../../../components/constants/routes'
+import { absolutePath } from '../../../util/absolutePath'
 
 class Proposals extends Component {
     constructor(props) {
@@ -200,11 +201,11 @@ return (
 // export async function getServerSideProps() {
 export async function getStaticProps() {
     // Fetch data from external API
-    const res = await fetch(`https://beta.articles.media/api/proposals`)
+    const res = await fetch(`${absolutePath}/api/proposals`)
     const proposals = await res.json()
   
-    // Pass data to the page via props
-    return { props: { proposals }, revalidate: (60 * 10) }
+    // Pass data to the page via props - revalidate every 10 minutes
+    return { props: { proposals }, revalidate: ( 60 * 10 ) }
 }
   
 export default Proposals

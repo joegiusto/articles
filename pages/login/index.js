@@ -71,18 +71,33 @@ class SignInFormBase extends Component {
       }
     }
   
-    onSubmit = event => {
-      event.preventDefault();
-  
-      const { email, password } = this.state;
-  
-      const userData = {
-        email: email,
-        password: password
-      };
-  
-      console.log(userData);
-      this.props.loginUser(userData); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
+    onSubmit = async event => {
+        event.preventDefault();
+    
+        const { email, password } = this.state;
+    
+        const userData = {
+            email: email,
+            password: password
+        };
+
+        const res = await fetch('/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(userData),
+        })
+
+        if (res.status === 200) {
+            const userObj = await res.json()
+            // set user to useSWR state
+            // mutate(userObj)
+            console.log(userObj);
+        } else {
+            setErrorMsg('Incorrect username or password. Try better!')
+        }
+    
+        // console.log(userData);
+        // this.props.loginUser(userData); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
     };
   
     onChange = event => {

@@ -113,7 +113,7 @@ function TransparencyLayout({ children }) {
                             <div className="report-link mt-3">
                                 <Link href={ROUTES.TRANSPARENCY_EMPLOYEES}>
                                     {/* <button className={"btn btn-articles-light btn-lg w-100 report-quick-links" + (router.asPath === ROUTES.TRANSPARENCY_EMPLOYEES ? ' active' : '') + (router.asPath, ROUTES.TRANSPARENCY_EMPLOYEES_DETAILS  ? ' active' : '')}> */}
-                                    <button className={"btn btn-articles-light btn-lg w-100 report-quick-links" + (router.asPath === ROUTES.TRANSPARENCY_EMPLOYEES ? ' active' : '') }>
+                                    <button className={"btn btn-articles-light btn-lg w-100 report-quick-links" + (router.asPath === ROUTES.TRANSPARENCY_EMPLOYEES ? ' active' : '') +  (router.pathname === '/transparency/employees/[id]' ? ' active' : '')}>
                                         <div>
                                         <i className="fas fa-paste" aria-hidden="true"></i>
                                         <span className="text">Employees</span>
@@ -149,7 +149,7 @@ function TransparencyLayout({ children }) {
 
                 </div>
     
-                <div className="col-md-8 py-5">
+                <div className="col-md-8">
                     {children}
                 </div>
     

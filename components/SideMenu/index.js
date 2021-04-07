@@ -4,6 +4,7 @@ import { connect, useSelector, useDispatch } from 'react-redux'
 import moment from 'moment';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Clock from 'react-live-clock';
+import { useSession } from 'next-auth/client'
 
 import ROUTES from '../constants/routes'
 
@@ -24,6 +25,8 @@ function SideMenuBase(props) {
     const [notificationProgress, setNotificationProgress] = useState(0);
     const [notificationVisible, setNotificationVisible] = useState(false);
     const [pinOpen, setPinOpen] = useState(false);
+
+    const [ session, loading ] = useSession()
 
     const dispatch = useDispatch()
     const { sideMenuOpen, colorModeDark } = useCounter()
@@ -251,16 +254,18 @@ function SideMenuBase(props) {
 
                     <p id="nav-welcome" className="subheading-font m-0 pl-2 py-0">
                     <span>Hello,&nbsp;
-                    {!props.isAuth ? 
+                    {!session ? 
                         
                     <Link href={`${ROUTES.SIGN_IN}`}>
                         <a id='nav-sign-in' onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>Log In / Sign Up</a>
                     </Link>
-                    
-                     : (
-                        null
-                    // <Link href={ROUTES.SETTINGS_ACCOUNT} onClick={() => {setMenuOpen(false)}} to={ROUTES.SETTINGS_ACCOUNT} id='nav-sign-in'>{props?.user?.first_name} {props?.user?.last_name}</Link>
-                    )}
+                    : 
+                    <Link href={ROUTES.SETTINGS_ACCOUNT}>
+                        <a id='nav-sign-in' onClick={() => {setMenuOpen(false)}}>
+                            {session.user.email}
+                        </a>
+                    </Link>
+                    }
                     </span>
                     </p>
 
@@ -310,7 +315,7 @@ function SideMenuBase(props) {
                 }
 
                 <Link href={ROUTES.MISSION}>
-                    <a className="link" onClick={ () => props.toggleSideMenuOpen() }>
+                    <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
                         {/* <IconFlagUsa className="icon"/> */}
                         <i className="icon fad fa-flag-usa"></i>
                         <span>Mission</span>
