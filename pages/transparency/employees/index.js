@@ -2,13 +2,13 @@ import Head from 'next/head'
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Link from 'next/link'
-
+import { connectToDatabase } from '../../../util/mongodb'
 import ROUTES from '../../../components/constants/routes'
-import { absolutePath } from '../../../util/absolutePath'
+
 import TransparencyLayout from '../../../components/layouts/transparency';
 
 function TransparencyEmployeesPage(props) {
-    const [employees, setEmployees] = useState(props.employees)
+    const [employees, setEmployees] = useState( JSON.parse(props.employees) )
     const [searchTerm, setSearchTerm] = useState('all')
     const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
@@ -77,9 +77,16 @@ function TransparencyEmployeesPage(props) {
 }
 
 export async function getStaticProps() {
+    const { db } = await connectToDatabase()
+
     // Fetch data from external API
-    const res = await fetch(`${absolutePath}/api/employees`)
-    const employees = await res.json()
+    // const res = await fetch(`REQUEST_URL`)
+
+    const result = await db
+    .collection("articles_users")
+    .find( {"roles.employee.bool": true}, { 'employee.friendly_url': 1, 'first_name': 1, 'last_name': 1 } )
+    .toArray();
+    const employees = JSON.stringify(result)
   
     // Pass data to the page via props - revalidate every 10 minutes
     return { props: { employees }, revalidate: ( 60 * 10 ) }

@@ -7,7 +7,6 @@ import axios from 'axios'
 import Link from 'next/link'
 
 import ROUTES from '../../../components/constants/routes'
-// import { absolutePath } from '../../../util/absolutePath'
 import TransparencyLayout from '../../../components/layouts/transparency';
 
 function TransparencyEmployeePage(props) {
@@ -24,7 +23,7 @@ function TransparencyEmployeePage(props) {
 
         setEmployeeLoading(true)
 		
-		axios.post('/api/employees', {
+		axios.post('/api/employee', {
             employee: id
         })
         .then( (response) => {

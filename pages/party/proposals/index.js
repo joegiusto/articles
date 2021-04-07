@@ -4,8 +4,8 @@ import React, { Component, useState } from 'react';
 import { useRouter } from 'next/router'
 import axios from 'axios'
 
+import { connectToDatabase } from '../../../util/mongodb'
 import ROUTES from '../../../components/constants/routes'
-import { absolutePath } from '../../../util/absolutePath'
 
 class Proposals extends Component {
     constructor(props) {
@@ -13,7 +13,7 @@ class Proposals extends Component {
   
       this.state = {
         filter: 'All',
-        proposals: [],
+        proposals: JSON.parse(props.proposals),
   
         senateSeats: 100,
         ourSenateSeats: 0,
@@ -113,7 +113,7 @@ class Proposals extends Component {
               </div>
   
               {
-                this.props.proposals.filter(proposal => proposal.type === 'fundamental').map(proposal => 
+                this.state.proposals.filter(proposal => proposal.type === 'fundamental').map(proposal => 
                   <Proposal key={proposal._id}
                     proposal={proposal}
                   />
@@ -130,7 +130,7 @@ class Proposals extends Component {
               </div>
   
               {
-                this.props.proposals.filter(proposal => proposal.type === 'social').map(proposal => 
+                this.state.proposals.filter(proposal => proposal.type === 'social').map(proposal => 
                   <Proposal key={proposal._id}
                     proposal={proposal}
                   />
@@ -147,7 +147,7 @@ class Proposals extends Component {
               </div>
   
               {
-                this.props.proposals.filter(proposal => proposal.type === 'financial').map(proposal => 
+                this.state.proposals.filter(proposal => proposal.type === 'financial').map(proposal => 
                   <Proposal key={proposal._id}
                     proposal={proposal}
                   />
@@ -164,7 +164,7 @@ class Proposals extends Component {
               </div>
   
               {
-                this.props.proposals.filter(proposal => proposal.type === 'education').map(proposal => 
+                this.state.proposals.filter(proposal => proposal.type === 'education').map(proposal => 
                   <Proposal key={proposal._id}
                     proposal={proposal}
                   />
@@ -200,9 +200,18 @@ return (
 // This gets called on every request
 // export async function getServerSideProps() {
 export async function getStaticProps() {
+    const { db } = await connectToDatabase()
+
     // Fetch data from external API
-    const res = await fetch(`${absolutePath}/api/proposals`)
-    const proposals = await res.json()
+    // const res = await fetch(`REQUEST_URL`)
+    // const proposals = await res.json()
+
+    const result = await db
+    .collection("articles_proposals")
+    .find({})
+    .limit(20)
+    .toArray();
+    const proposals = JSON.stringify(result)
   
     // Pass data to the page via props - revalidate every 10 minutes
     return { props: { proposals }, revalidate: ( 60 * 10 ) }
