@@ -5,16 +5,7 @@ export default async (req, res) => {
 
     console.log(req.method);
 
-    if (req.method === 'GET') {
-
-        const result = await db
-        .collection("articles_users")
-        .find({"roles.employee.bool": true})
-        .toArray();
-
-        res.json(result);
-
-    } else if (req.method === 'POST') {
+    if (req.method === 'POST') {
 
         const result = await db
         .collection("articles_users")
@@ -22,6 +13,15 @@ export default async (req, res) => {
             "roles.employee.bool": true,
             "employee.friendly_url": req.body.employee
         });
+
+        res.json(result);
+
+    } else {
+
+        const result = await db
+        .collection("articles_users")
+        .find({"roles.employee.bool": true})
+        .toArray();
 
         res.json(result);
 
