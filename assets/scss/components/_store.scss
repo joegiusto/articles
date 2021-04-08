@@ -242,7 +242,7 @@
     box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
 
     // background-color: $base-color;
-    background-color: white;
+    // background-color: white;
     
     font-size: 13px;
     display: flex;
@@ -352,6 +352,7 @@
       top: 50%;
       transform: translateY(-50%);
       padding: 0.5rem;
+      color: black;
 
       @include media-breakpoint-down(md) {
         right: 0;
@@ -645,7 +646,7 @@
 
     .panel {
       position: relative;
-      background-color: rgb(255, 255, 255);
+    //   background-color: rgb(255, 255, 255);
       border: 3px solid #000;
       padding: 0.5rem;
       height: 170px;
@@ -744,7 +745,7 @@
 
   .type-guide {
     padding: 2rem 10rem;
-    background-color: #edeeee;
+    // background-color: #edeeee;
     // height: 350px;
     width: 100%;
     display: flex;
@@ -787,6 +788,7 @@
         padding: 0rem .5rem;
         background-color: white;
         border: 2px solid #000;
+        color: black;
 
         &.partner {
           background-color: rgb(127, 252, 255); 

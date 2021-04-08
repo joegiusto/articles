@@ -11,7 +11,7 @@ function StoreLayout({ children }) {
 
     <div className="store-page">
 
-        <div className="extra-nav-bar noselect">
+        <div className="extra-nav-bar card noselect">
 
             <div className="left"></div>
 

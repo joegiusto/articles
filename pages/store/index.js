@@ -198,7 +198,7 @@ class StorePage extends Component {
         
                             <div className="link-panels">
                                 <Link href={ROUTES.STORE_PRODUCTS}>
-                                    <div onClick={() => window.scrollTo(0, 0)} className="panel">
+                                    <div onClick={() => window.scrollTo(0, 0)} className="panel card">
                                         <img src="https://cdn.articles.media/store/old_sheep_mockup_back.jpg" alt="" className="background view-all"/>
                                         <div className="icon">
                                             <i className="fas fa-tshirt"></i>
@@ -208,7 +208,7 @@ class StorePage extends Component {
                                 </Link>
     
                                 <Link href={ROUTES.STORE_COLLECTIONS}>
-                                    <div onClick={() => window.scrollTo(0, 0)} className="panel">
+                                    <div onClick={() => window.scrollTo(0, 0)} className="panel card">
                                         <img src="https://preview.free3d.com/img/2019/04/2154877840292579114/xqztcxft-900.jpg" alt="" className="background collections"/>
                                         <div className="icon">
                                             <i className="fas fa-grip-horizontal"></i>
@@ -218,7 +218,7 @@ class StorePage extends Component {
                                 </Link>
     
                                 <Link href={ROUTES.STORE_SUBMISSIONS}>
-                                    <div onClick={() => window.scrollTo(0, 0)} className="panel">
+                                    <div onClick={() => window.scrollTo(0, 0)} className="panel card">
     
                                         <div className="background submission"/>
     
@@ -248,7 +248,7 @@ class StorePage extends Component {
                         </div>
         
                         {/* Type Guide */}
-                        <div className="type-guide">
+                        <div className="type-guide card">
         
                             <div className="extras-panels">
         

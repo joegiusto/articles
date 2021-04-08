@@ -59,7 +59,7 @@ function TransparencyEmployeesPage(props) {
                 .map(employee => (
                     <Link href={ROUTES.TRANSPARENCY_EMPLOYEES + '/' + (employee.employee.friendly_url ? employee.employee.friendly_url : employee._id)}>
                         <a>
-                            <div className="employee-card">
+                            <div className="employee-card card">
                                 <div>{employee.last_name + (employee.first_name !== 'Anonymous' ? ', ' + employee.first_name : ' Anonymous')}</div>
                                 <div>
                                 <span className="badge badge-articles">Founder</span>

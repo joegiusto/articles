@@ -190,7 +190,12 @@ class ExpenseTable extends Component {
                                 .map(donation => (
                     
                                     <tr>
-                                        <td><a rel="noopener noreferrer" target="_blank" href={donation.file}><i className="fas fa-file-invoice mr-0"></i></a></td>
+                                        <td>
+                                            <a className="w-100 h-100 text-center d-block" rel="noopener noreferrer" target="_blank" href={donation.file}>
+                                                {/* <i className="fas fa-file-invoice mr-0"></i> */}
+                                                <i className="fad fa-copy mx-auto"></i>
+                                            </a>
+                                        </td>
                                         <td>{moment(donation.date).format('LL')}</td>
                                         <td>{donation.type}</td>
                                         <td>{donation.reason}</td>

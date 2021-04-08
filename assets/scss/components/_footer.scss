@@ -3,6 +3,17 @@
         border-top: 5px solid $base-color;
         background-color: black;
         color: white;
+
+        .dark-mode {
+            &:hover {
+                background-color: rgb(150, 150, 150)!important;
+                color: black!important;
+
+                // .beta {
+                //     transform: scale(1.2) translateX(3px) translateY(70%);
+                // }
+            }
+        }
     }
 }
 

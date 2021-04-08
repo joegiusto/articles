@@ -59,8 +59,14 @@
         color: white;
     }
 
+    .table-bordered {
+        td {
+            border: 1px solid rgb(78, 56, 56)!important;
+        }
+    }
+
     .table {
-        background-color: $dark-mode-card-color;
+        background-color: $dark-mode-card-color!important;
         color: white;
 
         tr:hover {

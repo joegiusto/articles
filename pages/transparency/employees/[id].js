@@ -45,7 +45,7 @@ function TransparencyEmployeePage(props) {
                 <title>Employee - Articles</title>
             </Head>
 
-            <div className="employee-header">
+            <div className="employee-header card">
 
                 <div className="d-flex flex-column flex-grow-1">
 
@@ -102,7 +102,7 @@ function TransparencyEmployeePage(props) {
 
             </div>
 
-            <div className="employee-details">
+            <div className="employee-details card">
 
                 <div className="filters noselect">
                     <div onClick={() => setFilter('get-to-know')} className={"filter " + ( filter === 'get-to-know' ? 'active' : '' ) }>Get To Know</div>

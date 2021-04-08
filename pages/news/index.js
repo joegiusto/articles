@@ -16,6 +16,7 @@ function Home() {
         <section className="submissions-page">
             <Head>
                 <title>News - Articles</title>
+                <meta name="description" content="Explore what's going on in the country, keep up to date with stories, issues and myths as well as current stock and crypto prices."/>
             </Head>
             <div className="container py-3">
                 <h2>News Page</h2>

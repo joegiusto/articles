@@ -56,7 +56,7 @@ function Updates(props) {
             <h2 className="">Updates</h2>
             </div>
 
-            <div className="blog-nav">
+            <div className="blog-nav card flex-row">
                 <div onClick={() => setTab('General')} className={"link " + (tab === 'General' ? 'active' : '')}>General</div>
                 <div onClick={() => setTab('Development')} className={"link " + (tab === 'Development' ? 'active' : '')}>Development</div>
             </div>

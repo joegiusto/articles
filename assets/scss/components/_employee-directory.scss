@@ -1,26 +1,26 @@
-.content-wrap.dark-mode {
+.dark-mode {
 
     .employees-page {
 
         .employees-list-head {
-        background-color: $dark-mode-card-color;
+        // background-color: $dark-mode-card-color;
         }
     
         .employees-list {
-        background-color: $dark-mode-card-color;
+        // background-color: $dark-mode-card-color;
         }
 
         .employee-card {
-        background-color: $dark-mode-element-color;
+        // background-color: $dark-mode-element-color;
         }
     }
 
   .employee-header {
-    background-color: $dark-mode-card-color!important;
-    color: white!important;
+    // background-color: $dark-mode-card-color!important;
+    // color: white!important;
     
     .employee-name {
-      color: white!important;
+    //   color: white!important;
     }
 
     .employee-header-traits {
@@ -100,7 +100,7 @@
     }
 
     .employees-list-head {
-        background-color: white;
+        // background-color: white;
         padding: 2.5rem;
     }
 
@@ -109,7 +109,7 @@
         .employee-card {
             border: 1px solid rgba(0, 0, 0, 0.125);
             padding: 2.5rem;
-            background-color: white;
+            // background-color: white;
             display: flex;
             justify-content: space-between;
         }
@@ -119,6 +119,7 @@
 
 .employee-page {
     margin-top: 2rem;
+    margin-bottom: 2rem;
 }
 
 .employee-directory-card {
@@ -132,7 +133,7 @@
   border: 2px solid #131313;
   box-shadow: 5px 6px 0px #131313;
   padding: 1rem 1rem;
-  background: #fff;
+//   background: #fff;
   margin: 30px auto 20px;
   border-radius: 5px;
   display: flex;
@@ -192,7 +193,7 @@
   border: 2px solid #131313;
   box-shadow: 5px 6px 0px #131313;
   margin-bottom: 1rem;
-  background: #fff;
+//   background: #fff;
   border-radius: 5px;
 
   .filters {
@@ -403,7 +404,7 @@
     }
 
     .get-to-know-block {
-      background-color: white;
+    //   background-color: white;
       box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
       padding: 0.75rem;
       padding-top: 0rem;
@@ -476,115 +477,120 @@
   padding: 1rem;
 }
 
-.employee {
-  &-letter {
-    text-transform: uppercase;
-  }
-  &-a {
-    color: black;
-    &:hover {
-      color: black;
-      text-decoration: none;
-    }
-  }
-  &-directory {
-    margin-top: 2rem;
-    font-family: 'Forte';
-    position: relative;
-    text-transform: uppercase;
-    font-size: 1.3rem;
-    text-align: center;
-    & .active {
-      background-color: $accent-color;
-    }
-    span {
-      // vertical-align: text-bottom;
-      line-height: 0px;
-      padding-right: 5px;
-      padding-left: 5px;
-      margin-right: 0px;
-      // vertical-align: text-bottom;
-      cursor: pointer;
-      transition-duration: .5s;
-      &:hover {
-        font-size: 2.5rem;
-      }
-    }
-    i {
-      // vertical-align: none;
-      vertical-align: unset;
-      transition-duration: .0s;
-      margin-right: 0px;
-      line-height: 0px;
-    }
-  }
-  &-social {
-    visibility: hidden;
-    display: none;
-  }
-  &-image {
-    background-color: $accent-color;
-    border: 2px solid #131313;
-    height: 70px;
-    width: 70px;
-    // margin: 0px auto;
-    position: relative;
+.employee-header {
 
-    &-zoom {
-      position: absolute;
-      // bottom: 0px;
-      // right: 0px;
-      width: 100%;
-      height: 100%;
-      transition-duration: .1s;
+    .employee-letter {
+        text-transform: uppercase;
+    }
 
-      img {
+    .employee-a {
+        color: black;
+        &:hover {
+        color: black;
+        text-decoration: none;
+        }
+    }
+
+    .employee-directory {
+        margin-top: 2rem;
+        font-family: 'Forte';
+        position: relative;
+        text-transform: uppercase;
+        font-size: 1.3rem;
+        text-align: center;
+        & .active {
+        background-color: $accent-color;
+        }
+        span {
+        // vertical-align: text-bottom;
+        line-height: 0px;
+        padding-right: 5px;
+        padding-left: 5px;
+        margin-right: 0px;
+        // vertical-align: text-bottom;
+        cursor: pointer;
+        transition-duration: .5s;
+        &:hover {
+            font-size: 2.5rem;
+        }
+        }
+        i {
+        // vertical-align: none;
+        vertical-align: unset;
+        transition-duration: .0s;
+        margin-right: 0px;
+        line-height: 0px;
+        }
+    }
+
+    .employee-social {
+        visibility: hidden;
+        display: none;
+    }
+
+    .employee-image {
+        background-color: $accent-color;
+        border: 2px solid #131313;
+        height: 70px;
+        width: 70px;
+        // margin: 0px auto;
+        position: relative;
+
+        &-zoom {
+        position: absolute;
+        // bottom: 0px;
+        // right: 0px;
         width: 100%;
         height: 100%;
-      }
+        transition-duration: .1s;
 
-      &:hover {
-        background-color: rgba(107, 107, 107, 0.5);
-        cursor: pointer;
-
-        .employee-image-zoom-icon {
-          //Transform translateX and translateY do not work here
-          bottom: calc(50% - 15px);
-          right: calc(50% - 30px);
-          transform: scale(3);
+        img {
+            width: 100%;
+            height: 100%;
         }
-      }
-      &:active {
-        background-color: rgba(107, 107, 107, 0.8);
 
-        .employee-image-zoom-icon {
-          //Transform translateX and translateY do not work here
-          // bottom: calc(50% - 15px);
-          // right: calc(50% - 25px);
-          // transform: scale(2);
-          color: white;
+        &:hover {
+            background-color: rgba(107, 107, 107, 0.5);
+            cursor: pointer;
+
+            .employee-image-zoom-icon {
+            //Transform translateX and translateY do not work here
+            bottom: calc(50% - 15px);
+            right: calc(50% - 30px);
+            transform: scale(3);
+            }
         }
-      }
-      &-icon {
-        position: absolute;
-        bottom: 0px;
-        right: 0px;
-        transform: translateX(50%), translateY(50%);
-        transition-duration: .5s;
-      }
+        &:active {
+            background-color: rgba(107, 107, 107, 0.8);
+
+            .employee-image-zoom-icon {
+            //Transform translateX and translateY do not work here
+            // bottom: calc(50% - 15px);
+            // right: calc(50% - 25px);
+            // transform: scale(2);
+            color: white;
+            }
+        }
+        &-icon {
+            position: absolute;
+            bottom: 0px;
+            right: 0px;
+            transform: translateX(50%), translateY(50%);
+            transition-duration: .5s;
+        }
+        }
     }
-  }
 
-  &-name {
-    font-weight: bold;
-    color: #111111 !important;
+    .employee-name {
+        font-weight: bold;
+        // color: #111111 !important;
 
-    @include media-breakpoint-up(lg) {
-      font-size: 1.5rem;
+        @include media-breakpoint-up(lg) {
+        font-size: 1.5rem;
+        }
     }
-  }
 
-    &-action-button {
+    .employee-action-button {
         cursor: pointer;
         background-color: $accent-color;
         box-shadow: 3px 4px 0px darken($accent-color, 100%);
@@ -602,11 +608,11 @@
         }
     }
 
-    &-bio {
+    .employee-bio {
         margin-top: 10px;
     }
 
-    &-social {
+    .employee-social {
         margin-top: 20px;
         font-size: 1.7rem;
 

@@ -142,6 +142,7 @@ function TransparencyHomePage(props) {
                 
             <Head>
                 <title>Transparency - Articles</title>
+                <meta name="description" content="Full transparency, a look into our reports, stats, analytics, and our employee directory."/>
             </Head>
 
             <div className="reports-table reports-shadow">

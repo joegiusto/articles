@@ -122,7 +122,7 @@ function TransparencyLayout({ children }) {
                                 </Link>
                             </div>
 
-                            <div className="report-link mt-3">
+                            {/* <div className="report-link mt-3">
                                 <Link href={ROUTES.TRANSPARENCY_FLAG}>
                                     <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (router.asPath === ROUTES.TRANSPARENCY_FLAG ? 'active' : null)}>
                                         <div>
@@ -131,7 +131,7 @@ function TransparencyLayout({ children }) {
                                         </div>
                                     </button>
                                 </Link>
-                            </div>
+                            </div> */}
 
                         </div>
 

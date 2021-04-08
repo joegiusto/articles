@@ -63,7 +63,7 @@ class Proposals extends Component {
   
             <div className="party-stats">
   
-              <div className="party-stat">
+              <div className="party-stat card">
                 <div>Seats in the the Senate</div>
                 <div>{`${state.ourSenateSeats} / ${state.senateSeats}`}</div>
                 <div className="progress">
@@ -71,7 +71,7 @@ class Proposals extends Component {
                 </div>
               </div>
   
-              <div className="party-stat">
+              <div className="party-stat card">
                 <div>Seats in the the House</div>
                 <div>{`${state.ourHouseSeats} / ${state.houseSeats}`}</div>
                 <div className="progress">
@@ -79,7 +79,7 @@ class Proposals extends Component {
                 </div>
               </div>
   
-              <div className="party-stat">
+              <div className="party-stat card">
                 <div>State Governorships</div>
                 <div>{`${state.ourStateGovernorships} / ${state.stateGovernorsips}`}</div>
                 <div className="progress">
@@ -87,7 +87,7 @@ class Proposals extends Component {
                 </div>
               </div>
   
-              <div className="party-stat">
+              <div className="party-stat card">
                 <div>Territorial Governorships</div>
                 <div>{`${state.ourTerritorialGovernorships} / ${state.territorialGovernorships}`}</div>
                 <div className="progress">
@@ -180,21 +180,21 @@ class Proposals extends Component {
   }
   
 const Proposal = (props) => {
-const { proposal } = props
+    const { proposal } = props
 
-return (
-<Link href={ROUTES.PROPOSALS + '/' + proposal.url}>
-    <a>
-        <div className="proposal">
-        <div className="title">{proposal.title}</div>
-        <div className="the-short">
-            <div className="label">Summary:</div>
-            <div className="description">{proposal.description}</div>
-        </div>
-        </div>
-    </a>
-</Link>
-)
+    return (
+        <Link href={ROUTES.PROPOSALS + '/' + proposal.url}>
+            <a>
+                <div className="proposal card">
+                    <div className="title">{proposal.title}</div>
+                    <div className="the-short">
+                        <div className="label">Summary:</div>
+                        <div className="description">{proposal.description}</div>
+                    </div>
+                </div>
+            </a>
+        </Link>
+    )
 }  
 
 // This gets called on every request

@@ -88,9 +88,9 @@ function StoreLayout({ children }) {
                     </div>
 
                     <SimpleMap 
-                        lat={trending[activeTrendingSlide].lat} 
-                        lng={trending[activeTrendingSlide].lng}
-                        text={trending[activeTrendingSlide].text}
+                        lat={trending[activeTrendingSlide]?.lat} 
+                        lng={trending[activeTrendingSlide]?.lng}
+                        text={trending[activeTrendingSlide]?.text}
                     />
 
                 </div>

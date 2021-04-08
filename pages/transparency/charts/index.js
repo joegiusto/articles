@@ -6,7 +6,7 @@ import TransparencyLayout from '../../../components/layouts/transparency';
 function TransparencyChartsPage({ isConnected }) {
 
     return (
-        <div className="transparency-page">
+        <div className="transparency-charts-page">
                 
             <Head>
                 <title>Charts - Articles</title>
