@@ -43,7 +43,7 @@ class StorePage extends Component {
           const self = this;
           this.setState({ loadingProducts: true });
   
-          axios.get('/api/getProducts')
+          axios.get('/api/store/products')
           .then(function (response) {
               console.log(response.data.news);
               self.setState({

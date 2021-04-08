@@ -83,11 +83,11 @@ class ExpenseTable extends Component {
             limit: 10,
             page: 1,
             all: [
-                ...props.reportsData.expenses.inventory.map(order => {
+                ...this.props.reportsData.expenses.inventory.map(order => {
                     order.type = 'Inventory';
                     return order;
                 }),
-                ...props.reportsData.expenses.recurring.map(order => {
+                ...this.props.reportsData.expenses.recurring.map(order => {
                     order.type = 'Recurring';
                     return order;
                 }),
@@ -97,6 +97,46 @@ class ExpenseTable extends Component {
         this.changeLimit = this.changeLimit.bind(this);
         this.changePage = this.changePage.bind(this);
     }
+
+    componentDidUpdate(prevProps) {
+
+        if (this.props.reportsData !== prevProps.reportsData) {
+
+            console.log(`reportsData received an update`);
+
+            this.setState({
+                all: [
+                    ...this.props.reportsData.expenses.inventory.map(order => {
+                        order.type = 'Inventory';
+                        return order;
+                    }),
+                    ...this.props.reportsData.expenses.recurring.map(order => {
+                        order.type = 'Recurring';
+                        return order;
+                    }),
+                ]
+            });
+
+        }
+
+    }
+
+    // componentDidMount() {
+
+    //     this.setState({
+    //         all: [
+    //             ...this.props.reportsData.expenses.inventory.map(order => {
+    //                 order.type = 'Inventory';
+    //                 return order;
+    //             }),
+    //             ...this.props.reportsData.expenses.recurring.map(order => {
+    //                 order.type = 'Recurring';
+    //                 return order;
+    //             }),
+    //         ]
+    //     });
+
+    // }
 
     changeLimit(limit) {
         this.setState({
@@ -112,93 +152,93 @@ class ExpenseTable extends Component {
   
     renderTable() {
   
-      switch(this.props.subtableSelector) {
-  
-          case 'expenses-payroll':
-              return(<PayrollTable/>)
-        //   case 'expenses-inventory':
-        //       return(<div className="p-3">There is no inventory expenses yet.</div>)
-        //   case 'expenses-recurring':
-        //       return(<div className="p-3">There is no ad revenue yet.</div>)
-        //   case 'expenses-utilities':
-        //       return(<div className="p-3">There is no utility expenses yet.</div>)
-        //   case 'expenses-other':
-        //       return(<div className="p-3">There is no other expenses yet.</div>)
-  
-          // All Expenses
-          default:
-              return (
-                    <table className="table articles-table table-sm table-hover table-bordered">
+        switch(this.props.subtableSelector) {
+    
+            case 'expenses-payroll':
+                return(<PayrollTable/>)
+            //   case 'expenses-inventory':
+            //       return(<div className="p-3">There is no inventory expenses yet.</div>)
+            //   case 'expenses-recurring':
+            //       return(<div className="p-3">There is no ad revenue yet.</div>)
+            //   case 'expenses-utilities':
+            //       return(<div className="p-3">There is no utility expenses yet.</div>)
+            //   case 'expenses-other':
+            //       return(<div className="p-3">There is no other expenses yet.</div>)
+    
+            // All Expenses
+            default:
+                return (
+                        <table className="table articles-table table-sm table-hover table-bordered">
 
-                        <thead>
-                            <tr className="table-articles-head">
-                                <th scope="col">File</th>
-                                <th scope="col">DATE</th>
-                                <th scope="col">TYPE</th>
-                                <th scope="col">FOR</th>
-                                <th scope="col">AMOUNT</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-
-                            {
-                            this.filterTableFromSubtableSelector(this.props.subtableSelector).length > 0 ?
-
-                            this.filterTableFromSubtableSelector(this.props.subtableSelector)
-                            .sort((a, b) => new Date(b.date) - new Date(a.date))
-                            .map(donation => (
-                
-                                <tr>
-                                    <td><a rel="noopener noreferrer" target="_blank" href={donation.file}><i className="fas fa-file-invoice mr-0"></i></a></td>
-                                    <td>{moment(donation.date).format('LL')}</td>
-                                    <td>{donation.type}</td>
-                                    <td>{donation.reason}</td>
-                                    <td>${(donation.amount / 100).toFixed(2)}</td>
+                            <thead>
+                                <tr className="table-articles-head">
+                                    <th scope="col">File</th>
+                                    <th scope="col">DATE</th>
+                                    <th scope="col">TYPE</th>
+                                    <th scope="col">FOR</th>
+                                    <th scope="col">AMOUNT</th>
                                 </tr>
-                
-                            ))
+                            </thead>
 
-                            :
+                            <tbody>
 
-                            <tr>
-                                <td className="p-2" colSpan="5">Nothing to display yet</td>
-                            </tr>
-                            
-                            }
+                                {
+                                this.filterTableFromSubtableSelector(this.props.subtableSelector).length > 0 ?
 
-                            <tr>
-                                <td colSpan='3' className="border-right-0 table-articles-head">
-                
-                                    <div className="results-dual-header">
-                
-                                    {/* <div className="page noselect">
-                                        <i onClick={() => props.changePage(props.page - 1)} className="fas fa-chevron-circle-left"></i>
-                                        Page {props.page}/1
-                                        <i onClick={() => props.changePage(props.page + 1)} style={{marginLeft: '10px'}} className="fas fa-chevron-circle-right"></i>
-                                    </div> */}
-                                    
-                                    {/* <span className="results noselect">
-                                        <span>Results:</span>
-                                        <span onClick={() => props.changeLimit(10)} className={"result" + (props.limit === 10 ? ' result-active' : '')}>10</span>
-                                        <span onClick={() => props.changeLimit(50)} className={"result" + (props.limit === 50 ? ' result-active' : '')}>50</span>
-                                        <span onClick={() => props.changeLimit(100)} className={"result" + (props.limit === 100 ? ' result-active' : '')}>100</span>
-                                        <span onClick={() => props.changeLimit(250)} className={"result" + (props.limit === 250 ? ' result-active' : '')}>250</span>
-                                    </span> */}
-                
-                                    </div>
-                
-                                </td>
-                
-                                <td colSpan="1" className="border-right-0 text-right table-articles-head">Total:</td>
-                                <td colSpan="1" className="border-left-0 table-articles-head">${(this.filterTableFromSubtableSelector(this.props.subtableSelector).reduce((a, b) => a + (parseInt(b['amount'] || 0)), 0) / 100).toFixed(2)}</td>
-                            </tr>
+                                this.filterTableFromSubtableSelector(this.props.subtableSelector)
+                                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                                .map(donation => (
+                    
+                                    <tr>
+                                        <td><a rel="noopener noreferrer" target="_blank" href={donation.file}><i className="fas fa-file-invoice mr-0"></i></a></td>
+                                        <td>{moment(donation.date).format('LL')}</td>
+                                        <td>{donation.type}</td>
+                                        <td>{donation.reason}</td>
+                                        <td>${(donation.amount / 100).toFixed(2)}</td>
+                                    </tr>
+                    
+                                ))
 
-                        </tbody>
+                                :
 
-                    </table>
-              )
-      };
+                                <tr>
+                                    <td className="p-2" colSpan="5">Nothing to display yet</td>
+                                </tr>
+                                
+                                }
+
+                                <tr>
+                                    <td colSpan='3' className="border-right-0 table-articles-head">
+                    
+                                        <div className="results-dual-header">
+                    
+                                        {/* <div className="page noselect">
+                                            <i onClick={() => props.changePage(props.page - 1)} className="fas fa-chevron-circle-left"></i>
+                                            Page {props.page}/1
+                                            <i onClick={() => props.changePage(props.page + 1)} style={{marginLeft: '10px'}} className="fas fa-chevron-circle-right"></i>
+                                        </div> */}
+                                        
+                                        {/* <span className="results noselect">
+                                            <span>Results:</span>
+                                            <span onClick={() => props.changeLimit(10)} className={"result" + (props.limit === 10 ? ' result-active' : '')}>10</span>
+                                            <span onClick={() => props.changeLimit(50)} className={"result" + (props.limit === 50 ? ' result-active' : '')}>50</span>
+                                            <span onClick={() => props.changeLimit(100)} className={"result" + (props.limit === 100 ? ' result-active' : '')}>100</span>
+                                            <span onClick={() => props.changeLimit(250)} className={"result" + (props.limit === 250 ? ' result-active' : '')}>250</span>
+                                        </span> */}
+                    
+                                        </div>
+                    
+                                    </td>
+                    
+                                    <td colSpan="1" className="border-right-0 text-right table-articles-head">Total:</td>
+                                    <td colSpan="1" className="border-left-0 table-articles-head">${(this.filterTableFromSubtableSelector(this.props.subtableSelector).reduce((a, b) => a + (parseInt(b['amount'] || 0)), 0) / 100).toFixed(2)}</td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+                )
+        };
   
     }
 

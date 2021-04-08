@@ -11,7 +11,7 @@ const initialState = {
         text: 'Test'
     }
 };
-export default function(state = initialState, action) {
+export default function Reducer(state = initialState, action) {
   switch (action.type) {
     case 'TOGGLE_SIDE_MENU_OPEN':
         return {

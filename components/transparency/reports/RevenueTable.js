@@ -11,8 +11,7 @@ class RevenueTable extends Component {
         this.state = {
             text: '',
             loading: false,
-            donationsFirebase: [],
-            expensesFirebase: [],
+
             limit: 10,
             page: 1,
 
@@ -28,7 +27,18 @@ class RevenueTable extends Component {
             // 	return order;
             // })]
 
-            all: [],
+            all: [
+                ...this.props.reportsData.revenue.donations.map(order => {
+                    order.type = 'Donation';
+                    order.unifiedPrice = order.amount
+                    return order;
+                }),
+                ...this.props.reportsData.revenue.orders.map(order => {
+                    order.type = 'Store Order';
+                    order.unifiedPrice = order.amount
+                    return order;
+                })
+            ]
 
         };
 
@@ -37,9 +47,10 @@ class RevenueTable extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.reportsData.revenue.donations !== prevProps.reportsData.revenue.donations) { // check if your props is changed
 
-            console.log(`reportsData.revenue.donations received an update`);
+        if (this.props.reportsData !== prevProps.reportsData) {
+
+            console.log(`reportsData received an update`);
 
             this.setState({
                 all: [
@@ -57,25 +68,32 @@ class RevenueTable extends Component {
             });
 
         }
+
     }
 
     componentDidMount() {
+
         console.log(`RevenueTable was mounted!`)
 
-        this.setState({
-            all: [
-                ...this.props.reportsData.revenue.donations.map(order => {
-                    order.type = 'Donation';
-                    order.unifiedPrice = order.amount
-                    return order;
-                }),
-                ...this.props.reportsData.revenue.orders.map(order => {
-                    order.type = 'Store Order';
-                    order.unifiedPrice = order.amount
-                    return order;
-                })
-            ]
-        });
+        console.log(
+            this.props.reportsData.revenue
+        )
+
+        // this.setState({
+        //     all: [
+        //         ...this.props.reportsData.revenue.donations.map(order => {
+        //             order.type = 'Donation';
+        //             order.unifiedPrice = order.amount
+        //             return order;
+        //         }),
+        //         ...this.props.reportsData.revenue.orders.map(order => {
+        //             order.type = 'Store Order';
+        //             order.unifiedPrice = order.amount
+        //             return order;
+        //         })
+        //     ]
+        // });
+
     }
 
     changeLimit(limit) {
@@ -101,7 +119,7 @@ class RevenueTable extends Component {
             case 'revenue-memberships':
                 return this.props.reportsData.revenue.memberships
             default:
-                return this.state.all
+                return [...this.state.all]
         }
     }
 
@@ -121,7 +139,7 @@ class RevenueTable extends Component {
                 <tbody>
 
                     {
-                        this.filterTableFromSubtableSelector(this.props.subtableSelector).length > 0 ?
+                        // this.filterTableFromSubtableSelector(this.props.subtableSelector).length > 0 ?
 
                         this.filterTableFromSubtableSelector(this.props.subtableSelector)
                         .sort((a, b) => new Date(b.date) - new Date(a.date))
@@ -133,11 +151,11 @@ class RevenueTable extends Component {
                             <td colSpan="1" className="border-right-0 ">${(sale.unifiedPrice / 100).toFixed(2)}</td>
                         </tr>)
 
-                        :
+                        // :
 
-                        <tr>
-                            <td className="p-2" colSpan="4">Nothing to display yet</td>
-                        </tr>
+                        // <tr>
+                        //     <td className="p-2" colSpan="4">Nothing to display yet</td>
+                        // </tr>
                     }
 
                     <tr>

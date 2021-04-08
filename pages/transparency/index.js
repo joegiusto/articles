@@ -1,5 +1,6 @@
 import Head from 'next/head'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
 
 // import { connectToDatabase } from '../../util/mongodb'
@@ -34,6 +35,50 @@ function TransparencyHomePage(props) {
     const [subtableSelector, setSubtableSelector] = useState('revenue-all');
 
     const isConnected = props.isConnected;
+
+    useEffect(() => {
+
+        axios.get('/api/transparency/reports/revenue')
+        .then(function (response) {
+            // console.log(response.data);
+
+            setReportsData( (prevState) => {
+                return({
+                    ...prevState,
+                    revenue: {
+                        donations: response.data.donations,
+                        orders: response.data.orders
+                    }
+                })
+            } )
+
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+        axios.get('/api/transparency/reports/expense')
+        .then(function (response) {
+
+            setReportsData( (prevState) => {
+                // prevState.expenses.recurring = response.data.recurring;
+                // prevState.expenses.inventory = response.data.inventory;
+                // return(prevState)
+                return({
+                    ...prevState,
+                    expenses: {
+                        inventory: response.data.inventory,
+                        recurring: response.data.recurring
+                    }
+                })
+            } )
+
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+	}, []);
 
     function setTableSelector(newSelector) {
 
@@ -76,18 +121,14 @@ function TransparencyHomePage(props) {
             case 'expenses':
                 return(
                     <ExpenseTable 
-                        // subtableSelector={subtableSelector} 
+                        subtableSelector={subtableSelector}
                         reportsData={reportsData} 
-                        // fetch="expenses"
                     />)
             case 'revenue':
                 return(
                     <RevenueTable 
-                        // subClothingTableSelector={this.state.subClothingTableSelector}
-                        // subtableSelector={subtableSelector} 
-                        // revenues_clothing={this.state.revenues_clothing}
+                        subtableSelector={subtableSelector}
                         reportsData={reportsData} 
-                        // fetch="expenses"
                     />
                 )
         
@@ -158,8 +199,33 @@ function TransparencyHomePage(props) {
                     </div>
 
                 </div>
+
+                {/* {getTableComponent()} */}
+
+                {
+                    tableSelector == 'expenses' && 
+                    <ExpenseTable 
+                        subtableSelector={subtableSelector}
+                        reportsData={reportsData} 
+                    />
+                }
+
+                {
+                    tableSelector == 'revenue' && 
+                    <RevenueTable 
+                        subtableSelector={subtableSelector}
+                        reportsData={reportsData} 
+                    />
+                }
         
-                { getTableComponent() }
+                {/* <RevenueTable 
+                    subtableSelector={subtableSelector}
+                    reportsData={reportsData} 
+                />
+                <ExpenseTable 
+                    subtableSelector={subtableSelector}
+                    reportsData={reportsData} 
+                /> */}
 
             </div>
             
