@@ -23,7 +23,7 @@ function TransparencyEmployeePage(props) {
 
         setEmployeeLoading(true)
 		
-		axios.post('/api/employee', {
+		axios.post('/api/transparency/employees/employee', {
             employee: id
         })
         .then( (response) => {

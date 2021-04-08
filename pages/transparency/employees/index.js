@@ -82,9 +82,11 @@ export async function getStaticProps() {
     // Fetch data from external API
     // const res = await fetch(`REQUEST_URL`)
 
+    const projection = { 'employee': 1, 'first_name': 1, 'last_name': 1, 'birth_date': 1 };
+
     const result = await db
     .collection("articles_users")
-    .find( {"roles.employee.bool": true}, { 'employee.friendly_url': 1, 'first_name': 1, 'last_name': 1 } )
+    .find( { "roles.employee.bool": true }, { projection: projection } )
     .toArray();
     const employees = JSON.stringify(result)
   
