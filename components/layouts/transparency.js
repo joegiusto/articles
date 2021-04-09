@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios'
 
 import ROUTES from '../../components/constants/routes';
 
@@ -8,10 +9,55 @@ function TransparencyLayout({ children }) {
     const router = useRouter()
     const { param } = router.query
     const [totals, setTotals] = useState({
-        revenue: 100,
-        expenses: 100
+        revenue: {
+            ordersTotal: 0,
+            donationsTotal: 0,
+        },
+        expenses: {
+            recurringTotal: 0,
+            inventoryTotal: 0
+        }
     })
+
+    function revenuesTotal() {
+        return ( (totals.revenue.ordersTotal + totals.revenue.donationsTotal) / 100 ).toFixed(2);
+    }
+
+    function expensesTotal() {
+        return (  ( totals.expenses.recurringTotal + totals.expenses.inventoryTotal) / 100 ).toFixed(2);
+    }
+
     const [reportsData, setReportsData] = useState({})
+    useEffect(() => {
+
+        axios.get('/api/transparency/reports/totals')
+        .then(function (response) {
+
+            console.log(response.data)
+
+            setTotals(response.data)
+
+            console.log( 
+                Number( revenuesTotal() ) / ( Number( revenuesTotal() ) + Number( expensesTotal() ) ) 
+            )
+
+            // setReportsData( (prevState) => {
+            //     return({
+            //         ...prevState,
+            //         revenue: {
+            //             donations: response.data.donations,
+            //             orders: response.data.orders
+            //         }
+            //     })
+            // } )
+
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+	}, []);
+
 
     return (
 
@@ -38,22 +84,35 @@ function TransparencyLayout({ children }) {
                                 <div className="px-2 pt-4">
 
                                     <div className="balance-label">Current Balance:</div>
-                                    <h2>${( totals.revenue - totals.expenses ).toFixed(2)}</h2>
+                                    <h2>${revenuesTotal() - expensesTotal()}</h2>
 
                                     <div className="time-container">
                                     <div className="progress">
+
                                         <div className="progress-bar bg-rev" role="progressbar" 
-                                        style={{
-                                        width: ( totals.revenue / ( ( totals.revenue + totals.expenses ) / 100 ) ).toFixed(0) + "%"
-                                        }}
-                                        aria-valuenow="15" 
-                                        aria-valuemin="0" 
-                                        aria-valuemax="100"
+                                            style={{
+                                                width: ( ( Number( revenuesTotal() ) / ( Number( revenuesTotal() ) + Number( expensesTotal() ) ) ) * 100 ).toFixed(0) + "%"
+                                            }}
+                                            // aria-valuenow="15" 
+                                            // aria-valuemin="0" 
+                                            // aria-valuemax="100"
                                         >
-                                        {( (totals.revenue) / ((totals.revenue + totals.expenses) / 100) ).toFixed(0)}%
+                                            { ( ( Number( revenuesTotal() ) / ( Number( revenuesTotal() ) + Number( expensesTotal() ) ) ) * 100 ).toFixed(0) }%
                                         </div>
 
-                                        <div className="progress-bar bg-danger" role="progressbar" style={{width: (totals.expenses / ((totals.revenue + totals.expenses) / 100) ).toFixed(0) + "%"}} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">{( totals.expenses / ((totals.revenue + totals.expenses) / 100) ).toFixed(0)}%</div>
+                                        <div 
+                                            className="progress-bar bg-danger" 
+                                            role="progressbar" 
+                                            style={{
+                                                width: ( ( Number( expensesTotal() ) / ( Number( revenuesTotal() ) + Number( expensesTotal() ) ) ) * 100 ).toFixed(0) + "%"
+                                            }} 
+                                            aria-valuenow="30" 
+                                            aria-valuemin="0" 
+                                            aria-valuemax="100"
+                                        >
+                                            { ( ( Number( expensesTotal() ) / ( Number( revenuesTotal() ) + Number( expensesTotal() ) ) ) * 100 ).toFixed(0) }%
+                                        </div>
+
                                     </div>
 
                                     {/* <div className="text-muted">Revenue | Expenses</div> */}
@@ -64,13 +123,13 @@ function TransparencyLayout({ children }) {
 
                                         <div className="col-12 col-xl-6 pr-xl-1">
                                             <div className="snippet positive">
-                                            Revenue: ${ totals.revenue }
+                                            Revenue: ${ revenuesTotal() }
                                             </div>
                                         </div>
 
                                         <div className="col-12 col-xl-6 pl-xl-1">
                                             <div className="snippet negative">
-                                            Expenses: -${ totals.expenses }
+                                            Expenses: -${ expensesTotal() }
                                             </div>
                                         </div>
 
@@ -122,7 +181,7 @@ function TransparencyLayout({ children }) {
                                 </Link>
                             </div>
 
-                            {/* <div className="report-link mt-3">
+                            <div className="report-link mt-3">
                                 <Link href={ROUTES.TRANSPARENCY_FLAG}>
                                     <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (router.asPath === ROUTES.TRANSPARENCY_FLAG ? 'active' : null)}>
                                         <div>
@@ -131,7 +190,7 @@ function TransparencyLayout({ children }) {
                                         </div>
                                     </button>
                                 </Link>
-                            </div> */}
+                            </div>
 
                         </div>
 
@@ -149,7 +208,7 @@ function TransparencyLayout({ children }) {
 
                 </div>
     
-                <div className="col-md-8">
+                <div className="col-md-8 transparency-sub-page-wrap">
                     {children}
                 </div>
     

@@ -53,7 +53,6 @@ $grid-breakpoints: (
 
 // Reports Related
 @import 'components/reports';
-@import 'components/employee-directory';
 
 @import 'components/mission';
 
@@ -113,6 +112,8 @@ $grid-breakpoints: (
 @import 'components/Admin/admin_presidents';
 
 @import 'components/Transparency/charts';
+@import 'components/Transparency/transparency';
+@import 'components/Transparency/employee-directory';
 
 @import 'components/town-hall-page';
 

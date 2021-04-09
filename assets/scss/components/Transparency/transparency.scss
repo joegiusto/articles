@@ -1,0 +1,11 @@
+.transparency-page {
+
+    .transparency-sub-page-wrap {
+        margin: 1rem 0;
+
+        @include media-breakpoint-up(md) {
+            margin: 2rem 0;
+        }
+    }
+    
+}
