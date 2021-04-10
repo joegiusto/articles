@@ -1,21 +1,21 @@
 // Expenses Reducer
-const expensesReducerDefaultState = [];
+const cartReducerDefaultState = [];
 
 // export default function Reducer(state = initialState, action) {
 
-export default function Reducer(state = expensesReducerDefaultState, action) {
+export default function Reducer(state = cartReducerDefaultState, action) {
     switch (action.type) {
 
-        case 'ADD_EXPENSE':
+        case 'ADD_CART_ITEM':
             return [
                 ...state,
-                action.expense
+                action.cart_item
             ];
-        case 'REMOVE_EXPENSE':
+        case 'REMOVE_CART_ITEM':
             return state.filter(({ id }) => id !== action.id);
-        case 'REMOVE_ALL':
+        case 'REMOVE_ALL_CART_ITEMS':
             return [];
-        case 'EDIT_EXPENSE':
+        case 'EDIT_CART_ITEM':
             return state.map((expense) => {
                 if (expense.id === action.id) {
                 return {

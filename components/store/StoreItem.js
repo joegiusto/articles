@@ -8,7 +8,7 @@ import ROUTES from '../../components/constants/routes';
 // import React, {useState, useEffect} from 'react';
 
 // import { connect } from 'react-redux';
-// import { addExpense } from '../../../actions/expenses';
+import { addCartItem } from '../../redux/actions/cartActions';
 import moment from 'moment';
 // import { usePopper } from 'react-popper';
 
@@ -181,7 +181,7 @@ const StoreItem = (props) => {
                   console.log(props.product.photos.one)
                   changeAdded(true)
                   changeAddedButtonDisabled(true)
-                  props.dispatch(addExpense({
+                  props.dispatch(addCartItem({
                     description: props.product.title,
                     note: props.product._id,
                     amount: props.product.price,

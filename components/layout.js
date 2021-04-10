@@ -6,8 +6,9 @@ import SideMenu from './SideMenu/'
 import Footer from './layouts/footer'
 
 const useCounter = () => {
-    const colorModeDark = useSelector((state) => state.colorModeDark)
-    return { colorModeDark }
+    const colorModeDark = useSelector((state) => state.site.colorModeDark)
+    const sideMenuFixed = useSelector((state) => state.site.sideMenuFixed)
+    return { colorModeDark, sideMenuFixed }
 }
 
 export default function Layout(
@@ -16,7 +17,7 @@ export default function Layout(
         title = 'Articles Media',
     }
 ) {
-    const { colorModeDark } = useCounter();
+    const { colorModeDark, sideMenuFixed } = useCounter();
 
     if (process.browser) {
         if ( colorModeDark === true ) {
@@ -27,7 +28,7 @@ export default function Layout(
     }
 
     return (
-        <div style={{minHeight: '100vh'}} className={`d-flex flex-column ${colorModeDark ? 'dark-mode' : ''} `}>
+        <div style={{minHeight: '100vh'}} className={`d-flex flex-column ${colorModeDark ? 'dark-mode' : ''} ${sideMenuFixed ? 'side-menu-fixed' : ''}`}>
 
             <Head>
 
@@ -68,7 +69,9 @@ export default function Layout(
                 }}
             />
 
-            {children}
+            <div className="content-wrap">
+                {children}
+            </div>
 
             <Footer/>
 

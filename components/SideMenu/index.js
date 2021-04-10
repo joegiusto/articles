@@ -14,9 +14,11 @@ import SocketContext from '../context/socket'
 import { toggleSideMenuFixed, toggleColorMode, toggleSideMenuOpen } from '../../redux/actions/siteActions';
 
 const useCounter = () => {
-    const sideMenuOpen = useSelector((state) => state.sideMenuOpen)
-    const colorModeDark = useSelector((state) => state.colorModeDark)
-    return { sideMenuOpen, colorModeDark }
+    const sideMenuOpen = useSelector((state) => state.site.sideMenuOpen)
+    const colorModeDark = useSelector((state) => state.site.colorModeDark)
+    const sideMenuFixed = useSelector((state) => state.site.sideMenuFixed)
+    const cartItems = useSelector((state) => state.cart)
+    return { sideMenuOpen, colorModeDark, cartItems, sideMenuFixed }
 }
 
 function SideMenuBase(props) {
@@ -29,7 +31,7 @@ function SideMenuBase(props) {
     const [ session, loading ] = useSession()
 
     const dispatch = useDispatch()
-    const { sideMenuOpen, colorModeDark } = useCounter()
+    const { sideMenuOpen, colorModeDark, cartItems, sideMenuFixed } = useCounter()
 
     useEffect(() => {
 
@@ -46,9 +48,9 @@ function SideMenuBase(props) {
 
     })
     
-    return ( <div className={'menu-wrap noselect' + (props.site?.sideMenuFixed ? ' fixed' : '') + (props.site?.colorModeDark ? ' dark-mode' : '')}>
+    return ( <div className={'menu-wrap noselect' + (sideMenuFixed ? ' fixed' : '') + (props.site?.colorModeDark ? ' dark-mode' : '')}>
 
-        <section onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) } className={'side-menu-overlay' + (sideMenuOpen || pinOpen ? " show" : "")}></section>
+        <section onClick={ props.toggleSideMenuOpen } className={'side-menu-overlay' + (sideMenuOpen || pinOpen ? " show" : "")}></section>
 
         <section className="menu-spacer"></section>
 
@@ -56,7 +58,9 @@ function SideMenuBase(props) {
 
         <section>
             <div className="nav-tab">
-                <button className={'hamburger hamburger--spin' + (props.site?.sideMenuFixed ? ' is-active' : sideMenuOpen ? " is-active" : "")} type="button" onClick={() => props.site?.sideMenuFixed ? (props.toggleSideMenuFixed(), dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}), props.toggleSideMenuOpen() ) : dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
+                {/* <button className={'hamburger hamburger--spin' + (props.site?.sideMenuFixed ? ' is-active' : sideMenuOpen ? " is-active" : "")} type="button" onClick={() => props.site?.sideMenuFixed ? (props.toggleSideMenuFixed(), dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}), props.toggleSideMenuOpen() ) : dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }> */}
+                <button className={'hamburger hamburger--spin' + (sideMenuFixed ? ' is-active' : sideMenuOpen ? " is-active" : "")} type="button" onClick={() => ( sideMenuFixed ? (props.toggleSideMenuFixed(), props.toggleSideMenuOpen() ) : props.toggleSideMenuOpen() ) }>
+                {/* <button className={'hamburger hamburger--spin' + (props.site?.sideMenuFixed ? ' is-active' : sideMenuOpen ? " is-active" : "")} type="button" onClick={ props.toggleSideMenuOpen }> */}
                     <span className="hamburger-box">
                     <span className="hamburger-inner"></span>
                     </span>
@@ -341,7 +345,7 @@ function SideMenuBase(props) {
                     <a id="shopping-cart-button" className="btn btn-articles-light btn-sm align-self-center">
                         <i className="fas fa-shopping-basket mr-0"></i>
                         <span id="shopping-cart-amount" className="badge badge-pill badge-dark">
-                            {props.expensesTotal}
+                            {cartItems.length}
                         </span>
                     </a>
                 </Link>
@@ -572,36 +576,33 @@ function SideMenuBase(props) {
 
         <hr/>
 
-        <p className="subheading-font align-items-center d-flex justify-content-between pb-3" onClick={() => dispatch({type: 'TOGGLE_COLOR_MODE'})}>
+        <div className="mx-4 subheading-font align-items-center d-flex justify-content-between pb-3" onClick={ props.toggleColorMode  }>
 
             <div>
-            {/* <i className="fas fa-code" aria-hidden="true"></i> */}
-            {props.site.colorModeDark ? <i className="far fa-moon"></i> : <i className="fas fa-sun"></i>}
-            <span>Dark Mode<span className="badge badge-primary ml-2">Beta</span></span>
+                {colorModeDark ? <i className="far fa-moon"></i> : <i className="fas fa-sun"></i>}
+                <span>Dark Mode<span className="badge badge-primary ml-2">Beta</span></span>
             </div>
 
-            <label className="articles-switch mb-0" onClick={() => dispatch({type: 'TOGGLE_COLOR_MODE'})}>
-            <input type="checkbox" defaultChecked={colorModeDark}/>
-            <span className="slider" onClick={() => dispatch({type: 'TOGGLE_COLOR_MODE'})}></span>
+            <label className="articles-switch mb-0">
+                <input disabled type="checkbox" checked={colorModeDark}/>
+                <span className="slider"></span>
             </label>
 
-        </p>
+        </div>
 
-        <p className="subheading-font align-items-center d-flex justify-content-between pb-3" onClick={() => dispatch({type: 'TOGGLE_COLOR_MODE'})}>
+        <div className="mx-4 subheading-font align-items-center d-flex justify-content-between pb-3" onClick={ props.toggleSideMenuFixed }>
 
             <div>
-            {/* <div className={'columns-fill-in ' + (props.site.sideMenuFixed ? 'active' : '')}></div> */}
-            {/* <i className="fas fa-columns"></i> */}
-            {props.site.sideMenuFixed ? <i className="fas fa-columns"></i> : <i className="fas fa-columns"></i>}
-            <span>Fixed Menu</span>
+                {sideMenuFixed ? <i className="fas fa-columns"></i> : <i className="fas fa-columns"></i>}
+                <span>Fixed Menu</span>
             </div>
 
-            <label className="articles-switch mb-0" onClick={() => dispatch({type: 'TOGGLE_COLOR_MODE'})}>
-                <input type="checkbox" defaultChecked={colorModeDark}/>
-                <span className="slider" onClick={() => dispatch({type: 'TOGGLE_COLOR_MODE'})}></span>
+            <label className="articles-switch mb-0" >
+                <input disabled type="checkbox" checked={sideMenuFixed}/>
+                <span className="slider" ></span>
             </label>
 
-        </p>
+        </div>
 
         <div className='side-menu-bottom-spacer'></div>
 
@@ -642,6 +643,6 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(
-    mapStateToProps, 
-    { toggleSideMenuOpen } 
+    null, 
+    { toggleSideMenuOpen, toggleSideMenuFixed , toggleColorMode } 
 )(SideMenu);

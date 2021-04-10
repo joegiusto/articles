@@ -19,6 +19,10 @@ import 'swiper/components/scrollbar/scrollbar.scss';
 
 import { useStore } from '../redux/store'
 
+import { setStories } from "../redux/actions/storiesActions";
+import { setIssues } from "../redux/actions/issuesActions";
+import { setMyths } from "../redux/actions/mythsActions";
+
 import SocketContext from '../components/context/socket'
 
 const socket = io("localhost:3000");
@@ -35,6 +39,10 @@ function MyApp({ Component, pageProps }) {
         // socket.on("connect", () => {
         //     console.log(socket.id); // "G5p5..."
         // });
+
+        {store.dispatch(setStories())}
+        {store.dispatch(setIssues())}
+        {store.dispatch(setMyths())}
         
 	}, []);
 

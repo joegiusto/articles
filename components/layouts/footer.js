@@ -3,6 +3,7 @@ import { connect, useSelector, useDispatch } from 'react-redux';
 import Link from 'next/link'
 
 import ROUTES from '../constants/routes'
+import { toggleColorMode } from '../../redux/actions/siteActions';
 // import { toggleColorMode } from '../../actions/siteActions';
 
 const useCounter = () => {
@@ -98,7 +99,7 @@ function FooterBase(props) {
                     </div>
 
                     <div>
-                        <div onClick={() => dispatch({type: 'TOGGLE_COLOR_MODE'})} className="dark-mode d-inline-flex flex-shrink-0 mt-3 mt-lg-0 border border-dark noselect">
+                        <div onClick={props.toggleColorMode} className="dark-mode d-inline-flex flex-shrink-0 mt-3 mt-lg-0 border border-dark noselect">
                             { (colorModeDark ? "Light Theme" : "Dark Theme") }
                             { (colorModeDark ? <i className="fas fa-sun ml-2 mr-0"></i> : <i className="fas fa-moon ml-2 mr-0"></i>) }
                             <div className="beta badge badge-articles">Beta!</div>
@@ -121,11 +122,11 @@ const mapStateToProps = (state) => {
   
 };
 
-export default FooterBase;
+// export default connect(null, toggleColorMode)(FooterBase);
 
 // const Footer = withRouter(FooterBase);
 
-// export default connect(
-// 	mapStateToProps, 
-// 	{ toggleColorMode } 
-// )(Footer);
+export default connect(
+	null,
+	{ toggleColorMode } 
+)(FooterBase);

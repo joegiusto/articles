@@ -1,11 +1,17 @@
 import { useMemo } from 'react'
-import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
+import thunk from 'redux-thunk';
+
 import expensesReducer from "./reducers/expensesReducer";
 import siteReducer from "./reducers/siteReducer";
+import cartReducer from "./reducers/cartReducer";
+import storiesReducer from "./reducers/storiesReducer";
+import issuesReducer from "./reducers/issuesReducer";
+import mythsReducer from "./reducers/mythsReducer";
 
 let store
 
@@ -15,8 +21,8 @@ const exampleInitialState = {
     count: 0,
     exampleData: [],
     error: null,
-    colorModeDark: false,
-    sideMenuOpen: false,
+    // colorModeDark: false,
+    // sideMenuOpen: false,
 }
 
 export const actionTypes = {
@@ -26,23 +32,23 @@ export const actionTypes = {
     RESET: 'RESET',
     LOAD_EXAMPLE_DATA: 'LOAD_EXAMPLE_DATA',
     LOADING_DATA_FAILURE: 'LOADING_DATA_FAILURE',
-    TOGGLE_COLOR_MODE: 'TOGGLE_COLOR_MODE',
-    TOGGLE_SIDE_MENU_OPEN: 'TOGGLE_SIDE_MENU_OPEN'
+    // TOGGLE_COLOR_MODE: 'TOGGLE_COLOR_MODE',
+    // TOGGLE_SIDE_MENU_OPEN: 'TOGGLE_SIDE_MENU_OPEN'
 }
 
 // REDUCERS
 export const reducer = (state = exampleInitialState, action) => {
   switch (action.type) {
-    case actionTypes.TOGGLE_COLOR_MODE:
-        return {
-          ...state,
-          colorModeDark: !state.colorModeDark
-        }
-    case actionTypes.TOGGLE_SIDE_MENU_OPEN:
-        return {
-            ...state,
-            sideMenuOpen: !state.sideMenuOpen,
-        }
+    // case actionTypes.TOGGLE_COLOR_MODE:
+    //     return {
+    //       ...state,
+    //       colorModeDark: !state.colorModeDark
+    //     }
+    // case actionTypes.TOGGLE_SIDE_MENU_OPEN:
+    //     return {
+    //         ...state,
+    //         sideMenuOpen: !state.sideMenuOpen,
+    //     }
     case actionTypes.TICK:
       return {
         ...state,
@@ -77,13 +83,13 @@ export const reducer = (state = exampleInitialState, action) => {
 }
 
 // ACTIONS
-export const toggleColorMode = () => {
-    return { type: actionTypes.TOGGLE_COLOR_MODE }
-}
+// export const toggleColorMode = () => {
+//     return { type: actionTypes.TOGGLE_COLOR_MODE }
+// }
 
-export const toggleSideMenuOpen = () => {
-    return { type: actionTypes.TOGGLE_SIDE_MENU_OPEN }
-}
+// export const toggleSideMenuOpen = () => {
+//     return { type: actionTypes.TOGGLE_SIDE_MENU_OPEN }
+// }
 
 export const serverRenderClock = () => {
   return { type: actionTypes.TICK, light: false, ts: Date.now() }
@@ -119,20 +125,41 @@ const persistConfig = {
     //   whitelist: ['exampleData'], // place to select which state you want to persist
 }
 
+// const persistedReducer = persistReducer(
+//     persistConfig, 
+//     // combineReducers({
+//     //     expenses: expensesReducer,
+//     //     site: siteReducer
+//     // })
+//     reducer
+// )
+
 const persistedReducer = persistReducer(
     persistConfig, 
-    // combineReducers({
-    //     expenses: expensesReducer,
-    //     site: siteReducer
-    // })
-    reducer
-)
+    combineReducers({
+        expenses: expensesReducer,
+        cart: cartReducer,
+        //   auth: authReducer,
+        //   errors: errorReducer,
+        //   notificationArea: notificationAreaReducer,
+        stories: storiesReducer,
+        issues: issuesReducer,
+        myths: mythsReducer,
+        //   submissions: submissionsReducer,
+        // site: siteReducer,
+        site: siteReducer,
+        // filters: filtersReducer,
+        // site: siteReducer,
+        // employees: employeesReducer
+        // ...reducer
+    })
+  );
 
 function makeStore(initialState = exampleInitialState) {
   return createStore(
     persistedReducer,
     initialState,
-    composeWithDevTools(applyMiddleware())
+    composeWithDevTools(applyMiddleware(thunk))
   )
 }
 
