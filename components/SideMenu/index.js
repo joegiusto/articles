@@ -13,15 +13,24 @@ import SocketContext from '../context/socket'
 
 import { toggleSideMenuFixed, toggleColorMode, toggleSideMenuOpen } from '../../redux/actions/siteActions';
 
-const useCounter = () => {
+// const useCounter = () => {
+//     const sideMenuOpen = useSelector((state) => state.site.sideMenuOpen)
+//     const colorModeDark = useSelector((state) => state.site.colorModeDark)
+//     const sideMenuFixed = useSelector((state) => state.site.sideMenuFixed)
+
+//     const userReduxState = useSelector((state) => state.auth.user_details)
+
+//     const cartItems = useSelector((state) => state.cart)
+//     return { sideMenuOpen, colorModeDark, cartItems, sideMenuFixed }
+// }
+
+function SideMenuBase(props) {
     const sideMenuOpen = useSelector((state) => state.site.sideMenuOpen)
     const colorModeDark = useSelector((state) => state.site.colorModeDark)
     const sideMenuFixed = useSelector((state) => state.site.sideMenuFixed)
+    const userReduxState = useSelector((state) => state.auth.user_details)
     const cartItems = useSelector((state) => state.cart)
-    return { sideMenuOpen, colorModeDark, cartItems, sideMenuFixed }
-}
 
-function SideMenuBase(props) {
     const [connected, setConnected] = useState(false);
     
     const [notificationProgress, setNotificationProgress] = useState(0);
@@ -31,7 +40,7 @@ function SideMenuBase(props) {
     const [ session, loading ] = useSession()
 
     const dispatch = useDispatch()
-    const { sideMenuOpen, colorModeDark, cartItems, sideMenuFixed } = useCounter()
+    // const { sideMenuOpen, colorModeDark, cartItems, sideMenuFixed } = useCounter()
 
     useEffect(() => {
 
@@ -244,14 +253,14 @@ function SideMenuBase(props) {
             <div className="profile">
 
                 <div className="profile-photo" >
-                    {props?.user?.photo_url === undefined ? 
+                    {userReduxState?.photo_url === undefined ? 
                     null
                     :
                     <Link href={ROUTES.SETTINGS_ACCOUNT} >
-                        <img alt="" className="" style={{borderRadius: '0px'}} width="100%" height="100%" src={`https://articles-website.s3.amazonaws.com/profile_photos/${props?.user?._id}.jpg` || ''}/>
+                        <img alt="" className="" style={{borderRadius: '0px'}} width="100%" height="100%" src={`https://articles-website.s3.amazonaws.com/profile_photos/${userReduxState?._id}.jpg` || ''}/>
                     </Link>
                     }
-                    <i className={props?.user?.photo_url ? '':'fas fa-question'}></i>
+                    <i className={userReduxState?.photo_url ? '':'fas fa-question'}></i>
                 </div> 
 
                 <div className="profile-welcome">
@@ -265,8 +274,9 @@ function SideMenuBase(props) {
                     </Link>
                     : 
                     <Link href={ROUTES.SETTINGS_ACCOUNT}>
-                        <a id='nav-sign-in' onClick={() => {setMenuOpen(false)}}>
-                            {session.user.email}
+                        <a id='nav-sign-in' onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
+                            {/* {session.user.email} */}
+                            {`${userReduxState?.first_name} ${userReduxState?.last_name}`}
                         </a>
                     </Link>
                     }
@@ -274,12 +284,12 @@ function SideMenuBase(props) {
                     </p>
 
                     <p id="nav-member-message" className='subheading-font m-0 pl-2 py-0'>
-                    {!props.isAuth ? (
+                    {!session ? (
                         <span></span>
                     ) : (
                         // <span>Member Since{moment.unix(props.user?.sign_up_date).format("MMMM Y")}</span>
                         <div>
-                        <div style={{fontSize: '0.8rem'}}>Member Since {moment(props.user?.sign_up_date).format("MMMM Y") || "Loading..."}</div>
+                        <div style={{fontSize: '0.8rem'}}>Member Since {moment(userReduxState?.sign_up_date).format("MMMM Y") || "Loading..."}</div>
                         {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.MESSAGES}><button className="btn btn-sm btn-articles-light">Chat</button></Link> */}
                         </div>
                     )
@@ -377,7 +387,7 @@ function SideMenuBase(props) {
 
                 <div className="side-menu-section-header-title">News</div>
 
-                <span id="shopping-cart-amount" className="badge badge-pill badge-dark">
+                <span id="news-notification-count" className="badge badge-pill badge-dark">
                     3
                 </span>
 
@@ -494,38 +504,40 @@ function SideMenuBase(props) {
 
             </div>
 
+            
+            {/* Admin */}
+            {props.user?.roles?.isAdmin &&
+                <>
+                    {/* Admin Section */}
+                    <div className="side-menu-section-header header-admin">
+
+                        <div className="side-menu-section-header-title">Admin</div>
+
+                        <span className="badge badge-warning"><i className="fas fa-star mr-0" aria-hidden="true"></i></span>
+
+                    </div>
+
+                    <div className="side-menu-section-links">
+
+                        <Link href={ROUTES.ADMIN} className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.ADMIN}>
+                            <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
+                                {/* <IconToolbox  className="icon"/> */}
+                                <i className="icon fad fa-toolbox fa-lg"></i>
+                                <span>Portal</span>
+                            </a>
+                        </Link>
+
+                    </div>
+
+                    {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ADMIN}><p className="subheading-font"><i className="fas fa-toolbox"></i>Admin Portal</p></Link> */}
+
+                </>
+            }
+
             {props.isAuth && (
 
                 <>
 
-                    {/* Admin */}
-                    {props.user?.roles?.isAdmin &&
-                        <>
-                            {/* Admin Section */}
-                            <div className="side-menu-section-header header-admin">
-
-                                <div className="side-menu-section-header-title">Admin</div>
-
-                                <span className="badge badge-warning"><i class="fas fa-star mr-0" aria-hidden="true"></i></span>
-
-                            </div>
-
-                            <div className="side-menu-section-links">
-
-                                <Link href={ROUTES.ADMIN} className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.ADMIN}>
-                                    <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
-                                        {/* <IconToolbox  className="icon"/> */}
-                                        <i className="icon fad fa-toolbox fa-lg"></i>
-                                        <span>Portal</span>
-                                    </a>
-                                </Link>
-
-                            </div>
-
-                            {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.ADMIN}><p className="subheading-font"><i className="fas fa-toolbox"></i>Admin Portal</p></Link> */}
-
-                        </>
-                    }
 
                     {/* Playground */}
                     {props.user?.roles?.isDev === true ?
@@ -534,7 +546,7 @@ function SideMenuBase(props) {
                         <div className="side-menu-section-header header-developer">
 
                             <div className="side-menu-section-header-title">Developer</div>
-                            <span className="badge badge-warning"><i class="fas fa-star mr-0" aria-hidden="true"></i></span>
+                            <span className="badge badge-warning"><i className="fas fa-star mr-0" aria-hidden="true"></i></span>
 
                         </div>
 
@@ -576,11 +588,11 @@ function SideMenuBase(props) {
 
         <hr/>
 
-        <div className="mx-4 subheading-font align-items-center d-flex justify-content-between pb-3" onClick={ props.toggleColorMode  }>
+        <div className="mx-4 subheading-font align-items-center d-flex justify-content-between pb-3 pt-2" onClick={ props.toggleColorMode  }>
 
-            <div>
+            <div className="">
                 {colorModeDark ? <i className="far fa-moon"></i> : <i className="fas fa-sun"></i>}
-                <span>Dark Mode<span className="badge badge-primary ml-2">Beta</span></span>
+                <span>Dark Mode</span>
             </div>
 
             <label className="articles-switch mb-0">

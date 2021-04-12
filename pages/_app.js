@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Provider as AuthProvider } from 'next-auth/client'
+import { Provider as AuthProvider, useSession } from 'next-auth/client'
 import { Provider } from 'react-redux'
 import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -19,6 +19,7 @@ import 'swiper/components/scrollbar/scrollbar.scss';
 
 import { useStore } from '../redux/store'
 
+import { setUserDetails } from "../redux/actions/authActions";
 import { setStories } from "../redux/actions/storiesActions";
 import { setIssues } from "../redux/actions/issuesActions";
 import { setMyths } from "../redux/actions/mythsActions";
@@ -32,19 +33,30 @@ function MyApp({ Component, pageProps }) {
     const persistor = persistStore(store, {}, function () {
         persistor.persist()
     })
+    const [ session, loading ] = useSession()
     const Layout = Component.Layout || DefaultLayout;
 
     useEffect(() => {
-
-        // socket.on("connect", () => {
-        //     console.log(socket.id); // "G5p5..."
-        // });
 
         {store.dispatch(setStories())}
         {store.dispatch(setIssues())}
         {store.dispatch(setMyths())}
         
 	}, []);
+
+    // Fetch content from protected route
+    useEffect(()=>{
+
+        // const fetchData = async () => {
+        //     const res = await fetch('/api/getUserDetails')
+        //     const json = await res.json()
+        //     console.log(json)
+        // }
+        // fetchData()
+
+        {store.dispatch(setUserDetails())}
+
+    },[session])
 
     return ( 
         <AuthProvider options={ {clientMaxAge: 0, keepAlive: 0} } session={ pageProps.session }>

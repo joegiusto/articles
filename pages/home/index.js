@@ -1,12 +1,16 @@
 import { useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
+import { useSession } from 'next-auth/client'
+import { useRouter } from 'next/router'
+
+import AccessDenied from '../../components/access-denied'
 import ROUTES from '../../components/constants/routes'
-import { connectToDatabase } from '../../util/mongodb'
+// import { connectToDatabase } from '../../util/mongodb'
 
-export default function Home() {
+function Home() {
     const [quotes, setQuotes] = useState([
         {
             quote: 'The ignorance of one voter in a democracy impairs the security of all.',
@@ -35,6 +39,26 @@ export default function Home() {
     ])
     const [randomQuoteIndex, setRandomQuoteIndex] = useState(0);
 
+    const userReduxState = useSelector((state) => state.auth.user_details)
+
+    const [ session, loading ] = useSession()
+    const router = useRouter()
+
+    if (typeof window !== 'undefined' && loading) return null
+
+    // If no session exists, display access denied message
+    if (!session) { 
+        return  (
+            <div className="container d-flex justify-content-center align-items-center">
+                <div style={{maxWidth: '500px'}} className="card m-3">
+                    <div className="card-body">
+                        <AccessDenied/>
+                    </div>
+                </div>
+            </div>
+        )
+     }
+
     function getRandomQuote() {
         setRandomQuoteIndex(Math.floor(Math.random() * ((quotes.length - 1) - 0 + 1)) + 0)
     }
@@ -54,12 +78,12 @@ export default function Home() {
                         <div className="photo-section">
 
                             <div className="photo">
-                                {/* <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${this.props?.user?._id}.jpg` || ''} alt=""/> */}
+                                <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${userReduxState?._id}.jpg` || ''} alt=""/>
                                 <div className="blank"></div>
                             </div>
 
                             <div>
-                                {/* <div className="name">{this.props.user?.first_name} {this.props.user?.last_name}</div> */}
+                                <div className="name">{userReduxState?.first_name} {userReduxState?.last_name}</div>
                                 <Link href={ROUTES.MESSAGES}>
                                     <a className="d-none d-md-block"><button className="btn btn-articles-light mt-4">0 Messages</button></a>
                                 </Link>
@@ -477,12 +501,14 @@ export default function Home() {
     )
 }
 
-export async function getServerSideProps(context) {
-    const { client } = await connectToDatabase()
+export default Home;
 
-    const isConnected = await client.isConnected()
+// export async function getServerSideProps(context) {
+//     const { client } = await connectToDatabase()
 
-    return {
-        props: { isConnected },
-    }
-}
+//     const isConnected = await client.isConnected()
+
+//     return {
+//         props: { isConnected },
+//     }
+// }

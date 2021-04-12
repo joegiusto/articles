@@ -6,7 +6,8 @@ import storage from 'redux-persist/lib/storage'
 
 import thunk from 'redux-thunk';
 
-import expensesReducer from "./reducers/expensesReducer";
+// import expensesReducer from "./reducers/expensesReducer";
+import authReducer from './reducers/authReducer'
 import siteReducer from "./reducers/siteReducer";
 import cartReducer from "./reducers/cartReducer";
 import storiesReducer from "./reducers/storiesReducer";
@@ -16,11 +17,11 @@ import mythsReducer from "./reducers/mythsReducer";
 let store
 
 const exampleInitialState = {
-    lastUpdate: 0,
-    light: false,
-    count: 0,
-    exampleData: [],
-    error: null,
+    // lastUpdate: 0,
+    // light: false,
+    // count: 0,
+    // exampleData: [],
+    // error: null,
     // colorModeDark: false,
     // sideMenuOpen: false,
 }
@@ -137,7 +138,8 @@ const persistConfig = {
 const persistedReducer = persistReducer(
     persistConfig, 
     combineReducers({
-        expenses: expensesReducer,
+        // expenses: expensesReducer,
+        auth: authReducer,
         cart: cartReducer,
         //   auth: authReducer,
         //   errors: errorReducer,

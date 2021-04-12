@@ -67,6 +67,11 @@ export default function Layout(
                 site={{
                     
                 }}
+                user={{
+                    roles: {
+                        isAdmin: true
+                    }
+                }}
             />
 
             <div className="content-wrap">

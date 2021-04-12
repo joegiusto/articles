@@ -20,6 +20,7 @@ export default {
     SETTINGS_CONNECTIONS: '/settings/connections',
     SETTINGS_BILLING: '/settings/billing',
     SETTINGS_EMPLOYEE: '/settings/employee',
+    SETTINGS_PROTECTED: '/settings/protected',
 
     // Home
     HOME: '/home',

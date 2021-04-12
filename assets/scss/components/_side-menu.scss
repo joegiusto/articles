@@ -26,7 +26,8 @@
             color: white;
 
             a {
-                color: rgb(184, 184, 184);
+                color: rgb(232, 232, 232);
+                
 
                 &:hover {
                 p, i {
@@ -35,7 +36,7 @@
                 }
 
                 i {
-                color: white;
+                    color: white;
                 }
 
             }
@@ -47,6 +48,16 @@
                 color: white!important;
                 }
 
+            }
+
+            #shopping-cart-button {
+                i.fa-shopping-basket {
+                    color: black;
+                }
+            }
+
+            .side-menu-section-header {
+                background-color: rgb(0 0 0 / 30%);
             }
         }
 

@@ -4,7 +4,7 @@ const initialState = {
     loading: false
 };
 
-export default function(state = initialState, action) {
+export default function Reducer(state = initialState, action) {
     switch (action.type) {
         case 'SET_STORIES':
         return {

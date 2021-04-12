@@ -202,6 +202,12 @@ body {
     max-width: 1920px;
     width: 100%;
     margin: 0 auto;
+    // display: flex;
+    // flex-grow: 1;
+
+    // &:first-child {
+    //     width: 100%;
+    // }
 }
 
 .site-wrap {
