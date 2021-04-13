@@ -9,8 +9,8 @@ function AdminHomePage() {
     const router = useRouter()
     const { param } = router.query
 
-    console.log(router.pathname)
-    console.log(param);
+    // console.log(router.pathname)
+    // console.log(param);
   
     return(
         <section className="submissions-page">

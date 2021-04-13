@@ -1,29 +1,239 @@
+import { useState, useEffect, Component } from 'react';
+
 import Head from 'next/head'
 import Link from 'next/link'
-import React, { Component, useState } from 'react';
+
 import { useRouter } from 'next/router'
 
-import AdminLayout from '../../components/layouts/admin.js';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Tooltip from 'react-bootstrap/Tooltip'
 
-function AdminHomePage() {
+import axios from 'axios'
+
+import AdminLayout from '../../components/layouts/admin.js';
+import AdminViewUserModal from '../../components/admin/AdminViewUserModal';
+
+class ConfirmDelete extends Component {
+    constructor(props) {
+      super(props);
+      
+      this.state = {
+        confirm: false
+      };
+  
+    }
+  
+    handleClick() {
+  
+      if (this.state.confirm) {
+        this.props.afterConfirm()
+      } else {
+        this.setState({confirm: true})
+      }
+  
+    }
+  
+    render() {
+      return (
+        this.state.confirm ? 
+        <div style={{cursor: 'pointer'}} onClick={() => this.handleClick()} className="badge badge-danger noselect">Confirm</div>
+        :
+        <div style={{cursor: 'pointer'}} onClick={() => this.handleClick()} className="badge badge-danger noselect">Delete</div>
+      )
+    }
+}
+function AdminUsersPage() {
     const router = useRouter()
     const { param } = router.query
+    const [ users, setUsers ] = useState([])
+    const [ outsetComplete, setOutsetComplete ] = useState(0)
 
-    console.log(router.pathname)
-    console.log(param);
+    // console.log(router.pathname)
+    // console.log(param);
+
+    useEffect(() => {
+
+        axios.get('/api/admin/users')
+        .then(function (response) {
+            
+            console.log(response.data)
+            setUsers(response.data.users)
+
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+	}, []);
+
+    useEffect(() => {
+
+        for (var i=0; i < users.length; i++) {
+
+            console.log(users[i])
+
+            if (users[i].outset === true ) {
+                setOutsetComplete( outsetComplete + 1 )
+            }
+
+        }
+
+	}, [users]);
   
     return(
-        <section className="submissions-page">
+        <section className="admin-page admin-users">
+
             <Head>
                 <title>Admin - Articles</title>
             </Head> 
-            <div className="container py-3">
-                <h2>Admin Users Page</h2>
-                <p>User list here.</p>
+
+            <div className="side-panel">
+
+                <div className="card mb-3">
+                    <div className="card-header">Outset {outsetComplete}</div>
+
+                    <div className="card-body">
+                        <div>Outset Complete: {(Math.floor((outsetComplete / users.length) * 100))}%</div>
+                    </div>
+                </div>
+
+                <div className="card mb-3">
+                    <div className="card-header">Geo Data</div>
+
+                    <div className="card-body">
+                        {/* <div>Outset Complete: 0%</div> */}
+                    </div>
+                </div>
+
+                <div className="card mb-3">
+                    <div className="card-header">Gender Data</div>
+
+                    <div className="card-body">
+                        {/* <div>Outset Complete: 0%</div> */}
+                    </div>
+                </div>
+
+                <div className="card">
+                    <div className="card-header">Political Data</div>
+
+                    <div className="card-body">
+                        {/* <div>Outset Complete: 0%</div> */}
+                    </div>
+                </div>
+
             </div>
+
+            <div className="main-panel">
+                
+                <div className="card manage-card">
+
+                    <div className="card-body">
+                        <div className="table-responsive">
+                            <table className="table table-sm mb-0">
+                            <thead className="thead-dark">
+                                <tr>
+                                {/* <th scope="col">User ID</th> */}
+                                <th scope="col">Name</th>
+                                <th scope="col">Stripe</th>
+                                <th scope="col">Membership</th>
+                                <th scope="col">State</th>
+                                <th scope="col">Party</th>
+                                <th scope="col">Outset</th>
+                                <th scope="col">Admin</th>
+                                <th scope="col">Dev</th>
+                                <th scope="col">Writer</th>
+                                <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                
+                                {users.map(user => (
+                
+                                <tr key={user._id}>
+                
+                                    {/* <th scope="row">{user._id}</th> */}
+                                    {/* <td>{`${user.first_name} ${user.last_name}`}</td> */}
+                
+                                    <td className="">
+                                    <img alt="" className="profile-photo" style={{borderRadius: '100px'}} width="100%" height="100%" src={`https://articles-website.s3.amazonaws.com/profile_photos/${user._id}.jpg` || ''}/>
+                                    <AdminViewUserModal user_id={user._id} name={`${user.first_name} ${user.last_name}`} buttonType={'badge'} />
+                                    {/* <span style={{width: '150px', display: 'inline-block'}}>{user.first_name} {user.last_name}</span> <span className="badge badge-light">{user._id}</span> */}
+                                    </td>
+                
+                                    {/* <td>{user.stripe?.customer_id === undefined ? <span>No<span onClick={() => this.createCustomer(user._id)} className="btn btn-sm btn-articles-light">Create</span></span> : 'Yes'}</td> */}
+                                    <td>
+                
+                                        {/* Production Customer ID */}
+                                        {user.stripe?.customer_id ? 
+                
+                                        <OverlayTrigger
+                                            key={'customer_id'}
+                                            placement={'bottom'}
+                                            overlay={
+                                            <Tooltip id={`tooltip-${'bottom'}`}>
+                                                <i className="far fa-clipboard"></i>{user.stripe?.customer_id}
+                                            </Tooltip>
+                                            }
+                                        >
+                                            <div style={{cursor: 'pointer'}} onClick={() => {navigator.clipboard.writeText(user.stripe?.customer_id)}} className="badge badge-primary mr-1">Prod</div>
+                                        </OverlayTrigger>
+                
+                                        :
+                
+                                        <div style={{cursor: 'pointer'}} onClick={() => this.createCustomer(user._id)} className="badge badge-success">Add Customer</div>
+                
+                                        }
+                
+                                        {/* Development Customer ID */}
+                                        {user.stripe?.customer_test_id && 
+                
+                                        <OverlayTrigger
+                                            key={'customer_test_id'}
+                                            placement={'bottom'}
+                                            overlay={
+                                            <Tooltip id={`tooltip-${'bottom'}`}>
+                                                <i className="far fa-clipboard"></i>{user.stripe?.customer_test_id}
+                                            </Tooltip>
+                                            }
+                                        >
+                                            <div style={{cursor: 'pointer'}} onClick={() => {navigator.clipboard.writeText(user.stripe?.customer_test_id)}} className="badge badge-warning">Dev</div>
+                                        </OverlayTrigger>
+                
+                                        }
+                
+                                    </td>
+                
+                                    <td>
+                                    <span className="badge badge-danger">No</span>
+                                    <span onClick={() => this.createCustomer(user._id, user.email)} className="badge badge-dark ml-2">Edit</span>
+                                    </td>
+                
+                                    <td>{user.address.state}</td>
+                                    <td>{user.political?.party || 'None'}</td>
+                                    <td>{user.outset === true ? 'True' : 'False'}</td>
+                                    <td>{user.roles?.isAdmin === true ? <div onClick={() => this.toggleRole(user._id, 'isAdmin', false )} className="badge badge-danger">True</div> : <div onClick={() => this.toggleRole(user._id, 'isAdmin', true )} className="badge badge-success">False</div>}</td>
+                                    <td>{user.roles?.isDev === true ? <div onClick={() => this.toggleRole(user._id, 'isDev', false )} className="badge badge-danger">True</div> : <div onClick={() => this.toggleRole(user._id, 'isDev', true )} className="badge badge-success">False</div>}</td>
+                                    <td>{user.roles?.isWriter === true ? <div onClick={() => this.toggleRole(user._id, 'isWriter', false )} className="badge badge-danger">True</div> : <div onClick={() => this.toggleRole(user._id, 'isWriter', true )} className="badge badge-success">False</div>}</td>
+                                    <td><ConfirmDelete afterConfirm={() => this.removeUser(user._id)}></ConfirmDelete></td>
+                                </tr>
+                                
+                                ))}
+                
+                            </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
         </section>
     )
 }
 
-AdminHomePage.Layout = AdminLayout;
-export default AdminHomePage;
+AdminUsersPage.Layout = AdminLayout;
+export default AdminUsersPage;

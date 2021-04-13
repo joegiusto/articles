@@ -8,7 +8,7 @@ export const setIssues = () => dispatch => {
         loading: true
     });
 
-    axios.get("/api/news/myths")
+    axios.get("/api/news/issues")
     .then( res => {
         // console.log("Got Stories")
         dispatch({

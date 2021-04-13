@@ -102,15 +102,15 @@ function AdminLayout({ children }) {
                     </Link>
 
                     <Link href={ROUTES.ADMIN_MESSAGES}>
-                        <span className={"tab" + (router.asPath === ROUTES.ADMIN_MESSAGES && 'active')}>Messages</span>
+                        <span className={"tab " + (router.asPath === ROUTES.ADMIN_MESSAGES && 'active')}>Messages</span>
                     </Link>
 
                     <Link href={ROUTES.ADMIN_PROJECTS}>
-                        <span className={"tab" + (router.asPath === ROUTES.ADMIN_PROJECTS && 'active')}>Projects</span>
+                        <span className={"tab " + (router.asPath === ROUTES.ADMIN_PROJECTS && 'active')}>Projects</span>
                     </Link>
 
                     <Link href={ROUTES.ADMIN_NEWSLETTER}>
-                        <span className={"tab" + (router.asPath === ROUTES.ADMIN_NEWSLETTER && 'active')}>Newsletter</span>
+                        <span className={"tab " + (router.asPath === ROUTES.ADMIN_NEWSLETTER && 'active')}>Newsletter</span>
                     </Link>
 {/* 
                     <Link href={ROUTES.ADMIN_PRESIDENTS}>
@@ -131,8 +131,7 @@ function AdminLayout({ children }) {
 
         </div>
 
-
-        <div className="page">{children}</div>
+        {children}
 
     </div>
 
