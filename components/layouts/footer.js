@@ -1,6 +1,9 @@
 import React from 'react'
+
 import { connect, useSelector, useDispatch } from 'react-redux';
+
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import ROUTES from '../constants/routes'
 import { toggleColorMode } from '../../redux/actions/siteActions';
@@ -15,6 +18,12 @@ function FooterBase(props) {
     //   const has =  props.location.pathname.toString().includes("/admin/news") 
     const dispatch = useDispatch()
     const { colorModeDark } = useCounter()
+
+    const router = useRouter()
+
+    if (router.route == "/messages") {
+        return null
+    }
 
     return (
         <footer className={"site-footer"}>

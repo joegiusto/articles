@@ -311,10 +311,10 @@ function SideMenuBase(props) {
             {/* Main Links Section */}
             <div className="side-menu-section-links">
 
-                {props.isAuth?
-                <Link href={ROUTES.ROUTES.HOME}>
+                {userReduxState?
+                <Link href={ROUTES.HOME}>
                     <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
-                        <i className="fad fa-home"></i>
+                        <i className="icon fad fa-home"></i>
                         <span>Home</span>
                     </a>
                 </Link>
@@ -495,7 +495,8 @@ function SideMenuBase(props) {
                 <Link href={ROUTES.MESSAGES} className="link messages-link" onClick={() => {setMenuOpen(false)}} to={ROUTES.MESSAGES}>
                     <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
                         {/* <IconComment className="icon messages-icon"/> */}
-                        <i className="icon fad fa-comment fa-lg"></i>
+                        {/* <i className="icon fad fa-comment fa-lg"></i> */}
+                        <i class="fad fa-comments-alt fa-lg"></i>
                         <span>
                             Messages
                         </span>

@@ -5,9 +5,11 @@ import GoogleMapReact from 'google-map-react';
 import Chart from 'chart.js';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import ROUTES from '../../components/constants/routes';
+import ROUTES from '../constants/routes';
 
-function StoreLayout({ children }) {
+import NewsHead from '../News/NewsHead';
+
+function NewsLayout({ children }) {
 // const StoreLayout = ({ children }) => (
     const router = useRouter()
     const [trending, setTrending] = useState([
@@ -36,7 +38,8 @@ function StoreLayout({ children }) {
             url: ''
         },
     ])
-    const [activeTrendingSlide, setActiveTrendingSlide] = useState(0)
+    const [ activeTrendingSlide, setActiveTrendingSlide ] = useState(0)
+    const [ mapViewVisible, setMapViewVisible ] = useState(false)
     const { param } = router.query
 
     const swiper_settings = {
@@ -60,11 +63,54 @@ function StoreLayout({ children }) {
 
     useEffect(() => {
         console.log("News layout")
+
+        return function cleanup () {
+            document.body.style.overflow = 'auto';
+        }
 	}, []);
+
+    useEffect(() => {
+        
+        if ( mapViewVisible ) {
+            console.log("")
+            document.body.style.overflow = 'hidden';
+            // document.body.style.paddingRight = scrollBarWidth + 'px';
+        } else {
+            document.body.style.overflow = 'auto';
+            // document.body.style.paddingRight = '0px';
+        }
+
+	}, [mapViewVisible]);
 
     return (
 
     <section className="news-page">
+
+        <div className={`map-view-container ${mapViewVisible}`}>
+
+            <div onClick={ () => setMapViewVisible(false) } className="close-button btn btn-articles-light btn-lg">
+                <i class="fad fa-compress-arrows-alt fa-lg mr-0"></i>
+            </div>
+
+            <div className="map-wrapper">
+                <FullscreenMap/>
+            </div>
+
+            <div className="list card rounded-0 py-3">
+                {trending.map(item => 
+
+                    <div className="card-body mx-3 p-3 mb-3">
+                        <h5>{item.title}</h5>
+                        <div>{item.text}</div>
+                        <Link href={item.url}>
+                            <a className="btn btn-articles-light">Read</a>
+                        </Link>
+                    </div>
+
+                )}
+            </div>
+
+        </div>
 
         <div className="side-bar card noselect">
 
@@ -95,91 +141,88 @@ function StoreLayout({ children }) {
 
                 </div>
 
-                <div className="expand-bar">
+                {/* <div className="expand-bar">
                     <span className="text">Expand Map</span><i class="far fa-expand-wide ml-2"></i> 
-                </div>
+                </div> */}
 
                 <div className="trending-slider">
 
-                <div className="title">Trending</div>
-
-                    <Swiper
-                    {...swiper_settings}
-                    >
-
-                    {/* See slots https://swiperjs.com/react/ */}
-                    <span slot="container-start">
-                
-                    </span>
-
-                    <div className="controls">
-                        <i className="swiper-button-prev fas fa-backward"></i>
-                        <i className="swiper-button-next fas fa-forward"></i>
+                    <div onClick={() => setMapViewVisible(true)} className="btn btn-articles-light mt-3">
+                        <i class="fad fa-expand-wide"></i> 
+                        <span>Launch Map View</span>
                     </div>
 
-                    {trending.map( item =>
+                    <div className="title mt-3">Trending</div>
+
+                    <Swiper
+                        {...swiper_settings}
+                        >
+
+                        {/* See slots https://swiperjs.com/react/ */}
+                        <span slot="container-start">
+                    
+                        </span>
+
+                        <div className="controls">
+                            <i className="swiper-button-prev fas fa-backward"></i>
+                            <i className="swiper-button-next fas fa-forward"></i>
+                        </div>
+
+                        {trending.map( item =>
+                            <SwiperSlide>
+                                <Link href={item.url}>
+                                    <div className="trending-card">
+                                    <div className="type story">Story</div>
+                                    {/* <Link to={`${ROUTES.STORIES}/tesla-new-gigafactory-austin-texas`}> */}
+                                    <div className="view btn btn-articles-light btn-sm">Read</div>
+                                    {/* </Link> */}
+                                    {item.title}
+                                    <div className="progress"></div>
+                                    </div>
+                                </Link>
+                            </SwiperSlide>
+                        )}
+
                         <SwiperSlide>
-                            <Link href={item.url}>
+                            <Link href={`${ROUTES.STORIES}/tesla-new-gigafactory-austin-texas`}>
                                 <div className="trending-card">
                                 <div className="type story">Story</div>
                                 {/* <Link to={`${ROUTES.STORIES}/tesla-new-gigafactory-austin-texas`}> */}
                                 <div className="view btn btn-articles-light btn-sm">Read</div>
                                 {/* </Link> */}
-                                {item.title}
+                                Tesla will build its next Gigafactory near Austin, Texas
                                 <div className="progress"></div>
                                 </div>
                             </Link>
                         </SwiperSlide>
-                    )}
 
-                    <SwiperSlide>
-                        <Link href={`${ROUTES.STORIES}/tesla-new-gigafactory-austin-texas`}>
+                        <SwiperSlide>
+                        <Link href={`${ROUTES.STORIES}/meet-cybertruck`}>
                             <div className="trending-card">
                             <div className="type story">Story</div>
-                            {/* <Link to={`${ROUTES.STORIES}/tesla-new-gigafactory-austin-texas`}> */}
+                            {/* <Link to={`${ROUTES.STORIES}/meet-cybertruck`}> */}
                             <div className="view btn btn-articles-light btn-sm">Read</div>
                             {/* </Link> */}
-                            Tesla will build its next Gigafactory near Austin, Texas
+                            Meet Cybertruck
                             <div className="progress"></div>
                             </div>
                         </Link>
-                    </SwiperSlide>
+                        </SwiperSlide>
 
-                    <SwiperSlide>
-                    <Link href={`${ROUTES.STORIES}/meet-cybertruck`}>
-                        <div className="trending-card">
-                        <div className="type story">Story</div>
-                        {/* <Link to={`${ROUTES.STORIES}/meet-cybertruck`}> */}
-                        <div className="view btn btn-articles-light btn-sm">Read</div>
-                        {/* </Link> */}
-                        Meet Cybertruck
-                        <div className="progress"></div>
-                        </div>
-                    </Link>
-                    </SwiperSlide>
+                        <SwiperSlide>
+                        <Link href={`${ROUTES.STORIES}/meet-cybertruck`}>
+                            <div className="trending-card">
+                            <div className="type story">Story</div>
+                            {/* <Link to={`${ROUTES.STORIES}/jeffery-epstein-arrested`}> */}
+                            <div className="view btn btn-articles-light btn-sm">Read</div>
+                            {/* </Link> */}
+                            Jeffery Epstein Arrested
+                            <div className="progress"></div>
+                            </div>
+                            </Link>
+                        </SwiperSlide>
 
-                    <SwiperSlide>
-                    <Link href={`${ROUTES.STORIES}/meet-cybertruck`}>
-                        <div className="trending-card">
-                        <div className="type story">Story</div>
-                        {/* <Link to={`${ROUTES.STORIES}/jeffery-epstein-arrested`}> */}
-                        <div className="view btn btn-articles-light btn-sm">Read</div>
-                        {/* </Link> */}
-                        Jeffery Epstein Arrested
-                        <div className="progress"></div>
-                        </div>
-                        </Link>
-                    </SwiperSlide>
-
-                </Swiper>
-
-                {/* <div className="trending-card">Tesla will build its next Gigafactory near Austin, Texas</div>
-
-                <div className="dots">
-                    <div className="dot active"></div>
-                    <div className="dot"></div>
-                    <div className="dot"></div>
-                </div> */}
+                    </Swiper>
                 
                 </div>
             </div>
@@ -299,6 +342,7 @@ function StoreLayout({ children }) {
         </div>
 
         <div className="main-content-container">
+            <NewsHead homeLayout={router.pathname == '/news' && true} />
             {children}
         </div>
 
@@ -379,25 +423,35 @@ class SimpleMap extends React.Component {
     };
   
     render() {
-      return (
-        <GoogleMapReact
-        bootstrapURLKeys={{ key: 'AIzaSyAKmyGIU1IJo_54kahuds7huxuoEyZF-68' }}
-        center={{lat: this.props.lat, lng: this.props.lng}}
-        defaultZoom={this.props.zoom}
-        options={{
-          fullscreenControl: false,
-          // zoomControl: false
-        }}
-      >
-        <AnyReactComponent 
-          lat={this.props.lat} 
-          lng={this.props.lng} 
-          text={this.props.text} 
-        />
-  
-      </GoogleMapReact>
-      );
+        return (
+
+            <GoogleMapReact
+                bootstrapURLKeys={{ key: 'AIzaSyAKmyGIU1IJo_54kahuds7huxuoEyZF-68' }}
+                center={{lat: this.props.lat, lng: this.props.lng}}
+                defaultZoom={this.props.zoom}
+                options={{ fullscreenControl: false }}
+            >
+
+            <AnyReactComponent 
+                lat={this.props.lat} 
+                lng={this.props.lng} 
+                text={this.props.text} 
+            />
+    
+            </GoogleMapReact>
+        );
     }
 }
+
+function FullscreenMap() {
+    return (
+        <GoogleMapReact
+            bootstrapURLKeys={{ key: 'AIzaSyAKmyGIU1IJo_54kahuds7huxuoEyZF-68' }}
+            center={{lat: 39.00, lng: -95.71}}
+            defaultZoom={4}
+            options={{ fullscreenControl: false }}
+        />
+    );
+}
   
-export default StoreLayout;
+export default NewsLayout;

@@ -7,7 +7,7 @@ export default async (req, res) => {
     .collection("articles_news")
     .find({news_type: 'issue'})
     .sort({"news_date": -1})
-    .limit(20)
+    .limit(10)
     .toArray();
 
     res.json(result);

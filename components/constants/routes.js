@@ -160,7 +160,7 @@ export default {
 
     ADMIN_DONATIONS: '/admin/donations',
     ADMIN_EXPENSES: '/admin/expenses',
-    ADMIN_SOCKET: '/admin/socket',
+    ADMIN_SOCKET: '/admin/sockets',
     ADMIN_AWS: '/admin/aws',
     ADMIN_COMMENTS: '/admin/comments',
     ADMIN_REPORTS: '/admin/reports',
