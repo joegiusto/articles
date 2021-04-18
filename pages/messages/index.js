@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect, setState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 
 import { useSelector } from 'react-redux'
 
@@ -173,13 +173,13 @@ function Messages(props) {
     //     });
     // }
 
-    const handleChange = e => {
-        const {name , value} = e.target
-        setState( prevState => ({
-            ...prevState,
-            [name] : value
-        }))
-    }
+    // const handleChange = e => {
+    //     const {name , value} = e.target
+    //     setState( prevState => ({
+    //         ...prevState,
+    //         [name] : value
+    //     }))
+    // }
     
     function handleTextareaChange(e) {
         
@@ -566,8 +566,9 @@ function Messages(props) {
                         className="pgp-public mr-1" 
                         name="pgpPublic"
                         value={publicPgpKey}
-                        onKeyPress={(e) => { this.handleTextareaChange(e) }}
-                        onChange={(e) => this.handleChange(e)}
+                        onKeyPress={(e) => { handleTextareaChange(e) }}
+                        // onChange={(e) => handleChange(e)}
+                        onChange={e => setPublicPgpKey(e.target.value)}
                         placeholder="Paste your PGP public key here">
                     </TextareaAutosize>
                     {/* <p style={{fontSize: '0.8rem', whiteSpace: 'break-spaces'}}>{props.user_details.public_pgp_block}</p> */}
@@ -626,19 +627,24 @@ function Messages(props) {
                         name="startChatUser" 
                         id="startChatUser" 
                         value={startChatUser}
-                        onChange={(e) => handleChange(e)}
+                        // onChange={(e) => handleChange(e)}
+                        onChange={e => setStartChatUser(e.target.value)}
                         type="text"/>
                     </div>
 
                     <div className="form-group articles">
+
                         <label for="startChatMessage">Message</label>
+
                         <TextareaAutosize
-                        className="form-control with-label"
-                        name="startChatMessage"
-                        value={startChatMessage}
-                        onChange={(e) => handleChange(e)}
-                        placeholder="Type your message">
+                            className="form-control with-label"
+                            name="startChatMessage"
+                            value={startChatMessage}
+                            // onChange={(e) => handleChange(e)}
+                            onChange={e => setStartChatMessage(e.target.value)}
+                            placeholder="Type your message">
                         </TextareaAutosize>
+                        
                     </div>
 
                     {startChatError !== '' &&
@@ -652,7 +658,7 @@ function Messages(props) {
                     </div>
 
                     <div className="card-footer">
-                    <small>Your User ID is <b>{props.user_id}</b> provide this to a friend to start a conversation.</small>
+                        <small>Your User ID is <b>{props.user_id}</b> provide this to a friend to start a conversation.</small>
                     </div>
 
                 </div>
@@ -900,11 +906,11 @@ function Messages(props) {
                                 message.media !== 'photo' ? 
                                 <span>{message.message}</span>
                                 :
-                                <img style={{cursor: 'pointer'}} onClick={() => this.setState({lightboxFocus: message.url, lightboxOpen: true})} className="img-fluid" src={message.url} alt=""/>
+                                <img style={{cursor: 'pointer'}} onClick={() => setState({lightboxFocus: message.url, lightboxOpen: true})} className="img-fluid" src={message.url} alt=""/>
                                 }
 
                                 <div className="message-extras">
-                                <i onClick={() => this.deleteMessage(focused?._id, message._id)} className="fas fa-trash-alt mr-0"></i>
+                                    <i onClick={() => deleteMessage(focused?._id, message._id)} className="fas fa-trash-alt mr-0"></i>
                                 </div>
 
                             </div>
@@ -941,7 +947,8 @@ function Messages(props) {
                         name="chatMessage"
                         value={chatMessage}
                         onKeyPress={(e) => { handleTextareaChange(e) }}
-                        onChange={(e) => handleChange(e)}
+                        // onChange={(e) => handleChange(e)}
+                        onChange={e => setChatMessage(e.target.value)}
                         placeholder="Type your message">
                     </TextareaAutosize>
                     : 
