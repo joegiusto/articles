@@ -78,7 +78,7 @@ function Messages(props) {
 
     const [focused, setFocused] = useState({});
     
-    const myScrollRef = React.createRef();
+    const myScrollRef = React.useRef();
     const socket = props.socket;
 
     useEffect(() => {
@@ -122,6 +122,7 @@ function Messages(props) {
         axios.get('/api/user/messages')
         .then(function (response) {
             
+            console.log(response)
             setMessages(response.data)
             setMessagesLoading(false)
     
@@ -208,6 +209,7 @@ function Messages(props) {
     
     function scrollToBottom() {
         // const self = this;
+        // console.log(myScrollRef)
         myScrollRef.current.scrollTop = myScrollRef.current.scrollHeight;
     }
     
@@ -236,7 +238,7 @@ function Messages(props) {
         setFocusedChat(chat_id)
         setSidebarVisible(false)
         setTimeout( function(){ scrollToBottom(); }, 100 );
-        socket.emit( 'join-room', focusedChat )
+        // socket.emit( 'join-room', focusedChat )
     }
     
     function messagesSort( a, b ) {
@@ -258,7 +260,7 @@ function Messages(props) {
             :
             messages.length > 0 ?
             messages.sort( messagesSort ).map(message => 
-            <div onClick={() => setFocusedChat(message._id)} className={"chat-contact inbox-message " + (message.promotional ? 'ad ' : '') + (message._id === focusedChat ? 'active ' : '')} >
+            <div onClick={() => focusChat(message._id)} className={"chat-contact inbox-message " + (message.promotional ? 'ad ' : '') + (message._id === focusedChat ? 'active ' : '')} >
     
                 <div className="contact-photo">
 
@@ -266,7 +268,7 @@ function Messages(props) {
                         <div className="status"></div>
                     </div>
         
-                    <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${ message.fetchedUsers?.filter(user => user.id !== props.user_id).map(user => user.id) }.jpg`} alt=""/>
+                    <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${ message.fetchedUsers?.filter(user => user.id !== userReduxState._id).map(user => user.id) }.jpg`} alt=""/>
 
                 </div>
     
@@ -277,7 +279,7 @@ function Messages(props) {
                         <div>
         
                         <div className="contact-name d-flex justify-content-between w-100"> 
-                            <span>{message.fetchedUsers?.filter(user => user.id !== props.user_id).map(user => user.name)}</span>
+                            <span>{message.fetchedUsers?.filter(user => user.id !== userReduxState._id).map(user => user.name)}</span>
                             <span style={{fontSize: '0.7rem', fontFamily: 'montserrat, sans-serif', fontWeight: '400'}} className="mute">{ moment( message.messages[message.messages.length - 1].date ).format("MMM Do | h:mm a") }</span>
                         </div>
         
@@ -412,7 +414,7 @@ function Messages(props) {
             console.log("This should not happen");
         } else {
     
-        axios.post('/api/chatMessage', data)
+        axios.post('/api/messages/send', data)
         .then(function (response) {
             console.log(response.data);
     
@@ -448,31 +450,32 @@ function Messages(props) {
         .then(function (response) {
             console.log(response.data);
 
-            setMessages([
-                ...messages,
-                {
-                    _id: response.data.insertedId,
-                    users: [
-                    user, props.user_id
-                    ],
-                    fetchecUsers: [
-                    {
-                        id: props.user_id
-                    },
-                    {
-                        id: user
-                    }
-                    ],
-                    messages: [
-                    {
-                        _id: 'will-fill',
-                        date: moment()._d,
-                        message: message,
-                        sender: props.user_id
-                    }
-                    ]
-                }
-            ])
+            // TODO OLD - Has to be redone with userReduxState._id
+            // setMessages([
+            //     ...messages,
+            //     {
+            //         _id: response.data.insertedId,
+            //         users: [
+            //         user, props.user_id
+            //         ],
+            //         fetchecUsers: [
+            //         {
+            //             id: props.user_id
+            //         },
+            //         {
+            //             id: user
+            //         }
+            //         ],
+            //         messages: [
+            //         {
+            //             _id: 'will-fill',
+            //             date: moment()._d,
+            //             message: message,
+            //             sender: props.user_id
+            //         }
+            //         ]
+            //     }
+            // ])
         
             // TODO - Not how I want this but has to be for now, fix the setState call, reload messages or anything else!
             window.location.reload();
@@ -549,7 +552,7 @@ function Messages(props) {
 
                 <Modal.Body>
 
-                    <div className="label"></div>
+                    {/* <div className="label"></div>
                     <Dropdown>
                         <Dropdown.Toggle variant="success" id="dropdown-basic">
                             Dropdown Button
@@ -560,12 +563,12 @@ function Messages(props) {
                             <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
                             <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
                         </Dropdown.Menu>
-                    </Dropdown>
+                    </Dropdown> */}
 
                     <TextareaAutosize
                         className="pgp-public mr-1" 
                         name="pgpPublic"
-                        value={publicPgpKey}
+                        value={userReduxState.public_pgp_block}
                         onKeyPress={(e) => { handleTextareaChange(e) }}
                         // onChange={(e) => handleChange(e)}
                         onChange={e => setPublicPgpKey(e.target.value)}
@@ -658,7 +661,7 @@ function Messages(props) {
                     </div>
 
                     <div className="card-footer">
-                        <small>Your User ID is <b>{props.user_id}</b> provide this to a friend to start a conversation.</small>
+                        <small>Your User ID is <b>{userReduxState._id}</b> provide this to a friend to start a conversation.</small>
                     </div>
 
                 </div>
@@ -893,10 +896,10 @@ function Messages(props) {
 
                     focused?.messages?.map((message) => (
 
-                        <div className={"chat-message p-3 " + ( message.sender === props.user_id ? 'personal' : '' )}>
+                        <div className={"chat-message p-3 " + ( message.sender === userReduxState._id ? 'personal' : '' )}>
 
-                            <div className={"message-photo " + ( message.sender === props.user_id ? 'd-none' : '' )}>
-                            <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${message.sender}.jpg`} alt=""/>
+                            <div className={"message-photo " + ( message.sender === userReduxState._id ? 'd-none' : '' )}>
+                                <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${message.sender}.jpg`} alt=""/>
                             </div>
 
                             <div className="message-details">

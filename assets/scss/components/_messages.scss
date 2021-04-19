@@ -266,7 +266,7 @@
         &.empty {
 
             .content-darken {
-                background-color: rgba(0, 0, 0, 0.5);
+                // background-color: rgba(0, 0, 0, 0.5);
                 pointer-events: initial;
                 z-index: 1;
             }
@@ -290,7 +290,7 @@
             justify-content: center;
             align-items: center;
             pointer-events: none;
-            background-color: $base-color;
+            // background-color: $base-color;
 
             .message-settings-cards {
                 display: grid;

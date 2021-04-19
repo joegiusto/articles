@@ -35,7 +35,7 @@ function SettingsProtectedPage () {
         <h1>Protected Page</h1>
         <p className="mb-3"><strong>{content || "\u00a0"}</strong></p>
 
-        <div className="p-3">
+        <div className="py-3">
             <h1>API Example</h1>
             <p>The examples below show responses from the example API endpoints.</p>
             <p><em>You must be signed in to see responses.</em></p>

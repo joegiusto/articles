@@ -2,6 +2,8 @@ import NextAuth from "next-auth"
 import Providers from "next-auth/providers"
 import axios from 'axios'
 
+import { connectToDatabase } from "../../../util/mongodb";
+
 // For more information on each option (and a full list of options) go to
 // https://next-auth.js.org/configuration/options
 export default NextAuth({
@@ -186,7 +188,22 @@ export default NextAuth({
     callbacks: {
         // async signIn(user, account, profile) { return true },
         // async redirect(url, baseUrl) { return baseUrl },
-        // async session(session, user) { return session },
+        async session(session, user) { 
+            const { db } = await connectToDatabase();
+
+            const projection = { '_id': 1 };
+        
+            const result = await db
+            .collection("articles_users")
+            .findOne(
+                {email: session.user.email},
+                {projection: projection}
+            )
+
+            user._id = result._id;
+            session.user._id = result._id;
+            return session 
+        },
         // async jwt(token, user, account, profile, isNewUser) { return token }
     },
 
