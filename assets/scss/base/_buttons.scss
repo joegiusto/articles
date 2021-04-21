@@ -24,7 +24,9 @@
 }
 
 .btn-success {
-  border-bottom: 3px solid rgb(132, 255, 187);
+    $btn-success-color: rgb(0, 167, 75);
+    background-color: $btn-success-color;
+    border-bottom: 3px solid darken($btn-success-color, 10%);
 }
 
 .btn-primary {

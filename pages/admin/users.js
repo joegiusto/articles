@@ -46,10 +46,37 @@ function AdminUsersPage() {
     const router = useRouter()
     const { param } = router.query
     const [ users, setUsers ] = useState([])
+
+    const [ zips, setZips ] = useState({
+        None: 0
+    })
+    const [ zipsToTown, setZipsToTown ] = useState({})
+
     const [ outsetComplete, setOutsetComplete ] = useState(0)
 
     // console.log(router.pathname)
     // console.log(param);
+
+    function checkZipName(zip) {
+
+        // Old way, MongoDB now has collection of every US Zip code
+        // const directory = {
+        //   12508: "Beacon",
+        //   12524: 'Fishkill',
+        //   12533: "Hopewell Junction",
+        //   12561: "New Paltz"
+        // }
+    
+        if ( Object.keys(zipsToTown).indexOf(zip) > -1 ) {
+    
+            return(  Object.values(zipsToTown)[Object.keys(zipsToTown).indexOf(zip)].city )
+    
+        } else {
+    
+            return( zip )
+          
+        }
+    }
 
     useEffect(() => {
 
@@ -73,12 +100,92 @@ function AdminUsersPage() {
             console.log(users[i])
 
             if (users[i].outset === true ) {
-                setOutsetComplete( outsetComplete + 1 )
+                // setOutsetComplete( outsetComplete + 1 )
+                setOutsetComplete( prevTotal => prevTotal + 1 )
+            }
+
+            const currentUserZip = users[i].address.zip
+
+            if (currentUserZip === undefined || currentUserZip === null || currentUserZip === "") {
+
+                setZips({
+                    ...zips,
+                    None: zips.None + 1
+                })
+
+                // self.setState({
+                //   zips: {
+                //     ...self.state.zips,
+                //     None: self.state.zips.None + 1
+                //   }
+                // })
+      
+            } else {
+
+                console.log("Logging")
+                console.log(users[i].address.zip)
+                let currentZip = users[i].address.zip;
+                
+                if ( !isNaN(zips[currentUserZip]) ) {
+                    // console.log("Add One")
+
+                    // setZips( prevZips => ({
+                    //     ...prevZips,
+                    //     [currentZip]: (prevZips[currentUserZip] + 1)
+                    // }) )
+
+                } else {
+                    // console.log("Set One")
+
+                    setZips( prevZips => ({
+                        ...prevZips,
+                        [currentZip]: 1
+                    }) )
+                }
+      
             }
 
         }
 
+        setTimeout( calculateThings, 2000 )
+
 	}, [users]);
+
+    function calculateThings() {
+        if ( users.length > 0 ) {
+            axios.post('/api/admin/zipsToTowns', {
+                zips: zips,
+                format: 'tally'
+            })
+            .then((response) => {
+                console.log(response.data)
+    
+                setZipsToTown(response.data)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        }
+    }
+
+    // useEffect(() => {
+
+    //     if ( users.length > 0 ) {
+    //         axios.post('/api/admin/zipsToTowns', {
+    //             zips: zips,
+    //             format: 'tally'
+    //         })
+    //         .then((response) => {
+    //             console.log(response.data)
+    
+    //             setZipsToTown(response.data)
+    //         })
+    //         .catch(function (error) {
+    //             console.log(error);
+    //         });
+    //     }
+
+	// }, [users]);
   
     return(
         <section className="admin-page admin-users">
@@ -98,10 +205,14 @@ function AdminUsersPage() {
                 </div>
 
                 <div className="card mb-3">
-                    <div className="card-header">Geo Data</div>
+                    <div className="card-header">Geographical Data</div>
 
                     <div className="card-body">
-                        {/* <div>Outset Complete: 0%</div> */}
+                        {
+                            Object.entries(zips).map(([key, val]) => 
+                                <div key={key}>{checkZipName(key)}: {val}</div>
+                            )
+                        }
                     </div>
                 </div>
 

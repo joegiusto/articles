@@ -112,10 +112,10 @@ function AdminLayout({ children }) {
                     <Link href={ROUTES.ADMIN_NEWSLETTER}>
                         <span className={"tab " + (router.asPath === ROUTES.ADMIN_NEWSLETTER && 'active')}>Newsletter</span>
                     </Link>
-{/* 
+
                     <Link href={ROUTES.ADMIN_PRESIDENTS}>
-                        <span className={"tab" + (this.state.tab === 'presidents' ? ' active' : '')}>Presidents</span>
-                    </Link> */}
+                        <span className={"tab " + (router.asPath === ROUTES.ADMIN_PRESIDENTS && 'active')}>Presidents</span>
+                    </Link>
                     
                 </div>
 

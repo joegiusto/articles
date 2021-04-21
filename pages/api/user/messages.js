@@ -13,7 +13,7 @@ export default async (req, res) => {
         const results = await db
         .collection("articles_messages")
         // .find( { users: { $in: [`${req.query.user._id}`] } } )
-        .find( { users: { $in: ["5e90cc96579a17440c5d7d52"] } } )
+        .find( { users: { $in: [session.user._id] } } )
         .toArray( async (err, response) => {
 
             // console.log("Made it here");

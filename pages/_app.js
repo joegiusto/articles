@@ -26,7 +26,7 @@ import { setMyths } from "../redux/actions/mythsActions";
 
 import SocketContext from '../components/context/socket'
 
-const socket = io("https://a0c586318e6b.ngrok.io");
+const socket = io("https://9e82f85e514d.ngrok.io");
 
 function MyApp({ Component, pageProps }) {
     const store = useStore(pageProps.initialReduxState)
