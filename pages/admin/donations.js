@@ -17,7 +17,7 @@ import { ThemeProvider } from "@material-ui/styles";
 
 // Articles Absolute
 import AdminLayout from 'components/layouts/admin.js';
-import AdminViewUserModal from 'components/Admin/AdminViewUserModal'
+import AdminViewUserModal from 'components/admin/AdminViewUserModal'
 import ConfirmDelete from 'components/ConfirmDelete'
 import articlesTheme from 'components/material_ui/articlesTheme'
 import ROUTES from 'components/constants/routes'
