@@ -1,5 +1,9 @@
 import { connectToDatabase } from "../../../../util/mongodb";
 
+// Return only safe data
+// Support friendly_url calls
+// Support _id calls
+
 export default async (req, res) => {
     const { db } = await connectToDatabase();
 
@@ -15,6 +19,25 @@ export default async (req, res) => {
         projection: projection
     })
 
-    res.json(result);
+    if ( result ) {
+
+        res.json(result);
+
+    } else {
+
+        let resultById = await db
+        .collection("articles_users")
+        .findOne({
+            "roles.employee.bool": true,
+            "employee._id": req.body.employee
+        },
+        {
+            projection: projection
+        })
+
+        res.json(resultById);
+    }
+
+    
 
 };

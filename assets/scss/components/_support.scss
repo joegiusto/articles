@@ -15,6 +15,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    margin-bottom: 2rem;
 
     @include media-breakpoint-up(md) {
       padding-top: 1rem;
@@ -23,13 +24,12 @@
     .item {
         cursor: pointer;
         position: relative;
-        text-align: center;
-        font-weight: bold;
+        // text-align: center;
         margin-top: 1rem;
         margin-right: 1rem;
         // margin-left: 0.5rem;
-        width: calc(100%);
-        padding: 1rem;
+        // width: calc(100%);
+        // padding: 1rem;
 
         i {
             margin-right: 0;
@@ -61,6 +61,21 @@
 
         @include media-breakpoint-up(md) {
             width: calc(33% - 1rem);
+        }
+
+        .card-body {
+            // font-size: 16px;
+            min-height: 125px;
+            padding-bottom: 3rem;
+        }
+
+        .view-link {
+            position: absolute;
+            margin: 0.5rem;
+            right: 1rem;
+            bottom: 0;
+            // font-size: 16px;
+            // transform: translateX(-50%);
         }
     }
   }

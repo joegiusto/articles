@@ -1,4 +1,5 @@
 import { MongoClient } from 'mongodb'
+import { mongoose } from 'mongodb'
 
 const { MONGODB_URI, MONGODB_DB } = process.env
 
@@ -20,15 +21,25 @@ if (!MONGODB_DB) {
  * during API Route usage.
  */
 let cached = global.mongo
+let cachedMongoose = global.mongoose
 
 if (!cached) {
   cached = global.mongo = { conn: null, promise: null }
 }
 
+// if (!cachedMongoose) {
+//     cachedMongoose = global.mongoose = { conn: null, promise: null }
+// }
+
 export async function connectToDatabase() {
+
   if (cached.conn) {
     return cached.conn
   }
+
+//   if (cachedMongoose.conn) {
+//     return cachedMongoose.conn
+//   }
 
   if (!cached.promise) {
     const opts = {
@@ -43,6 +54,22 @@ export async function connectToDatabase() {
       }
     })
   }
+
+//   if (!cachedMongoose.promise) {
+//     const opts = {
+//       useNewUrlParser: true,
+//       useUnifiedTopology: true,
+//     }
+
+//     cachedMongoose.promise = mongoose.connect(MONGODB_URI, opts).then((client) => {
+//         // return {
+//         //     client,
+//         //     db: client.db(MONGODB_DB),
+//         // }
+//         console.log("Mongoose connected")
+//     })
+//   }
+
   cached.conn = await cached.promise
   return cached.conn
 }

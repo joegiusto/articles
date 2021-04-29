@@ -57,6 +57,24 @@
             .side-menu-section-header {
                 background-color: rgb(0 0 0 / 30%);
             }
+
+            .side-menu-section-links .link {
+                color: rgb(180, 180, 180);
+
+                &:hover {
+                    color: rgb(0, 0, 0); 
+                }
+
+                .icon {
+                    
+                    &.fad {
+                        &::before {
+                            color: rgb(255, 222, 173)!important;
+                        }
+                    }
+                }
+
+            }
         }
 
     }
@@ -434,102 +452,90 @@
       
           .side-menu-section-links {
       
-              .link {
-                  color: rgb(71, 71, 71);
-                  overflow: hidden;
-                  position: relative;
-                  font-family: agenda, sans-serif;
-                  font-weight: 600;
-                  margin: 0px;
-                  padding: .6rem 1.5rem;
-                  display: flex;
-                  align-items: center;
-      
-                  &:hover {
-                      color: rgb(0, 0, 0);
-                      // font-weight: 700;
-                      // font-weight: 600;
-                      text-decoration: none;
-      
-                      &:before {
-                          opacity: 1;
-                          transform: translateX(0%);
-                      }
-                  }
-      
-                  &:before {
-                      content: "";
-                      z-index: -1;
-                      position: absolute;
-                      width: 100%;
-                      left: 0;
-                      top: 0;
-                      height: 100%;
-                      // opacity: 0;
-                      transform: translateX(-100%);
-                      transition-duration: 500ms;
-                      background-color: lighten($accent-color, 0%);
-                      // background-color: rgba(0, 0, 0, 0.05);
-                  }
-      
-                  // > i, > svg {
-                  //     min-width: 30px;
-                  // }
-      
-                  .icon {
-                      // color: $accent-color;
-                      // fill: $accent-color;
-                      position: relative;
-                      height: 1.25rem;
-                      width: 1.25rem;
-                      margin-right: 1rem;
-                      font-size: 1.2rem;
-                      line-height: 1.2;
-                      display: flex;
-                      justify-content: center;
-                      align-items: center;
-                  }
-      
-                  &.messages-link {
-      
-                      &:after {
-                          content: '';
-                          z-index: -1;
-                          position: absolute;
-                          top: 50%;
-                          // left: 1.25rem;
-                          left: 1.094rem;
-                          height: 1.95rem;
-                          width: 1.95rem;
-                          transform: translateY(-50%);
-                          background-color: rgb(90, 169, 253);
-                          // background-color: $accent-color;
-                          border-radius: 50px;
-                          font-size: 0.75rem;
-                      }
-      
-                      .icon {
-                          fill: rgb(255, 255, 255);
-                          color: rgb(255, 255, 255);
-                      }
-      
-                      .fa-secondary {
-                          opacity: 1;
-                      }
-                  }
-      
-                  #messages-button {
-                      font-size: 1rem;
-                      color: rgb(0, 0, 0);
-      
-                      #messages-button-count {
-                          padding: 0.1rem;
-                          font-size: 1rem;
-                          margin-left: 0.5rem;
-                      }
-                  }
-      
-              }
+            .link {
+                color: rgb(71, 71, 71);
+                overflow: hidden;
+                position: relative;
+                font-family: agenda, sans-serif;
+                font-weight: 600;
+                margin: 0px;
+                padding: .6rem 1.5rem;
+                display: flex;
+                align-items: center;
+    
+                &:hover {
+                    color: rgb(0, 0, 0);
+                    // font-weight: 700;
+                    // font-weight: 600;
+                    text-decoration: none;
+    
+                    &:before {
+                        opacity: 1;
+                        transform: translateX(0%);
+                    }
+
+                    .icon {
+                        transform: scale(1.2);
+                    }
+
+                    span {
+                        transform: translateX(5px);
+                    }
+                }
+    
+                &:before {
+                    content: "";
+                    z-index: -1;
+                    position: absolute;
+                    width: 100%;
+                    left: 0;
+                    top: 0;
+                    height: 100%;
+                    // opacity: 0;
+                    transform: translateX(-100%);
+                    transition-duration: 500ms;
+                    background-color: lighten($accent-color, 0%);
+                    // background-color: rgba(0, 0, 0, 0.05);
+                }
+    
+                &.link-messages {
+                    i {
+
+                        &::before, &::after {
+                            -webkit-text-stroke: 1px black;
+                        }
+
+                        &::before {
+                            color: $base-color;
+                        }
+
+                        &::after {
+                            opacity: 1;
+                            color: $accent-color;
+                        }
+                    }
+                }
+    
+                .icon {
+                    // color: $accent-color;
+                    // fill: $accent-color;
+                    position: relative;
+                    height: 1.25rem;
+                    width: 1.25rem;
+                    margin-right: 1rem;
+                    font-size: 1.2rem;
+                    line-height: 1.2;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    transition-duration: 300ms;
+                }
+
+                span {
+                    transition-duration: 300ms;
+                }
+    
+            }
       
           }
       

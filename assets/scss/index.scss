@@ -192,7 +192,7 @@ body {
         display: none;
     }
 
-    .content-wrap {
+    .content-wrap, .site-footer {
         padding-left: 300px;
         width: 100%;
     }
@@ -411,6 +411,22 @@ code {
 .form-group.articles {
   position: relative;
 
+    &.articles-switch-container {
+        
+        .articles-switch-wrap {
+            background-color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            border: 1px solid rgb(206 212 218);
+            border-radius: 0.25rem;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+    }
+
     &.MuiFormControl-root {
         label {
             transform: none!important;
@@ -426,7 +442,7 @@ code {
         }
     }
 
-    label {
+    label:not(.articles-switch) {
         display: block;
         background-color: $base-color;
         // border: 0.5px solid #000;

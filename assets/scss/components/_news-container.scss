@@ -86,10 +86,10 @@ section.news-page {
     }
 
     .map-view-container {
-        position: fixed;
+        position: absolute;
         width: 100%;
         height: calc(100vh - 50px);
-        top: 50px;
+        // top: 50px;
         left: 0;
         transition-duration: 1200ms;
         // transition-timing-function: cubic-bezier(.29, 1.01, 1, -0.68);
@@ -1165,7 +1165,7 @@ section.news-page {
   
           .swiper-container {
             width: 100%;
-            padding-bottom: 1rem;
+            padding-bottom: 2rem;
             overflow: initial;
 
             // @include media-breakpoint-down(md) {
@@ -1177,18 +1177,19 @@ section.news-page {
             }
   
             .swiper-pagination-bullets {
-              bottom: initial;
-              top: 0;
-              width: auto;
-              left: 50%;
-              transform: translateY(-30px) translateX(-50%);
-  
-              .swiper-pagination-bullet {
-  
-                &-active {
-                  background-color: rgb(0, 0, 0);
+                bottom: initial;
+                //   top: 0;
+                bottom: -25px;
+                width: auto;
+                left: 50%;
+                transform: translateY(-30px) translateX(-50%);
+    
+                .swiper-pagination-bullet {
+    
+                    &-active {
+                    background-color: rgb(0, 0, 0);
+                    }
                 }
-              }
             }
 
             .swiper-button-prev, .swiper-button-next {
@@ -1499,58 +1500,68 @@ section.news-page {
     
   }
 
-  .frontpage-section-header {
-    display: flex;
-    // align-items: center;
-    // align-items: flex-end;
-    flex-direction: column;
-    margin-bottom: 1rem;
+    .frontpage-section-header {
+        display: flex;
+        // align-items: center;
+        // align-items: flex-end;
+        flex-direction: column;
+        margin-bottom: 1rem;
 
-    @include media-breakpoint-down(md) {
-      justify-content: space-between;
-    }
-
-    h5 {
-      // text-transform: uppercase;
-      position: relative;
-      font-family: brandon-grotesque, sans-serif;
-      font-style: normal;
-      font-weight: 900;
-      font-size: 2.5rem;
-
-      @include media-breakpoint-down(md) {
-        font-size: 2.25rem;
-      }
-
-      &:after {
-        content: '';
-        position: absolute;
-        bottom: -0.5rem;
-        left: 0;
-        width: 150px;
-        height: 7px;
-        background-color: $accent-color;
-      }
-    }
-
-    .controls {
-      padding-left: 2rem;
-      font-size: 1rem;
-    //   margin-bottom: 0.5rem;
-
-      i {
-        cursor: pointer;
-        padding: 0.75rem;
-        border: 2px solid #000;
-        // border-radius: 5px;
-        opacity: 0.6;
-
-        &:hover {
-          opacity: 1;
+        @include media-breakpoint-down(md) {
+            justify-content: space-between;
         }
-      }
+
+        h5 {
+            // text-transform: uppercase;
+            position: relative;
+            font-family: brandon-grotesque, sans-serif;
+            font-style: normal;
+            font-weight: 900;
+            font-size: 2.5rem;
+
+            @include media-breakpoint-down(md) {
+                font-size: 2.25rem;
+            }
+
+            &:after {
+                content: '';
+                position: absolute;
+                bottom: -0.5rem;
+                left: 0;
+                width: 150px;
+                height: 7px;
+                background-color: $accent-color;
+            }
+        }
+
+        .view-all-button {
+            opacity: 0.8;
+            transition-duration: 200ms;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+
+        // .controls {
+        //     padding-left: 2rem;
+        //     font-size: 1rem;
+        //     //   margin-bottom: 0.5rem;
+
+        //     i {
+        //         cursor: pointer;
+        //         padding: 0.75rem;
+        //         border: 2px solid #000;
+        //         // border-radius: 5px;
+        //         opacity: 0.6;
+
+        //         &:hover {
+        //         opacity: 1;
+        //         }
+        //     }
+        // }
+
     }
-  }
 
   .banking-overlay {
     opacity: 0;
@@ -2188,38 +2199,39 @@ section.news-page {
 
         .news-static {
 
-        .news-preview-container {
-            // display: flex;
-            // flex-wrap: wrap;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-gap: 10px 10px;
+            .news-preview-container {
+                // display: flex;
+                // flex-wrap: wrap;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-gap: 10px 10px;
 
-            .content {
-            height: 300px;
-            // margin-top: 1rem;
+                .content {
+                    height: 300px;
+                    // margin-top: 1rem;
+                }
+
+                @include media-breakpoint-up(md) {
+                    grid-template-columns: repeat(3, 1fr);
+
+                    .content {
+                        height: 350px;
+                    }
+                }
+
+                @include media-breakpoint-up(lg) {
+                grid-template-columns: repeat(5, 1fr);
+
+                .content {
+                    height: 350px;
+                }
+                }
+
+                > a {
+                //  width: 20%;
+                }
             }
 
-            @include media-breakpoint-up(md) {
-            grid-template-columns: repeat(3, 1fr);
-
-            .content {
-                height: 350px;
-            }
-            }
-
-            @include media-breakpoint-up(lg) {
-            grid-template-columns: repeat(5, 1fr);
-
-            .content {
-                height: 350px;
-            }
-            }
-
-            > a {
-            //  width: 20%;
-            }
-        }
         }
 
         @include media-breakpoint-down(md) {
@@ -2425,7 +2437,8 @@ section.news-page {
         }
 
         .swiper-button-disabled {
-            opacity: 0;
+            opacity: 0.8;
+            cursor: not-allowed;
         }
 
         .content {
@@ -2442,6 +2455,10 @@ section.news-page {
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
+
+                .total {
+                    font-size: 0.8rem;
+                }
             }
 
             &.story {

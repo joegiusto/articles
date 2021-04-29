@@ -1,5 +1,21 @@
 // Site Menu - This is the sites main side menu that extends when pushing the menu button
 // Side Bar New - This is the side bar on the Mission Page
+// body {
+
+//     &::-webkit-scrollbar {
+//         width: 16px;
+//         background-color: rgb(214, 214, 214);
+//     }
+
+//     &::-webkit-scrollbar-thumb {
+//         border-radius: 8px;
+//         padding: 4px;
+//         border: 4px solid rgb(0 0 0 / 0%);
+//         background-color: rgb(151, 151, 151);
+//     }
+
+// }
+
 .tab-bar {
 
     @include media-breakpoint-up(lg) {

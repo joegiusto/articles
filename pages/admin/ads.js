@@ -495,12 +495,12 @@ class Ads extends Component {
         }
       );
   
-      axios.post('/api/secure/adminAds')
+      axios.post('/api/admin/ads')
       .then(function (response) {
         console.log(response)
   
         self.setState({
-          ads: response.data
+          ads: response.data.ads
         });
   
       })

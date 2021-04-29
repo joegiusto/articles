@@ -61,137 +61,128 @@ function Proposal() {
 	}, []);
   
     return(
-        <section className="party-page">
+        <section className="proposals-page single">
 
             <Head>
-                <title>Town Hall - Articles</title>
+            <title>Proposal - Articles</title>
             </Head>
 
-            <section className="proposals-page single">
+            <div className="container">
 
-<Head>
-  <title>Proposal - Articles</title>
-</Head>
+            <h5>Proposal:</h5>
 
-<div className="container">
+            {
+                proposalLoading ? 
+                <div className="title-fake"></div>
+                :
+                <h1>
+                {proposalNotFound ? "Not Found" : null}
+                {proposal.title}
+                </h1>
+            }
 
-  <h5>Proposal:</h5>
+            {
+                proposalLoading ? '' : <div className="mb-3">Type: <span style={{textTransform: 'capitalize'}}>{proposal.type}</span></div>
+            }
 
-  {
-    proposalLoading ? 
-    <div className="title-fake"></div>
-    :
-    <h1>
-      {proposalNotFound ? "Not Found" : null}
-      {proposal.title}
-      </h1>
-  }
+            {
+                proposalLoading || proposalNotFound ? 
+                <div className="description-fake"></div>
+                :
+                <p>{proposal.description}</p>
+            }
 
-  {
-    proposalLoading ? '' : <div className="mb-3">Type: <span style={{textTransform: 'capitalize'}}>{proposal.type}</span></div>
-  }
+            <hr/>
 
-  {
-    proposalLoading || proposalNotFound ? 
-    <div className="description-fake"></div>
-    :
-    <p>{proposal.description}</p>
-  }
+            {
+                proposalNotFound ? 
+                
+                <div>
+                <p>We could not find that proposal, in the event of a deletion we would redirect you to a reason. Please check the URL to make sure you are being sent to the right place.</p>
+                </div>
 
-  <hr/>
+                :
 
-  {
-    proposalNotFound ? 
-    
-    <div>
-      <p>We could not find that proposal, in the event of a deletion we would redirect you to a reason. Please check the URL to make sure you are being sent to the right place.</p>
-    </div>
+                <div className="proposal-body bg-white py-4 px-3 mt-3 mb-5">
 
-    :
+                {proposalLoading ? <LoadingBlock></LoadingBlock> : 
+                
+                // <p>{proposal.content}</p>
+                <div style={{whiteSpace: 'pre-wrap'}} dangerouslySetInnerHTML={{__html: proposal.content}}></div>
+                }
 
-    <div className="proposal-body bg-white py-4 px-3 mt-3 mb-5">
+                {/* {this.props.match.params.id === "revise-the-pledge-of-alligence" ?  */}
+                {false === "revise-the-pledge-of-alligence" ? 
+                    <>
 
-      {proposalLoading ? <LoadingBlock></LoadingBlock> : 
-      
-      // <p>{proposal.content}</p>
-      <div style={{whiteSpace: 'pre-wrap'}} dangerouslySetInnerHTML={{__html: proposal.content}}></div>
-      }
+                    <h5 className="title">
+                        August 1892
+                    </h5>
 
-      {/* {this.props.match.params.id === "revise-the-pledge-of-alligence" ?  */}
-      {false === "revise-the-pledge-of-alligence" ? 
-        <>
+                    <p className="text">
+                        Socialist minister Francis Bellamy (1855-1931) wrote the The Pledge of Allegiance. It was originally published in The Youth's Companion on September 8, 1892. Bellamy had hoped that the pledge would be used by citizens in any country.
+                    </p>
 
-          <h5 className="title">
-            August 1892
-          </h5>
+                    <p>In its original form it read:</p>
 
-          <p className="text">
-            Socialist minister Francis Bellamy (1855-1931) wrote the The Pledge of Allegiance. It was originally published in The Youth's Companion on September 8, 1892. Bellamy had hoped that the pledge would be used by citizens in any country.
-          </p>
+                    <div className="quote-wrap">
+                        <div className="icon">
+                        {/* <i className="fas fa-quote-right"></i> */}
+                        </div>
+                        <div className="quote">
+                        "I pledge allegiance to my Flag and the Republic for which it stands, one nation, indivisible, with liberty and justice for all."
+                        </div>
+                    </div>
 
-          <p>In its original form it read:</p>
+                    <h5 className="title">
+                        1923
+                    </h5>
 
-          <div className="quote-wrap">
-            <div className="icon">
-              {/* <i className="fas fa-quote-right"></i> */}
+                    <p>The words, "the Flag of the United States of America" were added. At this time it read:</p>
+
+                    <div className="quote-wrap">
+                        <div className="icon">
+                        {/* <i className="fas fa-quote-right"></i> */}
+                        </div>
+                        <div className="quote">
+                        "I pledge allegiance to the Flag of the United States of America and to the Republic for which it stands, one nation, indivisible, with liberty and justice for all."
+                        </div>
+                    </div>
+
+                    <h5 className="title">
+                        1954
+                    </h5>
+
+                    <p>
+                        In response to the Communist threat of the times, President Eisenhower encouraged Congress to add the words "under God," creating the 31-word pledge we say today. Bellamy's daughter objected to this alteration. Today it reads:
+                    </p>
+
+                    <div className="quote-wrap">
+                        <div className="icon">
+                        {/* <i className="fas fa-quote-right"></i> */}
+                        </div>
+                        <div className="quote">
+                        "I pledge allegiance to the flag of the United States of America, and to the republic for which it stands, one nation under God, indivisible, with liberty and justice for all."
+                        </div>
+                    </div> 
+
+                    <h5 className="title">
+                        Today
+                    </h5>
+
+                    <p>
+                        People raise concerns for the removal of the 1954 "under God," addition. 
+                    </p>   
+
+                    <small><a href="https://www.ushistory.org/documents/pledge.htm" target="_blank" rel="noopener noreferrer">https://www.ushistory.org/documents/pledge.htm</a></small>
+
+                    </>
+                :
+                    null
+                }
+                </div>
+            }
             </div>
-            <div className="quote">
-              "I pledge allegiance to my Flag and the Republic for which it stands, one nation, indivisible, with liberty and justice for all."
-            </div>
-          </div>
-
-          <h5 className="title">
-            1923
-          </h5>
-
-          <p>The words, "the Flag of the United States of America" were added. At this time it read:</p>
-
-          <div className="quote-wrap">
-            <div className="icon">
-              {/* <i className="fas fa-quote-right"></i> */}
-            </div>
-            <div className="quote">
-              "I pledge allegiance to the Flag of the United States of America and to the Republic for which it stands, one nation, indivisible, with liberty and justice for all."
-            </div>
-          </div>
-
-          <h5 className="title">
-            1954
-          </h5>
-
-          <p>
-            In response to the Communist threat of the times, President Eisenhower encouraged Congress to add the words "under God," creating the 31-word pledge we say today. Bellamy's daughter objected to this alteration. Today it reads:
-          </p>
-
-          <div className="quote-wrap">
-            <div className="icon">
-              {/* <i className="fas fa-quote-right"></i> */}
-            </div>
-            <div className="quote">
-            "I pledge allegiance to the flag of the United States of America, and to the republic for which it stands, one nation under God, indivisible, with liberty and justice for all."
-            </div>
-          </div> 
-
-          <h5 className="title">
-            Today
-          </h5>
-
-          <p>
-            People raise concerns for the removal of the 1954 "under God," addition. 
-          </p>   
-
-          <small><a href="https://www.ushistory.org/documents/pledge.htm" target="_blank" rel="noopener noreferrer">https://www.ushistory.org/documents/pledge.htm</a></small>
-
-        </>
-      :
-        null
-      }
-    </div>
-  }
-</div>
-</section>
-
-            
         </section>
     )
 }

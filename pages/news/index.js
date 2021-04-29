@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 
 import Head from 'next/head'
 import Link from 'next/link'
@@ -6,21 +6,13 @@ import { useRouter } from 'next/router'
 
 import { useSelector } from 'react-redux'
 
-// import moment from 'moment'
+import axios from 'axios'
 
-// import DropdownButton from 'react-bootstrap/DropdownButton'
-// import Dropdown from 'react-bootstrap/Dropdown'
-
-// import { Swiper, SwiperSlide } from 'swiper/react';
-
-import ROUTES from '../../components/constants/routes';
-
-import NewsLayout from '../../components/layouts/news.js';
-// import NewsCard from '../../components/News/NewsCard';
-import NewsHead from '../../components/News/NewsHead';
-import NewsPreviewSlider from '../../components/News/NewsPreviewSlider';
-
-// import background from '../../assets/img/card-1.png'
+// Articles Absolute
+import ROUTES from 'components/constants/routes';
+import NewsLayout from 'components/layouts/news.js';
+import NewsHead from 'components/News/NewsHead';
+import NewsPreviewSlider from 'components/News/NewsPreviewSlider';
 
 function News() {
     const router = useRouter()
@@ -31,18 +23,34 @@ function News() {
     const reduxIssues = useSelector((state) => state.issues.issues)
     const reduxMyths = useSelector((state) => state.myths.myths)
 
+    const [ newsDocumentCount, setNewsDocumentCount ] = useState({
+        stories: 30,
+        issues: 17,
+        myths: 13
+    })
+
     const swiper_settings = {
         spaceBetween: 10,
         slidesPerView: 'auto',
         scrollbar: { draggable: true },
         navigation: {
-            nextEl: '.fa-forward',
-            prevEl: '.fa-backward',
+            nextEl: '.preview-next',
+            prevEl: '.preview-prev',
         },
     }
 
-    console.log(router.pathname)
-    console.log(param);
+    useEffect(() => {
+
+        axios.get(`/api/news/count`)
+        .then(res => {
+            console.log(res);
+            setNewsDocumentCount(res.data)
+        })
+        .catch(err => {
+            console.log(err)
+        });
+    
+    }, []);
   
     return(
         <section className="news-front-page">
@@ -55,13 +63,13 @@ function News() {
             <div className="container py-3">
 
                 {/* Recent Stories */}
-                <NewsPreviewSlider type={'Stories'} documents={reduxStories} swiper_settings={swiper_settings}/>
+                <NewsPreviewSlider type={'Stories'} documents={reduxStories} swiper_settings={swiper_settings} newsDocumentCount={newsDocumentCount}/>
 
                 {/* Recent Issues */}
-                <NewsPreviewSlider type={'Issues'} documents={reduxIssues} swiper_settings={swiper_settings}/>
+                <NewsPreviewSlider type={'Issues'} documents={reduxIssues} swiper_settings={swiper_settings} newsDocumentCount={newsDocumentCount}/>
 
                 {/* Recent Myths */}
-                <NewsPreviewSlider type={'Myths'} documents={reduxMyths} swiper_settings={swiper_settings}/>
+                <NewsPreviewSlider type={'Myths'} documents={reduxMyths} swiper_settings={swiper_settings} newsDocumentCount={newsDocumentCount}/>
 
             </div>
 

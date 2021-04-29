@@ -1,28 +1,18 @@
-import Link from 'next/link'
 import React, { useEffect, useState } from 'react';
+
+import Link from 'next/link'
+
+import { useSession } from 'next-auth/client'
+
 import { connect, useSelector, useDispatch } from 'react-redux'
 import moment from 'moment';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Clock from 'react-live-clock';
-import { useSession } from 'next-auth/client'
 
-import ROUTES from '../constants/routes'
-
-// Import a context for socket
-import SocketContext from '../context/socket'
-
-import { toggleSideMenuFixed, toggleColorMode, toggleSideMenuOpen } from '../../redux/actions/siteActions';
-
-// const useCounter = () => {
-//     const sideMenuOpen = useSelector((state) => state.site.sideMenuOpen)
-//     const colorModeDark = useSelector((state) => state.site.colorModeDark)
-//     const sideMenuFixed = useSelector((state) => state.site.sideMenuFixed)
-
-//     const userReduxState = useSelector((state) => state.auth.user_details)
-
-//     const cartItems = useSelector((state) => state.cart)
-//     return { sideMenuOpen, colorModeDark, cartItems, sideMenuFixed }
-// }
+// Articles absolute imports
+import ROUTES from 'components/constants/routes'
+import SocketContext from 'components/context/socket'
+import { toggleSideMenuFixed, toggleColorMode, toggleSideMenuOpen } from 'redux/actions/siteActions';
 
 function SideMenuBase(props) {
     const sideMenuOpen = useSelector((state) => state.site.sideMenuOpen)
@@ -459,7 +449,6 @@ function SideMenuBase(props) {
 
                 <Link href={ROUTES.PROPOSALS}>
                     <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
-                        {/* <IconScroll className="icon"/> */}
                         <i className="icon fad fa-scroll fa-lg"></i>
                         <span>Proposals</span>
                     </a>
@@ -467,7 +456,6 @@ function SideMenuBase(props) {
 
                 <Link href={ROUTES.TOWN_HALL}>
                     <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
-                        {/* <IconBell className="icon"/> */}
                         <i className="icon fad fa-bell fa-lg"></i>
                         <span>Town Hall</span>
                     </a>
@@ -493,10 +481,10 @@ function SideMenuBase(props) {
                 </Link>
 
                 <Link href={ROUTES.MESSAGES} className="link messages-link" onClick={() => {setMenuOpen(false)}} to={ROUTES.MESSAGES}>
-                    <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
+                    <a className="link link-messages" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
                         {/* <IconComment className="icon messages-icon"/> */}
                         {/* <i className="icon fad fa-comment fa-lg"></i> */}
-                        <i class="fad fa-comments-alt fa-lg"></i>
+                        <i class="icon fad fa-comments-alt fa-lg"></i>
                         <span>
                             Messages
                         </span>
@@ -507,7 +495,7 @@ function SideMenuBase(props) {
 
             
             {/* Admin */}
-            {props.user?.roles?.isAdmin &&
+            {userReduxState?.roles?.isAdmin &&
                 <>
                     {/* Admin Section */}
                     <div className="side-menu-section-header header-admin">
@@ -535,56 +523,45 @@ function SideMenuBase(props) {
                 </>
             }
 
-            {props.isAuth && (
-
+            {userReduxState?.roles?.isAdmin && (
                 <>
 
+                    {/* Admin Section */}
+                    <div className="side-menu-section-header header-developer">
 
-                    {/* Playground */}
-                    {props.user?.roles?.isDev === true ?
-                    <>
-                        {/* Admin Section */}
-                        <div className="side-menu-section-header header-developer">
+                        <div className="side-menu-section-header-title">Developer</div>
+                        <span className="badge badge-warning"><i className="fas fa-star mr-0" aria-hidden="true"></i></span>
 
-                            <div className="side-menu-section-header-title">Developer</div>
-                            <span className="badge badge-warning"><i className="fas fa-star mr-0" aria-hidden="true"></i></span>
+                    </div>
 
-                        </div>
+                    <div className="side-menu-section-links">
 
-                        <div className="side-menu-section-links">
+                        <Link href={ROUTES.PLAYGROUND}>
+                            <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
+                                <i className="icon fad fa-compass fa-lg"></i>
+                                <span>Playground</span>
+                            </a>
+                        </Link>
 
-                            <Link href={ROUTES.PLAYGROUND} className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.PLAYGROUND}>
-                                <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
-                                    {/* <IconDraftingCompass className="icon"/> */}
-                                    <i className="icon fad fa-compass fa-lg"></i>
-                                    <span>Playground</span>
-                                </a>
-                            </Link>
+                        <Link href={ROUTES.OUTSET}>
+                            <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
+                                <i className="icon fad fa-alarm-exclamation fa-lg"></i>
+                                <span>Outset</span>
+                            </a>
+                        </Link>
 
-                            <Link href={ROUTES.OUTSET} className="link" onClick={() => {setMenuOpen(false)}} to={ROUTES.OUTSET}>
-                                <a className="" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
-                                    {/* <IconAlarmExclamation className="icon"/> */}
-                                    <i className="icon fad fa-alarm-exclamation fa-lg"></i>
-                                    <span>Outset</span>
-                                </a>
-                            </Link>
+                    </div>
 
-                        </div>
+                    {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PLAYGROUND}><p className="subheading-font"><i className="fas fa-code"></i>Playground</p></Link> */}
+                    {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.OUTSET}><p className="subheading-font"><i className="fas fa-road"></i>Outset</p></Link> */}
 
-                        {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.PLAYGROUND}><p className="subheading-font"><i className="fas fa-code"></i>Playground</p></Link> */}
-                        {/* <Link onClick={() => {setMenuOpen(false)}} to={ROUTES.OUTSET}><p className="subheading-font"><i className="fas fa-road"></i>Outset</p></Link> */}
+                    {/* One Day! */}
+                    {/* <div className="app-links">
+                        <img className="app-badge" src="https://bibibop.com/data/sites/1/media/rewards/Download_badge-apple-white.png" alt=""/>
+                        <img className="app-badge" src="https://www.prorehab-pc.com/wp-content/uploads/2017/12/google-play-button.svg_.hi_.png" alt=""/>
+                    </div> */}
 
-                        {/* One Day! */}
-                        {/* <div className="app-links">
-                            <img className="app-badge" src="https://bibibop.com/data/sites/1/media/rewards/Download_badge-apple-white.png" alt=""/>
-                            <img className="app-badge" src="https://www.prorehab-pc.com/wp-content/uploads/2017/12/google-play-button.svg_.hi_.png" alt=""/>
-                        </div> */}
-                    </>
-                    :
-                    null
-                    }
                 </>
-            
             )}
 
         <hr/>
