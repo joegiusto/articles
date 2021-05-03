@@ -45,6 +45,8 @@ function SettingsAccountPage() {
     //     });
 
 	// }, []);
+
+    console.log(session)
   
     return(
         <section className="settings-account">

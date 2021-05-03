@@ -54,7 +54,7 @@ function AdminLayout({ children }) {
                     </Link>
 
                     <Link href={ROUTES.ADMIN_NEWS}>
-                        <a><span className={"tab " + (router.asPath === ROUTES.ADMIN_NEWS && 'active')}>News</span></a>
+                        <a><span className={"tab " + ( (router.asPath === ROUTES.ADMIN_NEWS || router.pathname === '/admin/news/[[...news_id]]') && 'active')}>News</span></a>
                     </Link>
 
                     <Link href={ROUTES.ADMIN_PROPOSALS}>

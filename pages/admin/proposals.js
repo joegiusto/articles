@@ -82,7 +82,11 @@ class Proposal extends Component {
       return (
         <div className="proposal">
   
-          <div className="_id">{this.props.proposal._id}</div>
+            <div className="_id">
+                <div>Proposal: <b>{this.props.proposal._id}</b></div>
+                {/* <div>Drafted By: <b></b></div> */}
+            </div>
+
           <div className="type">{this.props.proposal.type}</div>
   
           <div className="title">{this.props.proposal.title}</div>

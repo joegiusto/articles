@@ -430,11 +430,11 @@ code {
     &.MuiFormControl-root {
         label {
             transform: none!important;
-            top: 0;
-            padding: 0.0rem 0.25rem;
-            font-size: 0.7rem;
-            line-height: 1rem;
-            color: black;
+            top: 0!important;
+            padding: 0.0rem 0.25rem!important;
+            font-size: 0.7rem!important;
+            line-height: 1rem!important;
+            color: black!important;
         }
         input {
             padding-bottom: 0.7rem;

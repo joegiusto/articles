@@ -20,11 +20,13 @@
 	}
 
 	.directory-squares {
-		max-width: 800px;
+		// max-width: 800px;
+        width: 100%;
 		display: grid;
-		grid-template-columns: 1fr 1fr 1fr 1fr;
+		grid-template-columns: repeat(2, 1fr);
+        // grid-auto-rows: auto;
 		grid-gap: 5px;
-		justify-content: center;
+		// justify-content: center;
 
 		.square {
 			background-color: $base-color;
@@ -34,17 +36,22 @@
 			align-items: center;
 			flex-wrap: wrap;
 			cursor: pointer;
+            flex-shrink: 0;
+            width: 100%;
+            padding: 0.25rem;
+            font-size: 0.9rem;
+            font-weight: bold;
 
 			&:hover {
 				background-color: darken($base-color, 10%);
 			}
 
-			&:before {
-				content: "";
-				padding-bottom: 100%;
-				display: inline-block;
-				vertical-align: top;
-			}
+			// &:before {
+			// 	content: "";
+			// 	padding-bottom: 100%;
+			// 	display: inline-block;
+			// 	vertical-align: top;
+			// }
 		}
 
 	}

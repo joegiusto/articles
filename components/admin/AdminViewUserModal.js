@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+
+import Link from 'next/link'
+
 import axios from 'axios'
 import moment from 'moment'
-// import { Link } from 'react-router-dom';
 
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
@@ -23,12 +25,12 @@ function AdminViewUserModal(props) {
     function loadUserData() {
 
         if ( Object.keys(userData).length === 0 ) {
-            axios.post('/api/secure/adminGetUser', {
+            axios.post('/api/admin/user', {
                 user_id: props.user_id
             })
             .then(function (response) {
                 console.log(response);
-                setUserData(response.data)
+                setUserData(response.data.user)
             })
             .catch(function (error) {
                 console.log(error);

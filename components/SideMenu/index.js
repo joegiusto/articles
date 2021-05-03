@@ -37,7 +37,7 @@ function SideMenuBase(props) {
         props.socket.on('connect', () => {
             console.log("Connected to server!");
             setConnected(true);
-            // props.socket.emit('login', {userId: props.user?._id})
+            props.socket.emit('login', {userId: userReduxState._id})
         });
 
         props.socket.on('disconnect', () => {
@@ -377,9 +377,9 @@ function SideMenuBase(props) {
 
                 <div className="side-menu-section-header-title">News</div>
 
-                <span id="news-notification-count" className="badge badge-pill badge-dark">
+                {/* <span id="news-notification-count" className="badge badge-pill badge-dark">
                     3
-                </span>
+                </span> */}
 
             </div>
 

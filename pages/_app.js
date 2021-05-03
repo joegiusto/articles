@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
+
 import { Provider as AuthProvider, useSession } from 'next-auth/client'
+
 import { Provider } from 'react-redux'
 import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -25,6 +27,8 @@ import { setIssues } from "../redux/actions/issuesActions";
 import { setMyths } from "../redux/actions/mythsActions";
 
 import SocketContext from '../components/context/socket'
+
+const secret = process.env.SECRET
 
 const socket = io("https://9e82f85e514d.ngrok.io");
 

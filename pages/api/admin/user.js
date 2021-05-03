@@ -1,4 +1,5 @@
-// This is an example of how to access a session from an API route
+var ObjectId = require('mongodb').ObjectId; 
+
 import { getSession } from 'next-auth/client'
 import { connectToDatabase } from "../../../util/mongodb";
 
@@ -11,12 +12,11 @@ export default async (req, res) => {
 
         const result = await db
         .collection("articles_users")
-        .find({})
-        .toArray();
+        .findOne({ _id: ObjectId(req.body.user_id) })
 
         return res.status(200).json({ 
             message: 'Here are the results!',
-            users: result
+            user: result
         })
 
     } else {
