@@ -3,10 +3,12 @@ import AWS from 'aws-sdk'
 import { getSession } from 'next-auth/client'
 // import { connectToDatabase } from "../../../util/mongodb";
 
-const s3 = new AWS.S3({
-    accessKeyId: process.env.accessKeyId,
-    secretAccessKey: process.env.secretAccessKey,
-});
+AWS.config.update({
+    'accessKeyId': process.env.ARTICLES_AMAZON_ACCESS_KEY_ID,
+    'secretAccessKey': process.env.ARTICLES_AMAZON_SECRET_ACCESS_KEY,
+})
+
+const s3 = new AWS.S3();
 
 const listAllDirectories = params => {
     return new Promise ((resolve, reject) => {
