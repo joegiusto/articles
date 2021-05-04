@@ -10,38 +10,9 @@ import Tooltip from 'react-bootstrap/Tooltip'
 
 import axios from 'axios'
 
-import AdminLayout from '../../components/layouts/admin.js';
-import AdminViewUserModal from '../../components/admin/AdminViewUserModal';
-
-class ConfirmDelete extends Component {
-    constructor(props) {
-      super(props);
-      
-      this.state = {
-        confirm: false
-      };
-  
-    }
-  
-    handleClick() {
-  
-      if (this.state.confirm) {
-        this.props.afterConfirm()
-      } else {
-        this.setState({confirm: true})
-      }
-  
-    }
-  
-    render() {
-      return (
-        this.state.confirm ? 
-        <div style={{cursor: 'pointer'}} onClick={() => this.handleClick()} className="badge badge-danger noselect">Confirm</div>
-        :
-        <div style={{cursor: 'pointer'}} onClick={() => this.handleClick()} className="badge badge-danger noselect">Delete</div>
-      )
-    }
-}
+import AdminLayout from 'components/layouts/admin.js';
+import ConfirmDelete from 'components/ConfirmDelete';
+import AdminViewUserModal from 'components/admin/AdminViewUserModal';
 function AdminUsersPage() {
     const router = useRouter()
     const { param } = router.query

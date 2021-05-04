@@ -210,7 +210,7 @@ function AdminHomePage() {
 
                         <div className="card-header">API Controls</div>
         
-                        <div className="card-body py-2 px-2 d-flex justify-content-center">
+                        <div className="card-body py-2 px-2 d-flex flex-wrap justify-content-center">
                             {/* Stripe */}
                             <DropdownButton variant={config.stripe.mode === 'Test' ? 'primary' : 'success'} style={{verticalAlign: 'middle'}} className="d-inline-block " id="dropdown-basic-button" title={`Stripe: ${config.stripe?.mode}`}>
                                 <Dropdown.Item onClick={() => this.setStripeMode('Live')}>Live</Dropdown.Item>

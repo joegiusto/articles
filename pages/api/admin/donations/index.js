@@ -1,8 +1,5 @@
 import connectDB from 'util/mongoose';
-// const mongoose = require("mongoose");
-
-// Articles Absolute
-const Revenue = require("models/Revenue");
+import Revenue from "models/Revenue";
 
 const handler = async (req, res) => {
 
