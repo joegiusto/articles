@@ -92,6 +92,10 @@ function Newsletter(props) {
 
     return (
         <div className="admin-page admin-newsletter">
+
+            <Head>
+                <title>Admin Newsletter - Articles</title>
+            </Head> 
 		  
             <Modal show={showDraftModal} className="draft-modal articles-modal" centered onHide={handleClose}>
 

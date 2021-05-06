@@ -30,7 +30,7 @@ function NewsIssues() {
 
             <div className="container py-3">
 
-                <h2>Stories</h2>
+                <h2>Issues</h2>
 
                 <DropdownButton variant="articles-light" id="dropdown-basic-button" title={ <span><i className="fas fa-filter"></i> Newest</span> }>
                     <Dropdown.Item href="#/action-1">Newest</Dropdown.Item>

@@ -104,7 +104,7 @@ function DonationsAdmin(props) {
 			delete donation.user_id;
 		}
 
-		axios.post('/api/secure/addDonation', {
+		axios.post('/api/admin/donations/add', {
 			donation,
 			selectedDate
 		})
@@ -124,7 +124,7 @@ function DonationsAdmin(props) {
 	const deleteDonation = (id) => {
 		// console.log(id)
 
-		axios.post('/api/secure/deleteDonation', {
+		axios.post('/api/admin/donations/delete', {
 			id
 		})
 		.then( (response) => {
@@ -164,6 +164,10 @@ function DonationsAdmin(props) {
 
     return (
         <div className="admin-donations admin-page">
+
+            <Head>
+                <title>Admin Donations - Articles</title>
+            </Head> 
 
             {/* Add Donation Modal */}
             <Modal show={modalShow} className="donations-modal articles-modal" centered onHide={handleClose}>

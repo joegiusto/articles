@@ -23,8 +23,12 @@ function SideMenuBase(props) {
 
     const [connected, setConnected] = useState(false);
     
-    const [notificationProgress, setNotificationProgress] = useState(0);
-    const [notificationVisible, setNotificationVisible] = useState(false);
+    const [ notificationProgress, setNotificationProgress ] = useState(  );
+    const [ notificationVisible, setNotificationVisible ] = useState( false );
+    const [ notification, setNotification ] = useState( {
+        // message: 'Test notification, please ignore'
+    } );
+
     const [pinOpen, setPinOpen] = useState(false);
 
     const [ session, loading ] = useSession()
@@ -40,12 +44,110 @@ function SideMenuBase(props) {
             props.socket.emit('login', {userId: userReduxState._id})
         });
 
+        // props.socket.on('notification', () => {
+        //     console.log("Notification received");
+        //     console.log(`Socket Message: ${msg}`);
+        //     showNotification();
+        // });
+
         props.socket.on('disconnect', () => {
             console.log("Disconnected from server!");
             setConnected(false);
         });
 
+        props.socket.on('notification', function( data ) {
+            setNotification( data );
+            showNotification( data );
+            console.log(`Socket Message: ${data}`);
+        });
+
     })
+
+    function showNotification(data, seconds) {
+        setNotificationVisible(true)
+    
+        // let progressBar = setInterval(() => { 
+        //   console.log(`Ran ${notificationProgress}`)
+    
+        //   if (notificationProgress < 100) {
+        //     console.log("Less then")
+        //     setNotificationProgress(prevProgress => (101) )
+        //   } else {
+        //     console.log("Not less then")
+        //     clearInterval(progressBar);
+        //     setNotificationProgress(0);
+        //   }
+          
+        // }, 1000 )
+
+        // Only hide notification if there is no override
+        if ( !data.force_notification_interaction ) {
+            setTimeout(() => { 
+                setNotificationVisible(false)
+                setTimeout(() => setNotification( {} ), 200 )
+            }, 4000);
+        }
+    
+        
+    }
+
+    function clearNotification() {
+        setNotificationVisible(false)
+        setTimeout(() => setNotification( {} ), 200 )
+    }
+
+    function renderNotificationType() {
+        switch(notification?.type) {
+            case 'basic':
+                return (
+                    <div className="notification-content">{notification?.message}</div>
+                );
+            case 'donation':
+                return (
+                    <div className="notification-content">
+
+                        <Link href={ROUTES.TRANSPARENCY}>
+                            <a><i class="fas fa-external-link-alt"></i></a>
+                        </Link> 
+
+                        <span>
+                            <b>{notification?.user}</b>
+                            {` from ` } 
+                            <b>{notification?.state}</b>
+                            {` has donated `}
+                            <span className="badge badge-success ml-1">{notification?.amount}</span>
+                        </span>
+
+                    </div>
+                );
+            case 'expense':
+                return (
+                    <div className="notification-content">
+
+                        <Link href={ROUTES.TRANSPARENCY}>
+                            <a><i class="fas fa-external-link-alt"></i></a>
+                        </Link> 
+
+                        <span>
+                            <b>Articles</b>
+                            {` has made a ` } 
+                            <b>{notification?.expense_type}</b>
+                            {` expense for `}
+                            <b>{notification?.reason}</b>
+                            {` of `}
+                            <span className="badge badge-danger ml-1">{notification?.amount}</span>
+                        </span>
+
+                    </div>
+                );
+            default:
+                return (
+                    <div className="notification-content">
+                        <span className="badge badge-warning">{notification?.type}</span> - {notification?.message}
+                    </div>
+                );
+        }
+    }
     
     return ( <div className={'menu-wrap noselect' + (sideMenuFixed ? ' fixed' : '') + (props.site?.colorModeDark ? ' dark-mode' : '')}>
 
@@ -70,6 +172,18 @@ function SideMenuBase(props) {
         <section className={"side-menu-notch-top " + (sideMenuOpen ? "show" : "")}>
             <div className={"side-menu-notch-top-end " + (sideMenuOpen ? "show" : "")}></div>
         </section>
+
+        <div className={"notification " + (notificationVisible && 'show')}>
+
+            <div onClick={() => clearNotification()} className="close">
+                <i className="far fa-times-circle mr-0"></i>
+            </div>
+
+            <div style={{width: notificationProgress + '%'}} className="progress"></div>
+
+            { renderNotificationType() }
+
+        </div>
 
         <section>
             <div className={'side-menu-notch-top-end-custom align-items-center ' + (sideMenuOpen ? 'show' : '')}>
@@ -102,17 +216,6 @@ function SideMenuBase(props) {
                 :
                 null
                 }
-
-                <div className={"notification " + (notificationVisible && 'show')}>
-
-                <div className="close">
-                    <i className="far fa-times-circle mr-0"></i>
-                </div>
-                
-                <div style={{width: notificationProgress + '%'}} className="progress"></div>
-
-                Hello! New Message!
-                </div>
 
                 <Dropdown 
                 className="weather-badge mr-2"

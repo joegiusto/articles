@@ -162,7 +162,7 @@ function AdminUsersPage() {
         <section className="admin-page admin-users">
 
             <Head>
-                <title>Admin - Articles</title>
+                <title>Admin Users - Articles</title>
             </Head> 
 
             <div className="side-panel">
