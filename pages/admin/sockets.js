@@ -24,10 +24,11 @@ class Sockets extends Component {
             photos: [],
             fakeImageHash: 0,
             newProfilePhotoLoading: false,
-            cacheBust: moment()
+            cacheBust: moment(),
+            connectedSockets: 0,
         };
 
-        // this.handleChange = this.handleChange.bind(this);
+        // this.pingOnlineSoketCount = this.pingOnlineSoketCount.bind(this);
         // this.onChange = this.onChange.bind(this);
         // this.onChangeProfile = this.onChangeProfile.bind(this);
         // this.pushSocket = this.pushSocket.bind(this);
@@ -35,29 +36,30 @@ class Sockets extends Component {
 
     componentDidMount() {
         // socket = socketIOClient(ENDPOINT);
-        // this.props.socket.emit('refreshOnline', null);
+        this.props.socket.emit('refreshOnline', null);
 
         // this.props.setLocation(this.props.tabLocation);
         const self = this;
-        
-        this.props.socket.on('online', function(data){
-            console.log(data)
-
-            self.setState({
-                sockets: data.clients || [],
-                userSockets: data.userSockets
-            })
-        });
 
         this.props.socket.on('adminMessage', function(msg) {
             console.log(`Admin Message: ${msg}`);
         });
+
+        self.props.socket.on('online', function(data){
+            console.log(data)
+
+            self.setState({
+                connectedSockets: data.connections
+            })
+        });
+
+        this.pingOnlineSoketCount()
         
     }
 
     componentWillUnmount() {
         // this.props.setLocation('');
-        // socket.disconnect();
+        this.props.socket.disconnect();
     }
 
     handleChange(event) {
@@ -68,6 +70,11 @@ class Sockets extends Component {
         this.setState({
         [name]: value
         });
+    }
+
+    pingOnlineSoketCount() {
+        const self = this;
+        this.props.socket.emit('refreshOnline', null);
     }
 
     testNotification(details) {
@@ -116,7 +123,7 @@ class Sockets extends Component {
                 <div className="text-center">
 
                     <div><img src="https://cdn.articles.media/sockets/socket-gif.gif" height="100px" alt=""/></div>
-                    <div className="badge badge-primary">Connected Sockets: {this.state.sockets.length}</div>
+                    <div onClick={ () => this.pingOnlineSoketCount() } className="badge badge-primary">Connected Sockets: {this.state.connectedSockets}</div>
 
                     <div className="mt-3">
                     <div><small className="text-muted">Limit to logged in users?</small></div>
@@ -205,14 +212,14 @@ class Sockets extends Component {
                             <td>0</td>
                             </tr>
 
-                            {Object.keys(this.state.userSockets).map((keyName, i) => (
+                            {/* {Object.keys(this.state.userSockets).map((keyName, i) => (
 
                             <tr>
                                 <th scope="row">{this.state.userSockets[keyName]}</th>
                                 <td><span className="badge badge-warning">{keyName}</span></td>
                             </tr>
 
-                            ))}
+                            ))} */}
 
                         </tbody>
                         </table>

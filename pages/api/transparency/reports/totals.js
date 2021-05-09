@@ -31,7 +31,19 @@ export default async (req, res) => {
             '$group': {
                 '_id': null, 
                 'total': {
-                    '$sum': '$amount'
+                    '$sum': '$payment.total'
+                }
+            }
+        }
+    ] )
+    .toArray();
+
+    const adsTotal = await db.collection("ads").aggregate( [
+        {
+            '$group': {
+                '_id': null, 
+                'total': {
+                    '$sum': '$price_total'
                 }
             }
         }
@@ -93,7 +105,7 @@ export default async (req, res) => {
             // donations: donationsResult,
             // orders: ordersResult,
             ordersTotal: ordersTotal[0].total,
-            // ads: [],
+            adsTotal: adsTotal[0].total,
             // memberships: []
         },
     })

@@ -28,16 +28,31 @@ class RevenueTable extends Component {
             // })]
 
             all: [
+
                 ...this.props.reportsData.revenue.donations.map(order => {
                     order.type = 'Donation';
                     order.unifiedPrice = order.amount
                     return order;
                 }),
+
                 ...this.props.reportsData.revenue.orders.map(order => {
                     order.type = 'Store Order';
-                    order.unifiedPrice = order.amount
+                    order.unifiedPrice = order.payment.total
                     return order;
-                })
+                }),
+
+                ...this.props.reportsData.revenue.ads
+                .filter(ad => {
+                    return !ad.test_ad
+                })    
+                .map(ad => 
+                    {
+                        ad.type = "Ad"
+                        ad.unifiedPrice = ad.price_total
+                        return ad;
+                    }
+                )
+
             ]
 
         };
@@ -63,7 +78,18 @@ class RevenueTable extends Component {
                         order.type = 'Store Order';
                         order.unifiedPrice = order.amount
                         return order;
-                    })
+                    }),
+                    ...this.props.reportsData.revenue.ads
+                    .filter(ad => {
+                        return !ad.test_ad
+                    })    
+                    .map(ad => 
+                        {
+                            ad.type = "Ad"
+                            ad.unifiedPrice = ad.price_total
+                            return ad;
+                        }
+                    )
                 ]
             });
 
@@ -115,7 +141,21 @@ class RevenueTable extends Component {
             case 'revenue-store':
                 return this.props.reportsData.revenue.orders
             case 'revenue-ads':
-                return this.props.reportsData.revenue.ads
+
+                const correctedAds = this.props.reportsData.revenue.ads
+                .filter(ad => {
+                    return !ad.test_ad
+                })    
+                .map(ad => 
+                    {
+                        ad.type = "Ad"
+                        ad.unifiedPrice = ad.price
+                        return ad;
+                    }
+                )
+
+                return correctedAds
+
             case 'revenue-memberships':
                 return this.props.reportsData.revenue.memberships
             default:
@@ -130,8 +170,14 @@ class RevenueTable extends Component {
                 <thead>
                     <tr className="table-articles-head">
                         <th scope="col">Date</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Order Summary</th>
+
+                        {this.props.subtableSelector == 'revenue-all' && <th scope="col">Type</th>}
+                        
+                        {this.props.subtableSelector != 'revenue-donations' && <th scope="col">Order Summary</th>}
+
+                        {this.props.subtableSelector === 'revenue-donations' && <th scope="col">From</th>}
+                        {this.props.subtableSelector === 'revenue-donations' && <th scope="col">Note</th>}
+
                         <th className='text-right' scope="col">Total</th>
                     </tr>
                 </thead>
@@ -139,27 +185,35 @@ class RevenueTable extends Component {
                 <tbody>
 
                     {
-                        // this.filterTableFromSubtableSelector(this.props.subtableSelector).length > 0 ?
+                        this.filterTableFromSubtableSelector(this.props.subtableSelector).length > 0 ?
 
                         this.filterTableFromSubtableSelector(this.props.subtableSelector)
                         .sort((a, b) => new Date(b.date) - new Date(a.date))
                         .map(sale => 
                         <tr onClick={() => this.props.history.push(ROUTES.TRANSPARENCY_REPORTS + `?id=${sale._id}&type=revenue`)}>
                             <td colSpan="1" className="border-right-0 ">{moment(sale.date).format("LLL")}</td>
-                            <td colSpan="1" className="border-right-0 ">{sale.type}</td>
+
+                            {this.props.subtableSelector != 'revenue-donations' &&  <td colSpan="1" className="border-right-0 ">{sale.type}</td>}
+                            {this.props.subtableSelector === 'revenue-donations' && <td colSpan="1" className="border-right-0 ">{sale.user_id.first_name} {sale.user_id.last_name}</td>}
+
                             <td colSpan="1" className="border-right-0 "></td>
                             <td colSpan="1" className="border-right-0 ">${(sale.unifiedPrice / 100).toFixed(2)}</td>
                         </tr>)
 
-                        // :
+                        :
 
-                        // <tr>
-                        //     <td className="p-2" colSpan="4">Nothing to display yet</td>
-                        // </tr>
+                        <tr>
+                            <td className="p-2" colSpan="4">No data to display</td>
+                        </tr>
                     }
 
-                    <tr>
-                        <td colSpan="2" className="border-right-0 table-articles-head">
+                    <tr className="table-footer">
+                        <td 
+                            colSpan={
+                                this.props.subtableSelector == 'revenue-donations' ? 2 : 2
+                            } 
+                            className="border-right-0 table-articles-head"
+                        >
 
                         </td>
 

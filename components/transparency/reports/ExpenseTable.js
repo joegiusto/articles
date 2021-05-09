@@ -32,36 +32,36 @@ function PayrollTable () {
                     )} */}
         
                     <tr>
-                    <th scope="row"><Link to={ROUTES.TRANSPARENCY_EMPLOYEES + '/5e90cc96579a17440c5d7d52'}>Joey Giusto</Link></th>
-                    <td>Admin</td>
-                    <td>$0.00</td>
+                        <th className="px-3" scope="row"><Link href={ROUTES.TRANSPARENCY_EMPLOYEES + '/joey-giusto'}>Joey Giusto</Link></th>
+                        <td>Admin</td>
+                        <td>$0.00</td>
                     </tr>
         
-                    <tr>
-                    <td colSpan="1" className="border-right-0 table-articles-head">
-        
-                        <div className="results-dual-header">
-        
-                            {/* <div className="page noselect">
-                            <i className="fas fa-chevron-circle-left"></i>
-                            Page 0/0
-                            <i style={{marginLeft: '10px'}} className="fas fa-chevron-circle-right"></i>
-                            </div> */}
-                        
-                            {/* <span className="results noselect">
-                            <span>Results:</span>
-                            <span className={"result result-active"}>10</span>
-                            <span className={"result"}>50</span>
-                            <span className={"result"}>100</span>
-                            <span className={"result"}>250</span>
-                            </span> */}
-        
-                        </div>
-        
-                    </td>
-        
-                    <td colSpan="1" className="border-right-0 text-right table-articles-head">Total:</td>
-                    <td colSpan="1" className="border-left-0 table-articles-head">$0.00</td>
+                    <tr className="table-footer">
+                        <td colSpan="1" className="border-right-0 table-articles-head">
+            
+                            <div className="results-dual-header">
+            
+                                {/* <div className="page noselect">
+                                <i className="fas fa-chevron-circle-left"></i>
+                                Page 0/0
+                                <i style={{marginLeft: '10px'}} className="fas fa-chevron-circle-right"></i>
+                                </div> */}
+                            
+                                {/* <span className="results noselect">
+                                <span>Results:</span>
+                                <span className={"result result-active"}>10</span>
+                                <span className={"result"}>50</span>
+                                <span className={"result"}>100</span>
+                                <span className={"result"}>250</span>
+                                </span> */}
+            
+                            </div>
+            
+                        </td>
+            
+                        <td colSpan="1" className="border-right-0 text-right table-articles-head">Total:</td>
+                        <td colSpan="1" className="border-left-0 table-articles-head">$0.00</td>
                     </tr>
         
                 </tbody>
@@ -207,12 +207,12 @@ class ExpenseTable extends Component {
                                 :
 
                                 <tr>
-                                    <td className="p-2" colSpan="5">Nothing to display yet</td>
+                                    <td className="p-2" colSpan="5">No data to display</td>
                                 </tr>
                                 
                                 }
 
-                                <tr>
+                                <tr className="table-footer">
                                     <td colSpan='3' className="border-right-0 table-articles-head">
                     
                                         <div className="results-dual-header">

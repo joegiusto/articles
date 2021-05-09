@@ -101,14 +101,14 @@ function Beta(props) {
                                         <div className="front text-center">
                                             <div className="text-muted">Front of ID</div>
                                             <button className="btn btn-articles-light mx-auto d-block">
-                                                <i class="fas fa-upload"></i> Upload
+                                                <i className="fas fa-upload"></i> Upload
                                             </button>
                                         </div>
 
                                         <div className="back text-center mt-3 mt-lg-0">
                                             <div className="text-muted">Back of ID</div>
                                             <button className="btn btn-articles-light mx-auto d-block">
-                                                <i class="fas fa-upload"></i> Upload
+                                                <i className="fas fa-upload"></i> Upload
                                             </button>
                                         </div>
 
@@ -121,7 +121,7 @@ function Beta(props) {
                             <div className="card-footer py-3 text-center">
                                 <Link href={ROUTES.COMMUNITY}>
                                     <button className="btn btn-articles-light">
-                                        <h4 className="mb-0"><i class="far fa-caret-square-left"></i>Support Hub</h4>
+                                        <h4 className="mb-0"><i className="far fa-caret-square-left"></i>Support Hub</h4>
                                     </button>
                                 </Link>
                             </div>

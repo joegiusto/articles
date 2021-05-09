@@ -1,9 +1,11 @@
+import React, { useState, useEffect } from 'react';
+
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useState, useEffect } from 'react';
+
 import axios from 'axios'
 
-import ROUTES from '../../components/constants/routes';
+import ROUTES from 'components/constants/routes';
 
 function TransparencyLayout({ children }) {
     const router = useRouter()
@@ -12,6 +14,7 @@ function TransparencyLayout({ children }) {
         revenue: {
             ordersTotal: 0,
             donationsTotal: 0,
+            adsTotal: 0
         },
         expenses: {
             recurringTotal: 0,
@@ -20,7 +23,7 @@ function TransparencyLayout({ children }) {
     })
 
     function revenuesTotal() {
-        return ( (totals.revenue.ordersTotal + totals.revenue.donationsTotal) / 100 ).toFixed(2);
+        return ( (totals.revenue.ordersTotal + totals.revenue.donationsTotal + totals.revenue.adsTotal) / 100 ).toFixed(2);
     }
 
     function expensesTotal() {
@@ -84,7 +87,7 @@ function TransparencyLayout({ children }) {
                                     <div className="px-2 pt-4">
 
                                         <div className="balance-label">Current Balance:</div>
-                                        <h2>${revenuesTotal() - expensesTotal()}</h2>
+                                        <h2>${ ( revenuesTotal() - expensesTotal() ).toFixed(2) }</h2>
 
                                         <div className="time-container">
 

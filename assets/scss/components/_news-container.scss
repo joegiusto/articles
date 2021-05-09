@@ -2220,15 +2220,16 @@ section.news-page {
                 }
 
                 @include media-breakpoint-up(lg) {
-                grid-template-columns: repeat(5, 1fr);
+                    // grid-template-columns: repeat(5, 1fr);
+                    grid-template-columns: repeat(auto-fill, minmax(270px, 270px));
 
-                .content {
-                    height: 350px;
-                }
+                    .content {
+                        height: 350px;
+                    }
                 }
 
                 > a {
-                //  width: 20%;
+                    //  width: 20%;
                 }
             }
 

@@ -1,9 +1,12 @@
 import Link from 'next/link'
-import ROUTES from '../../components/constants/routes';
 import { useRouter } from 'next/router'
 
+import { useSelector } from 'react-redux'
+
+import ROUTES from 'components/constants/routes';
+
 function StoreLayout({ children }) {
-// const StoreLayout = ({ children }) => (
+    const cartItems = useSelector((state) => state.cart)
     const router = useRouter()
     const { param } = router.query
 
@@ -26,7 +29,7 @@ function StoreLayout({ children }) {
 
             <div className="right">
                 <Link href={ROUTES.CHECKOUT}>
-                    <a className={'btn align-items-center ' + (router.asPath === ROUTES.CHECKOUT ? 'btn-articles-light alt' : 'btn-articles-light')}><i className="fas fa-shopping-basket mr-2"></i>Checkout ({0})</a>
+                    <a className={'btn align-items-center ' + (router.asPath === ROUTES.CHECKOUT ? 'btn-articles-light alt' : 'btn-articles-light')}><i className="fas fa-shopping-basket mr-2"></i>Checkout ({cartItems.length})</a>
                 </Link>
             </div>
 

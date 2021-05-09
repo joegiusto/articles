@@ -1,13 +1,14 @@
-import Head from 'next/head'
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
 
-// import { connectToDatabase } from '../../util/mongodb'
-import TransparencyLayout from '../../components/layouts/transparency';
+import Head from 'next/head'
 
-import ExpenseTable from '../../components/transparency/reports/ExpenseTable';
-import RevenueTable from '../../components/transparency/reports/RevenueTable';
+import axios from 'axios'
+
+import TransparencyLayout from 'components/layouts/transparency';
+
+import ExpenseTable from 'components/transparency/reports/ExpenseTable';
+import RevenueTable from 'components/transparency/reports/RevenueTable';
 
 function TransparencyHomePage(props) {
 
@@ -31,7 +32,7 @@ function TransparencyHomePage(props) {
 
     });
 
-    const [tableSelector, setTableSelectorValue] = useState('revenue');
+    const [tableSelector, setTableSelectorValue] = useState('revenues');
     const [subtableSelector, setSubtableSelector] = useState('revenue-all');
 
     const isConnected = props.isConnected;
@@ -46,8 +47,8 @@ function TransparencyHomePage(props) {
                 return({
                     ...prevState,
                     revenue: {
-                        donations: response.data.donations,
-                        orders: response.data.orders
+                        ...prevState.revenue,
+                        ...response.data
                     }
                 })
             } )
@@ -67,6 +68,7 @@ function TransparencyHomePage(props) {
                 return({
                     ...prevState,
                     expenses: {
+                        ...prevState.expenses,
                         inventory: response.data.inventory,
                         recurring: response.data.recurring
                     }
@@ -92,7 +94,7 @@ function TransparencyHomePage(props) {
           case 'expenses':
             setSubtableSelector('expenses-all')
             break;
-          case 'revenue':
+          case 'revenues':
             setSubtableSelector('revenue-all')
             break;
           default:
@@ -152,7 +154,7 @@ function TransparencyHomePage(props) {
                     <div className="main d-flex flex-row justify-content-between align-items-center">
 
                         <div className="d-flex">
-                            {tableSelectorChoice('revenue')}
+                            {tableSelectorChoice('revenues')}
                             {tableSelectorChoice('expenses')}
                         </div>
 
@@ -173,7 +175,7 @@ function TransparencyHomePage(props) {
                     </div>
                         
                     {/* Revenue Sub Nav */}
-                    <div className={"sub sub-revenue " + (tableSelector === 'revenue' ? '' : 'd-none')}>
+                    <div className={"sub sub-revenue " + (tableSelector === 'revenues' ? '' : 'd-none')}>
                         {subTableSelectorChoice('revenue-all', 'all')}
                         {subTableSelectorChoice('revenue-donations', 'donations')}
                         {subTableSelectorChoice('revenue-store', 'store')}
@@ -212,7 +214,7 @@ function TransparencyHomePage(props) {
                 }
 
                 {
-                    tableSelector == 'revenue' && 
+                    tableSelector == 'revenues' && 
                     <RevenueTable 
                         subtableSelector={subtableSelector}
                         reportsData={reportsData} 

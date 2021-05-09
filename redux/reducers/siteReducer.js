@@ -14,6 +14,14 @@ const initialState = {
 export default function Reducer(state = initialState, action) {
   switch (action.type) {
     case 'TOGGLE_SIDE_MENU_OPEN':
+
+
+        // if (state.sideMenuOpen) {
+        //     document.body.style.overflowY = "";
+        // } else if (!state.sideMenuOpen && !state.sideMenuOpen) {
+        //     document.body.style.overflowY = "hidden";
+        // }
+
         return {
                 ...state,
                 sideMenuOpen: !state.sideMenuOpen

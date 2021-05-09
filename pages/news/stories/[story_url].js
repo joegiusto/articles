@@ -116,7 +116,7 @@ function NewsStory() {
                     }
 
                     <div className="tile">
-                        <i class="fad fa-comments"></i>
+                        <i className="fad fa-comments"></i>
                         Comments
                     </div>
 

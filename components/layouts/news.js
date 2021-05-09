@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
+
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+
 import GoogleMapReact from 'google-map-react';
 import Chart from 'chart.js';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import ROUTES from '../constants/routes';
-
-import NewsHead from '../News/NewsHead';
+import ROUTES from 'components/constants/routes';
+import NewsHead from 'components/News/NewsHead';
 
 function NewsLayout({ children }) {
 // const StoreLayout = ({ children }) => (
@@ -89,7 +90,7 @@ function NewsLayout({ children }) {
         <div className={`map-view-container ${mapViewVisible}`}>
 
             <div onClick={ () => setMapViewVisible(false) } className="close-button btn btn-articles-light btn-lg">
-                <i class="fad fa-compress-arrows-alt fa-lg mr-0"></i>
+                <i className="fad fa-compress-arrows-alt fa-lg mr-0"></i>
             </div>
 
             <div className="map-wrapper">
@@ -142,13 +143,13 @@ function NewsLayout({ children }) {
                 </div>
 
                 {/* <div className="expand-bar">
-                    <span className="text">Expand Map</span><i class="far fa-expand-wide ml-2"></i> 
+                    <span className="text">Expand Map</span><i className="far fa-expand-wide ml-2"></i> 
                 </div> */}
 
                 <div className="trending-slider">
 
                     <div onClick={() => setMapViewVisible(true)} className="btn btn-articles-light mt-3">
-                        <i class="fad fa-expand-wide"></i> 
+                        <i className="fad fa-expand-wide"></i> 
                         <span>Launch Map View</span>
                     </div>
 

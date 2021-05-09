@@ -36,8 +36,8 @@ function PartyHomePage() {
                         </div> */}
 
                         {/* Bootstrap 4 */}
-                        <div class="livestream-wrapper embed-responsive embed-responsive-16by9">
-                            {/* <iframe class="embed-responsive-item" src="..."></iframe> */}
+                        <div className="livestream-wrapper embed-responsive embed-responsive-16by9">
+                            {/* <iframe className="embed-responsive-item" src="..."></iframe> */}
                         </div>
 
                     </div>

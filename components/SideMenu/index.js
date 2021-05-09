@@ -107,7 +107,7 @@ function SideMenuBase(props) {
                     <div className="notification-content">
 
                         <Link href={ROUTES.TRANSPARENCY}>
-                            <a><i class="fas fa-external-link-alt"></i></a>
+                            <a><i className="fas fa-external-link-alt"></i></a>
                         </Link> 
 
                         <span>
@@ -125,7 +125,7 @@ function SideMenuBase(props) {
                     <div className="notification-content">
 
                         <Link href={ROUTES.TRANSPARENCY}>
-                            <a><i class="fas fa-external-link-alt"></i></a>
+                            <a><i className="fas fa-external-link-alt"></i></a>
                         </Link> 
 
                         <span>
@@ -587,7 +587,7 @@ function SideMenuBase(props) {
                     <a className="link link-messages" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
                         {/* <IconComment className="icon messages-icon"/> */}
                         {/* <i className="icon fad fa-comment fa-lg"></i> */}
-                        <i class="icon fad fa-comments-alt fa-lg"></i>
+                        <i className="icon fad fa-comments-alt fa-lg"></i>
                         <span>
                             Messages
                         </span>

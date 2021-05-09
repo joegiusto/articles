@@ -7,7 +7,7 @@ const itemsToRender = [
     [
         ROUTES.UPDATES, 
         'Updates', 
-        <i class="far fa-sparkles"></i>,
+        <i className="far fa-sparkles"></i>,
         'Weekly updates about what is gooing on at Articles.'
     ],
     [
@@ -19,7 +19,7 @@ const itemsToRender = [
     [
         ROUTES.ROADMAP,
         'Roadmap',
-        <i class="fad fa-map-signs"></i>,
+        <i className="fad fa-map-signs"></i>,
         'What is next for Articles and where we are taking the platform.'
     ],
     [
@@ -85,7 +85,7 @@ const Page = (props) => (
                             </div>
 
                             <div className="view-link">
-                                View <i class="fas fa-caret-right"></i>
+                                View <i className="fas fa-caret-right"></i>
                             </div>
                             
                         </div>

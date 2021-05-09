@@ -64,9 +64,9 @@ class SubmissionItemNew extends Component {
 
                 </div>
 
-                <div class="progress">
-                    <div class="progress-bar dislike w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50% (1)</div>
-                    <div class="progress-bar like w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50% (1)</div>
+                <div className="progress">
+                    <div className="progress-bar dislike w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50% (1)</div>
+                    <div className="progress-bar like w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50% (1)</div>
                 </div>
 
                 {/* <div className="visual-bar d-none">

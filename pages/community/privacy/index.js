@@ -25,7 +25,7 @@ class PrivacyPage extends Component {
     
             <div className="container d-flex flex-column justify-content-center mt-5">
 
-                <i style={{color: 'black'}} class="fas fa-user-lock fa-5x my-3"></i>
+                <i style={{color: 'black'}} className="fas fa-user-lock fa-5x my-3"></i>
     
                 {/* <img className="align-self-center mt-5" src="https://winaero.com/blog/wp-content/uploads/2019/09/Chrome-Incognito-Mode-Icon-256.png" height="200px" alt=""/> */}
     

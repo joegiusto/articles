@@ -170,30 +170,42 @@
 }
 
 .store-page {
-  position: relative;
-  font-family: montserrat, sans-serif;
-  font-weight: 400;
+    position: relative;
+    font-family: montserrat, sans-serif;
+    font-weight: 400;
 
-  .store-collections-page {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    .store-collections-page {
 
-    .collections {
-      margin-top: 2rem;
-      max-width: 500px;
-      width: 100%;
-      padding: 1rem;
+        .collections {
 
-      .collection {
-        // width: 500px;
-        // max-width: 100%;
-        // background-color: white;
-        padding: 1rem;
-      }
+            .collection {
+                position: relative;
+                // background-color: transparent!important;
+                
+                .background-image {
+                    z-index: 1;
+                    position: absolute;
+                    width: 50%;
+                    height: 100%;
+                    right: 0;
+                    top: 0;
+                    opacity: 1;
+
+                    img {
+                        // Next.js
+                    }
+                    
+                }
+
+                .card-body {
+                    width: 50%;
+                }
+
+            }
+
+        }
+
     }
-  }
 
   .store-products-page {
     margin-top: 1rem;

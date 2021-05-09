@@ -48,7 +48,7 @@ function NewsPreviewSlider(props) {
                             <h2 className="mb-0">Recent {props.type}</h2>
         
                             <Link href={ actionLinkSwitch(props.type) } >
-                                <a className="ml-3 badge badge-articles view-all-button">View All <i class="fad fa-chevron-right mr-0"></i></a>
+                                <a className="ml-3 badge badge-articles view-all-button">View All <i className="fad fa-chevron-right mr-0"></i></a>
                             </Link>
         
                         </div>
