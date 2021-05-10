@@ -146,7 +146,7 @@ function TransparencyLayout({ children }) {
 
                                     <div className="report-link">
                                         <Link href={ROUTES.TRANSPARENCY}>
-                                            <button className={"btn btn-articles-light w-100 report-quick-links " + (router.asPath === ROUTES.TRANSPARENCY_REPORTS ? 'active ' : null) + (router.asPath === ROUTES.TRANSPARENCY ? ' active' : null)}>
+                                            <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (router.asPath === ROUTES.TRANSPARENCY_REPORTS ? 'active ' : null) + (router.asPath === ROUTES.TRANSPARENCY ? ' active' : null)}>
                                                 <div>
                                                 <i className="fas fa-paste" aria-hidden="true"></i>
                                                 <span className="text">Reports</span>
@@ -157,7 +157,7 @@ function TransparencyLayout({ children }) {
 
                                     <div className="report-link">
                                         <Link href={ROUTES.TRANSPARENCY_CHARTS}>
-                                            <button className={"btn btn-articles-light w-100 report-quick-links " + (router.asPath === ROUTES.TRANSPARENCY_CHARTS ? 'active' : null)}>
+                                            <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (router.asPath === ROUTES.TRANSPARENCY_CHARTS ? 'active' : null)}>
                                                 <div>
                                                 <i className="fas fa-chart-line"></i>
                                                 <span className="text">Charts</span>
@@ -169,7 +169,7 @@ function TransparencyLayout({ children }) {
                                     <div className="report-link">
                                         <Link href={ROUTES.TRANSPARENCY_EMPLOYEES}>
                                             {/* <button className={"btn btn-articles-light btn-lg w-100 report-quick-links" + (router.asPath === ROUTES.TRANSPARENCY_EMPLOYEES ? ' active' : '') + (router.asPath, ROUTES.TRANSPARENCY_EMPLOYEES_DETAILS  ? ' active' : '')}> */}
-                                            <button className={"btn btn-articles-light w-100 report-quick-links" + (router.asPath === ROUTES.TRANSPARENCY_EMPLOYEES ? ' active' : '') +  (router.pathname === '/transparency/employees/[id]' ? ' active' : '')}>
+                                            <button className={"btn btn-articles-light btn-lg w-100 report-quick-links" + (router.asPath === ROUTES.TRANSPARENCY_EMPLOYEES ? ' active' : '') +  (router.pathname === '/transparency/employees/[id]' ? ' active' : '')}>
                                                 <div>
                                                 <i className="fas fa-paste" aria-hidden="true"></i>
                                                 <span className="text">Employees</span>
@@ -180,7 +180,7 @@ function TransparencyLayout({ children }) {
 
                                     <div className="report-link">
                                         <Link href={ROUTES.TRANSPARENCY_FLAG}>
-                                            <button className={"btn btn-articles-light w-100 report-quick-links " + (router.asPath === ROUTES.TRANSPARENCY_FLAG ? 'active' : null)}>
+                                            <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (router.asPath === ROUTES.TRANSPARENCY_FLAG ? 'active' : null)}>
                                                 <div>
                                                 <i className="fas fa-flag"></i>
                                                 <span className="text">Flag</span>

@@ -165,6 +165,26 @@ function AdminHomePage() {
         // });
     
     }
+
+    function discordHookTest() {
+
+        console.log("Discord Hook Test called")
+
+        axios.post(`${process.env.DISCORD_HOOK}`, {
+            username: "Articles Hook",
+            avatar_url: "https://cdn.articles.media/email/logo.jpg",
+            content: `Testing the hook from /admin on the website!`
+          }
+        )
+        .then(function (response) {
+            // console.log(JSON.stringify(response.data))
+            console.log(response)
+        })
+        .catch(function (error) {
+            // console.log(JSON.stringify(error))
+            console.log(error);
+        });
+    }
   
     return(
         <section className="admin-page">
@@ -297,6 +317,10 @@ function AdminHomePage() {
                                 })} href="">Disable</Dropdown.Item>
         
                             </DropdownButton>
+                        </div>
+
+                        <div className="card-body">
+                            <button onClick={ () => discordHookTest() } className="btn btn-articles-light btn-sm">Test Discord</button>
                         </div>
 
                     </div>
