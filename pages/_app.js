@@ -8,29 +8,33 @@ import { PersistGate } from 'redux-persist/integration/react'
 
 import { io } from "socket.io-client";
 
-import MainLayout from '../components/layout'
-import DefaultLayout from '../components/layouts/default'
+import MainLayout from '/components/layout'
+import DefaultLayout from '/components/layouts/default'
 
-import '../assets/scss/index.scss';
-import 'public/fonts/fontawsome/css/all.min.css';
+import '/assets/scss/index.scss';
+import '/public/fonts/fontawsome/css/all.min.css';
 
 import 'swiper/swiper.scss'
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
 
-import { useStore } from '../redux/store'
+import { useStore } from '/redux/store'
 
-import { setUserDetails } from "../redux/actions/authActions";
-import { setStories } from "../redux/actions/storiesActions";
-import { setIssues } from "../redux/actions/issuesActions";
-import { setMyths } from "../redux/actions/mythsActions";
+import { setUserDetails } from "/redux/actions/authActions";
+import { setStories } from "/redux/actions/storiesActions";
+import { setIssues } from "/redux/actions/issuesActions";
+import { setMyths } from "/redux/actions/mythsActions";
 
-import SocketContext from '../components/context/socket'
+import SocketContext from '/components/context/socket'
 
 const secret = process.env.SECRET
 
-const socket = io("https://9e82f85e514d.ngrok.io");
+let socket
+
+if (typeof window !== 'undefined') {
+    socket = io("https://c949f15e888f.ngrok.io");
+}
 
 function MyApp({ Component, pageProps }) {
     const store = useStore(pageProps.initialReduxState)
