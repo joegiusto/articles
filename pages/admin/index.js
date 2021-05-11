@@ -170,10 +170,10 @@ function AdminHomePage() {
 
         console.log("Discord Hook Test called")
 
-        axios.post(`${process.env.DISCORD_HOOK}`, {
-            username: "Articles Hook",
-            avatar_url: "https://cdn.articles.media/email/logo.jpg",
-            content: `Testing the hook from /admin on the website!`
+        axios.post(`/api/discord/message`, {
+            // username: "Articles Hook",
+            // avatar_url: "https://cdn.articles.media/email/logo.jpg",
+            // content: `Testing the hook from /admin on the website!`
           }
         )
         .then(function (response) {

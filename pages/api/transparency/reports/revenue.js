@@ -1,8 +1,8 @@
-import { connectToDatabase } from "../../../../util/mongodb";
-// import connectDB from 'util/mongoose';
+import { connectToDatabase } from "util/mongodb";
+import connectDB from 'util/mongoose';
 import Donations from "models/Donations";
 
-export default async (req, res) => {
+export default connectDB(async (req, res) => {
 
     const { db } = await connectToDatabase();
 
@@ -33,4 +33,5 @@ export default async (req, res) => {
         ads: adsResult,
         memberships: []
     })
-}
+
+})

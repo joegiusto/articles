@@ -12,9 +12,9 @@ import moment from 'moment'
 import axios from 'axios';
 
 // Articles Imports
-import ROUTES from 'components/constants/routes'
-import AdminLayout from 'components/layouts/admin.js';
-import NewsAdd from 'components/admin/news/NewsAdd';
+import ROUTES from '/components/constants/routes'
+import AdminLayout from '/components/layouts/admin.js';
+import NewsAdd from '/components/admin/news/NewsAdd';
 
 class NewsAdmin extends Component {
   constructor(props) {
@@ -460,16 +460,20 @@ const mapStateToProps = state => ({
 
 const NewsAdminWrapWrap = function Wrapper() {
     return(
-        <NewsAdminWrap/>
+        <NewsAdmin/>
     )
 }
 
 NewsAdmin.Layout = AdminLayout;
 
-export default withRouter( connect(
-  mapStateToProps,
-)( NewsAdmin ) );
+// export default withRouter( connect(
+//   mapStateToProps,
+// )( NewsAdmin ) );
 
-// NewsAdminWrapWrap.Layout = AdminLayout;
+NewsAdminWrapWrap.Layout = AdminLayout;
 
 // export default NewsAdminWrapWrap
+
+export default withRouter( connect(
+    mapStateToProps,
+)( NewsAdmin ) );

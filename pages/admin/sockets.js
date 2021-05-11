@@ -49,7 +49,8 @@ class Sockets extends Component {
             console.log(data)
 
             self.setState({
-                connectedSockets: data.connections
+                connectedSockets: data.connections,
+                userSockets: data.list
             })
         });
 
@@ -59,7 +60,7 @@ class Sockets extends Component {
 
     componentWillUnmount() {
         // this.props.setLocation('');
-        this.props.socket.disconnect();
+        // this.props.socket.disconnect();
     }
 
     handleChange(event) {
@@ -201,25 +202,25 @@ class Sockets extends Component {
                         <table className="border table table-sm bg-white">
                         <thead>
                             <tr>
-                            <th scope="col">Name</th>
+                            <th scope="col">User</th>
                             <th scope="col">Sockets</th>
                             </tr>
                         </thead>
                         <tbody>
 
-                            <tr>
+                            {/* <tr>
                             <th scope="row">Guest</th>
                             <td>0</td>
-                            </tr>
+                            </tr> */}
 
-                            {/* {Object.keys(this.state.userSockets).map((keyName, i) => (
+                            {Object.keys(this.state.userSockets).map((keyName, i) => (
 
                             <tr>
                                 <th scope="row">{this.state.userSockets[keyName]}</th>
                                 <td><span className="badge badge-warning">{keyName}</span></td>
                             </tr>
 
-                            ))} */}
+                            ))}
 
                         </tbody>
                         </table>

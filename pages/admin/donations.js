@@ -311,74 +311,74 @@ function DonationsAdmin(props) {
 
                 <div className="card manage-card">
 
-                <div className="card-header">
+                    <div className="card-header">
 
-                    <div className="d-flex align-items-center">
-                        <i className="fas fa-edit fa-2x"></i>
-                        <h3 className="mb-0">Manage Donations</h3>
-                        <div className="total">({donations.length})</div>
+                        <div className="d-flex align-items-center">
+                            <i className="fas fa-edit fa-2x"></i>
+                            <h3 className="mb-0">Manage Donations</h3>
+                            <div className="total">({donations.length})</div>
+                        </div>
+
+                        <button onClick={() => setModalShow(true)} className="btn btn-articles-light btn-sm">Add Donation</button>
+
                     </div>
 
-                    <button onClick={() => setModalShow(true)} className="btn btn-articles-light btn-sm">Add Donation</button>
+                    <div className="card-body p-0">
 
-                </div>
-
-                <div className="card-body p-0">
-
-                    <div className="table-responsive">
-                    <table className="table table-sm mb-0">
-                        <thead className="thead-dark">
-                        <tr>
-                            <th scope="col">Date</th>
-                            <th scope="col">User</th>
-                            <th scope="col">Amount</th>
-                            <th scope="col">Type</th>
-                            <th scope="col">Message</th>
-                            <th scope="col">Created By</th>
-                            <th scope="col">Was Matched</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        {donations.sort((a, b) => new Date(b.date) - new Date(a.date)).map(donation => (
-
-                            <tr key={donation._id}>
-                                <th scope="row">{moment(donation.date).format('LL')}</th>
-                                <td>
-                                    {donation.user_id?._id ? <AdminViewUserModal user_id={donation.user_id._id} name={`${donation.user_id.first_name} ${donation.user_id.last_name}`} buttonType={'badge'} /> : 'No User'}
-                                </td>
-                                <td>${(donation.amount / 100).toFixed(2)}</td>
-
-                                <td>
-                                    {donation.type == 'cash' && <i className="fas fa-money-bill mr-0"></i>}
-                                    {donation.type == 'card' && <i className="far fa-credit-card mr-0"></i>}
-                                </td>
-
-                                <td>{donation.message}</td>
-                                <td>
-                                    <Link href={ROUTES.TRANSPARENCY_EMPLOYEES + `/${donation.createdBy._id}`}> 
-                                        <a className="badge badge-articles">{donation.createdBy.first_name} {donation.createdBy.last_name}</a>
-                                    </Link>
-                                </td>
-                                <td>{donation.matched ? 'True' : 'False'}</td>
-                                <td>
-                                    <ConfirmDelete afterConfirm={() => deleteDonation(donation._id)}></ConfirmDelete>
-                                    <div style={{cursor: 'pointer'}} onClick={() => editDonation(donation._id)} className="badge badge-dark noselect ml-1">Edit</div>
-                                </td>
+                        <div className="table-responsive">
+                        <table className="table table-sm mb-0">
+                            <thead className="thead-dark">
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">User</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Message</th>
+                                <th scope="col">Created By</th>
+                                <th scope="col">Was Matched</th>
+                                <th scope="col">Action</th>
                             </tr>
-                            
-                        ))}
+                            </thead>
+                            <tbody>
 
-                        </tbody>
-                    </table>
+                            {donations.sort((a, b) => new Date(b.date) - new Date(a.date)).map(donation => (
+
+                                <tr key={donation._id}>
+                                    <th scope="row">{moment(donation.date).format('LL')}</th>
+                                    <td>
+                                        {donation.user_id?._id ? <AdminViewUserModal user_id={donation.user_id._id} name={`${donation.user_id.first_name} ${donation.user_id.last_name}`} buttonType={'badge'} /> : 'No User'}
+                                    </td>
+                                    <td>${(donation.amount / 100).toFixed(2)}</td>
+
+                                    <td>
+                                        {donation.type == 'cash' && <i className="fas fa-money-bill mr-0"></i>}
+                                        {donation.type == 'card' && <i className="far fa-credit-card mr-0"></i>}
+                                    </td>
+
+                                    <td>{donation.message}</td>
+                                    <td>
+                                        <Link href={ROUTES.TRANSPARENCY_EMPLOYEES + `/${donation.createdBy._id}`}> 
+                                            <a className="badge badge-articles">{donation.createdBy.first_name} {donation.createdBy.last_name}</a>
+                                        </Link>
+                                    </td>
+                                    <td>{donation.matched ? 'True' : 'False'}</td>
+                                    <td>
+                                        <ConfirmDelete afterConfirm={() => deleteDonation(donation._id)}></ConfirmDelete>
+                                        <div style={{cursor: 'pointer'}} onClick={() => editDonation(donation._id)} className="badge badge-dark noselect ml-1">Edit</div>
+                                    </td>
+                                </tr>
+                                
+                            ))}
+
+                            </tbody>
+                        </table>
+                        </div>
+                    
                     </div>
-                
-                </div>
 
-                <div className="card-footer text-center">
-                    <div className="text-muted">{donations.length} / {donations.length} Donations being shown</div>
-                </div>
+                    <div className="card-footer text-center">
+                        <div className="text-muted">{donations.length} / {donations.length} Donations being shown</div>
+                    </div>
 
                 </div>
             

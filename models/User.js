@@ -1,99 +1,97 @@
 const mongoose = require("mongoose");
 const moment = require("moment");
-// const crypto = require('crypto');
-// const Token = require('../models/Token');
 const Schema = mongoose.Schema;
 
 // Create Schema
 const UserSchema = new Schema({
-  first_name: {
-    type: String,
-    required: true
-  },
-  last_name: {
-    type: String,
-  },
-  email: {
-    type: String,
-    required: true
-  },
-  password: {
-    type: String,
-    required: true
-  },
-  sign_up_date: {
-    type: Date,
-    default: moment()
-  },
-  isVerified: {
-    type: Boolean,
-    default: false
-  },
-  address: {
-    lineOne: {
-      type: String,
-      default: ""
+    first_name: {
+        type: String,
+        required: true
     },
-    lineTwo: {
-      type: String,
-      default: ""
+    last_name: {
+        type: String,
     },
-    zip: {
-      type: Number,
-      default: ""
+    email: {
+        type: String,
+        required: true
     },
-    city: {
-      type: String,
-      default: ""
+    password: {
+        type: String,
+        required: true
     },
-    state: {
-      type: String,
-      default: ""
-    }
-  },
-  roles: {
-    isDev: {
-      type: Boolean,
-      default: false
+    sign_up_date: {
+        type: Date,
+        default: moment()
     },
-    isAdmin: {
-      type: Boolean,
-      default: false
-    },
-    isWriter: {
-      type: Boolean,
-      default: false
-    },
-    employee: {
-      bool: {
+    isVerified: {
         type: Boolean,
         default: false
-      },
-      privacy: {
-        type: Boolean,
-        default: false
-      }
+    },
+    address: {
+        lineOne: {
+            type: String,
+            default: ""
+        },
+        lineTwo: {
+            type: String,
+            default: ""
+        },
+        zip: {
+            type: Number,
+            default: ""
+        },
+        city: {
+            type: String,
+            default: ""
+        },
+        state: {
+            type: String,
+            default: ""
+        }
+    },
+    roles: {
+        isDev: {
+            type: Boolean,
+            default: false
+        },
+        isAdmin: {
+            type: Boolean,
+            default: false
+        },
+        isWriter: {
+            type: Boolean,
+            default: false
+        },
+        employee: {
+            bool: {
+                type: Boolean,
+                default: false
+            },
+            privacy: {
+                type: Boolean,
+                default: false
+            }
+        }
+    },
+    referral: {
+        type: String,
+        default: ''
+    },
+    stripe: {
+        type: Object,
+        default: {
+            customer_id: '',
+            customer_test_id: ''
+        }
+    },
+    resetPasswordToken: {
+        type: String,
+        required: false
+    },
+    resetPasswordExpires: {
+        type: Date,
+        required: false
     }
-  },
-  referral: {
-    type: String,
-    default: ''
-  },
-  stripe: {
-    type: Object,
-    default: {
-      customer_id: '',
-      customer_test_id: ''
-    }
-  },
-  resetPasswordToken: {
-    type: String,
-    required: false
-  },
-  resetPasswordExpires: {
-    type: Date,
-    required: false
-  }
 });
 
 // UserSchema.methods.generatePasswordReset = function() {
