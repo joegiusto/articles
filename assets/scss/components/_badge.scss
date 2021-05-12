@@ -1,16 +1,25 @@
 .badge-articles {
-  color: #000000;
-  // border: solid 2px #fff;
-  background-color: #ffb7b7;
+    color: #000000;
+    // border: solid 2px #fff;
+    background-color: rgba(#ffb7b7, 0.75);
+    transition-duration: 200ms;
+
+    
+    &.badge-hover {
+        &:hover {
+            background-color: #ffb7b7;     
+        }
+    }
 }
 
 .badge-articles-light {
-  line-height: 22px;
-  font-size: 1rem;
-  color: #212529;
-  background-color: #f9e4b7;
-  border-radius: 5px;
-  .badge-danger {
-    border-radius: 1rem;
-  }
+    line-height: 22px;
+    font-size: 1rem;
+    color: #212529;
+    background-color: #f9e4b7;
+    border-radius: 5px;
+
+    .badge-danger {
+        border-radius: 1rem;
+    }
 }

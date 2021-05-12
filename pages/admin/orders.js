@@ -290,17 +290,17 @@ function AdminOrders() {
 
                 <div className="card manage-card mb-3">
 
-                    <div className="card-header">
+                    <div className="card-header flex-column flex-lg-row">
 
                         <div className="d-flex flex-column flex-lg-row align-items-center">
 
-                            <div className="d-flex">
+                            <div className="d-flex align-items-center mb-1 mb-lg-0">
                                 <i className="fas fa-edit fa-2x"></i>
                                 <h3 className="mb-0">Manage {itemName}s</h3>
                                 <div className="total">({orders.length})</div>
                             </div>
 
-                            <div className="table-filters d-flex mt-3 ml-lg-3 mt-lg-0">
+                            <div className="table-filters d-flex mt-3 ml-lg-3 mt-lg-0 mb-3 mb-lg-0">
                                 <button onClick={() => set_table_tab('Awaiting Shipment') } className={"btn btn-articles-light btn-sm " + (table_tab === 'Awaiting Shipment' ? 'alt' : '')}>Awaiting Shipment ({orders.filter(order => order.status === 'Awaiting Shipment').length})</button>
                                 <button onClick={() => set_table_tab('Shipped') } className={"btn btn-articles-light btn-sm ml-1 " + (table_tab === 'Shipped' ? 'alt' : '')}>Shipped ({orders.filter(order => order.status === 'Shipped').length})</button>
                                 <button onClick={() => set_table_tab('Delivered') } className={"btn btn-articles-light btn-sm ml-1 " + (table_tab === 'Delivered' ? 'alt' : '')}>Delivered ({orders.filter(order => order.status === 'Delivered').length})</button>

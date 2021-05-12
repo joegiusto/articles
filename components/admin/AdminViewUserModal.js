@@ -8,7 +8,7 @@ import moment from 'moment'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
-import ROUTES from '../../components/constants/routes'; 
+import ROUTES from 'components/constants/routes'; 
 
 function AdminViewUserModal(props) {
     const [modalShow, setModalShow] = useState(false);
@@ -78,7 +78,7 @@ function AdminViewUserModal(props) {
                         <div className="ml-3">
                             <div>{userData.first_name} {userData.last_name} ({userData._id})</div>
                             <div>User Since: {moment(userData.sign_up_date).format("LL")}</div>
-                            <div>Employee: {userData.employee?.bool ? <Link href={ROUTES.TRANSPARENCY_EMPLOYEES + `/${userData._id}`}><a className="badge badge-articles">True</a></Link> : 'False'}</div>
+                            <div>Employee: {userData.employee?.bool ? <Link href={ROUTES.TRANSPARENCY_EMPLOYEES + `/${userData._id}`}><a className="badge badge-articles badge-hover">True</a></Link> : 'False'}</div>
                             <div>Gender: {userData.gender}</div>
                             <div>State: {userData.address?.state}</div>
                             <div>Cell: {userData.cell}</div>

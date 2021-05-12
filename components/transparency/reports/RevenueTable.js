@@ -76,7 +76,7 @@ class RevenueTable extends Component {
                     }),
                     ...this.props.reportsData.revenue.orders.map(order => {
                         order.type = 'Store Order';
-                        order.unifiedPrice = order.amount
+                        order.unifiedPrice = order.payment.total
                         return order;
                     }),
                     ...this.props.reportsData.revenue.ads
@@ -191,13 +191,20 @@ class RevenueTable extends Component {
                         .sort((a, b) => new Date(b.date) - new Date(a.date))
                         .map(sale => 
                         <tr onClick={() => this.props.history.push(ROUTES.TRANSPARENCY_REPORTS + `?id=${sale._id}&type=revenue`)}>
-                            <td colSpan="1" className="border-right-0 ">{moment(sale.date).format("LLL")}</td>
+
+                            {this.props.showTransactionTime ? 
+                                <td colSpan="1" className="border-right-0 ">{moment(sale.date).format("LLL")}</td>
+                            : 
+                                <td colSpan="1" className="border-right-0 ">{moment(sale.date).format("LL")}</td>
+                            }
 
                             {this.props.subtableSelector != 'revenue-donations' &&  <td colSpan="1" className="border-right-0 ">{sale.type}</td>}
                             {this.props.subtableSelector === 'revenue-donations' && <td colSpan="1" className="border-right-0 ">{sale.user_id.first_name} {sale.user_id.last_name}</td>}
 
                             <td colSpan="1" className="border-right-0 "></td>
+                            
                             <td colSpan="1" className="border-right-0 ">${(sale.unifiedPrice / 100).toFixed(2)}</td>
+
                         </tr>)
 
                         :

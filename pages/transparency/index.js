@@ -1,15 +1,26 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
+
 import { useSelector, useDispatch } from 'react-redux'
 
 import Head from 'next/head'
 
+import moment from 'moment';
+
 import axios from 'axios'
+
+import Dropdown from 'react-bootstrap/Dropdown';
 
 import TransparencyLayout from 'components/layouts/transparency';
 
 import ExpenseTable from 'components/transparency/reports/ExpenseTable';
 import RevenueTable from 'components/transparency/reports/RevenueTable';
 
+// Date Picker UI
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
+import { DateTimePicker } from "@material-ui/pickers";
+import { ThemeProvider } from "@material-ui/styles";
+import articlesTheme from 'components/material_ui/articlesTheme'
 function TransparencyHomePage(props) {
 
     const [reportsData, setReportsData] = useState({
@@ -35,7 +46,29 @@ function TransparencyHomePage(props) {
     const [tableSelector, setTableSelectorValue] = useState('revenues');
     const [subtableSelector, setSubtableSelector] = useState('revenue-all');
 
-    const isConnected = props.isConnected;
+    const [ showTransactionTime, setShowTransactionTime ] = useState(false);
+
+    const [ filterDropdownOpen, setFilterDropdownOpen ] = useState(false);
+
+    const [ filterStartDateTimeOpen, setFilterStartDateTimeOpen ] = useState(false);
+    const [ filterEndDateTimeOpen, setFilterEndDateTimeOpen ] = useState(false);
+
+    const [ filterStartDateTime, setFilterStartDateTime ] = useState(new Date( moment('06/25/2019') ));
+    const [ filterEndDateTime, setFilterEndDateTime ] = useState(new Date());
+
+    const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+        <a
+          href=""
+          ref={ref}
+          className="btn btn-articles-light btn-sm d-flex align-items-center"
+          onClick={(e) => {
+            e.preventDefault();
+            onClick(e)
+          }}
+        >
+            { children}
+        </a>
+    ));
 
     useEffect(() => {
 
@@ -158,9 +191,72 @@ function TransparencyHomePage(props) {
                             {tableSelectorChoice('expenses')}
                         </div>
 
-                        <div className="d-flex">
-                            <div className="btn btn-articles-light btn-sm"><i className="fas fa-filter"></i>Filter</div>
-                        </div>
+                        <Dropdown style={{zIndex: '1', position: 'relative'}} className="d-flex">
+
+                            <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-1">
+                                <i className="fas fa-filter"></i>Filter
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu className="p-3">
+                                
+                                <div className="d-flex justify-content-lg-between mb-3" >
+
+                                    <button onClick={() => setFilterStartDateTimeOpen(true)} className="w-50 btn btn-articles-light btn-sm">
+                                        <div>Start Date</div>
+                                        <div className="text-muted">{moment(filterStartDateTime).format('LL')}</div>
+                                    </button>
+
+                                    <ThemeProvider theme={articlesTheme}>
+                                        <MuiPickersUtilsProvider utils={MomentUtils}>
+                                            {/* <DateTimePicker
+                                                label="Date"
+                                                inputVariant="outlined"
+                                                value={selectedDate}
+                                                onChange={handleDateChange}
+                                                className="form-group articles mb-3 w-100"
+                                            /> */}
+                                            <DateTimePicker 
+                                                onChange={setFilterStartDateTime} 
+                                                className=""
+                                                open={filterStartDateTimeOpen}
+                                                value={filterStartDateTime}
+                                                onOpen={() => setFilterStartDateTimeOpen(true)}
+                                                onClose={() => setFilterStartDateTimeOpen(false)}
+                                                TextFieldComponent={ (props) =>
+                                                    <></>
+                                                }
+                                            >
+                                            </DateTimePicker>
+                                        </MuiPickersUtilsProvider>
+                                    </ThemeProvider>
+
+                                    <button className="w-50 btn btn-articles-light btn-sm">
+                                        <div>End Date</div>
+                                        <div className="text-muted">{moment().format('LL')}</div>
+                                    </button>
+
+                                </div>
+
+                                <div className="d-flex align-items-center">
+                                    {showTransactionTime ? 'Enabled' : 'Disabled'} 
+                                    <button onClick={() => setShowTransactionTime(!showTransactionTime)} className="btn btn-articles-light btn-sm mx-auto d-block">Transaction Time</button>
+                                </div>
+
+                                {/* <div className="text-muted text-center" style={{fontSize: '0.8rem'}}>0 Notifications</div>
+
+                                <Dropdown.Divider />
+
+                                <div className="w-100 px-2">
+                                <Link href={ROUTES.MESSAGES}>
+                                    <div style={{cursor: 'pointer'}} className="badge badge-success w-100">0 Messages</div>
+                                </Link>
+                                </div> */}
+
+                                {/* <Dropdown.Item eventKey="4">Manage</Dropdown.Item> */}
+
+                            </Dropdown.Menu>
+
+                        </Dropdown>
 
                     </div>
         
@@ -210,6 +306,7 @@ function TransparencyHomePage(props) {
                     <ExpenseTable 
                         subtableSelector={subtableSelector}
                         reportsData={reportsData} 
+                        showTransactionTime={showTransactionTime}
                     />
                 }
 
@@ -218,6 +315,7 @@ function TransparencyHomePage(props) {
                     <RevenueTable 
                         subtableSelector={subtableSelector}
                         reportsData={reportsData} 
+                        showTransactionTime={showTransactionTime}
                     />
                 }
         

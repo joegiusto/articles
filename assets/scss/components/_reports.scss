@@ -736,97 +736,99 @@
         }
 
         .main {
-        overflow-x: scroll;
-        padding: .6rem .6rem;
-        border: solid 1px #000;
-        background-color: $base-color;
-        border-radius: 10px;
+            overflow: initial!important;
+            padding: .6rem .6rem;
+            border: solid 1px #000;
+            background-color: $base-color;
+            border-radius: 10px;
 
-        .main-seperation {
-            cursor: default;
-            margin-right: .3rem;
-            position: relative;
-            width: 15px;
-
-            .wall {
-            position: absolute;
-            width: 2.5px;
-            left: 50%;
-            top: -15px;
-            transform: translateX(-50%);
-            height: 90px;
-            background-color: rgb(77, 77, 77);
-            }
-        }
-
-        // Word to https://blog.alexandergottlieb.com/overflow-scroll-and-the-right-padding-problem-a-css-only-solution-6d442915b3f4
-        .selection:last-child:after {
-            content: "";
-            display: block;
-            position: absolute;
-            right: -0.5rem;
-            width: 0.5rem;
-            height: 1px;
-        }
-
-        .selection:last-child {
-            // margin-right: 2rem;
-        }
-
-        .selection {
-            cursor: pointer;
-            position: relative;
-            text-transform: capitalize;
-            // border: solid 2px black;
-            border-radius: 5px;
-            padding: .2rem .5rem;
-            margin-right: .3rem;
-            font-size: 1.2rem;
-            color: gray;
-
-            font-size: 1.2rem;
-            font-family: OpenSansRegular, Helvetica, sans-serif;
-            font-size: 18px;
-            font-style: normal;
-            font-weight: normal;
-            letter-spacing: normal;
-
-            transition-duration: 200ms;
-
-            &:hover:not(.selection-active) {
-                background-color: rgba($accent-color, 0.40);
-            }
-
-            &.selection-active {
+            .main-seperation {
+                cursor: default;
+                margin-right: .3rem;
                 position: relative;
-                color: black;
-                // font-weight: bold;
-                z-index: 1;
-                background-color: $accent-color;
+                width: 15px;
 
-                &:before {
-                    z-index: -1;
-                    position: absolute;
-                    bottom: -9px;
-                    left: 0px;
-                    // content: "";
-                    width: 100%;
-                    height: 40px;
-                    border-radius: 0px;
-                    border-top-left-radius: 5px;
-                    border-top-right-radius: 5px;
-                    background-color: $accent-color;
+                .wall {
+                position: absolute;
+                width: 2.5px;
+                left: 50%;
+                top: -15px;
+                transform: translateX(-50%);
+                height: 90px;
+                background-color: rgb(77, 77, 77);
                 }
             }
-        }
+
+            // Word to https://blog.alexandergottlieb.com/overflow-scroll-and-the-right-padding-problem-a-css-only-solution-6d442915b3f4
+            .selection:last-child:after {
+                content: "";
+                display: block;
+                position: absolute;
+                right: -0.5rem;
+                width: 0.5rem;
+                height: 1px;
+            }
+
+            .selection:last-child {
+                // margin-right: 2rem;
+            }
+
+            .selection {
+                cursor: pointer;
+                position: relative;
+                text-transform: capitalize;
+                // border: solid 2px black;
+                border-radius: 5px;
+                padding: .2rem .5rem;
+                margin-right: .3rem;
+                font-size: 1.2rem;
+                color: gray;
+
+                font-size: 1.2rem;
+                font-family: OpenSansRegular, Helvetica, sans-serif;
+                font-size: 18px;
+                font-style: normal;
+                font-weight: normal;
+                letter-spacing: normal;
+
+                transition-duration: 200ms;
+
+                &:hover:not(.selection-active) {
+                    background-color: rgba($accent-color, 0.40);
+                }
+
+                &.selection-active {
+                    position: relative;
+                    color: black;
+                    // font-weight: bold;
+                    z-index: 1;
+                    background-color: $accent-color;
+
+                    &:before {
+                        z-index: -1;
+                        position: absolute;
+                        bottom: -9px;
+                        left: 0px;
+                        // content: "";
+                        width: 100%;
+                        height: 40px;
+                        border-radius: 0px;
+                        border-top-left-radius: 5px;
+                        border-top-right-radius: 5px;
+                        background-color: $accent-color;
+                    }
+                }
+            }
+
         }
 
         .sub-revenue, .sub-clothing, .sub-expenses {
 
-        @include media-breakpoint-down(md) {
-            display: flex;
-            overflow-x: scroll!important;
-        }
+            @include media-breakpoint-down(md) {
+                display: flex;
+                overflow-x: scroll!important;
+            }
+
         }
 
         .sub-clothing {
