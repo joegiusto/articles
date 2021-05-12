@@ -344,10 +344,13 @@ function DonationsAdmin(props) {
                             {donations.sort((a, b) => new Date(b.date) - new Date(a.date)).map(donation => (
 
                                 <tr key={donation._id}>
+                                    
                                     <th scope="row">{moment(donation.date).format('LL')}</th>
+
                                     <td>
                                         {donation.user_id?._id ? <AdminViewUserModal user_id={donation.user_id._id} name={`${donation.user_id.first_name} ${donation.user_id.last_name}`} buttonType={'badge'} /> : 'No User'}
                                     </td>
+
                                     <td>${(donation.amount / 100).toFixed(2)}</td>
 
                                     <td>
@@ -356,16 +359,20 @@ function DonationsAdmin(props) {
                                     </td>
 
                                     <td>{donation.message}</td>
+
                                     <td>
                                         <Link href={ROUTES.TRANSPARENCY_EMPLOYEES + `/${donation.createdBy._id}`}> 
-                                            <a className="badge badge-articles">{donation.createdBy.first_name} {donation.createdBy.last_name}</a>
+                                            <a className="badge badge-articles badge-hover">{donation.createdBy.first_name} {donation.createdBy.last_name}</a>
                                         </Link>
                                     </td>
+
                                     <td>{donation.matched ? 'True' : 'False'}</td>
+
                                     <td>
                                         <ConfirmDelete afterConfirm={() => deleteDonation(donation._id)}></ConfirmDelete>
                                         <div style={{cursor: 'pointer'}} onClick={() => editDonation(donation._id)} className="badge badge-dark noselect ml-1">Edit</div>
                                     </td>
+
                                 </tr>
                                 
                             ))}

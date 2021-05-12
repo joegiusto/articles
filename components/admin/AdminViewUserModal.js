@@ -46,7 +46,7 @@ function AdminViewUserModal(props) {
         switch(buttonType) {
           case 'badge':
             return (
-                <button onClick={() => setModalShow(true) + loadUserData()} className="badge badge-articles"> 
+                <button onClick={() => setModalShow(true) + loadUserData()} className="badge badge-articles badge-hover"> 
                    {props.name}
                 </button>
             );

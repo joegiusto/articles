@@ -1,11 +1,13 @@
 .badge-articles {
     color: #000000;
     // border: solid 2px #fff;
-    background-color: rgba(#ffb7b7, 0.75);
+    background-color: $accent-color;
     transition-duration: 200ms;
 
     
     &.badge-hover {
+        background-color: rgba(#ffb7b7, 0.5);
+
         &:hover {
             background-color: #ffb7b7;     
         }
