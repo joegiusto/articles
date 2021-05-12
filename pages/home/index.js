@@ -94,7 +94,7 @@ function Home() {
                         <div className="weather">
 
                             <div className="icon">
-                                <img src="https://icon-library.com/images/cloudy-icon/cloudy-icon-3.jpg" alt="" />
+                                <img src="https://icon-library.com/images/cloudy-icon/cloudy-icon-3.jpg" alt="Cloudy weather icon" />
                             </div>
 
                             <div className="details">

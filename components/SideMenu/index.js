@@ -221,7 +221,7 @@ function SideMenuBase(props) {
                 className="weather-badge mr-2"
                 >
                 <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-1">
-                    <img src="https://icon-library.com/images/cloudy-icon/cloudy-icon-3.jpg" alt=""/>
+                    <img src="https://icon-library.com/images/cloudy-icon/cloudy-icon-3.jpg" alt="Cloudy weather icon"/>
                     <div>50°F</div>
                 </Dropdown.Toggle>
 
@@ -248,7 +248,7 @@ function SideMenuBase(props) {
                     <div className="weather">
 
                     <div className="icon">
-                        <img src="https://icon-library.com/images/cloudy-icon/cloudy-icon-3.jpg" alt=""/>
+                        <img src="https://icon-library.com/images/cloudy-icon/cloudy-icon-3.jpg" alt="Cloudy weather icon"/>
                     </div>
 
                     <div className="details">
