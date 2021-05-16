@@ -12,7 +12,7 @@ import MainLayout from '/components/layout'
 import DefaultLayout from '/components/layouts/default'
 
 import '/assets/scss/index.scss';
-import '/public/fonts/fontawsome/css/all.min.css';
+import '/assets/fontawesome/css/all.min.css';
 
 import 'swiper/swiper.scss'
 import 'swiper/components/navigation/navigation.scss';

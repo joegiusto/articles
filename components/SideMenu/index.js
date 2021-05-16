@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react';
 
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
 
 import { useSession } from 'next-auth/client'
 
 import { connect, useSelector, useDispatch } from 'react-redux'
 import moment from 'moment';
 import Dropdown from 'react-bootstrap/Dropdown';
-import Clock from 'react-live-clock';
 
 // Articles absolute imports
 import ROUTES from 'components/constants/routes'
 import SocketContext from 'components/context/socket'
 import { toggleSideMenuFixed, toggleColorMode, toggleSideMenuOpen } from 'redux/actions/siteActions';
+
+const Clock = dynamic(
+    () => import('react-live-clock'),
+    { ssr: false }
+)
 
 function SideMenuBase(props) {
     const sideMenuOpen = useSelector((state) => state.site.sideMenuOpen)
@@ -358,25 +363,25 @@ function SideMenuBase(props) {
 
                 <div className="profile-welcome">
 
-                    <p id="nav-welcome" className="subheading-font m-0 pl-2 py-0">
-                    <span>Hello,&nbsp;
-                    {!session ? 
-                        
-                    <Link href={`${ROUTES.SIGN_IN}`}>
-                        <a id='nav-sign-in' onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>Log In / Sign Up</a>
-                    </Link>
-                    : 
-                    <Link href={ROUTES.SETTINGS_ACCOUNT}>
-                        <a id='nav-sign-in' onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
-                            {/* {session.user.email} */}
-                            {`${userReduxState?.first_name} ${userReduxState?.last_name}`}
-                        </a>
-                    </Link>
-                    }
-                    </span>
-                    </p>
+                    <div id="nav-welcome" className="subheading-font m-0 pl-2 py-0">
+                        <span>Hello,&nbsp;
+                        {!session ? 
+                            
+                        <Link href={`${ROUTES.SIGN_IN}`}>
+                            <a id='nav-sign-in' onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>Log In / Sign Up</a>
+                        </Link>
+                        : 
+                        <Link href={ROUTES.SETTINGS_ACCOUNT}>
+                            <a id='nav-sign-in' onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
+                                {/* {session.user.email} */}
+                                {`${userReduxState?.first_name} ${userReduxState?.last_name}`}
+                            </a>
+                        </Link>
+                        }
+                        </span>
+                    </div>
 
-                    <p id="nav-member-message" className='subheading-font m-0 pl-2 py-0'>
+                    <div id="nav-member-message" className='subheading-font m-0 pl-2 py-0'>
                     {!session ? (
                         <span></span>
                     ) : (
@@ -387,7 +392,7 @@ function SideMenuBase(props) {
                         </div>
                     )
                     }
-                    </p>
+                    </div>
 
                 </div>
 
@@ -396,8 +401,8 @@ function SideMenuBase(props) {
             <hr/>
 
             {/* Clock and Today Info Section  */}
-            <p className="subheading-font m-0 py-0"><span id="date">{moment().format('dddd MMMM Do, YYYY')}</span></p>
-            <p className="subheading-font m-0 py-0"><Clock format={'h:mm:ss A'} ticking={true} /></p>
+            <div className="subheading-font m-0 py-0 pl-4"><span id="date">{moment().format('dddd MMMM Do, YYYY')}</span></div>
+            <div className="subheading-font m-0 py-0 pl-4"><Clock format={'h:mm:ss A'} ticking={true} /></div>
 
             <hr/>
 
