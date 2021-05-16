@@ -1,6 +1,7 @@
 import React, { Component, useState } from 'react';
 
 import Head from 'next/head'
+import Image from 'next/image'
 import Link from 'next/link'
 
 import { useSelector, useDispatch } from 'react-redux'
@@ -93,12 +94,18 @@ export default function Home(props) {
                     <div className="video-background-container">
                         <div className="video-background-wrapper">
                             {/* <iframe src="https://player.vimeo.com/video/529539150" width="640" height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe> */}
-                            <iframe style={{ pointerEvents: 'none' }} src={`https://player.vimeo.com/video/529539150`} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                            {/* <iframe style={{ pointerEvents: 'none' }} src={`https://player.vimeo.com/video/529539150`} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe> */}
                         </div>
                     </div>
 
                     <div className="image-background-container">
                         {/* <img src={dream} alt="" /> */}
+                        <Image
+                            src="/images/landing/hero.jpg"
+                            alt="Image of the White house in Washington DC"
+                            layout="fill"
+                            objectFit="cover"
+                        />
                     </div>
 
                     <div className="background d-none">
@@ -109,16 +116,17 @@ export default function Home(props) {
 
                     <div className="content">
 
-                        <div className="details">
+                        <div className="details text-center">
+
+                            {/* <h1 className="title">Something To Stand For</h1> */}
+
                             <div className="small">Welcome To</div>
 
                             <div className="brand d-flex flex-column justify-content-center">
 
-                                {/* <img height="200px" width="200px" src="https://cdn.articles.media/email/logo.jpg" alt=""/> */}
-
                                 <div className="">
-                                    <div className="main">Articles</div>
-                                    <div className="sub">Media</div>
+                                    <div className="main">Articles Media</div>
+                                    {/* <div className="sub">Media</div> */}
                                 </div>
 
                             </div>
@@ -132,26 +140,26 @@ export default function Home(props) {
 
                                 <div className="links">
 
-                                    <Link href={ROUTES.TRANSPARENCY_REPORTS}>
-                                        <button className="btn btn-articles-light">
+                                    <Link href={ROUTES.TRANSPARENCY}>
+                                        <button className="btn btn-articles-light btn-sm">
                                             <i className="fas fa-paste" aria-hidden="true"></i>Transparency
                                         </button>
                                     </Link>
 
                                     <Link href={ROUTES.STORE}>
-                                        <button className="btn btn-articles-light">
+                                        <button className="btn btn-articles-light btn-sm">
                                             <i className="fas fa-shopping-cart" aria-hidden="true"></i>Clothing
                                         </button>
                                     </Link>
 
                                     <Link href={ROUTES.NEWS}>
-                                        <button className="btn btn-articles-light">
+                                        <button className="btn btn-articles-light btn-sm">
                                             <i className="fas fa-newspaper" aria-hidden="true"></i>News
                                         </button>
                                     </Link>
 
                                     <Link href={ROUTES.PARTY}>
-                                        <button className="btn btn-articles-light">
+                                        <button className="btn btn-articles-light btn-sm">
                                             <i className="fas fa-scroll" aria-hidden="true"></i>Politics
                                         </button>
                                     </Link>
@@ -735,9 +743,9 @@ export default function Home(props) {
 
                 </div>
 
-                <h1 className="title">
+                {/* <h1 className="title">
                     Welcome to Articles Media
-                </h1>
+                </h1> */}
 
                 <div className="grid">
 

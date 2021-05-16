@@ -355,7 +355,7 @@ function SideMenuBase(props) {
                     null
                     :
                     <Link href={ROUTES.SETTINGS_ACCOUNT} >
-                        <img alt="" className="" style={{borderRadius: '0px'}} width="100%" height="100%" src={`https://articles-website.s3.amazonaws.com/profile_photos/${userReduxState?._id}.jpg` || ''}/>
+                        <img alt="User profile image" className="" style={{borderRadius: '0px'}} width="100%" height="100%" src={`https://articles-website.s3.amazonaws.com/profile_photos/${userReduxState?._id}.jpg` || ''}/>
                     </Link>
                     }
                     <i className={userReduxState?.photo_url ? '':'fas fa-question'}></i>
