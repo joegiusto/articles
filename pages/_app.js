@@ -32,8 +32,9 @@ const secret = process.env.SECRET
 
 let socket
 
+// MEMORY - Many, many, many issues later
 if (typeof window !== 'undefined') {
-    socket = io("https://c949f15e888f.ngrok.io");
+    socket = io("https://e7d13d1eada8.ngrok.io");
 }
 
 function MyApp({ Component, pageProps }) {

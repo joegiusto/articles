@@ -1,8 +1,20 @@
 var ObjectId = require('mongodb').ObjectId; 
-import { connectToDatabase } from "util/mongodb";
 
-export default async (req, res) => {
-    const { db } = await connectToDatabase();
+import { getSession } from 'next-auth/client'
+
+// import { connectToDatabase } from "util/mongodb";
+import connectDB from 'util/mongoose';
+import Order from "models/Order";
+
+export default connectDB(async (req, res) => {
+    const session = await getSession({ req })
+    // const { db } = await connectToDatabase();
+
+    if ( session?.user?.email != "joeygiusto@gmail.com" ) {
+        return res.status(403).json({ 
+            message: 'You do not have the proper role to do that',
+        })
+    }
 
     if (req.method === 'POST') {
         // console.log("Was a post")
@@ -17,13 +29,16 @@ export default async (req, res) => {
 
         res.send({document: result});
     } else {
+
         // Handle any other HTTP method
-        const result = await db
-        .collection("revenue_orders")
-        .find()
-        .toArray();
+        // const result = await db
+        // .collection("revenue_orders")
+        // .find()
+        // .toArray();
+
+        const result = await Order.find({}).populate('user_id', 'first_name last_name')
 
         res.json(result);
     }
     
-};
+});

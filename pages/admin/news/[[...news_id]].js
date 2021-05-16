@@ -12,9 +12,9 @@ import moment from 'moment'
 import axios from 'axios';
 
 // Articles Imports
-import ROUTES from '/components/constants/routes'
-import AdminLayout from '/components/layouts/admin.js';
-import NewsAdd from '/components/admin/news/NewsAdd';
+import ROUTES from 'components/constants/routes'
+import AdminLayout from 'components/layouts/admin.js';
+import NewsAdd from 'components/admin/news/NewsAdd';
 
 class NewsAdmin extends Component {
   constructor(props) {

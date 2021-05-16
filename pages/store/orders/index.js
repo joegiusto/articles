@@ -80,7 +80,8 @@ function Collections() {
                                             </div>
 
                                             <div className="card-body">
-                                                {JSON.stringify(order, null, 4)}
+                                                {/* {JSON.stringify(order, null, 4)} */}
+                                                <pre style={{fontSize: '0.8rem'}}>{JSON.stringify(order, null, 2) }</pre>
                                             </div>
                                             
                                         </div>

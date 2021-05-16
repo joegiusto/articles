@@ -47,11 +47,17 @@ function DonationsAdmin(props) {
 
 	const [donations, setDonations] = useState([]);
 
-	const [donation, setDonation] = useState({
+    const initialDonation = {
+        date: new Date(),
 		createdBy: '5e90cc96579a17440c5d7d52',
-		amount: 100,
+		amount: 500,
 		user_id: '',
-		message: ''
+		message: '',
+        type: 'cash'
+    }
+
+	const [donation, setDonation] = useState({
+        ...initialDonation
 	});
 
 	const [modalShow, setModalShow] = useState(false);
@@ -78,9 +84,16 @@ function DonationsAdmin(props) {
 
 	const handleClose = () => {
 		setModalShow(false); 
-		setActiveDonationID(''); 
-		// setActivePresident({}); 
-		// props.history.push(ROUTES.ADMIN_DONATIONS);
+		setDonation({...initialDonation})
+	}
+
+    const handleDate = (date) => {
+		// console.log(date)
+
+        setDonation(prevState => ({
+            ...prevState,
+            date: date._d
+        }));
 	}
 
 	useEffect(() => {
@@ -104,21 +117,21 @@ function DonationsAdmin(props) {
 			delete donation.user_id;
 		}
 
-		axios.post('/api/admin/donations/add', {
-			donation,
-			selectedDate
+		axios.post('/api/admin/donations/upsert', {
+			donation
 		})
 		.then( (response) => {
 			console.log(response)
 			// setDonations(donations.filter(item => item._id !== response.data.removed_id));
-			setDonations(prevState => ([
-				...prevState,
-				response.data.populatedDonation
-			]));
+			// setDonations(prevState => ([
+			// 	...prevState,
+			// 	response.data.populatedDonation
+			// ]));
 		})
 		.catch( (error) => {
 			console.log(error);
 		});
+
 	}
 
 	const deleteDonation = (id) => {
@@ -140,6 +153,9 @@ function DonationsAdmin(props) {
 		console.log(id);
 
         setModalShow(true);
+        setDonation(
+            donations.find(item => item._id == id)
+        )
 
         // setExpense(prevState => ({
 		// 	...prevState,
@@ -188,8 +204,8 @@ function DonationsAdmin(props) {
                                         <DateTimePicker
                                             label="Date"
                                             inputVariant="outlined"
-                                            value={selectedDate}
-                                            onChange={handleDateChange}
+                                            value={donation.date}
+                                            onChange={handleDate}
                                             className="form-group articles mb-3 w-100"
                                         />
                                     </MuiPickersUtilsProvider>
@@ -206,7 +222,7 @@ function DonationsAdmin(props) {
                                         id="createdBy" 
                                         type="text" 
                                         disabled
-                                        value={donation.createdBy}
+                                        value={donation.createdBy._id}
                                     />
                                 </div>
                             </div>
@@ -231,7 +247,21 @@ function DonationsAdmin(props) {
                             </div>
 
                             <div className="col-lg-6">
-                                <div className="form-group articles">
+
+                                {donation.user_id?._id && 
+                                    <div className="w-100 d-flex justify-content-center align-items-center h-100">
+                                        <div className="mb-3"><AdminViewUserModal user_id={donation.user_id._id} name={`${donation.user_id.first_name} ${donation.user_id.last_name}`} buttonType={'badge'} /></div>
+                                    </div>
+                                }
+
+
+                                {!donation.user_id?._id && 
+                                    <div className="w-100 d-flex justify-content-center align-items-center h-100">
+                                        <button className="btn btn-articles-light btn-sm mb-3">Add User</button>
+                                    </div>
+                                }
+
+                                {/* <div className="form-group articles">
                                     <label for="address">User</label>
                                     <input 
                                         className="form-control with-label"
@@ -239,9 +269,10 @@ function DonationsAdmin(props) {
                                         name="user_id" 
                                         id="user_id" 
                                         type="text" 
-                                        value={donation.user_id}
+                                        value={donation.user_id,_id}
                                     />
-                                </div>
+                                </div> */}
+
                             </div>
 
                             <div className="col-12">

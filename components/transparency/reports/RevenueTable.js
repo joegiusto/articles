@@ -199,7 +199,7 @@ class RevenueTable extends Component {
                             }
 
                             {this.props.subtableSelector != 'revenue-donations' &&  <td colSpan="1" className="border-right-0 ">{sale.type}</td>}
-                            {this.props.subtableSelector === 'revenue-donations' && <td colSpan="1" className="border-right-0 ">{sale.user_id.first_name} {sale.user_id.last_name}</td>}
+                            {this.props.subtableSelector === 'revenue-donations' && <td colSpan="1" className="border-right-0 ">{sale.user_id?.first_name} {sale.user_id?.last_name}</td>}
 
                             <td colSpan="1" className="border-right-0 "></td>
                             
