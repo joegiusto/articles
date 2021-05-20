@@ -190,6 +190,10 @@ export default function Home(props) {
 
                 </div>
 
+                <div className="spacer">
+                    
+                </div>
+
                 {/* Think about it - October 2020 Remodel */}
                 <div className="think-about-it">
 

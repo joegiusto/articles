@@ -170,6 +170,7 @@ body {
         color: white;
         }
     }
+
 }
 
 .side-menu-fixed {
@@ -208,6 +209,11 @@ body {
     // &:first-child {
     //     width: 100%;
     // }
+
+    @media only screen and (min-width: 1924px) {
+        border-left: solid 2px #000;
+        border-right: solid 2px #000;
+    }
 }
 
 .site-wrap {

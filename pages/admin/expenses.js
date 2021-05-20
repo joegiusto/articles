@@ -202,6 +202,10 @@ function ExpensesAdmin(props) {
     return(
         <div className="admin-page admin-expenses">
 
+            <Head>
+                <title>Admin Expenses - Articles</title>
+            </Head>
+
             {/* Add Donation Modal */}
             <Modal show={modalShow} className="donations-modal articles-modal" centered onHide={handleClose}>
 

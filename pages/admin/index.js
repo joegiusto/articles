@@ -190,7 +190,7 @@ function AdminHomePage() {
         <section className="admin-page">
 
             <Head>
-                <title>Admin - Articles</title>
+                <title>Admin Dashboard - Articles</title>
             </Head>
 
             <div className="side-panel">

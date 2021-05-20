@@ -25,6 +25,10 @@ function AdminUsersPage() {
 
     const [ outsetComplete, setOutsetComplete ] = useState(0)
 
+    const [ genderTotals, setGenderTotals ] = useState(0)
+
+    const [ partyTotals, setPartyTotals ] = useState({})
+
     // console.log(router.pathname)
     // console.log(param);
 
@@ -37,6 +41,8 @@ function AdminUsersPage() {
         //   12533: "Hopewell Junction",
         //   12561: "New Paltz"
         // }
+
+        console.log(zip)
     
         if ( Object.keys(zipsToTown).indexOf(zip) > -1 ) {
     
@@ -49,114 +55,152 @@ function AdminUsersPage() {
         }
     }
 
-    useEffect(() => {
+    useEffect( () => {
 
         axios.get('/api/admin/users')
         .then(function (response) {
             
             console.log(response.data)
             setUsers(response.data.users)
+            // console.log(users)
 
         })
         .catch(function (error) {
             console.log(error);
         });
 
-	}, []);
+	}, [] );
 
     useEffect(() => {
 
-        for (var i=0; i < users.length; i++) {
+        if ( Array.isArray(users) && users.length ) {
+            // console.log("Users Updated")
+            // console.log(users)
 
-            console.log(users[i])
-
-            if (users[i].outset === true ) {
-                // setOutsetComplete( outsetComplete + 1 )
-                setOutsetComplete( prevTotal => prevTotal + 1 )
+            // Geographical Related
+            var zipsToGet = users.map(user => user.address?.zip)
+            var zipTotals = {
+                None: 0
             }
+            zipsToGet.map(zip => {
 
-            const currentUserZip = users[i].address.zip
-
-            if (currentUserZip === undefined || currentUserZip === null || currentUserZip === "") {
-
-                setZips({
-                    ...zips,
-                    None: zips.None + 1
-                })
-
-                // self.setState({
-                //   zips: {
-                //     ...self.state.zips,
-                //     None: self.state.zips.None + 1
-                //   }
-                // })
-      
-            } else {
-
-                console.log("Logging")
-                console.log(users[i].address.zip)
-                let currentZip = users[i].address.zip;
-                
-                if ( !isNaN(zips[currentUserZip]) ) {
-                    // console.log("Add One")
-
-                    // setZips( prevZips => ({
-                    //     ...prevZips,
-                    //     [currentZip]: (prevZips[currentUserZip] + 1)
-                    // }) )
-
+                if ( zipTotals[zip] ) {
+                    // console.log("Add")
+                    zipTotals[zip] = zipTotals[zip] + 1
                 } else {
-                    // console.log("Set One")
-
-                    setZips( prevZips => ({
-                        ...prevZips,
-                        [currentZip]: 1
-                    }) )
+                    // console.log("Set")
+                    zipTotals[zip] = 1
                 }
-      
-            }
 
+            }) 
+            setZips(zipTotals)
+            calculateThings(zipTotals)
+
+            // Outset Related
+            var outsetTotal = 0;
+            users.map(user => {
+
+                if (user.outset === true) {
+                    outsetTotal++
+                }
+
+            })
+            setOutsetComplete(outsetTotal)
+
+            // Gender Related
+            var genderTotal = {
+                male: 0,
+                female: 0,
+                other: 0
+            };
+            users.map(user => {
+
+                if (user.gender == 'male') {
+                    genderTotal.male++
+                } else if (user.gender == 'female') {
+                    genderTotal.female++
+                } else {
+                    genderTotal.other++
+                }
+
+            })
+            setGenderTotals(genderTotal)
+
+            // Party Related
+            var partyTotal = {
+                articles: 0,
+                democrat: 0,
+                republican: 0,
+                independent: 0,
+                green: 0,
+                libertarian: 0,
+                constitution: 0,
+                reform: 0,
+                'legal-marijuana-now': 0,
+                'socialist-equality': 0,
+                justice: 0,
+                other: 0
+            };
+            users.map(user => {
+
+                switch(user.political?.party) {
+                    case 'articles':
+                        partyTotal.articles++
+                        break;
+                    case 'democrat':
+                        partyTotal.democrat++
+                        break;
+                    case 'republican':
+                        partyTotal.republican++
+                        break;
+                    case 'independent':
+                        partyTotal.independent++
+                        break;
+                    case 'green':
+                        partyTotal.green++
+                        break;
+                    case 'libertarian':
+                        partyTotal.libertarian++
+                        break;
+                    case 'constitution':
+                        partyTotal.constitution++
+                        break;
+                    case 'reform':
+                        partyTotal.reform++
+                        break;
+                    case 'legal-marijuana-now':
+                        partyTotal.legal-marijuana-now++
+                        break;
+                    case 'socialist-equality':
+                        partyTotal.socialist-equality++
+                        break;
+                    case 'justice':
+                        partyTotal.justice++
+                        break;
+                    default:
+                        partyTotal.other++
+                }
+
+            })
+            setPartyTotals(partyTotal)
         }
-
-        setTimeout( calculateThings, 2000 )
 
 	}, [users]);
 
-    function calculateThings() {
-        if ( users.length > 0 ) {
-            axios.post('/api/admin/zipsToTowns', {
-                zips: zips,
-                format: 'tally'
-            })
-            .then((response) => {
-                console.log(response.data)
-    
-                setZipsToTown(response.data)
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-        }
+    function calculateThings(zipTotals) {
+
+        axios.post('/api/admin/zipsToTowns', {
+            zips: zipTotals,
+            format: 'tally'
+        })
+        .then((response) => {
+            setZipsToTown(response.data)
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
     }
-
-    // useEffect(() => {
-
-    //     if ( users.length > 0 ) {
-    //         axios.post('/api/admin/zipsToTowns', {
-    //             zips: zips,
-    //             format: 'tally'
-    //         })
-    //         .then((response) => {
-    //             console.log(response.data)
-    
-    //             setZipsToTown(response.data)
-    //         })
-    //         .catch(function (error) {
-    //             console.log(error);
-    //         });
-    //     }
-
-	// }, [users]);
   
     return(
         <section className="admin-page admin-users">
@@ -167,12 +211,21 @@ function AdminUsersPage() {
 
             <div className="side-panel">
 
+                <div className="text-center mb-3"><span>{users.length} Users</span></div>
+
                 <div className="card mb-3">
-                    <div className="card-header">Outset {outsetComplete}</div>
+
+                    <div className="card-header d-flex justify-content-between">
+                        <span>Outset</span>
+                        <span>{outsetComplete}/{users.length} Users</span>
+                    </div>
 
                     <div className="card-body">
-                        <div>Outset Complete: {(Math.floor((outsetComplete / users.length) * 100))}%</div>
+                        <div>Outset Complete: {outsetComplete} | {(Math.floor((outsetComplete / users.length) * 100))}%</div>
+                        <div>Not Complete (1 Week): 0 | 0%</div>
+                        <div>Not Complete (1 Month): 0 | 0%</div>
                     </div>
+
                 </div>
 
                 <div className="card mb-3">
@@ -191,7 +244,9 @@ function AdminUsersPage() {
                     <div className="card-header">Gender Data</div>
 
                     <div className="card-body">
-                        {/* <div>Outset Complete: 0%</div> */}
+                        <div>Female: {genderTotals.female}</div>
+                        <div>Male: {genderTotals.male}</div>
+                        <div>Other: {genderTotals.other}</div>
                     </div>
                 </div>
 
@@ -199,7 +254,11 @@ function AdminUsersPage() {
                     <div className="card-header">Political Data</div>
 
                     <div className="card-body">
-                        {/* <div>Outset Complete: 0%</div> */}
+
+                        {Object.entries(partyTotals).map(([key, val]) => 
+                                <div key={key}>{key}: {val}</div>
+                        )}
+
                     </div>
                 </div>
 

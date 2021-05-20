@@ -1,37 +1,8 @@
-// import Head from 'next/head'
-// import Link from 'next/link'
-// import React, { Component, useState } from 'react';
-// import { useRouter } from 'next/router'
-
-
-
-// function AdminHomePage() {
-//     const router = useRouter()
-//     const { param } = router.query
-  
-//     return(
-//         <section className="submissions-page">
-
-//             <Head>
-//                 <title>Admin - Articles</title>
-//             </Head> 
-
-//             <div className="container py-3">
-//                 <h2>Submissions Page</h2>
-//                 <p>Admin stuff here.</p>
-//             </div>
-
-//         </section>
-//     )
-// }
-
-// AdminHomePage.Layout = AdminLayout;
-// export default AdminHomePage;
-
 import React, { Component, useState, useEffect } from 'react';
 
+import Head from 'next/head'
+
 import axios from 'axios'
-// import { Link } from 'react-router-dom';
 import moment from 'moment'
 
 import Modal from 'react-bootstrap/Modal';
@@ -41,7 +12,6 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 import { DateTimePicker } from "@material-ui/pickers";
 
-// import AdminViewUserModal from './Shared/AdminViewUserModal'
 import AdminLayout from 'components/layouts/admin.js';
 import AdminViewUserModal from 'components/admin/AdminViewUserModal';
 // import ROUTES from 'components/constants/routes'
@@ -75,6 +45,10 @@ function SubmissionsAdmin(props) {
 
     return(
         <div className="admin-page admin-submissions">
+
+            <Head>
+                <title>Admin Submissions - Articles</title>
+            </Head>
 
             <Modal show={modalShow} className="donations-modal articles-modal" centered onHide={handleClose}>
 

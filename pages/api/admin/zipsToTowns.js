@@ -14,11 +14,13 @@ export default async (req, res) => {
 
         let converted = {}
 
-        console.log(req.body)
+        // console.log(req.body)
 
         if (req.body.format === 'tally') {
 
             let cleanZips = Object.keys(req.body.zips).filter(zip => zip !== 'None');
+
+            console.log(cleanZips)
 
             promises();
 

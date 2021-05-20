@@ -678,6 +678,10 @@ class Ads extends Component {
   
       return (
         <div className="admin-page admin-ads">
+
+            <Head>
+                <title>Admin Ads - Articles</title>
+            </Head>
     
             <div className="side-panel">
     

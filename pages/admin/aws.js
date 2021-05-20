@@ -178,77 +178,81 @@ class AWS extends Component {
   render() {
 
     return (
-      <div className="admin-page admin-aws">
+        <div className="admin-page admin-aws">
 
-        <div className="side-panel">
+            <Head>
+                <title>Admin AWS - Articles</title>
+            </Head>
 
-        	<div className="card">
+            <div className="side-panel">
 
-            	<div className="card-header">Directories</div>
+                <div className="card">
 
-				<div className="card-body">
+                    <div className="card-header">Directories</div>
 
-					{this.state.directories.map(directory => (
-						<div className="directory-link" onClick={() => this.getDirectoryPhotos(directory.Prefix)}>{directory.Prefix}</div>
-					))}
+                    <div className="card-body">
 
-				</div>
+                        {this.state.directories.map(directory => (
+                            <div className="directory-link" onClick={() => this.getDirectoryPhotos(directory.Prefix)}>{directory.Prefix}</div>
+                        ))}
 
-          	</div>
-        </div>
-
-        <div className="main-panel">
-
-			<div>{this.state.newProfilePhotoLoading ? 'Uploading' : ''}</div>
-
-			<div className="row">
-                
-                <div className="col-lg-4">
-
-                    <div className="aws-photo-test">
-                        <div className="upload-container">
-                            <div className="upload-photo-wrap mr-1">
-                                <div className="upload-photo noselect">+</div>
-                                <input onChange={this.onChange} type="file" name="myfile" />
-                            </div>
-                        </div>
                     </div>
 
-    			    <div className="aws-photo-test mt-3 mb-3">
-        
-        				<h3 className="text-muted mt-2 w-100">Directories</h3>
-        
-        				<div className="directory-squares">
-                            <div className="square" onClick={() => this.getDirectoryPhotos('')}>{'/'}</div>
-        					{this.state.directories.map(directory => (
-        						<div className="square" onClick={() => this.getDirectoryPhotos(directory.Prefix)}>{directory.Prefix}</div>
-        					))}
-        				</div>
-        
-        			</div> 
+                </div>
+            </div>
+
+            <div className="main-panel">
+
+                <div>{this.state.newProfilePhotoLoading ? 'Uploading' : ''}</div>
+
+                <div className="row">
+                    
+                    <div className="col-lg-4">
+
+                        <div className="aws-photo-test">
+                            <div className="upload-container">
+                                <div className="upload-photo-wrap mr-1">
+                                    <div className="upload-photo noselect">+</div>
+                                    <input onChange={this.onChange} type="file" name="myfile" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="aws-photo-test mt-3 mb-3">
+            
+                            <h3 className="text-muted mt-2 w-100">Directories</h3>
+            
+                            <div className="directory-squares">
+                                <div className="square" onClick={() => this.getDirectoryPhotos('')}>{'/'}</div>
+                                {this.state.directories.map(directory => (
+                                    <div className="square" onClick={() => this.getDirectoryPhotos(directory.Prefix)}>{directory.Prefix}</div>
+                                ))}
+                            </div>
+            
+                        </div> 
+
+                    </div>
+
+                    <div className="col-lg-8">
+                        {this.state.photos.map((photo, i) => (
+            
+                            <div className="aws-photo-test image-container">
+                                <div onClick={() => this.removePhoto(photo)} className="delete noselect">X</div>
+            
+                                <a key={i} href={`https://articles-website.s3.amazonaws.com/${photo}`} target="_blank" rel="noopener noreferrer">
+                                    <img key={i} height="150px" alt="" src={`https://articles-website.s3.amazonaws.com/${photo}`} />
+                                </a>
+                            </div>
+            
+                        ))}
+                    </div>
 
                 </div>
 
-    			<div className="col-lg-8">
-    			    {this.state.photos.map((photo, i) => (
-        
-        				<div className="aws-photo-test image-container">
-        					<div onClick={() => this.removePhoto(photo)} className="delete noselect">X</div>
-        
-        					<a key={i} href={`https://articles-website.s3.amazonaws.com/${photo}`} target="_blank" rel="noopener noreferrer">
-        						<img key={i} height="150px" alt="" src={`https://articles-website.s3.amazonaws.com/${photo}`} />
-        					</a>
-        				</div>
-        
-        			))}
-    			</div>
+            </div>
 
-			</div>
 
         </div>
-
-
-      </div>
     );
   }
 }

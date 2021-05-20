@@ -195,9 +195,24 @@ function AdminOrders() {
 		});
 	}
 
-    function deleteItem(item_id) {
-        console.log("Delete Item called")
-    }
+    // function deleteItem(item_id) {
+    //     console.log("Delete Item called")
+    // }
+
+    const deleteItem = (id) => {
+		// console.log(id)
+
+		axios.post('/api/admin/orders/delete', {
+			id
+		})
+		.then( (response) => {
+			console.log(response)
+			setOrders(orders.filter(item => item._id !== response.data.removed_id));
+		})
+		.catch( (error) => {
+			console.log(error);
+		});
+	}
 
     const editOrder = (id) => {
 		console.log(id);
@@ -516,37 +531,40 @@ function AdminOrders() {
                                 <tbody>
 
                                     { orders.filter(order => order.status === table_tab).length > 0 &&
-                                    orders.filter(order => order.status === table_tab).sort((a, b) => new Date(b.date) - new Date(a.date)).map(donation => (
 
-                                        <tr key={donation._id}>
+                                        orders.filter(order => order.status === table_tab).sort((a, b) => new Date(b.date) - new Date(a.date)).map(donation => (
 
-                                            <th scope="row">{moment(donation?.date).format('LL')}</th>
+                                            <tr key={donation._id}>
 
-                                            <td>
-                                                {donation?.user_id?._id ? <AdminViewUserModal user_id={donation?.user_id._id} name={`${donation.user_id.first_name} ${donation.user_id.last_name}`} buttonType={'badge'} /> : 'No User'}
-                                            </td>
+                                                <th scope="row">{moment(donation?.date).format('LL')}</th>
 
-                                            <td>{donation?.products?.length}</td>
+                                                <td>
+                                                    {donation?.user_id?._id ? <AdminViewUserModal user_id={donation?.user_id._id} name={`${donation.user_id.first_name} ${donation.user_id.last_name}`} buttonType={'badge'} /> : 'No User'}
+                                                </td>
 
-                                            <td>
-                                                {donation?.payment.type == 'cash' && <i className="fas fa-money-bill mr-0"></i>}
-                                                {donation?.payment.type == 'card' && <i className="far fa-credit-card mr-0"></i>}
-                                            </td>
+                                                <td>{donation?.products?.length}</td>
 
-                                            <td>${(donation?.payment.total / 100).toFixed(2)}</td>
+                                                <td>
+                                                    {donation?.payment.type == 'cash' && <i className="fas fa-money-bill mr-0"></i>}
+                                                    {donation?.payment.type == 'card' && <i className="far fa-credit-card mr-0"></i>}
+                                                </td>
 
-                                            {/* <td></td> */}
+                                                <td>${(donation?.payment.total / 100).toFixed(2)}</td>
 
-                                            {/* <td>{donation.matched ? 'True' : 'False'}</td> */}
+                                                {/* <td></td> */}
 
-                                            <td>
-                                                <ConfirmDelete afterConfirm={ () => deleteItem(donation._id) }/>
-                                                <div style={{ cursor: 'pointer' }} onClick={() => editOrder(donation._id)} className="badge badge-dark noselect ml-1">Edit</div>
-                                            </td>
+                                                {/* <td>{donation.matched ? 'True' : 'False'}</td> */}
 
-                                        </tr>
+                                                <td>
+                                                    <ConfirmDelete afterConfirm={ () => deleteItem(donation._id) }/>
+                                                    <div style={{ cursor: 'pointer' }} onClick={() => editOrder(donation._id)} className="badge badge-dark noselect ml-1">Edit</div>
+                                                </td>
 
-                                    ))}
+                                            </tr>
+
+                                        ))
+                                        
+                                    }
 
                                     { orders.filter(order => order.status === table_tab).length == 0 &&
                                         <tr><div className="px-3 py-2">No orders to display</div></tr>

@@ -259,6 +259,10 @@ class Proposals extends Component {
   
       return (
         <div className="admin-page admin-proposals mt-5">
+
+            <Head>
+                <title>Admin Proposals - Articles</title>
+            </Head>
   
             <div className="container">
         

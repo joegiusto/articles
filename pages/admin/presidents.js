@@ -91,107 +91,111 @@ function Presidents(props) {
     }
     
     return (
-      <section className="admin-page admin-presidents">
-  
-        <div className="main w-100">
-  
-          <div className="presidents-container card">
+        <section className="admin-page admin-presidents">
+
+            <Head>
+                <title>Admin Presidents - Articles</title>
+            </Head>
     
-            <div className="container">
-              <h1>Manage Presidents</h1>
-              <p>Click a president to manage their details</p>
-          
-              <div className="presidents">
-                {presidents.map((president) => 
-      
-                  <Link to={`${ROUTES.ADMIN_PRESIDENTS}/${president._id}`} onClick={() => setPresidentID(president._id)}>
-                    <PresidentCard president={president}/>
-                  </Link>
-      
-                )}
-              </div>
-            </div>
+            <div className="main w-100">
     
-          </div>
-    
-          <div className="manage-president container">
-    
-            <div className="p-3">
-              <div className="form-group articles">
-                <label for="address">First Name</label>
-                <input className="form-control with-label" onChange={e => setFirstName(e.target.value)} name="first_name" id="first_name" type="text" value={first_name}/>
-              </div>
-      
-              <div className="form-group articles">
-                <label for="address">Last Name</label>
-                <input className="form-control with-label" onChange={e => setLastName(e.target.value)} name="last_name" id="last_name" type="text" value={last_name}/>
-              </div>
-      
-              <div className="form-group articles">
-                <label for="address">Photo</label>
-                <input className="form-control with-label" onChange={e => setPhoto(e.target.value)} name="photo" id="photo" type="text" value={photo}/>
-              </div>
-  
-              <div className="card mb-3">
-                <div className="card-body">
-  
-                  {terms.map(term => 
-                    <div className="mb-3">
-  
-                      <div className="d-flex d-flex-lg-row align-items-center">
-  
-                        <i className="far fa-edit"></i>
-  
-                        <div>
-                          <div>{moment(term.start_date).format("LL")} - {moment(term.end_date).format("LL")}</div>
-                          <div>{term.party}</div>
-                        </div>
-  
-                      </div>
-  
-                    </div>
-                  )}
-  
-                  <div className="row">
-  
-                    <div className="col-md-6">
-                      <div className="form-group articles">
-                        <label for="start_date">Start Date</label>
-                        <input className="form-control with-label" name="start_date" id="start_date" type="text"/>
-                      </div>
-                    </div>
-  
-                    <div className="col-md-6">
-                      <div className="form-group articles">
-                        <label for="end_date">End Date</label>
-                        <input className="form-control with-label" name="end_date" id="end_date" type="text"/>
-                      </div>
-                    </div>
-  
-                    <div className="col-md-6">
-                      <div className="form-group articles">
-                        <label for="party">Party</label>
-                        <input className="form-control with-label" name="party" id="party" type="text"/>
-                      </div>
-                    </div>
-  
-                  </div>
-  
-                  <button className="btn btn-articles-light">Add Term</button>
-  
+            <div className="presidents-container card">
+        
+                <div className="container">
+                <h1>Manage Presidents</h1>
+                <p>Click a president to manage their details</p>
+            
+                <div className="presidents">
+                    {presidents.map((president) => 
+        
+                    <Link to={`${ROUTES.ADMIN_PRESIDENTS}/${president._id}`} onClick={() => setPresidentID(president._id)}>
+                        <PresidentCard president={president}/>
+                    </Link>
+        
+                    )}
                 </div>
-              </div>
-  
-              <button onClick={() => cancel()} className="btn btn-articles-light">Cancel</button>
-              <button onClick={() => addPresident()} className="btn btn-articles-light">Add</button>
-  
+                </div>
+        
+            </div>
+        
+            <div className="manage-president container">
+        
+                <div className="p-3">
+                <div className="form-group articles">
+                    <label for="address">First Name</label>
+                    <input className="form-control with-label" onChange={e => setFirstName(e.target.value)} name="first_name" id="first_name" type="text" value={first_name}/>
+                </div>
+        
+                <div className="form-group articles">
+                    <label for="address">Last Name</label>
+                    <input className="form-control with-label" onChange={e => setLastName(e.target.value)} name="last_name" id="last_name" type="text" value={last_name}/>
+                </div>
+        
+                <div className="form-group articles">
+                    <label for="address">Photo</label>
+                    <input className="form-control with-label" onChange={e => setPhoto(e.target.value)} name="photo" id="photo" type="text" value={photo}/>
+                </div>
+    
+                <div className="card mb-3">
+                    <div className="card-body">
+    
+                    {terms.map(term => 
+                        <div className="mb-3">
+    
+                        <div className="d-flex d-flex-lg-row align-items-center">
+    
+                            <i className="far fa-edit"></i>
+    
+                            <div>
+                            <div>{moment(term.start_date).format("LL")} - {moment(term.end_date).format("LL")}</div>
+                            <div>{term.party}</div>
+                            </div>
+    
+                        </div>
+    
+                        </div>
+                    )}
+    
+                    <div className="row">
+    
+                        <div className="col-md-6">
+                        <div className="form-group articles">
+                            <label for="start_date">Start Date</label>
+                            <input className="form-control with-label" name="start_date" id="start_date" type="text"/>
+                        </div>
+                        </div>
+    
+                        <div className="col-md-6">
+                        <div className="form-group articles">
+                            <label for="end_date">End Date</label>
+                            <input className="form-control with-label" name="end_date" id="end_date" type="text"/>
+                        </div>
+                        </div>
+    
+                        <div className="col-md-6">
+                        <div className="form-group articles">
+                            <label for="party">Party</label>
+                            <input className="form-control with-label" name="party" id="party" type="text"/>
+                        </div>
+                        </div>
+    
+                    </div>
+    
+                    <button className="btn btn-articles-light">Add Term</button>
+    
+                    </div>
+                </div>
+    
+                <button onClick={() => cancel()} className="btn btn-articles-light">Cancel</button>
+                <button onClick={() => addPresident()} className="btn btn-articles-light">Add</button>
+    
+                </div>
+        
             </div>
     
-          </div>
-  
-        </div>
-  
-      </section>
+            </div>
+    
+        </section>
     );
 }
 

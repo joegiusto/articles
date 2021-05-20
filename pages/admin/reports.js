@@ -13,7 +13,7 @@ function AdminHomePage() {
         <section className="submissions-page">
 
             <Head>
-                <title>Admin - Articles</title>
+                <title>Admin Reports - Articles</title>
             </Head> 
 
             <div className="container py-3">
