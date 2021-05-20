@@ -42,11 +42,8 @@ function Sockets(props) {
 
             setConnectedSockets(data.connections)
             setUserSockets(data.list)
+            setConnected(true);
 
-            // self.setState({
-            //     connectedSockets: data.connections,
-            //     userSockets: data.list
-            // })
         });
 
     })
@@ -112,7 +109,7 @@ function Sockets(props) {
         
                                 <button 
                                     className="btn btn-articles-light mb-1" 
-                                    onClick={() => this.testNotification({
+                                    onClick={() => testNotification({
                                         type: 'basic',
                                         message: 'Test notification, please ignore.',
                                     })}
@@ -122,7 +119,7 @@ function Sockets(props) {
         
                                 <button 
                                     className="btn btn-articles-light mb-1" 
-                                    onClick={() => this.testNotification({
+                                    onClick={() => testNotification({
                                         type: 'donation',
                                         amount: '$100.00',
                                         user: 'Joey G',
@@ -134,7 +131,7 @@ function Sockets(props) {
         
                                 <button 
                                     className="btn btn-articles-light mb-1" 
-                                    onClick={() => this.testNotification({
+                                    onClick={() => testNotification({
                                         type: 'expense',
                                         expense_type: 'recurring',
                                         amount: '$17.29',
@@ -146,7 +143,7 @@ function Sockets(props) {
         
                                 <button 
                                     className="btn btn-articles-light" 
-                                    onClick={() => this.testNotification({
+                                    onClick={() => testNotification({
                                         type: 'unhandled',
                                         message: 'Test notification (stays open)',
                                         force_notification_interaction: true

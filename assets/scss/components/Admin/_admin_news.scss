@@ -72,6 +72,15 @@
     }
 
     .side-panel {
+        display: flex;
+        overflow: auto;
+        min-height: initial;
+        
+        .side-panel-sticky {
+            position: sticky;
+            top: 0;
+            align-self: flex-start;
+        }
 
         .shortcuts {
 
@@ -92,10 +101,23 @@
     }
 
     .main-panel {
+        // max-height: calc(100vh - 100px);
+
         .results {
             display: grid;
-            grid-template-columns: repeat(3,1fr);
-            grid-gap: 10px 10px;
+            grid-template-columns: repeat(1, 1fr);
+            grid-gap: 5px 5px;
+            padding-bottom: 3rem;
+
+            @include media-breakpoint-up(sm) {
+                grid-template-columns: repeat(2, 1fr);
+                grid-gap: 10px 10px;
+            }
+            
+            @include media-breakpoint-up(lg) {
+                grid-template-columns: repeat(3, 1fr);
+                grid-gap: 10px 10px;
+            }
 
             .result {
 
@@ -109,6 +131,7 @@
                 }
             }
         }
+
     }
 
 }

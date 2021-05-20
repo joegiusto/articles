@@ -17,8 +17,38 @@ function AdminHomePage() {
             </Head> 
 
             <div className="container py-3">
+
                 <h2>Messages Page</h2>
                 <p>Admin stuff here.</p>
+
+                <div className="">
+
+                    <div style={{width: '100px'}} class="embed-responsive embed-responsive-1by1 border bg-white shadow d-flex justify-content-center align-items-center">
+    
+                        <div className="text-center">
+                            <div><h2 className="mb-0">0</h2></div>
+        
+                            <div className="text-muted">
+                                Threads
+                            </div>
+                        </div>
+    
+                    </div>
+    
+                    <div style={{width: '100px'}} class="embed-responsive embed-responsive-1by1 border bg-white shadow d-flex justify-content-center align-items-center">
+    
+                        <div className="text-center">
+                            <div><h2 className="mb-0">0</h2></div>
+        
+                            <div className="text-muted">
+                                Threads
+                            </div>
+                        </div>
+    
+                    </div>
+
+                </div>
+
             </div>
 
         </section>

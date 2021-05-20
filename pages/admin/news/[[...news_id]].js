@@ -92,54 +92,57 @@ function AdminNews() {
 
             <div className="side-panel">
 
-                <div className="card mb-3">
-
-                    <div className="card-header d-flex justify-content-between">
-                        <span>News</span>
-                        <span>{news.length} Documents</span>
+                <div className="side-panel-sticky">
+                    <div className="card mb-3">
+    
+                        <div className="card-header d-flex justify-content-between">
+                            <span>News</span>
+                            <span>{news.length} Documents</span>
+                        </div>
+    
+                        <div className="card-body">
+                            <div>Stories: {news.filter(document => document.news_type == 'story').length} | { ( (news.filter(document => document.news_type == 'story').length / news.length) * 100 ).toFixed(2)}%</div>
+                            <div>Issues: {news.filter(document => document.news_type == 'issue').length} | { ( (news.filter(document => document.news_type == 'issue').length / news.length) * 100 ).toFixed(2)}%</div>
+                            <div>Myths: {news.filter(document => document.news_type == 'myth').length} | { ( (news.filter(document => document.news_type == 'myth').length / news.length) * 100 ).toFixed(2)}%</div>
+                        </div>
+    
                     </div>
-
-                    <div className="card-body">
-                        <div>Stories: {news.filter(document => document.news_type == 'story').length} | { ( (news.filter(document => document.news_type == 'story').length / news.length) * 100 ).toFixed(2)}%</div>
-                        <div>Issues: {news.filter(document => document.news_type == 'issue').length} | { ( (news.filter(document => document.news_type == 'issue').length / news.length) * 100 ).toFixed(2)}%</div>
-                        <div>Myths: {news.filter(document => document.news_type == 'myth').length} | { ( (news.filter(document => document.news_type == 'myth').length / news.length) * 100 ).toFixed(2)}%</div>
-                    </div>
-
-                </div>
-
-                <div className="card mb-3">
-
-                    <div className="card-header d-flex justify-content-between">
-                        <span>Shortcuts</span>
-                    </div>
-
-                    <div className="card-body shortcuts">
-                        
-                        <button className="shortcut btn btn-articles-light btn-sm w-100 mb-1">
-                            <span>Meet Cybertruck</span>
-                            <span className="badge badge-danger border clear-badge">Delete</span>
-                        </button>
-
-                        <button disabled className="shortcut btn btn-articles-light btn-sm w-100 mb-1">
-                            <span>Shortcut 2</span>
-                            <span className="badge badge-light border set-badge">Set</span>
-                        </button>
-
-                        <button disabled className="shortcut btn btn-articles-light btn-sm w-100 mb-1">
-                            <span>Shortcut 3</span>
-                            <span className="badge badge-light border set-badge">Set</span>
-                        </button>
-
-                        <button disabled className="shortcut btn btn-articles-light btn-sm w-100 mb-1">
-                            <span>Shortcut 4</span>
-                            <span className="badge badge-light border set-badge">Set</span>
-                        </button>
-
-                        <button disabled className="shortcut btn btn-articles-light btn-sm w-100">
-                            <span>Shortcut 5</span>
-                            <span className="badge badge-light border set-badge">Set</span>
-                        </button>
-                        
+    
+                    <div className="card mb-3">
+    
+                        <div className="card-header d-flex justify-content-between">
+                            <span>Shortcuts</span>
+                        </div>
+    
+                        <div className="card-body shortcuts">
+                            
+                            <button className="shortcut btn btn-articles-light btn-sm w-100 mb-1">
+                                <span>Meet Cybertruck</span>
+                                <span className="badge badge-danger border clear-badge">Delete</span>
+                            </button>
+    
+                            <button disabled className="shortcut btn btn-articles-light btn-sm w-100 mb-1">
+                                <span>Shortcut 2</span>
+                                <span className="badge badge-light border set-badge">Set</span>
+                            </button>
+    
+                            <button disabled className="shortcut btn btn-articles-light btn-sm w-100 mb-1">
+                                <span>Shortcut 3</span>
+                                <span className="badge badge-light border set-badge">Set</span>
+                            </button>
+    
+                            <button disabled className="shortcut btn btn-articles-light btn-sm w-100 mb-1">
+                                <span>Shortcut 4</span>
+                                <span className="badge badge-light border set-badge">Set</span>
+                            </button>
+    
+                            <button disabled className="shortcut btn btn-articles-light btn-sm w-100">
+                                <span>Shortcut 5</span>
+                                <span className="badge badge-light border set-badge">Set</span>
+                            </button>
+                            
+                        </div>
+    
                     </div>
 
                 </div>
@@ -148,7 +151,7 @@ function AdminNews() {
 
             <div className="main-panel">
 
-                <div className="d-flex">
+                <div className="d-flex flex-wrap justify-content-center">
 
                     <div className="news-type-filters mb-3 mr-lg-3 flex-shrink-0">
                         <button onClick={ () => setNewsTypeFilter('all') } className={"btn btn-articles-light h-100 px-4 "  + (newsTypeFilter == 'all' && 'active') }>All</button>
