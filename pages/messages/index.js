@@ -24,28 +24,6 @@ import axios from 'axios'
 import ROUTES from '../../components/constants/routes'
 import SocketContext from '../../components/context/socket'
 
-// import NewsLayout from '../../components/layouts/news.js';
-
-function PartyHomePage() {
-    const router = useRouter()
-    const { param } = router.query
-
-    console.log(router.pathname)
-    console.log(param);
-  
-    return(
-        <section className="party-page">
-            <Head>
-                <title>Messages - Articles</title>
-            </Head>
-            <div className="container py-3">
-                <h2>Messages Page</h2>
-                <p>This is the Messages page.</p>
-            </div>
-        </section>
-    )
-}
-
 function Messages(props) {
     const router = useRouter()
     const { param } = router.query
@@ -544,6 +522,10 @@ function Messages(props) {
     return (
         <div className="messages-page">
 
+            <Head>
+                <title>Messages - Articles</title>
+            </Head>
+
             <Modal show={publicPgpKeyModal} className="pgp-modal articles-modal" centered onHide={handleClose}>
 
                 <Modal.Header closeButton>
@@ -988,6 +970,3 @@ const MessagesWithSocket = props => (
 )
   
 export default MessagesWithSocket;
-
-// PartyHomePage.Layout = NewsLayout;
-// export default PartyHomePage;

@@ -1,21 +1,31 @@
-.content-wrap.dark-mode {
+.dark-mode {
 
-  .tab-bar a {
-    color: #000;
-  }
+    .tab-bar a {
+        color: #000;
 
-  .admin-page {
-
-    a {
-      color: #000;
+        &:hover {
+            color: rgb(85, 85, 85)!important;
+        }
     }
 
-    .upload-photo {
-      background-color: #000!important;
-      color: white!important;
-    }
+    .admin-page {
 
-  }
+        .side-panel {
+            .card-header {
+                color: black;
+            }
+        }
+
+        a {
+            color: #000!important;
+        }
+
+        .upload-photo {
+            background-color: #000!important;
+            color: white!important;
+        }
+
+    }
 
 }
 

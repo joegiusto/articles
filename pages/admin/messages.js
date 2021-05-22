@@ -19,11 +19,11 @@ function AdminHomePage() {
             <div className="container py-3">
 
                 <h2>Messages Page</h2>
-                <p>Admin stuff here.</p>
+                <p>Different metrics and actions for managing the messages portion of the website.</p>
 
-                <div className="">
+                <div className="d-flex">
 
-                    <div style={{width: '100px'}} class="embed-responsive embed-responsive-1by1 border bg-white shadow d-flex justify-content-center align-items-center">
+                    <div style={{width: '100px'}} class="m-1 embed-responsive embed-responsive-1by1 border card shadow-sm d-flex flex-row justify-content-center align-items-center">
     
                         <div className="text-center">
                             <div><h2 className="mb-0">0</h2></div>
@@ -34,14 +34,50 @@ function AdminHomePage() {
                         </div>
     
                     </div>
-    
-                    <div style={{width: '100px'}} class="embed-responsive embed-responsive-1by1 border bg-white shadow d-flex justify-content-center align-items-center">
+                    
+                    <div style={{width: '100px'}} class="m-1 embed-responsive embed-responsive-1by1 border card shadow-sm d-flex flex-row justify-content-center align-items-center">
     
                         <div className="text-center">
                             <div><h2 className="mb-0">0</h2></div>
         
                             <div className="text-muted">
-                                Threads
+                                Groups
+                            </div>
+                        </div>
+    
+                    </div>
+    
+                    <div style={{width: '100px'}} class="m-1 embed-responsive embed-responsive-1by1 border card shadow-sm d-flex flex-row justify-content-center align-items-center">
+    
+                        <div className="text-center">
+                            <div><h2 className="mb-0">0</h2></div>
+        
+                            <div className="text-muted">
+                                GB
+                            </div>
+                        </div>
+    
+                    </div>
+
+                    <div style={{width: '100px'}} class="m-1 embed-responsive embed-responsive-1by1 border card shadow-sm d-flex flex-row justify-content-center align-items-center">
+    
+                        <div className="text-center">
+                            <div><h2 className="mb-0">0</h2></div>
+        
+                            <div className="text-muted">
+                                Reports
+                            </div>
+                        </div>
+    
+                    </div>
+
+                    <div style={{width: '100px'}} class="m-1 embed-responsive embed-responsive-1by1 border card shadow-sm d-flex flex-row justify-content-center align-items-center">
+    
+                        <div className="text-center">
+                            <div><h2 className="mb-0">0</h2></div>
+        
+                            <div className="text-muted">
+                                GB
                             </div>
                         </div>
     

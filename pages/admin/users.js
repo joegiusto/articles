@@ -5,18 +5,29 @@ import Link from 'next/link'
 
 import { useRouter } from 'next/router'
 
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
+
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
+import { DateTimePicker } from "@material-ui/pickers";
+import { ThemeProvider } from "@material-ui/styles";
 
 import axios from 'axios'
 
 import AdminLayout from 'components/layouts/admin.js';
 import ConfirmDelete from 'components/ConfirmDelete';
 import AdminViewUserModal from 'components/admin/AdminViewUserModal';
+import articlesTheme from 'components/material_ui/articlesTheme'
+import ROUTES from 'components/constants/routes'
 function AdminUsersPage() {
     const router = useRouter()
     const { param } = router.query
+
     const [ users, setUsers ] = useState([])
+    const [ user, setUser ] = useState({})
 
     const [ zips, setZips ] = useState({
         None: 0
@@ -29,20 +40,15 @@ function AdminUsersPage() {
 
     const [ partyTotals, setPartyTotals ] = useState({})
 
-    // console.log(router.pathname)
-    // console.log(param);
+    const [searchFilter, setSearchFilter] = useState('')
+
+    const [modalShow, setModalShow] = useState(false);
+
+    const [selectedDate, handleDateChange] = useState(new Date());
 
     function checkZipName(zip) {
 
-        // Old way, MongoDB now has collection of every US Zip code
-        // const directory = {
-        //   12508: "Beacon",
-        //   12524: 'Fishkill',
-        //   12533: "Hopewell Junction",
-        //   12561: "New Paltz"
-        // }
-
-        console.log(zip)
+        // console.log(zip)
     
         if ( Object.keys(zipsToTown).indexOf(zip) > -1 ) {
     
@@ -187,7 +193,18 @@ function AdminUsersPage() {
 
 	}, [users]);
 
+    const handleUserChange = e => {
+		const { name, value } = e.target;
+
+		setUser(prevState => ({
+			...prevState,
+			[name]: value
+		}));
+	};
+
     function calculateThings(zipTotals) {
+
+        console.log("Zip to towns called (calculateThings)")
 
         axios.post('/api/admin/zipsToTowns', {
             zips: zipTotals,
@@ -201,17 +218,410 @@ function AdminUsersPage() {
         });
 
     }
+
+    const editUser = (id) => {
+		// console.log(`Edit user called ${id}`);
+
+        axios.post('/api/admin/user', {
+            user_id: id,
+        })
+        .then((response) => {
+            setUser(response.data.user)
+            setModalShow(true);
+        })
+        .catch(function (error) {
+            console.log(error);
+            setModalShow(false);
+            setUser({})
+        });
+	}
+
+    const handleClose = () => {
+        setModalShow(false); 
+    }
+
+    function removeUser(id) {
+        console.log( `Remove user of id ${id} called, Please do this in mongoDB Compass for now.` )
+    }
+
+    function returnGenderBadge(gender) {
+        if (user.gender == 'male') {
+            return <span className="badge badge-articles mx-1">Male</span>
+        } else if (user.gender == 'female') {
+            return <span className="badge badge-articles mx-1">Female</span>
+        } else {
+            return <span className="badge badge-articles mx-1">Other</span>
+        }
+    }
   
     return(
         <section className="admin-page admin-users">
 
             <Head>
                 <title>Admin Users - Articles</title>
-            </Head> 
+            </Head>
+
+            <Modal show={modalShow} className="user-modal articles-modal" centered onHide={handleClose}>
+
+                <Modal.Header closeButton>
+                    <Modal.Title>User Info</Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>
+
+                    <div className="user-form">
+
+                        <h3 className="text-center">{user.email}</h3>
+                        <p className="text-center mb-1">{user._id}</p>
+
+                        <div className="mb-3 d-flex justify-content-center">
+
+                            {user.outset ?
+                                <div className="badge badge-articles mx-1">
+                                    Outset Complete
+                                </div>
+                                :
+                                <div className="badge badge-danger mx-1">
+                                    Outset Not Complete
+                                </div>
+                            }
+
+                            {returnGenderBadge(user.gender)}
+
+                        </div>
+
+                        <div className="row mb-3">
+
+                            <div className="col-lg-6">
+                                <ThemeProvider theme={articlesTheme}>
+                                    <MuiPickersUtilsProvider utils={MomentUtils}>
+                                        <DateTimePicker
+                                            label="Birth Date"
+                                            inputVariant="outlined"
+                                            value={selectedDate}
+                                            onChange={handleDateChange}
+                                            className="form-group articles mb-3 w-100"
+                                        />
+                                    </MuiPickersUtilsProvider>
+                                </ThemeProvider>
+                            </div>
+
+                            <div className="col-lg-6">
+                                <ThemeProvider theme={articlesTheme}>
+                                    <MuiPickersUtilsProvider utils={MomentUtils}>
+                                        <DateTimePicker
+                                            label="Sign Up Date"
+                                            inputVariant="outlined"
+                                            value={selectedDate}
+                                            onChange={handleDateChange}
+                                            className="form-group articles mb-3 w-100"
+                                        />
+                                    </MuiPickersUtilsProvider>
+                                </ThemeProvider>
+                            </div>
+
+                            <div className="col-lg-6">
+
+                                <div className="form-group articles">
+                                    <label className="d-flex justify-content-between" for="address">
+                                        <span>First Name</span>
+                                        {/* <span>${ numberWithCommas( (donation.amount / 100).toFixed(2) ) }</span> */}
+                                    </label>
+                                    <input 
+                                        className="form-control with-label"
+                                        onChange={handleUserChange}
+                                        name="first_name"
+                                        id="first_name" 
+                                        type="text" 
+                                        autoComplete='off'
+                                        value={user.first_name}
+                                    />
+                                </div>
+
+                            </div>
+
+                            <div className="col-lg-6">
+
+                                <div className="form-group articles">
+                                    <label className="d-flex justify-content-between" for="address">
+                                        <span>Last Name</span>
+                                        {/* <span>${ numberWithCommas( (donation.amount / 100).toFixed(2) ) }</span> */}
+                                    </label>
+                                    <input 
+                                        className="form-control with-label"
+                                        onChange={handleUserChange}
+                                        name="last_name"
+                                        id="last_name" 
+                                        type="text" 
+                                        autoComplete='off'
+                                        value={user.last_name}
+                                    />
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div className="mb-3">
+
+                            <h3>Address Details</h3>
+
+                            <div className="row">
+    
+                                <div className="col-lg-6">
+    
+                                    <div className="form-group articles">
+                                        <label className="d-flex justify-content-between" for="lineOne">
+                                            <span>Address Line One</span>
+                                            {/* <span>${ numberWithCommas( (donation.amount / 100).toFixed(2) ) }</span> */}
+                                        </label>
+                                        <input 
+                                            className="form-control with-label"
+                                            onChange={handleUserChange}
+                                            name="lineOne"
+                                            id="lineOne" 
+                                            type="text" 
+                                            autoComplete='off'
+                                            value={user.address?.lineOne}
+                                        />
+                                    </div>
+    
+                                </div>
+
+                                <div className="col-lg-6">
+    
+                                    <div className="form-group articles">
+                                        <label className="d-flex justify-content-between" for="lineTwo">
+                                            <span>Address Line Two</span>
+                                            {/* <span>${ numberWithCommas( (donation.amount / 100).toFixed(2) ) }</span> */}
+                                        </label>
+                                        <input 
+                                            className="form-control with-label"
+                                            onChange={handleUserChange}
+                                            name="lineTwo"
+                                            id="lineTwo" 
+                                            type="text" 
+                                            autoComplete='off'
+                                            value={user.address?.lineTwo}
+                                        />
+                                    </div>
+    
+                                </div>
+    
+                                <div className="col-lg-6">
+    
+                                    <div className="form-group articles">
+                                        <label className="d-flex justify-content-between" for="city">
+                                            <span>City</span>
+                                            {/* <span>${ numberWithCommas( (donation.amount / 100).toFixed(2) ) }</span> */}
+                                        </label>
+                                        <input 
+                                            className="form-control with-label"
+                                            onChange={handleUserChange}
+                                            name="city"
+                                            id="city" 
+                                            type="text" 
+                                            autoComplete='off'
+                                            value={user.address?.city}
+                                        />
+                                    </div>
+    
+                                </div>
+
+                                <div className="col-lg-6">
+    
+                                    <div className="form-group articles">
+                                        <label className="d-flex justify-content-between" for="state">
+                                            <span>State</span>
+                                            {/* <span>${ numberWithCommas( (donation.amount / 100).toFixed(2) ) }</span> */}
+                                        </label>
+                                        <input 
+                                            className="form-control with-label"
+                                            onChange={handleUserChange}
+                                            name="state"
+                                            id="state" 
+                                            type="text" 
+                                            autoComplete='off'
+                                            value={user.address?.state}
+                                        />
+                                    </div>
+    
+                                </div>
+
+                                <div className="col-lg-6">
+    
+                                    <div className="form-group articles">
+                                        <label className="d-flex justify-content-between" for="zip">
+                                            <span>Zip</span>
+                                            {/* <span>${ numberWithCommas( (donation.amount / 100).toFixed(2) ) }</span> */}
+                                        </label>
+                                        <input 
+                                            className="form-control with-label"
+                                            onChange={handleUserChange}
+                                            name="zip"
+                                            id="zip" 
+                                            type="text" 
+                                            autoComplete='off'
+                                            value={user.address?.zip}
+                                        />
+                                    </div>
+    
+                                </div>
+    
+                            </div>
+                        </div>
+                        
+                        <div className="card d-flex mb-3">
+
+                            <div className="card-header d-flex flex-row justify-content-between align-items-center">
+                                <h5 className="mb-0">Is Employee</h5>
+    
+                                <label className="articles-switch mb-0" onClick={ () => null }>
+                                    <input type="checkbox" checked={ user.employee?.bool }/>
+                                    <span className="slider" onClick={ () => null }></span>
+                                </label>
+                            </div>
+
+                            {user.employee?.bool &&
+                            <div className="card-body">
+                                <div className="row">
+
+                                    <div className="col-lg-12">
+                                        <div className="card p-3 d-flex flex-row justify-content-between align-items-center mb-3">
+                                            <h5 className="mb-0">Privacy Mode</h5>
+                
+                                            <label className="articles-switch mb-0" onClick={ () => null }>
+                                                <input type="checkbox" checked={ user.employee?.privacy }/>
+                                                <span className="slider" onClick={ () => null }></span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-lg-12">
+                                        <div className="form-group articles">
+                                            <label for="address">Bio</label>
+                                            <textarea className="form-control with-label" rows="5" onChange={handleUserChange} name="message" id="message" type="text">
+                                                {user.employee?.bio}
+                                            </textarea>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-lg-12">
+                                        <div className="form-group articles">
+                                            <label for="address">Quote</label>
+                                            <textarea className="form-control with-label" rows="5" onChange={handleUserChange} name="message" id="message" type="text">
+                                                {user.employee?.quote}
+                                            </textarea>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-lg-6 d-none">
+        
+                                        <div className="form-group articles">
+                                            <label className="d-flex justify-content-between" for="state">
+                                                <span>Instagram</span>
+                                                {/* <span>${ numberWithCommas( (donation.amount / 100).toFixed(2) ) }</span> */}
+                                            </label>
+                                            <input 
+                                                className="form-control with-label"
+                                                onChange={handleUserChange}
+                                                name="state"
+                                                id="state" 
+                                                type="text" 
+                                                autoComplete='off'
+                                                value={user.address?.state}
+                                            />
+                                        </div>
+        
+                                    </div>
+
+                                    <div className="col-lg-6 d-none">
+        
+                                        <div className="form-group articles">
+                                            <label className="d-flex justify-content-between" for="state">
+                                                <span>Facebook</span>
+                                                {/* <span>${ numberWithCommas( (donation.amount / 100).toFixed(2) ) }</span> */}
+                                            </label>
+                                            <input 
+                                                className="form-control with-label"
+                                                onChange={handleUserChange}
+                                                name="state"
+                                                id="state" 
+                                                type="text" 
+                                                autoComplete='off'
+                                                value={user.address?.state}
+                                            />
+                                        </div>
+        
+                                    </div>
+
+                                    <div className="col-lg-6 d-none">
+        
+                                        <div className="form-group articles">
+                                            <label className="d-flex justify-content-between" for="state">
+                                                <span>Instagram</span>
+                                                {/* <span>${ numberWithCommas( (donation.amount / 100).toFixed(2) ) }</span> */}
+                                            </label>
+                                            <input 
+                                                className="form-control with-label"
+                                                onChange={handleUserChange}
+                                                name="state"
+                                                id="state" 
+                                                type="text" 
+                                                autoComplete='off'
+                                                value={user.address?.state}
+                                            />
+                                        </div>
+        
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            }
+
+                        </div>
+
+                        <div className="card p-3 d-flex flex-row justify-content-between align-items-center mb-3">
+
+                            <h5 className="mb-0">Ban Commenting</h5>
+
+                            <label className="articles-switch mb-0" onClick={ () => null }>
+                                <input type="checkbox" checked={ false }/>
+                                <span className="slider" onClick={ () => null }></span>
+                            </label>
+
+                        </div>
+
+                        <div className="card p-3 d-flex flex-row justify-content-between align-items-center mb-3">
+
+                            <h5 className="mb-0">Ban Photo Uploads</h5>
+
+                            <div className="d-flex justify-content-md-center align-items-center">
+
+                                <button className="btn btn-danger btn-sm mr-3">Remove</button>
+
+                                <label className="articles-switch mb-0" onClick={ () => null }>
+                                    <input type="checkbox" checked={ false }/>
+                                    <span className="slider" onClick={ () => null }></span>
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </Modal.Body>
+
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+
+            </Modal>
 
             <div className="side-panel">
-
-                <div className="text-center mb-3"><span>{users.length} Users</span></div>
 
                 <div className="card mb-3">
 
@@ -268,6 +678,43 @@ function AdminUsersPage() {
                 
                 <div className="card manage-card">
 
+                    <div className="card-header">
+
+                        <div className="d-flex align-items-center justify-content-between">
+                            <i className="fas fa-edit fa-2x"></i>
+                            <h3 className="mb-0">Manage Users</h3>
+                            <div className="total">({users.length})</div>
+                        </div>
+
+                        <div className={'d-flex align-items-center'}>
+
+                            <div className="form-group articles flex-shrink-0 mr-3 mb-0">
+                                <label for="searchFilter">Search Names</label>
+                                <input 
+                                    className="form-control with-label" 
+                                    onChange={ e => setSearchFilter(e.target.value) }
+                                    name="searchFilter" 
+                                    id="searchFilter" 
+                                    type="text"
+                                    autoComplete='off'
+                                    placeholder=""
+                                    value={searchFilter}
+                                />
+
+                                {searchFilter != '' &&
+                                    <div onClick={ () => setSearchFilter('') } className="clear-search">
+                                        <i class="far fa-times-circle mr-0"></i>
+                                    </div>
+                                }
+
+                            </div>
+
+                            <button onClick={() => setModalShow(true)} className="btn btn-articles-light btn-sm">Add User</button>
+                        </div>
+
+
+                    </div>
+
                     <div className="card-body">
                         <div className="table-responsive">
                             <table className="table table-sm mb-0">
@@ -288,7 +735,17 @@ function AdminUsersPage() {
                             </thead>
                             <tbody>
                 
-                                {users.map(user => (
+                                {users
+                                .filter(user => {
+    
+                                    if (searchFilter != '') {
+                                        return ( user.first_name.includes(searchFilter) || user.last_name.includes(searchFilter) || (`${user.first_name} ${user.last_name}`).includes(searchFilter) || (`${user.last_name} ${user.first_name}`).includes(searchFilter) )
+                                    } else {
+                                        return user
+                                    }
+            
+                                })
+                                .map(user => (
                 
                                 <tr key={user._id}>
                 
@@ -355,7 +812,10 @@ function AdminUsersPage() {
                                     <td>{user.roles?.isAdmin === true ? <div onClick={() => this.toggleRole(user._id, 'isAdmin', false )} className="badge badge-danger">True</div> : <div onClick={() => this.toggleRole(user._id, 'isAdmin', true )} className="badge badge-success">False</div>}</td>
                                     <td>{user.roles?.isDev === true ? <div onClick={() => this.toggleRole(user._id, 'isDev', false )} className="badge badge-danger">True</div> : <div onClick={() => this.toggleRole(user._id, 'isDev', true )} className="badge badge-success">False</div>}</td>
                                     <td>{user.roles?.isWriter === true ? <div onClick={() => this.toggleRole(user._id, 'isWriter', false )} className="badge badge-danger">True</div> : <div onClick={() => this.toggleRole(user._id, 'isWriter', true )} className="badge badge-success">False</div>}</td>
-                                    <td><ConfirmDelete afterConfirm={() => this.removeUser(user._id)}></ConfirmDelete></td>
+                                    <td>
+                                        <ConfirmDelete afterConfirm={() => removeUser(user._id)}></ConfirmDelete>
+                                        <div style={{cursor: 'pointer'}} onClick={() => editUser(user._id)} className="badge badge-dark noselect ml-1">Edit</div>
+                                    </td>
                                 </tr>
                                 
                                 ))}
@@ -363,6 +823,10 @@ function AdminUsersPage() {
                             </tbody>
                             </table>
                         </div>
+                    </div>
+
+                    <div className="card-footer text-center">
+                        <div className="text-muted">{users.length} / {users.length} Users being shown</div>
                     </div>
 
                 </div>

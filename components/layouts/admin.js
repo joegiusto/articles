@@ -58,63 +58,63 @@ function AdminLayout({ children }) {
                     </Link>
 
                     <Link href={ROUTES.ADMIN_PROPOSALS}>
-                        <span className={"tab " + (router.asPath === ROUTES.ADMIN_PROPOSALS && 'active')}>Proposals</span>
+                        <a><span className={"tab " + (router.asPath === ROUTES.ADMIN_PROPOSALS && 'active')}>Proposals</span></a>
                     </Link>
 
                     <Link href={ROUTES.ADMIN_PRODUCTS}>
-                        <span className={"tab " + (router.asPath === ROUTES.ADMIN_PRODUCTS && 'active')}>Products</span>
+                        <a><span className={"tab " + (router.asPath === ROUTES.ADMIN_PRODUCTS && 'active')}>Products</span></a>
                     </Link>
 
                     <Link href={ROUTES.ADMIN_SUBMISSIONS}>
-                        <span className={"tab " + (router.asPath === ROUTES.ADMIN_SUBMISSIONS && 'active')}>Submissions</span>
+                        <a><span className={"tab " + (router.asPath === ROUTES.ADMIN_SUBMISSIONS && 'active')}>Submissions</span></a>
                     </Link>
 
                     <Link href={ROUTES.ADMIN_DONATIONS}>
-                        <span className={"tab " + (router.asPath === ROUTES.ADMIN_DONATIONS && 'active')}>Donations</span>
+                        <a><span className={"tab " + (router.asPath === ROUTES.ADMIN_DONATIONS && 'active')}>Donations</span></a>
                     </Link>
 
                     <Link href={ROUTES.ADMIN_EXPENSES}>
-                        <span className={"tab " + (router.asPath === ROUTES.ADMIN_EXPENSES && 'active')}>Expenses</span>
+                        <a><span className={"tab " + (router.asPath === ROUTES.ADMIN_EXPENSES && 'active')}>Expenses</span></a>
                     </Link>
 
                     <Link href={ROUTES.ADMIN_SOCKET}>
-                        <span className={"tab " + (router.asPath === ROUTES.ADMIN_SOCKET && 'active')}>Sockets</span>
+                        <a><span className={"tab " + (router.asPath === ROUTES.ADMIN_SOCKET && 'active')}>Sockets</span></a>
                     </Link>
 
                     <Link href={ROUTES.ADMIN_AWS}>
-                        <span className={"tab " + (router.asPath === ROUTES.ADMIN_AWS && 'active')}>AWS</span>
+                        <a><span className={"tab " + (router.asPath === ROUTES.ADMIN_AWS && 'active')}>AWS</span></a>
                     </Link>
 
                     <Link href={ROUTES.ADMIN_COMMENTS}>
-                        <span className={"tab " + (router.asPath === ROUTES.ADMIN_COMMENTS && 'active')}>Comments</span>
+                        <a><span className={"tab " + (router.asPath === ROUTES.ADMIN_COMMENTS && 'active')}>Comments</span></a>
                     </Link>
 
                     <Link href={ROUTES.ADMIN_REPORTS}>
-                        <span className={"tab " + (router.asPath === ROUTES.ADMIN_REPORTS && 'active')}>Reports</span>
+                        <a><span className={"tab " + (router.asPath === ROUTES.ADMIN_REPORTS && 'active')}>Reports</span></a>
                     </Link>
 
                     <Link href={ROUTES.ADMIN_ORDERS}>
-                        <span className={"tab " + (router.asPath === ROUTES.ADMIN_ORDERS && 'active')}>Orders</span>
+                        <a><span className={"tab " + (router.asPath === ROUTES.ADMIN_ORDERS && 'active')}>Orders</span></a>
                     </Link>
 
                     <Link href={ROUTES.ADMIN_ADS}>
-                        <span className={"tab " + (router.asPath === ROUTES.ADMIN_ADS && 'active')}>Ads</span>
+                        <a><span className={"tab " + (router.asPath === ROUTES.ADMIN_ADS && 'active')}>Ads</span></a>
                     </Link>
 
                     <Link href={ROUTES.ADMIN_MESSAGES}>
-                        <span className={"tab " + (router.asPath === ROUTES.ADMIN_MESSAGES && 'active')}>Messages</span>
+                        <a><span className={"tab " + (router.asPath === ROUTES.ADMIN_MESSAGES && 'active')}>Messages</span></a>
                     </Link>
 
                     <Link href={ROUTES.ADMIN_PROJECTS}>
-                        <span className={"tab " + (router.asPath === ROUTES.ADMIN_PROJECTS && 'active')}>Projects</span>
+                        <a><span className={"tab " + (router.asPath === ROUTES.ADMIN_PROJECTS && 'active')}>Projects</span></a>
                     </Link>
 
                     <Link href={ROUTES.ADMIN_NEWSLETTER}>
-                        <span className={"tab " + (router.asPath === ROUTES.ADMIN_NEWSLETTER && 'active')}>Newsletter</span>
+                        <a><span className={"tab " + (router.asPath === ROUTES.ADMIN_NEWSLETTER && 'active')}>Newsletter</span></a>
                     </Link>
 
                     <Link href={ROUTES.ADMIN_PRESIDENTS}>
-                        <span className={"tab " + (router.asPath === ROUTES.ADMIN_PRESIDENTS && 'active')}>Presidents</span>
+                        <a><span className={"tab " + (router.asPath === ROUTES.ADMIN_PRESIDENTS && 'active')}>Presidents</span></a>
                     </Link>
                     
                 </div>

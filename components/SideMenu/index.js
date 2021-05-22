@@ -68,6 +68,18 @@ function SideMenuBase(props) {
 
     })
 
+    useEffect(() => {
+
+        if (sideMenuOpen) {
+            console.log(sideMenuOpen)
+            document.body.classList.add("overflow-hidden")
+        } else {
+            console.log(sideMenuOpen)
+            document.body.classList.remove("overflow-hidden")
+        }
+
+    }, [sideMenuOpen])
+
     function showNotification(data, seconds) {
         setNotificationVisible(true)
     

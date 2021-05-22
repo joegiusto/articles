@@ -83,6 +83,29 @@ function AdminNews() {
 
     }, [router]);
 
+    function setNewsShortcut() {
+
+        axios.post('/api/admin/news/setAuthorShortcuts')
+        .then(function (response) {
+            // console.log(response.data.news);
+            setNews(response.data.news)
+            setNewsLoading(false)
+            // self.setState({
+            //     results: response.data.news,
+            //     resultsOriginal: response.data.news,
+            //     resultsLoading: false
+            // });
+        })
+        .catch(function (error) {
+            // handle error
+            // console.log(error);
+            setNewsLoading(false)
+            // self.setState({ resultsLoading: true });
+            // self.setState({ resultsLoadingError: error });
+        });
+
+    } 
+
     return (
         <div className={"admin-page admin-news"}>
 
@@ -111,7 +134,7 @@ function AdminNews() {
                     <div className="card mb-3">
     
                         <div className="card-header d-flex justify-content-between">
-                            <span>Shortcuts</span>
+                            <span>Author Shortcuts</span>
                         </div>
     
                         <div className="card-body shortcuts">

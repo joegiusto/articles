@@ -151,27 +151,10 @@ function DonationsAdmin(props) {
 
     const editDonation = (id) => {
 		console.log(id);
-
         setModalShow(true);
         setDonation(
             donations.find(item => item._id == id)
         )
-
-        // setExpense(prevState => ({
-		// 	...prevState,
-		// 	_id: id
-		// }));
-
-		// axios.post('/api/secure/deleteDonation', {
-		// 	id
-		// })
-		// .then( (response) => {
-		// 	console.log(response)
-		// 	setDonations(donations.filter(item => item._id !== response.data.removed_id));
-		// })
-		// .catch( (error) => {
-		// 	console.log(error);
-		// });
 	}
 
     function numberWithCommas(x) {

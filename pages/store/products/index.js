@@ -5,8 +5,8 @@ import { useRouter } from 'next/router'
 import axios from 'axios';
 import { connect } from "react-redux";
 
-import StoreLayout from '../../../components/layouts/store.js';
-import StoreItemBeta from '../../../components/store/StoreItem';
+import StoreLayout from 'components/layouts/store.js';
+import StoreItemBeta from 'components/store/StoreItem';
 
 class Products extends Component {
     constructor(props) {
