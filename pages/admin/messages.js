@@ -23,7 +23,7 @@ function AdminHomePage() {
 
                 <div className="d-flex">
 
-                    <div style={{width: '100px'}} class="m-1 embed-responsive embed-responsive-1by1 border card shadow-sm d-flex flex-row justify-content-center align-items-center">
+                    <div style={{width: '100px'}} className="m-1 embed-responsive embed-responsive-1by1 border card shadow-sm d-flex flex-row justify-content-center align-items-center">
     
                         <div className="text-center">
                             <div><h2 className="mb-0">0</h2></div>
@@ -35,7 +35,7 @@ function AdminHomePage() {
     
                     </div>
                     
-                    <div style={{width: '100px'}} class="m-1 embed-responsive embed-responsive-1by1 border card shadow-sm d-flex flex-row justify-content-center align-items-center">
+                    <div style={{width: '100px'}} className="m-1 embed-responsive embed-responsive-1by1 border card shadow-sm d-flex flex-row justify-content-center align-items-center">
     
                         <div className="text-center">
                             <div><h2 className="mb-0">0</h2></div>
@@ -47,7 +47,7 @@ function AdminHomePage() {
     
                     </div>
     
-                    <div style={{width: '100px'}} class="m-1 embed-responsive embed-responsive-1by1 border card shadow-sm d-flex flex-row justify-content-center align-items-center">
+                    <div style={{width: '100px'}} className="m-1 embed-responsive embed-responsive-1by1 border card shadow-sm d-flex flex-row justify-content-center align-items-center">
     
                         <div className="text-center">
                             <div><h2 className="mb-0">0</h2></div>
@@ -59,7 +59,7 @@ function AdminHomePage() {
     
                     </div>
 
-                    <div style={{width: '100px'}} class="m-1 embed-responsive embed-responsive-1by1 border card shadow-sm d-flex flex-row justify-content-center align-items-center">
+                    <div style={{width: '100px'}} className="m-1 embed-responsive embed-responsive-1by1 border card shadow-sm d-flex flex-row justify-content-center align-items-center">
     
                         <div className="text-center">
                             <div><h2 className="mb-0">0</h2></div>
@@ -71,7 +71,7 @@ function AdminHomePage() {
     
                     </div>
 
-                    <div style={{width: '100px'}} class="m-1 embed-responsive embed-responsive-1by1 border card shadow-sm d-flex flex-row justify-content-center align-items-center">
+                    <div style={{width: '100px'}} className="m-1 embed-responsive embed-responsive-1by1 border card shadow-sm d-flex flex-row justify-content-center align-items-center">
     
                         <div className="text-center">
                             <div><h2 className="mb-0">0</h2></div>

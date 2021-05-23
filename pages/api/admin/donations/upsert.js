@@ -30,34 +30,4 @@ export default async (req, res) => {
         sent: req.body.donation
     });
 
-    // if ( session.user.email == "joeygiusto@gmail.com" ) {
-    //     console.log("Joey made this call")
-
-    //     console.log(req.body.donation)
-    //     console.log(req.body.selectedDate)
-
-    //     Revenue.create({ 
-    //         date: req.body.selectedDate,
-    //         ...req.body.donation
-    //     }, async function (err, savedDonation) {
-    //         if (err) return handleError(err);
-
-    //         const result = await Revenue.findById(savedDonation._id).populate('createdBy', 'first_name last_name').populate('user_id', 'first_name last_name')
-
-    //         res.send({
-    //             populatedDonation: result,
-    //             savedDonation,
-    //             sent: { 
-    //                 date: req.body.selectedDate,
-    //                 ...req.body.donation
-    //             }
-    //         });
-    //     });
-
-    // } else {
-    //     return res.status(403).json({ 
-    //         message: 'You do not have the proper role to access this',
-    //     })
-    // }
-
 }

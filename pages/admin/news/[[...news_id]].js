@@ -4,7 +4,12 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { withRouter, useRouter } from 'next/router'
 
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
+
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Tooltip from 'react-bootstrap/Tooltip'
 
 import moment from 'moment'
 import axios from 'axios';
@@ -18,7 +23,13 @@ function AdminNews() {
     const router = useRouter()
     const { param } = router.query
 
+    const userReduxState = useSelector((state) => state.auth.user_details)
+
     const [news, setNews] = useState([])
+
+    const [activeDocument, setActiveDocument] = useState({})
+    const [modalShow, setModalShow] = useState(false);
+
     const [tags, setTags] = useState([])
     const [newsLoading, setNewsLoading] = useState(false)
     const [newsLoadingError, setNewsLoadingError] = useState(false)
@@ -79,9 +90,35 @@ function AdminNews() {
 
     useEffect(() => {
 
-        console.log(router.query.news_id)
+        if (router.query.news_id) {
+            // console.log(router.query.news_id)
+            editActiveDocument(router.query.news_id[0])
+        }
 
     }, [router]);
+
+    const handleClose = () => {
+        router.push(ROUTES.ADMIN_NEWS)
+        setModalShow(false);
+        setActiveDocument({})
+    }
+
+    const editActiveDocument = (id) => {
+		// console.log(`editActiveDocument called ${id}`);
+
+        axios.post('/api/admin/news/', {
+            news_id: id,
+        })
+        .then((response) => {
+            setActiveDocument(response.data.document)
+            setModalShow(true);
+        })
+        .catch(function (error) {
+            console.log(error);
+            setModalShow(false);
+            setActiveDocument({})
+        });
+	}
 
     function setNewsShortcut() {
 
@@ -113,86 +150,109 @@ function AdminNews() {
                 <title>Admin News - Articles</title>
             </Head>
 
+            <Modal show={modalShow} className="user-modal articles-modal" centered onHide={handleClose}>
+
+                <Modal.Header closeButton>
+                    <Modal.Title>News Document Info</Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>
+
+                    <div className="user-form">
+
+                        <h3 className="text-center">{activeDocument?.news_title}</h3>
+                        {/* <p className="text-center mb-1">{user._id}</p> */}
+
+                    </div>
+
+                </Modal.Body>
+
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+
+            </Modal>
+
             <div className="side-panel">
 
-                <div className="side-panel-sticky">
-                    <div className="card mb-3">
-    
-                        <div className="card-header d-flex justify-content-between">
-                            <span>News</span>
-                            <span>{news.length} Documents</span>
-                        </div>
-    
-                        <div className="card-body">
-                            <div>Stories: {news.filter(document => document.news_type == 'story').length} | { ( (news.filter(document => document.news_type == 'story').length / news.length) * 100 ).toFixed(2)}%</div>
-                            <div>Issues: {news.filter(document => document.news_type == 'issue').length} | { ( (news.filter(document => document.news_type == 'issue').length / news.length) * 100 ).toFixed(2)}%</div>
-                            <div>Myths: {news.filter(document => document.news_type == 'myth').length} | { ( (news.filter(document => document.news_type == 'myth').length / news.length) * 100 ).toFixed(2)}%</div>
-                        </div>
-    
+                {/* <div className="side-panel-sticky"> */}
+
+                <div className="card mb-3">
+
+                    <div className="card-header d-flex justify-content-between">
+                        <span>News</span>
+                        <span>{news.length} Documents</span>
                     </div>
-    
-                    <div className="card mb-3">
-    
-                        <div className="card-header d-flex justify-content-between">
-                            <span>Author Shortcuts</span>
-                        </div>
-    
-                        <div className="card-body shortcuts">
-                            
-                            <button className="shortcut btn btn-articles-light btn-sm w-100 mb-1">
-                                <span>Meet Cybertruck</span>
-                                <span className="badge badge-danger border clear-badge">Delete</span>
-                            </button>
-    
-                            <button disabled className="shortcut btn btn-articles-light btn-sm w-100 mb-1">
-                                <span>Shortcut 2</span>
-                                <span className="badge badge-light border set-badge">Set</span>
-                            </button>
-    
-                            <button disabled className="shortcut btn btn-articles-light btn-sm w-100 mb-1">
-                                <span>Shortcut 3</span>
-                                <span className="badge badge-light border set-badge">Set</span>
-                            </button>
-    
-                            <button disabled className="shortcut btn btn-articles-light btn-sm w-100 mb-1">
-                                <span>Shortcut 4</span>
-                                <span className="badge badge-light border set-badge">Set</span>
-                            </button>
-    
-                            <button disabled className="shortcut btn btn-articles-light btn-sm w-100">
-                                <span>Shortcut 5</span>
-                                <span className="badge badge-light border set-badge">Set</span>
-                            </button>
-                            
-                        </div>
-    
+
+                    <div className="card-body">
+                        <div>Stories: {news.filter(document => document.news_type == 'story').length} | { ( (news.filter(document => document.news_type == 'story').length / news.length) * 100 ).toFixed(2)}%</div>
+                        <div>Issues: {news.filter(document => document.news_type == 'issue').length} | { ( (news.filter(document => document.news_type == 'issue').length / news.length) * 100 ).toFixed(2)}%</div>
+                        <div>Myths: {news.filter(document => document.news_type == 'myth').length} | { ( (news.filter(document => document.news_type == 'myth').length / news.length) * 100 ).toFixed(2)}%</div>
                     </div>
 
                 </div>
+
+                <div className="card mb-3">
+
+                    <div className="card-header d-flex justify-content-between">
+                        <span>Author Shortcuts</span>
+                    </div>
+
+                    <div className="card-body shortcuts">
+
+                        {userReduxState?.employee?.author_shortcuts.map(shortcut => (
+                            <Link key={shortcut.news_id} href={`${ROUTES.ADMIN_NEWS}/${shortcut.news_id}`}>
+                                <a>
+                                    <div className="shortcut d-flex justify-content-center align-items-center mb-1">
+                                        <button className="shortcut btn btn-articles-light btn-sm w-100">
+                                            <span>${shortcut.news_id}</span>
+                                        </button>
+            
+                                        <span className="badge badge-danger border clear-badge ml-1 mb-0">Delete</span>
+                                    </div>
+                                </a>
+                            </Link>
+                        ))}
+
+                        <div className="shortcut d-flex justify-content-center align-items-center mb-1 mt-4">
+                            <button className="shortcut btn btn-articles-light btn-sm">
+                                <span><i className="far fa-plus-square"></i>Set Shortcut</span>
+                            </button>
+
+                            {/* <span className="badge badge-light border set-badge ml-1 mb-0">Set</span> */}
+                        </div>
+                        
+                    </div>
+
+                </div>
+
+                {/* </div> */}
 
             </div>
 
             <div className="main-panel">
 
-                <div className="d-flex flex-wrap justify-content-center">
+                <div className="d-flex flex-wrap justify-content-center align-items-center">
 
                     <div className="news-type-filters mb-3 mr-lg-3 flex-shrink-0">
-                        <button onClick={ () => setNewsTypeFilter('all') } className={"btn btn-articles-light h-100 px-4 "  + (newsTypeFilter == 'all' && 'active') }>All</button>
-                        <button onClick={ () => setNewsTypeFilter('story') } className={"btn btn-articles-light h-100 px-4 "  + (newsTypeFilter == 'story' && 'active') }>Stories</button>
-                        <button onClick={ () => setNewsTypeFilter('issue') } className={"btn btn-articles-light h-100 px-4 "  + (newsTypeFilter == 'issue' && 'active') }>Issues</button>
-                        <button onClick={ () => setNewsTypeFilter('myth') } className={"btn btn-articles-light h-100 px-4 "  + (newsTypeFilter == 'myth' && 'active') }>Myths</button>
+                        <button onClick={ () => setNewsTypeFilter('all') } className={"btn btn-articles-light px-4 "  + (newsTypeFilter == 'all' && 'active') }>All</button>
+                        <button onClick={ () => setNewsTypeFilter('story') } className={"btn btn-articles-light px-4 "  + (newsTypeFilter == 'story' && 'active') }>Stories</button>
+                        <button onClick={ () => setNewsTypeFilter('issue') } className={"btn btn-articles-light px-4 "  + (newsTypeFilter == 'issue' && 'active') }>Issues</button>
+                        <button onClick={ () => setNewsTypeFilter('myth') } className={"btn btn-articles-light px-4 "  + (newsTypeFilter == 'myth' && 'active') }>Myths</button>
                     </div>
 
-                    <div className="d-flex flex-column">
-                        <button onClick={ () => setSubFilter('Title') } className={"btn btn-articles-light py-0 px-4 "  + (subFilter == 'Title' && 'active') }>Title</button>
-                        <button onClick={ () => setSubFilter('Tags') } className={"btn btn-articles-light py-0 px-4 "  + (subFilter == 'Tags' && 'active') }>Tags</button>
+                    <div className="d-flex align-items-start mb-3">
+                        <button onClick={ () => setSubFilter('Title') } className={"btn btn-articles-light px-4 "  + (subFilter == 'Title' && 'active') }>Title</button>
+                        <button onClick={ () => setSubFilter('Tags') } className={"btn btn-articles-light px-4 "  + (subFilter == 'Tags' && 'active') }>Tags</button>
                     </div>
 
                     {subFilter == 'Title' && 
                         <div className="form-group articles flex-shrink-0">
                             <label for="address">Search News</label>
                             <input 
-                                className="form-control with-label" 
+                                className="form-control with-label py-0" 
                                 onChange={ e => setSearchFilter(e.target.value) }
                                 name="createdBy" 
                                 id="createdBy" 
@@ -205,7 +265,7 @@ function AdminNews() {
 
                     {subFilter == 'Tags' && 
                         <>
-                            <div className="form-group articles flex-shrink-0">
+                            {/* <div className="form-group articles flex-shrink-0">
                                 <label for="address">Search Tags</label>
                                 <input 
                                     className="form-control with-label" 
@@ -216,7 +276,9 @@ function AdminNews() {
                                     placeholder="Democrats"
                                     value={searchFilter}
                                 />
-                            </div>
+                            </div> */}
+
+
 
                             <div className="tag-container d-flex flex-wrap mb-3 p-1 align-content-start ml-2 pt-2">
                                 {tags.map( tag => <div key={tag._id} className="badge badge-light border mb-1">{tag.tag_name}</div> )}
@@ -226,11 +288,11 @@ function AdminNews() {
 
                 </div>
 
-                {router.query.news_id && (
+                {/* {router.query.news_id && (
                      <Link href={`${ROUTES.ADMIN_NEWS}`}>
                         <button className="btn btn-articles-light mb-3">Cancel Edit</button>
                     </Link>
-                )}
+                )} */}
 
                 <div className="results">
                     {news
@@ -292,7 +354,7 @@ function AdminNews() {
 
                                     <div className="card-body d-flex px-0 py-0">
                                         <img src={document.hero_url} alt="" />
-                                        <div className="px-3 py-2">Fewnj uewfbhiuew uiewb ewfiubwe iiuweb iwebiuweiu biwe bwewebie wofpb ewe wiub weuewpbu.</div>
+                                        <div className="px-3 py-2">{document.news_tagline}</div>
                                     </div>
 
                                 </a>

@@ -678,15 +678,16 @@ function AdminUsersPage() {
                 
                 <div className="card manage-card">
 
-                    <div className="card-header">
+                    <div className="card-header flex-column flex-lg-row justify-content-sm-between">
 
-                        <div className="d-flex align-items-center justify-content-between">
+                        <div className="d-flex align-items-center justify-content-between mb-1 mb-lg-0 flex-fill flex-lg-grow-0">
                             <i className="fas fa-edit fa-2x"></i>
+
                             <h3 className="mb-0">Manage Users</h3>
                             <div className="total">({users.length})</div>
                         </div>
 
-                        <div className={'d-flex align-items-center'}>
+                        <div className={'d-flex align-items-center justify-content-between mb-1 mb-lg-0'}>
 
                             <div className="form-group articles flex-shrink-0 mr-3 mb-0">
                                 <label for="searchFilter">Search Names</label>
@@ -703,7 +704,7 @@ function AdminUsersPage() {
 
                                 {searchFilter != '' &&
                                     <div onClick={ () => setSearchFilter('') } className="clear-search">
-                                        <i class="far fa-times-circle mr-0"></i>
+                                        <i className="far fa-times-circle mr-0"></i>
                                     </div>
                                 }
 

@@ -72,15 +72,15 @@
     }
 
     .side-panel {
-        display: flex;
-        overflow: auto;
-        min-height: initial;
+        // display: flex;
+        // overflow: auto;
+        // min-height: initial;
         
-        .side-panel-sticky {
-            position: sticky;
-            top: 0;
-            align-self: flex-start;
-        }
+        // .side-panel-sticky {
+        //     position: sticky;
+        //     top: 0;
+        //     align-self: flex-start;
+        // }
 
         .shortcuts {
 
@@ -88,12 +88,15 @@
                 position: relative;
 
                 .clear-badge, .set-badge {
-                    position: absolute;
-                    right: 0;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    margin-right: 0.5rem;
+                    width: 50px;
+                    // position: absolute;
+                    // right: 0;
+                    // top: 50%;
+                    // transform: translateY(-50%);
+                    margin-left: 0.5rem;
+                    cursor: pointer;
                 }
+                
             }
 
         }
