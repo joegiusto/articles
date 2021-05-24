@@ -59,6 +59,21 @@
     // TODO Figure out why this is now lagging, first noticed 6/01/2020. After further inspection a reboot of the browser fixed this but want it documented.
     @import "landing_background";
 
+    .landing-page-centered-links {
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 0.5rem 0;
+        z-index: 200;
+
+        .links {
+            button:not(:last-child) {
+                margin-right: 0.5rem;
+            }
+        }
+    }
+
     .welcome-block {
         position: relative;
         display: flex;
@@ -73,6 +88,77 @@
 
         @include media-breakpoint-up(md) {
             // padding: 5rem 0rem;
+        }
+
+        .circle {
+            position: relative;
+
+            @include media-breakpoint-up(xxl) {
+                position: absolute;
+                right: 25%;
+                top: 50%;
+                background-color: rgba($accent-color, 0.5);
+                width: 300px;
+                height: 300px;
+                transform: translateX(0%) translateY(-50%);
+                border-radius: 100%;
+
+            }
+
+            $screen-mock-height: 300px;
+
+            .screen-mock {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                z-index: 1;
+                transform: translateY(-50%) translateX(-50%);
+                height: 400px;
+                width: calc( #{$screen-mock-height} * 0.6 );
+                background-color: rgba(255, 255, 255, 0.5);
+                border: 1px solid black;
+
+                .mock-nav {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 25px;
+                    background-color: black;
+                }
+            }
+        }
+
+        .circle-sm {
+            @include media-breakpoint-up(xxl) {
+                position: absolute;
+                // background-color: rgba($accent-color, 0.5);
+                transform: translateX(0%) translateY(-50%);
+                border-radius: 100%;
+            }
+
+            &.one {
+                background-color: rgba($accent-color, 0.65);
+                width: 75px;
+                height: 75px;
+                top: 10%;
+            }
+
+            &.two {
+                background-color: rgba($accent-color, 0.4);
+                width: 100px;
+                height: 100px;
+                right: -10%;
+                bottom: -30%;
+            }
+
+            &.three {
+                background-color: rgba($accent-color, 0.8);
+                width: 90px;
+                height: 90px;
+                left: 1%;
+                bottom: -20%;
+            }
         }
 
         .image-background-container {
@@ -197,12 +283,13 @@
             .details {
                 position: relative;
                 order: 2;
+                padding: 1rem;
 
                 @include media-breakpoint-up(md) {
                     order: 1;
-                    padding: 2.5rem 2rem;
+                    // padding: 2.5rem 2rem;
                     padding-bottom: 8rem;
-                    background-color: rgba(255, 255, 255, 0.85);
+                    // background-color: rgba(255, 255, 255, 0.85);
                     //   background: linear-gradient(to right, rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, .7) 80%, rgba(255, 255, 255, 0) 10%);
                 }
 
@@ -212,6 +299,7 @@
                     font-weight: 900;
                     font-size: 1.5rem;
                     margin-bottom: 0rem;
+                    border-bottom: 2px solid rgba(black, 0.3);
                     //   margin-top: 1rem;
 
                     @include media-breakpoint-up(md) {
@@ -225,7 +313,8 @@
                     // justify-content: center;
 
                     .main {
-                        font-size: 3rem;
+                        margin-left: 1rem;
+                        // font-size: 3rem;
                         font-family: forte;
                         font-weight: 400;
                         line-height: 1;
@@ -246,10 +335,10 @@
 
                 .text {
                     // text-align: center;
-                    max-width: 570px;
+                    max-width: 500px;
                     font-size: 18px;
                     // line-height: 30px;
-                    margin-top: 16px;
+                    margin-top: 8px;
                     font-family: brandon-grotesque, sans-serif;
                     font-style: normal;
                     font-weight: 700;
@@ -271,7 +360,7 @@
             // margin-top: 3rem;
             // margin: 0.5rem;
             padding: 1rem;
-            background-color: white;
+            // background-color: white;
 
             .header {
                 font-family: brandon-grotesque, sans-serif;
@@ -380,7 +469,11 @@
                 font-family: brandon-grotesque, sans-serif;
                 font-style: normal;
                 font-weight: 700;
-                font-size: 1.5rem;
+                // font-size: 1.5rem;
+
+                @include media-breakpoint-up(md) {
+                    font-size: 1.5rem;
+                }
 
                 @media only screen and (max-width: 380px) {
                     font-size: 0.9rem;

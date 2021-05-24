@@ -86,10 +86,56 @@ export default function Home(props) {
                 {/* <link rel="icon" href="/favicon.ico" /> */}
             </Head>
 
+            <div className="landing-page-centered-links">
+                <div className="links">
+
+                    <span className="badge badge-light">
+
+                    </span>
+
+                    <Link href={ROUTES.TRANSPARENCY}>
+                        <button className="btn btn-articles-light btn-sm">
+                            <i className="fas fa-paste" aria-hidden="true"></i>Transparency
+                        </button>
+                    </Link>
+
+                    <Link href={ROUTES.STORE}>
+                        <button className="btn btn-articles-light btn-sm">
+                            <i className="fas fa-shopping-cart" aria-hidden="true"></i>Clothing
+                        </button>
+                    </Link>
+
+                    <Link href={ROUTES.NEWS}>
+                        <button className="btn btn-articles-light btn-sm">
+                            <i className="fas fa-newspaper" aria-hidden="true"></i>News
+                        </button>
+                    </Link>
+
+                    <Link href={ROUTES.PARTY}>
+                        <button className="btn btn-articles-light btn-sm">
+                            <i className="fas fa-scroll" aria-hidden="true"></i>Politics
+                        </button>
+                    </Link>
+
+                </div>
+            </div>
+
             <main>
 
                 {/* Welcome Block - October 2020 Remodel */}
                 <div className="welcome-block">
+
+                    <div className="circle">
+
+                        <div className="circle-sm one"></div>
+                        <div className="circle-sm two"></div>
+                        <div className="circle-sm three"></div>
+
+                        <div className="screen-mock">
+                            <div className="mock-nav"></div>
+                        </div>
+
+                    </div>
 
                     <div className="video-background-container">
                         <div className="video-background-wrapper">
@@ -98,15 +144,14 @@ export default function Home(props) {
                         </div>
                     </div>
 
-                    <div className="image-background-container">
-                        {/* <img src={dream} alt="" /> */}
+                    {/* <div className="image-background-container">
                         <Image
                             src="/images/landing/hero.jpg"
                             alt="Image of the White house in Washington DC"
                             layout="fill"
                             objectFit="cover"
                         />
-                    </div>
+                    </div> */}
 
                     <div className="background d-none">
                         <div className="bg"></div>
@@ -116,17 +161,20 @@ export default function Home(props) {
 
                     <div className="content">
 
-                        <div className="details text-center">
+                        <div className="details">
 
                             {/* <h1 className="title">Something To Stand For</h1> */}
 
-                            <div className="small">Welcome To</div>
+                            <div className="small d-flex align-items-baseline">
 
-                            <div className="brand d-flex flex-column justify-content-center">
+                                <span>Welcome To</span>
 
-                                <div className="">
-                                    <div className="main">Articles Media</div>
-                                    {/* <div className="sub">Media</div> */}
+                                <div className="brand">
+
+                                    <div className="">
+                                        <div className="main">Articles</div>
+                                    </div>
+
                                 </div>
 
                             </div>
@@ -135,7 +183,7 @@ export default function Home(props) {
                                 A political organization and platform, working to make America a better place for the people through avenues of transparency, clothing, news and politics.
                             </div>
 
-                            <div className="looking-for-section">
+                            {/* <div className="looking-for-section">
                                 <div className="header">Looking for one of the following pages?</div>
 
                                 <div className="links">
@@ -165,7 +213,8 @@ export default function Home(props) {
                                     </Link>
 
                                 </div>
-                            </div>
+                            </div> */}
+
                         </div>
                         {/* 
                         <div className="image d-none">
@@ -190,9 +239,9 @@ export default function Home(props) {
 
                 </div>
 
-                <div className="spacer">
+                {/* <div className="spacer">
                     
-                </div>
+                </div> */}
 
                 {/* Think about it - October 2020 Remodel */}
                 <div className="think-about-it">
@@ -751,31 +800,6 @@ export default function Home(props) {
                     Welcome to Articles Media
                 </h1> */}
 
-                <div className="grid">
-
-                    <Link href={ROUTES.NEWS}>
-                        <a className="card">
-                            <h3>News &rarr;</h3>
-                            <p>Explore what's going on in the country.</p>
-                        </a>
-                    </Link>
-
-                    <Link href={ROUTES.STORE}>
-                        <a className="card">
-                            <h3>Store &rarr;</h3>
-                            <p>Help support Articles by making a purchase.</p>
-                        </a>
-                    </Link>
-
-                    <Link href={ROUTES.PROPOSALS}>
-                        <a className="card">
-                            <h3>Proposals &rarr;</h3>
-                            <p>Discover some of the ideas we have in mind.</p>
-                        </a>
-                    </Link>
-
-                </div>
-
             </main>
 
             <style jsx>{`
@@ -865,21 +889,6 @@ export default function Home(props) {
                     width: 100%;
                     flex-direction: column;
                 }
-                }
-            `}</style>
-
-            <style jsx global>{`
-                html,
-                body {
-                padding: 0;
-                margin: 0;
-                font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-                    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-                    sans-serif;
-                }
-
-                * {
-                box-sizing: border-box;
                 }
             `}</style>
 

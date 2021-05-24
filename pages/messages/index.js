@@ -44,6 +44,9 @@ function Messages(props) {
     const [startChatUser, setStartChatUser] = useState('');
     const [startChatError, setStartChatError] = useState('');
     const [chatMessage, setChatMessage] = useState('');
+
+    const [theme, setTheme] = useState('Default');
+
     const [image, setImage] = useState('');
     const [imageFile, setImageFile] = useState('');
     const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -520,7 +523,7 @@ function Messages(props) {
     }
 
     return (
-        <div className="messages-page">
+        <div className={`messages-page theme-${theme} ${theme == 'Neon' && 'dark-mode'}`}>
 
             <Head>
                 <title>Messages - Articles</title>
@@ -656,303 +659,351 @@ function Messages(props) {
 
                 <div className="card-body d-flex p-0">
 
-                <div className={"chat-sidebar card rounded-0 " + (sidebarVisible ? 'expand' : '')}>
+                    <div className={"chat-sidebar card rounded-0 " + (sidebarVisible ? 'expand' : '')}>
 
-                    {/* <div className="alert alert-warning mb-0 p-1" style={{fontSize: '0.8rem'}}>Chat is in development! Articles staff will <span className="badge badge-danger">NEVER</span> ask you for your email or personal info via messages!</div>\ */}
+                        {theme == 'Default' && null}
+                        {theme == 'Neon' && <img src="https://media0.giphy.com/media/cOzK12kNVHoiOLYX6P/giphy.gif" alt="" className="background" />}
+                        {theme == 'City' && <img src="https://i.pinimg.com/originals/91/22/e8/9122e8553143325ab503ff95e208f2f9.gif" alt="" className="background" />}
+                        {theme == 'Sky' && <img src="https://i.pinimg.com/originals/3b/8e/b7/3b8eb7b301f7bb6301ec1a8ff8e609c1.gif" alt="" className="background" />}
+                        {/* <img src="https://media0.giphy.com/media/cOzK12kNVHoiOLYX6P/giphy.gif" alt="" className="background" />
+                        <img src="https://media0.giphy.com/media/cOzK12kNVHoiOLYX6P/giphy.gif" alt="" className="background" />
+                        <img src="https://media0.giphy.com/media/cOzK12kNVHoiOLYX6P/giphy.gif" alt="" className="background" /> */}
 
-                    {/* <div className="d-flex justify-content-center align-self-center"> */}
+                        {/* <div className="alert alert-warning mb-0 p-1" style={{fontSize: '0.8rem'}}>Chat is in development! Articles staff will <span className="badge badge-danger">NEVER</span> ask you for your email or personal info via messages!</div>\ */}
 
-                    <button onClick={() => focusChat('')} className="home-button btn btn-articles-light d-flex m-2 mb-0">
-                        <i className="fas fa-home"></i>
-                        <div>Messages Home</div>
-                    </button>
+                        {/* <div className="d-flex justify-content-center align-self-center"> */}
 
-                    {/* </div> */}
-
-                    {renderMessageContacts()}
-
-                    <div className="start-chat">
-                    <button onClick={() => setCreateChatOverlay(true)} className="btn btn-articles-light">Start Chat</button>
-                    </div>
-                </div>
-
-                <div className={"chat-content" + (sidebarVisible ? '' : ' expand') + (Object.keys( focused || {} ).length === 0 ? ' empty' : '')}>
-
-                    <div onClick={() => setSidebarVisible(false)}  className={"content-darken " + (sidebarVisible ? 'visible ' : '')}></div>
-
-                    <div className="content-header">
-                    <div className="row justify-content-center justify-content-lg-between align-items-center">
-
-                        <div className="col-8 col-sm-8 d-flex justify-content-center align-items-center">
-
-                            <button id="conversations-menu-button" onClick={() => setSidebarVisible(true)} className="btn btn-articles-light d-lg-none mr-3">
-                                <i className="fas fa-comment mr-2"></i>
-                                <span>Messages</span>
+                        <div className={`home-button ${focusedChat == '' && 'visible'}`}>
+                            <button onClick={() => focusChat('')} className="btn btn-articles-light d-flex m-2 mb-0">
+                                <i className="fas fa-home"></i>
+                                <div>Messages Home</div>
                             </button>
+                        </div>
+
+                        {/* </div> */}
+
+                        <div className="contacts-list">{renderMessageContacts()}</div>
+
+                        <div className="start-chat">
+                            <button onClick={() => setCreateChatOverlay(true)} className="btn btn-articles-light">Start Chat</button>
+                        </div>
+
+                    </div>
+
+                    <div className={"chat-content" + (sidebarVisible ? '' : ' expand') + (Object.keys( focused || {} ).length === 0 ? ' empty' : '')}>
+
+                        <div onClick={() => setSidebarVisible(false)}  className={"content-darken " + (sidebarVisible ? 'visible ' : '')}></div>
+
+                        <div className="content-header">
+                        <div className="row justify-content-center justify-content-lg-between align-items-center">
+
+                            <div className="col-8 col-sm-8 d-flex justify-content-center align-items-center">
+
+                                <button id="conversations-menu-button" onClick={() => setSidebarVisible(true)} className="btn btn-articles-light d-lg-none mr-3">
+                                    <i className="fas fa-comment mr-2"></i>
+                                    <span>Messages</span>
+                                </button>
+
+                                {focusedChat !== '' &&
+                                <div className="d-flex align-items-center">
+                                    <div className="badge badge-dark mr-2">Offline</div>
+                                    <div>{focused?.fetchedUsers?.filter(user => user.id !== props.user_id).map(user => user.name)}</div>
+                                </div>
+                                }
+
+                            </div>
 
                             {focusedChat !== '' &&
-                            <div className="d-flex align-items-center">
-                                <div className="badge badge-dark mr-2">Offline</div>
-                                <div>{focused?.fetchedUsers?.filter(user => user.id !== props.user_id).map(user => user.name)}</div>
+                            <div className="col-auto">
+
+                                <OverlayTrigger 
+                                    trigger='click' 
+                                    rootClose 
+                                    placement="bottom" 
+                                    overlay={ 
+                                        <Popover id="popover-basic">
+
+                                            <Popover.Title as="h3">Settings</Popover.Title>
+
+                                            <Popover.Content>
+
+                                                <div className="d-flex justify-content-between align-items-center mb-3">
+                                                    <div className="mr-3">Encrypt Chat</div>
+                                                    <div>
+                                                    <button className="btn btn-sm btn-articles-light">
+                                                        Encrypt
+                                                    </button>
+                                                    </div>
+                                                </div>
+
+                                                <div className="d-flex justify-content-between align-items-center mb-3">
+                                                    <div className="mr-3">Mute Chat</div>
+                                                    <div>
+                                                    <button className="btn btn-radio active btn-sm btn-articles-light">
+                                                        No
+                                                    </button>
+                                                    <button className="btn btn-radio btn-sm btn-articles-light">
+                                                        Yes
+                                                    </button>
+                                                    </div>
+                                                </div>
+
+                                                <div className="d-flex justify-content-between align-items-center">
+                                                    <div className="mr-3">Delete Chat</div>
+                                                    <div>
+                                                    <button onClick={() => deleteConversation(focused?._id)} className="btn btn-sm btn-danger">
+                                                        Delete
+                                                    </button>
+                                                    </div>
+                                                </div>
+
+                                                <div className={"justify-content-between align-items-center mt-3 " + (props.user_id === '5e90cc96579a17440c5d7d52' ? 'd-flex' : 'd-none')}>
+                                                    <div className="mr-3">Fake Delete Chat</div>
+                                                    <div>
+                                                    <button onClick={() => fakeDeleteConversation(focused?._id)} className="btn btn-sm btn-danger">
+                                                        Delete
+                                                    </button>
+                                                    </div>
+                                                </div>
+
+                                            </Popover.Content>
+                                        
+                                        </Popover>
+                                    }
+                                >
+                                    <button className="btn btn-articles-light">
+                                        <i className="fas fa-cog mr-0"></i>  
+                                    </button>
+                                </OverlayTrigger>
+
                             </div>
                             }
 
                         </div>
-
-                        {focusedChat !== '' &&
-                        <div className="col-auto">
-
-                            <OverlayTrigger 
-                                trigger='click' 
-                                rootClose 
-                                placement="bottom" 
-                                overlay={ 
-                                    <Popover id="popover-basic">
-
-                                        <Popover.Title as="h3">Settings</Popover.Title>
-
-                                        <Popover.Content>
-
-                                            <div className="d-flex justify-content-between align-items-center mb-3">
-                                                <div className="mr-3">Encrypt Chat</div>
-                                                <div>
-                                                <button className="btn btn-sm btn-articles-light">
-                                                    Encrypt
-                                                </button>
-                                                </div>
-                                            </div>
-
-                                            <div className="d-flex justify-content-between align-items-center mb-3">
-                                                <div className="mr-3">Mute Chat</div>
-                                                <div>
-                                                <button className="btn btn-radio active btn-sm btn-articles-light">
-                                                    No
-                                                </button>
-                                                <button className="btn btn-radio btn-sm btn-articles-light">
-                                                    Yes
-                                                </button>
-                                                </div>
-                                            </div>
-
-                                            <div className="d-flex justify-content-between align-items-center">
-                                                <div className="mr-3">Delete Chat</div>
-                                                <div>
-                                                <button onClick={() => deleteConversation(focused?._id)} className="btn btn-sm btn-danger">
-                                                    Delete
-                                                </button>
-                                                </div>
-                                            </div>
-
-                                            <div className={"justify-content-between align-items-center mt-3 " + (props.user_id === '5e90cc96579a17440c5d7d52' ? 'd-flex' : 'd-none')}>
-                                                <div className="mr-3">Fake Delete Chat</div>
-                                                <div>
-                                                <button onClick={() => fakeDeleteConversation(focused?._id)} className="btn btn-sm btn-danger">
-                                                    Delete
-                                                </button>
-                                                </div>
-                                            </div>
-
-                                        </Popover.Content>
-                                    
-                                    </Popover>
-                                }
-                            >
-                                <button className="btn btn-articles-light">
-                                    <i className="fas fa-cog mr-0"></i>  
-                                </button>
-                            </OverlayTrigger>
-
                         </div>
-                        }
 
-                    </div>
-                    </div>
+                        <div className="content-home">
 
-                    <div className="content-home">
+                            <div className="container">
+                                
+                                <h2 onClick={() => setSidebarVisible(true) }>Welcome</h2>
+                                <div className="mb-4" style={{fontSize: '1rem'}}>Articles staff will <span style={{fontSize: '1.0em'}} className="badge badge-danger">NEVER</span> ask you for personal info such as your email, address, password, etc via messages!</div>
 
-                        <div className="container">
-                            
-                            <h2 onClick={() => setSidebarVisible(true) }>Messages Home</h2>
-                            <div className="mb-5" style={{fontSize: '1rem'}}>Articles staff will <span style={{fontSize: '1.0em'}} className="badge badge-danger">NEVER</span> ask you for personal info such as your email, address, password, etc via messages!</div>
+                                <div className="theme-picker mb-4">
+                                    <h2>Chat Theme</h2>
 
-                            <div className="message-settings-cards">
+                                    <div className="d-flex">
 
-                                {/* Message Previews */}
-                                <div className="card p-3 d-flex">
-
-                                    <div className="d-flex justify-content-between mb-2">
-                                        <div>Message Preview</div>
-
-                                        <label 
-                                            className="articles-switch mb-0" 
-                                            onClick={ () => setShowMessagePreview(!showMessagePreview) }
-                                        >
-                                            <input type="checkbox" checked={showMessagePreview}/>
-                                            <span className="slider" onClick={ () => setShowMessagePreview(!showMessagePreview) }></span>
-                                        </label>
-                                    </div>
-
-                                    <hr/>
-
-                                    <div className="mt-2 d-flex">
-                                        <div className="fake-profile-photo mr-2"></div>
-                                        <div>
-                                            <div><b>Sender</b></div>
-                                            {showMessagePreview && <div className="message-preview">A short preview of the message</div> }
+                                        <div className="card shadow-sm mx-1">
+                                            <div className="card-header">Default</div>
+                                            <div className="card-body"><button disabled={theme == 'Default' && 'off'} onClick={() => setTheme('Default')} className="btn btn-articles-light">{ theme == 'Default' ? 'Selected' : 'Select' }</button></div>
                                         </div>
-                                    </div>
-
-                                </div>
-
-                                {/* Online Status */}
-                                <div className="card p-3 d-flex">
-
-                                    <div className="d-flex justify-content-between mb-2">
-                                        <div>Online Activity</div>
-
-                                        <label className="articles-switch mb-0" onClick={ () => setShowOnlineActivity(!showOnlineActivity) }>
-                                            <input type="checkbox" checked={showOnlineActivity}/>
-                                            <span className="slider" onClick={ () => setShowOnlineActivity(!showOnlineActivity) }></span>
-                                        </label>
-                                    </div>
-
-                                    <hr/>
-
-                                    <div className="mt-2">
-                                        {showOnlineActivity ? <div className="badge badge-success mr-2">Online</div> : <div className="badge badge-dark mr-2">Offline</div>}  
-                                        <div>Displays whether you are online or not</div>
-                                    </div>
-
-                                </div>
-
-                                {/* Encrypted Chats */}
-                                <div className="card p-3 d-flex">
-
-                                    <div className="d-flex justify-content-between mb-2">
-                                        <div>Encrypted Chats</div>
-
-                                        <label className="articles-switch mb-0" onClick={ () => setPublicPgpKeyModal(true) }>
-                                            <input type="checkbox" checked={publicPgpKeyModal}/>
-                                            <span className="slider" onClick={ () => setPublicPgpKeyModal(true) }></span>
-                                        </label>
-                                    </div>
-
-                                    <hr/>
-
-                                    <div className="mt-2">
-                                        <div className="badge badge-primary">Beta</div>
-                                        <div>Enter a PGP Public Block for users to encrypt messages with.</div>
-                                    </div>
-
-                                </div>
-                            
-                            </div>
-                        </div>
-
-                        </div>
-
-                    <div ref={myScrollRef} onScroll={(e) => listenToScroll(e)} className="content-body">
-                    
-                    {focused?.encryption === true ? 
-
-                    <div className="chat-encryption-warning card">
-
-                        <div className="card-header">
-                        Chat Encrypted
-                        </div>
-
-                        <div className="card-body">
-                        <div>The user who started this chat set a password that you will need to decrypt the messages. For best security obtain this password from the user in person.</div>
     
-                        <div style={{width: '100%'}} className="form-group d-inline-block articles mt-3">
-                            <label for="password">Password</label>
-                            <input className="form-control with-label" name="password" id="password" type="text" value=""/>
-                        </div>
+                                        <div className="card shadow-sm mx-1">
+                                            <div className="card-header">Neon</div>
+                                            <div className="card-body"><button disabled={theme == 'Neon' && 'off'} onClick={() => setTheme('Neon')} className={`btn btn-articles-light`}>{ theme == 'Neon' ? 'Selected' : 'Select' }</button></div>
+                                        </div>
+                                        
+                                        <div className="card shadow-sm mx-1">
+                                            <div className="card-header">City</div>
+                                            <div className="card-body"><button disabled={theme == 'City' && 'off'} onClick={() => setTheme('City')} className={`btn btn-articles-light`}>{ theme == 'City' ? 'Selected' : 'Select' }</button></div>
+                                        </div>
     
-                        <button className="btn btn-articles-light w-100">Enter</button>
-                        </div>
+                                        <div className="card shadow-sm mx-1">
+                                            <div className="card-header">Sky</div>
+                                            <div className="card-body"><button disabled={theme == 'Sky' && 'off'} onClick={() => setTheme('Sky')} className={`btn btn-articles-light`}>{ theme == 'Sky' ? 'Selected' : 'Select' }</button></div>
+                                        </div>
 
-                    </div>
+                                    </div>
 
-                    :
+                                </div>
 
-                    focused?.messages?.map((message) => (
+                                <div className="mb-4">
+                                    <h2>Message Options</h2>
+                                    <div className="message-settings-cards">
+    
+                                        {/* Message Previews */}
+                                        <div className="card p-3 d-flex">
+    
+                                            <div className="d-flex justify-content-between mb-2">
+                                                <div>Message Preview</div>
+    
+                                                <label 
+                                                    className="articles-switch mb-0" 
+                                                    
+                                                >
+                                                    <input type="checkbox" checked={showMessagePreview}/>
+                                                    <span onClick={ () => setShowMessagePreview(!showMessagePreview) } className="slider"></span>
+                                                </label>
+                                            </div>
+    
+                                            <hr/>
+    
+                                            <div className="mt-2 d-flex">
+                                                <div className="fake-profile-photo mr-2"></div>
+                                                <div>
+                                                    <div><b>Sender</b></div>
+                                                    {showMessagePreview && <div className="message-preview">A short preview of the message</div> }
+                                                </div>
+                                            </div>
+    
+                                        </div>
+    
+                                        {/* Online Status */}
+                                        <div className="card p-3 d-flex">
+    
+                                            <div className="d-flex justify-content-between mb-2">
+                                                <div>Online Activity</div>
+    
+                                                <label className="articles-switch mb-0" onClick={ () => setShowOnlineActivity(!showOnlineActivity) }>
+                                                    <input type="checkbox" checked={showOnlineActivity}/>
+                                                    <span className="slider" onClick={ () => setShowOnlineActivity(!showOnlineActivity) }></span>
+                                                </label>
+                                            </div>
+    
+                                            <hr/>
+    
+                                            <div className="mt-2">
+                                                {showOnlineActivity ? <div className="badge badge-success mr-2">Online</div> : <div className="badge badge-dark mr-2">Offline</div>}  
+                                                <div>Displays whether you are online or not</div>
+                                            </div>
+    
+                                        </div>
+    
+                                        {/* Encrypted Chats */}
+                                        <div className="card p-3 d-flex">
+    
+                                            <div className="d-flex justify-content-between mb-2">
+                                                <div>Encrypted Chats</div>
+    
+                                                <label className="articles-switch mb-0" onClick={ () => setPublicPgpKeyModal(true) }>
+                                                    <input type="checkbox" checked={publicPgpKeyModal}/>
+                                                    <span className="slider" onClick={ () => setPublicPgpKeyModal(true) }></span>
+                                                </label>
+                                            </div>
+    
+                                            <hr/>
+    
+                                            <div className="mt-2">
+                                                <div className="badge badge-primary">Beta</div>
+                                                <div>Enter a PGP Public Block for users to encrypt messages with.</div>
+                                            </div>
+    
+                                        </div>
+                                    
+                                    </div>
+                                </div>
 
-                        <div className={"chat-message p-3 " + ( message.sender === userReduxState._id ? 'personal' : '' )}>
-
-                            <div className={"message-photo " + ( message.sender === userReduxState._id ? 'd-none' : '' )}>
-                                <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${message.sender}.jpg`} alt=""/>
-                            </div>
-
-                            <div className="message-details">
-
-                            <div className={"message " + (message.media === 'photo' ? 'photo' : '')}>
-                                {
-                                message.media !== 'photo' ? 
-                                <span>{message.message}</span>
-                                :
-                                <img style={{cursor: 'pointer'}} onClick={() => setState({lightboxFocus: message.url, lightboxOpen: true})} className="img-fluid" src={message.url} alt=""/>
-                                }
-
-                                <div className="message-extras">
-                                    <i onClick={() => deleteMessage(focused?._id, message._id)} className="fas fa-trash-alt mr-0"></i>
+                                <div className="theme-picker mb-4">
+                                    <h2>Encryption Tips</h2>
                                 </div>
 
                             </div>
 
-                            <div className="date">{moment(message.date).format("LLL")}</div>
-                            </div>
-
                         </div>
 
-                    ))}
-
-                    </div>
-
-                    <div className={"content-send " + (focused?.encryption ? 'd-none' : '')}>
-
-                    <div onClick={() => scrollToBottom()} className={"scroll-lock " + (scrollPosition === 1 ? 'active' : '')}>
-                        <span>Auto Scroll</span>
-                        <span className={(props.user_id === '5e90cc96579a17440c5d7d52' ? '' : 'd-none')}>&nbsp;{scrollPosition}</span>
-                    </div> 
-
-                    <div className={"thumbnail-container " + (image === '' ? 'd-none' : '')}>
-
-                        <button onClick={() => setState({image: '', imageFile: ''})} className="btn btn-sm btn-danger remove">
-                        <span><i className="far fa-window-close"></i>Remove</span>
-                        </button>
-
-                        <img id="thumbnail" src={image}/>
-
-                    </div>
-
-                    {image === '' ? 
-                    <TextareaAutosize
-                        className="chat-message mr-1" 
-                        name="chatMessage"
-                        value={chatMessage}
-                        onKeyPress={(e) => { handleTextareaChange(e) }}
-                        // onChange={(e) => handleChange(e)}
-                        onChange={e => setChatMessage(e.target.value)}
-                        placeholder="Type your message">
-                    </TextareaAutosize>
-                    : 
-                    ''}                  
-
-                    <div className="align-items-start">
-                        <input className="d-none" onFocus={() => (props.changeFocus('photo'))} id="file-upload" onChange={onImageUpload} accept="image/x-png,image/gif,image/jpeg" type="file" name="myfile" />
-                        <label for="file-upload" className="btn btn-sm btn-articles-light mb-0"><i className="fas fa-paperclip mr-0 mr-m-1"></i><span className="d-none d-md-inline">Attach</span></label>
-    
-                        <button disabled={chatMessage === '' && image === ''} className="btn btn-sm btn-articles-light" onClick={() => sendMessage()}><i className="far fa-paper-plane mr-0 mr-m-1"></i><span className="d-none d-md-inline">Send</span></button>
+                        <div ref={myScrollRef} onScroll={(e) => listenToScroll(e)} className="content-body">
                         
-                        <button onClick={() => sendSocketText()} className={"btn btn-sm btn-articles-light d-none d-md-inline " + (props.user_id === '5e90cc96579a17440c5d7d52' ? '' : 'd-none')}>Txt</button>
-                        <button onClick={() => sendSocketImage()} className={"btn btn-sm btn-articles-light d-none d-md-inline " + (props.user_id === '5e90cc96579a17440c5d7d52' ? '' : 'd-none')}>Img</button>
-                        <button onClick={() => logRooms()} className={"btn btn-sm btn-articles-light d-none d-md-inline " + (props.user_id === '5e90cc96579a17440c5d7d52' ? '' : 'd-none')}>Room</button>
-                    </div>
+                        {focused?.encryption === true ? 
+
+                        <div className="chat-encryption-warning card">
+
+                            <div className="card-header">
+                            Chat Encrypted
+                            </div>
+
+                            <div className="card-body">
+                            <div>The user who started this chat set a password that you will need to decrypt the messages. For best security obtain this password from the user in person.</div>
+        
+                            <div style={{width: '100%'}} className="form-group d-inline-block articles mt-3">
+                                <label for="password">Password</label>
+                                <input className="form-control with-label" name="password" id="password" type="text" value=""/>
+                            </div>
+        
+                            <button className="btn btn-articles-light w-100">Enter</button>
+                            </div>
+
+                        </div>
+
+                        :
+
+                        focused?.messages?.map((message) => (
+
+                            <div className={"chat-message p-3 " + ( message.sender === userReduxState._id ? 'personal' : '' )}>
+
+                                <div className={"message-photo " + ( message.sender === userReduxState._id ? 'd-none' : '' )}>
+                                    <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${message.sender}.jpg`} alt=""/>
+                                </div>
+
+                                <div className="message-details">
+
+                                <div className={"message " + (message.media === 'photo' ? 'photo' : '')}>
+                                    {
+                                    message.media !== 'photo' ? 
+                                    <span>{message.message}</span>
+                                    :
+                                    <img style={{cursor: 'pointer'}} onClick={() => setState({lightboxFocus: message.url, lightboxOpen: true})} className="img-fluid" src={message.url} alt=""/>
+                                    }
+
+                                    <div className="message-extras">
+                                        <i onClick={() => deleteMessage(focused?._id, message._id)} className="fas fa-trash-alt mr-0"></i>
+                                    </div>
+
+                                </div>
+
+                                <div className="date">{moment(message.date).format("LLL")}</div>
+                                </div>
+
+                            </div>
+
+                        ))}
+
+                        </div>
+
+                        <div className={"content-send " + (focused?.encryption ? 'd-none' : '')}>
+
+                        <div onClick={() => scrollToBottom()} className={"scroll-lock " + (scrollPosition === 1 ? 'active' : '')}>
+                            <span>Auto Scroll</span>
+                            <span className={(props.user_id === '5e90cc96579a17440c5d7d52' ? '' : 'd-none')}>&nbsp;{scrollPosition}</span>
+                        </div> 
+
+                        <div className={"thumbnail-container " + (image === '' ? 'd-none' : '')}>
+
+                            <button onClick={() => setState({image: '', imageFile: ''})} className="btn btn-sm btn-danger remove">
+                            <span><i className="far fa-window-close"></i>Remove</span>
+                            </button>
+
+                            <img id="thumbnail" src={image}/>
+
+                        </div>
+
+                        {image === '' ? 
+                        <TextareaAutosize
+                            className="chat-message mr-1" 
+                            name="chatMessage"
+                            value={chatMessage}
+                            onKeyPress={(e) => { handleTextareaChange(e) }}
+                            // onChange={(e) => handleChange(e)}
+                            onChange={e => setChatMessage(e.target.value)}
+                            placeholder="Type your message">
+                        </TextareaAutosize>
+                        : 
+                        ''}                  
+
+                        <div className="align-items-start">
+                            <input className="d-none" onFocus={() => (props.changeFocus('photo'))} id="file-upload" onChange={onImageUpload} accept="image/x-png,image/gif,image/jpeg" type="file" name="myfile" />
+                            <label for="file-upload" className="btn btn-sm btn-articles-light mb-0"><i className="fas fa-paperclip mr-0 mr-m-1"></i><span className="d-none d-md-inline">Attach</span></label>
+        
+                            <button disabled={chatMessage === '' && image === ''} className="btn btn-sm btn-articles-light" onClick={() => sendMessage()}><i className="far fa-paper-plane mr-0 mr-m-1"></i><span className="d-none d-md-inline">Send</span></button>
+                            
+                            <button onClick={() => sendSocketText()} className={"btn btn-sm btn-articles-light d-none d-md-inline " + (props.user_id === '5e90cc96579a17440c5d7d52' ? '' : 'd-none')}>Txt</button>
+                            <button onClick={() => sendSocketImage()} className={"btn btn-sm btn-articles-light d-none d-md-inline " + (props.user_id === '5e90cc96579a17440c5d7d52' ? '' : 'd-none')}>Img</button>
+                            <button onClick={() => logRooms()} className={"btn btn-sm btn-articles-light d-none d-md-inline " + (props.user_id === '5e90cc96579a17440c5d7d52' ? '' : 'd-none')}>Room</button>
+                        </div>
+
+                        </div>
 
                     </div>
-
-                </div>
 
                 </div>
             </div>

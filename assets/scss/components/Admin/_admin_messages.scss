@@ -1,0 +1,16 @@
+.admin-messages {
+
+    .metric-item {
+        overflow: visible;
+        position: relative;
+
+        .encrypted {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateY(50%) translateX(-50%);
+        }
+
+    }
+
+}
