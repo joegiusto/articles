@@ -23,6 +23,8 @@ export default function Home(props) {
 
     const { colorModeDark } = useCounter()
 
+    const [signUpEmail, setSignUpEmail] = useState('')
+
     const stories = useSelector((state) => state.stories.stories)
     const issues = useSelector((state) => state.issues.issues)
     const myths = useSelector((state) => state.myths.myths)
@@ -127,9 +129,14 @@ export default function Home(props) {
 
                     <div className="circle">
 
-                        <div className="circle-sm one"></div>
-                        <div className="circle-sm two"></div>
-                        <div className="circle-sm three"></div>
+                        <div className="orbit">
+                            <div className="circle-sm one"></div>
+                            <div className="circle-sm two"></div>
+                            <div className="circle-sm three"></div>
+                        </div>
+
+                        {/* <div className="circle-sm two"></div>
+                        <div className="circle-sm three"></div> */}
 
                         <div className="screen-mock">
                             <div className="mock-nav"></div>
@@ -137,12 +144,12 @@ export default function Home(props) {
 
                     </div>
 
-                    <div className="video-background-container">
-                        <div className="video-background-wrapper">
+                    {/* <div className="video-background-container"> */}
+                        {/* <div className="video-background-wrapper"> */}
                             {/* <iframe src="https://player.vimeo.com/video/529539150" width="640" height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe> */}
                             {/* <iframe style={{ pointerEvents: 'none' }} src={`https://player.vimeo.com/video/529539150`} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe> */}
-                        </div>
-                    </div>
+                        {/* </div> */}
+                    {/* </div> */}
 
                     {/* <div className="image-background-container">
                         <Image
@@ -181,6 +188,26 @@ export default function Home(props) {
 
                             <div className="text">
                                 A political organization and platform, working to make America a better place for the people through avenues of transparency, clothing, news and politics.
+                            </div>
+
+                            <div className="card p-2 d-flex flex-row flex-wrap align-items-center mt-4 d-flex">
+
+                                <div className="form-group articles flex-shrink-0 flex-grow-1 mr-md-2 mb-0">
+                                    <label for="searchFilter">Email Address</label>
+                                    <input 
+                                        className="form-control with-label" 
+                                        onChange={ e => setSignUpEmail(e.target.value) }
+                                        name="signUpEmail" 
+                                        id="signUpEmail" 
+                                        type="text"
+                                        autoComplete='off'
+                                        placeholder=""
+                                        value={signUpEmail}
+                                    />
+                                </div>
+
+                                <button className="btn btn-articles-light btn-lg mt-2 mt-md-0 ml-auto">Sign Up <i className="fas fa-caret-right mr-0 ml-2"></i></button>
+
                             </div>
 
                             {/* <div className="looking-for-section">
@@ -804,92 +831,92 @@ export default function Home(props) {
 
             <style jsx>{`
 
-                main {
-                    // padding: 5rem 0;
-                    // flex: 1;
-                    // display: flex;
-                    // flex-direction: column;
-                    // justify-content: center;
-                    // align-items: center;
-                }
+                // main {
+                //     // padding: 5rem 0;
+                //     // flex: 1;
+                //     // display: flex;
+                //     // flex-direction: column;
+                //     // justify-content: center;
+                //     // align-items: center;
+                // }
 
-                .title a {
-                color: #0070f3;
-                text-decoration: none;
-                }
+                // .title a {
+                // color: #0070f3;
+                // text-decoration: none;
+                // }
 
-                .title a:hover,
-                .title a:focus,
-                .title a:active {
-                text-decoration: underline;
-                }
+                // .title a:hover,
+                // .title a:focus,
+                // .title a:active {
+                // text-decoration: underline;
+                // }
 
-                .title {
-                margin: 0;
-                line-height: 1.15;
-                font-size: 4rem;
-                }
+                // .title {
+                // margin: 0;
+                // line-height: 1.15;
+                // font-size: 4rem;
+                // }
 
-                .title,
-                .description {
-                text-align: center;
-                }
+                // .title,
+                // .description {
+                // text-align: center;
+                // }
 
-                .subtitle {
-                font-size: 2rem;
-                }
+                // .subtitle {
+                // font-size: 2rem;
+                // }
 
 
-                .grid {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                flex-wrap: wrap;
+                // .grid {
+                // display: flex;
+                // align-items: center;
+                // justify-content: center;
+                // flex-wrap: wrap;
 
-                max-width: 1000px;
-                margin-top: 3rem;
-                }
+                // max-width: 1000px;
+                // margin-top: 3rem;
+                // }
 
-                .card {
-                margin: 1rem;
-                flex-basis: 30%;
-                padding: 1.5rem;
-                text-align: left;
-                color: inherit;
-                text-decoration: none;
-                border: 1px solid #eaeaea;
-                border-radius: 10px;
-                transition: color 0.15s ease, border-color 0.15s ease;
-                }
+                // .card {
+                // margin: 1rem;
+                // flex-basis: 30%;
+                // padding: 1.5rem;
+                // text-align: left;
+                // color: inherit;
+                // text-decoration: none;
+                // border: 1px solid #eaeaea;
+                // border-radius: 10px;
+                // transition: color 0.15s ease, border-color 0.15s ease;
+                // }
 
                 .card:hover,
                 .card:focus,
                 .card:active {
-                color: #0070f3;
-                border-color: #0070f3;
+                color: black;
+                border-color: black;
                 }
 
-                .card h3 {
-                margin: 0 0 1rem 0;
-                font-size: 1.5rem;
-                }
+                // .card h3 {
+                // margin: 0 0 1rem 0;
+                // font-size: 1.5rem;
+                // }
 
-                .card p {
-                margin: 0;
-                font-size: 1.25rem;
-                line-height: 1.5;
-                }
+                // .card p {
+                // margin: 0;
+                // font-size: 1.25rem;
+                // line-height: 1.5;
+                // }
 
-                .logo {
-                height: 1em;
-                }
+                // .logo {
+                // height: 1em;
+                // }
 
-                @media (max-width: 600px) {
-                .grid {
-                    width: 100%;
-                    flex-direction: column;
-                }
-                }
+                // @media (max-width: 600px) {
+                // .grid {
+                //     width: 100%;
+                //     flex-direction: column;
+                // }
+                // }
             `}</style>
 
         </div>
