@@ -156,7 +156,7 @@ const StoreItem = (props) => {
                 </a>
             </Link>
 
-            <div className="dual-header">
+            <div className={`dual-header ${props.viewOnly && 'd-none'}`}>
               <select 
                 className={"mt-1 btn btn-outline-" + (props.color === "articles" ? 'dark' : props.color)}
                 onChange={(e) => {
@@ -202,7 +202,9 @@ const StoreItem = (props) => {
               </div>
 
             </div>
-            <div className="spacer"></div>
+
+            <div className={`spacer ${props.viewOnly && 'd-none'}`}></div>
+
             <div className="footer">
               {/* <p className="text-muted text-center subheading-font mb-0 pt-1" onClick={() => changeFlipped(!flipped)}>More details</p> */}
             </div>

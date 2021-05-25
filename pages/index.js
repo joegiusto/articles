@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 
 import Head from 'next/head'
 import Image from 'next/image'
@@ -6,10 +6,13 @@ import Link from 'next/link'
 
 import { useSelector, useDispatch } from 'react-redux'
 
+import axios from 'axios'
+
 // Articles Imports
 import ROUTES from 'components/constants/routes'
 import StoreItemBeta from 'components/store/StoreItem';
 import { connectToDatabase } from 'util/mongodb'
+import StoreItem from 'components/store/StoreItem'
 import NewsCard from 'components/News/NewsCard';
 
 const useCounter = () => {
@@ -31,15 +34,22 @@ export default function Home(props) {
 
     const [timeProgress, setTimeProgress] = useState(0)
 
+    const [counter, setCounter] = useState(0);
+
+    const [activeHeroMock, setActiveHeroMock] = useState('Transparency')
+
     const [expandThinkAboutTiles, setExpandThinkAboutTiles] = useState(false)
 
     const [avenueTab, setAvenueTab] = useState(0)
+    const [subAvenueTab, setSubAvenueTab] = useState('Reports')
+
     const [avenueScroll, setAvenueScroll] = useState(false)
 
     const [newsShowcase, setNewsShowcase] = useState('stories')
     const [newsShowcaseStories, setNewsShowcaseStories] = useState(0)
     const [newsShowcaseIssues, setNewsShowcaseIssues] = useState(0)
     const [newsShowcaseMyths, setNewsShowcaseMyths] = useState(0)
+    const [products, setProducts] = useState([])
     const [newsTotals, setNewsTotals] = useState({
         stories: 0,
         issues: 0,
@@ -52,6 +62,41 @@ export default function Home(props) {
         financial: 0,
         education: 0
     })
+
+    useEffect(() => {
+
+        axios.get('/api/store/products')
+        .then(function (response) {
+            console.log(response.data.news);
+            setProducts(response.data)
+            // self.setState({
+            //     products: response.data,
+            //     loadingProducts: false
+            // });
+        })
+        .catch(function (error) {
+            console.log(error);
+            // self.setState({ loadingProducts: true });
+            // self.setState({ resultsLoadingError: error });
+        });
+
+    }, []);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+
+            if ( counter == 3 ) {
+                return setCounter(0);
+            }
+
+            return setCounter(counter + 1);
+
+        }, 2500);
+    
+        return () => {
+          clearInterval(interval);
+        };
+    });
 
     function startSalesAnimation() {
         console.log("Sales Animation Started!");
@@ -139,16 +184,55 @@ export default function Home(props) {
                         <div className="circle-sm three"></div> */}
 
                         <div className="screen-mock">
-                            <div className="mock-nav"></div>
+
+                            {/* <div className="mock-nav"></div> */}
+
+                            <div className={`mock transparency-mock ${counter == 0 && 'active'}`}>
+                                <Image
+                                    src="/images/landing/mobile-transparency.png"
+                                    alt="Image of our Transparency page."
+                                    layout="fill"
+                                    objectFit="cover"
+                                    className="test"
+                                />
+                            </div>
+
+                            <div className={`mock news-mock ${counter == 1 && 'active'}`}>
+                                <Image
+                                    src="/images/landing/mobile-news.png"
+                                    alt="Image of our News page, home to Stories, Issues and Myths."
+                                    layout="fill"
+                                    objectFit="cover"
+                                />
+                            </div>
+
+                            <div className={`mock store-mock ${counter == 2 && 'active'}`}>
+                                <Image
+                                    src="/images/landing/mobile-store.png"
+                                    alt="Image of our Store page."
+                                    layout="fill"
+                                    objectFit="cover"
+                                />
+                            </div>
+
+                            <div className={`mock proposal-mock ${counter == 3 && 'active'}`}>
+                                <Image
+                                    src="/images/landing/mobile-proposals.png"
+                                    alt="Image of our Proposal page."
+                                    layout="fill"
+                                    objectFit="cover"
+                                />
+                            </div>
+
                         </div>
 
                     </div>
 
                     {/* <div className="video-background-container"> */}
-                        {/* <div className="video-background-wrapper"> */}
-                            {/* <iframe src="https://player.vimeo.com/video/529539150" width="640" height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe> */}
-                            {/* <iframe style={{ pointerEvents: 'none' }} src={`https://player.vimeo.com/video/529539150`} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe> */}
-                        {/* </div> */}
+                    {/* <div className="video-background-wrapper"> */}
+                    {/* <iframe src="https://player.vimeo.com/video/529539150" width="640" height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe> */}
+                    {/* <iframe style={{ pointerEvents: 'none' }} src={`https://player.vimeo.com/video/529539150`} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe> */}
+                    {/* </div> */}
                     {/* </div> */}
 
                     {/* <div className="image-background-container">
@@ -194,11 +278,11 @@ export default function Home(props) {
 
                                 <div className="form-group articles flex-shrink-0 flex-grow-1 mr-md-2 mb-0">
                                     <label for="searchFilter">Email Address</label>
-                                    <input 
-                                        className="form-control with-label" 
-                                        onChange={ e => setSignUpEmail(e.target.value) }
-                                        name="signUpEmail" 
-                                        id="signUpEmail" 
+                                    <input
+                                        className="form-control with-label"
+                                        onChange={e => setSignUpEmail(e.target.value)}
+                                        name="signUpEmail"
+                                        id="signUpEmail"
                                         type="text"
                                         autoComplete='off'
                                         placeholder=""
@@ -408,6 +492,123 @@ export default function Home(props) {
 
                             {/* <NewCustomPanel identifier={avenueTabDetails[avenueTab]} /> */}
 
+                            {avenueTab == 0 &&
+                                <div className="card mb-2">
+                                    <div className="card-body">
+
+                                        <div className="text-center">
+                                            <h2 className="mb-1">Open Financial Details</h2>
+                                            <p>With more Transparency at Articles we aim to eliminate corruption and provide insight into what we are doing.</p>
+                                        </div>
+
+                                        <div className="transparency-tab">
+                                            <div className="row">
+
+                                                <div className="col-lg-5">
+                                                    <div className="tab-list d-flex flex-column">
+
+                                                        <button onClick={() => setSubAvenueTab('Reports')} className={`btn btn-articles-light btn-lg mb-3 ${subAvenueTab == 'Reports' && 'active'}`}>
+                                                            <i className="fad fa-clipboard-list"></i><span>Reports</span>
+                                                            <div className="active-arrow"><i className="far fa-caret-square-right mr-0"></i></div>
+                                                        </button>
+
+                                                        <button onClick={() => setSubAvenueTab('Charts')} className={`btn btn-articles-light btn-lg mb-3 ${subAvenueTab == 'Charts' && 'active'}`}>
+                                                            <i className="fad fa-chart-line"></i><span>Charts</span>
+                                                            <div className="active-arrow"><i className="far fa-caret-square-right mr-0"></i></div>
+                                                        </button>
+
+                                                        {/* <button className="btn btn-articles-light btn-lg">
+                                                            Charts
+                                                        </button> */}
+
+                                                        <button onClick={() => setSubAvenueTab('Employees')} className={`btn btn-articles-light btn-lg mb-3 ${subAvenueTab == 'Employees' && 'active'}`}>
+                                                            <i className="fad fa-paste"></i><span>Employees</span>
+                                                            <div className="active-arrow"><i className="far fa-caret-square-right mr-0"></i></div>
+                                                        </button>
+
+                                                        <button onClick={() => setSubAvenueTab('Flag')} className={`btn btn-articles-light btn-lg ${subAvenueTab == 'Flag' && 'active'}`}>
+                                                            <i className="fad fa-paste"></i><span>Flag</span>
+                                                            <div className="active-arrow"><i className="far fa-caret-square-right mr-0"></i></div>
+                                                        </button>
+
+                                                        {/* <button className="btn btn-articles-light btn-lg">
+                                                            Flag
+                                                        </button> */}
+
+                                                    </div>
+                                                </div>
+
+                                                <div className="col-lg-7">
+
+                                                    <div className="tab-content">
+
+                                                        {subAvenueTab == 'Reports' &&
+                                                            <table className="table articles-table table-sm table-hover table-bordered mb-0">
+                                                                <thead><tr className="table-articles-head"><th scope="col">Date</th><th scope="col">Type</th><th scope="col">Order Summary</th><th className="text-right" scope="col">Total</th></tr></thead>
+                                                                <tbody>
+                                                                    <tr><td colSpan="1" className="border-right-0 ">May 8, 2021</td><td colSpan="1" className="border-right-0 ">Ad</td><td colSpan="1" className="border-right-0 "></td><td colSpan="1" className="border-right-0 ">$1.00</td></tr>
+                                                                    <tr><td colSpan="1" className="border-right-0 ">March 13, 2021</td><td colSpan="1" className="border-right-0 ">Store Order</td><td colSpan="1" className="border-right-0 "></td><td colSpan="1" className="border-right-0 ">$5.00</td></tr>
+                                                                    <tr><td colSpan="1" className="border-right-0 ">February 8, 2021</td><td colSpan="1" className="border-right-0 ">Donation</td><td colSpan="1" className="border-right-0 "></td><td colSpan="1" className="border-right-0 ">$50.00</td></tr>
+                                                                    <tr><td colSpan="1" className="border-right-0 ">July 6, 2020</td><td colSpan="1" className="border-right-0 ">Donation</td><td colSpan="1" className="border-right-0 "></td><td colSpan="1" className="border-right-0 ">$50.00</td></tr>
+                                                                    <tr><td colSpan="1" className="border-right-0 ">June 13, 2020</td><td colSpan="1" className="border-right-0 ">Donation</td><td colSpan="1" className="border-right-0 "></td><td colSpan="1" className="border-right-0 ">$50.00</td></tr>
+                                                                    <tr><td colSpan="1" className="border-right-0 ">May 30, 2020</td><td colSpan="1" className="border-right-0 ">Donation</td><td colSpan="1" className="border-right-0 "></td><td colSpan="1" className="border-right-0 ">$100.00</td></tr>
+                                                                    <tr><td colSpan="1" className="border-right-0 ">June 25, 2019</td><td colSpan="1" className="border-right-0 ">Donation</td><td colSpan="1" className="border-right-0 "></td><td colSpan="1" className="border-right-0 ">$50.00</td></tr>
+                                                                    <tr><td colSpan="1" className="border-right-0 ">June 25, 2019</td><td colSpan="1" className="border-right-0 ">Donation</td><td colSpan="1" className="border-right-0 "></td><td colSpan="1" className="border-right-0 ">$50.00</td></tr>
+                                                                    <tr><td colSpan="1" className="border-right-0 ">June 25, 2019</td><td colSpan="1" className="border-right-0 ">Donation</td><td colSpan="1" className="border-right-0 "></td><td colSpan="1" className="border-right-0 ">$50.00</td></tr>
+                                                                    <tr><td colSpan="1" className="border-right-0 ">June 25, 2019</td><td colSpan="1" className="border-right-0 ">Donation</td><td colSpan="1" className="border-right-0 "></td><td colSpan="1" className="border-right-0 ">$50.00</td></tr>
+                                                                    <tr className="table-footer"><td colSpan="2" className="border-right-0 table-articles-head"></td><td colSpan="1" className="border-right-0 text-right table-articles-head">Total:</td><td colSpan="1" className="border-left-0 table-articles-head">$306.00</td></tr>
+                                                                </tbody>
+                                                            </table>
+                                                        }
+
+                                                        {subAvenueTab == 'Employees' && <img className="img-fluid" src="https://assets.coinbase.com/assets/coinbase-app.3b0bfd4cb6b7a7614c1e18472187f6b9.webp" alt="" />}
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            }
+
+                            {avenueTab == 1 &&
+                                <div className="card mb-2">
+                                    <div className="card-body">
+
+                                        <div className="text-center">
+                                            <h2>A look into out store</h2>
+                                            <p>We sell clothing and other merchandise to help fund the platform.</p>
+                                        </div>
+
+                                        <div className="transparency-tab">
+                                            
+                                            <div className="clothing-container">
+                                                <StoreItem 
+                                                    color="articles" 
+                                                    viewOnly={true} 
+                                                    product={products.find(element => element._id === "5eabc1e99b0beb3e04599717")}
+                                                />
+                                                <StoreItem 
+                                                    color="articles" 
+                                                    viewOnly={true} 
+                                                    product={products.find(element => element._id === "5eb50fdde094562238f5b910")}
+                                                />
+                                                <StoreItem 
+                                                    color="articles" 
+                                                    viewOnly={true} 
+                                                    product={products.find(element => element._id === "5f4b146d537b221bc419408c")}
+                                                />
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            }
+
                             <div className="controls noselect d-flex justify-content-center">
 
                                 <div className="avenue-selector">
@@ -417,25 +618,25 @@ export default function Home(props) {
 
                                         {/* <span className="avenue-filler"></span> */}
 
-                                        <div onClick={() => this.jumpTo(0, true)} className={"avenue avenue-selection transparency ml-0 " + (avenueTab === 0 ? 'active' : '')}>
+                                        <div onClick={() => setAvenueTab(0)} className={"card avenue avenue-selection transparency ml-0 " + (avenueTab === 0 ? 'active' : '')}>
                                             <div className="beak"></div>
                                             <i className="fas fa-paste" aria-hidden="true"></i>
                                             Transparency
                                         </div>
 
-                                        <div onClick={() => this.jumpTo(1, true)} className={"avenue avenue-selection clothing " + (avenueTab === 1 ? 'active' : '')}>
+                                        <div onClick={() => setAvenueTab(1)} className={"card avenue avenue-selection clothing " + (avenueTab === 1 ? 'active' : '')}>
                                             <div className="beak"></div>
                                             <i className="fas fa-shopping-cart" aria-hidden="true"></i>
                                             Clothing
                                         </div>
 
-                                        <div onClick={() => this.jumpTo(2, true)} className={"avenue avenue-selection news " + (avenueTab === 2 ? 'active' : '')}>
+                                        <div onClick={() => setAvenueTab(2)} className={"card avenue avenue-selection news " + (avenueTab === 2 ? 'active' : '')}>
                                             <div className="beak"></div>
                                             <i className="fas fa-newspaper" aria-hidden="true"></i>
                                             News
                                         </div>
 
-                                        <div onClick={() => this.jumpTo(3, true)} className={"avenue avenue-selection politics " + (avenueTab === 3 ? 'active' : '')}>
+                                        <div onClick={() => setAvenueTab(3)} className={"card avenue avenue-selection politics " + (avenueTab === 3 ? 'active' : '')}>
                                             <div className="beak"></div>
                                             <i className="fas fa-scroll" aria-hidden="true"></i>
                                             Politics
