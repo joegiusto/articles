@@ -2,7 +2,7 @@
 // import { useForm } from "react-hook-form";
 // // import Headers from "./Header";
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -22,69 +22,80 @@ export default function Playground() {
     const router = useRouter()
     const { param } = router.query
 
+    useEffect(() => {
+
+    });
+
     return (
 
-        <div className="container">
+        <div className="playground-page">
 
-            <div className="card mx-auto" style={{"width": "24rem"}}>
+            <Head>
+                <title>Playground | Articles</title>
+                {/* <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/86/three.min.js"></script> */}
+            </Head>
 
-                <div className="card-body">
-                    <form onSubmit={handleSubmit(onSubmit)}>
-             
-                        <div className="form-group articles">
-                            <label htmlFor="firstName">First Name</label>
-                            <input {...register( "firstName", { required: true } )} id="firstName" className="form-control with-label" />
-                        </div>
+            <div className="container">
 
-                        {/* {errors.firstName && errors.firstName.type === "required" && <span>This is required</span>} */}
-                        {/* {errors.firstName && errors.firstName.type === "maxLength" && <span>Max length exceeded</span> } */}
+                <div className="card mx-auto mb-3" style={{ "width": "24rem" }}>
 
-                        <div className="form-group articles">
-                            <label htmlFor="lastName">Last Name</label>
-                            <input {...register( "lastName" )} id="lastName" className="form-control with-label" />
-                        </div>
+                    <div className="card-body">
+                        <form onSubmit={handleSubmit(onSubmit)}>
 
-                        <div className="form-group articles">
-                            <label htmlFor="message">Message</label>
-                            <textarea {...register( "message" )} id="message" className="form-control with-label" />
-                        </div>
+                            <div className="form-group articles">
+                                <label htmlFor="firstName">First Name</label>
+                                <input {...register("firstName", { required: true })} id="firstName" className="form-control with-label" />
+                            </div>
 
-                        {/* <input {...register("coverFees", { required: true })} type="radio" value="No" /> */}
-                        {/* <input {...register("coverFees", { required: true })} type="radio" value=" Yes" /> */}
+                            {/* {errors.firstName && errors.firstName.type === "required" && <span>This is required</span>} */}
+                            {/* {errors.firstName && errors.firstName.type === "maxLength" && <span>Max length exceeded</span> } */}
 
-                        <div className="form-group articles articles-switch-container">
+                            <div className="form-group articles">
+                                <label htmlFor="lastName">Last Name</label>
+                                <input {...register("lastName")} id="lastName" className="form-control with-label" />
+                            </div>
 
-                            <label className="" htmlFor="coverFees">Cover Processing Fees?</label>
+                            <div className="form-group articles">
+                                <label htmlFor="message">Message</label>
+                                <textarea {...register("message")} id="message" className="form-control with-label" />
+                            </div>
 
-                            <div className="articles-switch-wrap mb-3 py-1 px-3">
+                            {/* <input {...register("coverFees", { required: true })} type="radio" value="No" /> */}
+                            {/* <input {...register("coverFees", { required: true })} type="radio" value=" Yes" /> */}
 
-                                <label className="articles-switch mb-0">
-                                    {/* <input disabled type="checkbox" checked={data.coverFees}/> */}
-                                    <input type="checkbox" id="coverFees" checked={watchCoverFees} placeholder="Cover Fees" {...register("Cover Fees", {required: true})} />
-                                    <span className="slider"></span>
-                                </label>
+                            <div className="form-group articles articles-switch-container">
 
-                                <div className="text-muted">$0.39 Fees</div>
+                                <label className="" htmlFor="coverFees">Cover Processing Fees?</label>
+
+                                <div className="articles-switch-wrap mb-3 py-1 px-3">
+
+                                    <label className="articles-switch mb-0">
+                                        {/* <input disabled type="checkbox" checked={data.coverFees}/> */}
+                                        <input type="checkbox" id="coverFees" checked={watchCoverFees} placeholder="Cover Fees" {...register("Cover Fees", { required: true })} />
+                                        <span className="slider"></span>
+                                    </label>
+
+                                    <div className="text-muted">$0.39 Fees</div>
+
+                                </div>
 
                             </div>
 
-                        </div>
-            
-                        {/* <select className="mb-3" {...register("category")}>
-                            <option value="">Select...</option>
-                            <option value="A">Category A</option>
-                            <option value="B">Category B</option>
-                        </select> */}
-            
-                        <input className="btn btn-articles-light w-100" type="submit" />
-            
-                    </form>
+                            {/* <select className="mb-3" {...register("category")}>
+                                <option value="">Select...</option>
+                                <option value="A">Category A</option>
+                                <option value="B">Category B</option>
+                            </select> */}
+
+                            <input className="btn btn-articles-light w-100" type="submit" />
+
+                        </form>
+                    </div>
+
                 </div>
 
             </div>
-
         </div>
-
     );
 }
 
@@ -94,7 +105,7 @@ export default function Playground() {
 
 //     console.log(router.pathname)
 //     console.log(param);
-  
+
 //     return(
 //         <section className="outset-page">
 

@@ -50,7 +50,8 @@
         "socket.io-client": "^4.0.1",
         "stripe": "^8.144.0",
         "styled-components": "^5.2.3",
-        "swiper": "^6.5.3"
+        "swiper": "^6.5.3",
+        "three": "^0.128.0"
     },
     "peerOptionalDependencies": {
         "mongodb": "^3.5.9"

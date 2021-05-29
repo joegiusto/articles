@@ -3,12 +3,11 @@ var ObjectId = require('mongodb').ObjectId;
 import { getSession } from 'next-auth/client'
 
 import connectDB from 'util/mongoose';
-import Revenue from "models/Revenue";
+import Recurring from "models/Recurring";
 
 export default connectDB( async (req, res) => {
 
     const session = await getSession({ req })
-    console.log(req.body.donation)
 
     if ( session.user.email !== "joeygiusto@gmail.com" ) {
         return res.status(403).json({ 
@@ -16,23 +15,30 @@ export default connectDB( async (req, res) => {
         })
     }
 
+    // console.log("😎 req.body")
+    // console.log(req.body)
+
+    // console.log("😎 query")
+    // const query = ( { _id: "5eb350ad5ec6cf37a8f79999" } );
+
+    // console.log( query );
+
     let filter = {};
 
-    if(req.body.donation._id == null) {
+    if(req.body._id == null) {
         // console.log("was null")
-        delete req.body.donation._id;
+        delete req.body._id;
         filter = { _id: new ObjectId() };
     } else {
         // console.log("was not null")
-        filter = { _id: req.body.donation._id };
+        filter = { _id: req.body._id };
     }
 
-    Revenue.findOneAndUpdate( filter, req.body.donation, { new: true, upsert: true }, function(err, result) {
+    Recurring.findOneAndUpdate( filter, req.body, { new: true, upsert: true }, function(err, doc) {
         if (err) return res.send(500, {error: err});
-
-        return res.send({
-            populatedDonation: result
-        });
+        // console.log("😎 doc")
+        // console.log(doc)
+        return res.send(doc);
     });
 
 } );

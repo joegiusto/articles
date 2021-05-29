@@ -34,7 +34,7 @@ let socket
 
 // MEMORY - Many, many, many issues later
 if (typeof window !== 'undefined') {
-    socket = io("https://b177becdadc3.ngrok.io");
+    socket = io("https://60f746d5c43f.ngrok.io");
 }
 
 function MyApp({ Component, pageProps }) {

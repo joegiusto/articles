@@ -7,6 +7,11 @@
     </url>
 
     <url>
+        <loc>https://articles.media/outset</loc>
+        <priority>0.90</priority>
+    </url>
+
+    <url>
         <loc>https://articles.media/mission</loc>
         <priority>0.90</priority>
     </url>
@@ -97,12 +102,12 @@
     </url>
 
     <url>
-        <loc>https://articles.media/proposals</loc>
+        <loc>https://articles.media/party/proposals</loc>
         <priority>0.90</priority>
     </url>
 
     <url>
-        <loc>https://articles.media/town-hall</loc>
+        <loc>https://articles.media/party/town-hall</loc>
         <priority>0.90</priority>
     </url>
 

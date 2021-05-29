@@ -234,106 +234,141 @@ function SideMenuBase(props) {
                 null
                 }
 
-                <Dropdown 
-                className="weather-badge mr-2"
-                >
-                <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-1">
-                    <img src="https://icon-library.com/images/cloudy-icon/cloudy-icon-3.jpg" alt="Cloudy weather icon"/>
-                    <div>50°F</div>
-                </Dropdown.Toggle>
+                <Dropdown className="weather-badge mr-3">
 
-                <Dropdown.Menu className="">
-
-                    <div className="px-2 d-flex justify-content-between align-items-center" style={{fontSize: '1.3rem'}}>
-
-                    <div className="display-flex align-items-center">
-                        <div className="badge badge-articles mr-1">12524</div>
-
-                        <div className="badge badge-dark mr-1">
-                        +
-                        </div>
-                    </div>
-
-                    <div className="badge badge-dark">
-                        <div><i className="fas fa-cog mr-0"></i></div>
-                    </div>
-
-                    </div>
-
-                    <Dropdown.Divider/>
-
-                    <div className="weather">
-
-                    <div className="icon">
+                    <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-1">
                         <img src="https://icon-library.com/images/cloudy-icon/cloudy-icon-3.jpg" alt="Cloudy weather icon"/>
-                    </div>
+                        <div>50°F</div>
+                    </Dropdown.Toggle>
 
-                    <div className="details">
-                        <div className="temp">
-                        50
-                        <span className="deg">°F</span>
-                        </div>
-                    </div>
+                    <Dropdown.Menu className="">
 
-                    <div className="details-extra">
+                        <div className="px-2 d-flex justify-content-between align-items-center" style={{fontSize: '1.3rem'}}>
 
-                        <div className="precipitation">
-                        <img src="https://media.istockphoto.com/vectors/water-drop-symbol-vector-rain-drop-icon-vector-id1156487494?k=6&amp;m=1156487494&amp;s=170667a&amp;w=0&amp;h=RD9wBtK827d_3rdeOvSez9bboMBf4_E_0MIEtus9cUo=" alt="Precipitation Symbol"/>
-                        0%
-                        </div>
+                        <div className="display-flex align-items-center">
+                            <div className="badge badge-articles mr-1">12524</div>
 
-                        <div className="humidity">
-                        <img src="https://w7.pngwing.com/pngs/65/666/png-transparent-drawing-humidity-indicator-angle-triangle-illustrator-thumbnail.png" alt="Humidity Symbol"/>
-                        0%
+                            <div className="badge badge-dark mr-1">
+                            +
+                            </div>
                         </div>
 
-                        <div className="wind">
-                        <img src="https://www.pinclipart.com/picdir/middle/140-1405202_windy-weather-icon-wind-weather-symbols-clipart.png" alt="Wind Symbol"/>
-                        5 mph
-                        </div>
+                        <div className="badge badge-dark">
+                            <div><i className="fas fa-cog mr-0"></i></div>
                         </div>
 
-                    </div>
+                        </div>
 
-                </Dropdown.Menu>
+                        <Dropdown.Divider/>
+
+                        <div className="weather">
+
+                        <div className="icon">
+                            <img src="https://icon-library.com/images/cloudy-icon/cloudy-icon-3.jpg" alt="Cloudy weather icon"/>
+                        </div>
+
+                        <div className="details">
+                            <div className="temp">
+                            50
+                            <span className="deg">°F</span>
+                            </div>
+                        </div>
+
+                        <div className="details-extra">
+
+                            <div className="precipitation">
+                            <img src="https://media.istockphoto.com/vectors/water-drop-symbol-vector-rain-drop-icon-vector-id1156487494?k=6&amp;m=1156487494&amp;s=170667a&amp;w=0&amp;h=RD9wBtK827d_3rdeOvSez9bboMBf4_E_0MIEtus9cUo=" alt="Precipitation Symbol"/>
+                            0%
+                            </div>
+
+                            <div className="humidity">
+                            <img src="https://w7.pngwing.com/pngs/65/666/png-transparent-drawing-humidity-indicator-angle-triangle-illustrator-thumbnail.png" alt="Humidity Symbol"/>
+                            0%
+                            </div>
+
+                            <div className="wind">
+                            <img src="https://www.pinclipart.com/picdir/middle/140-1405202_windy-weather-icon-wind-weather-symbols-clipart.png" alt="Wind Symbol"/>
+                            5 mph
+                            </div>
+                            </div>
+
+                        </div>
+
+                    </Dropdown.Menu>
 
                 </Dropdown>
 
-                <Dropdown 
-                className="notification-badge mr-3"
-                >
-                <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-1">
-                    <div className="notification-count">0</div>
-                    <div className={"message-count " + (connected ? 'bg-success' : 'bg-danger')}>0</div>
+                <Dropdown className="messages-badge mr-3">
+                    
+                    <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-1">
+                        {/* <div className="notification-count">0</div> */}
+                        <div className={"messages-count " + (connected ? 'bg-success' : 'bg-danger')}>0</div>
 
-                    <div>{' '} <i className="far fa-bell mr-0"></i> {' '}</div>
-                </Dropdown.Toggle>
+                        <div>{' '} <i className="fad fa-comments-alt mr-0"></i> {' '}</div>
+                    </Dropdown.Toggle>
 
-                <Dropdown.Menu className="super-colors">
+                    <Dropdown.Menu className="super-colors">
 
-                    {/* <Dropdown.Item className="px-1" eventKey="2">
-                    <i className="fas fa-shopping-cart" aria-hidden="true"></i>
-                    <span style={{fontSize: '0.8rem'}}>Order shipped</span>
-                    </Dropdown.Item> */}
+                        {/* <Dropdown.Item className="px-1" eventKey="2">
+                        <i className="fas fa-shopping-cart" aria-hidden="true"></i>
+                        <span style={{fontSize: '0.8rem'}}>Order shipped</span>
+                        </Dropdown.Item> */}
 
-                    {/* <Dropdown.Item className="px-1" eventKey="2">
-                    <i className="fas fa-paste" aria-hidden="true"></i>
-                    <span style={{fontSize: '0.8rem'}}>Report Response</span>
-                    </Dropdown.Item> */}
+                        {/* <Dropdown.Item className="px-1" eventKey="2">
+                        <i className="fas fa-paste" aria-hidden="true"></i>
+                        <span style={{fontSize: '0.8rem'}}>Report Response</span>
+                        </Dropdown.Item> */}
 
-                    <div className="text-muted text-center" style={{fontSize: '0.8rem'}}>0 Notifications</div>
+                        <div className="text-muted text-center" style={{fontSize: '0.8rem'}}>0 Notifications</div>
 
-                    <Dropdown.Divider />
+                        <Dropdown.Divider />
 
-                    <div className="w-100 px-2">
-                    <Link href={ROUTES.MESSAGES}>
-                        <div style={{cursor: 'pointer'}} className="badge badge-success w-100">0 Messages</div>
-                    </Link>
-                    </div>
+                        <div className="w-100 px-2">
+                        <Link href={ROUTES.MESSAGES}>
+                            <div style={{cursor: 'pointer'}} className="badge badge-success w-100">0 Messages</div>
+                        </Link>
+                        </div>
 
-                    {/* <Dropdown.Item eventKey="4">Manage</Dropdown.Item> */}
+                        {/* <Dropdown.Item eventKey="4">Manage</Dropdown.Item> */}
 
-                </Dropdown.Menu>
+                    </Dropdown.Menu>
+
+                </Dropdown>
+
+                <Dropdown  className="notification-badge mr-3">
+
+                    <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-1">
+                        <div className="notification-count">0</div>
+                        {/* <div className={"message-count " + (connected ? 'bg-success' : 'bg-danger')}>0</div> */}
+
+                        <div>{' '} <i className="far fa-bell mr-0"></i> {' '}</div>
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu className="super-colors">
+
+                        {/* <Dropdown.Item className="px-1" eventKey="2">
+                        <i className="fas fa-shopping-cart" aria-hidden="true"></i>
+                        <span style={{fontSize: '0.8rem'}}>Order shipped</span>
+                        </Dropdown.Item> */}
+
+                        {/* <Dropdown.Item className="px-1" eventKey="2">
+                        <i className="fas fa-paste" aria-hidden="true"></i>
+                        <span style={{fontSize: '0.8rem'}}>Report Response</span>
+                        </Dropdown.Item> */}
+
+                        <div className="text-muted text-center" style={{fontSize: '0.8rem'}}>0 Notifications</div>
+
+                        <Dropdown.Divider />
+
+                        <div className="w-100 px-2">
+                        <Link href={ROUTES.MESSAGES}>
+                            <div style={{cursor: 'pointer'}} className="badge badge-success w-100">0 Messages</div>
+                        </Link>
+                        </div>
+
+                        {/* <Dropdown.Item eventKey="4">Manage</Dropdown.Item> */}
+
+                    </Dropdown.Menu>
 
                 </Dropdown>
 
@@ -660,6 +695,13 @@ function SideMenuBase(props) {
                             <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
                                 <i className="icon fad fa-compass fa-lg"></i>
                                 <span>Playground</span>
+                            </a>
+                        </Link>
+
+                        <Link href={ROUTES.EPCOT}>
+                            <a className="link" onClick={ () => dispatch({type: 'TOGGLE_SIDE_MENU_OPEN'}) }>
+                                <i className="icon fad fa-tree-palm fa-lg"></i>
+                                <span>Epcot</span>
                             </a>
                         </Link>
 

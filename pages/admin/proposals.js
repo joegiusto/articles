@@ -10,7 +10,7 @@ import axios from 'axios'
 import TextareaAutosize from 'react-textarea-autosize';
 import moment from 'moment'
 
-import AdminLayout from '../../components/layouts/admin.js';
+import AdminLayout from 'components/layouts/admin.js';
 
 function AdminHomePage() {
     const router = useRouter()
@@ -169,20 +169,20 @@ class Proposals extends Component {
     }
   
     componentDidMount() {
-      const self = this;
-    //   this.props.setLocation(this.props.tabLocation);
+        const self = this;
+        // this.props.setLocation(this.props.tabLocation);
   
-      axios.get('/api/proposals')
-      .then(function (response) {
-        console.log(response);
-  
-        self.setState({
-          proposals: response.data
+        axios.get('/api/proposals')
+        .then(function (response) {
+            console.log(response);
+    
+            self.setState({
+                proposals: response.data
+            })
         })
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+        .catch(function (error) {
+            console.log(error);
+        });
   
     }
   
@@ -206,8 +206,8 @@ class Proposals extends Component {
     deleteProposal(id) {
       const self = this;
   
-      axios.post('/api/deleteProposal', {
-        _id: id
+      axios.post('/api/admin/proposals/delete', {
+        id: id
       })
       .then(function (response) {
         console.log(response);
@@ -224,30 +224,30 @@ class Proposals extends Component {
       });
     }
   
-    upsertProposal(obj, cb) {
+    upsertProposal( obj ) {
       const self = this;
   
-      axios.post('/api/upsertProposal', {
+      axios.post('/api/admin/proposals/upsert', {
         proposal: obj
       })
       .then(function (response) {
         console.log(response);
   
-        // self.setState({
-        //   // Remove old one if it exists
-        //   proposals: self.state.proposals.filter(function( oldObj ) {
-        //     return oldObj._id !== obj._id;
-        //   })
-        // }, () => self.setState({
-        //   // Insert new one
-        //   proposals: [
-        //     ...self.state.proposals,
-        //     self.state.newProposal
-        //   ]
-        //   })
-        // );
+        self.setState({
+          // Remove old one if it exists
+          proposals: self.state.proposals.filter(function( oldObj ) {
+            return oldObj._id !== obj._id;
+          })
+        }, () => self.setState({
+          // Insert new one
+          proposals: [
+            ...self.state.proposals,
+            self.state.newProposal
+          ]
+          })
+        );
   
-        cb('Hello there child');
+        // cb('Hello there child');
   
       })
       .catch(function (error) {
@@ -274,74 +274,78 @@ class Proposals extends Component {
             
                             <div className="proposal-type">
             
-                            <button onClick={() => this.setState({newProposal: {...this.state.newProposal, type: 'social'}})} className={"btn btn-articles-light " + (this.state.newProposal.type === 'social' ? 'alt' : '')}>
-                                Social
-                            </button>
-                
-                            <button onClick={() => this.setState({newProposal: {...this.state.newProposal, type: 'education'}})} className={"btn btn-articles-light " + (this.state.newProposal.type === 'education' ? 'alt' : '')}>
-                                Eduacation
-                            </button>
-                
-                            <button onClick={() => this.setState({newProposal: {...this.state.newProposal, type: 'financial'}})} className={"btn btn-articles-light " + (this.state.newProposal.type === 'financial' ? 'alt' : '')}>
-                                Financial
-                            </button>
-                
-                            <button onClick={() => this.setState({newProposal: {...this.state.newProposal, type: 'fundamental'}})} className={"btn btn-articles-light " + (this.state.newProposal.type === 'fundamental' ? 'alt' : '')}>
-                                Fundamental
-                            </button>
+                                <button onClick={() => this.setState({newProposal: {...this.state.newProposal, type: 'social'}})} className={"btn btn-articles-light " + (this.state.newProposal.type === 'social' && 'active')}>
+                                    Social
+                                </button>
+                    
+                                <button onClick={() => this.setState({newProposal: {...this.state.newProposal, type: 'education'}})} className={"btn btn-articles-light " + (this.state.newProposal.type === 'education' && 'active')}>
+                                    Education
+                                </button>
+                    
+                                <button onClick={() => this.setState({newProposal: {...this.state.newProposal, type: 'financial'}})} className={"btn btn-articles-light " + (this.state.newProposal.type === 'financial' && 'active')}>
+                                    Financial
+                                </button>
+                    
+                                <button onClick={() => this.setState({newProposal: {...this.state.newProposal, type: 'fundamental'}})} className={"btn btn-articles-light " + (this.state.newProposal.type === 'fundamental' && 'active')}>
+                                    Fundamental
+                                </button>
+
                             </div>
             
                             <div className="form-group mt-3">
-                            <label for="address">Title</label>
-                            <input className="form-control with-label" onChange={ (e) => { this.handleNewProposalChange(e) } } name="title" id="title" type="text" value={this.state.title}/>
+                                <label for="address">Title</label>
+                                <input className="form-control with-label" onChange={ (e) => { this.handleNewProposalChange(e) } } name="title" id="title" type="text" value={this.state.title}/>
                             </div>
             
                             <div className="form-group">
-                            <label for="address">URL</label>
-                            <input className="form-control with-label" onChange={(e) => {this.handleNewProposalChange(e)}} name="url" id="url" type="text" value={this.state.url}/>
+                                <label for="address">URL</label>
+                                <input className="form-control with-label" onChange={(e) => {this.handleNewProposalChange(e)}} name="url" id="url" type="text" value={this.state.url}/>
                             </div>
             
                             <div className="form-group">
-                            <label for="address">Description</label>
-                            <input className="form-control with-label" onChange={(e) => {this.handleNewProposalChange(e)}} name="description" id="description" type="text" value={this.state.description}/>
+                                <label for="address">Description</label>
+                                <input className="form-control with-label" onChange={(e) => {this.handleNewProposalChange(e)}} name="description" id="description" type="text" value={this.state.description}/>
                             </div>
             
                             <div className="form-group">
-                            <label for="address">Content</label>
-                            <TextareaAutosize className="form-control with-label" name="content" id="content" type="text" value={this.state.content} onChange={(e) => {this.handleNewProposalChange(e)}} cols="30" rows="3"/>
-                            {/* <input   name="content" id="content" type="text" value={this.state.content}/> */}
+                                <label for="address">Content</label>
+                                <TextareaAutosize className="form-control with-label" name="content" id="content" type="text" value={this.state.content} onChange={(e) => {this.handleNewProposalChange(e)}} cols="30" rows="3"/>
+                                {/* <input   name="content" id="content" type="text" value={this.state.content}/> */}
                             </div>
             
                             <button onClick={() => this.upsertProposal(this.state.newProposal)} disabled={(
-                            this.state.newProposal.type === '' 
-                            || 
-                            this.state.newProposal.title === '' 
-                            ||
-                            this.state.newProposal.url === '' 
-                            ||
-                            this.state.newProposal.description === '' 
-                            ||
-                            this.state.newProposal.content === '' 
-                            ? true : false)} className="btn btn-articles-light ">Submit</button>
+                                this.state.newProposal.type === '' 
+                                || 
+                                this.state.newProposal.title === '' 
+                                ||
+                                this.state.newProposal.url === '' 
+                                ||
+                                this.state.newProposal.description === '' 
+                                ||
+                                this.state.newProposal.content === '' 
+                                ? true : false)} className="btn btn-articles-light "
+                            >
+                                Submit
+                            </button>
             
                         </div>
             
                         <h2 className="mb-2">View Proposals - {this.state.proposals.length}</h2>
 
                         <div className="proposal-filters">
-                            <button onClick={() => this.setState({typeFilter: 'social'})} className={"btn btn-articles-light " + (this.state.typeFilter === 'social' ? 'alt' : '')}>
+                            <button onClick={() => this.setState({typeFilter: 'social'})} className={"btn btn-articles-light " + (this.state.typeFilter === 'social' && 'active') }>
                                 Social - {this.state.proposals.filter(  (obj) => obj.type === 'social' ).length}
                             </button>
                 
-                            <button onClick={() => this.setState({typeFilter: 'education'})} className={"btn btn-articles-light " + (this.state.typeFilter === 'education' ? 'alt' : '')}>
+                            <button onClick={() => this.setState({typeFilter: 'education'})} className={"btn btn-articles-light " + (this.state.typeFilter === 'education' && 'active') }>
                                 Education - {this.state.proposals.filter(  (obj) => obj.type === 'education' ).length}
                             </button>
                 
-                            <button onClick={() => this.setState({typeFilter: 'financial'})} className={"btn btn-articles-light " + (this.state.typeFilter === 'financial' ? 'alt' : '')}>
+                            <button onClick={() => this.setState({typeFilter: 'financial'})} className={"btn btn-articles-light " + (this.state.typeFilter === 'financial' && 'active') }>
                                 Financial - {this.state.proposals.filter(  (obj) => obj.type === 'financial' ).length}
                             </button>
                 
-                            <button onClick={() => this.setState({typeFilter: 'fundamental'})} className={"btn btn-articles-light " + (this.state.typeFilter === 'fundamental' ? 'alt' : '')}>
+                            <button onClick={() => this.setState({typeFilter: 'fundamental'})} className={"btn btn-articles-light " + (this.state.typeFilter === 'fundamental' && 'active') }>
                                 Fundamental - {this.state.proposals.filter(  (obj) => obj.type === 'fundamental' ).length}
                             </button>
             
@@ -352,12 +356,12 @@ class Proposals extends Component {
 
                         <div className="proposals">
                             {this.state.proposals.filter(  this.state.typeFilter === '' ? (obj) => obj : (obj) => obj.type === this.state.typeFilter ).map(proposal => 
-                            <Proposal 
-                                key={proposal._id}
-                                proposal={proposal}
-                                deleteProposal={this.deleteProposal}
-                                upsertProposal={this.upsertProposal}
-                            />
+                                <Proposal 
+                                    key={proposal._id}
+                                    proposal={proposal}
+                                    deleteProposal={this.deleteProposal}
+                                    upsertProposal={this.upsertProposal}
+                                />
                             )}
                         </div>
 

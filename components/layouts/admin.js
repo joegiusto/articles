@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 import Link from 'next/link'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 import { useSession } from 'next-auth/client'
@@ -31,6 +32,11 @@ function AdminLayout({ children }) {
 
     if (!session) { return(
         <div className="container my-3">
+
+            <Head>
+
+            </Head>
+
             <AccessDenied/>
         </div>
     ) }
@@ -38,6 +44,10 @@ function AdminLayout({ children }) {
     return (
 
     <div className="admin-container">
+
+        <Head>
+            <meta name="robots" content="noindex"/>
+        </Head>
 
         <div className="tab-bar-wrapper">
 

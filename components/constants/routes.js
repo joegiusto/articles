@@ -184,6 +184,7 @@ export default {
 
     // Playground
     PLAYGROUND: '/playground',
+    EPCOT: '/playground/epcot',
     CHAT: '/chat',
 
 }

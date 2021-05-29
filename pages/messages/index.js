@@ -219,7 +219,7 @@ function Messages(props) {
         setFocusedChat(chat_id)
         setSidebarVisible(false)
         setTimeout( function(){ scrollToBottom(); }, 100 );
-        // socket.emit( 'join-room', focusedChat )
+        socket.emit( 'join-room', focusedChat )
     }
     
     function messagesSort( a, b ) {
@@ -523,7 +523,7 @@ function Messages(props) {
     }
 
     return (
-        <div className={`messages-page theme-${theme} ${theme == 'Neon' && 'dark-mode'}`}>
+        <div className={`messages-page ${focusedChat != '' && 'chat-view'} theme-${theme} ${ (theme == 'Neon' || theme == 'City') && 'dark-mode'}`}>
 
             <Head>
                 <title>Messages - Articles</title>
@@ -673,8 +673,8 @@ function Messages(props) {
 
                         {/* <div className="d-flex justify-content-center align-self-center"> */}
 
-                        <div className={`home-button ${focusedChat == '' && 'visible'}`}>
-                            <button onClick={() => focusChat('')} className="btn btn-articles-light d-flex m-2 mb-0">
+                        <div className={`home-button p-2 ${focusedChat != '' ? 'visible' : 'd-none'}`}>
+                            <button onClick={() => focusChat('')} className="btn d-flex btn-articles-light w-100 align-items-center justify-content-center">
                                 <i className="fas fa-home"></i>
                                 <div>Messages Home</div>
                             </button>
@@ -694,212 +694,249 @@ function Messages(props) {
 
                         <div onClick={() => setSidebarVisible(false)}  className={"content-darken " + (sidebarVisible ? 'visible ' : '')}></div>
 
-                        <div className="content-header">
-                        <div className="row justify-content-center justify-content-lg-between align-items-center">
+                        <div className="content-header d-none">
+                            <div className="row justify-content-center justify-content-lg-between align-items-center">
 
-                            <div className="col-8 col-sm-8 d-flex justify-content-center align-items-center">
+                                <div className="col-8 col-sm-8 d-flex justify-content-center align-items-center">
 
-                                <button id="conversations-menu-button" onClick={() => setSidebarVisible(true)} className="btn btn-articles-light d-lg-none mr-3">
-                                    <i className="fas fa-comment mr-2"></i>
-                                    <span>Messages</span>
-                                </button>
+                                    <button id="conversations-menu-button" onClick={() => setSidebarVisible(true)} className="btn btn-articles-light d-lg-none mr-3">
+                                        <i className="fas fa-comment mr-2"></i>
+                                        <span>Messages</span>
+                                    </button>
+
+                                    {focusedChat !== '' &&
+                                    <div className="d-flex align-items-center">
+                                        <div className="badge badge-dark mr-2">Offline</div>
+                                        <div>{focused?.fetchedUsers?.filter(user => user.id !== props.user_id).map(user => user.name)}</div>
+                                    </div>
+                                    }
+
+                                </div>
 
                                 {focusedChat !== '' &&
-                                <div className="d-flex align-items-center">
-                                    <div className="badge badge-dark mr-2">Offline</div>
-                                    <div>{focused?.fetchedUsers?.filter(user => user.id !== props.user_id).map(user => user.name)}</div>
+                                <div className="col-auto">
+
+                                    <OverlayTrigger 
+                                        trigger='click' 
+                                        rootClose 
+                                        placement="bottom" 
+                                        overlay={ 
+                                            <Popover id="popover-basic">
+
+                                                <Popover.Title as="h3">Settings</Popover.Title>
+
+                                                <Popover.Content>
+
+                                                    <div className="d-flex justify-content-between align-items-center mb-3">
+                                                        <div className="mr-3">Encrypt Chat</div>
+                                                        <div>
+                                                        <button className="btn btn-sm btn-articles-light">
+                                                            Encrypt
+                                                        </button>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="d-flex justify-content-between align-items-center mb-3">
+                                                        <div className="mr-3">Mute Chat</div>
+                                                        <div>
+                                                        <button className="btn btn-radio active btn-sm btn-articles-light">
+                                                            No
+                                                        </button>
+                                                        <button className="btn btn-radio btn-sm btn-articles-light">
+                                                            Yes
+                                                        </button>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="d-flex justify-content-between align-items-center">
+                                                        <div className="mr-3">Delete Chat</div>
+                                                        <div>
+                                                        <button onClick={() => deleteConversation(focused?._id)} className="btn btn-sm btn-danger">
+                                                            Delete
+                                                        </button>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className={"justify-content-between align-items-center mt-3 " + (props.user_id === '5e90cc96579a17440c5d7d52' ? 'd-flex' : 'd-none')}>
+                                                        <div className="mr-3">Fake Delete Chat</div>
+                                                        <div>
+                                                        <button onClick={() => fakeDeleteConversation(focused?._id)} className="btn btn-sm btn-danger">
+                                                            Delete
+                                                        </button>
+                                                        </div>
+                                                    </div>
+
+                                                </Popover.Content>
+                                            
+                                            </Popover>
+                                        }
+                                    >
+                                        <button className="btn btn-articles-light">
+                                            <i className="fas fa-cog mr-0"></i>  
+                                        </button>
+                                    </OverlayTrigger>
+
                                 </div>
                                 }
 
                             </div>
-
-                            {focusedChat !== '' &&
-                            <div className="col-auto">
-
-                                <OverlayTrigger 
-                                    trigger='click' 
-                                    rootClose 
-                                    placement="bottom" 
-                                    overlay={ 
-                                        <Popover id="popover-basic">
-
-                                            <Popover.Title as="h3">Settings</Popover.Title>
-
-                                            <Popover.Content>
-
-                                                <div className="d-flex justify-content-between align-items-center mb-3">
-                                                    <div className="mr-3">Encrypt Chat</div>
-                                                    <div>
-                                                    <button className="btn btn-sm btn-articles-light">
-                                                        Encrypt
-                                                    </button>
-                                                    </div>
-                                                </div>
-
-                                                <div className="d-flex justify-content-between align-items-center mb-3">
-                                                    <div className="mr-3">Mute Chat</div>
-                                                    <div>
-                                                    <button className="btn btn-radio active btn-sm btn-articles-light">
-                                                        No
-                                                    </button>
-                                                    <button className="btn btn-radio btn-sm btn-articles-light">
-                                                        Yes
-                                                    </button>
-                                                    </div>
-                                                </div>
-
-                                                <div className="d-flex justify-content-between align-items-center">
-                                                    <div className="mr-3">Delete Chat</div>
-                                                    <div>
-                                                    <button onClick={() => deleteConversation(focused?._id)} className="btn btn-sm btn-danger">
-                                                        Delete
-                                                    </button>
-                                                    </div>
-                                                </div>
-
-                                                <div className={"justify-content-between align-items-center mt-3 " + (props.user_id === '5e90cc96579a17440c5d7d52' ? 'd-flex' : 'd-none')}>
-                                                    <div className="mr-3">Fake Delete Chat</div>
-                                                    <div>
-                                                    <button onClick={() => fakeDeleteConversation(focused?._id)} className="btn btn-sm btn-danger">
-                                                        Delete
-                                                    </button>
-                                                    </div>
-                                                </div>
-
-                                            </Popover.Content>
-                                        
-                                        </Popover>
-                                    }
-                                >
-                                    <button className="btn btn-articles-light">
-                                        <i className="fas fa-cog mr-0"></i>  
-                                    </button>
-                                </OverlayTrigger>
-
-                            </div>
-                            }
-
-                        </div>
                         </div>
 
                         <div className="content-home">
 
-                            <div className="container">
-                                
-                                <h2 onClick={() => setSidebarVisible(true) }>Welcome</h2>
-                                <div className="mb-4" style={{fontSize: '1rem'}}>Articles staff will <span style={{fontSize: '1.0em'}} className="badge badge-danger">NEVER</span> ask you for personal info such as your email, address, password, etc via messages!</div>
+                            <div style={{maxWidth: 1200}} className="container-fluid py-3 py-lg-5">
 
-                                <div className="theme-picker mb-4">
-                                    <h2>Chat Theme</h2>
-
-                                    <div className="d-flex">
-
-                                        <div className="card shadow-sm mx-1">
-                                            <div className="card-header">Default</div>
-                                            <div className="card-body"><button disabled={theme == 'Default' && 'off'} onClick={() => setTheme('Default')} className="btn btn-articles-light">{ theme == 'Default' ? 'Selected' : 'Select' }</button></div>
-                                        </div>
-    
-                                        <div className="card shadow-sm mx-1">
-                                            <div className="card-header">Neon</div>
-                                            <div className="card-body"><button disabled={theme == 'Neon' && 'off'} onClick={() => setTheme('Neon')} className={`btn btn-articles-light`}>{ theme == 'Neon' ? 'Selected' : 'Select' }</button></div>
-                                        </div>
-                                        
-                                        <div className="card shadow-sm mx-1">
-                                            <div className="card-header">City</div>
-                                            <div className="card-body"><button disabled={theme == 'City' && 'off'} onClick={() => setTheme('City')} className={`btn btn-articles-light`}>{ theme == 'City' ? 'Selected' : 'Select' }</button></div>
-                                        </div>
-    
-                                        <div className="card shadow-sm mx-1">
-                                            <div className="card-header">Sky</div>
-                                            <div className="card-body"><button disabled={theme == 'Sky' && 'off'} onClick={() => setTheme('Sky')} className={`btn btn-articles-light`}>{ theme == 'Sky' ? 'Selected' : 'Select' }</button></div>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                                <div className="mb-4">
-                                    <h2>Message Options</h2>
-                                    <div className="message-settings-cards">
-    
-                                        {/* Message Previews */}
-                                        <div className="card p-3 d-flex">
-    
-                                            <div className="d-flex justify-content-between mb-2">
-                                                <div>Message Preview</div>
-    
-                                                <label 
-                                                    className="articles-switch mb-0" 
-                                                    
-                                                >
-                                                    <input type="checkbox" checked={showMessagePreview}/>
-                                                    <span onClick={ () => setShowMessagePreview(!showMessagePreview) } className="slider"></span>
-                                                </label>
-                                            </div>
-    
-                                            <hr/>
-    
-                                            <div className="mt-2 d-flex">
-                                                <div className="fake-profile-photo mr-2"></div>
-                                                <div>
-                                                    <div><b>Sender</b></div>
-                                                    {showMessagePreview && <div className="message-preview">A short preview of the message</div> }
-                                                </div>
-                                            </div>
-    
-                                        </div>
-    
-                                        {/* Online Status */}
-                                        <div className="card p-3 d-flex">
-    
-                                            <div className="d-flex justify-content-between mb-2">
-                                                <div>Online Activity</div>
-    
-                                                <label className="articles-switch mb-0" onClick={ () => setShowOnlineActivity(!showOnlineActivity) }>
-                                                    <input type="checkbox" checked={showOnlineActivity}/>
-                                                    <span className="slider" onClick={ () => setShowOnlineActivity(!showOnlineActivity) }></span>
-                                                </label>
-                                            </div>
-    
-                                            <hr/>
-    
-                                            <div className="mt-2">
-                                                {showOnlineActivity ? <div className="badge badge-success mr-2">Online</div> : <div className="badge badge-dark mr-2">Offline</div>}  
-                                                <div>Displays whether you are online or not</div>
-                                            </div>
-    
-                                        </div>
-    
-                                        {/* Encrypted Chats */}
-                                        <div className="card p-3 d-flex">
-    
-                                            <div className="d-flex justify-content-between mb-2">
-                                                <div>Encrypted Chats</div>
-    
-                                                <label className="articles-switch mb-0" onClick={ () => setPublicPgpKeyModal(true) }>
-                                                    <input type="checkbox" checked={publicPgpKeyModal}/>
-                                                    <span className="slider" onClick={ () => setPublicPgpKeyModal(true) }></span>
-                                                </label>
-                                            </div>
-    
-                                            <hr/>
-    
-                                            <div className="mt-2">
-                                                <div className="badge badge-primary">Beta</div>
-                                                <div>Enter a PGP Public Block for users to encrypt messages with.</div>
-                                            </div>
-    
-                                        </div>
+                                <div className="row justify-content-center">
                                     
+                                    <div className="col-lg-8 mb-3 mb-lg-5">
+                                        <h2 className="text-center" onClick={() => setSidebarVisible(true) }>Hello {userReduxState.first_name}!</h2>
+                                        <div className="text-center mb-4" style={{fontSize: '1rem'}}>
+                                            <span style={{fontSize: '0.8em', verticalAlign: 'text-top'}} className="badge badge-dark mr-1">Articles Staff</span>
+                                            <span>will </span>
+                                            <span style={{fontSize: '0.8em', verticalAlign: 'text-top'}} className="badge badge-danger mr-1">NEVER</span>
+                                            <span>ask for personal info such as your email, address, password, etc via messages!</span>
+                                        </div>
                                     </div>
-                                </div>
+    
+                                    <div className="col-lg-6">
+                                        <div className="theme-picker mb-4">
+                                            <h2 className={'text-center'}>Chat Theme</h2>
+        
+                                            <div className="themes">
+        
+                                                <div className="card shadow-sm mx-1">
+                                                    <div className="card-header">Default</div>
+                                                    <div className="card-body"><button disabled={theme == 'Default' && 'off'} onClick={() => setTheme('Default')} className="btn btn-articles-light">{ theme == 'Default' ? 'Selected' : 'Select' }</button></div>
+                                                </div>
+            
+                                                <div className="card shadow-sm mx-1">
+                                                    <div className="card-header d-flex justify-content-between align-items-center">Neon<span className="badge badge-articles">Dark Mode</span></div>
+                                                    <div className="card-body"><button disabled={theme == 'Neon' && 'off'} onClick={() => setTheme('Neon')} className={`btn btn-articles-light`}>{ theme == 'Neon' ? 'Selected' : 'Select' }</button></div>
+                                                </div>
+                                                
+                                                <div className="card shadow-sm mx-1">
+                                                    <div className="card-header d-flex justify-content-between align-items-center">City<span className="badge badge-articles">Dark Mode</span></div>
+                                                    <div className="card-body"><button disabled={theme == 'City' && 'off'} onClick={() => setTheme('City')} className={`btn btn-articles-light`}>{ theme == 'City' ? 'Selected' : 'Select' }</button></div>
+                                                </div>
+            
+                                                <div className="card shadow-sm mx-1">
+                                                    <div className="card-header">Sky</div>
+                                                    <div className="card-body"><button disabled={theme == 'Sky' && 'off'} onClick={() => setTheme('Sky')} className={`btn btn-articles-light`}>{ theme == 'Sky' ? 'Selected' : 'Select' }</button></div>
+                                                </div>
+        
+                                            </div>
+        
+                                        </div>
+                                    </div>
+    
+                                    <div className="col-lg-6">
+                                        <div className="mb-4">
+                                            <h2 className={'text-center'}>Message Options</h2>
+                                            <div className="message-settings-cards">
+            
+                                                {/* Message Previews */}
+                                                <div className="card p-3 d-flex">
+            
+                                                    <div className="d-flex justify-content-between mb-2">
+                                                        <div>Message Preview</div>
+            
+                                                        <label 
+                                                            className="articles-switch mb-0" 
+                                                            
+                                                        >
+                                                            <input type="checkbox" checked={showMessagePreview}/>
+                                                            <span onClick={ () => setShowMessagePreview(!showMessagePreview) } className="slider"></span>
+                                                        </label>
+                                                    </div>
+            
+                                                    <hr/>
+            
+                                                    <div className="mt-2 d-flex">
+                                                        <div className="fake-profile-photo mr-2"></div>
+                                                        <div>
+                                                            <div><b>Sender</b></div>
+                                                            {showMessagePreview && <div className="message-preview">A short preview of the message</div> }
+                                                        </div>
+                                                    </div>
+            
+                                                </div>
+            
+                                                {/* Online Status */}
+                                                <div className="card p-3 d-flex">
+            
+                                                    <div className="d-flex justify-content-between mb-2">
+                                                        <div>Online Activity</div>
+            
+                                                        <label className="articles-switch mb-0" onClick={ () => setShowOnlineActivity(!showOnlineActivity) }>
+                                                            <input type="checkbox" checked={showOnlineActivity}/>
+                                                            <span className="slider" onClick={ () => setShowOnlineActivity(!showOnlineActivity) }></span>
+                                                        </label>
+                                                    </div>
+            
+                                                    <hr/>
+            
+                                                    <div className="mt-2">
+                                                        {showOnlineActivity ? <div className="badge badge-success mr-2">Online</div> : <div className="badge badge-dark mr-2">Offline</div>}  
+                                                        <div>Displays whether you are online or not</div>
+                                                    </div>
+            
+                                                </div>
+            
+                                                {/* Encrypted Chats */}
+                                                <div className="card p-3 d-flex">
+            
+                                                    <div className="d-flex justify-content-between mb-2">
+                                                        <div>Encrypted Chats</div>
+            
+                                                        <label className="articles-switch mb-0" onClick={ () => setPublicPgpKeyModal(true) }>
+                                                            <input type="checkbox" checked={publicPgpKeyModal}/>
+                                                            <span className="slider" onClick={ () => setPublicPgpKeyModal(true) }></span>
+                                                        </label>
+                                                    </div>
+            
+                                                    <hr/>
+            
+                                                    <div className="mt-2">
+                                                        <div className="badge badge-primary">Beta</div>
+                                                        <div>Enter a PGP Public Block for users to encrypt messages with.</div>
+                                                    </div>
+            
+                                                </div>
 
-                                <div className="theme-picker mb-4">
-                                    <h2>Encryption Tips</h2>
-                                </div>
+                                                {/* Messages Badge */}
+                                                <div className="card p-3 d-flex">
+            
+                                                    <div className="d-flex justify-content-between mb-2">
+                                                        <div>Messages Badge</div>
+            
+                                                        <label className="articles-switch mb-0" onClick={ () => setPublicPgpKeyModal(true) }>
+                                                            <input type="checkbox" checked={publicPgpKeyModal}/>
+                                                            <span className="slider" onClick={ () => setPublicPgpKeyModal(true) }></span>
+                                                        </label>
+                                                    </div>
+            
+                                                    <hr/>
+            
+                                                    <div className="mt-2">
+                                                        <div>Display messages button in top right of site.</div>
+                                                    </div>
+            
+                                                </div>
+                                            
 
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                    <div className="col-lg-6">
+                                        <div className="theme-picker mb-4">
+                                            <h2>Encryption Tips</h2>
+                                        </div>
+                                    </div>
+    
+                                </div>
                             </div>
-
+                        
                         </div>
 
                         <div ref={myScrollRef} onScroll={(e) => listenToScroll(e)} className="content-body">

@@ -60,7 +60,7 @@ function ExpensesAdmin(props) {
     useEffect(() => {
         // props.setLocation(props.tabLocation);
     
-        axios.get('/api/getExpenses')
+        axios.get('/api/admin/recurring')
         .then(function (response) {
             console.log(response);
             setExpenses(response.data);
@@ -73,11 +73,8 @@ function ExpensesAdmin(props) {
 
     const handleClose = () => {
         setModalShow(false); 
-        setExpense(prevState => ({}));
+        setExpense({});
         handleDateChange(new Date())
-        // setActiveDonationID(''); 
-        // setActivePresident({}); 
-        // props.history.push(ROUTES.ADMIN_DONATIONS);
     }
 
     const handleExpenseChange = e => {
@@ -122,7 +119,7 @@ function ExpensesAdmin(props) {
 	const deleteExpense = (id) => {
 		console.log(id)
 
-		axios.post('/api/secure/deleteExpense', {
+		axios.post('/api/admin/recurring/delete', {
 			id
 		})
 		.then( (response) => {
@@ -130,8 +127,9 @@ function ExpensesAdmin(props) {
 			setExpenses(expenses.filter(item => item._id !== response.data.removed_id));
 		})
 		.catch( (error) => {
-			console.log(error);
+			console.log(error.response.data.error);
 		});
+
 	}
 
     const editExpense = (id) => {
@@ -165,30 +163,22 @@ function ExpensesAdmin(props) {
 
         console.log(expenseToSend)
 
-        axios.post('/api/secure/upsertExpense', expenseToSend)
+        axios.post('/api/admin/recurring/upsert', expenseToSend)
 		.then( (response) => {
-
-			console.log(response.data.result._id)
             console.log(response)
-
-            // setExpenses();
 
             // filter out newResponsesOldResults
             const expensesToSet = [
-                ...expenses.filter(item => item._id != response.data.result._id),
-                response.data.result
+                ...expenses.filter(item => item._id != response.data._id),
+                response.data
             ]
 
             console.log(expensesToSet)
 
-            setExpenses( prevState => ( expensesToSet ) );
+            setExpenses( expensesToSet );
 
             handleClose()
-			// setDonations(donations.filter(item => item._id !== response.data.removed_id));
-			// setDonations(prevState => ([
-			// 	...prevState,
-			// 	response.data.populatedDonation
-			// ]));
+
 		})
 		.catch( (error) => {
 			console.log(error);

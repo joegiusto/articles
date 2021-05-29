@@ -35,6 +35,7 @@ function AdminHomePage() {
         <section className="admin-page admin-messages">
 
             <Head>
+                <meta name="robots" content="noindex"/>
                 <title>Admin Messages - Articles</title>
             </Head>
 

@@ -6,7 +6,7 @@ export default async (req, res) => {
     const result = await db
     .collection("articles_proposals")
     .find({})
-    .limit(20)
+    // .limit(20)
     .toArray();
 
     res.json(result);

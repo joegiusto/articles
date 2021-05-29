@@ -66,7 +66,7 @@ function TransparencyLayout({ children }) {
 
     <div className="reports-page transparency-page">
 
-        <div className="container">
+        <div className="container-lg">
             <div className="row">
     
                 <div className="col-md-4">
@@ -209,7 +209,7 @@ function TransparencyLayout({ children }) {
 
                 </div>
     
-                <div className="col-md-8 transparency-sub-page-wrap">
+                <div className="col-md-8 transparency-sub-page-wrap pl-md-0">
                     {children}
                 </div>
     

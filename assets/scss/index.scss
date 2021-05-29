@@ -91,8 +91,11 @@ $grid-breakpoints: (
 @import 'components/messages';
 @import 'components/not-found';
 
-@import 'components/footer';
+@import 'components/epcot';
+
 @import 'components/playground';
+
+@import 'components/footer';
 
 // Admin Portal
 @import 'components/Admin/admin';

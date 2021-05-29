@@ -75,6 +75,12 @@
         border-bottom: solid 2px #000;
     }
 
+    &.chat-view {
+        .content-home {
+            display: none;
+        }
+    }
+
     .nav-bar-sticker {
         background-color: hotpink;
         position: absolute;
@@ -136,7 +142,7 @@
             }
 
             .contacts-list {
-                margin: 1rem;
+                margin: 0.5rem;
                 background-color: rgba(255, 255, 255, 0.85);
                 z-index: 0;
                 max-height: 800px;
@@ -150,11 +156,12 @@
             }
 
             .home-button {
-                width: -webkit-fill-available;
+                width: 100%;
                 align-items: center;
                 justify-content: center;
                 opacity: 0;
                 transition-duration: 200ms;
+                z-index: 5;
 
                 &.visible {
                     opacity: 1;
@@ -324,8 +331,8 @@
             &.empty {
                 .content-darken {
                     // background-color: rgba(0, 0, 0, 0.5);
-                    pointer-events: initial;
-                    z-index: 1;
+                    // pointer-events: initial;
+                    // z-index: 1;
                 }
 
                 .content-body,
@@ -334,31 +341,42 @@
                 }
 
                 .content-home {
-                    display: flex;
-                    pointer-events: initial;
-                    z-index: 2;
+                    // display: flex;
+                    // pointer-events: initial;
+                    // z-index: 2;
                 }
             }
 
             .content-home {
-                display: none;
-                width: 100%;
-                height: 100%;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                pointer-events: none;
+                // padding: 3rem;
+                // display: none;
+                // width: 100%;
+                // height: 100%;
+                // flex-direction: column;
+                // justify-content: center;
+                // align-items: center;
+                // pointer-events: none;
                 // background-color: $base-color;
 
                 .theme-picker {
+                    
+                    .themes {
+                        display: grid;
+                        grid-gap: 5px 5px;
+                        grid-template-columns: repeat(2, 1fr);
 
+                        .card {
+                            .card-body {
+                                min-height: 115px;
+                            }
+                        }
+                    }
                 }
 
                 .message-settings-cards {
                     display: grid;
-                    // justify-content: center;
-                    grid-template-columns: repeat(auto-fit, minmax(300px, 400px));
-                    grid-gap: 20px 20px;
+                    grid-gap: 5px 5px;
+                    grid-template-columns: repeat(2, 1fr);
 
                     .fake-profile-photo {
                         width: 50px;
@@ -386,16 +404,16 @@
                 pointer-events: none;
 
                 &.empty {
-                    background-color: rgba(0, 0, 0, 0.5);
-                    pointer-events: initial;
-                    z-index: 1;
+                    // background-color: rgba(0, 0, 0, 0.5);
+                    // pointer-events: initial;
+                    // z-index: 1;
                 }
 
                 @include media-breakpoint-down(md) {
                     &.visible {
                         background-color: rgba(0, 0, 0, 0.5);
-                        pointer-events: initial;
-                        z-index: 1;
+                        // pointer-events: initial;
+                        // z-index: 1;
                     }
                 }
             }

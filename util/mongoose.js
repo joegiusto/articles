@@ -7,11 +7,11 @@ const connectDB = handler => async (req, res) => {
     }
     // Use new db connection
     await mongoose.connect(process.env.MONGODB_URI, {
+        useNewUrlParser: true,
+        useFindAndModify: false,
+        useCreateIndex: true,
         useUnifiedTopology: true,
-        // useFindAndModify: false,
-        // useCreateIndex: true,
         serverSelectionTimeoutMS: 20000,
-        useNewUrlParser: true
     });
     return handler(req, res);
 };

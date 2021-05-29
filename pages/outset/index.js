@@ -950,6 +950,7 @@ class OutsetBase extends React.Component {
             <div className="outset-page">
 
                 <Head>
+                    <meta name="robots" content="noindex"/>
                     <title>Outset - Articles</title>
                 </Head>
 
@@ -1060,7 +1061,13 @@ class OutsetBase extends React.Component {
 
                     {this.state.step === 0 ?
                         <div className="done-image-container" style={{height: '100%', position: 'relative'}}>
-                        <img alt="GIF of man riding horse into sunset holding American Flag" className="img-fluid" src="https://media2.giphy.com/media/C1L8yq5ZEz0cg/source.gif"></img>
+                            <Image
+                                    src="/images/branding/logo.jpg"
+                                    alt="Image of our Store page."
+                                    layout="fill"
+                                    objectFit="contain"
+                            />
+                            {/* <img alt="GIF of man riding horse into sunset holding American Flag" className="img-fluid" src="https://media2.giphy.com/media/C1L8yq5ZEz0cg/source.gif"></img> */}
                         </div>
                         :
                         this.renderStep(this.state.step)
