@@ -60,7 +60,20 @@ function DonationsAdmin(props) {
         ...initialDonation
 	});
 
+    const [users, setUsers] = useState([
+        {
+            first_name: 'Joey',
+            last_name: 'Giusto'
+        },
+        {
+            first_name: 'John',
+            last_name: 'Smith'
+        }
+    ]);
+
 	const [modalShow, setModalShow] = useState(false);
+    const [modalShowUsers, setModalShowUsers] = useState(false);
+
 	const [modalLoading, setModalLoading] = useState(false);
 	const [activeDonationID, setActiveDonationID] = useState('');
 
@@ -98,12 +111,19 @@ function DonationsAdmin(props) {
 
 	useEffect(() => {
 		
-		axios.get('/api/admin/donations', {
-
-		})
+		axios.get('/api/admin/donations')
 		.then( (response) => {
             console.log(response)
             setDonations(response.data);
+		})
+		.catch( (error) => {
+		    console.log(error);
+		});
+
+        axios.get('/api/admin/donations/users')
+		.then( (response) => {
+            console.log(response)
+            setUsers(response.data.users);
 		})
 		.catch( (error) => {
 		    console.log(error);
@@ -122,11 +142,12 @@ function DonationsAdmin(props) {
 		})
 		.then( (response) => {
 			console.log(response)
-			// setDonations(donations.filter(item => item._id !== response.data.removed_id));
-			// setDonations(prevState => ([
-			// 	...prevState,
-			// 	response.data.populatedDonation
-			// ]));
+			setDonations(donations.filter(item => item._id !== response.data.populatedDonation._id));
+			setDonations(prevState => ([
+				...prevState,
+				response.data.populatedDonation
+			]));
+            handleClose()
 		})
 		.catch( (error) => {
 			console.log(error);
@@ -205,7 +226,7 @@ function DonationsAdmin(props) {
                                         id="createdBy" 
                                         type="text" 
                                         disabled
-                                        value={donation.createdBy._id}
+                                        value={(donation.createdBy._id ? donation.createdBy._id : donation.createdBy)}
                                     />
                                 </div>
                             </div>
@@ -232,15 +253,30 @@ function DonationsAdmin(props) {
                             <div className="col-lg-6">
 
                                 {donation.user_id?._id && 
-                                    <div className="w-100 d-flex justify-content-center align-items-center h-100">
-                                        <div className="mb-3"><AdminViewUserModal user_id={donation.user_id._id} name={`${donation.user_id.first_name} ${donation.user_id.last_name}`} buttonType={'badge'} /></div>
+                                    <div className="w-100 d-flex justify-content-center align-items-center mt-3">
+                                        <div className=""><AdminViewUserModal user_id={donation.user_id._id} name={`${donation.user_id.first_name} ${donation.user_id.last_name}`} buttonType={'badge'} /></div>
+                                        <button className="btn btn-articles-light btn-sm" onClick={() => setDonation({...donation, user_id: {_id: undefined, first_name: undefined, last_name: undefined  } }) }>Remove</button>
                                     </div>
                                 }
 
 
                                 {!donation.user_id?._id && 
-                                    <div className="w-100 d-flex justify-content-center align-items-center h-100">
-                                        <button className="btn btn-articles-light btn-sm mb-3">Add User</button>
+                                    <div className="d-flex flex-column mt-3">
+
+                                        <div className="w-100 d-flex justify-content-center align-items-center h-100">
+                                            <button onClick={() => setModalShowUsers(true)} className="btn btn-articles-light btn-sm mb-3">Add User</button>
+                                        </div>
+
+
+                                            {modalShowUsers && 
+                                            <div className="mb-3">
+                                                {users.map(user => 
+                                                    <button key={user._id} onClick={() => setDonation({...donation, user_id: {_id: user._id, first_name: user.first_name, last_name: user.last_name  } }) + setModalShowUsers(false)} className="btn btn-articles-light btn-sm">{user.first_name} {user.last_name}</button>
+                                                )}
+                                            </div>
+                                            }
+
+
                                     </div>
                                 }
 
@@ -259,7 +295,7 @@ function DonationsAdmin(props) {
                             </div>
 
                             <div className="col-12">
-                            <   div className="mb-3 d-flex justify-content-center">
+                            <   div className="mb-3 d-flex flex-wrap justify-content-center">
                                     <button onClick={() => handleDonationAmountChange(100)} className="flex-grow-1 btn btn-articles-light btn-sm">$1.00</button>
                                     <button onClick={() => handleDonationAmountChange(500)} className="flex-grow-1 btn btn-articles-light btn-sm">$5.00</button>
                                     <button onClick={() => handleDonationAmountChange(1000)} className="flex-grow-1 btn btn-articles-light btn-sm">$10.00</button>
@@ -325,11 +361,11 @@ function DonationsAdmin(props) {
 
                 <div className="card manage-card">
 
-                    <div className="card-header">
+                    <div className="card-header flex-column flex-lg-row justify-content-sm-between">
 
-                        <div className="d-flex align-items-center">
+                        <div className="d-flex align-items-center mb-2 mb-sm-0">
                             <i className="fas fa-edit fa-2x"></i>
-                            <h3 className="mb-0">Manage Donations</h3>
+                            <h3 className="mb-0">Donations</h3>
                             <div className="total">({donations.length})</div>
                         </div>
 

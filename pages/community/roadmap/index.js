@@ -9,9 +9,9 @@ const Page = () => (
     <div className="roadmap-page">
 
         
-<Head>
-                <title>Roadmap - Articles</title>
-            </Head>
+        <Head>
+            <title>Roadmap - Articles</title>
+        </Head>
   
         <img className="roadmap-trail-image" src="https://cdn.onlinewebfonts.com/svg/img_446438.png" alt=""/>
         <img className="roadmap-map-image" src="https://ddo0fzhfvians.cloudfront.net/uploads/icons/png/568635131536669843-512.png" alt=""/>

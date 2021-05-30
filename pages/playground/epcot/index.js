@@ -96,8 +96,8 @@ export default function Epcot() {
                 </div>
 
                 {/* <div className="my-3" id="TutContainer"></div> */}
-                <div class="embed-responsive embed-responsive-16by9">
-                    <iframe class={`embed-responsive-item ${epcotFullscreen && 'fullscreen'}`} src="https://jblaha.art/sketchbook/0.4/"></iframe>
+                <div className="embed-responsive embed-responsive-16by9">
+                    <iframe className={`embed-responsive-item ${epcotFullscreen && 'fullscreen'}`} src="https://jblaha.art/sketchbook/0.4/"></iframe>
                 </div>
 
                 <div className="buttons d-flex justify-content-start align-items-center mb-0 mt-0 bg-dark">
@@ -112,7 +112,7 @@ export default function Epcot() {
 
                     <Dropdown>
                         <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
-                            <i class="fad fa-layer-group ml-0 mr-2"></i>Menu
+                            <i className="fad fa-layer-group ml-0 mr-2"></i>Menu
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu as={CustomMenu}>

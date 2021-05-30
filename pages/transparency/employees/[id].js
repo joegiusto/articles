@@ -12,12 +12,13 @@ import TransparencyLayout from '../../../components/layouts/transparency';
 function TransparencyEmployeePage(props) {
     const router = useRouter()
     const { id } = router.query
+    
     const [employee, setEmployee] = useState({})
     const [employeeLoading, setEmployeeLoading] = useState(false)
     const [filter, setFilter] = useState('get-to-know')
 
     const [ commits, setCommits ] = useState([])
-    const [ commitsLoading, setCommitsLoading ] = useState('false')
+    const [ commitsLoading, setCommitsLoading ] = useState(true)
 
     useEffect(() => {
 
@@ -36,6 +37,23 @@ function TransparencyEmployeePage(props) {
             setEmployeeLoading(false)
         });
 
+        axios.post('/api/github', {
+            employee: id
+        })
+        .then( (response) => {
+
+            console.log(response)
+            setCommitsLoading(false)
+            setCommits(response.data.commits)
+
+        })
+        .catch(function (error) {
+
+            console.log(error);
+            setCommitsLoading(false)
+
+        });
+
 	}, []);
 
     return (
@@ -47,9 +65,9 @@ function TransparencyEmployeePage(props) {
 
             <div className="employee-header card">
 
-                <div className="d-flex flex-column flex-grow-1">
+                <div className="employee-header-left d-flex flex-column flex-grow-1">
 
-                    <div className="top d-flex flex-row">
+                    <div className="top d-flex flex-row mb-2">
                         <div className="employee-header-image-and-socials">
 
                         <div onClick={() => this.setState({expandedPhoto: true})} className="employee-image">
@@ -70,13 +88,9 @@ function TransparencyEmployeePage(props) {
 
                         <div className="employee-header-info">
 
-                        <div className='employee-name'>{`${employee.first_name} ${employee.last_name}`}</div>
+                        <div className='employee-name'><h3>{`${employee.first_name} ${employee.last_name}`}</h3></div>
 
-                        <Link href={ROUTES.MESSAGES + `/?startMsg=${employee._id}`}>
-                            <a>
-                                <div className='employee-action-button btn'>+ MESSAGE</div>
-                            </a>
-                        </Link>
+                        <div className='employee-role'>Founder</div>
 
                         <div className='employee-social'>
                             <SharedSocials socials={employee.employee?.socials}/>
@@ -85,19 +99,26 @@ function TransparencyEmployeePage(props) {
                         </div>
                     </div>
 
+                    <Link href={ROUTES.MESSAGES + `/?startMsg=${employee._id}`}>
+                            <a>
+                                <button className="btn btn-articles-light btn-lg w-100"><i className="fad fa-comments-alt"></i>Message</button>
+                            </a>
+                    </Link>
+
+                </div>
+
+                <div className='employee-header-right'>
+
                     <div className="bio">
                         <div className='employee-bio'>{employee.employee?.bio.replace('<age></age>', moment().diff(employee.birth_date, 'years') )}</div>
                     </div>
 
-                </div>
-
-                <div className='employee-header-traits'>
-                    <p className="employee-header-traits-title">Location</p>
-                    <p className="employee-header-traits-details">{employee.address?.state}</p>
+                    <div className="employee-header-traits-title">Location - <span className="badge badge-dark">{employee.address?.state}</span></div>
                     <p className="employee-header-traits-title">Role</p>
                     <p className="employee-header-traits-details">{employee.employee?.role.map((role) => <span className="badge badge-dark mr-1">{role}</span>) || 'NONE'}</p>
                     <p className="employee-header-traits-title">Joined</p>
                     <p className="employee-header-traits-details">{moment(employee.sign_up_date).format('LL') || 'ERROR'}</p>
+
                 </div>
 
             </div>
@@ -155,24 +176,25 @@ function TransparencyEmployeePage(props) {
                         :
                         <div className="commits">
 
-                        <a target="_blank" rel="noopener noreferrer" href="https://github.com/joegiusto/articles/commits/">
-                            <div className="powered-by d-flex align-items-center justify-content-center">
-                            <i className="fab fa-github-square fa-3x"></i>
-                            <span className="">Powered by Github</span>
-                            </div>
-                        </a>
-
-                        {commits.map(commit => 
-                            <a target="_blank" rel="noopener noreferrer" href={commit.html_url}>
-                            <div className="commit d-flex">
-                                <div className="photo"><img src={commit.committer.avatar_url} alt=""/></div>
-                                <div className="commit-details">
-                                <div className="date">{moment(commit.commit.author.date).format("LL")}</div>
-                                <div className="title">{commit.commit.message}</div>
+                            <a target="_blank" rel="noopener noreferrer" href="https://github.com/joegiusto/articles/commits/">
+                                <div className="powered-by d-flex align-items-center justify-content-center">
+                                <i className="fab fa-github-square fa-3x"></i>
+                                <span className="">Powered by Github</span>
                                 </div>
-                            </div>
                             </a>
-                        )}
+
+                            {commits.map(commit => 
+                                <a key={commit.sha} target="_blank" rel="noopener noreferrer" href={commit.html_url}>
+                                    <div className="commit d-flex">
+                                        <div className="photo"><img src={commit.committer.avatar_url} alt=""/></div>
+                                        <div className="commit-details">
+                                        <div className="date">{moment(commit.commit.author.date).format("LL")}</div>
+                                        <div className="title">{commit.commit.message}</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            )}
+
                         </div>
                         }
 

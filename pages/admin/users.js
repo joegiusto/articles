@@ -683,7 +683,7 @@ function AdminUsersPage() {
                         <div className="d-flex align-items-center justify-content-between mb-1 mb-lg-0 flex-fill flex-lg-grow-0">
                             <i className="fas fa-edit fa-2x"></i>
 
-                            <h3 className="mb-0">Manage Users</h3>
+                            <h3 className="mb-0">Users</h3>
                             <div className="total">({users.length})</div>
                         </div>
 

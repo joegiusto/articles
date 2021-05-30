@@ -57,6 +57,45 @@
     }
 }
 
+.theme-City {
+
+    .contacts-list {
+        background-color: rgba(0, 0, 0, 0.75)!important;
+    }
+
+    .chat-content {
+        background-color: rgb(46, 49, 53);
+
+        .message {
+            background-color: rgb(182 74 34) !important;
+            box-shadow: 0 0.125rem 0.25rem #d7a476 !important;
+            border-radius: 2.5px;
+            margin-bottom: 0.25rem;
+        }
+    }
+}
+
+.theme-Sky {
+
+    .contacts-list {
+        background-color: rgb(255 255 255 / 60%)!important;
+    }
+
+    .chat-content {
+        background-color: rgb(217 217 221);
+
+        .message {
+            // background-color: rgb(182 74 34) !important;
+            background-color: rgba(39, 48, 57, 0.5)!important;
+            color: white;
+
+            box-shadow: 0 0.125rem 0.25rem rgb(39 48 57) !important;
+            border-radius: 2.5px;
+            margin-bottom: 0.25rem;
+        }
+    }
+}
+
 .messages-page {
     font-family: montserrat, sans-serif;
     font-weight: 400;

@@ -41,7 +41,7 @@ function PartyHomePage() {
 
                         {/* Bootstrap 4 */}
                         <div className="livestream-wrapper embed-responsive embed-responsive-16by9">
-                            <h2 className="stream-status-badge badge badge-light badge-lg border"><i class="fas fa-video-slash"></i>Offline</h2>
+                            <h2 className="stream-status-badge badge badge-light badge-lg border"><i className="fas fa-video-slash"></i>Offline</h2>
                             <h2 className="stream-status-message badge badge-light badge-lg border">Next event: TBA</h2>
                             {/* <iframe className="embed-responsive-item" src="..."></iframe> */}
                         </div>

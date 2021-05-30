@@ -1,9 +1,17 @@
 import React from 'react';
+
 import Link from 'next/link'
 import Head from 'next/head'
-import ROUTES from '../../components/constants/routes'
+
+import ROUTES from 'components/constants/routes'
 
 const itemsToRender = [
+    [
+        ROUTES.POLLS, 
+        'Polls', 
+        <i className="fad fa-poll"></i>,
+        'Vote on ideas and proposals to shape the future of Articles!'
+    ],
     [
         ROUTES.UPDATES, 
         'Updates', 
@@ -56,56 +64,48 @@ const itemsToRender = [
     ],
 ]
 
-const Page = (props) => (
-    <div className="community-page">
+export default function CommunityPage(props) {
 
-        <Head>
-            <title>Community - Articles</title>
-        </Head>
+    return (
+        <div className="community-page">
 
-        <div className="container">
+            <Head>
+                <title>Community - Articles</title>
+            </Head>
 
-            <div className="text-center">
-                <h1>Community Hub</h1>
-                <p>Various pages that carry out different tasks for the site</p>
+            <div className="container">
+
+                <div className="text-center">
+                    <h1>Community Hub</h1>
+                    <p>Various pages that carry out different tasks for the site</p>
+                </div>
+
+                <div className="hub-items">
+                    {itemsToRender.map((item, i) => 
+                        <Link href={item[0]}>
+
+                            <div className="item card">
+
+                                <div className="card-header">
+                                    <b><span className="icon">{item[2]}</span> <span className="title">{item[1]}</span></b>
+                                </div>
+
+                                <div className="card-body">
+                                    {item[3]}
+                                </div>
+
+                                <div className="view-link">
+                                    View <i className="fas fa-caret-right"></i>
+                                </div>
+                                
+                            </div>
+
+                        </Link>
+                    )}
+                </div>
+
             </div>
-
-            <div className="hub-items">
-                {itemsToRender.map((item, i) => 
-                    <Link href={item[0]}>
-
-                        <div className="item card">
-
-                            <div className="card-header">
-                                <b><span className="icon">{item[2]}</span> <span className="title">{item[1]}</span></b>
-                            </div>
-
-                            <div className="card-body">
-                                {item[3]}
-                            </div>
-
-                            <div className="view-link">
-                                View <i className="fas fa-caret-right"></i>
-                            </div>
-                            
-                        </div>
-
-                    </Link>
-                )}
-            </div>
-
-            {/* <ul>
-                <Link to={ROUTES.TRANSLATIONS}><li>Translations</li></Link>
-                <Link to={ROUTES.FAQ}><li>Frequently Asked Questions</li></Link>
-                <Link to={ROUTES.UPDATES}><li>Updates</li></Link>
-                <Link to={ROUTES.PRESS}><li>Press</li></Link>
-                <Link to={ROUTES.ROADMAP}><li>Roadmap</li></Link>
-                <Link to={ROUTES.PRIVACY}><li>Privacy</li></Link>
-            </ul> */}
 
         </div>
-
-    </div>
-);
-
-export default Page
+    )
+};

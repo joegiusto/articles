@@ -30,6 +30,11 @@ const donationsSchema = new Schema({
         required: true,
     },
 
+    type: {
+        type: String,
+        required: true,
+    }
+
 }, {timestamps: true});
 
 var Token = mongoose.models.donations || mongoose.model('donations', donationsSchema, 'revenues_donations');

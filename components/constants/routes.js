@@ -120,15 +120,13 @@ export default {
     // Support
     COMMUNITY: `${COMMUNITY}`,
 
-    // export const SUPPORT ='/support'
-    // export const BLOG ='/support/blog'
-
     FAQ: `${COMMUNITY}/faqs`,
     PRIVACY: `${COMMUNITY}/privacy`,
 
     UPDATES: `${COMMUNITY}/updates`,
     UPDATE: `${COMMUNITY}/updates/:id`,
 
+    POLLS: `${COMMUNITY}/polls`,
     JOBS: `${COMMUNITY}/jobs`,
     PRESS: `${COMMUNITY}/press`,
     TRANSLATIONS: `${COMMUNITY}/translations`,
