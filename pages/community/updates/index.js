@@ -50,17 +50,19 @@ function Updates(props) {
 
             <div className="header">
 
-            {/* <img className="d-block mb-3" src="https://cdn.articles.media/email/logo.jpg" alt=""/> */}
-            <div className="mb-1">
-                <Image
-                    src="https://cdn.articles.media/email/logo.jpg"
-                    alt="Articles Media Logo"
-                    width="110px"
-                    height="110xp"
-                />
-            </div>
+                <Link href={ROUTES.COMMUNITY}><button className="btn btn-articles-light btn-lg mb-3"><i class="fad fa-hand-point-left"></i>Community Home</button></Link>
 
-            <h2 className="">Updates</h2>
+                <div className="mb-1">
+                    <Image
+                        src="https://cdn.articles.media/email/logo.jpg"
+                        alt="Articles Media Logo"
+                        width="110px"
+                        height="110xp"
+                    />
+                </div>
+
+                <h2 className="">Updates</h2>
+
             </div>
 
             <div className="blog-nav card flex-row">

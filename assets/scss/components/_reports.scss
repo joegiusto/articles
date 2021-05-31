@@ -869,6 +869,32 @@
         }
 
         .sub-table-overview {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin: 0.5rem;
+
+            @include media-breakpoint-up(md) {
+                flex-direction: row;
+            }
+
+            .detail-card {
+                width: 100%;
+                max-width: 300px;
+                display: block;
+                margin-bottom: 0.25rem;
+
+                @include media-breakpoint-up(md) {
+                    max-width: initial;
+                    margin-bottom: 0rem;
+
+                    &:not(:last-child) {
+                        margin-right: 0.5rem;
+                    }
+                }
+            }
+
             .card {
                 background-color: $articles-secondary-color;
             }

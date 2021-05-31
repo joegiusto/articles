@@ -16,24 +16,22 @@ export default async (req, res) => {
                 'User-Agent': 'joegiusto'
             }
         })
-            .then(function (response) {
+        .then(function (response) {
 
-                cache.put('githubCommits', response.data, 60000);
+            cache.put('githubCommits', response.data, 60000);
 
-                res.send({
-                    commits: response.data,
-                    cached: false
-                });
-
-            })
-            .catch(function (error) {
-                console.log(error);
-                return res.status(400).send({
-                    message: 'There was an error in getting the commits'
-                });
+            res.send({
+                commits: response.data,
+                cached: false
             });
 
-        // cache.put('githubCommits', [{id: 1}, {id: 2}], 60000);
+        })
+        .catch(function (error) {
+            console.log(error);
+            return res.status(400).send({
+                message: 'There was an error in getting the commits'
+            });
+        });
 
         console.log('[Cache Engine] githubCommits is not stored in cache'.yellow);
 

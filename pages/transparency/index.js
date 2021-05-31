@@ -284,7 +284,7 @@ function TransparencyHomePage(props) {
 
                     {/* Donations Overview Stats */}
                     {subtableSelector === 'revenue-donations' &&
-                        <div className="sub-table-overview d-flex mx-2 my-2 justify-content-center">
+                        <div className="sub-table-overview">
 
                             <div className="detail-card card">
 
@@ -300,7 +300,7 @@ function TransparencyHomePage(props) {
 
                             </div>
 
-                            <div className="detail-card card ml-2">
+                            <div className="detail-card card">
 
                                 <div className="py-1 px-2">
 
@@ -314,7 +314,7 @@ function TransparencyHomePage(props) {
 
                             </div>
 
-                            <div className="detail-card card ml-2">
+                            <div className="detail-card card">
 
                                 <div className="py-1 px-2">
 
@@ -323,6 +323,54 @@ function TransparencyHomePage(props) {
 
                                     <span className="badge badge-articles border border-dark mr-2">$100.00</span>
                                     Joey Giusto
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    }
+
+                    {/* Recurring Overview Stats */}
+                    {subtableSelector === 'expenses-recurring'  &&
+                        <div className="sub-table-overview">
+
+                            <div className="detail-card card">
+
+                                <div className="py-1 px-2">
+
+                                    <div className="">Monthly Estimate: </div>
+                                    <hr className="my-1"/>
+
+                                    <span className="badge badge-articles border border-dark mr-2">$24.86</span>
+
+                                </div>
+
+                            </div>
+
+                            <div className="detail-card card">
+
+                                <div className="py-1 px-2">
+
+                                    <div className="">Largest Monthly: </div>
+                                    <hr className="my-1"/>
+
+                                    <span className="badge badge-articles border border-dark mr-2">$17.29</span>
+                                    Adobe
+
+                                </div>
+
+                            </div>
+
+                            <div className="detail-card card">
+
+                                <div className="py-1 px-2">
+
+                                    <div className="">Largest To Date: </div>
+                                    <hr className="my-1"/>
+
+                                    <span className="badge badge-articles border border-dark mr-2">${(17.29 * 7).toFixed(2)}</span>
+                                    Adobe
 
                                 </div>
 

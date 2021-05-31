@@ -1,4 +1,5 @@
 .dark-mode {
+
     .employees-page {
         .employees-list-head {
             // background-color: $dark-mode-card-color;
@@ -16,6 +17,8 @@
     .employee-header {
         // background-color: $dark-mode-card-color!important;
         // color: white!important;
+        box-shadow: inset 0 0 10px #ffb7b7 !important;
+        border: 3px solid rgb(255 255 255);
 
         .employee-name {
             //   color: white!important;
@@ -26,7 +29,7 @@
         }
 
         .employee-header-traits-title {
-            color: black;
+            color: white;
             font-weight: 700;
             font-size: 1rem;
         }
@@ -34,6 +37,8 @@
 
     .employee-details {
         background-color: $dark-mode-card-color;
+        box-shadow: inset 0 0 10px #ffb7b7 !important;
+        border: 3px solid rgb(255 255 255);
 
         .payrole-stubs .stub {
             background-color: $dark-mode-element-color;

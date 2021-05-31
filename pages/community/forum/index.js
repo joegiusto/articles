@@ -28,54 +28,45 @@ const threads = [
     }
   ]
   
-  const Page = () => (
-    <div className="forum-page">
+export default function Page() {
+
+    return ( <div className="forum-page">
 
         <Head>
             <title>Forum - Articles</title>
         </Head>
 
-        <div className="container">
-            <div className="row h-100 justify-content-center">
-            <div className="col-sm-12 my-auto">
-                <div className="card shadow-sm">
-    
-                <div className="card-body">
-                    <h1>Forum</h1>
-                    <p>Help shape the future of Articles.</p>
-                </div>
-    
-                <div className="threads card-footer p-0 px-2 pt-3 py-5">
+        <div className="container py-3 py-lg-5">
+
+            <div className="text-center mb-3 mb-lg-5">
+                <Link href={ROUTES.COMMUNITY}><button className="btn btn-articles-light btn-lg mb-3"><i class="fad fa-hand-point-left"></i>Community Home</button></Link>
+                <h1 className="">Forums</h1>
+                <p className="">Help shape the future of Articles.</p>
+            </div>
+
+            <div className="card threads p-2">
         
-                    {/* <div className="d-flex justify-content-between">
-                    <p className="text-muted mb-0 badge">Return To <Link to={ROUTES.HOME}>Home Page</Link></p>
-                    <p className="text-muted mb-0 badge">Return To <Link to={ROUTES.LANDING}>Landing Page</Link></p>
-                    </div> */}
-    
-                    {threads.map(thread => 
-                    <Link href={ROUTES.FORUM + '/' + thread.url_title}>
-                        <div className="thread alert alert-light">
+                {/* <div className="d-flex justify-content-between">
+                <p className="text-muted mb-0 badge">Return To <Link to={ROUTES.HOME}>Home Page</Link></p>
+                <p className="text-muted mb-0 badge">Return To <Link to={ROUTES.LANDING}>Landing Page</Link></p>
+                </div> */}
+
+                {threads.map(thread => 
+                <Link href={ROUTES.FORUM + '/' + thread.url_title}>
+                    <div className="thread alert alert-light">
                         <div className="title">0 Threads</div>
                         <div className="text">{thread.title}</div>
-        
+
                         <div className="hover-icon">
                             <i className="fas fa-eye"></i>
                         </div>
-                        </div>
-                    </Link>
-                    )}
-                    
-                </div>
-    
-                <div style={{backgroundColor: 'rgb(49 49 49);'}} className="card-footer py-2 text-center">
-                    <Link href={ROUTES.COMMUNITY}><button className="btn btn-articles-light">Support Hub</button></Link>
-                </div>
-    
-                </div>
+                    </div>
+                </Link>
+                )}
+                
             </div>
-            </div>
+
         </div>
-    </div>
-  );
-  
-  export default Page 
+
+    </div> )
+};

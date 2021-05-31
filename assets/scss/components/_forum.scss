@@ -16,30 +16,30 @@
 
 .forum-page {
 
-    @include media-breakpoint-up(md) {
-        flex-grow: 1;
-        display: flex;
-    }
+    // @include media-breakpoint-up(md) {
+    //     flex-grow: 1;
+    //     display: flex;
+    // }
 
-    .card {
-        margin: 3rem auto;
+    // .card {
+    //     margin: 3rem auto;
 
-        @include media-breakpoint-up(md) {
-        margin: auto auto;
-        }
-    }
+    //     @include media-breakpoint-up(md) {
+    //         margin: auto auto;
+    //     }
+    // }
 
-    h1 {
-        font-family: brandon-grotesque, sans-serif;
-        font-style: normal;
-        font-weight: 900;
-        font-size: 1.5rem;
-    }
+    // h1 {
+    //     font-family: brandon-grotesque, sans-serif;
+    //     font-style: normal;
+    //     font-weight: 900;
+    //     font-size: 1.5rem;
+    // }
 
-    p, .alert {
-        font-family: montserrat, sans-serif;
-        font-weight: 400;
-    }
+    // p, .alert {
+    //     font-family: montserrat, sans-serif;
+    //     font-weight: 400;
+    // }
 
     .hover-icon {
         color: black;

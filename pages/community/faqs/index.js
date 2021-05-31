@@ -68,11 +68,12 @@ export default function FAQPage() {
                 <title>FAQ - Articles</title>
             </Head>
 
-            <div className="container">
+            <div className="container py-3 py-lg-5">
 
-                <div className="text-center">
-                    <h2 className="mb-1">Frequently Asked Questions</h2>
-                    <p className="mb-3 mb-lg-5">Our most asked questions, answered.</p>
+                <div className="text-center mb-3 mb-lg-5">
+                    <Link href={ROUTES.COMMUNITY}><button className="btn btn-articles-light btn-lg mb-3"><i class="fad fa-hand-point-left"></i>Community Home</button></Link>
+                    <h1 className="">Frequently Asked Questions</h1>
+                    <p className="">Our most asked questions, answered.</p>
                 </div>
 
                 <div className="filter-section d-flex align-items-center">

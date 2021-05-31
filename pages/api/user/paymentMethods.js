@@ -1,15 +1,52 @@
 const stripe = require('stripe')(process.env.STRIPE_TEST_SECRET);
 
 import { getSession } from 'next-auth/client'
+import axios from 'axios'
+
 import { connectToDatabase } from "util/mongodb";
 
 export default async (req, res) => {
     const { db } = await connectToDatabase();
     const session = await getSession({ req })
 
+    let host = req.headers.host;
+    // console.log(host)
+
+    // console.log('session')
+    // console.log(session)
+
     if (session) {
 
-        let customer_id = 'cus_I2gasSmH70Etq2'
+        // We first need to get stripe_id because it is not in session
+        let stripe_customer_id = await axios.get(`http://${host}/api/user/customerId`, {
+            params: {
+                email: session.user.email,
+            }
+            // headers: {
+            //     Authorization: process.env.GITHUB_API_KEY,
+            //     'User-Agent': 'joegiusto'
+            // }
+        })
+        .then(function (response) {
+            // console.log('response')
+            // console.log(response.data)
+            return response.data
+            // cache.put('githubCommits', response.data, 60000);
+            // res.send({
+            //     commits: response.data,
+            //     cached: false
+            // });
+        })
+        .catch(function (error) {
+            console.log(error);
+            // return res.status(400).send({
+            //     message: 'There was an error in getting the commits'
+            // });
+        });
+
+        let customer_id = stripe_customer_id;
+        // console.log('customer_id')
+        // console.log(customer_id)
     
         try {
     

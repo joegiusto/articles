@@ -23,8 +23,8 @@ function PartyHomePage() {
             <div className="container py-3 py-lg-5">
 
                 <div className="text-center mb-3 mb-lg-5">
-                    <h2>Town Hall</h2>
-                    <p>Return to this page when we have an event going on to interact and share input with us.</p>
+                    <h1>Town Hall</h1>
+                    <p>Return to this page when we have an event going on to watch, interact and share input with us.</p>
                 </div>
 
                 {/* <div className="mb-3">Next Event:<span className="badge badge-dark ml-2">?</span></div> */}
