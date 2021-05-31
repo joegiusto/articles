@@ -31,7 +31,7 @@ function AdminNews() {
     const [modalShow, setModalShow] = useState(false);
 
     const [tags, setTags] = useState([])
-    const [newsLoading, setNewsLoading] = useState(false)
+    const [newsLoading, setNewsLoading] = useState(true)
     const [newsLoadingError, setNewsLoadingError] = useState(false)
 
     const [newsTypeFilter, setNewsTypeFilter] = useState('all')
@@ -177,8 +177,7 @@ function AdminNews() {
 
             <div className="side-panel">
 
-                {/* <div className="side-panel-sticky"> */}
-
+                {/* Totals */}
                 <div className="card mb-3">
 
                     <div className="card-header d-flex justify-content-between">
@@ -194,6 +193,7 @@ function AdminNews() {
 
                 </div>
 
+                {/* Shortcuts */}
                 <div className="card mb-3">
 
                     <div className="card-header d-flex justify-content-between">
@@ -227,8 +227,6 @@ function AdminNews() {
                     </div>
 
                 </div>
-
-                {/* </div> */}
 
             </div>
 
@@ -294,6 +292,12 @@ function AdminNews() {
                     </Link>
                 )} */}
 
+                {newsLoading && 
+                    <div className="text-center mb-3">
+                        <h2><i className="fas fa-spinner fa-spin"></i>Loading...</h2>
+                    </div>
+                }
+
                 <div className="results">
                     {news
                     .filter(document => {
@@ -313,7 +317,7 @@ function AdminNews() {
                             return document
                         }
     
-                    }).length > 0 ?
+                    }).length > 0 &&
     
                         news
                         .filter(document => {
@@ -361,10 +365,6 @@ function AdminNews() {
 
                             </Link>
                         ))
-
-                    :
-
-                    'No matches returned'
 
                     }
                 </div>

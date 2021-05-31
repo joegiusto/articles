@@ -46,7 +46,7 @@ function SideMenuBase(props) {
         props.socket.on('connect', () => {
             console.log("Connected to server!");
             setConnected(true);
-            props.socket.emit('login', {userId: userReduxState._id})
+            props.socket.emit('login', {userId: userReduxState?._id})
         });
 
         // props.socket.on('notification', () => {

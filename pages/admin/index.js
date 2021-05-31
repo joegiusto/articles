@@ -224,6 +224,10 @@ function AdminHomePage() {
 
             <div className="main-panel">
                 <div className="container">
+
+                    {/* <div className="shortcuts">
+
+                    </div> */}
     
                     {/* API Controls */}
                     <div className="card border border-dark mb-3">

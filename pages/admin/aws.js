@@ -199,6 +199,7 @@ class AWS extends Component {
                     </div>
 
                 </div>
+                
             </div>
 
             <div className="main-panel">
