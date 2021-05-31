@@ -271,7 +271,7 @@ export default function Home(props) {
                             </div>
 
                             <div className="text">
-                                A political organization and platform, working to make America a better place for the people through avenues of transparency, clothing, news and politics.
+                                A political organization and platform, working to make America a better place for the people through avenues of transparency, clothing, news, and politics.
                             </div>
 
                             <div className="card p-2 d-flex flex-row flex-wrap align-items-center mt-4 d-flex">
