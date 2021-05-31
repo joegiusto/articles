@@ -77,6 +77,8 @@ const CheckoutForm = (props) => {
     // const { register, handleSubmit, watch, errors } = useForm();
     // const dispatch = useDispatch()
 
+    const userReduxState = useSelector((state) => state.auth.user_details)
+
     const [tax, setTax] = useState(0);
     const [total, setTotal] = useState(0);
     const [cartCount, setCartCount] = useState(0);
@@ -85,7 +87,7 @@ const CheckoutForm = (props) => {
     const prevReturnRef = useRef()
     const mounted = useRef();
 
-    const [lineOne, setLineOne] = useState(props.user_details?.address?.lineOne || '');
+    const [lineOne, setLineOne] = useState('');
     const [lineTwo, setLineTwo] = useState(props.user_details?.address?.lineTwo || '');
     const [city, setCity] = useState(props.user_details?.address?.city || '');
     const [state, setState] = useState(props.user_details?.address?.state || '');
@@ -116,30 +118,42 @@ const CheckoutForm = (props) => {
     
     useEffect(() => {
 
-    if (props.productsUser.length < 1) {
-        setCartEmpty(true)
-    } else {
-        setCartEmpty(false)
-        userProductsToServer()
-    }
-
-    getUserPaymentMethods()
-    storeDisabled()
-
-    if (!mounted.current) {
-        // do componentDidMount logic
-        mounted.current = true;
-    } else {
-        // do componentDidUpdate logic
-        console.log("UPDATE!")
-        // userProductsToServer()
-        mounted.current = false;
-
-        if (returnedProducts.length !== props.productsUser.length && returnedProducts.length !== 0) {
-        console.log("Not equal, update");
+        if (props.productsUser.length < 1) {
+            setCartEmpty(true)
+        } else {
+            setCartEmpty(false)
+            userProductsToServer()
         }
-    }
+
+        getUserPaymentMethods()
+        storeDisabled()
+
+        if (!mounted.current) {
+            // do componentDidMount logic
+            mounted.current = true;
+        } else {
+            // do componentDidUpdate logic
+            console.log("UPDATE!")
+            // userProductsToServer()
+            mounted.current = false;
+
+            if (returnedProducts.length !== props.productsUser.length && returnedProducts.length !== 0) {
+            console.log("Not equal, update");
+            }
+        }
     }, []);
+
+    useEffect(() => {
+        console.log('userReduxState')
+        console.log(userReduxState)
+
+        setLineOne(userReduxState.address?.lineOne)
+        setLineTwo(userReduxState.address?.lineTwo)
+        setCity(userReduxState.address?.city)
+        setState(userReduxState.address?.state)
+        setZip(userReduxState.address?.zip)
+
+     },[userReduxState])
 
     const tryIntent = () => {
         axios.post('/api/store/create-payment-intent', {
@@ -462,23 +476,12 @@ const CheckoutForm = (props) => {
                 </li>
                 )
                 :
-                <li key='empty' className="cart-item list-group-item d-flex justify-content-between lh-condensed shadow-sm">
-                    <div>
-                    {/* <div className="remove" onClick={() => {
-                        props.removeCartItem({
-                        id: item.id
-                        });
-                    }}>
-                        <i className="fas fa-trash-alt"></i>
-                    </div> */}
-                    {/* <div className="edit">
-                        <i className="fas fa-pen-square"></i>
-                    </div> */}
-                    <h6 className="my-0">{'Cart Empty!'}</h6>
-                    {/* <small className="text-muted">{ letterToSize[item.size] || '' }</small> */}
+                <div key='empty' className="list-group-item cart-item py-5">
+                    <div className="text-center">
+                        <h5 className="mb-2">{'Cart Empty!'}</h5>
+                        <Link href={ROUTES.STORE}><a className="btn btn-articles-light">Visit Store</a></Link>
                     </div>
-                    {/* <span className="text-muted">${(item.amount / 100).toFixed(2) || ''}</span> */}
-                </li>
+                </div>
             }
 
             </div>

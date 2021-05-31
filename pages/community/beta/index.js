@@ -29,17 +29,21 @@ function Beta(props) {
                 <title>Beta - Articles</title>
             </Head>
 
-            <div className="container">
-                <div className="row h-100 justify-content-center">
+            <div className="container py-3 py-lg-5">
+
+                <div className="text-center mb-3 mb-lg-5">
+                    <Link href={ROUTES.COMMUNITY}><button className="btn btn-articles-light btn-lg mb-3"><i class="fad fa-hand-point-left"></i>Community Home</button></Link>
+                    <h1 className="">Beta Testing</h1>
+                    <p className="">To help us test upcoming features opt into some of the below features. These features may break parts of the site and cause pages to sop working. During the testing we ask you provide us with a summary of your thoughts and issues you had when using the feature.</p>
+                </div>
+
+                <div className="row justify-content-center">
 
                     <div className="col-sm-8 my-auto">
 
                         <div className="card shadow-sm">
 
                             <div className="card-body">
-
-                                <h1>Beta Testing</h1>
-                                <p className="mb-4">To help us test upcoming features opt into some of the below features. These features may break parts of the site and cause pages to sop working. During the testing we ask you provide us with a summary of your thoughts and issues you had when using the feature.</p>
                     
                                 <div className="beta-item">
                                     {
@@ -85,7 +89,7 @@ function Beta(props) {
 
                                 </div>
                             
-                                <div className="beta-item">
+                                <div className="beta-item mb-0">
                                     {
                                         RealId ? <div className="badge badge-success">Enabled</div> : <div className="badge badge-secondary">Not Enabled</div>
                                     }
@@ -118,13 +122,13 @@ function Beta(props) {
 
                             </div>
 
-                            <div className="card-footer py-3 text-center">
+                            {/* <div className="card-footer py-3 text-center">
                                 <Link href={ROUTES.COMMUNITY}>
                                     <button className="btn btn-articles-light">
                                         <h4 className="mb-0"><i className="far fa-caret-square-left"></i>Support Hub</h4>
                                     </button>
                                 </Link>
-                            </div>
+                            </div> */}
 
                         </div>
 

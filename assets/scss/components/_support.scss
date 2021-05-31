@@ -1,80 +1,81 @@
 // Once internal renaming of support is done "support-page" can be removed
-
-.support-page, .community-page {
-  font-family: montserrat, sans-serif;
-  font-weight: 400;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-
-  @include media-breakpoint-up(md) {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-  }
-
-  .hub-items {
-    padding-top: 0rem;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
+.support-page,
+.community-page {
+    font-family: montserrat, sans-serif;
+    font-weight: 400;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 
     @include media-breakpoint-up(md) {
-      padding-top: 1rem;
+        padding-top: 3rem;
+        padding-bottom: 3rem;
     }
 
-    .item {
-        cursor: pointer;
-        position: relative;
-        border-radius: 2.5px;
-        border-color: black;
-        margin-top: 1rem;
-        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25), 0 2px 3px rgba(0, 0, 0, 0.3);
-        transition-duration: 200ms;
-
-        i {
-            margin-right: 0;
-        }
-
-        &:before {
-            z-index: -1;
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition-duration: 400ms;
-            background: linear-gradient(45deg, #ffb7b7, #f9edcd 80%);
-        }
-
-        &:hover {
-            transform: translateY(-0.3rem);
-
-            &:before {
-            opacity: 1;
-            }
-        }
+    .hub-items {
+        padding-top: 0rem;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
 
         @include media-breakpoint-up(md) {
-            width: calc(33% - 1rem);
-            margin-right: 1rem;
+            padding-top: 1rem;
         }
 
-        .card-body {
-            // font-size: 16px;
-            min-height: 125px;
-            padding-bottom: 3rem;
-        }
+        .item {
+            width: 100%;
+            cursor: pointer;
+            position: relative;
+            border-radius: 2.5px;
+            border-color: black;
+            margin-top: 1rem;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25), 0 2px 3px rgba(0, 0, 0, 0.3);
+            transition-duration: 200ms;
 
-        .view-link {
-            position: absolute;
-            margin: 0.5rem;
-            right: 1rem;
-            bottom: 0;
-            // font-size: 16px;
-            // transform: translateX(-50%);
+            i {
+                margin-right: 0;
+            }
+
+            &:before {
+                z-index: -1;
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+                transition-duration: 400ms;
+                background: linear-gradient(45deg, #ffb7b7, #f9edcd 80%);
+            }
+
+            &:hover {
+                transform: translateY(-0.3rem);
+
+                &:before {
+                    opacity: 1;
+                }
+            }
+
+            @include media-breakpoint-up(md) {
+                width: calc(33% - 1rem);
+                margin-right: 1rem;
+            }
+
+            .card-body {
+                // font-size: 16px;
+                min-height: 125px;
+                padding-bottom: 3rem;
+            }
+
+            .view-link {
+                position: absolute;
+                margin: 0.5rem;
+                right: 1rem;
+                bottom: 0;
+                // font-size: 16px;
+                // transform: translateX(-50%);
+            }
         }
     }
-  }
 }
