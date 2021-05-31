@@ -83,18 +83,16 @@ function FooterBase(props) {
 
                 <div className="col-6 col-lg-2 ml-lg-5 footer-panel">
                     <div className="panel-title title border-bottom border-dark mb-2">Community</div>
-                    <Link href={ROUTES.FORUM}>
-                        <a>Forum</a>
-                    </Link>
-                    <Link href={ROUTES.TRANSPARENCY_FLAG}>Flag Transaction</Link>
-                    <Link href={ROUTES.PARTY}>Real ID</Link>
+                    <Link href={ROUTES.POLLS}>Polls</Link>
+                    <Link href={ROUTES.UPDATES}>Updates</Link>
+                    <Link href={ROUTES.ROADMAP}>Roadmap</Link>
                 </div>
 
                 <div className="col-6 col-lg-2 ml-lg-5 footer-panel">
                     <div className="panel-title title border-bottom border-dark mb-2">About Us</div>
                     <Link href={ROUTES.MISSION}>Mission</Link>
                     <Link href={ROUTES.PRESS}>Press and Business</Link>
-                    <Link href={ROUTES.UPDATES}>Updates</Link>
+                    <Link href={ROUTES.FAQ}>FAQ</Link>
                 </div>
 
                 </div>

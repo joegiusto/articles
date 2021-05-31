@@ -70,10 +70,12 @@ export default function PollsPage() {
 
                     {polls.map((poll) => {
                         
-                        // let yesPercent = poll.yes.length
-                        // let noPercent = poll.no.length
+                        let totalVotes = poll.yes.length + poll.no.length
 
-                        (
+                        let yesPercent = poll.yes.length / totalVotes
+                        let noPercent = poll.no.length / totalVotes                
+
+                        return (
 
                         <div className="col-lg-6">
                             <div className="card poll shadow-sm">
@@ -90,8 +92,8 @@ export default function PollsPage() {
                                     <div className="text-center">
 
                                         <div style={{maxWidth: '300px'}} className="progress mx-auto border">
-                                            <div className="progress-bar bg-danger" role="progressbar" style={{width: '0%'}} aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">0%</div>
-                                            <div className="progress-bar bg-success" role="progressbar" style={{width: '100%'}} aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">100%</div>
+                                            <div className="progress-bar bg-danger" role="progressbar" style={{width: `${(noPercent*100).toFixed(2)}%`}} aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{(noPercent*100).toFixed(2)}%</div>
+                                            <div className="progress-bar bg-success" role="progressbar" style={{width: `${(yesPercent*100).toFixed(2)}%`}} aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{(yesPercent*100).toFixed(2)}%</div>
                                         </div>
 
                                         <div className="text-muted mb-3">{poll.no.length + poll.yes.length} Votes</div>

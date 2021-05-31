@@ -8,11 +8,11 @@ import { PersistGate } from 'redux-persist/integration/react'
 
 import { io } from "socket.io-client";
 
-import MainLayout from '/components/layout'
-import DefaultLayout from '/components/layouts/default'
+import MainLayout from 'components/layout'
+import DefaultLayout from 'components/layouts/default'
 
-import '/assets/scss/index.scss';
-import '/assets/fontawesome/css/all.min.css';
+import 'assets/scss/index.scss';
+import 'assets/fontawesome/css/all.min.css';
 
 import 'swiper/swiper.scss'
 import 'swiper/components/navigation/navigation.scss';

@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
+
+import moment from 'moment'
 import axios from 'axios';
+
+import Link from 'next/link'
 import Head from 'next/head'
 import Image from 'next/image'
+
+import ROUTES from 'components/constants/routes'
 
 const Page = (props) => (
   <div className="updates-page">
@@ -23,9 +29,10 @@ function Updates(props) {
 
         setUpdatesLoading(true)
 		
-		axios.post('/api/getUpdates', {})
+		axios.post('/api/community/updates', {})
         .then( (response) => {
-            setUpdatesGeneral(response.data)
+            setUpdatesGeneral(response.data.general)
+            setUpdatesDevelopment(response.data.development)
             setUpdatesLoading(false)
         })
         .catch(function (error) {
@@ -74,7 +81,7 @@ function Updates(props) {
                 {tab === 'General' &&
                 updatesGeneral.map( update => 
 
-                    <Link to={`${ROUTES.UPDATES}/${update.url}`}> 
+                    <Link href={`${ROUTES.UPDATES}/${update.url}`}> 
                     <div className="card update-card">
 
                         <div className="card-body">
@@ -105,7 +112,7 @@ function Updates(props) {
                 {tab === 'Development' &&
                 updatesDevelopment.map( update => 
 
-                    <Link to={`${ROUTES.UPDATES}/${update.url}`}> 
+                    <Link href={`${ROUTES.UPDATES}/${update.url}`}> 
                     <div className="card update-card">
 
                         <div className="card-body">

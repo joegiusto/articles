@@ -8,6 +8,7 @@
 
   @include media-breakpoint-up(md) {
     padding-top: 3rem;
+    padding-bottom: 3rem;
   }
 
   .hub-items {
@@ -24,12 +25,11 @@
     .item {
         cursor: pointer;
         position: relative;
-        // text-align: center;
+        border-radius: 2.5px;
+        border-color: black;
         margin-top: 1rem;
-        margin-right: 1rem;
-        // margin-left: 0.5rem;
-        // width: calc(100%);
-        // padding: 1rem;
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25), 0 2px 3px rgba(0, 0, 0, 0.3);
+        transition-duration: 200ms;
 
         i {
             margin-right: 0;
@@ -48,9 +48,6 @@
             background: linear-gradient(45deg, #ffb7b7, #f9edcd 80%);
         }
 
-        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25), 0 2px 3px rgba(0, 0, 0, 0.3);
-        transition-duration: 200ms;
-
         &:hover {
             transform: translateY(-0.3rem);
 
@@ -61,6 +58,7 @@
 
         @include media-breakpoint-up(md) {
             width: calc(33% - 1rem);
+            margin-right: 1rem;
         }
 
         .card-body {

@@ -800,13 +800,19 @@ function Messages(props) {
     
                                     <div className="col-lg-6">
                                         <div className="theme-picker mb-4">
-                                            <h2 className={'text-center'}>Chat Theme</h2>
+
+                                            <h2 className={''}>Chat Theme</h2>
         
                                             <div className="themes">
         
                                                 <div className="card shadow-sm mx-1">
                                                     <div className="card-header">Default</div>
                                                     <div className="card-body"><button disabled={theme == 'Default' && 'off'} onClick={() => setTheme('Default')} className="btn btn-articles-light">{ theme == 'Default' ? 'Selected' : 'Select' }</button></div>
+                                                </div>
+
+                                                <div className="card shadow-sm mx-1">
+                                                    <div className="card-header">Sky</div>
+                                                    <div className="card-body"><button disabled={theme == 'Sky' && 'off'} onClick={() => setTheme('Sky')} className={`btn btn-articles-light`}>{ theme == 'Sky' ? 'Selected' : 'Select' }</button></div>
                                                 </div>
             
                                                 <div className="card shadow-sm mx-1">
@@ -818,11 +824,6 @@ function Messages(props) {
                                                     <div className="card-header d-flex justify-content-between align-items-center">City<span className="badge badge-articles">Dark Mode</span></div>
                                                     <div className="card-body"><button disabled={theme == 'City' && 'off'} onClick={() => setTheme('City')} className={`btn btn-articles-light`}>{ theme == 'City' ? 'Selected' : 'Select' }</button></div>
                                                 </div>
-            
-                                                <div className="card shadow-sm mx-1">
-                                                    <div className="card-header">Sky</div>
-                                                    <div className="card-body"><button disabled={theme == 'Sky' && 'off'} onClick={() => setTheme('Sky')} className={`btn btn-articles-light`}>{ theme == 'Sky' ? 'Selected' : 'Select' }</button></div>
-                                                </div>
         
                                             </div>
         
@@ -831,7 +832,9 @@ function Messages(props) {
     
                                     <div className="col-lg-6">
                                         <div className="mb-4">
-                                            <h2 className={'text-center'}>Message Options</h2>
+
+                                            <h2 className={''}>Message Options</h2>
+
                                             <div className="message-settings-cards">
             
                                                 {/* Message Previews */}

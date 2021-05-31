@@ -21,6 +21,7 @@ import MomentUtils from '@date-io/moment';
 import { DateTimePicker } from "@material-ui/pickers";
 import { ThemeProvider } from "@material-ui/styles";
 import articlesTheme from 'components/material_ui/articlesTheme'
+import { Discovery } from 'aws-sdk';
 function TransparencyHomePage(props) {
 
     const [reportsData, setReportsData] = useState({
@@ -280,6 +281,55 @@ function TransparencyHomePage(props) {
                         {/* {this.subTableSelectorChoice('revenue-grants', 'grants')} */}
                         {/* {this.subTableSelectorChoice('revenue-sponsorships', 'sponsorships')} */}
                     </div>
+
+                    {/* Donations Overview Stats */}
+                    {subtableSelector === 'revenue-donations' &&
+                        <div className="sub-table-overview d-flex mx-2 my-2 justify-content-center">
+
+                            <div className="detail-card card">
+
+                                <div className="py-1 px-2">
+
+                                    <div className="">Top Donor: </div>
+                                    <hr className="my-1"/>
+
+                                    <span className="badge badge-articles border border-dark mr-2">$400.00</span>
+                                    Joey Giusto
+
+                                </div>
+
+                            </div>
+
+                            <div className="detail-card card ml-2">
+
+                                <div className="py-1 px-2">
+
+                                    <div className="">Largest Donation: </div>
+                                    <hr className="my-1"/>
+
+                                    <span className="badge badge-articles border border-dark mr-2">$100.00</span>
+                                    Joey Giusto
+
+                                </div>
+
+                            </div>
+
+                            <div className="detail-card card ml-2">
+
+                                <div className="py-1 px-2">
+
+                                    <div className="">Recent Donation: </div>
+                                    <hr className="my-1"/>
+
+                                    <span className="badge badge-articles border border-dark mr-2">$100.00</span>
+                                    Joey Giusto
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    }
 
                     {/* Clothing Sub Nav */}
                     {/* <div className={"sub sub-clothing dual-header " + (subtableSelector === 'revenue-clothing' ? '' : 'd-none')}>

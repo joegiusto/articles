@@ -75,7 +75,7 @@
     }
 
     .card {
-        background-color: $dark-mode-card-color;
+        background-color: $dark-mode-card-color!important;
         color: white;
 
         .card-header, .card-footer {
