@@ -12,7 +12,7 @@ export default connectDB(async (req, res) => {
         })
     }
 
-    const result = await News.find({}, 'comments news_title',).populate("comments.user_id", 'first_name last_name')
+    const result = await News.find({}, 'comments news_title news_type',).populate("comments.user_id", 'first_name last_name')
 
     res.json(result);
 });

@@ -45,7 +45,7 @@ export default function AdminHomePage() {
                 <div className="card">
                     <div className="card-header">Stories</div>
                     <div className="card-body">
-                        <div>Total: <b>0</b></div>
+                        <div>Total: <b>{comments.filter(document => document.news_type == "story").length}</b></div>
                         <div>Reported: <b>0</b></div>
                     </div>
                 </div>
@@ -53,7 +53,7 @@ export default function AdminHomePage() {
                 <div className="card mt-3">
                     <div className="card-header">Issues</div>
                     <div className="card-body">
-                        <div>Total: <b>0</b></div>
+                        <div>Total: <b>{comments.filter(document => document.news_type == "issue").length}</b></div>
                         <div>Reported: <b>0</b></div>
                     </div>
                 </div>
@@ -61,7 +61,7 @@ export default function AdminHomePage() {
                 <div className="card mt-3">
                     <div className="card-header">Myths</div>
                     <div className="card-body">
-                        <div>Total: <b>0</b></div>
+                        <div>Total: <b>{comments.filter(document => document.news_type == "myth").length}</b></div>
                         <div>Reported: <b>0</b></div>
                     </div>
                 </div>
