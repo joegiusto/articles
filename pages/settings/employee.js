@@ -34,8 +34,8 @@ export default function SettingsEmployeePage(props) {
                     <h4>Employee Info</h4>
                     <p className="mb-3">Info you wish to share with others on your employee page located at:</p>
 
-                    <Link href={ROUTES.TRANSPARENCY_EMPLOYEES + `/${userReduxState.employee.friendly_url}`}> 
-                        <button className="btn btn-articles-light btn-sm">{`https://articles.media${ROUTES.TRANSPARENCY_EMPLOYEES}/${userReduxState.employee.friendly_url}`}</button> 
+                    <Link href={ROUTES.TRANSPARENCY_EMPLOYEES + `/${userReduxState?.employee?.friendly_url}`}> 
+                        <button className="btn btn-articles-light btn-sm">{`https://articles.media${ROUTES.TRANSPARENCY_EMPLOYEES}/${userReduxState?.employee?.friendly_url}`}</button> 
                     </Link>
                 </div>
 
