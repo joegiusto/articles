@@ -1,0 +1,117 @@
+.dark-mode {
+    footer.site-footer {
+        border-top: 5px solid $base-color;
+        background-color: black;
+        color: white;
+
+        .dark-mode {
+            &:hover {
+                background-color: rgb(150, 150, 150)!important;
+                color: black!important;
+
+                // .beta {
+                //     transform: scale(1.2) translateX(3px) translateY(70%);
+                // }
+            }
+        }
+    }
+}
+
+footer.site-footer {
+    margin-top: auto;
+    position: relative;
+    // padding: 3rem 0rem;
+    background-color: white;
+    border-top: 5px solid black;
+    // height: 100%;
+    min-height: 175px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .footer-panel {
+
+        .brand {
+            font-size: 2rem;
+            font-family: forte;
+        }
+
+        .title {
+            font-family: brandon-grotesque, sans-serif;
+            font-style: normal;
+            font-weight: 900;
+            font-size: 1.25rem;
+        }
+
+        a {
+            display: block;
+            font-family: montserrat, sans-serif;
+            font-weight: 400;
+            font-size: 15px;
+        }
+
+        &.first {
+            @include media-breakpoint-down(md) {
+                margin: 1rem 0;
+            }
+        }
+
+        &.fourth {
+        
+        }
+
+        &.fifth {
+
+            .btn {
+                font-family: brandon-grotesque, sans-serif;
+                font-style: normal;
+                font-weight: 900;
+                font-size: 1.5rem;
+
+                @include media-breakpoint-down(xs) {
+                font-size: 1rem;
+                }
+            }
+        }
+
+        .icons {
+            a {
+                font-size: 2rem;
+                display: inline-block;
+            }
+        }
+
+        &.copyright {
+            font-family: montserrat, sans-serif;
+            font-weight: 400;
+            font-size: 15px;
+
+            .dark-mode {
+                padding: 0.5rem;
+                position: relative;
+                cursor: pointer;
+                min-width: 140px;
+                // text-align: center;
+                justify-content: center;
+
+                &:hover {
+                    background-color: black;
+                    color: white;
+
+                    .beta {
+                        transform: scale(1.2) translateX(3px) translateY(70%);
+                    }
+                }
+
+                .beta {
+                    position: absolute;
+                    left: 0;
+                    transform: translateX(3px) translateY(70%);
+                    bottom: 0;
+                    transition: 200ms;
+                }
+            }
+        }
+
+    }
+}

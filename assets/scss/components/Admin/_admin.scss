@@ -1,0 +1,486 @@
+.dark-mode {
+
+    .tab-bar a {
+        color: #000;
+
+        &:hover {
+            color: rgb(85, 85, 85)!important;
+        }
+    }
+
+    .admin-page {
+
+        .side-panel {
+            .card-header {
+                color: black;
+            }
+        }
+
+        a {
+            color: #000!important;
+        }
+
+        .upload-photo {
+            background-color: #000!important;
+            color: white!important;
+        }
+
+    }
+
+}
+
+.admin-container {
+  font-family: montserrat, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+
+  .admin-page {
+    display: flex;
+    flex-direction: column;
+
+    @include media-breakpoint-up(md) {
+      flex-direction: row;
+    }
+
+    .side-panel {
+      width: 100%;
+      background-color: $base-color;
+      border-right: 1px solid #000;
+      padding: 1rem;
+      height: inherit;
+  
+      @include media-breakpoint-up(md) {
+        flex-basis: 300px;
+        flex-shrink: 0;
+        min-height: calc(100vh - 100px);
+      }
+  
+      .card {
+        border: none;
+        box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.5);
+
+        .card-body, .card-header,card-footer {
+          border: 1px solid #000;
+          padding: 0.5rem;
+        }
+  
+        .card-header {
+          background-color: $accent-color;
+          font-family: brandon-grotesque, sans-serif;
+          font-weight: 900;
+          font-style: normal;
+          padding: 0.25rem 0.5rem;
+          font-size: 1.1rem;
+        }
+  
+        .card-body {
+          font-size: 0.8rem;
+        }
+      }
+    }
+
+    .main-panel {
+      flex-grow: 1;
+      padding: 1rem;
+    }
+
+  }
+
+  .form-group {
+    position: relative;
+
+    label {
+      display: block;
+      background-color: $base-color;
+      // border: 0.5px solid #000;
+      box-shadow: 0px 0px ;
+      border-radius: 0.25rem;
+      border: 1px solid #ced4da;
+      // position: absolute;
+      margin-bottom: 0;
+      top: -0.75rem;
+      left: 0rem;
+      width: 100%;
+      // color: white;
+      padding: 0.0rem 0.25rem;
+      font-size: 0.7rem;
+      // box-shadow: 0 2px 5px rgba( $base-color , 0.7);
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    input.with-label, textarea.with-label {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+
+    input:focus, select:focus {
+      border-color: rgba(0, 0, 0, 0.8);
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(0, 0, 0, 0.6);
+      outline: 0 none;
+    }
+
+    .prefilled {
+      background-color: white;
+      border: 0.5px solid #000;
+      border-radius: 0.25rem;
+      position: absolute;
+      top: -0.75rem;
+      left: 3.5rem;
+      padding: 0.05rem 0.25rem;
+      font-size: 0.7rem;
+    }
+  }
+
+  .table {
+    thead {
+      font-family: brandon-grotesque, sans-serif;
+      font-style: normal;
+      font-weight: 900;
+
+      th {
+        padding: 0.5rem;
+        // color: #000;
+        background-color: #f9edcd;
+
+        color: black;
+        // background-color: $accent-color;
+        border: none;
+        // padding: 0.3rem;
+      }
+    }
+  }
+
+  .tab-bar-wrapper {
+    position: relative;
+    overflow: hidden;
+
+    .scroll-alert {
+      position: absolute;
+      background-color: rgba(0, 0, 0, 0.75);
+      border-radius: 20px;
+      top: 50%;
+      width: 30px;
+      height: 30px;
+      transition-duration: 200ms;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .scroll-left-alert {
+      left: 0;
+      transform: translateY(-50%) translateX(-100%);
+      
+      &.active {
+        transform: translateY(-50%) translateX(-35%);
+      }
+
+      i {
+        color: white;
+        animation: linear infinite;
+        animation-name: run;
+        animation-duration: 1s;
+        animation-direction: alternate-reverse;
+      }
+    }
+
+    .scroll-right-alert {
+      right: 0;
+      transform: translateY(-50%) translateX(100%);
+
+      &.active {
+        transform: translateY(-50%) translateX(35%);
+      }
+
+      i {
+        color: white;
+        animation: linear infinite;
+        animation-name: run;
+        animation-duration: 1s;
+        animation-direction: alternate;
+      }
+    }
+
+    @keyframes run {
+      0% {
+        transform: translateX(2.5px);
+      }
+      100% {
+        transform: translateX(-2.5px);    
+      }
+    }
+
+  }
+
+  .tab-bar {
+    position: relative;
+    border-bottom: 1px solid #000;
+    font-size: 1.5rem;
+    background-color: $base-color;
+    font-family: brandon-grotesque, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    // padding: 0.5rem 0rem;
+    height: 50px;
+    display: flex;
+    align-items: center;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    // For some reason adding position: absolute; on the active tabs ::before element makes the element wrap to a new line. Does not seem to be a lot of info on this
+    // https://stackoverflow.com/questions/14851320/how-to-avoid-line-breaks-after-before-in-css
+    // If this is ever causing issues look here
+    white-space: nowrap;
+
+    // @include media-breakpoint-down(md) {
+    //   overflow-x: scroll;
+    // }
+
+    a:hover {
+      text-decoration: none;
+    }
+
+    .tab {
+      position: relative;
+      margin-right: 1rem;
+      cursor: pointer;
+      
+      &.active {
+        font-weight: 900;
+
+        &::before {
+          content: '';
+          position: absolute;
+          bottom: 4px;
+          left: 0px;
+          width: 100%;
+          height: 2px;
+          background-color: rgba(0, 0, 0, 0.5);
+        }
+      }
+    }
+  }
+
+  .admin-side-by-side-form {
+    padding: 0 5%;
+    padding-top: 1rem;
+    // margin-bottom: 1rem;
+    width: 100%;
+    height: 100%;
+    background-color: $base-color;
+    background-color: white;
+    border-left: 3px solid #000;
+    border-right: 3px solid #000;
+    height: 100%;
+
+    @include media-breakpoint-up(md) {
+      min-height: calc(100vh - 275px);
+      max-width: 500px;
+    }
+
+    @include media-breakpoint-down(md) {
+      margin-top: 1rem;
+      border-top: 3px solid #000;
+      border-bottom: 3px solid #000;
+    }
+    
+    .form-group {
+
+      .form-control {
+        border-bottom: 2px solid #000;
+      }
+    }
+
+    .payment-type {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      padding-bottom: 1rem;
+
+      .type {
+        cursor: pointer;
+        background-color: white;
+        border: 1px solid #000;
+        border-radius: 10px;
+        padding: 0.25rem 1rem;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        opacity: 0.5;
+        transform: scale(0.9);
+
+        i {
+          margin-right: 0;
+        }
+        
+        &.active {
+          opacity: 1;
+          transform: scale(1);
+        }
+
+        &:hover {
+          opacity: 1;
+          transform: scale(1);
+        }
+
+        &:first-child {
+          margin-right: 0.5rem;
+        }
+      }
+    }
+
+    .match-details {
+      margin-bottom: 1rem;
+
+      .match-button {
+        background-color: white;
+        border: 1px solid #000;
+        border-radius: 10px;
+        padding: 0.25rem 1rem;
+        opacity: 0.5;
+        transform: scale(0.9);
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &.active {
+          opacity: 1;
+        }
+
+        &:hover {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .content {
+        display: flex;
+        flex-direction: row;
+      }
+    }
+
+    .StripeElement {
+      border: 1px solid #000;
+      margin-bottom: 1rem;
+    }
+
+    .submit {
+      width: 200px;
+      margin: 0 auto;
+    }
+  }
+
+  .tab-content {
+    
+  }
+
+}
+
+.manage-card {
+    height: max-content;
+    width: 100%;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 5px 30px rgba(255, 183, 183, 0.5);
+
+    .card-header, .card-body, .card-footer {
+        border-radius: 0;
+        border: solid 1px rgba(0, 0, 0, 0.5);
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        @include media-breakpoint-down(xs) {
+            padding: 0.5rem 0.5rem;
+            
+            h3, .total {
+                // font-size: 1rem;
+            }
+        }
+    }
+
+    .card-body {
+        padding: 0rem;
+    }
+
+    .card-footer {
+        font-size: 0.8rem;   
+    }
+
+    .total {
+        position: relative;
+        z-index: 1;
+        font-weight: bold;
+        font-family: brandon-grotesque, sans-serif;
+        font-weight: 900;
+        font-size: 2rem;
+        margin-left: 1rem;
+        line-height: 1;
+
+        &:before {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0px;
+            background-color: rgba(255, 183, 183, 0.3);
+            z-index: -1;
+            content: "";
+            // transform: translateY(50%);
+            transform: translateX(6px) translateY(6px);
+            top: 0;
+
+            animation: bounce1 1.5s ease-in-out alternate infinite;
+
+            @keyframes bounce1 {
+              from { transform: translateX(6px) translateY(6px);; }
+              to   { transform: translateX(-6px) translateY(-6px);; }
+            }
+        }
+
+        &:after {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0px;
+            background-color: rgba(255, 183, 183, .5);
+            z-index: -1;
+            content: "";
+            // transform: translateY(50%);
+            transform: translateX(-6px) translateY(-6px);
+            top: 0;
+
+            animation: bounce2 1.5s ease-in-out alternate infinite;
+
+            @keyframes bounce2 {
+              from { transform: translateX(-6px) translateY(-6px);; }
+              to   { transform: translateX(6px) translateY(6px);; }
+            }
+        }
+    }
+
+    .table {
+
+        tr {
+            white-space: nowrap;
+        }
+
+        .actions-cell {
+            // position: absolute;
+            // right: 0;
+            // top: 0;
+            // background-color: rgba(255, 255, 255, 0.5);
+            // padding: 0.3rem 0.5rem;
+        }
+
+        // @include media-breakpoint-down(xs) {
+        //     white-space: nowrap;
+        // } 
+    }
+}

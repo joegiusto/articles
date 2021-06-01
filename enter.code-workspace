@@ -1,0 +1,13 @@
+{
+	"folders": [
+        {
+			"name": "Website",
+			"path": "./"
+		},
+		{
+			"name": "SCSS",
+			"path": "assets/scss/"
+		},
+	],
+	"settings": {}
+}

@@ -1,0 +1,28 @@
+.faq-page {
+    // margin-top: 2rem;
+    // margin-bottom: 2rem;
+    font-family: montserrat, sans-serif;
+    font-weight: 400;
+
+    @include media-breakpoint-up(md) {
+        // margin-top: 4rem;
+        // margin-bottom: 4rem;
+    }
+
+    .faq-item {
+        .badge {
+            text-align: center;
+            min-width: 100px;
+            font-size: 0.8rem;
+        }
+    }
+
+    .accordion {
+        margin-bottom: 1rem;
+
+        .card-header {
+            cursor: pointer;
+        }
+    }
+
+}

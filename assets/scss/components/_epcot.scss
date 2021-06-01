@@ -1,0 +1,32 @@
+.epcot-page {
+    position: relative;
+
+    a {
+        text-decoration: underline;
+
+        &:hover {
+            background-color: rgba($accent-color, 0.5);
+        }
+    }
+    
+    &.fullscreen {
+
+        iframe {
+            position: fixed;
+            top: 50px;
+            left: 0;
+            width: 100%;
+            z-index: 1;
+            height: calc(100% - 40px - 50px);
+        }
+
+        .buttons {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 2;
+            height: 40px;
+        }
+    }
+}

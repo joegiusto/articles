@@ -1,0 +1,41 @@
+$accent-color: #ffb7b7;
+$articles-primary-color: #ffb7b7;
+
+$base-color: #f9edcd;
+$articles-secondary-color: #f9edcd;
+
+$menu-color: rgb(243, 243, 243);
+
+$dark-mode-color: #343a40;
+$dark-mode-card-color: #141414;
+$dark-mode-element-color: #313131;
+
+@mixin dark-mode-neon-accent() {
+  background-color: rgba(255, 183, 183, 0.3)!important;
+  box-shadow: inset 0 0 10px #ffb7b7!important;
+}
+
+@mixin dark-mode-neon-base() {
+  background-color: rgba(249, 237, 205, 0.3)!important;
+  box-shadow: inset 0 0 10px #f9edcd!important;
+}
+
+.dark-mode {
+  .theme-card-background {
+    background-color: $dark-mode-card-color;
+  }
+}
+
+.theme-card-background {
+  background-color: white;
+}
+
+$story-color: yellow;
+$issue-color: rgb(255, 123, 123);
+$myth-color: rgb(145, 255, 145);
+
+$shadow-articles: 0 0 0 1px rgba(0, 0, 0, 15%), 0 2px 3px rgba(0, 0, 0, 20%);
+
+// @mixin shadow-articles() {
+//   box-shadow: 0 0 0 1px rgba(0, 0, 0, 15%), 0 2px 3px rgba(0, 0, 0, 20%);
+// }

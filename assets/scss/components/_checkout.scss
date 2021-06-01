@@ -1,0 +1,606 @@
+.dark-mode {
+
+  .checkout-page {
+
+    .cart {
+      
+      .card {
+        @include dark-mode-neon-accent();
+      }
+
+      .list-group-item {
+        background-color: $dark-mode-card-color;
+      }
+
+      .total {
+        background-color: $dark-mode-card-color!important;
+      }
+
+      .stripe {
+        background-color: $dark-mode-card-color!important;
+      }
+
+      .articles-profit {
+        background-color: $dark-mode-card-color!important;
+      }
+
+    }
+
+    .details {
+      
+      #powered-by-stripe {
+        filter: invert(1);
+      }
+      
+    }
+
+  }
+
+}
+
+.checkout-page {
+  font-family: montserrat, sans-serif;
+  font-weight: 400;
+  
+  &.new {
+    position: relative;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    margin-top: 1rem;
+
+    .success-overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      z-index: 3;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      transition-duration: 200ms;
+      opacity: 0;
+      pointer-events: none;
+      background-color: white;
+
+      i {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+      }
+
+      &.visible {
+        opacity: 1;
+        pointer-events: initial;
+      }
+    }
+
+    @include media-breakpoint-up(md) {
+      margin-top: 3rem;
+    }
+
+    @include media-breakpoint-up(md) {
+      flex-direction: row;
+    }
+
+    .details {
+      flex-grow: 1;
+      margin-top: 1rem;
+
+      @include media-breakpoint-up(md) {
+        margin-top: 0rem;
+      }
+
+      .customer-info-cards {
+        display: flex;
+        flex-direction: column;
+
+        @include media-breakpoint-up(md) {
+          flex-direction: row;
+        }
+      }
+
+      .shiping-info {
+
+        // Is now a global style under .form-group.articles if you are reading this in 2021 then it is safe to remove this
+        // .form-group {
+        //   position: relative;
+
+        //   label {
+        //     display: block;
+        //     background-color: $base-color;
+        //     // border: 0.5px solid #000;
+        //     box-shadow: 0px 0px ;
+        //     border-radius: 0.25rem;
+        //     border: 1px solid #ced4da;
+        //     // position: absolute;
+        //     margin-bottom: 0;
+        //     top: -0.75rem;
+        //     left: 0rem;
+        //     width: 100%;
+        //     // color: white;
+        //     padding: 0.0rem 0.25rem;
+        //     font-size: 0.7rem;
+        //     // box-shadow: 0 2px 5px rgba( $base-color , 0.7);
+        //     border-bottom-left-radius: 0;
+        //     border-bottom-right-radius: 0;
+        //   }
+
+        //   input.with-label {
+        //     border-top-left-radius: 0;
+        //     border-top-right-radius: 0;
+        //   }
+
+        //   .prefilled {
+        //     background-color: white;
+        //     border: 0.5px solid #000;
+        //     border-radius: 0.25rem;
+        //     position: absolute;
+        //     top: -0.75rem;
+        //     left: 3.5rem;
+        //     padding: 0.05rem 0.25rem;
+        //     font-size: 0.7rem;
+        //   }
+        // }
+
+      }
+
+      .payment-details {
+
+        .remember-card {
+          margin-top: 1rem;
+          margin-bottom: 0.125rem;
+          overflow: hidden;
+          // cursor: pointer;
+          position: relative;
+          // display: flex;
+          // flex-direction: row;
+          // justify-content: center;
+          // align-items: center;
+          // padding: 1rem 0.25rem;
+          height: 50px;
+          border-radius: 0.25rem;
+          border: 1px solid #ced4da;
+          font-size: 0.7rem;
+
+          input {
+            position: absolute;
+            // width: 100%;
+            height: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 5rem;
+            margin: 0;
+            // text-indent: -1000px;
+          }
+
+          label {
+            cursor: pointer;
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 0;
+            // margin-left: 0.5rem;
+          }
+
+          .cover {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.75);
+            color: white;
+            font-size: 1rem;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            @include media-breakpoint-down(sm) {
+              // padding-left: 2rem;
+              font-size: 0.8rem;
+            }
+          }
+        }
+
+        .stored-cards-label {
+          margin-top: 0.5rem;
+          font-family: brandon-grotesque, sans-serif;
+          font-style: normal;
+          font-weight: 900;
+          font-size: 1rem;
+        }
+
+        .stored-cards {
+
+          .no-card {
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+            height: 50px;
+            border: 1px solid gray;
+            border-radius: 5px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          .payment-method {
+            margin-top: 0.5rem;
+            position: relative;
+            margin-bottom: 1rem;
+            display: flex;
+            border: 1px solid gray;
+            // flex-direction: column;
+            
+            // justify-content: space-between;
+            padding: 0.5rem 0rem;
+
+            font-family: brandon-grotesque, sans-serif;
+            font-style: normal;
+            font-weight: 900;
+
+            @include media-breakpoint-up(sm) {
+              padding: 0.25rem 0rem;
+            }
+
+            @include media-breakpoint-up(md) {
+              flex-direction: row;
+              justify-content: space-between;
+              align-items: center;
+              // padding: 0.5rem 0rem;
+            }
+
+            &.visa {
+              // background:linear-gradient(120deg, rgba(26, 30, 113, 0.5), rgba(247, 181, 0, 0.5));
+            }
+
+            .inline-remove {
+              position: absolute;
+              top: 0;
+              right: 0;
+              background-color: white;
+              height: 100%;
+              width: 3rem;
+              border-left: 1px solid gray;
+              border-right: 1px solid gray;
+
+              display: flex;
+              justify-content: center;
+              align-items: center; 
+
+              i {
+                margin-right: 0rem;
+
+                &:hover {
+                  color: red;
+                  cursor: pointer;
+                  font-size: 1.5rem;
+                }
+              }
+            }
+
+            .select {
+              position: absolute;
+              top: 0;
+              left: 0;
+              background-color: white;
+              height: 100%;
+              width: 3rem;
+              border-left: 1px solid gray;
+              border-right: 1px solid gray;
+
+              display: flex;
+              justify-content: center;
+              // flex-direction: row;
+              // flex-wrap: nowrap;
+              align-items: center; 
+
+              .circle {
+                width: 10px;
+                height: 10px;
+                border: 1px solid #000;
+                border-radius: 50px;
+
+                &.active {
+                  background-color: black;
+                }
+              }
+
+              i {
+                margin-right: 0rem;
+
+                &:hover {
+                  color: red;
+                  cursor: pointer;
+                  font-size: 1.5rem;
+                }
+              }
+            }
+
+            .remove {
+              background-color: black;
+              border-radius: 100px;
+              font-size: 1.5rem;
+              color: red;
+              position: absolute;
+              cursor: pointer;
+              left: -0.75rem;
+              top: 50%;
+              transform: translateY(-50%);
+              opacity: 0.8;
+              padding: 0rem;
+
+              i {
+                margin-right: 0rem;
+              }
+
+              &.confirm {
+                padding-right: 4rem;
+              }
+
+              &:hover {
+                opacity: 1;
+              }
+            }
+
+            .card-brand {
+              font-size: 1.5rem;
+              margin-left: 3.5rem;
+
+              @include media-breakpoint-down(xs) {
+                font-size: 1rem;
+              }
+
+              i {
+                margin-right: 0.5rem!important;
+              }
+            }
+
+            .card-details {
+              display: flex;
+              align-items: center;
+            }
+
+            .exp {
+              margin-right: 3.5rem;
+              display: flex;
+              align-items: center;
+
+              @include media-breakpoint-down(md) {
+                margin-left: 1rem;
+                font-size: 0.8rem;
+                line-height: 0.8rem;
+              }
+            }
+
+            .last4 {
+              display: flex;
+              align-items: center;
+              font-size: 0.9rem;
+
+              .fake-digits {
+                display: flex;
+                align-items: center;
+
+                i {
+                  font-size: 0.5rem;
+                }
+
+                div, i {
+                  margin-right: 0.25rem;
+
+                  @include media-breakpoint-down(md) {
+                    display: none;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .stripe-card-input {
+          position: relative;
+          border: 1px solid gray;
+
+          .stripe-card-input-cover {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background-color: rgba(0, 0, 0, 0.75);
+            z-index: 1;
+            color: white;
+
+            @include media-breakpoint-down(sm) {
+              padding-left: 2rem;
+              font-size: 0.8rem;
+            }
+          }
+
+          .select {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            background-color: white;
+            height: 100%;
+            width: 3rem;
+            border-left: 1px solid gray;
+            border-right: 1px solid gray;
+
+            display: flex;
+            justify-content: center;
+            align-items: center; 
+
+            .circle {
+              width: 10px;
+              height: 10px;
+              border: 1px solid #000;
+              border-radius: 50px;
+
+              &.active {
+                background-color: black;
+              }
+            }
+          }
+        }
+
+        .StripeElement {
+          // border: 1px solid gray;
+          border-left: none;
+          margin-left: 3rem;
+          border-radius: 0;
+        }
+
+        small {
+          font-size: 0.7rem;
+          // line-height: 0.7rem;
+        }
+      }
+    }
+
+    .cart {
+      width: 100%;
+
+      @include media-breakpoint-up(md) {
+        flex-basis: 350px;
+      }
+
+      .card {
+        background-color: $accent-color;
+      }
+
+      @include media-breakpoint-up(md) {
+        margin-right: 1rem;
+      }
+
+      .total {
+        background-color: lighten(green, 70%);
+      }
+
+      .stripe {
+        background-color: lighten(#6772e5, 30%);
+      }
+
+      .articles-profit {
+        background-color: lighten($base-color, 7.5%);
+      }
+
+      .cart-item {
+        position: relative;
+
+        .remove {
+          cursor: pointer;
+          position: absolute;
+          top: 12px;
+          left: -14px;
+          background-color: white;
+          width: 25px;
+          height: 25px;
+          box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.25);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 5px;
+
+          &:hover {
+            background-color: red;
+            box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.5);
+
+            i {
+              color: black;
+            }
+          }
+
+          i {
+            color: red;
+            margin-right: 0rem;
+          }
+        }
+
+        .edit {
+          cursor: pointer;
+          position: absolute;
+          top: 40px;
+          left: -14px;
+          background-color: white;
+          width: 25px;
+          height: 25px;
+          box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.25);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 5px;
+
+          &:hover {
+            background-color: rgb(0, 0, 0);
+            box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.5);
+
+            i {
+              color: rgb(255, 255, 255);
+            }
+          }
+
+          i {
+            color: black;
+            margin-right: 0rem;
+          }
+        }
+
+      }
+    }
+  }
+
+  .card {
+    // margin: 3rem auto;
+
+    @include media-breakpoint-up(md) {
+      // margin: auto auto;
+    }
+  }
+
+  h1 {
+    font-family: brandon-grotesque, sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-family: brandon-grotesque, sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 1.25rem;
+  }
+
+  p, .alert {
+    font-family: montserrat, sans-serif;
+    font-weight: 400;
+  }
+
+  li.lh-condensed {
+    &:hover {
+      background-color: rgba(255, 195, 195, 0.507)!important;
+      color: black;
+    }
+  }
+
+}

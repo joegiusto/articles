@@ -1,1 +1,0 @@
-web: node iso-server/server.js

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://articles.media/sitemap.xml

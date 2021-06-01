@@ -1,0 +1,27 @@
+.polls-page {
+
+    .polls {
+        
+        .poll {
+            position: relative;
+            border-radius: 0px;
+
+            .vote-button {
+                position: relative;
+                padding: 0.35rem 3rem;
+                padding-bottom: 0.5rem;
+
+                .vote-count {
+                    width: auto;
+                    position: absolute;
+                    left: 50%;
+                    bottom: 0;
+                    transform: translateX(-50%) translateY(50%);
+                    font-size: 0.7rem;
+                    padding: 0.05rem 0.5rem;
+                }
+            }
+
+        }
+    }
+}

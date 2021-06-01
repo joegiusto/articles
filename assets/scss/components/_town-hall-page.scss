@@ -1,0 +1,42 @@
+.town-hall-page {
+
+    .livestream-wrapper {
+        // width: 100%;
+        // height: 250px;
+        background-color: black;
+        position: relative;
+
+        .stream-status-badge {
+            position: absolute;
+            margin: 0.5rem;
+            top: 0;
+            left: 0;
+        }
+
+        .stream-status-message {
+            position: absolute;
+            margin: 0.5rem;
+            top: 2rem;
+            left: 0;
+        }
+
+    }
+
+    .chat-wrapper {
+        // background-color: white;
+        height: 100%;
+        
+        .card {
+            height: 100%;
+
+            .chat-offline-wrapper {
+                height: 100%;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+        
+    }
+}

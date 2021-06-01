@@ -1,15 +1,28 @@
-## Articles React App (src)
+# Articles Media
 
-The code base for the Articles [website](https://articles.media). We use a MERN Stack which consist of React for our frontend then MongoDB, Express and Node.js for our backend.
+A political organization and platform, working to make America a better place for the people through avenues of transparency, clothing, news, and politics.
 
-## Articles Server (iso-server)
+If you want to learn more about Articles, visit the following pages:
 
-Even though we want Articles to be as transparent as possible the code for the server might come down soon as we see it being nothing but a security risk. This site will be getting attacked and by exposing this code we are just putting a target on our backs but at the same time maybe others might catch something we don't. Only time will tell. Some considerations for the future would be getting our site working on the [Next.js Framework](https://nextjs.org/) as well as a single package.json for all of our dependencies. Right now our site is a SPA which is definitely hurting load times and SEO performance, making the switch to server-side-rendering/isomorphic is needed as soon as possible so anyone with experience in this and is interested in helping please reach out.
+- [Articles Website](https://articles.media/)
+- [Articles Mission Statement](https://articles.media/mission)
+
+## Stack
+
+Just about done converting to Next.js. Two biggest things that power our site are Next.js(React) and MongoDB. We use Next Auth, Redux, Mongoose, SCSS as well as many other packages and tools!
+
+## Installation
+
+Run the following.
+
+```bash
+npm i
+npm run dev
+```
 
 ## Contributing
+The main purpose of this repository is to live up to the transparency aspect of Articles and let our supporters see the code base and possibly help. If you want to help us out then we would be grateful for any bug fixes and improvements. Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. Please keep Pull Request limited to a single feature.
 
-The main purpose of this repository is to live up to Articles transparency is key philosophy, and let our supporters see behind the scene workings. If you want to help us out then we would be grateful for any bugfixes and improvements. Please keep any Pull Request limited to a single feature/route, if you jump around all over the place with a request it will possibly not be accepted or take a while to test.
+We are looking for part-time help as well.
 
-### Special Thanks, Notable Contributions and Open Source Libraries
-
-This section is still being worked on.
+- [Jobs | Articles](https://articles.media/community/jobs)

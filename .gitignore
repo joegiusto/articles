@@ -2,25 +2,33 @@
 
 # dependencies
 /node_modules
-/iso-server/node_modules
 /.pnp
 .pnp.js
 
 # testing
 /coverage
 
+# next.js
+/.next/
+/out/
+
 # production
 /build
 
-# credentials
-.env
+# pwa
+public/sw.js.map
+public/sw.js
 
 # misc
 .DS_Store
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
-
-npm-debug.log*
-package-lock.json
