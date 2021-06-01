@@ -92,6 +92,7 @@ class Employee extends Component {
             </div>
 
           </div>
+          
       </div>
     );
   }

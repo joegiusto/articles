@@ -1,3 +1,5 @@
+var colors = require('colors');
+
 function isJoey(id) {
     if ( id == "5e90cc96579a17440c5d7d52" ) {
         console.log('[Admin] Was Joey'.red);

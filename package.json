@@ -84,8 +84,7 @@
     "server": "cd iso-server & nodemon server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "push-firebase": "yarn firebase deploy --only hosting"
+    "eject": "react-scripts eject"
   },
   "proxy": "http://localhost:8080",
   "eslintConfig": {

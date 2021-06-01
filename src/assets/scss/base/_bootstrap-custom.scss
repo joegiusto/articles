@@ -37,32 +37,44 @@
 }
 
 .articles-modal {
-  font-family: montserrat, sans-serif;
-  font-weight: 400;
+    font-family: montserrat, sans-serif;
+    font-weight: 400;
 
-  .modal-header {
-    padding: 0.5rem 1rem;
-    border-radius: 0;
-    background: linear-gradient(45deg, #ffb7b7, #f9edcd 80%);
-    box-shadow: 0 0 0 1px rgb(0, 0, 0), 0 2px 3px rgba(0, 0, 0, 0.2);
-    border-bottom: 0px solid #dee2e6;
+    &.pgp-modal {
+        .modal-dialog {
+            @include media-breakpoint-up(lg) {
+                max-width: 900px;
+            }
 
-    .modal-title {
-      font-family: brandon-grotesque, sans-serif;
-      font-style: normal;
-      font-weight: 900;
-      font-size: 1.75rem;
+            .pgp-public {
+                width: 100%;
+            }
+        }
     }
 
-  }
+    .modal-header {
+        padding: 0.5rem 1rem;
+        border-radius: 0;
+        background: linear-gradient(45deg, #ffb7b7, #f9edcd 80%);
+        box-shadow: 0 0 0 1px rgb(0, 0, 0), 0 2px 3px rgba(0, 0, 0, 0.2);
+        border-bottom: 0px solid #dee2e6;
 
-  .modal-footer {
-    border-top: 0px solid #dee2e6;
-    padding: 0.5rem 1rem;
-    border-radius: 0;
-    background: linear-gradient(45deg, #ffb7b7, #f9edcd 80%);
-    box-shadow: 0 0 0 1px rgb(0, 0, 0), 0 2px 3px rgba(0, 0, 0, 0.2);
-  }
+        .modal-title {
+        font-family: brandon-grotesque, sans-serif;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 1.75rem;
+        }
+
+    }
+
+    .modal-footer {
+        border-top: 0px solid #dee2e6;
+        padding: 0.5rem 1rem;
+        border-radius: 0;
+        background: linear-gradient(45deg, #ffb7b7, #f9edcd 80%);
+        box-shadow: 0 0 0 1px rgb(0, 0, 0), 0 2px 3px rgba(0, 0, 0, 0.2);
+    }
 
 }
 

@@ -612,7 +612,7 @@ class Account extends Component {
 
 				<ManageAccountBirthdayModal/>
 
-        <ManageAccountGenderModal/>
+                <ManageAccountGenderModal/>
 				
 			</div>
 

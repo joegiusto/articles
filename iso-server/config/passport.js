@@ -23,26 +23,4 @@ module.exports = passport => {
     })
   );
 
-    //This verifies that the token sent by the user is valid
-    // passport.use(
-    //   new JwtStrategy({
-
-    //   //secret we used to sign our JWT
-    //   secretOrKey : opts.secretOrKey,
-
-    //   //we expect the user to send the token as a query parameter with the name 'secret_token'
-    //   jwtFromRequest : opts.jwtFromRequest
-
-    // }, async (token, done) => {
-
-    //   try {
-
-    //     //Pass the user details to the next middleware
-    //     return done(null, token.user);
-
-    //   } catch (error) {
-
-    //     done(error);
-    //   }
-    // }));
 };

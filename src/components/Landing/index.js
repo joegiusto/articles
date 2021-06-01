@@ -598,7 +598,8 @@ class LandingPage extends Component {
 
 					<div className="video-background-container">
 						<div className="video-background-wrapper">
-							<iframe style={{pointerEvents: 'none'}} src={`https://youtube.com/embed/${this.state.youtubeVideoID}?autoplay=1&mute=1&controls=0&loop=1&rel=0&playlist=${this.state.youtubeVideoID}&modestbranding=1`} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            {/* <iframe src="https://player.vimeo.com/video/529539150" width="640" height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe> */}
+							<iframe style={{pointerEvents: 'none'}} src={`https://player.vimeo.com/video/529539150`} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 						</div>
 					</div>
 

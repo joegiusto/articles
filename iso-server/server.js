@@ -21,6 +21,7 @@ const express = require('express');
 const fileUpload = require('express-fileupload');
 const bodyParser = require('body-parser');
 const passport = require("passport");
+// const passportOptional = require("passport");
 const path = require('path');
 const moment = require('moment');
 const app = express();
@@ -243,9 +244,11 @@ app.use(fileUpload());
 
 // Passport middleware
 app.use(passport.initialize());
+// app.use(passportOptional.initialize());
 
 // Passport config
 require("./config/passport")(passport);
+// require("./config/passportOptional")(passportOptional);
 
 // Routes
 app.use("/api/users", users);

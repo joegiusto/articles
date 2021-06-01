@@ -56,20 +56,21 @@ class EmployeePageDetails extends Component {
     })
     .then(function (response) {
 
-      console.log(response);
+        console.log(response);
 
-      self.setState({
-        commitsLoading: false,
-        commits: response.data.commits
-      })
+        self.setState({
+            commitsLoading: false,
+            commits: response.data.commits
+        })
 
     })
     .catch(function (error) {
-      console.log(error);
+        console.log(error);
 
-      self.setState({
-        commitsLoading: false,
-      })
+        self.setState({
+            commitsLoading: false,
+        })
+        
     });
 
     this.getWriterNews();

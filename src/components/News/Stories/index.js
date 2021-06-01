@@ -24,15 +24,15 @@ function Myths(props) {
       </Helmet>
   
       <div className="news-static">
-        <div className="news-preview-container story">
-          {props.stories?.stories ?
-          (props.stories?.stories.map((document, i) => (
-            <NewsCard key={i} document={document}/>
-          )))
-          : 
-          <div>Myths Loading...</div>
-          }
-        </div>
+            <div className="news-preview-container story">
+                {props.stories?.stories ?
+                (props.stories?.stories.map((document, i) => (
+                    <NewsCard key={i} document={document}/>
+                )))
+                : 
+                <div>Myths Loading...</div>
+                }
+            </div>
       </div>
 
       <div className="row mt-4">

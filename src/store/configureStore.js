@@ -62,7 +62,7 @@ export default () => {
     persistedReducer,
     {},
     composeEnhancers(
-      applyMiddleware(thunk)
+        applyMiddleware(thunk)
     )
   )
 

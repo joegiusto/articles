@@ -47,18 +47,18 @@ if (localStorage.jwtToken) {
 }
 
 ReactDOM.render(
-  <PersistGate loading={<h1>Test</h1>} persistor={persistor}>
+    <PersistGate loading={<h1>Test</h1>} persistor={persistor}>
 
-    {store.dispatch(setMyths())}
-    {store.dispatch(setStories())}
-    {store.dispatch(setIssues())}
-    {store.dispatch(setSubmissions())}
+        {store.dispatch(setMyths())}
+        {store.dispatch(setStories())}
+        {store.dispatch(setIssues())}
+        {store.dispatch(setSubmissions())}
 
-    <Provider store={store}>
-      <App /> 
-    </Provider>
+        <Provider store={store}>
+            <App /> 
+        </Provider>
 
-  </PersistGate>,
+    </PersistGate>,
 document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
@@ -68,6 +68,6 @@ document.getElementById('root'));
 // serviceWorker.unregister();
 serviceWorker.register();
 // serviceWorker.register({
-  // onSuccess: () => console.log("Service worker installed"),
-  // onUpdate: reg => console.log(reg),
+    // onSuccess: () => console.log("Service worker installed"),
+    // onUpdate: reg => console.log(reg),
 // });

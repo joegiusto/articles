@@ -6,6 +6,8 @@ const axios = require("axios");
 const User = mongoose.model("users");
 var colors = require('colors');
 
+const logMessage = require("./routes/functions/logMessage");
+
 // const { resource } = require('../api/users');
 // const { response } = require('express');
 
@@ -27,7 +29,10 @@ module.exports = (app, db) => {
   
   app.post('/api/secure/getUserDetails', passport.authenticate('jwt', {session: false}), (req, res) => {
     
-    console.log(`Call to /api/getUserDetails made here at ${new Date()} by user ${req.user._id}`);
+    // console.log(`Call to /api/getUserDetails by user ${req.user._id}`);
+
+    logMessage('Call to /api/getUserDetails', req.user._id)
+
       let data = {};
       var o_id = new ObjectId(req.user._id);
       // let justNews = []
@@ -311,6 +316,7 @@ module.exports = (app, db) => {
       clientSecret: paymentIntent.client_secret,
       paymentIntentID: paymentIntent.id
     });
+    
   });
 
   app.post("/api/setDefaultPaymentMethod", passport.authenticate('jwt', {session: false}), async (req, res) => {

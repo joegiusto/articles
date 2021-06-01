@@ -49,14 +49,4 @@ class PrivacyPage extends Component {
   }
 }
 
-// const mapStateToProps = state => ({
-//   // auth: state.auth,
-//   orders: state.auth.user_details.ordersFetched,
-//   errors: state.errors
-// });
-
-// export default connect(
-//   mapStateToProps,
-// )(PrivacyPage);
-
 export default PrivacyPage;

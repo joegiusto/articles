@@ -21,7 +21,7 @@ function Updates(props) {
 
         setUpdatesLoading(true)
 		
-		axios.get('/api/getUpdates', {})
+		axios.post('/api/getUpdates', {})
         .then( (response) => {
             setUpdatesGeneral(response.data)
             setUpdatesLoading(false)

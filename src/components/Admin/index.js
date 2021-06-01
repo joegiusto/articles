@@ -117,39 +117,36 @@ class Admin extends Component {
 
         <div className="tab-bar-wrapper">
 
-          <div ref={this.tabBar} onScroll={this.scrollEvent} className="tab-bar">
-  
-            <div className="container-fluid">
-  
-              <Link to={ROUTES.ADMIN}><span className={"tab" + (this.state.tab === 'dashboard' ? ' active' : '')}>Dashboard</span></Link>
-              <Link to={ROUTES.ADMIN_USERS}><span className={"tab" + (this.state.tab === 'users' ? ' active' : '')}>Users</span></Link>
-              <Link to={ROUTES.ADMIN_NEWS}><span className={"tab" + (this.state.tab === 'news' ? ' active' : '')}>News</span></Link>
-              <Link to={ROUTES.ADMIN_PROPOSALS}><span className={"tab" + (this.state.tab === 'proposals' ? ' active' : '')}>Proposals</span></Link>
-              <Link to={ROUTES.ADMIN_PRODUCTS}><span className={"tab" + (this.state.tab === 'products' ? ' active' : '')}>Products</span></Link>
-              <Link to={ROUTES.ADMIN_SUBMISSIONS}><span className={"tab" + (this.state.tab === 'submissions' ? ' active' : '')}>Submissions</span></Link>
-              <Link to={ROUTES.ADMIN_DONATIONS}><span className={"tab" + (this.state.tab === 'donations' ? ' active' : '')}>Donations</span></Link>
-              <Link to={ROUTES.ADMIN_EXPENSES}><span className={"tab" + (this.state.tab === 'expenses' ? ' active' : '')}>Expenses</span></Link>
-              <Link to={ROUTES.ADMIN_SOCKET}><span className={"tab" + (this.state.tab === 'sockets' ? ' active' : '')}>Sockets</span></Link>
-              <Link to={ROUTES.ADMIN_AWS}><span className={"tab" + (this.state.tab === 'aws' ? ' active' : '')}>AWS</span></Link>
-              <Link to={ROUTES.ADMIN_COMMENTS}><span className={"tab" + (this.state.tab === 'comments' ? ' active' : '')}>Comments</span></Link>
-              <Link to={ROUTES.ADMIN_REPORTS}><span className={"tab" + (this.state.tab === 'reports' ? ' active' : '')}>Reports</span></Link>
-              <Link to={ROUTES.ADMIN_ORDERS}><span className={"tab" + (this.state.tab === 'orders' ? ' active' : '')}>Orders</span></Link>
-              <Link to={ROUTES.ADMIN_ADS}><span className={"tab" + (this.state.tab === 'ads' ? ' active' : '')}>Ads</span></Link>
-              <Link to={ROUTES.ADMIN_MESSAGES}><span className={"tab" + (this.state.tab === 'messages' ? ' active' : '')}>Messages</span></Link>
-              <Link to={ROUTES.ADMIN_PROJECTS}><span className={"tab" + (this.state.tab === 'projects' ? ' active' : '')}>Projects</span></Link>
-              <Link to={ROUTES.ADMIN_NEWSLETTER}><span className={"tab" + (this.state.tab === 'newsletter' ? ' active' : '')}>Newsletter</span></Link>
-              <Link to={ROUTES.ADMIN_PRESIDENTS}><span className={"tab" + (this.state.tab === 'presidents' ? ' active' : '')}>Presidents</span></Link>
-  
+            <div ref={this.tabBar} onScroll={this.scrollEvent} className="tab-bar">
+                <div className="container-fluid">
+                    <Link to={ROUTES.ADMIN}><span className={"tab" + (this.state.tab === 'dashboard' ? ' active' : '')}>Dashboard</span></Link>
+                    <Link to={ROUTES.ADMIN_USERS}><span className={"tab" + (this.state.tab === 'users' ? ' active' : '')}>Users</span></Link>
+                    <Link to={ROUTES.ADMIN_NEWS}><span className={"tab" + (this.state.tab === 'news' ? ' active' : '')}>News</span></Link>
+                    <Link to={ROUTES.ADMIN_PROPOSALS}><span className={"tab" + (this.state.tab === 'proposals' ? ' active' : '')}>Proposals</span></Link>
+                    <Link to={ROUTES.ADMIN_PRODUCTS}><span className={"tab" + (this.state.tab === 'products' ? ' active' : '')}>Products</span></Link>
+                    <Link to={ROUTES.ADMIN_SUBMISSIONS}><span className={"tab" + (this.state.tab === 'submissions' ? ' active' : '')}>Submissions</span></Link>
+                    <Link to={ROUTES.ADMIN_DONATIONS}><span className={"tab" + (this.state.tab === 'donations' ? ' active' : '')}>Donations</span></Link>
+                    <Link to={ROUTES.ADMIN_EXPENSES}><span className={"tab" + (this.state.tab === 'expenses' ? ' active' : '')}>Expenses</span></Link>
+                    <Link to={ROUTES.ADMIN_SOCKET}><span className={"tab" + (this.state.tab === 'sockets' ? ' active' : '')}>Sockets</span></Link>
+                    <Link to={ROUTES.ADMIN_AWS}><span className={"tab" + (this.state.tab === 'aws' ? ' active' : '')}>AWS</span></Link>
+                    <Link to={ROUTES.ADMIN_COMMENTS}><span className={"tab" + (this.state.tab === 'comments' ? ' active' : '')}>Comments</span></Link>
+                    <Link to={ROUTES.ADMIN_REPORTS}><span className={"tab" + (this.state.tab === 'reports' ? ' active' : '')}>Reports</span></Link>
+                    <Link to={ROUTES.ADMIN_ORDERS}><span className={"tab" + (this.state.tab === 'orders' ? ' active' : '')}>Orders</span></Link>
+                    <Link to={ROUTES.ADMIN_ADS}><span className={"tab" + (this.state.tab === 'ads' ? ' active' : '')}>Ads</span></Link>
+                    <Link to={ROUTES.ADMIN_MESSAGES}><span className={"tab" + (this.state.tab === 'messages' ? ' active' : '')}>Messages</span></Link>
+                    <Link to={ROUTES.ADMIN_PROJECTS}><span className={"tab" + (this.state.tab === 'projects' ? ' active' : '')}>Projects</span></Link>
+                    <Link to={ROUTES.ADMIN_NEWSLETTER}><span className={"tab" + (this.state.tab === 'newsletter' ? ' active' : '')}>Newsletter</span></Link>
+                    <Link to={ROUTES.ADMIN_PRESIDENTS}><span className={"tab" + (this.state.tab === 'presidents' ? ' active' : '')}>Presidents</span></Link>
+                </div>
             </div>
-          </div>
 
-          <div className={"scroll-alert scroll-left-alert " + (this.state.tabBarScrollPosition > 80 && 'active')}>
-            <i className="fas fa-caret-left mr-0"></i>
-          </div>
-          
-          <div className={"scroll-alert scroll-right-alert " + (this.state.tabBarScrollPosition < (this.state.tabBarScrollWidth - this.state.tabBarWidth - 80) && 'active')}>
-            <i className="fas fa-caret-right mr-0"></i>
-          </div>
+            <div className={"scroll-alert scroll-left-alert " + (this.state.tabBarScrollPosition > 80 && 'active')}>
+                <i className="fas fa-caret-left mr-0"></i>
+            </div>
+            
+            <div className={"scroll-alert scroll-right-alert " + (this.state.tabBarScrollPosition < (this.state.tabBarScrollWidth - this.state.tabBarWidth - 80) && 'active')}>
+                <i className="fas fa-caret-right mr-0"></i>
+            </div>
 
         </div>
 

@@ -26,7 +26,8 @@ class Story extends React.Component {
       loading: false,
       relatedContent: [],
       relatedContentLoading: false,
-      news_tags: []
+      news_tags: [],
+      active_related_content_tag: '',
     };
 
   }
@@ -73,6 +74,10 @@ class Story extends React.Component {
       self.setState({
         ...response.data.document,
         loading: false
+      }, () => {
+          self.setState({
+              active_related_content_tag: self.state.news_tags[0].tag_name
+          })
       });
 
     })
@@ -210,7 +215,7 @@ class Story extends React.Component {
                             <div className="tags">
                                 {this.state.news_tags.length > 0 ?
                                 this.state.news_tags.map((tag) => 
-                                <div className="tag badge badge-dark">{tag.tag_name}</div>
+                                <div onClick={() => this.setState({active_related_content_tag: tag.tag_name})} className={`tag badge ${this.state.active_related_content_tag === tag.tag_name ? 'badge-dark' : 'badge-light'}`}>{tag.tag_name}</div>
                                 )
                                 :
                                 <div className="badge badge-light">No Tags</div>

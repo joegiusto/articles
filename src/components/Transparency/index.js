@@ -586,22 +586,22 @@ class Reports extends Component {
                       <div className="px-2 pt-4">
       
                         <div className="balance-label">Current Balance:</div>
-                        <h2>${((this.state.totals.donations - this.state.totals.recurring + this.state.totals.clothing) / 100 ).toFixed(2)}</h2>
+                        <h2>${( this.state.totals.revenue - this.state.totals.expenses ).toFixed(2)}</h2>
       
                         <div className="time-container">
                           <div className="progress">
                             <div className="progress-bar bg-rev" role="progressbar" 
                             style={{
-                              width: ( this.state.totals.revenue / ( ( this.state.totals.revenue + this.state.totals.recurring ) / 100 ) ).toFixed(0) + "%"
+                              width: ( this.state.totals.revenue / ( ( this.state.totals.revenue + this.state.totals.expenses ) / 100 ) ).toFixed(0) + "%"
                             }}
                             aria-valuenow="15" 
                             aria-valuemin="0" 
                             aria-valuemax="100"
                             >
-                              {( (this.state.totals.donations + this.state.totals.clothing) / ((this.state.totals.donations + this.state.totals.recurring + this.state.totals.clothing) / 100) ).toFixed(0)}%
+                              {( (this.state.totals.revenue) / ((this.state.totals.revenue + this.state.totals.expenses) / 100) ).toFixed(0)}%
                             </div>
 
-                            <div className="progress-bar bg-danger" role="progressbar" style={{width: (this.state.totals.recurring / ((this.state.totals.donations + this.state.totals.recurring + this.state.totals.clothing) / 100) ).toFixed(0) + "%"}} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">{( this.state.totals.recurring / ((this.state.totals.donations + this.state.totals.recurring + this.state.totals.clothing) / 100) ).toFixed(0)}%</div>
+                            <div className="progress-bar bg-danger" role="progressbar" style={{width: (this.state.totals.expenses / ((this.state.totals.revenue + this.state.totals.expenses) / 100) ).toFixed(0) + "%"}} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">{( this.state.totals.expenses / ((this.state.totals.revenue + this.state.totals.expenses) / 100) ).toFixed(0)}%</div>
                           </div>
         
                           {/* <div className="text-muted">Revenue | Expenses</div> */}
@@ -736,7 +736,7 @@ class Reports extends Component {
                   <div className="reports-table reports-shadow">
                     <div className="table-selector">
             
-						<div className="main d-flex flex-row justify-content-lg-between align-items-center">
+						<div className="main d-flex flex-row justify-content-between align-items-center">
 
 							<div className="d-flex">
 								{this.tableSelectorChoice('revenue')}
@@ -1554,100 +1554,102 @@ class DataCharts extends Component {
 
         <div className="chart-blocks">
 
-          <div className="chart-block">
-            <h5>Balance History</h5>
-            <BalanceHistoryChart/>
-          </div>
-
-          <div className="chart-block">
-            <h5>Revenue vs Expenses</h5>
-            <p>How much we are spending a month compared to how much we are making.</p>
-  
-            <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} />
-            <canvas className='chart mb-3 bg-white' id={this.state.chartRevenueExpense} width="100%" height="45px"></canvas>
-          </div>
-  
-          <div className="chart-block">
-            <h5>Payrole Comparison</h5>
-            <p>The amount of money being spent on payrole compared to expenses.</p>
-  
-            <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} />
-            <canvas className='chart mb-3 bg-white' id={this.state.chartPayroleExpenses} width="100%" height="45px"></canvas>
-          </div>
-
-          <div className="row">
-
-            <div className="col-lg-4">
-              <div className="chart-block">
-                <h5>Employee Average Pay</h5>
-                <h3 className="mb-0">$0</h3>
-              </div>
+            <div className="chart-block">
+                <h5>Balance History</h5>
+                <p>How much we are spending a month compared to how much we are making.</p>
+                <BalanceHistoryChart/>
             </div>
 
-            <div className="col-lg-4">
-              <div className="chart-block">
-                <h5>CEO Pay</h5>
-                <h3 className="mb-0">$0</h3>
-              </div>
+            <div className="chart-block">
+                <h5>Revenue vs Expenses</h5>
+                <p>How much we are spending a month compared to how much we are making.</p>
+    
+                <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} />
+                <canvas className='chart mb-3 bg-white' id={this.state.chartRevenueExpense} width="100%" height="45px"></canvas>
+            </div>
+    
+            <div className="chart-block">
+                <h5>Payrole Comparison</h5>
+                <p>The amount of money being spent on payrole compared to expenses.</p>
+    
+                <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} />
+                <canvas className='chart mb-3 bg-white' id={this.state.chartPayroleExpenses} width="100%" height="45px"></canvas>
             </div>
 
-            <div className="col-lg-4">
-              <div className="chart-block">
-                <h5>Percent Difference</h5>
-                <h3 className="mb-0">0.00%</h3>
-              </div>
+            <div className="row">
+
+                <div className="col-lg-4">
+                <div className="chart-block">
+                    <h5>Employee Average Pay</h5>
+                    <h3 className="mb-0">$0</h3>
+                </div>
+                </div>
+
+                <div className="col-lg-4">
+                <div className="chart-block">
+                    <h5>CEO Pay</h5>
+                    <h3 className="mb-0">$0</h3>
+                </div>
+                </div>
+
+                <div className="col-lg-4">
+                <div className="chart-block">
+                    <h5>Percent Difference</h5>
+                    <h3 className="mb-0">0.00%</h3>
+                </div>
+                </div>
+
+            </div>
+    
+            <div className="chart-block">
+                <h5>Median USA Income vs Our Employees</h5>
+                <p>The amount of money being spent on payrole compared to revenues and expenses.</p>
+    
+                {/* <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} /> */}
+                <span className="badge badge-dark">10 Years</span>
+    
+                <canvas className='chart mb-3 bg-white' id={this.state.chartNewYorkEmployeeOurEmployee} width="100%" height="45px"></canvas>
+
+                <div onClick={() => this.changeExpandSource(!this.state.expandSource)} className="btn btn-articles-light mb-2">
+                {this.state.expandSource ? 
+                <i className="fas fa-caret-square-up"></i>
+                :
+                <i className="fas fa-caret-square-down"></i>
+                }
+                
+                Expand Source Info
+                </div>
+
+                <div className={"source-info " + (this.state.expandSource ? "show" : null)}>
+                <hr/>
+                <div>Information sourced from the following:</div>
+                <div className="sources">
+                    <ul className="mb-0">
+
+                    <li>
+                        <a target="_blank" rel="noopener noreferrer" href="https://www.census.gov/quickfacts/fact/table/NY,US/PST045219">https://www.census.gov/quickfacts/fact/table/NY,US/PST045219</a>
+                    </li>
+
+                    <li>Link</li>
+
+                    <li>Static Image</li>
+
+                    <li>Static Image</li>
+
+                    </ul>
+                </div>
+                </div>
+
+            </div>
+    
+            <div className="chart-block">
+                <h5>Employee to CEO Pay Diffrence</h5>
+                <p>The % of employee worth to CEO pay. (Lowest Paid Employee, Median Employee Pay, Top Employee pay)</p>
+    
+                <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} />
+                <canvas className='chart mb-3 bg-white' id={this.state.chartEmployeeAdmin} width="100%" height="45px"></canvas>
             </div>
 
-          </div>
-  
-          <div className="chart-block">
-            <h5>Median USA Income vs Our Employees</h5>
-            <p>The amount of money being spent on payrole compared to revenues and expenses.</p>
-  
-            {/* <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} /> */}
-            <span className="badge badge-dark">10 Years</span>
-  
-            <canvas className='chart mb-3 bg-white' id={this.state.chartNewYorkEmployeeOurEmployee} width="100%" height="45px"></canvas>
-
-            <div onClick={() => this.changeExpandSource(!this.state.expandSource)} className="btn btn-articles-light mb-2">
-              {this.state.expandSource ? 
-              <i className="fas fa-caret-square-up"></i>
-              :
-              <i className="fas fa-caret-square-down"></i>
-              }
-              
-              Expand Source Info
-            </div>
-
-            <div className={"source-info " + (this.state.expandSource ? "show" : null)}>
-              <hr/>
-              <div>Information sourced from the following:</div>
-              <div className="sources">
-                <ul className="mb-0">
-
-                  <li>
-                    <a target="_blank" rel="noopener noreferrer" href="https://www.census.gov/quickfacts/fact/table/NY,US/PST045219">https://www.census.gov/quickfacts/fact/table/NY,US/PST045219</a>
-                  </li>
-
-                  <li>Link</li>
-
-                  <li>Static Image</li>
-
-                  <li>Static Image</li>
-
-                </ul>
-              </div>
-            </div>
-
-          </div>
-  
-          <div className="chart-block">
-            <h5>Employee to CEO Pay Diffrence</h5>
-            <p>The % of employee worth to CEO pay. (Lowest Paid Employee, Median Employee Pay, Top Employee pay)</p>
-  
-            <ChartBlockTimeFrame setChartPeriodSelector={this.props.setChartPeriodSelector} chartPeriodSelector={this.props.chartPeriodSelector} />
-            <canvas className='chart mb-3 bg-white' id={this.state.chartEmployeeAdmin} width="100%" height="45px"></canvas>
-          </div>
         </div>
 
       </div>
