@@ -64,8 +64,8 @@ function Sockets(props) {
                 <div className="container">
                     <div className="row">
 
-                        <div className="col-lg-3">
-                            <div>
+                        <div className="col-lg-3 mb-3 mb-lg-0">
+                            <div >
 
                                 <div>
 
@@ -105,7 +105,7 @@ function Sockets(props) {
                         </div>
 
                         <div className="col-lg-3">
-                            <div className="d-flex flex-column">
+                            <div className="d-flex flex-column mb-3 mb-lg-0">
         
                                 <button 
                                     className="btn btn-articles-light mb-1" 

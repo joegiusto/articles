@@ -680,7 +680,7 @@ function AdminUsersPage() {
 
                     <div className="card-header flex-column flex-lg-row justify-content-sm-between">
 
-                        <div className="d-flex align-items-center justify-content-between mb-1 mb-lg-0 flex-fill flex-lg-grow-0">
+                        <div className="d-flex align-items-center mb-2">
                             <i className="fas fa-edit fa-2x"></i>
 
                             <h3 className="mb-0">Users</h3>

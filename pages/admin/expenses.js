@@ -359,7 +359,7 @@ function ExpensesAdmin(props) {
 
                     <div className="d-flex align-items-center">
                         <i className="fas fa-edit fa-2x"></i>
-                        <h3 className="mb-0">Manage Expenses</h3>
+                        <h3 className="mb-0">Expenses</h3>
                         <div className="total">({expenses.length})</div>
                     </div>
 
