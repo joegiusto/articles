@@ -9,8 +9,8 @@ import { useSelector } from 'react-redux'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 
-import NewsLayout from '../../../components/layouts/news.js';
-import NewsCard from '../../../components/News/NewsCard';
+import NewsLayout from 'components/layouts/news.js';
+import NewsCard from 'components/News/NewsCard';
 
 function NewsStories() {
     const router = useRouter()

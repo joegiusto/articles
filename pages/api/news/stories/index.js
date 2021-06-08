@@ -14,6 +14,7 @@ export default async (req, res) => {
         'news_date': 1 ,
         'news_tags': 1 ,
         'news_tagline': 1,
+        'news_type': 1,
         'hero_url': 1,
         'last_update': 1,
         'authors': 1,
