@@ -20,6 +20,7 @@
         "bcryptjs": "^2.4.3",
         "bootstrap": "^4.6.0",
         "chart.js": "^2.9.4",
+        "chartjs-plugin-datalabels": "^1.0.0",
         "colors": "^1.4.0",
         "formidable": "^1.2.2",
         "google-map-react": "^2.1.9",

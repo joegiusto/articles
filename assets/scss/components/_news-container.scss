@@ -97,7 +97,7 @@ section.news-page {
         -o-transition-timing-function: ease;
         transform: translateX(-100%);
         background-color: rgba(0, 0, 0, 0.8);
-        z-index: 5;
+        z-index: -1;
         pointer-events: none;
         display: flex;
 
@@ -105,6 +105,7 @@ section.news-page {
             background-color: rgba(0, 0, 0, 0.8);
             transform: translateX(0);
             pointer-events: initial;
+            z-index: 5;
         }
 
         &.false {

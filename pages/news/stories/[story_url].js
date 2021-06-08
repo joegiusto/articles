@@ -74,17 +74,14 @@ function NewsStory() {
                 <div className="breadcrumb-header mb-3">
 
                     <div className="watermarks">
-                        <div className="watermark news">News</div>
-                        <div className="watermark stories">Stories</div>
+                        <Link href={`${ROUTES.NEWS}`}><a className="watermark news">News</a></Link>
+                        <Link href={`${ROUTES.STORIES}`}><a className="watermark stories">Stories</a></Link>
                     </div>
 
                     <div style={{background: ''}} className={"edit-story-button " + (userReduxState?.roles?.isWriter ? 'd-inline-block' : 'd-none')}>
 
-                        <Link 
-                            href={`${ROUTES.ADMIN_NEWS}/${story._id}?writerFromDocument=true`}
-                            // className="btn btn-articles-light"
-                        >
-                            <span className="badge badge-warning"><i className="fas fa-star mr-1" aria-hidden="true"></i>Edit Story</span>
+                        <Link href={`${ROUTES.ADMIN_NEWS}/${story._id}?writerFromDocument=true`}>
+                            <a className="btn btn-articles-light btn-sm"><i className="fas fa-star mr-1" aria-hidden="true"></i>Edit Story</a>
                         </Link>
 
                     </div>

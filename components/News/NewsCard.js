@@ -4,11 +4,10 @@ import Link from 'next/link'
 
 import moment from 'moment';
 
-import ROUTES from '../constants/routes';
-
 import { connect } from 'react-redux';
-import { removeSubscription, addSubscription } from "../../redux/actions/siteActions";
-// import News from '.';
+
+import ROUTES from 'components/constants/routes';
+import { removeSubscription, addSubscription } from "redux/actions/siteActions";
 
 class NewsCard extends Component {
     constructor(props) {

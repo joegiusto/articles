@@ -92,7 +92,16 @@
             box-shadow: 0 0.125rem 0.25rem rgb(39 48 57) !important;
             border-radius: 2.5px;
             margin-bottom: 0.25rem;
+
+            .message-extras {
+                color: black!important;
+            }
         }
+
+        .date {
+            color: black!important;
+        }
+
     }
 }
 
@@ -575,7 +584,7 @@
 
                         .date {
                             font-size: 0.7rem;
-                            color: #b6c1d2 !important;
+                            color: #b6c1d2;
                         }
                     }
                 }
@@ -588,12 +597,17 @@
                 border-top: 1px solid #d8e2ef;
                 width: 100%;
                 padding: 1rem;
+                // max-height: 350px;
 
                 .chat-message {
+                    // height: 100%;
+                    max-height: 300px;
+                    max-width: 1000px;
                     flex-grow: 1;
                     border: none;
                     font-size: 0.9rem;
                     outline: none !important;
+                    border: 1px solid rgb(216, 226, 239);
                 }
 
                 .scroll-lock {

@@ -23,6 +23,7 @@ import { useStore } from '/redux/store'
 
 import { setUserDetails } from "/redux/actions/authActions";
 import { setStories } from "/redux/actions/storiesActions";
+import { setMessages } from "/redux/actions/messagesActions";
 import { setIssues } from "/redux/actions/issuesActions";
 import { setMyths } from "/redux/actions/mythsActions";
 
@@ -63,7 +64,10 @@ function MyApp({ Component, pageProps }) {
         // }
         // fetchData()
 
-        {store.dispatch(setUserDetails())}
+        if (session?.email) {
+            {store.dispatch( setUserDetails() )}
+            {store.dispatch( setMessages() )}
+        }
 
     },[session])
 

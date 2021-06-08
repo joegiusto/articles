@@ -18,16 +18,7 @@ export default function PollsPage() {
     const userReduxState = useSelector((state) => state.auth.user_details)
 
     const [pollsLoading, setPollsLoading] = useState(true);
-    const [polls, setPolls] = useState([
-        // {
-        //     title: 'Should Articles invest money into stocks?',
-        //     description: 'Funds that are not being used for anything lose value due to inflation, to stop this from happening in the future we may look to investing that into stocks.'
-        // },
-        // {
-        //     title: 'Should Articles invest money into crypto?',
-        //     description: 'Funds that are not being used for anything lose value due to inflation, to stop this from happening in the future we may look to investing that into crypto.'
-        // },
-    ]);
+    const [polls, setPolls] = useState([]);
 
     useEffect(() => {
 		

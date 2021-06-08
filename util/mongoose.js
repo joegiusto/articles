@@ -11,7 +11,7 @@ const connectDB = handler => async (req, res) => {
         useFindAndModify: false,
         useCreateIndex: true,
         useUnifiedTopology: true,
-        serverSelectionTimeoutMS: 20000,
+        // serverSelectionTimeoutMS: 20000,
     });
     return handler(req, res);
 };

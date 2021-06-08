@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 
 import axios from 'axios'
 import Chart from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 import ROUTES from 'components/constants/routes';
 
@@ -44,11 +45,23 @@ const data = {
 const chartConfig = {
     type: 'doughnut',
     data: data,
+    plugins: [ChartDataLabels],
     options: {
         responsive: true,
+        aspectRatio: 1,
+        maintainAspectRatio: true,
         legend: {
-            position: 'bottom',
-            align: 'start',
+            // position: 'bottom',
+            align: 'top',
+            offset: 100
+        },
+        layout: {
+            padding: {
+                left: 100,
+                right: 100,
+                top: 100,
+                bottom: 100
+            }
         },
         tooltips: {
             callbacks: {
@@ -58,7 +71,37 @@ const chartConfig = {
                     return dataset.labels[index] + ": " + dataset.data[index] + '%';
                 }
             }
-        }
+        },
+        plugins: {
+
+            datalabels: {
+                // anchor: 'end',
+                color: '#fff',
+
+                backgroundColor: function(context){
+                    // console.log("Chart Data")
+                    // console.log(context)
+                    return '#000';
+                },
+
+                align: 'end',
+                clamp: true,
+                offset: 20,
+                // display: 'auto',
+
+                formatter: function (value, context) {
+
+                    // console.log("Chart Data")
+                    // console.log(value)
+                    // console.log(context)
+                    let label = context.dataset.labels[context.dataIndex];
+                    let dataPercent = context.dataset.data[context.dataIndex];
+
+                    return label + ": " + dataPercent + '%';
+                },
+            },
+
+        },
         // plugins: {
         //     legend: {
         //         position: 'bottom',

@@ -14,6 +14,14 @@ const useCounter = () => {
     return { colorModeDark }
 }
 
+function contains(target, pattern){
+    var value = 0;
+    pattern.forEach(function(word){
+      value = value + target.includes(word);
+    });
+    return (value === 1)
+}
+
 function FooterBase(props) {
     //   const has =  props.location.pathname.toString().includes("/admin/news") 
     const dispatch = useDispatch()
@@ -21,7 +29,9 @@ function FooterBase(props) {
 
     const router = useRouter()
 
-    if (router.route == "/messages") {
+    // console.log(router)
+
+    if ( [ROUTES.MESSAGES, ROUTES.OUTSET].some(el => router.asPath.includes(el) ) ) {
         return null
     }
 

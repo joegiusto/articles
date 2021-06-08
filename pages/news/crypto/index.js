@@ -4,20 +4,22 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import NewsLayout from '../../../components/layouts/news.js';
+import axios from 'axios'
+
+import NewsLayout from 'components/layouts/news.js';
 
 var ws;
 
 if (typeof window !== 'undefined') {
-    ws = new WebSocket("wss://ws.bitstamp.net");
+    ws = new WebSocket("wss://ws-feed.pro.coinbase.com")
 }
 
-const subscribeMsg = {
-    "event": "bts:subscribe",
-    "data": {
-        "channel": "live_trades_btcusd"
-    }
-};
+// const subscribeMsg = {
+//     "event": "bts:subscribe",
+//     "data": {
+//         "channel": "live_trades_btcusd"
+//     }
+// };
 
 function CryptoPage() {
     const router = useRouter()
@@ -84,11 +86,23 @@ function CryptoPage() {
         },
     ]
 
-    const subscribeBTC = {
-        "event": "bts:subscribe",
-        "data": {
-            "channel": "live_trades_btcusd",
-        }
+    const subscribe = {
+        "type": "subscribe",
+        "product_ids": [
+            "ETH-USD",
+            "ETH-EUR"
+        ],
+        "channels": [
+            "level2",
+            "heartbeat",
+            {
+                "name": "ticker",
+                "product_ids": [
+                    "ETH-BTC",
+                    "ETH-USD"
+                ]
+            }
+        ]
     };
 
     const subscribeETH = {
@@ -110,70 +124,83 @@ function CryptoPage() {
 
     useEffect(() => {
 
-        if (typeof window !== 'undefined') {
-            // initWebsocket();
-        }
+        // initWebsocket()
 
-        return () => {
-            console.log("Stopping Web Socket")
+        axios.get('/api/news/crypto', {
+
+		})
+		.then( (response) => {
+            console.log(response)
+            setBtcPrice(response.data.btc_price)
+            setEthPrice(response.data.eth_price)
+            setXlmPrice(response.data.xlm_price)
+		})
+		.catch( (error) => {
+		    console.log(error);
+		});
+
+        // return () => {
+        //     console.log("Stopping Web Socket")
             
-            if (typeof window !== 'undefined') {
-                // ws.close(1000, 'user');
-            }
-        };
+        //     if (typeof window !== 'undefined') {
+        //         // ws.close(1000, 'user');
+        //     }
+        // };
 
     }, []);
 
     function initWebsocket() {
-        ws = new WebSocket("wss://ws.bitstamp.net");
+        // ws = new WebSocket("wss://ws-feed.pro.coinbase.com");
 
         ws.onopen = function (event) {
             console.log(event)
 
-            ws.send( JSON.stringify( subscribeBTC ) );
+            ws.send( JSON.stringify( subscribe ) );
             // ws.send(JSON.stringify(subscribeBTC, subscribeETH, subscribeXLM));
         };
 
         ws.onmessage = function (evt) {
             var response = JSON.parse(evt.data);
+            console.log(response)
             /**
              * This switch statement handles message logic. It processes data in case of trade event
              * and it reconnects if the server requires.
              */
-            switch (response.event) {
-                case 'trade': {
+            // switch (response.event) {
+            //     case 'trade': {
 
-                    switch (response.channel) {
+            //         switch (response.channel) {
 
-                        case 'live_trades_btcusd': {
-                            setBtcPrice(response.data.price)
-                            break;
-                        }
-                        case 'live_trades_ethusd': {
+            //             case 'live_trades_btcusd': {
+            //                 setBtcPrice(response.data.price)
+            //                 break;
+            //             }
+            //             case 'live_trades_ethusd': {
 
-                            setEthPrice(response.data.price)
-                            break;
-                        }
-                        case 'live_trades_xlmusd': {
-                            setXlmPrice(response.data.price)
-                            break;
-                        }
+            //                 setEthPrice(response.data.price)
+            //                 break;
+            //             }
+            //             case 'live_trades_xlmusd': {
+            //                 setXlmPrice(response.data.price)
+            //                 break;
+            //             }
 
-                    }
+            //         }
 
-                    // serializeTrade(response.data);
-                    // console.log(response)
-                    // setBtcPrice(response.data.price)
-                    // break;
+            //         // serializeTrade(response.data);
+            //         // console.log(response)
+            //         // setBtcPrice(response.data.price)
+            //         // break;
 
-                }
-                case 'bts:request_reconnect': {
-                    initWebsocket();
-                    break;
-                }
-            }
+            //     }
+            //     case 'bts:request_reconnect': {
+            //         initWebsocket();
+            //         break;
+            //     }
+            // }
 
         };
+
         /**
          * In case of unexpected close event, try to reconnect.
          */
@@ -199,8 +226,8 @@ function CryptoPage() {
                 <p className="mb-5">This is the Crypto Page of the news section.</p>
 
                 <h2 className="">Bitcoin: {btcPrice}</h2>
-                <h2 className="">Eth: {ethPrice}</h2>
-                <h2 className="">Stel: {xlmPrice}</h2>
+                <h2 className="">Ethereum: {ethPrice}</h2>
+                <h2 className="">Stellar: {xlmPrice}</h2>
 
                 <div className="row">
 

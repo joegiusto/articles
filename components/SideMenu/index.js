@@ -24,6 +24,7 @@ function SideMenuBase(props) {
     const colorModeDark = useSelector((state) => state.site.colorModeDark)
     const sideMenuFixed = useSelector((state) => state.site.sideMenuFixed)
     const userReduxState = useSelector((state) => state.auth.user_details)
+    const userMessages = useSelector((state) => state.messages)
     const cartItems = useSelector((state) => state.cart)
 
     const [connected, setConnected] = useState(false);
@@ -164,6 +165,11 @@ function SideMenuBase(props) {
                     </div>
                 );
         }
+    }
+
+    function messagesSort( a, b ) {
+        // console.log(b.messages[b.messages.length - 1].date);
+        return ( moment(b.messages[b.messages.length - 1].date) - moment(a.messages[a.messages.length - 1].date) )
     }
     
     return ( <div className={'menu-wrap noselect' + (sideMenuFixed ? ' fixed' : '') + (props.site?.colorModeDark ? ' dark-mode' : '')}>
@@ -307,7 +313,7 @@ function SideMenuBase(props) {
                         <div>{' '} <i className="fad fa-comments-alt mr-0"></i> {' '}</div>
                     </Dropdown.Toggle>
 
-                    <Dropdown.Menu className="super-colors">
+                    <Dropdown.Menu className="card messages-dropdown pb-0">
 
                         {/* <Dropdown.Item className="px-1" eventKey="2">
                         <i className="fas fa-shopping-cart" aria-hidden="true"></i>
@@ -319,14 +325,41 @@ function SideMenuBase(props) {
                         <span style={{fontSize: '0.8rem'}}>Report Response</span>
                         </Dropdown.Item> */}
 
-                        <div className="text-muted text-center" style={{fontSize: '0.8rem'}}>0 Notifications</div>
+                        <div className="card-header text-muted text-center mb-1 mt-0 pt-0" style={{fontSize: '0.8rem'}}>Recent Messages</div>
 
-                        <Dropdown.Divider />
+                        <div className="card-body px-1 py-1">
 
-                        <div className="w-100 px-2">
-                        <Link href={ROUTES.MESSAGES}>
-                            <div style={{cursor: 'pointer'}} className="badge badge-success w-100">0 Messages</div>
-                        </Link>
+                            { userMessages.messages
+                            .filter(thread => !thread.encryption)
+                            .sort( messagesSort )
+                            .map( (thread) => (
+                                <Link href={ROUTES.MESSAGES + '/' + thread._id}>
+                                    <a>
+                                        <div key={thread._id} className="card px-2 py-1">
+            
+                                                <div className="d-flex justify-content-between flex-column flex-lg-row">
+                                                    <span className="contact flex-shrink-0">{thread.fetchedUsers.filter( (user) => user.id != userReduxState._id).map( user => user.name) }</span>
+                                                    <span className="date flex-shrink-0 ml-lg-3">{ moment(thread.messages.sort( (a, b) => new Date(b.date) - new Date(a.date) )[0].date).format("LL") }</span>
+                                                </div>
+            
+                                                <div className="preview">
+                                                    { thread.messages.sort( (a, b) => new Date(b.date) - new Date(a.date) )[0].message ? thread.messages.sort( (a, b) => new Date(b.date) - new Date(a.date) )[0].message : <span><i className="far fa-file-image"></i>Image</span> }
+                                                </div>
+
+                                        </div>
+                                    </a>
+                                </Link>
+                            ) ) }
+
+                        </div>
+
+                        {/* <Dropdown.Divider /> */}
+
+                        <div className="card-footer w-100 px-2">
+                            <Link href={ROUTES.MESSAGES}>
+                                <button className="btn btn-articles-light btn-sm ml-auto d-block">View All <span className="d-none d-lg-inline-block">Messages</span></button>
+                                {/* <div style={{cursor: 'pointer'}} className="badge badge-success w-100">0 Messages</div> */}
+                            </Link>
                         </div>
 
                         {/* <Dropdown.Item eventKey="4">Manage</Dropdown.Item> */}

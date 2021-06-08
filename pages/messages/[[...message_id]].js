@@ -67,6 +67,24 @@ function Messages(props) {
         // if (!props.auth) {
         //     props.history.push(ROUTES.SIGN_IN);
         // }
+        // console.log('First Load')
+        // console.log(param);
+
+        // if ( param?.message_id[0] ) {
+
+        //     console.log("Setting focused chat")
+
+        //     // setFocusedChat(chat_id)
+
+        //     setFocusedChat( param.message_id[0] )
+        //     setSidebarVisible(false)
+        //     setTimeout( function(){ scrollToBottom(); }, 100 );
+        //     socket.emit( 'join-room', focusedChat )
+        // } else {
+        //     console.log("Not setting focused chat")
+        //     setFocusedChat({})
+        //     // router.push(ROUTES.MESSAGES)
+        // }
     
         // var query = qs.parse(props.location.search, { ignoreQueryPrefix: true });
         if ( param?.startMsg !== '' && param?.startMsg !== undefined && param?.startMsg !== null ) {
@@ -138,8 +156,36 @@ function Messages(props) {
 	}, []);
 
     useEffect(() => {
-        setFocused( messages?.find(m => m._id === focusedChat) );
+
+        // setFocused( messages?.find(m => m._id === focusedChat) );
+        // router.push()
+        
     }, [focusedChat]);
+
+    useEffect(() => {
+        console.log('router changes')
+        console.log(router.query);
+        // console.log(router.query.message_id[0]);
+
+        if ( router.query?.message_id !== '' && router.query?.message_id !== undefined && router.query?.message_id !== null ) {
+
+            console.log("Setting focused chat")
+
+            // setFocusedChat(chat_id)
+
+            setFocusedChat( router.query.message_id[0] )
+            setFocused( messages?.find(m => m._id === router.query.message_id[0] ) );
+            setSidebarVisible(false)
+            setTimeout( function(){ scrollToBottom(); }, 100 );
+            socket.emit( 'join-room', focusedChat )
+        } else {
+            console.log("Not setting focused chat")
+            setFocusedChat('')
+            setFocused( messages?.find(m => m._id === focusedChat) );
+            // router.push(ROUTES.MESSAGES)
+        }
+        
+    }, [router]);
 
     function randomIntFromInterval(min, max) { // min and max included 
         return Math.floor(Math.random() * (max - min + 1) + min);
@@ -215,11 +261,13 @@ function Messages(props) {
     
     function focusChat(chat_id) {
         // const self = this;
+        router.push(ROUTES.MESSAGES + '/' + chat_id)
 
-        setFocusedChat(chat_id)
-        setSidebarVisible(false)
-        setTimeout( function(){ scrollToBottom(); }, 100 );
-        socket.emit( 'join-room', focusedChat )
+        // Being moved to router useEffect
+        // setFocusedChat(chat_id)
+        // setSidebarVisible(false)
+        // setTimeout( function(){ scrollToBottom(); }, 100 );
+        // socket.emit( 'join-room', focusedChat )
     }
     
     function messagesSort( a, b ) {
@@ -665,24 +713,17 @@ function Messages(props) {
                         {theme == 'Neon' && <img src="https://media0.giphy.com/media/cOzK12kNVHoiOLYX6P/giphy.gif" alt="" className="background" />}
                         {theme == 'City' && <img src="https://i.pinimg.com/originals/91/22/e8/9122e8553143325ab503ff95e208f2f9.gif" alt="" className="background" />}
                         {theme == 'Sky' && <img src="https://i.pinimg.com/originals/3b/8e/b7/3b8eb7b301f7bb6301ec1a8ff8e609c1.gif" alt="" className="background" />}
-                        {/* <img src="https://media0.giphy.com/media/cOzK12kNVHoiOLYX6P/giphy.gif" alt="" className="background" />
-                        <img src="https://media0.giphy.com/media/cOzK12kNVHoiOLYX6P/giphy.gif" alt="" className="background" />
-                        <img src="https://media0.giphy.com/media/cOzK12kNVHoiOLYX6P/giphy.gif" alt="" className="background" /> */}
-
-                        {/* <div className="alert alert-warning mb-0 p-1" style={{fontSize: '0.8rem'}}>Chat is in development! Articles staff will <span className="badge badge-danger">NEVER</span> ask you for your email or personal info via messages!</div>\ */}
-
-                        {/* <div className="d-flex justify-content-center align-self-center"> */}
 
                         <div className={`home-button p-2 ${focusedChat != '' ? 'visible' : 'd-none'}`}>
-                            <button onClick={() => focusChat('')} className="btn d-flex btn-articles-light w-100 align-items-center justify-content-center">
+                            <button onClick={ () => focusChat('') + router.push(ROUTES.MESSAGES) } className="btn d-flex btn-articles-light w-100 align-items-center justify-content-center">
                                 <i className="fas fa-home"></i>
                                 <div>Messages Home</div>
                             </button>
                         </div>
 
-                        {/* </div> */}
-
-                        <div className="contacts-list">{renderMessageContacts()}</div>
+                        <div className="contacts-list">
+                            {renderMessageContacts()}
+                        </div>
 
                         <div className="start-chat">
                             <button onClick={() => setCreateChatOverlay(true)} className="btn btn-articles-light">Start Chat</button>
@@ -782,7 +823,7 @@ function Messages(props) {
                             </div>
                         </div>
 
-                        <div className="content-home">
+                        <div className={`content-home ${focusedChat != '' && 'd-none' }`}>
 
                             <div style={{maxWidth: 1200}} className="container-fluid py-3 py-lg-5">
 
@@ -944,104 +985,108 @@ function Messages(props) {
 
                         <div ref={myScrollRef} onScroll={(e) => listenToScroll(e)} className="content-body">
                         
-                        {focused?.encryption === true ? 
+                            {focused?.encryption === true ? 
 
-                        <div className="chat-encryption-warning card">
+                            <div className="chat-encryption-warning card">
 
-                            <div className="card-header">
-                            Chat Encrypted
-                            </div>
-
-                            <div className="card-body">
-                            <div>The user who started this chat set a password that you will need to decrypt the messages. For best security obtain this password from the user in person.</div>
-        
-                            <div style={{width: '100%'}} className="form-group d-inline-block articles mt-3">
-                                <label for="password">Password</label>
-                                <input className="form-control with-label" name="password" id="password" type="text" value=""/>
-                            </div>
-        
-                            <button className="btn btn-articles-light w-100">Enter</button>
-                            </div>
-
-                        </div>
-
-                        :
-
-                        focused?.messages?.map((message) => (
-
-                            <div className={"chat-message p-3 " + ( message.sender === userReduxState._id ? 'personal' : '' )}>
-
-                                <div className={"message-photo " + ( message.sender === userReduxState._id ? 'd-none' : '' )}>
-                                    <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${message.sender}.jpg`} alt=""/>
+                                <div className="card-header">
+                                Chat Encrypted
                                 </div>
 
-                                <div className="message-details">
+                                <div className="card-body">
+                                <div>The user who started this chat set a password that you will need to decrypt the messages. For best security obtain this password from the user in person.</div>
+            
+                                <div style={{width: '100%'}} className="form-group d-inline-block articles mt-3">
+                                    <label for="password">Password</label>
+                                    <input className="form-control with-label" name="password" id="password" type="text" value=""/>
+                                </div>
+            
+                                <button className="btn btn-articles-light w-100">Enter</button>
+                                </div>
 
-                                <div className={"message " + (message.media === 'photo' ? 'photo' : '')}>
-                                    {
-                                    message.media !== 'photo' ? 
-                                    <span>{message.message}</span>
-                                    :
-                                    <img style={{cursor: 'pointer'}} onClick={() => setState({lightboxFocus: message.url, lightboxOpen: true})} className="img-fluid" src={message.url} alt=""/>
-                                    }
+                            </div>
 
-                                    <div className="message-extras">
-                                        <i onClick={() => deleteMessage(focused?._id, message._id)} className="fas fa-trash-alt mr-0"></i>
+                            :
+
+                            focused?.messages?.map((message) => (
+
+                                <div className={"chat-message p-3 " + ( message.sender === userReduxState._id ? 'personal' : '' )}>
+
+                                    <div className={"message-photo " + ( message.sender === userReduxState._id ? 'd-none' : '' )}>
+                                        <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${message.sender}.jpg`} alt=""/>
+                                    </div>
+
+                                    <div className="message-details">
+
+                                    <div className={"message " + (message.media === 'photo' ? 'photo' : '')}>
+                                        {
+                                        message.media !== 'photo' ? 
+                                        <span>{message.message}</span>
+                                        :
+                                        <img style={{cursor: 'pointer'}} onClick={() => setState({lightboxFocus: message.url, lightboxOpen: true})} className="img-fluid" src={message.url} alt=""/>
+                                        }
+
+                                        <div className="message-extras">
+                                            <i onClick={() => deleteMessage(focused?._id, message._id)} className="fas fa-trash-alt mr-0"></i>
+                                        </div>
+
+                                    </div>
+
+                                    <div className="date">{moment(message.date).format("LLL")}</div>
                                     </div>
 
                                 </div>
 
-                                <div className="date">{moment(message.date).format("LLL")}</div>
-                                </div>
-
-                            </div>
-
-                        ))}
+                            ))}
 
                         </div>
 
                         <div className={"content-send " + (focused?.encryption ? 'd-none' : '')}>
 
-                        <div onClick={() => scrollToBottom()} className={"scroll-lock " + (scrollPosition === 1 ? 'active' : '')}>
-                            <span>Auto Scroll</span>
-                            <span className={(props.user_id === '5e90cc96579a17440c5d7d52' ? '' : 'd-none')}>&nbsp;{scrollPosition}</span>
-                        </div> 
+                            <div onClick={() => scrollToBottom()} className={"scroll-lock " + (scrollPosition === 1 ? 'active' : '')}>
+                                <span>Auto Scroll</span>
+                                <span className={(props.user_id === '5e90cc96579a17440c5d7d52' ? '' : 'd-none')}>&nbsp;{scrollPosition}</span>
+                            </div> 
 
-                        <div className={"thumbnail-container " + (image === '' ? 'd-none' : '')}>
+                            <div className={"thumbnail-container " + (image === '' ? 'd-none' : '')}>
 
-                            <button onClick={() => setState({image: '', imageFile: ''})} className="btn btn-sm btn-danger remove">
-                            <span><i className="far fa-window-close"></i>Remove</span>
-                            </button>
+                                <button onClick={() => setState({image: '', imageFile: ''})} className="btn btn-sm btn-danger remove">
+                                <span><i className="far fa-window-close"></i>Remove</span>
+                                </button>
 
-                            <img id="thumbnail" src={image}/>
+                                <img id="thumbnail" src={image}/>
+
+                            </div>
+
+                            {image === '' ? 
+                            <TextareaAutosize
+                                className="chat-message mr-2 p-2" 
+                                name="chatMessage"
+                                value={chatMessage}
+                                onKeyPress={(e) => { handleTextareaChange(e) }}
+                                // onChange={(e) => handleChange(e)}
+                                onChange={e => setChatMessage(e.target.value)}
+                                placeholder="Type your message">
+                            </TextareaAutosize>
+                            : 
+                            ''}                  
+
+                            <div className="flex-grow-1 d-flex justify-content-start align-items-start">
+                                <input className="d-none" onFocus={() => (props.changeFocus('photo'))} id="file-upload" onChange={onImageUpload} accept="image/x-png,image/gif,image/jpeg" type="file" name="myfile" />
+                                <label for="file-upload" className="btn btn-sm btn-articles-light mb-0"><i className="fas fa-paperclip mr-0 mr-m-1"></i><span className="d-none d-md-inline">Attach</span></label>
+            
+                                <button disabled={chatMessage === '' && image === ''} className="btn btn-sm btn-articles-light" onClick={() => sendMessage()}><i className="far fa-paper-plane mr-0 mr-m-1"></i><span className="d-none d-md-inline">Send</span></button>
+                                
+                                <button onClick={() => sendSocketText()} className={"btn btn-sm btn-articles-light d-none d-md-inline " + (props.user_id === '5e90cc96579a17440c5d7d52' ? '' : 'd-none')}>Txt</button>
+                                <button onClick={() => sendSocketImage()} className={"btn btn-sm btn-articles-light d-none d-md-inline " + (props.user_id === '5e90cc96579a17440c5d7d52' ? '' : 'd-none')}>Img</button>
+                                <button onClick={() => logRooms()} className={"btn btn-sm btn-articles-light d-none d-md-inline " + (props.user_id === '5e90cc96579a17440c5d7d52' ? '' : 'd-none')}>Room</button>
+                            </div>
 
                         </div>
 
-                        {image === '' ? 
-                        <TextareaAutosize
-                            className="chat-message mr-1" 
-                            name="chatMessage"
-                            value={chatMessage}
-                            onKeyPress={(e) => { handleTextareaChange(e) }}
-                            // onChange={(e) => handleChange(e)}
-                            onChange={e => setChatMessage(e.target.value)}
-                            placeholder="Type your message">
-                        </TextareaAutosize>
-                        : 
-                        ''}                  
+                    </div>
 
-                        <div className="align-items-start">
-                            <input className="d-none" onFocus={() => (props.changeFocus('photo'))} id="file-upload" onChange={onImageUpload} accept="image/x-png,image/gif,image/jpeg" type="file" name="myfile" />
-                            <label for="file-upload" className="btn btn-sm btn-articles-light mb-0"><i className="fas fa-paperclip mr-0 mr-m-1"></i><span className="d-none d-md-inline">Attach</span></label>
-        
-                            <button disabled={chatMessage === '' && image === ''} className="btn btn-sm btn-articles-light" onClick={() => sendMessage()}><i className="far fa-paper-plane mr-0 mr-m-1"></i><span className="d-none d-md-inline">Send</span></button>
-                            
-                            <button onClick={() => sendSocketText()} className={"btn btn-sm btn-articles-light d-none d-md-inline " + (props.user_id === '5e90cc96579a17440c5d7d52' ? '' : 'd-none')}>Txt</button>
-                            <button onClick={() => sendSocketImage()} className={"btn btn-sm btn-articles-light d-none d-md-inline " + (props.user_id === '5e90cc96579a17440c5d7d52' ? '' : 'd-none')}>Img</button>
-                            <button onClick={() => logRooms()} className={"btn btn-sm btn-articles-light d-none d-md-inline " + (props.user_id === '5e90cc96579a17440c5d7d52' ? '' : 'd-none')}>Room</button>
-                        </div>
-
-                        </div>
+                    <div className="chat-details">
 
                     </div>
 

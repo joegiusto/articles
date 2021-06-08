@@ -13,6 +13,7 @@ import cartReducer from "./reducers/cartReducer";
 import storiesReducer from "./reducers/storiesReducer";
 import issuesReducer from "./reducers/issuesReducer";
 import mythsReducer from "./reducers/mythsReducer";
+import messagesReducer from "./reducers/messagesReducer";
 
 let store
 
@@ -147,6 +148,7 @@ const persistedReducer = persistReducer(
         stories: storiesReducer,
         issues: issuesReducer,
         myths: mythsReducer,
+        messages: messagesReducer,
         //   submissions: submissionsReducer,
         // site: siteReducer,
         site: siteReducer,
