@@ -28,6 +28,7 @@
         // }
 
         .quick-links {
+            
             .btn.btn-articles-light {
                 background-color: rgba(249, 237, 205, 0.3);
                 border-bottom: 3px solid rgba(255, 183, 183, 0.3);
@@ -348,7 +349,7 @@
         }
     }
 
-    .reports-side-menu {
+    .transparency-side-menu {
         position: sticky;
         top: calc(50px + 2rem);
         margin-bottom: 0rem;
@@ -356,6 +357,29 @@
 
         @include media-breakpoint-up(md) {
             margin-bottom: 2rem;
+        }
+
+        .side-menu-header {
+            border-bottom: 3px solid black;
+            padding: 0.3rem 0rem;
+            justify-content: space-between;
+
+            .left {
+                line-height: 1;
+                flex-shrink: 0;
+                flex-basis: 120px;
+
+                h2 {
+                    line-height: 1;
+                }
+            }
+
+            .right {
+                width: 100%;
+                max-width: 215px;
+                padding-left: 1rem;
+            }
+
         }
 
         .other-tag {
@@ -385,8 +409,16 @@
             }
         }
 
+        .sidebar-chart {
+            margin: 0.75rem 0;
+            height: 200px;
+        }
+
         .quick-links {
+            border-top: 3px solid black;
             padding: 0.5rem;
+            padding-top: 1rem;
+            margin-bottom: 0.5rem;
 
             @include media-breakpoint-down(sm) {
                 display: flex;
@@ -395,10 +427,14 @@
             }
 
             .report-link {
-                margin-top: 1rem;
+                // margin-top: 1rem;
 
                 @include media-breakpoint-down(sm) {
                     width: 100%;
+                }
+
+                &:not(:last-child) {
+                    margin-bottom: 0.75rem;
                 }
 
                 .text {
@@ -486,10 +522,10 @@
         // border-radius: 0;
 
         .progress-bar {
-            padding: 0.5rem;
+            padding: 0.3rem 0.5rem;
             color: black;
-            font-size: 0.9rem;
-            font-weight: bold;
+            font-size: 0.8rem;
+            // font-weight: bold;
         }
     }
 
@@ -614,7 +650,7 @@
         margin-top: 1.25rem;
         position: relative;
         transition-duration: 200ms;
-        padding-bottom: 1rem;
+        // padding-bottom: 1rem;
 
         @include media-breakpoint-up(md) {
             margin-top: 2rem;
@@ -622,7 +658,7 @@
 
         .bg-rev {
             background-color: rgba(75, 186, 110, 0.35);
-            border-right: solid 4px rgba(75, 186, 110, 1);
+            border-right: solid 4px rgb(56, 105, 72);
             // border-left: solid 4px rgba(75, 186, 110, 1);
         }
 
@@ -640,12 +676,14 @@
         .snippet {
             //   background-color: black;
             // color: black;
-            padding: 0.25rem;
+            padding: 0.1rem 0.25rem;
+            padding-left: 0.25rem;
             margin-bottom: 0.25rem;
-            text-align: center;
+            // text-align: center;
             font-weight: bold;
-            font-size: 0.7rem;
+            font-size: 0.85rem;
             border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.7)!important;
             // flex-grow: 1;
 
             i {
@@ -653,20 +691,20 @@
             }
 
             &.positive {
-                background-color: rgba(75, 186, 110, 0.35);
-                border-right: solid 2px rgba(75, 186, 110, 1);
-                border-left: solid 2px rgba(75, 186, 110, 1);
-                border-top: solid 2px rgba(75, 186, 110, 1);
-                border-bottom: solid 2px rgba(75, 186, 110, 1);
-                margin-right: 0.5rem;
+                // background-color: rgba(75, 186, 110, 0.35);
+                // border-right: solid 2px rgba(75, 186, 110, 1);
+                border-left: solid 4px rgb(56, 105, 72);
+                // border-top: solid 2px rgba(75, 186, 110, 1);
+                // border-bottom: solid 2px rgba(75, 186, 110, 1);
+                // margin-right: 0.5rem;
             }
 
             &.negative {
-                background-color: rgba(255, 0, 0, 0.35);
-                border-left: solid 2px rgb(255, 0, 0);
-                border-right: solid 2px rgb(255, 0, 0);
-                border-top: solid 2px rgb(255, 0, 0);
-                border-bottom: solid 2px rgb(255, 0, 0);
+                // background-color: rgba(255, 0, 0, 0.35);
+                border-left: solid 4px rgb(255, 0, 0);
+                // border-right: solid 2px rgb(255, 0, 0);
+                // border-top: solid 2px rgb(255, 0, 0);
+                // border-bottom: solid 2px rgb(255, 0, 0);
             }
         }
 

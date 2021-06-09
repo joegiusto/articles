@@ -1,0 +1,27 @@
+.crypto-page {
+
+    .crypto-cards {
+        
+        .card {
+            width: 24%;
+            flex-basis: 24%;
+
+            .card-body {
+                img {
+                    object-fit: cover;
+                }
+
+                .watchlist-button {
+                    color: #333;
+                    margin-top: 0.5rem;
+                    font-size: 0.9rem;
+                    cursor: pointer;
+
+                    &:hover {
+                        color: black;
+                    }
+                }
+            }
+        }
+    }
+}

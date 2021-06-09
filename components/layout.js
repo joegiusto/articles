@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import SideMenu from './SideMenu/'
 import Footer from './layouts/footer'
+import ROUTES from 'components/constants/routes'
 
 const useCounter = () => {
     const colorModeDark = useSelector((state) => state.site.colorModeDark)
@@ -73,6 +74,40 @@ export default function Layout(
                     }
                 }}
             />
+
+            <div className="nav-bar-centered-links">
+                <div className="links">
+
+                    <span className="badge badge-light">
+
+                    </span>
+
+                    <Link href={ROUTES.TRANSPARENCY}>
+                        <button className="btn btn-articles-light btn-sm">
+                            <i className="fas fa-paste" aria-hidden="true"></i>Transparency
+                        </button>
+                    </Link>
+
+                    <Link href={ROUTES.STORE}>
+                        <button className="btn btn-articles-light btn-sm">
+                            <i className="fas fa-shopping-cart" aria-hidden="true"></i>Clothing
+                        </button>
+                    </Link>
+
+                    <Link href={ROUTES.NEWS}>
+                        <button className="btn btn-articles-light btn-sm">
+                            <i className="fas fa-newspaper" aria-hidden="true"></i>News
+                        </button>
+                    </Link>
+
+                    <Link href={ROUTES.PARTY}>
+                        <button className="btn btn-articles-light btn-sm">
+                            <i className="fas fa-scroll" aria-hidden="true"></i>Politics
+                        </button>
+                    </Link>
+
+                </div>
+            </div>
 
             <div className="content-wrap">
                 {children}

@@ -59,25 +59,6 @@
     // TODO Figure out why this is now lagging, first noticed 6/01/2020. After further inspection a reboot of the browser fixed this but want it documented.
     @import "landing_background";
 
-    .landing-page-centered-links {
-        position: fixed;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        margin: 0.5rem 0;
-        z-index: 200;
-
-        @include media-breakpoint-down(lg) {
-            display: none;
-        }
-
-        .links {
-            button:not(:last-child) {
-                margin-right: 0.5rem;
-            }
-        }
-    }
-
     .welcome-block {
         position: relative;
         display: flex;

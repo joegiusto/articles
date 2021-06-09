@@ -4,9 +4,13 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
+import DropdownButton from 'react-bootstrap/DropdownButton'
+import Dropdown from 'react-bootstrap/Dropdown'
+
 import axios from 'axios'
 
 import NewsLayout from 'components/layouts/news.js';
+import ROUTES from 'components/constants/routes';
 
 var ws;
 
@@ -25,9 +29,10 @@ function CryptoPage() {
     const router = useRouter()
     const { param } = router.query
 
-    const [btcPrice, setBtcPrice] = useState(0)
-    const [ethPrice, setEthPrice] = useState(0)
-    const [xlmPrice, setXlmPrice] = useState(0)
+    const [btcCrypto, setBtc] = useState(0)
+    const [ethCrypto, setEth] = useState(0)
+    const [xlmCrypto, setXlm] = useState(0)
+    const [xmrCrypto, setXmr] = useState(0)
 
     const cryptos = [
         {
@@ -131,9 +136,10 @@ function CryptoPage() {
 		})
 		.then( (response) => {
             console.log(response)
-            setBtcPrice(response.data.btc_price)
-            setEthPrice(response.data.eth_price)
-            setXlmPrice(response.data.xlm_price)
+            setBtc(response.data.btc)
+            setEth(response.data.eth)
+            setXlm(response.data.xlm)
+            // setXmr(response.data.xmr)
 		})
 		.catch( (error) => {
 		    console.log(error);
@@ -217,19 +223,59 @@ function CryptoPage() {
     }
   
     return(
-        <section className="submissions-page">
+        <section className="crypto-page">
             <Head>
                 <title>Crypto - Articles</title>
             </Head>
             <div className="container py-3">
-                <h2>Crypto Page</h2>
-                <p className="mb-5">This is the Crypto Page of the news section.</p>
+                <h2>Crypto</h2>
+                <DropdownButton variant="articles-light" id="dropdown-basic-button" title={ <span><i className="fas fa-filter"></i>Market Cap</span> }>
+                    <Link href={`${ROUTES.NEWS_CRYPTO}/market-cap`}><div className="btn dropdown-item p-2 pl-4">Market Cap</div></Link>
+                    <Link href={`${ROUTES.NEWS_CRYPTO}/watch-list`}><div className="btn dropdown-item p-2 pl-4">Watch List</div></Link>
+                    {/* <Dropdown.Item href={`${ROUTES.NEWS_CRYPTO}/watch-list`}>Watchlist</Dropdown.Item> */}
+                </DropdownButton>
+                {/* <p className="mb-5">This is the Crypto Page of the news section.</p> */}
 
-                <h2 className="">Bitcoin: {btcPrice}</h2>
-                <h2 className="">Ethereum: {ethPrice}</h2>
-                <h2 className="">Stellar: {xlmPrice}</h2>
+                <div className="crypto-cards d-flex justify-content-between mt-4 mb-4">
+                    <div className="card">
+                        <div className="card-header">
+                            <h5 className="mb-0">Bitcoin: { parseFloat(btcCrypto.price).toLocaleString('en-US', {maximumFractionDigits:2}) }</h5>
+                        </div>
+                        <div className="card-body text-center">
+                            <img width="50px" height="50px" src="https://lh3.googleusercontent.com/proxy/s5Io0jkECZ8R6szs1yvf0zeIN8tnBU5VMRytOgSOtGACO6u1J63qzFrgkWIXsihLQa3awbDXREJ46PWof9Xmoq4-sB9180Mc741tohDV31fpVDV0ukD1XGhROv0" alt="" /><a className="btn btn-articles-light" target="_blank" href={btcCrypto.link}>View</a>
+                            <a className="watchlist-button d-block"><i className="fad fa-plus"></i>Add to watch-list</a>
+                        </div>
+                    </div>
+                    <div className="card">
+                        <div className="card-header">
+                            <h5 className="mb-0">Ethereum: { parseFloat(ethCrypto.price).toLocaleString('en-US', {maximumFractionDigits:2}) }</h5>
+                        </div>
+                        <div className="card-body text-center">
+                            <img width="50px" height="50px" src="https://lh3.googleusercontent.com/proxy/s5Io0jkECZ8R6szs1yvf0zeIN8tnBU5VMRytOgSOtGACO6u1J63qzFrgkWIXsihLQa3awbDXREJ46PWof9Xmoq4-sB9180Mc741tohDV31fpVDV0ukD1XGhROv0" alt="" /><a className="btn btn-articles-light" target="_blank" href={ethCrypto.link}>View</a>
+                            <a className="watchlist-button d-block"><i className="fad fa-plus"></i>Add to watch-list</a>
+                        </div>
+                    </div>
+                    <div className="card">
+                        <div className="card-header">
+                            <h5 className="mb-0">Stellar: { parseFloat(xlmCrypto.price).toLocaleString('en-US', {maximumFractionDigits:2}) }</h5>
+                        </div>
+                        <div className="card-body text-center">
+                            <img width="50px" height="50px" src="https://lh3.googleusercontent.com/proxy/s5Io0jkECZ8R6szs1yvf0zeIN8tnBU5VMRytOgSOtGACO6u1J63qzFrgkWIXsihLQa3awbDXREJ46PWof9Xmoq4-sB9180Mc741tohDV31fpVDV0ukD1XGhROv0" alt="" /><a className="btn btn-articles-light" target="_blank" href={xlmCrypto.link}>View</a>
+                            <a className="watchlist-button d-block"><i className="fad fa-plus"></i>Add to watch-list</a>
+                        </div>
+                    </div>
+                    <div className="card">
+                        <div className="card-header">
+                            <h5 className="mb-0">Monero: 0</h5>
+                        </div>
+                        <div className="card-body text-center">
+                            <img width="50px" height="50px" src="https://lh3.googleusercontent.com/proxy/s5Io0jkECZ8R6szs1yvf0zeIN8tnBU5VMRytOgSOtGACO6u1J63qzFrgkWIXsihLQa3awbDXREJ46PWof9Xmoq4-sB9180Mc741tohDV31fpVDV0ukD1XGhROv0" alt="" /><a className="btn btn-articles-light" target="_blank" href={'https://www.coinbase.com/price/monero'}>View</a>
+                            <a className="watchlist-button d-block"><i className="fad fa-plus"></i>Add to watch-list</a>
+                        </div>
+                    </div>
+                </div>
 
-                <div className="row">
+                <div className="row d-none">
 
                     {cryptos.map( crypto => 
                     <div className="col-lg-3">

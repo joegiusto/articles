@@ -133,40 +133,6 @@ export default function Home(props) {
                 {/* <link rel="icon" href="/favicon.ico" /> */}
             </Head>
 
-            <div className="landing-page-centered-links">
-                <div className="links">
-
-                    <span className="badge badge-light">
-
-                    </span>
-
-                    <Link href={ROUTES.TRANSPARENCY}>
-                        <button className="btn btn-articles-light btn-sm">
-                            <i className="fas fa-paste" aria-hidden="true"></i>Transparency
-                        </button>
-                    </Link>
-
-                    <Link href={ROUTES.STORE}>
-                        <button className="btn btn-articles-light btn-sm">
-                            <i className="fas fa-shopping-cart" aria-hidden="true"></i>Clothing
-                        </button>
-                    </Link>
-
-                    <Link href={ROUTES.NEWS}>
-                        <button className="btn btn-articles-light btn-sm">
-                            <i className="fas fa-newspaper" aria-hidden="true"></i>News
-                        </button>
-                    </Link>
-
-                    <Link href={ROUTES.PARTY}>
-                        <button className="btn btn-articles-light btn-sm">
-                            <i className="fas fa-scroll" aria-hidden="true"></i>Politics
-                        </button>
-                    </Link>
-
-                </div>
-            </div>
-
             <main>
 
                 {/* Welcome Block - October 2020 Remodel */}

@@ -48,8 +48,8 @@ const chartConfig = {
     plugins: [ChartDataLabels],
     options: {
         responsive: true,
-        aspectRatio: 1,
-        maintainAspectRatio: true,
+        // aspectRatio: 2,
+        maintainAspectRatio: false,
         legend: {
             // position: 'bottom',
             align: 'top',
@@ -57,10 +57,10 @@ const chartConfig = {
         },
         layout: {
             padding: {
-                left: 100,
-                right: 100,
-                top: 100,
-                bottom: 100
+                // left: 100,
+                // right: 100,
+                // top: 100,
+                // bottom: 100
             }
         },
         tooltips: {
@@ -187,7 +187,7 @@ function TransparencyLayout({ children }) {
 
                     <div className="col-md-4">
 
-                        <div className="reports-side-menu">
+                        <div className="transparency-side-menu">
 
                             <div className="static-wrapper">
 
@@ -200,29 +200,36 @@ function TransparencyLayout({ children }) {
                                 <div id='info' className="info">
 
                                     <div className="normal">
-                                        <div className="px-2 pt-4">
+                                        <div className="px-2 pt-3">
 
-                                            <div className="balance-label">Current Balance:</div>
-                                            <h2 className="">${(revenuesTotal() - expensesTotal()).toFixed(2)}</h2>
-
-                                            <div className="sidebar-chart mb-3 mt-0">
-                                                <canvas ref={chartContainer} />
+                                            <div className="side-menu-header d-flex align-items-center">
+                                                <div className="left">
+                                                    <div className="balance-label">Current Balance:</div>
+                                                    <h2 className="mb-0">${(revenuesTotal() - expensesTotal()).toFixed(2)}</h2>
+                                                </div>
+    
+                                                <div className="right">
+                                                    <div className="snippet positive w-100">
+                                                        <i className="fad fa-chart-line me-0"></i>Revenue: ${revenuesTotal()}
+                                                    </div>
+                                                    <div className="snippet negative w-100">
+                                                        <i className="fad fa-chart-line-down me-0"></i>Expenses: -${expensesTotal()}
+                                                    </div>
+                                                </div>
                                             </div>
 
-                                            <div className="time-container">
-
-                                                <div className="progress">
+                                            <div className="progress mt-1">
 
                                                     <div className="progress-bar bg-rev" role="progressbar"
                                                         style={{
                                                             width: ((Number(revenuesTotal()) / (Number(revenuesTotal()) + Number(expensesTotal()))) * 100).toFixed(0) + "%"
                                                         }}
-                                                    // aria-valuenow="15" 
-                                                    // aria-valuemin="0" 
-                                                    // aria-valuemax="100"
+                                                        // aria-valuenow="15" 
+                                                        // aria-valuemin="0" 
+                                                        // aria-valuemax="100"
                                                     >
                                                         {((Number(revenuesTotal()) / (Number(revenuesTotal()) + Number(expensesTotal()))) * 100).toFixed(0)}%
-                                                </div>
+                                                    </div>
 
                                                     <div
                                                         className="progress-bar bg-danger"
@@ -235,13 +242,47 @@ function TransparencyLayout({ children }) {
                                                         aria-valuemax="100"
                                                     >
                                                         {((Number(expensesTotal()) / (Number(revenuesTotal()) + Number(expensesTotal()))) * 100).toFixed(0)}%
-                                                </div>
+                                                    </div>
+
+                                            </div>
+
+                                            <div className="sidebar-chart">
+                                                <canvas ref={chartContainer} />
+                                            </div>
+
+                                            <div className="time-container d-none">
+
+                                                <div className="progress">
+
+                                                    <div className="progress-bar bg-rev" role="progressbar"
+                                                        style={{
+                                                            width: ((Number(revenuesTotal()) / (Number(revenuesTotal()) + Number(expensesTotal()))) * 100).toFixed(0) + "%"
+                                                        }}
+                                                        // aria-valuenow="15" 
+                                                        // aria-valuemin="0" 
+                                                        // aria-valuemax="100"
+                                                    >
+                                                        {((Number(revenuesTotal()) / (Number(revenuesTotal()) + Number(expensesTotal()))) * 100).toFixed(0)}%
+                                                    </div>
+
+                                                    <div
+                                                        className="progress-bar bg-danger"
+                                                        role="progressbar"
+                                                        style={{
+                                                            width: ((Number(expensesTotal()) / (Number(revenuesTotal()) + Number(expensesTotal()))) * 100).toFixed(0) + "%"
+                                                        }}
+                                                        aria-valuenow="30"
+                                                        aria-valuemin="0"
+                                                        aria-valuemax="100"
+                                                    >
+                                                        {((Number(expensesTotal()) / (Number(revenuesTotal()) + Number(expensesTotal()))) * 100).toFixed(0)}%
+                                                    </div>
 
                                                 </div>
 
                                                 {/* <div className="text-muted">Revenue | Expenses</div> */}
 
-                                                <div className="mt-2">
+                                                <div className="mt-2 d-none">
 
                                                     <div className="snippets">
 

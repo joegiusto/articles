@@ -58,6 +58,7 @@ $grid-breakpoints: (
 
 @import 'components/myths';
 @import 'components/resources';
+@import 'components/crypto';
 
 @import 'components/party';
 
@@ -516,4 +517,23 @@ $shadow-articles: 0 0 0 1px rgba(0, 0, 0, 15%), 0 2px 3px rgba(0, 0, 0, 20%);
 
 .shadow-articles {
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 15%), 0 2px 3px rgba(0, 0, 0, 20%);
+}
+
+.nav-bar-centered-links {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0.5rem 0;
+    z-index: 200;
+
+    @include media-breakpoint-down(lg) {
+        display: none;
+    }
+
+    .links {
+        button:not(:last-child) {
+            margin-right: 0.5rem;
+        }
+    }
 }

@@ -56,11 +56,28 @@ export default async (req, res) => {
         });
     });
 
+    // const xmr = await axios.get('https://api.coinbase.com/v2/prices/XMR-USD/buy', {
+    // })
+    // .then(function (response) {
+    //     console.log(response.data)
+    //     return(response)
+
+    // })
+    // .catch(function (error) {
+    //     console.log(error);
+    //     return res.status(400).send({
+    //         message: 'There was an error in getting the totals'
+    //     });
+    // });
+
     res.json({ 
-        btc_price: btc.data.data.amount,
-        eth_price: eth.data.data.amount,
+        btc: {price: btc.data.data.amount, link: 'https://www.coinbase.com/price/bitcoin'},
+        eth: {price: eth.data.data.amount, link: 'https://www.coinbase.com/price/ethereum'},
+        xlm: {price: xlm.data.data.amount, link: 'https://www.coinbase.com/price/stellar'},
+        // xmr: {price: xmr.data.data.amount, link: 'https://www.coinbase.com/price/monero'},
+        // eth_price: eth.data.data.amount,
         // ada_price: 5000,
-        xlm_price: xlm.data.data.amount,
+        // xlm_price: xlm.data.data.amount,
         // ltc_price: ltc.data.data.amount,
         // xmr_price: 5000
     });
