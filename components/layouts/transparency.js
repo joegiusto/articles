@@ -117,15 +117,16 @@ const chartConfig = {
 function TransparencyLayout({ children }) {
     const router = useRouter()
     const { param } = router.query
+    const [totalsLoading, setTotalsLoading] = useState(true)
     const [totals, setTotals] = useState({
         revenue: {
-            ordersTotal: 0,
-            donationsTotal: 0,
-            adsTotal: 0
+            ordersTotal: 1,
+            donationsTotal: 1,
+            adsTotal: 1
         },
         expenses: {
-            recurringTotal: 0,
-            inventoryTotal: 0
+            recurringTotal: 2,
+            inventoryTotal: 1
         }
     })
     const chartContainer = useRef(null);
@@ -146,27 +147,19 @@ function TransparencyLayout({ children }) {
         axios.get('/api/transparency/reports/totals')
             .then(function (response) {
 
-                console.log(response.data)
+                // console.log(response.data)
 
                 setTotals(response.data)
+                setTotalsLoading(false)
 
-                console.log(
-                    Number(revenuesTotal()) / (Number(revenuesTotal()) + Number(expensesTotal()))
-                )
-
-                // setReportsData( (prevState) => {
-                //     return({
-                //         ...prevState,
-                //         revenue: {
-                //             donations: response.data.donations,
-                //             orders: response.data.orders
-                //         }
-                //     })
-                // } )
+                // console.log(
+                //     Number(revenuesTotal()) / (Number(revenuesTotal()) + Number(expensesTotal()))
+                // )
 
             })
             .catch(function (error) {
                 console.log(error);
+                setTotalsLoading(false)
             });
 
     }, []);
@@ -203,19 +196,33 @@ function TransparencyLayout({ children }) {
                                         <div className="px-2 pt-3">
 
                                             <div className="side-menu-header d-flex align-items-center">
-                                                <div className="left">
-                                                    <div className="balance-label">Current Balance:</div>
-                                                    <h2 className="mb-0">${(revenuesTotal() - expensesTotal()).toFixed(2)}</h2>
-                                                </div>
-    
-                                                <div className="right">
-                                                    <div className="snippet positive w-100">
-                                                        <i className="fad fa-chart-line me-0"></i>Revenue: ${revenuesTotal()}
+
+                                                {totalsLoading ? 
+
+                                                    <div><i className="fas fa-spinner fa-spin"></i>Loading</div>
+
+                                                    :
+
+                                                    <>
+
+                                                    <div className="left">
+                                                        <div className="balance-label">Current Balance:</div>
+                                                        <h2 className="mb-0">${(revenuesTotal() - expensesTotal()).toFixed(2)}</h2>
                                                     </div>
-                                                    <div className="snippet negative w-100">
-                                                        <i className="fad fa-chart-line-down me-0"></i>Expenses: -${expensesTotal()}
+        
+                                                    <div className="right">
+                                                        <div className="snippet positive w-100">
+                                                            <i className="fad fa-chart-line me-0"></i>Revenue: ${revenuesTotal()}
+                                                        </div>
+                                                        <div className="snippet negative w-100">
+                                                            <i className="fad fa-chart-line-down me-0"></i>Expenses: -${expensesTotal()}
+                                                        </div>
                                                     </div>
-                                                </div>
+
+                                                    </>
+
+                                                }
+
                                             </div>
 
                                             <div className="progress mt-1">
@@ -247,7 +254,7 @@ function TransparencyLayout({ children }) {
                                             </div>
 
                                             <div className="sidebar-chart">
-                                                <canvas ref={chartContainer} />
+                                                {/* <canvas ref={chartContainer} /> */}
                                             </div>
 
                                             <div className="time-container d-none">
@@ -357,16 +364,6 @@ function TransparencyLayout({ children }) {
                             </div>
 
                         </div>
-
-                        {/* <div className="bg-primary text-center py-5">
-                        <h2 className="bg-primary text-center mb-5">Transparency Nav</h2>
-                        <div className="links d-flex flex-column">
-                            <Link href={ROUTES.TRANSPARENCY}>Reports</Link>
-                            <Link href={ROUTES.TRANSPARENCY_CHARTS}>Charts</Link>
-                            <Link href={ROUTES.TRANSPARENCY_EMPLOYEES}>Employees</Link>
-                            <Link href={ROUTES.TRANSPARENCY_FLAG}>Flag</Link>
-                        </div>
-                    </div> */}
 
                     </div>
 

@@ -50,7 +50,7 @@ function Updates(props) {
 
             <div className="header">
 
-                <Link href={ROUTES.COMMUNITY}><button className="btn btn-articles-light btn-lg mb-3"><i class="fad fa-hand-point-left"></i>Community Home</button></Link>
+                <Link href={ROUTES.COMMUNITY}><button className="btn btn-articles-light btn-lg mb-3"><i className="fad fa-hand-point-left"></i>Community Home</button></Link>
 
                 <div className="mb-1">
                     <Image

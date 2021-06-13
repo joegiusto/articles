@@ -1,0 +1,38 @@
+.mass-shootings-page {
+
+    .stats {
+        display: flex;
+        justify-content: space-around;
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .total {
+                font-size: 2rem!important;
+            }
+        }
+    }
+
+    .mass-shootings-wrap {
+        
+        .mass-shooting-item {
+            position: relative;
+
+            .date {
+                position: absolute;
+                top: 0;
+                left: 1rem;
+                transform: translateY(-50%);
+            }
+
+            .types {
+                position: absolute;
+                top: 0;
+                right: 1rem;
+                transform: translateY(-50%);
+            }
+        }
+    }
+}

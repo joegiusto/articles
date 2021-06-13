@@ -39,7 +39,7 @@ export default function Page() {
         <div className="container py-3 py-lg-5">
 
             <div className="text-center mb-3 mb-lg-5">
-                <Link href={ROUTES.COMMUNITY}><button className="btn btn-articles-light btn-lg mb-3"><i class="fad fa-hand-point-left"></i>Community Home</button></Link>
+                <Link href={ROUTES.COMMUNITY}><button className="btn btn-articles-light btn-lg mb-3"><i className="fad fa-hand-point-left"></i>Community Home</button></Link>
                 <h1 className="">Forums</h1>
                 <p className="">Help shape the future of Articles.</p>
             </div>

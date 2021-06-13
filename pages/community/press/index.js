@@ -20,7 +20,7 @@ export default function PressPage() {
             <div className="container py-3 py-lg-5">
 
                 <div className="text-center mb-3 mb-lg-5">
-                    <Link href={ROUTES.COMMUNITY}><button className="btn btn-articles-light btn-lg mb-3"><i class="fad fa-hand-point-left"></i>Community Home</button></Link>
+                    <Link href={ROUTES.COMMUNITY}><button className="btn btn-articles-light btn-lg mb-3"><i className="fad fa-hand-point-left"></i>Community Home</button></Link>
                     <h1 className="">Press and Business</h1>
                     <p className="">To reach out with questions or any other inquires contact us by the following methods.</p>
                 </div>

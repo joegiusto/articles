@@ -38,14 +38,35 @@ class NewsCard extends Component {
         }
     }
 
+    renderRouteCaps(type) {
+        switch(type) {
+        case 'Stories':
+            return ROUTES.STORIES
+            // break;
+        case 'Issues':
+            return ROUTES.ISSUES
+            // break;
+        case 'Myths':
+            return ROUTES.MYTHS
+            // break;
+        default:
+            ''
+        }
+    }
+
     render() {
 
         if (this.props.viewMoreCard) {
             return(
-                <div className="content viewMore">
-                    <button className="btn btn-articles-light btn-lg mb-2">All {this.props.type}</button>
-                    <div className="total">{this.props.newsDocumentCount[this.props.type.toLowerCase()]} Total {this.props.type}</div>
-                </div>
+                <Link href={ this.renderRouteCaps(this.props.type) } >
+                    <a>
+                        <div className="content viewMore">
+                            {/* <div>{this.props.type} - { this.renderRouteCaps(this.props.type) }</div> */}
+                            <button className="btn btn-articles-light btn-lg mb-2">All {this.props.type}</button>
+                            <div className="total">{this.props.newsDocumentCount[this.props.type.toLowerCase()]} Total {this.props.type}</div>
+                        </div>
+                    </a>
+                </Link>
             )
         }
 

@@ -3,6 +3,7 @@ import React, { Component, useState, useEffect } from 'react';
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
@@ -14,9 +15,9 @@ import ROUTES from 'components/constants/routes';
 
 var ws;
 
-if (typeof window !== 'undefined') {
-    ws = new WebSocket("wss://ws-feed.pro.coinbase.com")
-}
+// if (typeof window !== 'undefined') {
+//     ws = new WebSocket("wss://ws-feed.pro.coinbase.com")
+// }
 
 // const subscribeMsg = {
 //     "event": "bts:subscribe",
@@ -242,7 +243,11 @@ function CryptoPage() {
                             <h5 className="mb-0">Bitcoin: { parseFloat(btcCrypto.price).toLocaleString('en-US', {maximumFractionDigits:2}) }</h5>
                         </div>
                         <div className="card-body text-center">
-                            <img width="50px" height="50px" src="https://lh3.googleusercontent.com/proxy/s5Io0jkECZ8R6szs1yvf0zeIN8tnBU5VMRytOgSOtGACO6u1J63qzFrgkWIXsihLQa3awbDXREJ46PWof9Xmoq4-sB9180Mc741tohDV31fpVDV0ukD1XGhROv0" alt="" /><a className="btn btn-articles-light" target="_blank" href={btcCrypto.link}>View</a>
+                            <div>
+                                
+                            </div>
+                            {/* <img width="50px" height="50px" src="https://lh3.googleusercontent.com/proxy/s5Io0jkECZ8R6szs1yvf0zeIN8tnBU5VMRytOgSOtGACO6u1J63qzFrgkWIXsihLQa3awbDXREJ46PWof9Xmoq4-sB9180Mc741tohDV31fpVDV0ukD1XGhROv0" alt="" /> */}
+                            <a className="btn btn-articles-light" target="_blank" href={btcCrypto.link}>View</a>
                             <a className="watchlist-button d-block"><i className="fad fa-plus"></i>Add to watch-list</a>
                         </div>
                     </div>

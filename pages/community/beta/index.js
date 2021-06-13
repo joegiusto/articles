@@ -32,7 +32,7 @@ function Beta(props) {
             <div className="container py-3 py-lg-5">
 
                 <div className="text-center mb-3 mb-lg-5">
-                    <Link href={ROUTES.COMMUNITY}><button className="btn btn-articles-light btn-lg mb-3"><i class="fad fa-hand-point-left"></i>Community Home</button></Link>
+                    <Link href={ROUTES.COMMUNITY}><button className="btn btn-articles-light btn-lg mb-3"><i className="fad fa-hand-point-left"></i>Community Home</button></Link>
                     <h1 className="">Beta Testing</h1>
                     <p className="">To help us test upcoming features opt into some of the below features. These features may break parts of the site and cause pages to sop working. During the testing we ask you provide us with a summary of your thoughts and issues you had when using the feature.</p>
                 </div>

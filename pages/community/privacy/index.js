@@ -26,7 +26,7 @@ class PrivacyPage extends Component {
             <div className="container py-3 py-lg-5">
 
                 <div className="text-center mb-3 mb-lg-3">
-                    <Link href={ROUTES.COMMUNITY}><button className="btn btn-articles-light btn-lg mb-3"><i class="fad fa-hand-point-left"></i>Community Home</button></Link>
+                    <Link href={ROUTES.COMMUNITY}><button className="btn btn-articles-light btn-lg mb-3"><i className="fad fa-hand-point-left"></i>Community Home</button></Link>
                     <h1 className="">Privacy</h1>
                     <p className="">The information that you give to a website belongs to you! Here is how that data is processed and used.</p>
                     <i style={{color: 'black'}} className="fas fa-user-lock fa-5x mt-3 mb-0"></i>
