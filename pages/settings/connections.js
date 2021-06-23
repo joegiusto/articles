@@ -23,7 +23,7 @@ function SettingsAccountPage() {
 
                 {/* Subscription */}
 
-                <div className={"card settings-card mt-3"}>
+                <div className={"card settings-card"}>
 
                     <div className="card-header">
                         <h5>Connections</h5>

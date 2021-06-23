@@ -24,7 +24,7 @@ function SettingsAccountPage() {
 
             <div className="settings-account mb-3">
 
-                <div className="card settings-card w-100 mt-3">
+                <div className="card settings-card w-100">
 
                     <div className="card-header">
                         <h5>Newsletter Settings</h5>

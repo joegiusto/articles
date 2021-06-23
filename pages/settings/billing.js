@@ -1,9 +1,16 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 
 import Head from 'next/head'
 import Link from 'next/link'
-
 import { useRouter } from 'next/router'
+
+import { useSelector } from 'react-redux'
+
+import axios from 'axios'
+import moment from 'moment'
+
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 import SettingsLayout from 'components/layouts/settings.js';
 import ROUTES from 'components/constants/routes';
@@ -14,6 +21,8 @@ export default function SettingsAccountPage() {
     const router = useRouter()
     const { param } = router.query
 
+    const userReduxState = useSelector((state) => state.auth.user_details)
+
     const [userDonations, setUserDonations] = useState([])
     const [userDonationsLoading, setUserDonationsLoading] = useState(true)
 
@@ -21,10 +30,110 @@ export default function SettingsAccountPage() {
     const [ordersLoading, setOrdersLoading] = useState([])
 
     const [paymentMethods, setPaymentMethods] = useState([])
-    const [userPaymentMethodsLoading, setUserPaymentMethodsLoading] = useState(true)
+    const [paymentMethodsLoading, setPaymentMethodsLoading] = useState(true)
 
     console.log(router.pathname)
     console.log(param);
+
+    useEffect(() => {
+        getPaymentMethods()
+        getDonationHistory()
+        getOrderHistory()
+    }, []);
+
+    function getPaymentMethods() {
+        axios.post('/api/user/paymentMethods', {
+
+        })
+        .then(function (response) {
+            // console.log(response)
+            setPaymentMethods(response.data.data);
+            setPaymentMethodsLoading(false);
+            // console.log(userPaymentMethods)
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+
+    function getDonationHistory() {
+        axios.post('/api/user/donations', {
+
+        })
+        .then(function (response) {
+            // console.log(response)
+            setUserDonations(response.data);
+            setUserDonationsLoading(false);
+            // console.log(userPaymentMethods)
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+
+    function getOrderHistory() {
+        axios.post('/api/user/orders', {
+
+        })
+        .then(function (response) {
+            // console.log(response)
+            setOrders(response.data);
+            setOrdersLoading(false);
+            // console.log(userPaymentMethods)
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+
+    function DeletePaymentMethod(props) {
+        const [show, setShow] = useState(false);
+      
+        const handleClose = () => setShow(false);
+        const handleShow = () => setShow(true);
+      
+        console.log("Test");
+      
+        return (
+          <>
+      
+            <Button variant="danger btn-sm" onClick={handleShow}>
+              Delete
+            </Button>
+      
+            <Modal className="articles-modal" show={show} onHide={handleClose} centered backdropClassName={'articles-modal-backdrop'}>
+      
+              <Modal.Header closeButton>
+                <Modal.Title>Delete Payment Method?</Modal.Title>
+              </Modal.Header>
+      
+              <Modal.Body>
+                <div>{`${props.card.card.brand} - ${props.card.card.last4} - ${props.card.card.exp_month}/${props.card.card.exp_year}`}</div>
+                <div style={{fontSize: '0.8rem'}} className="text-muted">{props.card.id}</div>
+      
+                <div className="mt-3 content-info">
+                  <div className="content-info-label">Attention</div>
+                    If this payment method is attached to an active membership link a new card to your membership to avoid cancellation.
+                </div>
+      
+              </Modal.Body>
+      
+              <Modal.Footer className="">
+      
+                {/* <Button variant="link" onClick={handleClose}>
+                  Close
+                </Button> */}
+      
+                <Button variant="danger btn-sm" onClick={handleClose}>
+                  Confirm Delete
+                </Button>
+      
+              </Modal.Footer>
+      
+            </Modal>
+          </>
+        );
+      }
 
     return (
         <section className="settings-billing-page">
@@ -37,7 +146,7 @@ export default function SettingsAccountPage() {
 
                 {/* Billing */}
 
-                <div className={"card settings-card mt-3"}>
+                <div className={"card settings-card"}>
 
                     <div className="card-header">
                         <h5>Payment Methods</h5>
@@ -60,7 +169,7 @@ export default function SettingsAccountPage() {
 
                                 <tbody>
                                     {
-                                        userPaymentMethodsLoading ?
+                                        paymentMethodsLoading ?
 
                                             <tr>
                                                 <td colSpan="4" className="text-center w-100 p-3">
@@ -69,7 +178,7 @@ export default function SettingsAccountPage() {
                                             </tr>
 
                                             :
-                                            userPaymentMethods?.map(card => {
+                                            paymentMethods?.map(card => {
 
                                                 function renderedBrandImage(card_brand) {
 
@@ -86,7 +195,7 @@ export default function SettingsAccountPage() {
                                                 }
 
                                                 return (
-                                                    <tr className="donation">
+                                                    <tr key={card.id} className="donation">
 
                                                         <th scope="row" className="" >{renderedBrandImage(card.card.brand)}</th>
 
@@ -96,7 +205,7 @@ export default function SettingsAccountPage() {
 
                                                         <td className="">
                                                             {
-                                                                this.state.defaultUserPaymentMethod === card.id ?
+                                                                userReduxState.defaultUserPaymentMethod === card.id ?
                                                                     // <span className="badge badge-primary">Primary</span>
                                                                     <button className="btn btn-sm btn-articles-light alt" disabled>Primary</button>
                                                                     :
@@ -168,10 +277,10 @@ export default function SettingsAccountPage() {
 
                                             :
 
-                                            userDonations.length > 1 ?
+                                            userDonations.length > 0 ?
 
                                                 userDonations.map(donation => (
-                                                    <tr className="donation">
+                                                    <tr key={donation._id} className="donation">
                                                         <th scope="row" className="donation-id">{donation._id}</th>
                                                         <td className="date">{moment(donation.date).format('LLL')}</td>
                                                         <td className="type">Donation</td>
@@ -211,43 +320,45 @@ export default function SettingsAccountPage() {
 
                     <div className="card-body">
 
-                        <div className="info billing-orders w-100 table-responsive">
-                            <table className="table table-hover mb-0">
-                                <thead className="">
-                                    <tr>
-                                        <th scope="col">Order #</th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">For</th>
-                                        <th scope="col">Amount</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-
-                                    <tr>
-                                        {ordersLoading && 
-                                            <td colSpan="4" className="text-center w-100 p-3">
-                                                <h4 className="mb-0"><i className="fas fa-spinner fa-spin"></i>Loading orders...</h4>
-                                            </td>        
+                        <div className="info-snippet p-0">
+                            <div className="info billing-orders w-100 table-responsive">
+                                <table className="table table-hover mb-0">
+                                    <thead className="">
+                                        <tr>
+                                            <th scope="col">Order #</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Amount</th>
+                                            <th scope="col">Status</th>
+                                        </tr>
+                                    </thead>
+    
+                                    <tbody>
+    
+                                        <tr>
+                                            {ordersLoading && 
+                                                <td colSpan="4" className="text-center w-100 p-3">
+                                                    <h4 className="mb-0"><i className="fas fa-spinner fa-spin"></i>Loading orders...</h4>
+                                                </td>        
+                                            }
+                                        </tr>
+    
+                                        { (orders.length > 0 && ordersLoading == false) &&
+                                            orders?.map(order =>
+                                                <tr className="order" onClick={() => this.redirectToOrder(order._id)}>
+                                                    <th scope="row" className="order-id">{order._id}</th>
+                                                    <td className="date">{moment(order.date).format('LLL')}</td>
+                                                    <td className="amount">${(order.payment.total / 100).toFixed(2)}</td>
+                                                    <td className="type">{order.status}</td>
+                                                </tr>
+                                            )
                                         }
-                                    </tr>
-
-                                    { (orders.length > 0 && ordersLoading == false) &&
-                                        orders?.map(order =>
-                                            <tr className="order" onClick={() => this.redirectToOrder(order._id)}>
-                                                <th scope="row" className="order-id">{order._id}</th>
-                                                <td className="date">{moment(order.date).format('LLL')}</td>
-                                                <td className="type">{order.for}</td>
-                                                <td className="amount">${(order.payment.total / 100).toFixed(2)}</td>
-                                            </tr>
-                                        )
-                                    }
-                                </tbody>
-
-                                {/* {this.state.previousUserOrdersLoading ? null : this.state.previousUserOrders.length < 1 ? <div className="pl-3 pt-3">No donations to display</div> : ''} */}
-
-                            </table>
-
+                                    </tbody>
+    
+                                    {/* {this.state.previousUserOrdersLoading ? null : this.state.previousUserOrders.length < 1 ? <div className="pl-3 pt-3">No donations to display</div> : ''} */}
+    
+                                </table>
+    
+                            </div>
                         </div>
 
                     </div>

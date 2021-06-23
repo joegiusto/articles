@@ -483,35 +483,35 @@ function ManageAccountAddressModal({ userReduxState }) {
                         <div className="col-lg-12">
                             <div className="form-group articles">
                                 <label htmlFor="first_name">Address Line One</label>
-                                <input className="form-control with-label" name="first_name" id="address" type="text" value={userReduxState.address.lineOne} />
+                                <input className="form-control with-label" name="first_name" id="address" type="text" value={userReduxState?.address?.lineOne} />
                             </div>
                         </div>
 
                         <div className="col-lg-12">
                             <div className="form-group articles">
                                 <label htmlFor="last_name">Address Line Two</label>
-                                <input className="form-control with-label" name="last_name" id="address" type="text" value={userReduxState.address.lineTwo} />
+                                <input className="form-control with-label" name="last_name" id="address" type="text" value={userReduxState?.address?.lineTwo} />
                             </div>
                         </div>
 
                         <div className="col-lg-5 pr-lg-1">
                             <div className="form-group articles">
                                 <label htmlFor="last_name">City / Town</label>
-                                <input className="form-control with-label" name="last_name" id="address" type="text" value={userReduxState.address.city} />
+                                <input className="form-control with-label" name="last_name" id="address" type="text" value={userReduxState?.address?.city} />
                             </div>
                         </div>
 
                         <div className="col-lg-3 px-lg-1">
                             <div className="form-group articles">
                                 <label htmlFor="last_name">State</label>
-                                <input className="form-control with-label" name="last_name" id="address" type="text" value={userReduxState.address.state} />
+                                <input className="form-control with-label" name="last_name" id="address" type="text" value={userReduxState?.address?.state} />
                             </div>
                         </div>
 
                         <div className="col-lg-4 pl-lg-1">
                             <div className="form-group articles">
                                 <label htmlFor="last_name">Zip</label>
-                                <input className="form-control with-label" name="last_name" id="address" type="text" value={userReduxState.address.zip} />
+                                <input className="form-control with-label" name="last_name" id="address" type="text" value={userReduxState?.address?.zip} />
                             </div>
                         </div>
 
