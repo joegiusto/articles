@@ -24,30 +24,27 @@ const StepOne = (props) => (
                 <ProfilePhoto changeFocus={props.changeFocus} user_id={props.user_id}/>
 
                 <div className="grow">
-                <div className="form-row">
+                    <div className="form-row">
 
-                    <div className="col-12 col-md-auto w-100 mb-3">
-                        {/* <Email {...props}></Email> */}
-                    </div>
+                        <div className="col-md-12 mb-3">
+                            <label htmlFor="validationTooltip01">First Name</label>
+                            <input onFocus={() => (props.changeFocus('first_name'))} type="text" className="form-control" id="validationTooltip01" onChange={(e) => props.handleChange(e)} name="first_name" value={props.first_name} required/>
+                            <div className="valid-tooltip">
+                                Looks good!
+                            </div>
+                        </div>
 
-                    <div className="col-md-6 mb-3">
-                    <label htmlFor="validationTooltip01">First Name</label>
-                    <input onFocus={() => (props.changeFocus('first_name'))} type="text" className="form-control" id="validationTooltip01" onChange={(e) => props.handleChange(e)} name="first_name" value={props.first_name} required/>
-                    <div className="valid-tooltip">
-                        Looks good!
-                    </div>
-                    </div>
+                        <div className="col-md-12 mb-3">
+                            <label htmlFor="validationTooltip02">Last Name</label>
+                            <input onFocus={() => (props.changeFocus('last_name'))} type="text" className="form-control" id="validationTooltip02" onChange={(e) => props.handleChange(e)} name="last_name" value={props.last_name} placeholder={""}/>
+                            <div className="valid-tooltip">
+                                Looks good!
+                            </div>
+                        </div>
 
-                    <div className="col-md-6 mb-3">
-                    <label htmlFor="validationTooltip02">Last Name</label>
-                    <input onFocus={() => (props.changeFocus('last_name'))} type="text" className="form-control" id="validationTooltip02" onChange={(e) => props.handleChange(e)} name="last_name" value={props.last_name} placeholder={""}/>
-                    <div className="valid-tooltip">
-                        Looks good!
                     </div>
-                    </div>
-
                 </div>
-                </div>
+
             </div>
 
             {/* <StepOneProfilePhoto changeFocus={props.changeFocus} user_id={props.user_id}/> */}
@@ -73,6 +70,59 @@ const StepOne = (props) => (
                 Looks good!
                 </div>
             </div> */}
+
+        </div>
+
+        <div className="form-row justify-content-center">
+
+            <div className="col-lg-6">
+
+                <div className="form-row">
+                    <div className="col-lg-12">
+                        <div className="form-group articles">
+                            <label htmlFor="first_name">Address Line One</label>
+                            <input className="form-control with-label" name="first_name" id="address" type="text" value={props.address?.lineOne} />
+                        </div>
+                    </div>
+        
+                    <div className="col-lg-12">
+                        <div className="form-group articles">
+                            <label htmlFor="last_name">Address Line Two</label>
+                            <input className="form-control with-label" name="last_name" id="address" type="text" value={props.address?.lineTwo} />
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div className="col-lg-6">
+
+                <div className="form-row">
+                    
+                    <div className="col-lg-12">
+                        <div className="form-group articles">
+                            <label htmlFor="last_name">City / Town</label>
+                            <input className="form-control with-label" name="last_name" id="address" type="text" value={props.address?.city} />
+                        </div>
+                    </div>
+        
+                    <div className="col-lg-6">
+                        <div className="form-group articles">
+                            <label htmlFor="last_name">State</label>
+                            <input className="form-control with-label" name="last_name" id="address" type="text" value={props.address?.state} />
+                        </div>
+                    </div>
+        
+                    <div className="col-lg-6">
+                        <div className="form-group articles">
+                            <label htmlFor="last_name">Zip</label>
+                            <input className="form-control with-label" name="last_name" id="address" type="text" value={props.address?.zip} />
+                        </div>
+                    </div>
+                    
+                </div>
+
+            </div>
 
         </div>
 

@@ -657,7 +657,7 @@ function Messages(props) {
                     <div className="card-body">
 
                     <div className="form-group articles">
-                        <label for="new-chat-user-id">User's ID or Email Address</label>
+                        <label htmlFor="new-chat-user-id">User's ID or Email Address</label>
                         <input 
                         className="form-control with-label" 
                         name="startChatUser" 
@@ -670,7 +670,7 @@ function Messages(props) {
 
                     <div className="form-group articles">
 
-                        <label for="startChatMessage">Message</label>
+                        <label htmlFor="startChatMessage">Message</label>
 
                         <TextareaAutosize
                             className="form-control with-label"
@@ -997,7 +997,7 @@ function Messages(props) {
                                 <div>The user who started this chat set a password that you will need to decrypt the messages. For best security obtain this password from the user in person.</div>
             
                                 <div style={{width: '100%'}} className="form-group d-inline-block articles mt-3">
-                                    <label for="password">Password</label>
+                                    <label htmlFor="password">Password</label>
                                     <input className="form-control with-label" name="password" id="password" type="text" value=""/>
                                 </div>
             
@@ -1073,7 +1073,7 @@ function Messages(props) {
 
                             <div className="flex-grow-1 d-flex justify-content-start align-items-start">
                                 <input className="d-none" onFocus={() => (props.changeFocus('photo'))} id="file-upload" onChange={onImageUpload} accept="image/x-png,image/gif,image/jpeg" type="file" name="myfile" />
-                                <label for="file-upload" className="btn btn-sm btn-articles-light mb-0"><i className="fas fa-paperclip mr-0 mr-m-1"></i><span className="d-none d-md-inline">Attach</span></label>
+                                <label htmlFor="file-upload" className="btn btn-sm btn-articles-light mb-0"><i className="fas fa-paperclip mr-0 mr-m-1"></i><span className="d-none d-md-inline">Attach</span></label>
             
                                 <button disabled={chatMessage === '' && image === ''} className="btn btn-sm btn-articles-light" onClick={() => sendMessage()}><i className="far fa-paper-plane mr-0 mr-m-1"></i><span className="d-none d-md-inline">Send</span></button>
                                 

@@ -444,7 +444,7 @@ function SetBannerModal(props) {
                 <Modal.Body>
                     You better have something important to say! This will activate a site wide banner that will show up immediately.
                     <div className="form-group articles mt-3">
-                    <label for="bannerText">Banner Text</label>
+                    <label htmlFor="bannerText">Banner Text</label>
                     <input className="form-control with-label" onChange={e => setValue(e.target.value)} name="bannerText" id="bannerText" type="text" value={value}/>
                     </div>
                 </Modal.Body>

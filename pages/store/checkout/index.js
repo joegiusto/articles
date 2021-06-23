@@ -683,7 +683,7 @@ const CheckoutForm = (props) => {
                         : 
                         <div className="remember-card form-group form-check">
                         <input type="checkbox" className="form-check-input" id="exampleCheck1" onClick={() => setSaveCard(!saveCard)} checked={saveCard}/>
-                        <label className="form-check-label noselect" for="exampleCheck1">Remember Card?</label>
+                        <label className="form-check-label noselect" htmlFor="exampleCheck1">Remember Card?</label>
                         {isSavedPayment ? 
                         <div className="cover">
                             <span>Using stored payment</span>

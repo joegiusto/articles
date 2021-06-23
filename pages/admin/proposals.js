@@ -102,22 +102,22 @@ class Proposal extends Component {
           <button onClick={() => this.setState({newProposal: {...this.state.newProposal, type: 'fundamental'}})} className={"btn btn-articles-light " + (this.state.newProposal.type === 'fundamental' ? 'alt' : '')}>Fundamental</button>
   
             <div className="form-group mt-3">
-              <label for="address">Title</label>
+              <label htmlFor="address">Title</label>
               <input className="form-control with-label" onChange={ (e) => { this.handleNewProposalChange(e) } } name="title" id="title" type="text" value={this.state.newProposal.title}/>
             </div>
   
             <div className="form-group mt-3">
-              <label for="address">URL</label>
+              <label htmlFor="address">URL</label>
               <input className="form-control with-label" onChange={ (e) => { this.handleNewProposalChange(e) } } name="url" id="url" type="text" value={this.state.newProposal.url}/>
             </div>
   
             <div className="form-group">
-              <label for="address">Description</label>
+              <label htmlFor="address">Description</label>
               <input className="form-control with-label" onChange={ (e) => { this.handleNewProposalChange(e) } } name="description" id="description" type="text" value={this.state.newProposal.description}/>
             </div>
   
             <div className="form-group">
-              <label for="address">Content</label>
+              <label htmlFor="address">Content</label>
               {/* <input className="form-control with-label" onChange={ (e) => { this.handleNewProposalChange(e) } } name="content" id="content" type="text" value={this.state.newProposal.content}/> */}
               <TextareaAutosize className="form-control with-label" name="content" id="content" type="text" value={this.state.newProposal.content} onChange={(e) => {this.handleNewProposalChange(e)}} cols="30" rows="3"/>
             </div>
@@ -293,22 +293,22 @@ class Proposals extends Component {
                             </div>
             
                             <div className="form-group mt-3">
-                                <label for="address">Title</label>
+                                <label htmlFor="address">Title</label>
                                 <input className="form-control with-label" onChange={ (e) => { this.handleNewProposalChange(e) } } name="title" id="title" type="text" value={this.state.title}/>
                             </div>
             
                             <div className="form-group">
-                                <label for="address">URL</label>
+                                <label htmlFor="address">URL</label>
                                 <input className="form-control with-label" onChange={(e) => {this.handleNewProposalChange(e)}} name="url" id="url" type="text" value={this.state.url}/>
                             </div>
             
                             <div className="form-group">
-                                <label for="address">Description</label>
+                                <label htmlFor="address">Description</label>
                                 <input className="form-control with-label" onChange={(e) => {this.handleNewProposalChange(e)}} name="description" id="description" type="text" value={this.state.description}/>
                             </div>
             
                             <div className="form-group">
-                                <label for="address">Content</label>
+                                <label htmlFor="address">Content</label>
                                 <TextareaAutosize className="form-control with-label" name="content" id="content" type="text" value={this.state.content} onChange={(e) => {this.handleNewProposalChange(e)}} cols="30" rows="3"/>
                                 {/* <input   name="content" id="content" type="text" value={this.state.content}/> */}
                             </div>

@@ -248,7 +248,7 @@ function AdminNews() {
 
                     {subFilter == 'Title' && 
                         <div className="form-group articles flex-shrink-0">
-                            <label for="address">Search News</label>
+                            <label htmlFor="address">Search News</label>
                             <input 
                                 className="form-control with-label py-0" 
                                 onChange={ e => setSearchFilter(e.target.value) }
@@ -264,7 +264,7 @@ function AdminNews() {
                     {subFilter == 'Tags' && 
                         <>
                             {/* <div className="form-group articles flex-shrink-0">
-                                <label for="address">Search Tags</label>
+                                <label htmlFor="address">Search Tags</label>
                                 <input 
                                     className="form-control with-label" 
                                     // onChange={ e => setSearchFilter(e.target) }
@@ -690,7 +690,7 @@ class NewsAdmin extends Component {
                                             {/* <div className="assist-header">Latest Searched Terms:</div> */}
 
                                             <div className="form-group articles">
-                                                <label for="searchText">Search:</label>
+                                                <label htmlFor="searchText">Search:</label>
                                                 <input
                                                     type="text"
                                                     className="form-control with-label"

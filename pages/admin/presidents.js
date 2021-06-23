@@ -122,17 +122,17 @@ function Presidents(props) {
         
                 <div className="p-3">
                 <div className="form-group articles">
-                    <label for="address">First Name</label>
+                    <label htmlFor="address">First Name</label>
                     <input className="form-control with-label" onChange={e => setFirstName(e.target.value)} name="first_name" id="first_name" type="text" value={first_name}/>
                 </div>
         
                 <div className="form-group articles">
-                    <label for="address">Last Name</label>
+                    <label htmlFor="address">Last Name</label>
                     <input className="form-control with-label" onChange={e => setLastName(e.target.value)} name="last_name" id="last_name" type="text" value={last_name}/>
                 </div>
         
                 <div className="form-group articles">
-                    <label for="address">Photo</label>
+                    <label htmlFor="address">Photo</label>
                     <input className="form-control with-label" onChange={e => setPhoto(e.target.value)} name="photo" id="photo" type="text" value={photo}/>
                 </div>
     
@@ -160,21 +160,21 @@ function Presidents(props) {
     
                         <div className="col-md-6">
                         <div className="form-group articles">
-                            <label for="start_date">Start Date</label>
+                            <label htmlFor="start_date">Start Date</label>
                             <input className="form-control with-label" name="start_date" id="start_date" type="text"/>
                         </div>
                         </div>
     
                         <div className="col-md-6">
                         <div className="form-group articles">
-                            <label for="end_date">End Date</label>
+                            <label htmlFor="end_date">End Date</label>
                             <input className="form-control with-label" name="end_date" id="end_date" type="text"/>
                         </div>
                         </div>
     
                         <div className="col-md-6">
                         <div className="form-group articles">
-                            <label for="party">Party</label>
+                            <label htmlFor="party">Party</label>
                             <input className="form-control with-label" name="party" id="party" type="text"/>
                         </div>
                         </div>

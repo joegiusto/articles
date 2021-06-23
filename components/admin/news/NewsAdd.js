@@ -463,7 +463,7 @@ class Add extends Component {
           
           <div className="col-12 col-md-6">
             <div className="form-group">
-              <label for="newsType">News Type:</label>
+              <label htmlFor="newsType">News Type:</label>
               <select className="form-control" name="news_type" disabled={this.state.editLoading ? 'disabled' : ''} id="news_type" value={this.state.news_type} onChange={this.handleChange}>
                 <option value={''}>Choose One</option>
                 <option value={'story'}>Story</option>
@@ -475,7 +475,7 @@ class Add extends Component {
 
           <div className="col-12 col-md-6">
             <div className="form-group">
-              <label for="news_title">Title:</label>
+              <label htmlFor="news_title">Title:</label>
               <input 
                 type="text" 
                 className="form-control" 
@@ -493,7 +493,7 @@ class Add extends Component {
 
           <div className="col-12 col-md-6">
             <div className="form-group">
-              <label for="news_title">Hero URL:</label>
+              <label htmlFor="news_title">Hero URL:</label>
               <input 
                 type="text" 
                 className="form-control" 
@@ -510,7 +510,7 @@ class Add extends Component {
 
           <div className="col-12 col-md-6">
             <div className="form-group">
-              <label for="news_title">Fancy URL:</label>
+              <label htmlFor="news_title">Fancy URL:</label>
               <input 
                 type="text" 
                 className="form-control" 
@@ -529,14 +529,14 @@ class Add extends Component {
 
             <div className="form-group tags-group">
 
-                <label for="news_title">Tags:</label>
+                <label htmlFor="news_title">Tags:</label>
 
                 <div className="preview form-control">
 
                   <div className="tags">
                     {this.state.news_tags.length > 0 ?
                     this.state.news_tags.map((tag) => (
-                      <div onClick={() => this.removeTag(tag)} className="badge badge-dark d-inline-block mr-1">{tag.tag_name}</div>
+                      <div key={tag.tag_name} onClick={() => this.removeTag(tag)} className="badge badge-dark d-inline-block mr-1">{tag.tag_name}</div>
                     ))
                     :
                     <div className="badge badge-danger d-inline-block">No Tags</div>
@@ -588,7 +588,7 @@ class Add extends Component {
 
             <div className="form-group proposals-group">
 
-                <label for="news_title">Proposals:</label>
+                <label htmlFor="news_title">Proposals:</label>
 
                 <div className="preview form-control">
 
@@ -645,7 +645,7 @@ class Add extends Component {
 
           <div className="col-12 col-md-6">
             <div className="form-group">
-              <label for="news_date">News Date:</label>
+              <label htmlFor="news_date">News Date:</label>
               {/* <DayPickerInput 
                 style={{display: 'block'}}
                 onDayChange={this.handleDateChange}
@@ -663,7 +663,7 @@ class Add extends Component {
 
           <div className="col-12 col-md-6">
             <div className="form-group">
-              <label for="news_date">Last Update:</label>
+              <label htmlFor="news_date">Last Update:</label>
               {/* <DayPickerInput 
                 style={{display: 'block'}}
                 onDayChange={this.handleUpdateDayChange}
@@ -681,7 +681,7 @@ class Add extends Component {
 
           <div className="col-12 col-md-6">
             <div className="form-group">
-              <label for="visible">Visible:</label>
+              <label htmlFor="visible">Visible:</label>
               <select className="form-control" name="visible" disabled={this.state.editLoading ? 'disabled' : ''} id="visible" value={this.state.visible} onChange={this.handleChange}>
                 <option value={true}>True</option>
                 <option value={false}>False</option>
@@ -693,7 +693,7 @@ class Add extends Component {
 
             <div className="form-group tags-group">
 
-                <label for="news_title">Authors:</label>
+                <label htmlFor="news_title">Authors:</label>
 
                 <div className="preview form-control">
 
@@ -757,7 +757,7 @@ class Add extends Component {
 
           <div className="col-12 col-md-6 d-none">
             <div className="form-group">
-              <label for="visible">Author:</label>
+              <label htmlFor="visible">Author:</label>
               <select className="form-control" name="author" id="author" value={this.state.author} onChange={this.handleChange}>
               <option value={undefined}>None</option>
               {this.props.authors.map(author => <option value={author._id}>{author.first_name} {author.last_name}</option>)}
@@ -767,7 +767,7 @@ class Add extends Component {
 
           <div className="col-12">
             <div className="form-group">
-              <label for="news_tagline">Tagline</label>
+              <label htmlFor="news_tagline">Tagline</label>
               <textarea 
                 className="form-control" 
                 id="news_tagline" 
@@ -782,7 +782,7 @@ class Add extends Component {
 
           <div className="col-12">
             <div className="form-group">
-              <label for="news_notes">Content</label>
+              <label htmlFor="news_notes">Content</label>
 
               <div className="content-controls">
 

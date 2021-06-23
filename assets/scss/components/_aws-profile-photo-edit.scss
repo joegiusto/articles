@@ -9,7 +9,7 @@
     .upload-photo-wrap {
         position: relative;
         cursor: pointer;
-        margin-bottom: 0.5rem;
+        // margin-bottom: 0.5rem;
         width: 150px;
         height: 150px;
         background-color: black;
@@ -70,15 +70,16 @@
     }
 
     .provided-profile-photos {
-        padding: 1rem;
+        padding: 0.5rem;
         display: grid;
-        grid-gap: 10px 10px;
+        grid-gap: 5px 5px;
         grid-template-columns: repeat(3, 1fr);
 
         img {
+            cursor: pointer;
             border: 1px solid #000;
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             transition-duration: 200ms;
 
             &:hover {

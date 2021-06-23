@@ -250,12 +250,12 @@ class SignInFormBase extends Component {
                 // id="exampleInputEmail1" 
                 aria-describedby="emailHelp" 
                 placeholder="you@email.com"
-                autocorrect="off"
-                spellcheck="false"
+                autoCorrect="off"
+                spellCheck="false"
                 // TODO - autofocus is not working, gonna guess side menu is causing this
                 // autofocus
                 />
-                <label className="heading-font" for="inputEmail">Email address:</label>
+                <label className="heading-font" htmlFor="inputEmail">Email address:</label>
             </div>
     
             <div className="form-label-group">
@@ -269,7 +269,7 @@ class SignInFormBase extends Component {
                 aria-describedby="passwordHelp" 
                 placeholder="Password"
                 />
-                <label className="heading-font" for="inputEmail">Password:</label>
+                <label className="heading-font" htmlFor="inputEmail">Password:</label>
             </div>
     
             <div className="d-flex flex-column flex-lg-row justify-content-lg-between">

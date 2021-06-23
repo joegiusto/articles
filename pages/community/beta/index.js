@@ -80,7 +80,7 @@ function Beta(props) {
                                             <span>Enable Feature</span>
                                         </div>
                     
-                                        <label for="feature" className="articles-switch mb-0">
+                                        <label htmlFor="feature" className="articles-switch mb-0">
                                             <input id="feature" type="checkbox" checked={AnimatedSideMenuSectionHeaders}/>
                                             <span className="slider" onClick={() => handleToggleAnimatedSideMenuSectionHeaders()}></span>
                                         </label>

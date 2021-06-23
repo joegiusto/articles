@@ -218,7 +218,7 @@ function DonationsAdmin(props) {
 
                             <div className="col-lg-6">
                                 <div className="form-group articles">
-                                    <label for="address">Created By</label>
+                                    <label htmlFor="address">Created By</label>
                                     <input 
                                         className="form-control with-label" 
                                         onChange={handleDonationChange}
@@ -234,7 +234,7 @@ function DonationsAdmin(props) {
                             <div className="col-lg-6">
 
                                 <div className="form-group articles">
-                                    <label className="d-flex justify-content-between" for="address">
+                                    <label className="d-flex justify-content-between" htmlFor="address">
                                         <span>Amount</span>
                                         <span>${ numberWithCommas( (donation.amount / 100).toFixed(2) ) }</span>
                                     </label>
@@ -281,7 +281,7 @@ function DonationsAdmin(props) {
                                 }
 
                                 {/* <div className="form-group articles">
-                                    <label for="address">User</label>
+                                    <label htmlFor="address">User</label>
                                     <input 
                                         className="form-control with-label"
                                         onChange={handleDonationChange}
@@ -313,7 +313,7 @@ function DonationsAdmin(props) {
 
                             <div className="col-lg-12">
                                 <div className="form-group articles">
-                                    <label for="address">Message</label>
+                                    <label htmlFor="address">Message</label>
                                     <textarea className="form-control with-label" onChange={handleDonationChange} name="message" id="message" type="text">
                                         {donation.message}
                                     </textarea>

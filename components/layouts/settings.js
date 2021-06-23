@@ -195,10 +195,10 @@ function DeleteAccountModal() {
 
                 <p className="mb-3"><b>Are you sure you want to delete your account?</b></p>
 
-                <p>After typing "Delete Account" and pressing the button you will be signed out and sent a confirmation email. After 7 days of inactivity we will delete your account, if you login at any point during the 7 days this process will be canceled.</p>
+                <p>After typing &quot;Delete Account&quot; and pressing the button you will be signed out and sent a confirmation email. After 7 days of inactivity we will delete your account, if you login at any point during the 7 days this process will be canceled.</p>
 
                 <div className="form-group articles">
-                    <label for="confirm-delete">Type "Delete Account"</label>
+                    <label htmlFor="confirm-delete">Type &quot;Delete Account&quot;</label>
                     <input className="form-control with-label" name="confirm-delete" id="confirm-delete" type="text" value=""/>
                 </div>
     

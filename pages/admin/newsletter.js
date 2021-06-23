@@ -186,44 +186,44 @@ function Newsletter(props) {
                     <div className="d-flex">
 
                         <div className="form-group articles flex-grow-1">
-                            <label for="address">Subject</label>
+                            <label htmlFor="address">Subject</label>
                             <input className="form-control with-label" name="address" id="address" type="text" value={subject}/>
                         </div>
             
                         <div className="form-group articles flex-grow-1">
-                            <label for="address">Sender</label>
+                            <label htmlFor="address">Sender</label>
                             <input className="form-control with-label" disabled name="address" id="address" type="text" value="Joey Giusto"/>
                         </div>
 
                     </div>
 
                     <div className="form-group articles flex-grow-1">
-                        <label for="address">Video URL</label>
+                        <label htmlFor="address">Video URL</label>
                         <input className="form-control with-label" name="address" id="address" type="text" value={videoURL}/>
                     </div>
 
                     <div className="form-group articles flex-grow-1">
-                        <label for="address">Start Content</label>
+                        <label htmlFor="address">Start Content</label>
                         <textarea className="form-control with-label" name="address" id="address" type="text" value={startContent}></textarea>
                     </div>
 
                     <div className="form-group articles flex-grow-1">
-                        <label for="address">Transparency Content</label>
+                        <label htmlFor="address">Transparency Content</label>
                         <textarea className="form-control with-label" name="address" id="address" type="text" value={transparencyContent}></textarea>
                     </div>
 
                     <div className="form-group articles flex-grow-1">
-                        <label for="address">Clothing Content</label>
+                        <label htmlFor="address">Clothing Content</label>
                         <textarea className="form-control with-label" name="address" id="address" type="text" value={clothingContent}></textarea>
                     </div>
 
                     <div className="form-group articles flex-grow-1">
-                        <label for="address">News Content</label>
+                        <label htmlFor="address">News Content</label>
                         <textarea className="form-control with-label" name="address" id="address" type="text" value={newsContent}></textarea>
                     </div>
 
                     <div className="form-group articles flex-grow-1">
-                        <label for="address">Politics Content</label>
+                        <label htmlFor="address">Politics Content</label>
                         <textarea className="form-control with-label" name="address" id="address" type="text" value={politicsContent}></textarea>
                     </div>
 

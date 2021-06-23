@@ -323,7 +323,7 @@ function AdminUsersPage() {
                             <div className="col-lg-6">
 
                                 <div className="form-group articles">
-                                    <label className="d-flex justify-content-between" for="address">
+                                    <label className="d-flex justify-content-between" htmlFor="address">
                                         <span>First Name</span>
                                         {/* <span>${ numberWithCommas( (donation.amount / 100).toFixed(2) ) }</span> */}
                                     </label>
@@ -343,7 +343,7 @@ function AdminUsersPage() {
                             <div className="col-lg-6">
 
                                 <div className="form-group articles">
-                                    <label className="d-flex justify-content-between" for="address">
+                                    <label className="d-flex justify-content-between" htmlFor="address">
                                         <span>Last Name</span>
                                         {/* <span>${ numberWithCommas( (donation.amount / 100).toFixed(2) ) }</span> */}
                                     </label>
@@ -371,7 +371,7 @@ function AdminUsersPage() {
                                 <div className="col-lg-6">
     
                                     <div className="form-group articles">
-                                        <label className="d-flex justify-content-between" for="lineOne">
+                                        <label className="d-flex justify-content-between" htmlFor="lineOne">
                                             <span>Address Line One</span>
                                             {/* <span>${ numberWithCommas( (donation.amount / 100).toFixed(2) ) }</span> */}
                                         </label>
@@ -391,7 +391,7 @@ function AdminUsersPage() {
                                 <div className="col-lg-6">
     
                                     <div className="form-group articles">
-                                        <label className="d-flex justify-content-between" for="lineTwo">
+                                        <label className="d-flex justify-content-between" htmlFor="lineTwo">
                                             <span>Address Line Two</span>
                                             {/* <span>${ numberWithCommas( (donation.amount / 100).toFixed(2) ) }</span> */}
                                         </label>
@@ -411,7 +411,7 @@ function AdminUsersPage() {
                                 <div className="col-lg-6">
     
                                     <div className="form-group articles">
-                                        <label className="d-flex justify-content-between" for="city">
+                                        <label className="d-flex justify-content-between" htmlFor="city">
                                             <span>City</span>
                                             {/* <span>${ numberWithCommas( (donation.amount / 100).toFixed(2) ) }</span> */}
                                         </label>
@@ -431,7 +431,7 @@ function AdminUsersPage() {
                                 <div className="col-lg-6">
     
                                     <div className="form-group articles">
-                                        <label className="d-flex justify-content-between" for="state">
+                                        <label className="d-flex justify-content-between" htmlFor="state">
                                             <span>State</span>
                                             {/* <span>${ numberWithCommas( (donation.amount / 100).toFixed(2) ) }</span> */}
                                         </label>
@@ -451,7 +451,7 @@ function AdminUsersPage() {
                                 <div className="col-lg-6">
     
                                     <div className="form-group articles">
-                                        <label className="d-flex justify-content-between" for="zip">
+                                        <label className="d-flex justify-content-between" htmlFor="zip">
                                             <span>Zip</span>
                                             {/* <span>${ numberWithCommas( (donation.amount / 100).toFixed(2) ) }</span> */}
                                         </label>
@@ -499,7 +499,7 @@ function AdminUsersPage() {
 
                                     <div className="col-lg-12">
                                         <div className="form-group articles">
-                                            <label for="address">Bio</label>
+                                            <label htmlFor="address">Bio</label>
                                             <textarea className="form-control with-label" rows="5" onChange={handleUserChange} name="message" id="message" type="text">
                                                 {user.employee?.bio}
                                             </textarea>
@@ -508,7 +508,7 @@ function AdminUsersPage() {
 
                                     <div className="col-lg-12">
                                         <div className="form-group articles">
-                                            <label for="address">Quote</label>
+                                            <label htmlFor="address">Quote</label>
                                             <textarea className="form-control with-label" rows="5" onChange={handleUserChange} name="message" id="message" type="text">
                                                 {user.employee?.quote}
                                             </textarea>
@@ -518,7 +518,7 @@ function AdminUsersPage() {
                                     <div className="col-lg-6 d-none">
         
                                         <div className="form-group articles">
-                                            <label className="d-flex justify-content-between" for="state">
+                                            <label className="d-flex justify-content-between" htmlFor="state">
                                                 <span>Instagram</span>
                                                 {/* <span>${ numberWithCommas( (donation.amount / 100).toFixed(2) ) }</span> */}
                                             </label>
@@ -538,7 +538,7 @@ function AdminUsersPage() {
                                     <div className="col-lg-6 d-none">
         
                                         <div className="form-group articles">
-                                            <label className="d-flex justify-content-between" for="state">
+                                            <label className="d-flex justify-content-between" htmlFor="state">
                                                 <span>Facebook</span>
                                                 {/* <span>${ numberWithCommas( (donation.amount / 100).toFixed(2) ) }</span> */}
                                             </label>
@@ -558,7 +558,7 @@ function AdminUsersPage() {
                                     <div className="col-lg-6 d-none">
         
                                         <div className="form-group articles">
-                                            <label className="d-flex justify-content-between" for="state">
+                                            <label className="d-flex justify-content-between" htmlFor="state">
                                                 <span>Instagram</span>
                                                 {/* <span>${ numberWithCommas( (donation.amount / 100).toFixed(2) ) }</span> */}
                                             </label>
@@ -690,7 +690,7 @@ function AdminUsersPage() {
                         <div className={'d-flex align-items-center justify-content-between mb-1 mb-lg-0'}>
 
                             <div className="form-group articles flex-shrink-0 mr-3 mb-0">
-                                <label for="searchFilter">Search Names</label>
+                                <label htmlFor="searchFilter">Search Names</label>
                                 <input 
                                     className="form-control with-label" 
                                     onChange={ e => setSearchFilter(e.target.value) }

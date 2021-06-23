@@ -105,18 +105,18 @@ function ManageAdModal() {
           <Modal.Body>
   
             <div className="form-group articles">
-              <label for="address">Business Name</label>
+              <label htmlFor="address">Business Name</label>
               <input className="form-control with-label" name="address" id="address" type="text" value=""/>
             </div>
   
             <div className="d-flex">
               <div className="form-group articles flex-grow-1">
-                <label for="address">Address One</label>
+                <label htmlFor="address">Address One</label>
                 <input className="form-control with-label" name="address" id="address" type="text" value=""/>
               </div>
     
               <div className="form-group articles flex-grow-1">
-                <label for="address">Address Two (Optional)</label>
+                <label htmlFor="address">Address Two (Optional)</label>
                 <input className="form-control with-label" name="address" id="address" type="text" value=""/>
               </div>
             </div>
@@ -124,18 +124,18 @@ function ManageAdModal() {
             <div className="d-flex justify-content-between">
   
               <div style={{width: '100px'}} className="form-group articles">
-                <label for="address">Zip</label>
+                <label htmlFor="address">Zip</label>
                 <input className="form-control with-label" name="address" id="address" type="text" value=""/>
               </div>
     
               <div className="d-flex flex-grow-1 ml-3">
                 <div className="form-group articles">
-                  <label for="address">City</label>
+                  <label htmlFor="address">City</label>
                   <input className="form-control with-label" disabled name="address" id="address" type="text" value=""/>
                 </div>
       
                 <div className="form-group articles">
-                  <label for="address">State</label>
+                  <label htmlFor="address">State</label>
                   <input className="form-control with-label" disabled name="address" id="address" type="text" value=""/>
                 </div>
               </div>
@@ -191,12 +191,12 @@ function ManageAdModal() {
     
                         <div className="d-flex">
                           <div className="form-group">
-                            <label for="address">Start Age</label>
+                            <label htmlFor="address">Start Age</label>
                             <input className="form-control with-label" onChange={(e) => {this.changeAgeFilterOption('range', 'start', e)}} name="age_range_start" id="age_range_start" type="text" value={ad.age_range_start}/>
                           </div>
     
                           <div className="form-group">
-                            <label for="address">End Age</label>
+                            <label htmlFor="address">End Age</label>
                             <input className="form-control with-label" onChange={(e) => {this.changeAgeFilterOption('range', 'end', e)}}  name="age-range-end" id="age-range-end" type="text" value={ad.age_range_end}/>
                           </div>
                         </div>
@@ -206,7 +206,7 @@ function ManageAdModal() {
                       <div className={"filter-option-dropdown " + (ad.ageFilters.above.active ? '' : 'd-none')}>
     
                         <div className="form-group">
-                          <label for="address">Above Age</label>
+                          <label htmlFor="address">Above Age</label>
                           <input className="form-control with-label" onChange={(e) => {this.changeAgeFilterOption('above', 'age', e)}}  name="address" id="address" type="text" value={ad.age_above}/>
                         </div>
     
@@ -215,7 +215,7 @@ function ManageAdModal() {
                       <div className={"filter-option-dropdown " + (ad.ageFilters.below.active ? '' : 'd-none')}>
     
                         <div className="form-group">
-                          <label for="address">Below Age</label>
+                          <label htmlFor="address">Below Age</label>
                           <input className="form-control with-label" onChange={(e) => {this.changeAgeFilterOption('below', 'age', e)}}  name="address" id="address" type="text" value={ad.age_below}/>
                         </div>
     
@@ -267,7 +267,7 @@ function ManageAdModal() {
                           <small className="w-100">Comma Separated List</small>
     
                           <div className="form-group">
-                            <label className="d-flex justify-content-between" for="address">Zips</label>
+                            <label className="d-flex justify-content-between" htmlFor="address">Zips</label>
                             <input className="form-control with-label" onChange={(e) => {this.changeZipFilterOption('list', 'zip', e)}} name="address" id="address" type="text" value={this.state.zipFilters.list.zip}/>
                           </div>
     
@@ -282,12 +282,12 @@ function ManageAdModal() {
                           <small className="w-100">Specified Distance Around Zip Code (including zip code)</small>
     
                           <div className="form-group">
-                            <label for="address">Zip Code</label>
+                            <label htmlFor="address">Zip Code</label>
                             <input className="form-control with-label" name="address" id="address" type="text" value=""/>
                           </div>
     
                           <div className="form-group">
-                            <label for="exampleFormControlSelect1">Miles</label>
+                            <label htmlFor="exampleFormControlSelect1">Miles</label>
                             <select className="form-control" id="exampleFormControlSelect1">
                               <option>1</option>
                               <option>5</option>
@@ -309,12 +309,12 @@ function ManageAdModal() {
                           <small className="w-100">Specified Distance Around Zip Code (not including zip code)</small>
     
                           <div className="form-group">
-                            <label for="address">Zip</label>
+                            <label htmlFor="address">Zip</label>
                             <input className="form-control with-label" name="address" id="address" type="text" value=""/>
                           </div>
     
                           <div className="form-group">
-                            <label for="exampleFormControlSelect1">Miles</label>
+                            <label htmlFor="exampleFormControlSelect1">Miles</label>
                             <select className="form-control" id="exampleFormControlSelect1">
                               <option>1</option>
                               <option>5</option>
@@ -364,12 +364,12 @@ function ManageAdModal() {
                           <div className="d-flex">
     
                             <div className="form-group">
-                              <label className="d-flex justify-content-between" for="timeOne">Start Time</label>
+                              <label className="d-flex justify-content-between" htmlFor="timeOne">Start Time</label>
                               <input className="form-control with-label" onChange={(e) => {this.changeTimeFilterOption('between', 'timeOne', e)}} name="timeOne" id="timeOne" type="text" value={this.state.timeFilters.between.timeOne}/>
                             </div>
     
                             <div className="form-group">
-                              <label className="d-flex justify-content-between" for="timeTwo">End Time</label>
+                              <label className="d-flex justify-content-between" htmlFor="timeTwo">End Time</label>
                               <input className="form-control with-label" onChange={(e) => {this.changeTimeFilterOption('between', 'timeTwo', e)}} name="timeTwo" id="timeTwo" type="text" value={this.state.timeFilters.between.timeTwo}/>
                             </div>
     
@@ -759,12 +759,12 @@ class Ads extends Component {
     
                                 <div className="d-flex">
                                 <div className="form-group">
-                                    <label for="address">Start Age</label>
+                                    <label htmlFor="address">Start Age</label>
                                     <input className="form-control with-label" onChange={(e) => {this.changeAgeFilterOption('range', 'start', e)}} name="age_range_start" id="age_range_start" type="text" value={this.state.age_range_start}/>
                                 </div>
         
                                 <div className="form-group">
-                                    <label for="address">End Age</label>
+                                    <label htmlFor="address">End Age</label>
                                     <input className="form-control with-label" onChange={(e) => {this.changeAgeFilterOption('range', 'end', e)}}  name="age-range-end" id="age-range-end" type="text" value={this.state.age_range_end}/>
                                 </div>
                                 </div>
@@ -774,7 +774,7 @@ class Ads extends Component {
                             <div className={"filter-option-dropdown " + (this.state.ageFilters.above.active ? '' : 'd-none')}>
     
                                 <div className="form-group">
-                                <label for="address">Above Age</label>
+                                <label htmlFor="address">Above Age</label>
                                 <input className="form-control with-label" onChange={(e) => {this.changeAgeFilterOption('above', 'age', e)}}  name="address" id="address" type="text" value={this.state.age_above}/>
                                 </div>
     
@@ -783,7 +783,7 @@ class Ads extends Component {
                             <div className={"filter-option-dropdown " + (this.state.ageFilters.below.active ? '' : 'd-none')}>
     
                                 <div className="form-group">
-                                <label for="address">Below Age</label>
+                                <label htmlFor="address">Below Age</label>
                                 <input className="form-control with-label" onChange={(e) => {this.changeAgeFilterOption('below', 'age', e)}}  name="address" id="address" type="text" value={this.state.age_below}/>
                                 </div>
     
@@ -835,7 +835,7 @@ class Ads extends Component {
                                 <small className="w-100">Comma Separated List</small>
     
                                 <div className="form-group">
-                                    <label className="d-flex justify-content-between" for="address">Zips</label>
+                                    <label className="d-flex justify-content-between" htmlFor="address">Zips</label>
                                     <input className="form-control with-label" onChange={(e) => {this.changeZipFilterOption('list', 'zip', e)}} name="address" id="address" type="text" value={this.state.zipFilters.list.zip}/>
                                 </div>
     
@@ -850,12 +850,12 @@ class Ads extends Component {
                                 <small className="w-100">Specified Distance Around Zip Code (including zip code)</small>
     
                                 <div className="form-group">
-                                    <label for="address">Zip Code</label>
+                                    <label htmlFor="address">Zip Code</label>
                                     <input className="form-control with-label" name="address" id="address" type="text" value=""/>
                                 </div>
     
                                 <div className="form-group">
-                                    <label for="exampleFormControlSelect1">Miles</label>
+                                    <label htmlFor="exampleFormControlSelect1">Miles</label>
                                     <select className="form-control" id="exampleFormControlSelect1">
                                     <option>1</option>
                                     <option>5</option>
@@ -877,12 +877,12 @@ class Ads extends Component {
                                 <small className="w-100">Specified Distance Around Zip Code (not including zip code)</small>
     
                                 <div className="form-group">
-                                    <label for="address">Zip</label>
+                                    <label htmlFor="address">Zip</label>
                                     <input className="form-control with-label" name="address" id="address" type="text" value=""/>
                                 </div>
     
                                 <div className="form-group">
-                                    <label for="exampleFormControlSelect1">Miles</label>
+                                    <label htmlFor="exampleFormControlSelect1">Miles</label>
                                     <select className="form-control" id="exampleFormControlSelect1">
                                     <option>1</option>
                                     <option>5</option>
@@ -932,12 +932,12 @@ class Ads extends Component {
                                 <div className="d-flex">
     
                                     <div className="form-group">
-                                    <label className="d-flex justify-content-between" for="timeOne">Start Time</label>
+                                    <label className="d-flex justify-content-between" htmlFor="timeOne">Start Time</label>
                                     <input className="form-control with-label" onChange={(e) => {this.changeTimeFilterOption('between', 'timeOne', e)}} name="timeOne" id="timeOne" type="text" value={this.state.timeFilters.between.timeOne}/>
                                     </div>
     
                                     <div className="form-group">
-                                    <label className="d-flex justify-content-between" for="timeTwo">End Time</label>
+                                    <label className="d-flex justify-content-between" htmlFor="timeTwo">End Time</label>
                                     <input className="form-control with-label" onChange={(e) => {this.changeTimeFilterOption('between', 'timeTwo', e)}} name="timeTwo" id="timeTwo" type="text" value={this.state.timeFilters.between.timeTwo}/>
                                     </div>
     
@@ -991,7 +991,7 @@ class Ads extends Component {
                             <Card.Body>
     
                             <div className="form-group">
-                                <label for="hobbies-search">Hobbies Search</label>
+                                <label htmlFor="hobbies-search">Hobbies Search</label>
                                 <input className="form-control with-label" name="hobbies-search" id="hobbies-search" type="text" value=""/>
                             </div>
     

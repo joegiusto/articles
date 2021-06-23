@@ -219,7 +219,7 @@ function ManageAccountBirthdayModal({ userReduxState }) {
                 <div className="label">BIRTHDAY</div>
 
                 <div className="info">
-                    {moment(userReduxState.birth_date).format("LL")}
+                    {moment(userReduxState.birth_date).format("MMM Do yyyy")}
                 </div>
 
                 <div className="arrow"><i className="far fa-hand-point-right " aria-hidden="true"></i></div>
@@ -255,8 +255,6 @@ function ManageAccountBirthdayModal({ userReduxState }) {
                         </div>
                     </div>
 
-                    {/* <div className="text-muted text-center mt-5">Access ID: 1901</div> */}
-
                 </Modal.Body>
 
                 <Modal.Footer className="justify-content-between">
@@ -267,9 +265,6 @@ function ManageAccountBirthdayModal({ userReduxState }) {
                     </Button>
 
                     <div>
-                        {/* <Button variant="link" onClick={handleClose}>
-            Cancel
-          </Button> */}
                         <Button variant="articles-light" onClick={handleClose}>
                             Save
                         </Button>

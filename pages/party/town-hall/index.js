@@ -70,7 +70,7 @@ function PartyHomePage() {
 
                                             <div className="form-group articles">
 
-                                                <label for="chatMessage">Message</label>
+                                                <label htmlFor="chatMessage">Message</label>
 
                                                 <TextareaAutosize
                                                     className="form-control with-label"

@@ -225,7 +225,7 @@ function ExpensesAdmin(props) {
 
                             <div className="col-lg-6">
                                 <div className="form-group articles">
-                                    <label className="d-flex justify-content-between" for="address">
+                                    <label className="d-flex justify-content-between" htmlFor="address">
                                         <span>Amount</span>
                                         <span>${ numberWithCommas( (expense.amount / 100).toFixed(2) ) }</span>
                                     </label>
@@ -243,7 +243,7 @@ function ExpensesAdmin(props) {
                             {/* <div className="col-lg-12">
 
                                 <div className="form-group articles mx-auto" style={{maxWidth: "200px"}}>
-                                    <label for="address">Amount</label>
+                                    <label htmlFor="address">Amount</label>
                                     <input 
                                         className="form-control with-label"
                                         onChange={handleDonationChange}
@@ -272,7 +272,7 @@ function ExpensesAdmin(props) {
 
                             <div className="col-lg-12 mx-auto">
                                 <div className="form-group articles">
-                                    <label for="address">Reason</label>
+                                    <label htmlFor="address">Reason</label>
                                     <input 
                                         className="form-control with-label"
                                         onChange={handleExpenseChange}
@@ -286,7 +286,7 @@ function ExpensesAdmin(props) {
 
                             <div className="col-lg-12 mx-auto">
                                 <div className="form-group articles">
-                                    <label for="file">File</label>
+                                    <label htmlFor="file">File</label>
                                     <input 
                                         className="form-control with-label"
                                         onChange={handleExpenseChange}
@@ -300,7 +300,7 @@ function ExpensesAdmin(props) {
 
                             <div className="col-lg-12">
                                 <div className="form-group articles">
-                                    <label for="note">Note</label>
+                                    <label htmlFor="note">Note</label>
                                     {/* <textarea className="form-control with-label" rows="" onChange={handleExpenseChange} name="note" id="note" type="text">
                                         {expense.note}
                                     </textarea> */}

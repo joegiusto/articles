@@ -1,5 +1,5 @@
 {
-    "name": "with-mongodb",
+    "name": "articles-media-website",
     "version": "0.1.0",
     "scripts": {
         "dev2": "start chrome http://localhost:3000 && next dev -p 3000",
