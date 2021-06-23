@@ -243,7 +243,7 @@ export default function Home(props) {
                             <div className="card p-2 d-flex flex-row flex-wrap align-items-center mt-4 d-flex">
 
                                 <div className="form-group articles flex-shrink-0 flex-grow-1 mr-md-2 mb-0">
-                                    <label for="searchFilter">Email Address</label>
+                                    <label htmlFor="searchFilter">Email Address</label>
                                     <input
                                         className="form-control with-label"
                                         onChange={e => setSignUpEmail(e.target.value)}

@@ -21,7 +21,7 @@ import 'swiper/components/scrollbar/scrollbar.scss';
 
 import { useStore } from '/redux/store'
 
-import { setUserDetails } from "/redux/actions/authActions";
+import { setUserDetails, clearUserDetails } from "/redux/actions/authActions";
 import { setStories } from "/redux/actions/storiesActions";
 import { setMessages } from "/redux/actions/messagesActions";
 import { setIssues } from "/redux/actions/issuesActions";
@@ -35,7 +35,7 @@ let socket
 
 // MEMORY - Many, many, many issues later
 if (typeof window !== 'undefined') {
-    socket = io("https://e91feb007ed7.ngrok.io");
+    socket = io("https://e0b6dd99dc62.ngrok.io");
 }
 
 function MyApp({ Component, pageProps }) {
@@ -46,16 +46,16 @@ function MyApp({ Component, pageProps }) {
     const [ session, loading ] = useSession()
     const Layout = Component.Layout || DefaultLayout;
 
-    useEffect(() => {
+    useEffect( () => {
 
-        {store.dispatch(setStories())}
-        {store.dispatch(setIssues())}
-        {store.dispatch(setMyths())}
+        { store.dispatch( setStories() ) }
+        { store.dispatch( setIssues() ) }
+        { store.dispatch( setMyths() ) }
         
-	}, []);
+	}, [] );
 
     // Fetch content from protected route
-    useEffect(()=>{
+    useEffect( () => {
 
         // const fetchData = async () => {
         //     const res = await fetch('/api/getUserDetails')
@@ -64,12 +64,30 @@ function MyApp({ Component, pageProps }) {
         // }
         // fetchData()
 
-        if (session?.email) {
+        // console.log("Session Var")
+        // console.log(loading)
+        // console.log(session)
+
+        // No session and not loading
+        if ( !session ) {
+            // {store.dispatch( clearUserDetails() )}
+        }
+
+        // Email set and not loading
+        if ( session?.user.email ) {
+            console.log("User has valid session")
             {store.dispatch( setUserDetails() )}
             {store.dispatch( setMessages() )}
         }
 
-    },[session])
+    }, [session] )
+
+    useEffect( () => {
+
+        console.log("Loading change")
+        console.log(session)
+
+    }, [ loading ] )
 
     return ( 
         <AuthProvider options={ {clientMaxAge: 0, keepAlive: 0} } session={ pageProps.session }>

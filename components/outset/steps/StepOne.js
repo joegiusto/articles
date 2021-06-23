@@ -1,5 +1,8 @@
 import React, { Component, useState } from 'react';
 
+import moment from 'moment';
+import axios from 'axios';
+
 // import { Manager, Reference, Popper } from 'react-popper';
 
 // import Popper from 'react-bootstrap/Popper';
@@ -8,174 +11,68 @@ import React, { Component, useState } from 'react';
 
 import PhoneInput from 'react-phone-number-input/input'
 // import Cleave from 'cleave.js/react';
-import moment from 'moment';
-import axios from 'axios';
-// import { Helmet } from 'react-helmet';s
 
-// function Email (props) {
-//     const [shouldShowElement, setShouldShowElement] = useState(false);
-
-//     return (
-//         <Manager>
-//             <Reference>
-//             {({ ref }) => (
-                
-//                 // <button className="btn btn-primary" type="button" ref={ref} onMouseEnter={() => {setShouldShowElement(true)}} onMouseLeave={() => {setShouldShowElement(false)}}>
-//                 //   Reference element
-//                 // </button>
-
-//                 <div ref={ref} 
-//                 // onMouseEnter={() => {setShouldShowElement(true)}} 
-//                 // onMouseLeave={() => {setShouldShowElement(false)}}
-//                 >
-//                 <label htmlFor="email">Email</label>
-//                 <input disabled onFocus={() => (props.changeFocus('email'))} type="text" className="form-control" id="email" placeholder={props.user?.email}/>
-//                 <div className="valid-tooltip">
-//                     Looks good!
-//                 </div>
-//                 </div>
-//             )}
-//             </Reference>
-//             {shouldShowElement ? (
-//             <Popper placement="right">
-//             {({ ref, style, placement, arrowProps }) => (
-//                 <div className="popper-help-wrap" ref={ref} style={style} data-placement={placement}>
-//                 <div className="popper-help">
-//                     You can not change your email at this time, if this is incorrect please restart.
-//                 </div>
-//                 <div ref={arrowProps.ref} style={arrowProps.style} />
-//                 </div>
-//             )}
-//             </Popper>
-//             ) : null}
-            
-//         </Manager>
-//     )
-// }
-
-class StepOneProfilePhoto extends Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            fakeImageHash: 0,
-            newProfilePhotoLoading: false,
-            cacheBust: moment()
-        }
-
-        this.onChangeProfile = this.onChangeProfile.bind(this);
-    }
-
-    onChangeProfile(e) {
-        console.log(e.target.files);
-        const data = new FormData();
-
-        this.setState({
-        file: e.target.files[0],
-        newProfilePhotoLoading: true,
-        }, 
-        () => {
-            data.append('file', this.state.file);
-            data.append('user', this.props.user_id);
-            
-            axios.post("/api/addProfilePhoto", data, { // receive two parameter endpoint url ,form data 
-            
-            })
-            .then(res => { // then print response status
-            console.log(res.statusText)
-            this.setState({
-                newProfilePhotoLoading: false,
-                // photos: [...this.state.photos, 'profile_photos/' + this.props.user_id + '.' + this.state.file.name.split('.')[1]],
-                fakeImageHash: this.state.fakeImageHash + 1
-            })
-            })
-        }
-        )
-
-    }
-
-    render() {
-        return (
-        <div className="aws-profile-photo-edit">
-
-            <div className="upload-photo-wrap mr-1">
-
-                {this.state.newProfilePhotoLoading ? <div className="upload-notifiction">Uploading</div> : ''}
-                
-                <div className="upload-photo-button noselect">
-                <i className="fas fa-plus mr-0"></i>
-                </div>
-
-                <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${this.props.user_id}.jpg?h=${this.state.fakeImageHash}&b=${this.state.cacheBust}`} height="150" width="150" alt=""/>
-                
-                <input onFocus={() => (this.props.changeFocus('photo'))} onChange={this.onChangeProfile} accept=".jpg" type="file" name="myfile" />
-
-            </div>
-
-        </div>
-        )
-    }
-}
+import ProfilePhoto from 'components/user/ProfilePhoto';
 
 const StepOne = (props) => (
     <div className="outset-step-one outset-details-scroll" style={{paddingLeft: '5px', paddingRight: '5px'}}>
 
         <div className="form-row">
 
-        <div className="top">
+            <div className="top">
 
-            <StepOneProfilePhoto changeFocus={props.changeFocus} user_id={props.user_id}/>
+                <ProfilePhoto changeFocus={props.changeFocus} user_id={props.user_id}/>
 
-            <div className="grow">
-            <div className="form-row">
+                <div className="grow">
+                <div className="form-row">
 
-                <div className="col-12 col-md-auto w-100 mb-3">
-                    {/* <Email {...props}></Email> */}
+                    <div className="col-12 col-md-auto w-100 mb-3">
+                        {/* <Email {...props}></Email> */}
+                    </div>
+
+                    <div className="col-md-6 mb-3">
+                    <label htmlFor="validationTooltip01">First Name</label>
+                    <input onFocus={() => (props.changeFocus('first_name'))} type="text" className="form-control" id="validationTooltip01" onChange={(e) => props.handleChange(e)} name="first_name" value={props.first_name} required/>
+                    <div className="valid-tooltip">
+                        Looks good!
+                    </div>
+                    </div>
+
+                    <div className="col-md-6 mb-3">
+                    <label htmlFor="validationTooltip02">Last Name</label>
+                    <input onFocus={() => (props.changeFocus('last_name'))} type="text" className="form-control" id="validationTooltip02" onChange={(e) => props.handleChange(e)} name="last_name" value={props.last_name} placeholder={""}/>
+                    <div className="valid-tooltip">
+                        Looks good!
+                    </div>
+                    </div>
+
                 </div>
+                </div>
+            </div>
 
-                <div className="col-md-6 mb-3">
-                <label htmlFor="validationTooltip01">First Name</label>
+            {/* <StepOneProfilePhoto changeFocus={props.changeFocus} user_id={props.user_id}/> */}
+
+            {/* <div className="col-12 col-md-auto w-100 mb-3">
+                <Example {...props}></Example>
+            </div> */}
+
+            <div className="div w-100"></div>
+
+            {/* <div className="col-md-6 mb-3">
+                <label htmlFor="validationTooltip01">First name</label>
                 <input onFocus={() => (props.changeFocus('first_name'))} type="text" className="form-control" id="validationTooltip01" onChange={(e) => props.handleChange(e)} name="first_name" value={props.first_name} required/>
                 <div className="valid-tooltip">
-                    Looks good!
+                Looks good!
                 </div>
-                </div>
+            </div> */}
 
-                <div className="col-md-6 mb-3">
-                <label htmlFor="validationTooltip02">Last Name</label>
+            {/* <div className="col-md-6 mb-3">
+                <label htmlFor="validationTooltip02">Last name</label>
                 <input onFocus={() => (props.changeFocus('last_name'))} type="text" className="form-control" id="validationTooltip02" onChange={(e) => props.handleChange(e)} name="last_name" value={props.last_name} placeholder={""}/>
                 <div className="valid-tooltip">
-                    Looks good!
+                Looks good!
                 </div>
-                </div>
-
-            </div>
-            </div>
-        </div>
-
-        {/* <StepOneProfilePhoto changeFocus={props.changeFocus} user_id={props.user_id}/> */}
-
-        {/* <div className="col-12 col-md-auto w-100 mb-3">
-            <Example {...props}></Example>
-        </div> */}
-
-        <div className="div w-100"></div>
-
-        {/* <div className="col-md-6 mb-3">
-            <label htmlFor="validationTooltip01">First name</label>
-            <input onFocus={() => (props.changeFocus('first_name'))} type="text" className="form-control" id="validationTooltip01" onChange={(e) => props.handleChange(e)} name="first_name" value={props.first_name} required/>
-            <div className="valid-tooltip">
-            Looks good!
-            </div>
-        </div> */}
-
-        {/* <div className="col-md-6 mb-3">
-            <label htmlFor="validationTooltip02">Last name</label>
-            <input onFocus={() => (props.changeFocus('last_name'))} type="text" className="form-control" id="validationTooltip02" onChange={(e) => props.handleChange(e)} name="last_name" value={props.last_name} placeholder={""}/>
-            <div className="valid-tooltip">
-            Looks good!
-            </div>
-        </div> */}
+            </div> */}
 
         </div>
 
@@ -283,5 +180,3 @@ const StepOne = (props) => (
 )
 
 export default StepOne;
-
-export { StepOneProfilePhoto }

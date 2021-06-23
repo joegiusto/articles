@@ -7,9 +7,6 @@ module.exports = withPWA({
         dest: 'public',
         runtimeCaching,
     },
-    future: {
-        webpack5: true,
-    },
     images: {
         domains: ['cdn.articles.media'],
     },

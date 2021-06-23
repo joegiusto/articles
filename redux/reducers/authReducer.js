@@ -26,7 +26,7 @@ export default function Reducer (state = initialState, action) {
         ...state,
         user_details: action.payload.user
         };
-    case 'SET_CURRENT_USER_DETAILS_TO_EMPTY':
+    case 'CLEAR_CURRENT_USER_DETAILS':
         return {
         ...state,
         user_details: {}

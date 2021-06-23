@@ -79,6 +79,7 @@ export const setUserDetails = userData => dispatch => {
             payload: json
         });
     }
+
     fetchData()
 
     // axios
@@ -98,6 +99,14 @@ export const setUserDetails = userData => dispatch => {
     // );
 
 };
+
+export const clearUserDetails = userData => dispatch => {
+    console.log('clearUserDetails called');
+
+    dispatch({
+        type: 'CLEAR_CURRENT_USER_DETAILS',
+    });
+}
 
 // User loading
 // export const setUserLoading = () => {

@@ -333,9 +333,9 @@ function SideMenuBase(props) {
                             .filter(thread => !thread.encryption)
                             .sort( messagesSort )
                             .map( (thread) => (
-                                <Link href={ROUTES.MESSAGES + '/' + thread._id}>
+                                <Link key={thread._id} href={ROUTES.MESSAGES + '/' + thread._id}>
                                     <a>
-                                        <div key={thread._id} className="card px-2 py-1">
+                                        <div className="card px-2 py-1">
             
                                                 <div className="d-flex justify-content-between flex-column flex-lg-row">
                                                     <span className="contact flex-shrink-0">{thread.fetchedUsers.filter( (user) => user.id != userReduxState._id).map( user => user.name) }</span>

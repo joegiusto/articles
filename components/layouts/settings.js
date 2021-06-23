@@ -12,9 +12,10 @@ import moment from 'moment';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
-import ROUTES from '../../components/constants/routes';
+import ROUTES from 'components/constants/routes';
 
 function SettingsLayout({ children }) {
+    
     const router = useRouter()
     const { param } = router.query
 

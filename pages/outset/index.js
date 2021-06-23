@@ -177,20 +177,18 @@ class OutsetBase extends React.Component {
 
         // console.log(newobj)
 
-        axios.post('/api/outsetUpdate', {
-        user: this.props.user._id,
-        outsetState: newobj
+        axios.post('/api/outset/upsert', {
+            outsetState: newobj
         })
         .then(function (response) {
-        console.log(response);
+            console.log(response);
 
-        // Will be turned on and off many times...
-        self.props.setUserDetails(self.props.user_id);
-        self.props.history.push(ROUTES.HOME);
-
+            // Will be turned on and off many times...
+            self.props.setUserDetails(self.props.user_id);
+            self.props.history.push(ROUTES.HOME);
         })
         .catch(function (error) {
-        console.log(error);
+            console.log(error);
         });
 
     }

@@ -10,7 +10,7 @@ import { toggleColorMode } from '../../redux/actions/siteActions';
 // import { toggleColorMode } from '../../actions/siteActions';
 
 const useCounter = () => {
-    const colorModeDark = useSelector((state) => state.colorModeDark)
+    const colorModeDark = useSelector((state) => state.site.colorModeDark)
     return { colorModeDark }
 }
 
@@ -115,13 +115,13 @@ function FooterBase(props) {
                         <span className="ml-1 pl-1 border-left border-dark"><Link href={ROUTES.PRIVACY}>Privacy</Link></span>
                     </div>
 
-                    <div>
-                        <div onClick={props.toggleColorMode} className="dark-mode d-inline-flex flex-shrink-0 mt-3 mt-lg-0 border border-dark noselect">
-                            { (colorModeDark ? "Light Theme" : "Dark Theme") }
-                            { (colorModeDark ? <i className="fas fa-sun ml-2 mr-0"></i> : <i className="fas fa-moon ml-2 mr-0"></i>) }
-                            <div className="beta badge badge-articles">Beta!</div>
-                        </div>
+                    {/* <div> */}
+                    <div onClick={props.toggleColorMode} className="btn btn-articles-light btn-sm mt-3 mt-lg-0 noselect">
+                        { (colorModeDark ? <i className="fas fa-sun mr-1"></i> : <i className="fas fa-moon mr-1"></i>) }
+                        { (colorModeDark ? "Light Theme" : "Dark Theme") }
+                        {/* <div className="beta badge badge-articles">Beta!</div> */}
                     </div>
+                    {/* </div> */}
 
                 </div>
 

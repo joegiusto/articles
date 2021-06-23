@@ -6,6 +6,7 @@ If you want to learn more about Articles, visit the following pages:
 
 - [Articles Website](https://articles.media/)
 - [Articles Mission Statement](https://articles.media/mission)
+- [Articles Transparency](https://articles.media/transparency)
 
 ## Stack
 

@@ -81,6 +81,8 @@ class StorePage extends Component {
                                 alt="People wearing branded Articles clothing"
                                 layout="fill"
                                 objectFit="cover"
+                                placeholder="blur"
+                                blurDataURL="LdQupO0fMzxa_K=Kn$R*NIS4kCjF"
                             />
         
                             <div className="notice">
