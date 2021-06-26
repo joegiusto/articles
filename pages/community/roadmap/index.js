@@ -35,7 +35,7 @@ const Page = () => (
 
                         <div className="roadmap-cards card">
 
-                            <div className="card-body roadmap-card">
+                            <div className="card-body roadmap-card my-2">
                                 {/* <div className="title">2021</div> */}
                                 <div className="text">
                                     <ul className="mb-0">

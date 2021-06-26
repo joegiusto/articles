@@ -52,16 +52,18 @@ function Updates(props) {
 
                 <Link href={ROUTES.COMMUNITY}><button className="btn btn-articles-light btn-lg mb-3"><i className="fad fa-hand-point-left"></i>Community Home</button></Link>
 
-                <div className="mb-1">
+                <div className="mb-1 d-flex flex-column align-items-center">
+
+                    <h1 className="">Updates</h1>
+
                     <Image
                         src="https://cdn.articles.media/email/logo.jpg"
                         alt="Articles Media Logo"
                         width="110px"
                         height="110xp"
                     />
-                </div>
 
-                <h2 className="">Updates</h2>
+                </div>
 
             </div>
 

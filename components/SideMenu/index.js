@@ -240,7 +240,7 @@ function SideMenuBase(props) {
                 null
                 }
 
-                <Dropdown className="weather-badge mr-3">
+                <Dropdown className="weather-badge mr-2">
 
                     <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-1">
                         <img src="https://icon-library.com/images/cloudy-icon/cloudy-icon-3.jpg" alt="Cloudy weather icon"/>
@@ -304,13 +304,13 @@ function SideMenuBase(props) {
 
                 </Dropdown>
 
-                <Dropdown className="messages-badge mr-3">
+                <Dropdown className="messages-badge">
                     
                     <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-1">
                         {/* <div className="notification-count">0</div> */}
                         <div className={"messages-count " + (connected ? 'bg-success' : 'bg-danger')}>0</div>
 
-                        <div>{' '} <i className="fad fa-comments-alt mr-0"></i> {' '}</div>
+                        <div>{' '} <i className="fad fa-comments-alt fa-lg mr-0"></i> {' '}</div>
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu className="card messages-dropdown pb-0">
@@ -368,13 +368,13 @@ function SideMenuBase(props) {
 
                 </Dropdown>
 
-                <Dropdown  className="notification-badge mr-3">
+                <Dropdown  className="notification-badge">
 
                     <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-1">
                         <div className="notification-count">0</div>
                         {/* <div className={"message-count " + (connected ? 'bg-success' : 'bg-danger')}>0</div> */}
 
-                        <div>{' '} <i className="far fa-bell mr-0"></i> {' '}</div>
+                        <div>{' '} <i className="fad fa-bells mr-0 fa-lg"></i> {' '}</div>
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu className="super-colors">
@@ -389,15 +389,15 @@ function SideMenuBase(props) {
                         <span style={{fontSize: '0.8rem'}}>Report Response</span>
                         </Dropdown.Item> */}
 
-                        <div className="text-muted text-center" style={{fontSize: '0.8rem'}}>0 Notifications</div>
+                        <div className="text-muted text-center" style={{fontSize: '0.8rem'}}>Recent Notifications</div>
 
                         <Dropdown.Divider />
 
-                        <div className="w-100 px-2">
+                        {/* <div className="w-100 px-2">
                         <Link href={ROUTES.MESSAGES}>
                             <div style={{cursor: 'pointer'}} className="badge badge-success w-100">0 Messages</div>
                         </Link>
-                        </div>
+                        </div> */}
 
                         {/* <Dropdown.Item eventKey="4">Manage</Dropdown.Item> */}
 

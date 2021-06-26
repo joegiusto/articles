@@ -88,6 +88,36 @@ function Beta(props) {
                                     </div>
 
                                 </div>
+
+                                <div className="beta-item">
+                                    {
+                                        AnimatedSideMenuSectionHeaders ? <div className="badge badge-success">Enabled</div> : <div className="badge badge-secondary">Not Enabled</div>
+                                    }
+                                    <div className="text mb-1"><b>Stocks and Crypto</b></div>
+                                    <div className="text mb-3">View your favorite stocks and crypto right on Articles.</div>
+
+                                    <div className="d-flex justify-content-center my-4">
+                                        <i className="fad fa-chart-line fa-4x"></i>
+                                        <i className="fab fa-bitcoin fa-4x"></i>
+                                        <i className="fab fa-ethereum fa-4x"></i>
+                                    </div>
+
+                                    <hr/>
+
+                                    <div className="articles-switch-wrap">
+
+                                        <div className="switch-label mr-2" onClick={() => handleToggleAnimatedSideMenuSectionHeaders()}>
+                                            <span>Enable Feature</span>
+                                        </div>
+                    
+                                        <label htmlFor="feature" className="articles-switch mb-0">
+                                            <input id="feature" type="checkbox" checked={AnimatedSideMenuSectionHeaders}/>
+                                            <span className="slider" onClick={() => handleToggleAnimatedSideMenuSectionHeaders()}></span>
+                                        </label>
+
+                                    </div>
+
+                                </div>
                             
                                 <div className="beta-item mb-0">
                                     {

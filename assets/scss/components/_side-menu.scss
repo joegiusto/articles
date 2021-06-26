@@ -808,6 +808,10 @@
         }
     }
 
+    .messages-badge {
+        
+    }
+
     .notification-badge,
     .messages-badge {
         font-family: montserrat, sans-serif;
@@ -815,7 +819,7 @@
         // border-radius: 2px;
         // padding: 0.25rem;
         // background-colorgb(10, 8, 8)ite;
-        // margin-right: 1rem;
+        margin-right: 0.6rem;
         // border-bottom: 2px solid red;
 
         .notification-count,
@@ -823,7 +827,7 @@
             position: absolute;
             top: 0;
             right: 0;
-            transform: translateX(50%) translateY(-35%);
+            transform: translateX(35%) translateY(-35%);
             background-color: $base-color;
             border-radius: 5rem;
             font-weight: bold;
@@ -834,24 +838,33 @@
         }
 
         .messages-count {
-            position: absolute;
-            top: 0;
-            right: 0;
-            transform: translateX(50%) translateY(-35%);
-            // background-color: $base-color;
             color: white;
-            border-radius: 5rem;
-            font-weight: bold;
-            font-size: 0.8rem;
-            padding: 0.25rem;
-            border: solid 1px black;
-            line-height: 0.8;
         }
 
         i {
             margin-right: 0;
             padding-right: 0.5rem;
             padding-left: 0.5rem;
+
+            &::before,
+            &::after {
+                -webkit-text-stroke: 1px black;
+            }
+
+            &::before {
+                color: $base-color;
+            }
+
+            &::after {
+                opacity: 1;
+                color: $accent-color;
+            }
+        }
+
+        i {
+            // margin-right: 0;
+            // padding-right: 0.5rem;
+            // padding-left: 0.5rem;
         }
 
         .messages-dropdown {

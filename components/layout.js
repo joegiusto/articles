@@ -1,6 +1,11 @@
+import { useState } from 'react'
 import Link from 'next/link'
 import Head from 'next/head'
 import { useSelector, useDispatch } from 'react-redux'
+
+import Dropdown from 'react-bootstrap/Dropdown';
+import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 import SideMenu from './SideMenu/'
 import Footer from './layouts/footer'
@@ -9,6 +14,7 @@ import ROUTES from 'components/constants/routes'
 const useCounter = () => {
     const colorModeDark = useSelector((state) => state.site.colorModeDark)
     const sideMenuFixed = useSelector((state) => state.site.sideMenuFixed)
+    
     return { colorModeDark, sideMenuFixed }
 }
 
@@ -18,6 +24,12 @@ export default function Layout(
         title = 'Articles Media',
     }
 ) {
+
+    const [ menuTransparencyOpen, toggleTransparencyMenuOpen ] = useState(false);
+    const [ menuClothingOpen, toggleClothingMenuOpen ] = useState(false);
+    const [ menuNewsOpen, toggleNewsMenuOpen ] = useState(false);
+    const [ menuPoliticsOpen, togglePoliticsMenuOpen ] = useState(false);
+
     const { colorModeDark, sideMenuFixed } = useCounter();
 
     if (process.browser) {
@@ -78,33 +90,159 @@ export default function Layout(
             <div className="nav-bar-centered-links">
                 <div className="links">
 
-                    <span className="badge badge-light">
+                    <Dropdown 
+                        onMouseEnter={() => {
+                            toggleTransparencyMenuOpen(true);
+                        }}
+                        onMouseLeave={() => {
+                            toggleTransparencyMenuOpen(false);
+                        }}
+                        className="" 
+                        show={menuTransparencyOpen} 
+                        as={ButtonGroup}
+                    >
 
-                    </span>
+                        <Link href={ROUTES.TRANSPARENCY}>
+                            <Button variant="articles-light btn-sm mr-0 align-items-center">
+                            <i className="fad fa-file-chart-line fa-lg"></i>Transparency
+                            </Button>
+                        </Link>
 
-                    <Link href={ROUTES.TRANSPARENCY}>
-                        <button className="btn btn-articles-light btn-sm">
-                            <i className="fas fa-paste" aria-hidden="true"></i>Transparency
-                        </button>
-                    </Link>
+                        <Dropdown.Toggle split variant="articles-light btn-sm" id="dropdown-custom-2" />
 
-                    <Link href={ROUTES.STORE}>
-                        <button className="btn btn-articles-light btn-sm">
-                            <i className="fas fa-shopping-cart" aria-hidden="true"></i>Clothing
-                        </button>
-                    </Link>
+                        <Dropdown.Menu className="">
 
-                    <Link href={ROUTES.NEWS}>
-                        <button className="btn btn-articles-light btn-sm">
-                            <i className="fas fa-newspaper" aria-hidden="true"></i>News
-                        </button>
-                    </Link>
+                            <Link passHref={true} href={ROUTES.TRANSPARENCY_CHARTS}>
+                                <Dropdown.Item eventKey="1"><i className="fad fa-chart-pie fa-lg"></i>Charts</Dropdown.Item>
+                            </Link>
 
-                    <Link href={ROUTES.PARTY}>
-                        <button className="btn btn-articles-light btn-sm">
-                            <i className="fas fa-scroll" aria-hidden="true"></i>Politics
-                        </button>
-                    </Link>
+                            <Link passHref={true} href={ROUTES.TRANSPARENCY_EMPLOYEES}>
+                                <Dropdown.Item eventKey="2"><i className="fad fa-users fa-lg"></i>Employees</Dropdown.Item>
+                            </Link>
+
+                        </Dropdown.Menu>
+
+                    </Dropdown>
+
+                    <Dropdown 
+                        onMouseEnter={() => {
+                            toggleClothingMenuOpen(true);
+                        }}
+                        onMouseLeave={() => {
+                            toggleClothingMenuOpen(false);
+                        }}
+                        className="" 
+                        show={menuClothingOpen} 
+                        as={ButtonGroup}
+                    >
+
+                        <Link href={ROUTES.STORE}>
+                            <Button variant="articles-light btn-sm mr-0 align-items-center">
+                            <i className="fad fa-shopping-cart fa-lg"></i>Clothing
+                            </Button>
+                        </Link>
+
+                        <Dropdown.Toggle split variant="articles-light btn-sm" id="dropdown-custom-2" />
+
+                        <Dropdown.Menu className="">
+
+                            <Link passHref={true} href={ROUTES.STORE_PRODUCTS}>
+                                <Dropdown.Item eventKey="1"><i className="fad fa-tags fa-lg"></i>Products</Dropdown.Item>
+                            </Link>
+
+                            <Link passHref={true} href={ROUTES.STORE_SUBMISSIONS}>
+                                <Dropdown.Item eventKey="2"><i className="fad fa-tshirt fa-lg"></i>Submissions</Dropdown.Item>
+                            </Link>
+
+                        </Dropdown.Menu>
+
+                    </Dropdown>
+
+                    <Dropdown 
+                        onMouseEnter={() => {
+                            toggleNewsMenuOpen(true);
+                        }}
+                        onMouseLeave={() => {
+                            toggleNewsMenuOpen(false);
+                        }}
+                        className="" 
+                        show={menuNewsOpen} 
+                        as={ButtonGroup}
+                    >
+
+                        <Link href={ROUTES.NEWS}>
+                            <Button variant="articles-light btn-sm mr-0 align-items-center">
+                            <i className="fad fa-newspaper fa-lg"></i>News
+                            </Button>
+                        </Link>
+
+                        <Dropdown.Toggle split variant="articles-light btn-sm" id="dropdown-custom-2" />
+
+                        <Dropdown.Menu className="">
+
+                            <Link passHref={true} href={ROUTES.STORIES}>
+                                <Dropdown.Item eventKey="1"><i className="fad fa-bullhorn fa-lg"></i>Stories</Dropdown.Item>
+                            </Link>
+
+                            <Link passHref={true} href={ROUTES.ISSUES}>
+                                <Dropdown.Item eventKey="2"><i className="fad fa-balance-scale fa-lg"></i>Issues</Dropdown.Item>
+                            </Link>
+
+                            <Link passHref={true} href={ROUTES.MYTHS}>
+                                <Dropdown.Item eventKey="3"><i className="fad fa-ghost fa-lg"></i>Myths</Dropdown.Item>
+                            </Link>
+
+                            <Link passHref={true} href={ROUTES.RESOURCES}>
+                                <Dropdown.Item eventKey="4"><i className="fad fa-books fa-lg"></i>Resources</Dropdown.Item>
+                            </Link>
+
+                        </Dropdown.Menu>
+
+                    </Dropdown>
+
+                    <Dropdown 
+                        onMouseEnter={() => {
+                            togglePoliticsMenuOpen(true);
+                        }}
+                        onMouseLeave={() => {
+                            togglePoliticsMenuOpen(false);
+                        }}
+                        className="" 
+                        show={menuPoliticsOpen} 
+                        as={ButtonGroup}
+                    >
+
+                        <Link href={ROUTES.PARTY}>
+                            <Button variant="articles-light btn-sm mr-0 align-items-center">
+                            <i className="fad fa-hands-helping fa-lg"></i>Politics
+                            </Button>
+                        </Link>
+
+                        <Dropdown.Toggle split variant="articles-light btn-sm" id="dropdown-custom-2" />
+
+                        <Dropdown.Menu className="">
+
+                            <Link passHref={true} href={ROUTES.PROPOSALS}>
+                                <Dropdown.Item eventKey="1"><i className="fad fa-scroll fa-lg"></i>Proposals</Dropdown.Item>
+                            </Link>
+
+                            <Link passHref={true} href={ROUTES.TOWN_HALL}>
+                                <Dropdown.Item eventKey="2"><i className="fad fa-signal-stream fa-lg"></i>Town Hall</Dropdown.Item>
+                            </Link>
+
+                            {/* <Dropdown.Item eventKey="1">Proposals</Dropdown.Item>
+                            <Dropdown.Item eventKey="2">Town Hall</Dropdown.Item> */}
+                            {/* <Dropdown.Item eventKey="3">Employees</Dropdown.Item> */}
+                            {/* <Dropdown.Item eventKey="4">Flag</Dropdown.Item> */}
+                            {/* <Dropdown.Divider /> */}
+
+                        </Dropdown.Menu>
+
+                    </Dropdown>
+
+                    <Button variant="articles-light btn-sm mr-0 align-items-center rounded-pill">
+                        <i className="fad fa-edit fa-lg mr-0"></i>
+                    </Button>
 
                 </div>
             </div>

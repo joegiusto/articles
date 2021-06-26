@@ -49,40 +49,41 @@ function SettingsLayout({ children }) {
             <div className="sub-page-nav">
 
                 <div className="container">
-                    <div className="tabs mt-3 ">
+
+                    <div className="tabs">
 
                         <Link href={ROUTES.SETTINGS_ACCOUNT}>
-                            <button className={"btn btn-articles-light " + (router.asPath === ROUTES.SETTINGS_ACCOUNT ? 'alt' : '')}>Account</button>
+                            <button className={"btn btn-articles-light " + (router.asPath === ROUTES.SETTINGS_ACCOUNT ? 'active' : '')}>Account</button>
                         </Link>
 
                         <Link href={ROUTES.SETTINGS_MEMBERSHIP}>
-                            <button className={"btn btn-articles-light " + (router.asPath === ROUTES.SETTINGS_MEMBERSHIP ? 'alt' : '')}>Membership</button>
+                            <button className={"btn btn-articles-light " + (router.asPath === ROUTES.SETTINGS_MEMBERSHIP ? 'active' : '')}>Membership</button>
                         </Link>
 
                         <Link href={ROUTES.SETTINGS_NEWSLETTER}>
-                            <button className={"btn btn-articles-light " + (router.asPath === ROUTES.SETTINGS_NEWSLETTER ? 'alt' : '')}>Newsletter</button>
+                            <button className={"btn btn-articles-light " + (router.asPath === ROUTES.SETTINGS_NEWSLETTER ? 'active' : '')}>Newsletter</button>
                         </Link>
 
                         <Link href={ROUTES.SETTINGS_CONNECTIONS}>
-                            <button className={"btn btn-articles-light " + (router.asPath === ROUTES.SETTINGS_CONNECTIONS ? 'alt' : '')}>Connections</button>
+                            <button className={"btn btn-articles-light " + (router.asPath === ROUTES.SETTINGS_CONNECTIONS ? 'active' : '')}>Connections</button>
                         </Link>
 
                         <Link href={ROUTES.SETTINGS_BILLING}>
-                            <button className={"btn btn-articles-light " + (router.asPath === ROUTES.SETTINGS_BILLING ? 'alt' : '')}>Billing</button>
+                            <button className={"btn btn-articles-light " + (router.asPath === ROUTES.SETTINGS_BILLING ? 'active' : '')}>Billing</button>
                         </Link>
 
                         <Link href={ROUTES.SETTINGS_PROTECTED}>
-                            <button className={"btn btn-articles-light " + (router.asPath === ROUTES.SETTINGS_PROTECTED ? 'alt' : '')}>Protected</button>
+                            <button className={"btn btn-articles-light " + (router.asPath === ROUTES.SETTINGS_PROTECTED ? 'active' : '')}>Protected</button>
                         </Link>
 
                         {/* Employee Only */}
-                        {/* {this.props.user_details.employee?.bool === true &&  */}
-                        <Link href={ROUTES.SETTINGS_EMPLOYEE}>
-                            <button className={"btn btn-articles-light ml-lg-3 " + (router.asPath === ROUTES.SETTINGS_EMPLOYEE ? 'alt' : '')}>
-                                Employee<span className="badge badge-warning ml-1"><i className="fas fa-star mr-0"></i></span>
-                            </button>
-                        </Link>
-                        {/* } */}
+                        {userReduxState.employee?.bool === true && 
+                            <Link href={ROUTES.SETTINGS_EMPLOYEE}>
+                                <button className={"btn btn-articles-light ml-lg-3 " + (router.asPath === ROUTES.SETTINGS_EMPLOYEE ? 'active' : '')}>
+                                    Employee<span className="badge badge-warning ml-1"><i className="fas fa-star mr-0"></i></span>
+                                </button>
+                            </Link>
+                        }
                         
                     </div>
                 </div>
