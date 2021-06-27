@@ -9,9 +9,9 @@ import { useRouter } from 'next/router'
 
 import AdminLayout from 'components/layouts/admin.js';
 
-AdminHomePage.Layout = AdminLayout;
+AdminComments.Layout = AdminLayout;
 
-export default function AdminHomePage() {
+export default function AdminComments() {
     const router = useRouter()
     const { param } = router.query
 
@@ -95,6 +95,7 @@ export default function AdminHomePage() {
                         } )
                         .map((comments) => (
                             <Comment
+                                key={comments._id}
                                 document={comments}
                             />
                         ))}
@@ -139,7 +140,7 @@ class Comment extends Component {
 
                         document.comments?.map((comment) => (
 
-                            <div className="ml-2 pl-2 border-left border-dark alert alert-primary mb-0">
+                            <div key={comment._id} className="ml-2 pl-2 border-left border-dark alert alert-primary mb-0">
                                 {/* <div>{comment._id}</div> */}
                                 <div>{comment.user_id.first_name} {comment.user_id.last_name}</div>
                                 <div>{comment.comment}</div>
@@ -151,7 +152,7 @@ class Comment extends Component {
                                 {comment.replies?.length > 0 ?
 
                                     comment.replies.map((reply) => (
-                                        <div className="mt-2 ml-2 pl-2 border-left border-dark alert alert-secondary mb-0">
+                                        <div key={reply._id} className="mt-2 ml-2 pl-2 border-left border-dark alert alert-secondary mb-0">
                                             <div>{reply.user_id}</div>
                                             <div>{reply.comment}</div>
                                             <div className="my-2">

@@ -126,6 +126,10 @@ function AdminLayout({ children }) {
                     <Link href={ROUTES.ADMIN_PRESIDENTS}>
                         <a><span className={"tab " + (router.asPath === ROUTES.ADMIN_PRESIDENTS && 'active')}>Presidents</span></a>
                     </Link>
+
+                    <Link href={ROUTES.ADMIN_EMAIL}>
+                        <a><span className={"tab " + (router.asPath === ROUTES.ADMIN_EMAIL && 'active')}>Email</span></a>
+                    </Link>
                     
                 </div>
 

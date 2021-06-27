@@ -171,6 +171,8 @@ export default {
     ADMIN_PRESIDENTS: '/admin/presidents',
     ADMIN_PRESIDENTS_DETAILS: '/admin/presidents/:id',
 
+    ADMIN_EMAIL: '/admin/email',
+
     // Donate
     DONATE: '/donate',
     DONATE_DETAILS: '/donate/:id',

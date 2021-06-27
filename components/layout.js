@@ -11,12 +11,9 @@ import SideMenu from './SideMenu/'
 import Footer from './layouts/footer'
 import ROUTES from 'components/constants/routes'
 
-const useCounter = () => {
-    const colorModeDark = useSelector((state) => state.site.colorModeDark)
-    const sideMenuFixed = useSelector((state) => state.site.sideMenuFixed)
-    
-    return { colorModeDark, sideMenuFixed }
-}
+// const useCounter = () => {
+//     return { colorModeDark, sideMenuFixed }
+// }
 
 export default function Layout(
     {
@@ -24,13 +21,17 @@ export default function Layout(
         title = 'Articles Media',
     }
 ) {
+    const userReduxState = useSelector((state) => state.auth.user_details)
+    const colorModeDark = useSelector((state) => state.site.colorModeDark)
+    const sideMenuFixed = useSelector((state) => state.site.sideMenuFixed)
 
     const [ menuTransparencyOpen, toggleTransparencyMenuOpen ] = useState(false);
     const [ menuClothingOpen, toggleClothingMenuOpen ] = useState(false);
     const [ menuNewsOpen, toggleNewsMenuOpen ] = useState(false);
     const [ menuPoliticsOpen, togglePoliticsMenuOpen ] = useState(false);
+    const [ menuCustomLinksOpen, toggleCustomLinksMenuOpen ] = useState(false);
 
-    const { colorModeDark, sideMenuFixed } = useCounter();
+    // const { colorModeDark, sideMenuFixed } = useCounter();
 
     if (process.browser) {
         if ( colorModeDark === true ) {
@@ -240,8 +241,40 @@ export default function Layout(
 
                     </Dropdown>
 
+                    {userReduxState.custom_links?.enabled &&
+                    <Dropdown 
+                        onMouseEnter={() => {
+                            toggleCustomLinksMenuOpen(true);
+                        }}
+                        onMouseLeave={() => {
+                            toggleCustomLinksMenuOpen(false);
+                        }}
+                        className="" 
+                        show={menuCustomLinksOpen} 
+                        as={ButtonGroup}
+                    >
+
+                        <Link href={ROUTES.PARTY}>
+                            <Button variant="articles-light btn-sm mr-0 align-items-center">
+                                <i className="fad fa-link fa-lg"></i>My Links
+                            </Button>
+                        </Link>
+
+                        <Dropdown.Toggle split variant="articles-light btn-sm" id="dropdown-custom-2" />
+
+                        <Dropdown.Menu className="">
+
+                            {userReduxState.custom_links?.links.map( item => 
+                                <Dropdown.Item key={item.link} href={item.link} target="_blank" rel="noreferrer" eventKey="1"><i className="fad fa-link fa-lg"></i>{item.text}</Dropdown.Item>
+                            )}
+
+                        </Dropdown.Menu>
+
+                    </Dropdown>
+                    }
+
                     <Button variant="articles-light btn-sm mr-0 align-items-center rounded-pill">
-                        <i className="fad fa-edit fa-lg mr-0"></i>
+                        <i className="fad fa-edit mr-0"></i>
                     </Button>
 
                 </div>
