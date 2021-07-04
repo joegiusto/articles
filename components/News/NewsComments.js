@@ -160,9 +160,12 @@ export default function NewsComments(props) {
 
                     <p className="about">Help us fight bot accounts and explore real comments by real people. Submit a photo of your state license or passport to gain access to a better comment thread. Free from spam, closely moderated, and interact with the writers of news articles.</p>
 
-                    <button className="btn btn-articles-light">
-                        Sign up
-                    </button>
+                    <Link href={ROUTES.BETA}>
+                        <a className="btn btn-articles-light">
+                            Sign up
+                        </a>
+                    </Link>
+
                 </div>
             }
 
