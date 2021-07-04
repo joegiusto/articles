@@ -10,6 +10,13 @@ module.exports = withPWA({
     images: {
         domains: ['cdn.articles.media'],
     },
+    webpack: (config) => {
+        config.module.rules.push({
+          test: /\.html$/,
+          loader: 'html-loader',
+        });
+        return config
+    },
     eslint: {
         // Warning: Dangerously allow production builds to successfully complete even if
         // your project has ESLint errors.

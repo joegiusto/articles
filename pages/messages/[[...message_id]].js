@@ -289,7 +289,7 @@ function Messages(props) {
             :
             messages.length > 0 ?
             messages.sort( messagesSort ).map(message => 
-            <div onClick={() => focusChat(message._id)} className={"chat-contact inbox-message " + (message.promotional ? 'ad ' : '') + (message._id === focusedChat ? 'active ' : '')} >
+            <div key={message._id} onClick={() => focusChat(message._id)} className={"chat-contact inbox-message " + (message.promotional ? 'ad ' : '') + (message._id === focusedChat ? 'active ' : '')} >
     
                 <div className="contact-photo">
 

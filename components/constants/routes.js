@@ -1,5 +1,5 @@
 const COMMUNITY = '/community';
-export default {
+const routes = {
 
     // Landing
     LANDING: '/',
@@ -108,11 +108,11 @@ export default {
     RESOURCES_POLITICIANS_SENATE: '/news/resources/politicians/senate',
 
     // Party
-    PARTY: '/party',
-    POLICY: '/party/policy',
-    TOWN_HALL: '/party/town-hall',
-    PROPOSALS: '/party/proposals',
-    PROPOSAL: '/party/proposals/:id',
+    PARTY: '/politics',
+    POLICY: '/politics/policy',
+    TOWN_HALL: '/politics/town-hall',
+    PROPOSALS: '/politics/proposals',
+    PROPOSAL: '/politics/proposals/:id',
 
     // Mesh
     MESH: '/mesh',
@@ -188,3 +188,5 @@ export default {
     CHAT: '/chat',
 
 }
+
+export default routes;

@@ -10,9 +10,13 @@ export default async (req, res) => {
     const { db } = await connectToDatabase();
     const story = req.query.story
 
+    const projection = { 
+        'comments': 0, 
+    };
+
     const result = await db
     .collection("articles_news")
-    .findOne({url: story})
+    .findOne( {url: story}, { projection: projection } )
 
     res.json(result);
 };

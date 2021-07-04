@@ -56,8 +56,6 @@ $grid-breakpoints: (
 
 @import 'components/mission';
 
-@import 'components/myths';
-
 @import 'components/resources';
 @import 'components/Resources/mass-shootings';
 
@@ -86,6 +84,9 @@ $grid-breakpoints: (
 
 @import 'components/issues';
 @import 'components/stories';
+@import 'components/myths';
+
+@import 'components/News/comment-section';
 
 @import 'components/tag';
 

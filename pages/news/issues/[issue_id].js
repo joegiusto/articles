@@ -13,6 +13,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 
 import StoryAd from 'components/Ads/StoryAd'
 import ROUTES from 'components/constants/routes'
+import NewsComments from 'components/News/NewsComments'
 
 export default function NewsIssue(props) {
     const router = useRouter()
@@ -111,22 +112,22 @@ export default function NewsIssue(props) {
                             </div>
 
                             {
-                                // this.props.user_subscriptions?.filter(sub => sub._id === issue._id).length > 0 ?
+                                // props.user_subscriptions?.filter(sub => sub._id === issue._id).length > 0 ?
                                 //     <div className="subscribe">
-                                //         <button onClick={() => this.props.removeSubscription(issue._id)} style={{ opacity: '0.5' }} className="btn btn-articles-light">Subscribed</button>
+                                //         <button onClick={() => props.removeSubscription(issue._id)} style={{ opacity: '0.5' }} className="btn btn-articles-light">Subscribed</button>
                                 //         <small className="d-block">{issue.subCount} others subscribed to this issue</small>
                                 //     </div>
                                 //     :
                                 //     <div className="subscribe">
-                                //         <button onClick={() => this.props.addSubscription(issue._id)} className="btn btn-articles-light">Subscribe</button>
+                                //         <button onClick={() => props.addSubscription(issue._id)} className="btn btn-articles-light">Subscribe</button>
                                 //         <small className="d-block">Join {issue.subCount} others subscribed to this issue</small>
                                 //     </div>
                             }
 
-                            {/* <div className="subscribe">
-                                <button className="btn btn-articles-light">Subscribe</button>
+                            <div className="subscribe d-inline-flex align-items-center border-bottom border-top border-dark py-2">
+                                <button className="btn btn-articles-light mr-2">Subscribe</button>
                                 <small className="d-block">Join 0 others subscribed to this issue</small>
-                            </div> */}
+                            </div>
 
                             <div className="authors">
 
@@ -139,12 +140,12 @@ export default function NewsIssue(props) {
                                     :
 
                                     issue.authors?.map(author =>
-                                        <div className="author">
+                                        <div key={author} className="author">
                                             <Link href={ROUTES.EMPLOYEES + `/${author}`}>
-                                                <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${author}.jpg`} alt="" />
-                                            </Link>
-                                            <Link href={ROUTES.EMPLOYEES + `/${author}`}>
-                                                <div className="name">Joey Giusto</div>
+                                                <a>
+                                                    <img src={`https://articles-website.s3.amazonaws.com/profile_photos/${author}.jpg`} alt="" />
+                                                    <span className="name">Joey Giusto</span>
+                                                </a>
                                             </Link>
                                         </div>
                                     )
@@ -152,9 +153,9 @@ export default function NewsIssue(props) {
                                 }
 
                                 {/* <div className="author">
-            <Link to={ROUTES.EMPLOYEES + '/5e90cc96579a17440c5d7d52'}><img src="https://articles-website.s3.amazonaws.com/profile_photos/5e90cc96579a17440c5d7d52.jpg" alt=""/></Link>
-            <Link to={ROUTES.EMPLOYEES + '/5e90cc96579a17440c5d7d52'}><div className="name">Joey Giusto</div></Link>
-          </div> */}
+                                    <Link to={ROUTES.EMPLOYEES + '/5e90cc96579a17440c5d7d52'}><img src="https://articles-website.s3.amazonaws.com/profile_photos/5e90cc96579a17440c5d7d52.jpg" alt=""/></Link>
+                                    <Link to={ROUTES.EMPLOYEES + '/5e90cc96579a17440c5d7d52'}><div className="name">Joey Giusto</div></Link>
+                                </div> */}
 
                             </div>
 
@@ -247,21 +248,22 @@ export default function NewsIssue(props) {
                     <div className="related-proposals card">
 
                         <div className="header d-flex justify-content-between">
-                            {proposals?.length} Related Proposals
-      </div>
+                            <h4 className="mb-0">{proposals?.length} Related Proposals</h4>
+                        </div>
 
-                        <div className="p-2">
+                        <div className="">
                             {proposals.map(proposal =>
-                                <div>
+                                <div key={proposal._id}>
                                     {proposal.title}
                                 </div>
                             )}
                         </div>
 
                         <div className="card-body">
-                            When there is a related political proposals that could fix an issue it will be listed here.
 
-        <div className="supporters">
+                            <p>When there is a related political proposals that could fix an issue it will be listed here.</p>
+
+                            <div className="supporters">
 
                                 <div className="supporter">
                                     <span className="badge badge-primary">Democrats</span>
@@ -283,128 +285,9 @@ export default function NewsIssue(props) {
 
                     </div>
 
-                    <div className="comment-section card">
-
-                        <div className="header d-flex justify-content-between">
-
-                            <div className="types">
-                                <div onClick={() => setCommentView('normal') } className={"type " + ( commentView === 'normal' ? 'active' : '')}>{issue.comments?.length} Comments</div>
-                                <div onClick={() => setCommentView('new') } className={"type ml-2 " + ( commentView === 'new' ? 'active' : '')}>0 Real ID Comments</div>
-                            </div>
-
-                            {/* <SortPopper setCommentSort={this.onChange} commentSort={commentSort} /> */}
-
-                        </div>
-
-                        {commentView === 'normal' ?
-                            <>
-                                <div className="add-comment">
-
-                                    <div className="profile-photo">
-                                        {userReduxState._id === undefined ?
-                                            null
-                                            :
-                                            <img alt="" className="" width="100%" height="100%" src={`https://articles-website.s3.amazonaws.com/profile_photos/${userReduxState?._id}.jpg` || ''} />
-                                        }
-                                    </div>
-
-                                    <div className="comment">
-                                        {/* <input onClick={() => this.setState({newCommentExpanded: true})} type="text" name="comment" id="comment" onChange={this.onChange} value={this.state.comment} placeholder="Add a comment"/> */}
-                                        {/* <textarea onClick={() => this.setState({newCommentExpanded: true})} type="text" name="comment" id="comment" onChange={this.onChange} value={this.state.comment} placeholder="Add a comment"/> */}
-                                        <div className='tx-div-before'></div>
-                                        <TextareaAutosize className="tx-div" onClick={() => this.setState({ newCommentExpanded: true })} placeholder="Add a comment" type="text" name="comment" id="comment" onChange={e => setComment(e)} value={comment} />
-                                        <div className='tx-div-after'></div>
-                                    </div>
-
-                                </div>
-
-                                {
-                                    // this.state.newCommentExpanded === true ?
-                                    //     <div className="comment-controls d-flex justify-content-between align-items-start">
-
-                                    //         {
-                                    //             this.state.commentSubmitError === '' ?
-                                    //                 <div></div>
-                                    //                 :
-                                    //                 <div className="badge badge-danger">{this.state.commentSubmitError}</div>
-                                    //         }
-
-                                    //         <div className="d-flex">
-                                    //             <div onClick={() => this.setState({ newCommentExpanded: false })} className="btn btn-danger">Cancel</div>
-                                    //             <button onClick={() => this.submitComment()} disabled={this.state.commentSubmitError != "" && this.state.comment === '' ? true : false} className="btn btn-articles-light">Comment</button>
-                                    //         </div>
-
-                                    //     </div>
-                                    //     :
-                                    //     null
-                                }
-
-                                {issue.comments?.length < 1 ?
-                                    <div className="no-comments">
-
-                                        <div className="sad">
-                                            <div className="l-eye"></div>
-                                            <div className="r-eye"></div>
-                                            <div className="mouth"></div>
-                                        </div>
-
-                                        <div className="message">There are no comments yet</div>
-
-                                    </div>
-                                    :
-                                    null
-                                }
-
-                                <div className="comments">
-                                    {issue.comments?.sort((a, b) => new Date(b.date) - new Date(a.date)).map(comment =>
-                                        <Comment comment={comment} user={userReduxState} />
-                                    )}
-                                </div>
-                            </>
-                            :
-                            <div className="real-id-notice">
-
-                                <div className="bots">
-
-                                    <div className="bot bot-1">
-                                        <i className="fas fa-robot"></i>
-                                        {/* <i className="fas fa-crosshairs"></i> */}
-                                    </div>
-
-                                    <div className="bot bot-2">
-                                        <i className="fas fa-robot"></i>
-                                        {/* <i className="fas fa-crosshairs"></i> */}
-                                    </div>
-
-                                    <div className="network network-1">
-                                        <i className="fas fa-project-diagram"></i>
-                                        <i className="fas fa-crosshairs"></i>
-                                    </div>
-
-                                    <div className="network network-2">
-                                        <i className="fas fa-project-diagram"></i>
-                                        <i className="fas fa-crosshairs"></i>
-                                    </div>
-
-                                </div>
-
-                                <h3>Sign up for Real ID</h3>
-
-                                <div className="icons">
-                                    <i className="far fa-id-card"></i>
-                                    <i className="fas fa-passport"></i>
-                                    <i className="far fa-id-badge"></i>
-                                </div>
-
-                                <p className="about">Help us fight bot accounts and explore real comments. Submit a photo of your state license or passport to gain access to a better comment thread. Free from spam, closely moderated, and interact with the writter of this article.</p>
-
-                                <button className="btn btn-articles-light alt">
-                                    Sign up
-                                </button>
-                            </div>
-                        }
-
-                    </div>
+                    <div style={{maxWidth: 1000}}>
+                        <NewsComments userReduxState={userReduxState} document={issue} news_id={issue._id} />
+                    </div>             
 
                     <div className="back-button d-flex" onClick={() => router.back}>
                         <i className="far fa-caret-square-left mr-1"></i>
@@ -415,7 +298,7 @@ export default function NewsIssue(props) {
 
                 {/* <div className="link badge badge-dark w-100 py-2 mb-3" onClick={() => this.props.history.goBack()}>{String.fromCharCode(11148)} Back to Issues</div> */}
 
-                <div className="card d-none">
+                <div className="card">
 
                     <div className="card-header">
 

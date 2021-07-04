@@ -15,11 +15,11 @@ function PartyHomePage() {
     return(
         <section className="party-page">
             <Head>
-                <title>Party - Articles</title>
+                <title>Politics - Articles</title>
             </Head>
             <div className="container py-3">
-                <h2>Party Page</h2>
-                <p>This is the Home Page of the party section.</p>
+                <h2>Politics Page</h2>
+                <p>...</p>
             </div>
         </section>
     )

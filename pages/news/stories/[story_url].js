@@ -9,8 +9,9 @@ import { useSelector } from 'react-redux'
 import axios from 'axios'
 import moment from 'moment'
 
-import StoryAd from '../../../components/Ads/StoryAd'
-import ROUTES from '../../../components/constants/routes'
+import StoryAd from 'components/Ads/StoryAd'
+import NewsComments from 'components/News/NewsComments'
+import ROUTES from 'components/constants/routes'
 
 function NewsStory() {
     const router = useRouter()
@@ -69,63 +70,68 @@ function NewsStory() {
                 <title>Story - Articles</title>
             </Head>
 
-            <div className="card story-card rounded-0">
-
-                <div className="breadcrumb-header mb-3">
-
-                    <div className="watermarks">
-                        <Link href={`${ROUTES.NEWS}`}><a className="watermark news">News</a></Link>
-                        <Link href={`${ROUTES.STORIES}`}><a className="watermark stories">Stories</a></Link>
+            <div className="story-wrap">
+                <div className="card story-card rounded-0">
+    
+                    <div className="breadcrumb-header mb-3">
+    
+                        <div className="watermarks">
+                            <Link href={`${ROUTES.NEWS}`}><a className="watermark news">News</a></Link>
+                            <Link href={`${ROUTES.STORIES}`}><a className="watermark stories">Stories</a></Link>
+                        </div>
+    
+                        <div style={{background: ''}} className={"edit-story-button " + (userReduxState?.roles?.isWriter ? 'd-inline-block' : 'd-none')}>
+    
+                            <Link href={`${ROUTES.ADMIN_NEWS}/${story._id}?writerFromDocument=true`}>
+                                <a className="btn btn-articles-light btn-sm"><i className="fas fa-star mr-1" aria-hidden="true"></i>Edit Story</a>
+                            </Link>
+    
+                        </div>
+    
                     </div>
-
-                    <div style={{background: ''}} className={"edit-story-button " + (userReduxState?.roles?.isWriter ? 'd-inline-block' : 'd-none')}>
-
-                        <Link href={`${ROUTES.ADMIN_NEWS}/${story._id}?writerFromDocument=true`}>
-                            <a className="btn btn-articles-light btn-sm"><i className="fas fa-star mr-1" aria-hidden="true"></i>Edit Story</a>
-                        </Link>
-
+    
+                    <h2 className="text-center">{story.news_title}</h2>
+                    <h4 className="text-center text-muted mb-3">600 Billion!</h4>
+    
+                    <div className="dates d-flex flex-column flex-lg-row align-items-center justify-content-center mb-3">
+                        <div className="date">Published: {moment(story.news_date).format("LLL")}</div>
+                        <div className="mx-2 d-none d-lg-block"> - </div>
+                        <div className="date">Updated: {moment(story.last_update).format("LLL")}</div>
                     </div>
-
-                </div>
-
-                <h2 className="text-center">{story.news_title}</h2>
-                <h4 className="text-center text-muted mb-3">600 Billion!</h4>
-
-                <div className="dates d-flex flex-column flex-lg-row align-items-center justify-content-center mb-3">
-                    <div className="date">Published: {moment(story.news_date).format("LLL")}</div>
-                    <div className="mx-2 d-none d-lg-block"> - </div>
-                    <div className="date">Updated: {moment(story.last_update).format("LLL")}</div>
-                </div>
-
-                <div className="icon-tiles d-flex justify-content-center mb-3">
-
-                    {story.authors?.length === 0 || story.authors?.length === undefined ?
-
-                        <div className="tile">No Author</div>
-                        :
-                        story.authors?.map(author => 
-                            <div className="tile">
-                                <Link href={ROUTES.TRANSPARENCY_EMPLOYEES + `/${author}`}><img className="mr-2" style={{width: '20px', height: '20px'}} src={`https://articles-website.s3.amazonaws.com/profile_photos/${author}.jpg`} alt=""/></Link>
-                                <Link href={ROUTES.TRANSPARENCY_EMPLOYEES + `/${author}`}><div className="name">Joey Giusto</div></Link>
-                            </div>
-                        )
-
-                    }
-
-                    <div className="tile">
-                        <i className="fad fa-comments"></i>
+    
+                    <div className="icon-tiles d-flex justify-content-center mb-3">
+    
+                        {story.authors?.length === 0 || story.authors?.length === undefined ?
+    
+                            <div className="tile">No Author</div>
+                            :
+                            story.authors?.map(author => 
+                                <div className="tile">
+                                    <Link href={ROUTES.TRANSPARENCY_EMPLOYEES + `/${author}`}><img className="mr-2" style={{width: '20px', height: '20px'}} src={`https://articles-website.s3.amazonaws.com/profile_photos/${author}.jpg`} alt=""/></Link>
+                                    <Link href={ROUTES.TRANSPARENCY_EMPLOYEES + `/${author}`}><div className="name">Joey Giusto</div></Link>
+                                </div>
+                            )
+    
+                        }
+    
+                        <div className="tile">
+                            <i className="fad fa-comments"></i>
+                            Comments
+                        </div>
+    
+                    </div>
+    
+                    <img className="hero-image w-100 img-fluid" src={story.hero_url} alt=""/>
+    
+                    <div className="container document-text" style={{whiteSpace: 'pre-wrap'}} dangerouslySetInnerHTML={{__html: story?.news_notes}}></div>
+    
+                    {/* <div id="comments">
                         Comments
-                    </div>
-
+                    </div> */}
+    
                 </div>
-
-                <img className="hero-image w-100 img-fluid" src={story.hero_url} alt=""/>
-
-                <div className="container document-text" style={{whiteSpace: 'pre-wrap'}} dangerouslySetInnerHTML={{__html: story?.news_notes}}></div>
-
-                <div id="comments">
-                    Comments
-                </div>
+    
+                <NewsComments userReduxState={userReduxState} document={story} news_id={story._id} />
 
             </div>
 

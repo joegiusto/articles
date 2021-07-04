@@ -2,7 +2,7 @@ import sgMail from '@sendgrid/mail'
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
-export default function(msg) {
+export default function sendEmail(msg) {
 
     // Trust no one!
     msg.from = {

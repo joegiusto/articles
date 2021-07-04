@@ -621,6 +621,13 @@
         }
     }
 
+    .story-wrap {
+        @include media-breakpoint-up(xl) {
+            margin-right: 1rem;
+            margin-bottom: 3rem;
+        }
+    }
+
     .story-card {
         position: relative;
         // max-width: 1020px;
@@ -630,8 +637,8 @@
         margin-top: 1rem;
 
         @include media-breakpoint-up(xl) {
-            margin-right: 1rem;
-            margin-bottom: 1rem;
+            // margin-right: 1rem;
+            // margin-bottom: 1rem;
         }
 
         .breadcrumb-header {
