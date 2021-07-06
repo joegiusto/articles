@@ -13,33 +13,92 @@ const DATA_COUNT = 5;
 const NUMBER_CFG = { count: DATA_COUNT, min: 0, max: 100 };
 
 const data = {
+    labels: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
     datasets: [
+
         {
-            label: 'General',
-            labels: ['Revenues', 'Expenses'],
-            data: [50, 50],
-            backgroundColor: [
-                'rgba(75, 186, 110, 0.6)',
-                'rgba(255, 99, 132, 0.6)'
-            ],
+            label: 'Revenue',
+            data: [ 10, 13, 17, 10, 13, 10 ],
+            backgroundColor: 'rgba(75, 186, 110, 0.6)',
+            stack: 'Stack 0',
         },
         {
-            label: 'Specific',
-            labels: ['Donations', 'Store', 'Ads', 'Memberships', 'Payroll', 'Inventory', 'Recurring', 'Utilities', 'Other'],
-            data: [90/2, 5/2 , 5/2, 0, 0, 5/2, 95/2, 0, 0, 0],
-            backgroundColor: [
-                'rgba(75, 186, 110, 0.4)',
-                'rgba(75, 186, 110, 0.4)',
-                'rgba(75, 186, 110, 0.4)',
-                'rgba(75, 186, 110, 0.4)',
-                'rgba(255, 99, 132, 0.4)',
-                'rgba(255, 99, 132, 0.4)',
-                'rgba(255, 99, 132, 0.4)',
-                'rgba(255, 99, 132, 0.4)',
-                'rgba(255, 99, 132, 0.4)',
-            ],
-        }
+            label: 'Expense',
+            data: [ 10, 13, 17, 10, 13, 10 ],
+            backgroundColor: 'rgba(255, 99, 132, 0.6)',
+            stack: 'Stack 0',
+        },
+
+        // {
+        //     label: 'Revenue',
+        //     data: [ 10, 5, 10, 15, 20, 30],
+        //     backgroundColor: 'rgba(75, 186, 110, 0.6)',
+        //     stack: 'Stack 1',
+        // },
+        // {
+        //     label: 'Expense',
+        //     data: [ 10, 5, 10, 15, 20, 30],
+        //     backgroundColor: 'rgba(255, 99, 132, 0.6)',
+        //     stack: 'Stack 1',
+        // },
+
+        // {
+        //     label: 'General',
+        //     labels: ['Revenues', 'Expenses'],
+        //     data: [50, 50],
+        //     backgroundColor: [
+        //         'rgba(75, 186, 110, 0.6)',
+        //         'rgba(255, 99, 132, 0.6)'
+        //     ],
+        // },
+        // {
+        //     label: 'Specific',
+        //     labels: ['Donations', 'Store', 'Ads', 'Memberships', 'Payroll', 'Inventory', 'Recurring', 'Utilities', 'Other'],
+        //     data: [90/2, 5/2 , 5/2, 0, 0, 5/2, 95/2, 0, 0, 0],
+        //     backgroundColor: [
+        //         'rgba(75, 186, 110, 0.4)',
+        //         'rgba(75, 186, 110, 0.4)',
+        //         'rgba(75, 186, 110, 0.4)',
+        //         'rgba(75, 186, 110, 0.4)',
+        //         'rgba(255, 99, 132, 0.4)',
+        //         'rgba(255, 99, 132, 0.4)',
+        //         'rgba(255, 99, 132, 0.4)',
+        //         'rgba(255, 99, 132, 0.4)',
+        //         'rgba(255, 99, 132, 0.4)',
+        //     ],
+        // }
+
     ]
+};
+
+const config = {
+    type: 'bar',
+    data: data,
+    options: {
+        plugins: {
+            title: {
+                display: false,
+                text: 'Chart.js Bar Chart - Stacked'
+            },
+        },
+        responsive: true,
+        scales: {
+            x: {
+                stacked: true,
+            },
+            y: {
+                stacked: true
+            },
+            yAxes: [{
+                ticks: {
+                    // Include a dollar sign in the ticks
+                    callback: function(value, index, values) {
+                        return '$' + value.toFixed(2);
+                    }
+                }
+            }]
+        }
+    }
 };
 
 const chartConfig = {
@@ -48,12 +107,8 @@ const chartConfig = {
     plugins: [ChartDataLabels],
     options: {
         responsive: true,
-        // aspectRatio: 2,
-        maintainAspectRatio: false,
         legend: {
-            // position: 'bottom',
             align: 'top',
-            offset: 100
         },
         layout: {
             padding: {
@@ -117,6 +172,12 @@ const chartConfig = {
 function TransparencyLayout({ children }) {
     const router = useRouter()
     const { param } = router.query
+
+    const [scrollPosition, setScrollPosition] = useState(0);
+    const handleScroll = () => {
+        const position = window.pageYOffset;
+        setScrollPosition(position);
+    };
     const [totalsLoading, setTotalsLoading] = useState(true)
     const [totals, setTotals] = useState({
         revenue: {
@@ -143,30 +204,35 @@ function TransparencyLayout({ children }) {
     const [reportsData, setReportsData] = useState({})
 
     useEffect(() => {
+        window.addEventListener('scroll', handleScroll, { passive: true });
 
         axios.get('/api/transparency/reports/totals')
-            .then(function (response) {
+        .then(function (response) {
 
-                // console.log(response.data)
+            // console.log(response.data)
 
-                setTotals(response.data)
-                setTotalsLoading(false)
+            setTotals(response.data)
+            setTotalsLoading(false)
 
-                // console.log(
-                //     Number(revenuesTotal()) / (Number(revenuesTotal()) + Number(expensesTotal()))
-                // )
+            // console.log(
+            //     Number(revenuesTotal()) / (Number(revenuesTotal()) + Number(expensesTotal()))
+            // )
 
-            })
-            .catch(function (error) {
-                console.log(error);
-                setTotalsLoading(false)
-            });
+        })
+        .catch(function (error) {
+            console.log(error);
+            setTotalsLoading(false)
+        });
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
 
     }, []);
 
     useEffect(() => {
         if (chartContainer && chartContainer.current) {
-            const newChartInstance = new Chart(chartContainer.current, chartConfig);
+            const newChartInstance = new Chart(chartContainer.current, config);
             setChartInstance(newChartInstance);
         }
     }, [chartContainer]);
@@ -192,8 +258,8 @@ function TransparencyLayout({ children }) {
                                         <span>Live</span>
                                     </div>
 
-                                    <div className="normal">
-                                        <div className="px-2 py-3">
+                                    <div className={`normal ${scrollPosition > 400 && 'scrolled-down'}`}>
+                                        <div className="px-2 pt-3 pb-1">
 
                                             <div className="side-menu-header d-flex flex-column align-items-center">
 
@@ -256,8 +322,8 @@ function TransparencyLayout({ children }) {
 
                                             </div>
 
-                                            <div className="sidebar-chart d-none">
-                                                {/* <canvas ref={chartContainer} /> */}
+                                            <div className="sidebar-chart bg-white">
+                                                <canvas ref={chartContainer} />
                                             </div>
 
                                             <div className="time-container d-none">
@@ -313,7 +379,7 @@ function TransparencyLayout({ children }) {
                                         </div>
                                     </div>
 
-                                    <div className="quick-links">
+                                    <div className={`quick-links ${scrollPosition > 400 && 'scrolled-down'}`}>
 
                                         <div className="report-link">
                                             <Link href={ROUTES.TRANSPARENCY}>

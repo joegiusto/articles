@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 
+import { useRouter } from 'next/router';
+
 import { Provider as AuthProvider, useSession } from 'next-auth/client'
 
 import { Provider } from 'react-redux'
@@ -39,12 +41,21 @@ if (typeof window !== 'undefined') {
 }
 
 function MyApp({ Component, pageProps }) {
+    const router = useRouter();
+    const { pathname, asPath } = router;
+
     const store = useStore(pageProps.initialReduxState)
     const persistor = persistStore(store, {}, function () {
         persistor.persist()
     })
     const [ session, loading ] = useSession()
     const Layout = Component.Layout || DefaultLayout;
+
+    useEffect(() => {
+        gtag('config', 'G-1FY263JYMM', {    // DON'T ADD THIS TO _document.tsx
+            page_path: window.location.pathname,   // OTHERWISE YOU'LL GET DUPLICATE HITS
+        });                                      // ON FIRST PAGE LOAD
+    },[asPath]);
 
     useEffect( () => {
 
