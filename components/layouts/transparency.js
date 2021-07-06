@@ -178,24 +178,24 @@ function TransparencyLayout({ children }) {
             <div className="container-lg">
                 <div className="row">
 
-                    <div className="col-md-4">
+                    {/* <div className="col-md-4"> */}
 
                         <div className="transparency-side-menu">
 
                             <div className="static-wrapper">
 
-                                <div className="live">
-                                    <span className="recording-dot d-inline-block"></span>
-                                    <span>Live</span>
-                                </div>
-
                                 {/* <div id='info' className={"info " + (this.state.menuExpanded ? 'expanded' : '') }> */}
                                 <div id='info' className="info">
 
-                                    <div className="normal">
-                                        <div className="px-2 pt-3">
+                                    <div className="live">
+                                        <span className="recording-dot d-inline-block"></span>
+                                        <span>Live</span>
+                                    </div>
 
-                                            <div className="side-menu-header d-flex align-items-center">
+                                    <div className="normal">
+                                        <div className="px-2 py-3">
+
+                                            <div className="side-menu-header d-flex flex-column align-items-center">
 
                                                 {totalsLoading ? 
 
@@ -207,16 +207,19 @@ function TransparencyLayout({ children }) {
 
                                                     <div className="left">
                                                         <div className="balance-label">Current Balance:</div>
-                                                        <h2 className="mb-0">${(revenuesTotal() - expensesTotal()).toFixed(2)}</h2>
+                                                        <h2 className="">${(revenuesTotal() - expensesTotal()).toFixed(2)}</h2>
                                                     </div>
         
-                                                    <div className="right">
-                                                        <div className="snippet positive w-100">
-                                                            <i className="fad fa-chart-line me-0"></i>Revenue: ${revenuesTotal()}
+                                                    <div className="right d-flex">
+
+                                                        <div className="snippet positive">
+                                                            <i className="fad fa-chart-line me-0 d-none"></i> <span className="tag">Revenue:</span> <span className="price">${revenuesTotal()}</span>
                                                         </div>
-                                                        <div className="snippet negative w-100">
-                                                            <i className="fad fa-chart-line-down me-0"></i>Expenses: -${expensesTotal()}
+
+                                                        <div className="snippet negative">
+                                                            <i className="fad fa-chart-line-down me-0 d-none"></i> <span className="tag">Expenses:</span> <span className="price">-${expensesTotal()}</span>
                                                         </div>
+
                                                     </div>
 
                                                     </>
@@ -225,7 +228,7 @@ function TransparencyLayout({ children }) {
 
                                             </div>
 
-                                            <div className="progress mt-1">
+                                            <div className="progress mt-2">
 
                                                     <div className="progress-bar bg-rev" role="progressbar"
                                                         style={{
@@ -253,7 +256,7 @@ function TransparencyLayout({ children }) {
 
                                             </div>
 
-                                            <div className="sidebar-chart">
+                                            <div className="sidebar-chart d-none">
                                                 {/* <canvas ref={chartContainer} /> */}
                                             </div>
 
@@ -315,7 +318,7 @@ function TransparencyLayout({ children }) {
                                         <div className="report-link">
                                             <Link href={ROUTES.TRANSPARENCY}>
                                                 <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (router.asPath === ROUTES.TRANSPARENCY_REPORTS ? 'active ' : null) + (router.asPath === ROUTES.TRANSPARENCY ? ' active' : null)}>
-                                                    <div>
+                                                    <div className="text-center">
                                                         <i className="fas fa-paste" aria-hidden="true"></i>
                                                         <span className="text">Reports</span>
                                                     </div>
@@ -326,7 +329,7 @@ function TransparencyLayout({ children }) {
                                         <div className="report-link">
                                             <Link href={ROUTES.TRANSPARENCY_CHARTS}>
                                                 <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (router.asPath === ROUTES.TRANSPARENCY_CHARTS ? 'active' : null)}>
-                                                    <div>
+                                                    <div className="text-center">
                                                         <i className="fas fa-chart-line"></i>
                                                         <span className="text">Charts</span>
                                                     </div>
@@ -338,7 +341,7 @@ function TransparencyLayout({ children }) {
                                             <Link href={ROUTES.TRANSPARENCY_EMPLOYEES}>
                                                 {/* <button className={"btn btn-articles-light btn-lg w-100 report-quick-links" + (router.asPath === ROUTES.TRANSPARENCY_EMPLOYEES ? ' active' : '') + (router.asPath, ROUTES.TRANSPARENCY_EMPLOYEES_DETAILS  ? ' active' : '')}> */}
                                                 <button className={"btn btn-articles-light btn-lg w-100 report-quick-links" + (router.asPath === ROUTES.TRANSPARENCY_EMPLOYEES ? ' active' : '') + (router.pathname === '/transparency/employees/[id]' ? ' active' : '')}>
-                                                    <div>
+                                                    <div className="text-center">
                                                         <i className="fas fa-paste" aria-hidden="true"></i>
                                                         <span className="text">Employees</span>
                                                     </div>
@@ -349,7 +352,7 @@ function TransparencyLayout({ children }) {
                                         <div className="report-link">
                                             <Link href={ROUTES.TRANSPARENCY_FLAG}>
                                                 <button className={"btn btn-articles-light btn-lg w-100 report-quick-links " + (router.asPath === ROUTES.TRANSPARENCY_FLAG ? 'active' : null)}>
-                                                    <div>
+                                                    <div className="text-center">
                                                         <i className="fas fa-flag"></i>
                                                         <span className="text">Flag</span>
                                                     </div>
@@ -365,7 +368,7 @@ function TransparencyLayout({ children }) {
 
                         </div>
 
-                    </div>
+                    {/* </div> */}
 
                     <div className="col-md-8 transparency-sub-page-wrap pl-md-0">
                         {children}

@@ -350,34 +350,58 @@
     }
 
     .transparency-side-menu {
-        position: sticky;
-        top: calc(50px + 2rem);
+        position: relative;
         margin-bottom: 0rem;
         max-width: 600px;
+        flex-basis: 355px;
+        flex-shrink: 0;
+        padding-right: 15px;
+        padding-left: 15px;
+        flex-grow: 1;
 
         @include media-breakpoint-up(md) {
+            position: sticky;
+            top: calc(50px + 2rem);
             margin-bottom: 2rem;
+            margin-right: 1rem;
         }
 
         .side-menu-header {
             border-bottom: 3px solid black;
-            padding: 0.3rem 0rem;
+            // padding: 0.3rem 0rem;
+            padding-bottom: 1rem;
             justify-content: space-between;
 
             .left {
-                line-height: 1;
-                flex-shrink: 0;
-                flex-basis: 120px;
+                // line-height: 1;
+                // flex-shrink: 0;
+                // flex-basis: 120px;
 
                 h2 {
                     line-height: 1;
+                    text-align: center;
+                    margin-bottom: 0.5rem;
                 }
             }
 
             .right {
                 width: 100%;
-                max-width: 215px;
-                padding-left: 1rem;
+                display: flex;
+                justify-content: space-around;
+                margin-top: 0.25rem;
+                // max-width: 215px;
+                // padding-left: 1rem;
+
+                .tag {
+                    // width: 70px;
+                    display: inline-block;
+                    text-align: left;
+                }
+
+                .price {
+                    // width: 70px;
+                    display: inline-block;
+                }
             }
 
         }
@@ -394,19 +418,29 @@
         }
 
         .static-wrapper {
+
             .balance-label {
                 // text-decoration: underline;
-                // color: rgb(73, 73, 73);
+                color: rgb(73, 73, 73);
                 font-size: 14px;
                 font-weight: 700;
-                // text-transform: uppercase;
+                text-transform: uppercase;
+                margin-bottom: 0.25rem;
             }
 
             h2 {
+                font-size: 2.5rem;
+
+                // @include media-breakpoint-up(sm) {
+                //     font-size: 2.5rem;
+                // }
+
                 @include media-breakpoint-up(xl) {
-                    font-size: 2.5rem;
+                    font-size: 3rem;
                 }
+
             }
+
         }
 
         .sidebar-chart {
@@ -415,31 +449,53 @@
         }
 
         .quick-links {
-            border-top: 3px solid black;
+            position: relative;
+            // border-top: 3px solid black;
             padding: 0.5rem;
-            padding-top: 1rem;
-            margin-bottom: 0.5rem;
+            // padding-top: 1rem;
+            // margin-bottom: 0.5rem;
+
+            display: grid;
+            grid-gap: 5px 5px;
+            grid-template-columns: repeat(2, 1fr);
+
+            &:after {
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%) translateY(-100%);
+                content: '';
+                width: calc(100% - 1.25rem);
+                height: 3px;
+                background-color: black;
+            }
 
             @include media-breakpoint-down(sm) {
-                display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
+                // display: flex;
+                // flex-direction: row;
+                // justify-content: space-between;
+                // flex-wrap: wrap;
+                // display: grid;
+                // grid-gap: 5px 5px;
+                // grid-template-columns: repeat(2, 1fr);
             }
 
             .report-link {
+                // text-align: center;
                 // margin-top: 1rem;
 
                 @include media-breakpoint-down(sm) {
-                    width: 100%;
+                    // width: 50%;
+                    // margin: 1rem;
                 }
 
-                &:not(:last-child) {
-                    margin-bottom: 0.75rem;
-                }
+                // &:not(:last-child) {
+                //     margin-bottom: 0.75rem;
+                // }
 
                 .text {
                     @media (max-width: 411px) {
-                        font-size: 0.8rem !important;
+                        // font-size: 0.8rem !important;
                     }
                 }
             }
@@ -658,7 +714,7 @@
 
         .bg-rev {
             background-color: rgba(75, 186, 110, 0.35);
-            border-right: solid 4px rgb(56, 105, 72);
+            border-right: solid 4px rgba(75, 186, 110, 1);
             // border-left: solid 4px rgba(75, 186, 110, 1);
         }
 
@@ -679,21 +735,22 @@
             padding: 0.1rem 0.25rem;
             padding-left: 0.25rem;
             margin-bottom: 0.25rem;
-            // text-align: center;
+            text-align: center;
             font-weight: bold;
-            font-size: 0.85rem;
-            border-radius: 5px;
+            font-size: 0.8rem;
+            // border-radius: 5px;
             background-color: rgba(255, 255, 255, 0.7)!important;
             // flex-grow: 1;
+            min-width: 47%;
 
             i {
-                margin-right: 5px;
+                margin-right: 1px;
             }
 
             &.positive {
                 // background-color: rgba(75, 186, 110, 0.35);
                 // border-right: solid 2px rgba(75, 186, 110, 1);
-                border-left: solid 4px rgb(56, 105, 72);
+                border-bottom: solid 3px rgba(75, 186, 110, 1);
                 // border-top: solid 2px rgba(75, 186, 110, 1);
                 // border-bottom: solid 2px rgba(75, 186, 110, 1);
                 // margin-right: 0.5rem;
@@ -701,7 +758,7 @@
 
             &.negative {
                 // background-color: rgba(255, 0, 0, 0.35);
-                border-left: solid 4px rgb(255, 0, 0);
+                border-bottom: solid 3px rgb(255, 0, 0);
                 // border-right: solid 2px rgb(255, 0, 0);
                 // border-top: solid 2px rgb(255, 0, 0);
                 // border-bottom: solid 2px rgb(255, 0, 0);
