@@ -14,8 +14,11 @@ class MyDocument extends Document {
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
                 <link rel="stylesheet" href="https://use.typekit.net/wvo0uze.css"/>
                 <link rel="stylesheet" href="/fonts/fontawsome/css/all.min.css"/>
+
                 {/* <link rel="stylesheet" href="public/fonts/fontawsome/css/all.min.css" ></link> */}
                 {/* <script src="https://kit.fontawesome.com/d1a2586c98.js" crossOrigin="anonymous"></script> */}
+
+                <script async src="https://www.googletagmanager.com/gtag/js?id=G-1FY263JYMM"></script>
                 <script
                     dangerouslySetInnerHTML={{
                         __html: `
@@ -27,6 +30,7 @@ class MyDocument extends Document {
                         `,
                     }}
                 />
+
             </Head>
 
             <body>
