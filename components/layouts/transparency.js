@@ -174,10 +174,17 @@ function TransparencyLayout({ children }) {
     const { param } = router.query
 
     const [scrollPosition, setScrollPosition] = useState(0);
+    const [pageWidth, setPageWidth] = useState(0);
+
     const handleScroll = () => {
         const position = window.pageYOffset;
         setScrollPosition(position);
     };
+    const handleResize = () => {
+        const positionX = window.innerWidth;
+        setPageWidth(positionX);
+    };
+
     const [totalsLoading, setTotalsLoading] = useState(true)
     const [totals, setTotals] = useState({
         revenue: {
@@ -190,6 +197,7 @@ function TransparencyLayout({ children }) {
             inventoryTotal: 1
         }
     })
+
     const chartContainer = useRef(null);
     const [chartInstance, setChartInstance] = useState(null);
 
@@ -205,6 +213,9 @@ function TransparencyLayout({ children }) {
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll, { passive: true });
+        window.addEventListener('resize', handleResize);
+
+        handleResize();
 
         axios.get('/api/transparency/reports/totals')
         .then(function (response) {
@@ -226,6 +237,7 @@ function TransparencyLayout({ children }) {
 
         return () => {
             window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('resize', handleResize);
         };
 
     }, []);
@@ -241,12 +253,11 @@ function TransparencyLayout({ children }) {
 
         <div className="reports-page transparency-page">
 
-            <div className="container-lg">
-                <div className="row">
+            <div className="container">
 
-                    {/* <div className="col-md-4"> */}
+                <div className="page-content-wrap row">
 
-                        <div className="transparency-side-menu">
+                    <div className="transparency-side-menu">
 
                             <div className="static-wrapper">
 
@@ -258,7 +269,7 @@ function TransparencyLayout({ children }) {
                                         <span>Live</span>
                                     </div>
 
-                                    <div className={`normal ${scrollPosition > 400 && 'scrolled-down'}`}>
+                                    <div className={`normal ${ ( scrollPosition > 400 && pageWidth < 992 ) && 'scrolled-down'}`}>
                                         <div className="px-2 pt-3 pb-1">
 
                                             <div className="side-menu-header d-flex flex-column align-items-center">
@@ -322,7 +333,7 @@ function TransparencyLayout({ children }) {
 
                                             </div>
 
-                                            <div className="sidebar-chart bg-white">
+                                            <div className="sidebar-chart">
                                                 <canvas ref={chartContainer} />
                                             </div>
 
@@ -379,7 +390,7 @@ function TransparencyLayout({ children }) {
                                         </div>
                                     </div>
 
-                                    <div className={`quick-links ${scrollPosition > 400 && 'scrolled-down'}`}>
+                                    <div className={`quick-links ${ ( scrollPosition > 400 && pageWidth < 992 ) && 'scrolled-down'}`}>
 
                                         <div className="report-link">
                                             <Link href={ROUTES.TRANSPARENCY}>
@@ -434,13 +445,12 @@ function TransparencyLayout({ children }) {
 
                         </div>
 
-                    {/* </div> */}
-
-                    <div className="col-md-8 transparency-sub-page-wrap pl-md-0">
+                    <div className="transparency-sub-page-wrap">
                         {children}
                     </div>
 
                 </div>
+
             </div>
 
         </div>
