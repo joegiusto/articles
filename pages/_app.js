@@ -37,7 +37,7 @@ let socket
 
 // MEMORY - Many, many, many issues later
 if (typeof window !== 'undefined') {
-    socket = io("https://676f0e10e678.ngrok.io");
+    socket = io("https://59cafa9f1d9c.ngrok.io");
 }
 
 function MyApp({ Component, pageProps }) {
@@ -53,11 +53,16 @@ function MyApp({ Component, pageProps }) {
 
     useEffect(() => {
              
-        if (typeof window !== 'undefined') {
+        if ( typeof window !== 'undefined' && process.env.VERCEL_ENV == "production" ) {
+
             console.log("GA - EVENT")
+
             gtag('config', 'G-1FY263JYMM', {    // DON'T ADD THIS TO _document.tsx
                 page_path: window.location.pathname,   // OTHERWISE YOU'LL GET DUPLICATE HITS
             });    
+
+        } else {
+            console.log("GA - EVENT IGNORED")
         }
 
     },[asPath]);

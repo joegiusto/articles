@@ -100,7 +100,7 @@ function NewsLayout({ children }) {
             <div className="list card rounded-0 py-3">
                 {trending.map(item => 
 
-                    <div className="card-body mx-3 p-3 mb-3">
+                    <div key={item.title} className="card-body mx-3 p-3 mb-3">
                         <h5>{item.title}</h5>
                         <div>{item.text}</div>
                         <Link href={item.url}>
@@ -153,7 +153,7 @@ function NewsLayout({ children }) {
                         <span>Launch Map View</span>
                     </div>
 
-                    <div className="title mt-3">Trending</div>
+                    <h3 className="mt-3">Trending</h3>
 
                     <Swiper
                         {...swiper_settings}
@@ -170,7 +170,7 @@ function NewsLayout({ children }) {
                         </div>
 
                         {trending.map( item =>
-                            <SwiperSlide>
+                            <SwiperSlide key={item.url}>
                                 <Link href={item.url}>
                                     <div className="trending-card">
                                     <div className="type story">Story</div>
@@ -231,109 +231,107 @@ function NewsLayout({ children }) {
             <div className="menu">
 
                 <div className="discover-links">
-                <h5 className="title">Discover</h5>
 
-                <div className="links">
+                    <h3 className="title">Discover</h3>
 
-                    <Link href={ROUTES.NEWS}>
-                        <a>
-                            <div className={"link frontpage " + (router.asPath === "/news" ? 'active' : null)}>
-                                <i className="fas fa-newspaper"></i>
-                                <div className="text">Frontpage</div>
-                            </div>
-                        </a>
-                    </Link>
+                    <div className="links">
 
-                    <Link href={ROUTES.STORIES}>
-                        <a>
-                            <div className={"link stories " + (router.asPath === "/news/stories" ? 'active' : null)}>
-                                <i className="fas fa-bullhorn"></i>
-                                <div className="text">Stories</div>
-                            </div>
-                        </a>
-                    </Link>
+                        <Link href={ROUTES.NEWS}>
+                            <a>
+                                <div className={"link frontpage " + (router.asPath === "/news" ? 'active' : null)}>
+                                    <i className="fad fa-newspaper"></i>
+                                    <div className="text">Frontpage</div>
+                                </div>
+                            </a>
+                        </Link>
 
-                    <Link href={ROUTES.ISSUES}>
-                        <a>
-                            <div className={"link issues " + (router.asPath === "/news/issues" ? 'active' : null)}>
-                                <i className="fas fa-balance-scale"></i>
-                                <div className="text">Issues</div>
-                            </div>
-                        </a>
-                    </Link>
-                    
-                    <Link href={ROUTES.MYTHS}>
-                        <a>
-                            <div className={"link myths " + (router.asPath === "/news/myths" ? 'active' : null)}>
-                                <i className="fas fa-ghost"></i>
-                                <div className="text">Myths</div>
-                            </div>
-                        </a>
-                    </Link>
+                        <Link href={ROUTES.STORIES}>
+                            <a>
+                                <div className={"link stories " + (router.asPath === "/news/stories" ? 'active' : null)}>
+                                    <i className="fad fa-bullhorn"></i>
+                                    <div className="text">Stories</div>
+                                </div>
+                            </a>
+                        </Link>
 
-                    <Link href={ROUTES.NEWS_LOCAL}>
-                        <a>
-                            <div className={"link frontpage " + (router.asPath === "/news/local" ? 'active' : null)}>
-                                <i className="fas fa-school"></i>
-                                <div className="text">Local</div>
-                            </div>
-                        </a>
-                    </Link>
+                        <Link href={ROUTES.ISSUES}>
+                            <a>
+                                <div className={"link issues " + (router.asPath === "/news/issues" ? 'active' : null)}>
+                                    <i className="fad fa-balance-scale"></i>
+                                    <div className="text">Issues</div>
+                                </div>
+                            </a>
+                        </Link>
+                        
+                        <Link href={ROUTES.MYTHS}>
+                            <a>
+                                <div className={"link myths " + (router.asPath === "/news/myths" ? 'active' : null)}>
+                                    <i className="fad fa-ghost"></i>
+                                    <div className="text">Myths</div>
+                                </div>
+                            </a>
+                        </Link>
 
-                    <Link href={ROUTES.RESOURCES}>
-                        <a>
-                            <div className={"link frontpage " + (router.asPath === "/news/resources" ? 'active' : null)}>
-                                {/* <i className="fas fa-ghost"></i> */}
-                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="books" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" className="svg-inline--fa fa-books fa-w-16 fa-fw mr-2"><path fill="currentColor" d="M575.11 443.25L461.51 19.06C458.2 6.7 445.61-3.18 430.15.96L414.7 5.1c-6.18 1.66-11.53 6.4-16.06 14.24-14.03 6.94-52.3 17.21-68 18.22-7.84-4.53-14.85-5.96-21.03-4.3l-15.46 4.14c-2.42.65-4.2 1.95-6.15 3.08V32c0-17.67-14.33-32-32-32h-64c-17.67 0-32 14.33-32 32v64h128l101.66 396.94c3.31 12.36 15.9 22.24 31.36 18.1l15.45-4.14c6.18-1.66 11.53-6.4 16.06-14.24 13.91-6.88 52.18-17.2 68-18.22 7.84 4.53 14.85 5.96 21.03 4.3l15.46-4.14c15.45-4.14 21.41-18.99 18.09-31.35zm-134.4-7.06L348.64 92.37l61.82-16.56 92.07 343.82-61.82 16.56zM0 384h128V128H0v256zM96 0H32C14.33 0 0 14.33 0 32v64h128V32c0-17.67-14.33-32-32-32zM0 480c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64H0v64zm160-96h128V128H160v256zm0 96c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64H160v64z" className=""></path></svg>
-                                <div className="text">Resources</div>
-                            </div>
-                        </a>
-                    </Link>
+                        <Link href={ROUTES.NEWS_LOCAL}>
+                            <a>
+                                <div className={"link frontpage " + (router.asPath === "/news/local" ? 'active' : null)}>
+                                    <i className="fad fa-street-view"></i>
+                                    <div className="text">Local</div>
+                                </div>
+                            </a>
+                        </Link>
 
-                    <Link href={ROUTES.NEWS_STOCKS}>
-                        <a>
-                            <div className={"link frontpage " + (router.asPath === "/news/stocks" ? 'active' : null)}>
-                                {/* <i className="fas fa-ghost"></i> */}
-                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chart-area" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="svg-inline--fa fa-chart-area fa-w-16 fa-fw mr-2"><path fill="currentColor" d="M500 384c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H12c-6.6 0-12-5.4-12-12V76c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v308h436zM372.7 159.5L288 216l-85.3-113.7c-5.1-6.8-15.5-6.3-19.9 1L96 248v104h384l-89.9-187.8c-3.2-6.5-11.4-8.7-17.4-4.7z" className=""></path></svg>
-                                <div className="text">Stocks</div>
-                            </div>
-                        </a>
-                    </Link>
+                        <Link href={ROUTES.RESOURCES}>
+                            <a>
+                                <div className={"link frontpage " + (router.asPath === "/news/resources" ? 'active' : null)}>
+                                    <i className="fad fa-books"></i>
+                                    <div className="text">Resources</div>
+                                </div>
+                            </a>
+                        </Link>
 
-                    <Link href={ROUTES.NEWS_CRYPTO}>
-                        <a>
-                            <div className={"link crypto " + (router.asPath === "/news/crypto" ? 'active' : null)}>
-                                {/* <i className="fas fa-ghost"></i> */}
-                                <i className="fab fa-bitcoin"></i>
-                                <div className="text">Crypto</div>
-                            </div>
-                        </a>
-                    </Link>
+                        <Link href={ROUTES.NEWS_STOCKS}>
+                            <a className="d-none">
+                                <div className={"link frontpage " + (router.asPath === "/news/stocks" ? 'active' : null)}>
+                                    <i className="fad fa-chart-area"></i>
+                                    <div className="text">Stocks</div>
+                                </div>
+                            </a>
+                        </Link>
 
-                </div>
+                        <Link href={ROUTES.NEWS_CRYPTO}>
+                            <a className="d-none">
+                                <div className={"link crypto " + (router.asPath === "/news/crypto" ? 'active' : null)}>
+                                    <i className="fab fa-bitcoin"></i>
+                                    <div className="text">Crypto</div>
+                                </div>
+                            </a>
+                        </Link>
+
+                    </div>
 
                 </div>
 
                 <div className="grow"></div>
 
                 <div className="feature-links d-none">
-                <h5 className="title mt-3">Feature</h5>
+                    <h5 className="title mt-3">Feature</h5>
 
-                <Link href={`${ROUTES.EXTENDED}'/coronavirus'`}>
-                    <a>
-                        <div className={"link frontpage " + (router.asPath === "/news/extended/coronavirus" ? 'active' : null)}>
-                            <i className="fas fa-lungs-virus"></i>
-                            <div className="text">Coronavirus</div>
+                    <Link href={`${ROUTES.EXTENDED}'/coronavirus'`}>
+                        <a>
+                            <div className={"link frontpage " + (router.asPath === "/news/extended/coronavirus" ? 'active' : null)}>
+                                <i className="fas fa-lungs-virus"></i>
+                                <div className="text">Coronavirus</div>
+                            </div>
+                        </a>
+                    </Link>
+
+                    {/* <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS}>
+                        <div className={"link " + (this.props.location.pathname === "/news/coronavirus" ? 'active' : null)}>
+                        <i className="fas fa-fist-raised"></i>
+                        <div className="text">Black Lives Matter</div>
                         </div>
-                    </a>
-                </Link>
-
-                {/* <Link onClick={() => (window.scrollTo(0, 0))} to={ROUTES.NEWS}>
-                    <div className={"link " + (this.props.location.pathname === "/news/coronavirus" ? 'active' : null)}>
-                    <i className="fas fa-fist-raised"></i>
-                    <div className="text">Black Lives Matter</div>
-                    </div>
-                </Link> */}
+                    </Link> */}
                 </div>
 
             </div>

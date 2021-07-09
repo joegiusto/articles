@@ -47,7 +47,7 @@ const resourceItems = [
     }
 ]
 
-function Home() {
+function ResourcesPage() {
     const router = useRouter()
     const { param } = router.query
 
@@ -63,8 +63,8 @@ function Home() {
 
             <div className="container py-3">
 
-                <h2>Resources Page</h2>
-                <p className="mb-4">This is the Resources Page of the news section.</p>
+                <h2>Resources</h2>
+                {/* <p className="mb-4">This is the Resources Page of the news section.</p> */}
 
                 <div className="row">
 
@@ -72,7 +72,7 @@ function Home() {
                         <div className="row">
 
                             {resourceItems.map(item => (
-                                <div className="col-lg-6 mb-3">
+                                <div key={item.title} className="col-lg-6 mb-3">
 
                                     <div className="card h-100 shadow-articles rounded-0">
 
@@ -131,5 +131,5 @@ function Home() {
     )
 }
 
-Home.Layout = NewsLayout;
-export default Home;
+ResourcesPage.Layout = NewsLayout;
+export default ResourcesPage;

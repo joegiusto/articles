@@ -254,13 +254,9 @@ export default function Layout(
                         as={ButtonGroup}
                     >
 
-                        <Link href={ROUTES.PARTY}>
-                            <Button variant="articles-light btn-sm mr-0 align-items-center">
-                                <i className="fad fa-link fa-lg"></i>My Links
-                            </Button>
-                        </Link>
-
-                        <Dropdown.Toggle split variant="articles-light btn-sm" id="dropdown-custom-2" />
+                        <Dropdown.Toggle split variant="articles-light btn-sm" id="dropdown-custom-2">                          
+                            <i className="fad fa-link fa-lg"></i><span className="mr-2">My Links</span>
+                        </Dropdown.Toggle>
 
                         <Dropdown.Menu className="">
 

@@ -20,8 +20,8 @@ function LocalPage() {
             </Head>
 
             <div className="container py-3">
-                <h2>Local Page</h2>
-                <p>This is the Local Page of the news section.</p>
+                <h2>Local</h2>
+                {/* <p>Local news provided by our partners.</p> */}
 
                 <div className="row mr-3">
 
