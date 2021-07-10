@@ -478,8 +478,8 @@ function Home() {
                         <div className="quote-container">
 
                             <div className="quote">
-                                "{quotes[randomQuoteIndex].quote}"
-                    </div>
+                                &quot;{quotes[randomQuoteIndex].quote}&quot;
+                            </div>
 
                             <div className="author">
                                 {quotes[randomQuoteIndex].author}

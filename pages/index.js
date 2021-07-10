@@ -15,9 +15,13 @@ import StoreItemBeta from 'components/store/StoreItem';
 import StoreItem from 'components/store/StoreItem'
 import NewsCard from 'components/News/NewsCard';
 
+import picTransparency from 'public/images/landing/mobile-transparency.png'
+import picNews from 'public/images/landing/mobile-news.png'
+import picStore from 'public/images/landing/mobile-store.png'
+import picProposals from 'public/images/landing/mobile-proposals.png'
+
 const useCounter = () => {
     const colorModeDark = useSelector((state) => state.colorModeDark)
-
     return { colorModeDark }
 }
 
@@ -155,38 +159,45 @@ export default function Home(props) {
 
                             <div className={`mock transparency-mock ${counter == 0 && 'active'}`}>
                                 <Image
-                                    src="/images/landing/mobile-transparency.png"
+                                    src={picTransparency}
                                     alt="Image of our Transparency page."
                                     layout="fill"
                                     objectFit="cover"
-                                    className="test"
+                                    priority="true"
+                                    placeholder="blur"
                                 />
                             </div>
 
                             <div className={`mock news-mock ${counter == 1 && 'active'}`}>
                                 <Image
-                                    src="/images/landing/mobile-news.png"
+                                    src={picNews}
                                     alt="Image of our News page, home to Stories, Issues and Myths."
                                     layout="fill"
                                     objectFit="cover"
+                                    priority="true"
+                                    placeholder="blur"
                                 />
                             </div>
 
                             <div className={`mock store-mock ${counter == 2 && 'active'}`}>
                                 <Image
-                                    src="/images/landing/mobile-store.png"
+                                    src={picStore}
                                     alt="Image of our Store page."
                                     layout="fill"
                                     objectFit="cover"
+                                    priority="true"
+                                    placeholder="blur"
                                 />
                             </div>
 
                             <div className={`mock proposal-mock ${counter == 3 && 'active'}`}>
                                 <Image
-                                    src="/images/landing/mobile-proposals.png"
+                                    src={picProposals}
                                     alt="Image of our Proposal page."
                                     layout="fill"
                                     objectFit="cover"
+                                    priority="true"
+                                    placeholder="blur"
                                 />
                             </div>
 

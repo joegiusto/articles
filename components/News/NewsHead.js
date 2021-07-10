@@ -1,24 +1,59 @@
 import React, { Component, useState } from 'react';
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 import moment from 'moment'
 
-import ROUTES from '../constants/routes';
+import ROUTES from 'components/constants/routes';
+
+import picHeroMidTown from 'public/images/news/heros/midtown.jpg'
+import picHeroIsland from 'public/images/news/heros/island.jpg'
+import picHeroRiver from 'public/images/news/heros/river.jpg'
+import picHeroBannermans from 'public/images/news/heros/bannermans.jpg'
 
 function NewsHead(props) {
     const router = useRouter()
 
     const [backgroundIndex, setBackgroundIndex] = useState(0);
   
-  
     const days = [];
   
     const searchBackgrounds = [
-      'https://cdn.vox-cdn.com/thumbor/GxxQX7lKYjQp8CXU0GWtQcWGLDk=/0x0:2000x1333/1200x675/filters:focal(840x507:1160x827)/cdn.vox-cdn.com/uploads/chorus_image/image/66009531/190921_07_18_10_5DS27714__1_.0.jpg',
-      'https://walkway.org/wp-content/uploads/2017/07/HV-Image.jpg',
-      'https://cdn.theculturetrip.com/wp-content/uploads/2020/09/e3y4tn-e1599862024871.jpg'
+        <Image
+            key="1"
+            src={picHeroMidTown}
+            alt="Image of New York City Midtown skyline"
+            layout="fill"
+            objectFit="cover"
+            placeholder="blur"
+            priority="true"
+        />,
+        <Image 
+            key="2" 
+            src={picHeroIsland}
+            alt=""
+            layout="fill"
+            objectFit="cover"
+            placeholder="blur"
+        />,
+        <Image 
+            key="3" 
+            src={picHeroRiver}
+            alt=""
+            layout="fill"
+            objectFit="cover"
+            placeholder="blur"
+        />,
+        <Image 
+            key="4" 
+            src={picHeroBannermans}
+            alt=""
+            layout="fill"
+            objectFit="cover"
+            placeholder="blur"
+        />
     ]
   
     for (let i = 0;  i <= 6; i++ ) {
@@ -73,7 +108,7 @@ function NewsHead(props) {
     return (
         <div className={"news-head-new " + (isHome ? 'home' : 'focus')}>
 
-            <img src={searchBackgrounds[backgroundIndex]} alt=""/>
+            {searchBackgrounds[backgroundIndex]}
 
             <div className="background-gradient"></div>
 
@@ -95,38 +130,38 @@ function NewsHead(props) {
 
                 <div className="modal-items">
 
-                <Link href={ROUTES.NEWS_LOCAL}>
-                    <div className="item text-white">
-                    <i className="icon fas fa-street-view mr-0" aria-hidden="true"></i>
-                    <div>Local</div>
-                    </div>
-                </Link>
+                    <Link href={ROUTES.NEWS_LOCAL}>
+                        <div className="item text-white">
+                        <i className="icon fas fa-street-view mr-0" aria-hidden="true"></i>
+                        <div>Local</div>
+                        </div>
+                    </Link>
 
-                {/* <div className="item text-white">
-                    <i className="icon fas fa-temperature-low mr-0" aria-hidden="true"></i>
-                    <div>Weather</div>
-                </div> */}
+                    {/* <div className="item text-white">
+                        <i className="icon fas fa-temperature-low mr-0" aria-hidden="true"></i>
+                        <div>Weather</div>
+                    </div> */}
 
-                <Link href={ROUTES.NEWS_STOCKS}>
-                    <div className="item text-white">
-                    <i className="icon fas fa-chart-line mr-0" aria-hidden="true"></i>
-                    <div>Stocks</div>
-                    </div>
-                </Link>
+                    <Link href={ROUTES.NEWS_STOCKS}>
+                        <div className="item text-white">
+                        <i className="icon fas fa-chart-line mr-0" aria-hidden="true"></i>
+                        <div>Stocks</div>
+                        </div>
+                    </Link>
 
-                <Link href={ROUTES.NEWS_CRYPTO}>
-                    <div className="item text-white">
-                    <i className="icon fab fa-bitcoin mr-0" aria-hidden="true"></i>
-                    <div>Crypto</div>
-                    </div>
-                </Link>
+                    <Link href={ROUTES.NEWS_CRYPTO}>
+                        <div className="item text-white">
+                        <i className="icon fab fa-bitcoin mr-0" aria-hidden="true"></i>
+                        <div>Crypto</div>
+                        </div>
+                    </Link>
 
-                <Link href={ROUTES.RESOURCES}>
-                    <div className="item text-white">
-                    <i className="icon fas fa-archive mr-0" aria-hidden="true"></i>
-                    <div>Resources</div>
-                    </div>
-                </Link>
+                    <Link href={ROUTES.RESOURCES}>
+                        <div className="item text-white">
+                        <i className="icon fas fa-archive mr-0" aria-hidden="true"></i>
+                        <div>Resources</div>
+                        </div>
+                    </Link>
 
                 </div>
 

@@ -7,10 +7,11 @@ import { useRouter } from 'next/router'
 
 import axios from 'axios'
 
-// import hero from 'assets/img/Store/head.jpg';
-import ROUTES from '../../components/constants/routes'
-import StoreLayout from '../../components/layouts/store.js';
-import StoreItemBeta from '../../components/store/StoreItem';
+import ROUTES from 'components/constants/routes'
+import StoreLayout from 'components/layouts/store.js';
+import StoreItemBeta from 'components/store/StoreItem';
+
+import picHero from 'public/images/store/hero.jpg'
 
 class StorePage extends Component {
     constructor(props) {
@@ -77,12 +78,11 @@ class StorePage extends Component {
                             {/* Todo - Diffretn Header Image based on the color mode that is active, I want this back in */}
                             {/* <img src={ (this.props.colorModeDark ? heroDark : hero) } alt=""/> */}
                             <Image
-                                src="/images/store/hero.jpg"
+                                src={picHero}
                                 alt="People wearing branded Articles clothing"
                                 layout="fill"
                                 objectFit="cover"
                                 placeholder="blur"
-                                blurDataURL="LdQupO0fMzxa_K=Kn$R*NIS4kCjF"
                             />
         
                             <div className="notice">
