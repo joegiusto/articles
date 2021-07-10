@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 
-import ROUTES from '../../../components/constants/routes';
+import ROUTES from 'components/constants/routes';
+// import orders from 'pages/api/user/orders';
 
 class RevenueTable extends Component {
     constructor(props) {
@@ -31,13 +32,15 @@ class RevenueTable extends Component {
 
                 ...this.props.reportsData.revenue.donations.map(order => {
                     order.type = 'Donation';
+                    order.revenue_summary = `${order.user_id?.first_name} ${order.user_id?.last_name}`;
                     order.unifiedPrice = order.amount
                     return order;
                 }),
 
                 ...this.props.reportsData.revenue.orders.map(order => {
                     order.type = 'Store Order';
-                    order.unifiedPrice = order.payment.total
+                    order.unifiedPrice = order.payment.total;
+                    order.revenue_summary = "1 Item"
                     return order;
                 }),
 
@@ -71,12 +74,14 @@ class RevenueTable extends Component {
                 all: [
                     ...this.props.reportsData.revenue.donations.map(order => {
                         order.type = 'Donation';
+                        order.revenue_summary = `${order.user_id?.first_name} ${order.user_id?.last_name}`;
                         order.unifiedPrice = order.amount
                         return order;
                     }),
                     ...this.props.reportsData.revenue.orders.map(order => {
                         order.type = 'Store Order';
-                        order.unifiedPrice = order.payment.total
+                        order.unifiedPrice = order.payment.total;
+                        order.revenue_summary = "1 Item"
                         return order;
                     }),
                     ...this.props.reportsData.revenue.ads
@@ -201,7 +206,7 @@ class RevenueTable extends Component {
                             {this.props.subtableSelector != 'revenue-donations' &&  <td colSpan="1" className="border-right-0 ">{sale.type}</td>}
                             {this.props.subtableSelector === 'revenue-donations' && <td colSpan="1" className="border-right-0 ">{sale.user_id?.first_name} {sale.user_id?.last_name}</td>}
 
-                            <td colSpan="1" className="border-right-0 "></td>
+                            <td colSpan="1" className="border-right-0 ">{sale.revenue_summary}</td>
                             
                             <td colSpan="1" className="border-right-0 ">${(sale.unifiedPrice / 100).toFixed(2)}</td>
 

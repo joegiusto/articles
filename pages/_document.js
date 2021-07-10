@@ -11,7 +11,7 @@ class MyDocument extends Document {
         <Html>
 
             <Head>
-                <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
                 <link rel="stylesheet" href="https://use.typekit.net/wvo0uze.css"/>
                 <link rel="stylesheet" href="/fonts/fontawsome/css/all.min.css"/>
 

@@ -1368,13 +1368,13 @@ section.news-page {
                 }
 
                 .discover-links {
-                    @include media-breakpoint-down(lg) {
+                    @include media-breakpoint-down(md) {
                         display: flex;
                         align-items: stretch;
                     }
 
                     .title {
-                        @include media-breakpoint-down(lg) {
+                        @include media-breakpoint-down(md) {
                             // margin-top: 0.5re;
                             // display: block;
                             display: flex;

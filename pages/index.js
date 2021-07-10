@@ -11,7 +11,7 @@ import axios from 'axios'
 // Articles Imports
 import ROUTES from 'components/constants/routes'
 import StoreItemBeta from 'components/store/StoreItem';
-import { connectToDatabase } from 'util/mongodb'
+// import { connectToDatabase } from 'util/mongodb'
 import StoreItem from 'components/store/StoreItem'
 import NewsCard from 'components/News/NewsCard';
 
@@ -660,7 +660,8 @@ export default function Home(props) {
                                     {/* <div className="fake-note">This data is for display purposes only, live data available on the <Link style={{ textDecoration: 'underline' }} to={ROUTES.TRANSPARENCY_REPORTS}>Reports Page</Link></div> */}
 
                                     <div className="fake-sales">
-                                        {startSalesAnimation()}
+
+                                        {/* {startSalesAnimation()} */}
 
                                         <div className="sale active" style={{ 'animationDelay': '0s' }}>
                                             <div className="amount revenue">+$10</div>
@@ -1160,11 +1161,11 @@ export default function Home(props) {
 
 // }
 
-export async function getServerSideProps(context) {
-    const { client } = await connectToDatabase()
-    const isConnected = await client.isConnected()
+// export async function getServerSideProps(context) {
+//     const { client } = await connectToDatabase()
+//     const isConnected = await client.isConnected()
 
-    return {
-        props: { isConnected },
-    }
-}
+//     return {
+//         props: { isConnected },
+//     }
+// }

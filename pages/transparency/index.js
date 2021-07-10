@@ -21,7 +21,7 @@ import MomentUtils from '@date-io/moment';
 import { DateTimePicker } from "@material-ui/pickers";
 import { ThemeProvider } from "@material-ui/styles";
 import articlesTheme from 'components/material_ui/articlesTheme'
-import { Discovery } from 'aws-sdk';
+// import { Discovery } from 'aws-sdk';
 function TransparencyHomePage(props) {
 
     const [reportsData, setReportsData] = useState({
@@ -194,7 +194,7 @@ function TransparencyHomePage(props) {
 
                         <Dropdown style={{zIndex: '1', position: 'relative'}} className="d-flex">
 
-                            <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-1">
+                            <Dropdown.Toggle variant="articles-light" id="dropdown-custom-1">
                                 <i className="fas fa-filter"></i>Filter
                             </Dropdown.Toggle>
 
@@ -293,8 +293,8 @@ function TransparencyHomePage(props) {
                                     <div className="">Top Donor: </div>
                                     <hr className="my-1"/>
 
-                                    <span className="badge badge-articles border border-dark mr-2">$400.00</span>
-                                    Joey Giusto
+                                    <span className="badge badge-articles border border-dark mr-2">$900.00</span>
+                                    <span>Joey Giusto</span>
 
                                 </div>
 
@@ -307,8 +307,8 @@ function TransparencyHomePage(props) {
                                     <div className="">Largest Donation: </div>
                                     <hr className="my-1"/>
 
-                                    <span className="badge badge-articles border border-dark mr-2">$100.00</span>
-                                    Joey Giusto
+                                    <span className="badge badge-articles border border-dark mr-2">$300.00</span>
+                                    <span>Joey Giusto</span>
 
                                 </div>
 
@@ -321,8 +321,8 @@ function TransparencyHomePage(props) {
                                     <div className="">Recent Donation: </div>
                                     <hr className="my-1"/>
 
-                                    <span className="badge badge-articles border border-dark mr-2">$100.00</span>
-                                    Joey Giusto
+                                    <span className="badge badge-articles border border-dark mr-2">$300.00</span>
+                                    <span>Joey Giusto</span>
 
                                 </div>
 

@@ -212,10 +212,13 @@ function TransparencyLayout({ children }) {
     const [reportsData, setReportsData] = useState({})
 
     useEffect(() => {
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        window.addEventListener('resize', handleResize);
 
-        handleResize();
+        if (typeof window !== 'undefined') {
+            window.addEventListener('scroll', handleScroll, { passive: true });
+            window.addEventListener('resize', handleResize);
+
+            handleResize();
+        }
 
         axios.get('/api/transparency/reports/totals')
         .then(function (response) {
@@ -236,8 +239,12 @@ function TransparencyLayout({ children }) {
         });
 
         return () => {
-            window.removeEventListener('scroll', handleScroll);
-            window.removeEventListener('resize', handleResize);
+            if (typeof window !== 'undefined') {
+                window.addEventListener('scroll', handleScroll, { passive: true });
+                window.addEventListener('resize', handleResize);
+    
+                handleResize();
+            }
         };
 
     }, []);

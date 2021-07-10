@@ -66,13 +66,13 @@ function ResourcesPage() {
                 <h2>Resources</h2>
                 {/* <p className="mb-4">This is the Resources Page of the news section.</p> */}
 
-                <div className="row">
+                <div className="row resources-row">
 
-                    <div className="col-lg-12">
-                        <div className="row">
+                    {/* <div className="col-lg-12"> */}
+                        {/* <div className="row"> */}
 
                             {resourceItems.map(item => (
-                                <div key={item.title} className="col-lg-6 mb-3">
+                                <div key={item.title} className="">
 
                                     <div className="card h-100 shadow-articles rounded-0">
 
@@ -109,7 +109,7 @@ function ResourcesPage() {
                                             </div>
 
                                             <Link href={ `${ROUTES.RESOURCES}/${item.location}` }>
-                                                <a className="btn btn-lg btn-articles-light">Access</a>
+                                                <a className="btn btn-lg btn-articles-light w-100">Access</a>
                                             </Link>
                                         
                                         </div>
@@ -119,9 +119,9 @@ function ResourcesPage() {
                                 </div>
                             ))}
 
-                        </div>
+                        {/* </div> */}
 
-                    </div>
+                    {/* </div> */}
 
                 </div>
 
