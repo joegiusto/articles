@@ -97,7 +97,7 @@ class Proposals extends Component {
 
                     </div> */}
 
-                    <div className="badges noselect d-flex justify-content-center">
+                    <div className="badges noselect">
                         <button onClick={() => this.setState({ filter: 'All' })} className={"btn btn-articles-light btn-lg " + ( this.state.filter === "All" ? 'active' : '' )}>All</button>
                         <button onClick={() => this.setState({ filter: 'Fundamental' })} className={"btn btn-articles-light btn-lg " + ( this.state.filter === "Fundamental" ? 'active' : '' )}>Fundamental</button>
                         <button onClick={() => this.setState({ filter: 'Social' })} className={"btn btn-articles-light btn-lg " + ( this.state.filter === "Social" ? 'active' : '' )}>Social</button>

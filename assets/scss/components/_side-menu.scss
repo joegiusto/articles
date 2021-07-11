@@ -589,7 +589,7 @@
             margin-right: 0.5rem;
             font-size: 1.2rem;
             position: absolute;
-            top: 50%;
+            top: 1.25rem;
             right: 0;
             transform: translateY(-50%);
         }
@@ -751,6 +751,26 @@
             object-fit: contain;
         }
 
+        i {
+            // margin-right: 0;
+            // padding-right: 0.5rem;
+            // padding-left: 0.5rem;
+
+            &::before,
+            &::after {
+                -webkit-text-stroke: 1px black;
+            }
+
+            &::before {
+                color: $base-color;
+            }
+
+            &::after {
+                opacity: 1;
+                color: $accent-color;
+            }
+        }
+
         .weather {
             height: inherit;
             width: 300px;
@@ -809,7 +829,7 @@
     }
 
     .messages-badge {
-        
+
     }
 
     .notification-badge,

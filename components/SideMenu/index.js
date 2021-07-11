@@ -101,8 +101,11 @@ function SideMenuBase(props) {
         // Only hide notification if there is no override
         if ( !data.force_notification_interaction ) {
             setTimeout(() => { 
-                setNotificationVisible(false)
-                setTimeout(() => setNotification( {} ), 200 )
+
+                // TODO - ADD BACK IN
+                // setNotificationVisible(false)
+                // setTimeout(() => setNotification( {} ), 200 )
+
             }, 4000);
         }
     
@@ -155,6 +158,50 @@ function SideMenuBase(props) {
                             {` of `}
                             <span className="badge badge-danger ml-1">{notification?.amount}</span>
                         </span>
+
+                    </div>
+                );
+            case 'message':
+                return (
+                    <div className="notification-content">
+
+                        <Link href={ROUTES.MESSAGES}>
+
+                            <a className="d-flex align-items-center">
+                                <img alt="Message notification user profile photo" className="mr-2" width="40px" height="40px" src={notification.profile_photo}/>
+                                <span>{notification.user}</span>
+                            </a>
+
+                        </Link> 
+
+                        <hr/>
+
+                        <div className="mb-2">
+                            {notification.message_preview}
+                        </div>
+
+                        <hr/>
+
+                        <div className="d-flex justify-content-between align-items-center">
+                            <div>
+                                <Link href={ROUTES.MESSAGES}>
+                                    <a className="btn btn-sm btn-link">
+                                        Mute User
+                                    </a>
+                                </Link> 
+                                |
+                                <Link href={ROUTES.MESSAGES}>
+                                    <a className="btn btn-sm btn-link">
+                                        Mute Messages
+                                    </a>
+                                </Link> 
+                            </div>
+                            <Link href={ROUTES.MESSAGES}>
+                                <a className="btn btn-sm btn-articles-light">
+                                    View Message
+                                </a>
+                            </Link> 
+                        </div>
 
                     </div>
                 );
@@ -243,7 +290,8 @@ function SideMenuBase(props) {
                 <Dropdown className="weather-badge mr-2">
 
                     <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-1">
-                        <img src="https://icon-library.com/images/cloudy-icon/cloudy-icon-3.jpg" alt="Cloudy weather icon"/>
+                        {/* <img src="https://icon-library.com/images/cloudy-icon/cloudy-icon-3.jpg" alt="Cloudy weather icon"/> */}
+                        <i className="fad fa-clouds-sun mr-0 fa-lg mr-1"></i>
                         <div>50°F</div>
                     </Dropdown.Toggle>
 
@@ -269,33 +317,39 @@ function SideMenuBase(props) {
 
                         <div className="weather">
 
-                        <div className="icon">
-                            <img src="https://icon-library.com/images/cloudy-icon/cloudy-icon-3.jpg" alt="Cloudy weather icon"/>
-                        </div>
+                            {/* <div className="icon"> */}
+                                {/* <img src="https://icon-library.com/images/cloudy-icon/cloudy-icon-3.jpg" alt="Cloudy weather icon"/> */}
+                            {/* </div> */}
 
-                        <div className="details">
-                            <div className="temp">
-                            50
-                            <span className="deg">°F</span>
-                            </div>
-                        </div>
+                            <div className="details">
 
-                        <div className="details-extra">
+                                <div className="temp d-flex justify-content-center align-items-center p-3">
 
-                            <div className="precipitation">
-                            <img src="https://media.istockphoto.com/vectors/water-drop-symbol-vector-rain-drop-icon-vector-id1156487494?k=6&amp;m=1156487494&amp;s=170667a&amp;w=0&amp;h=RD9wBtK827d_3rdeOvSez9bboMBf4_E_0MIEtus9cUo=" alt="Precipitation Symbol"/>
-                            0%
+                                    <i className="fad fa-clouds-sun mr-0 fa-lg mr-3 fa-lg"></i>
+                                    <span>50</span>
+                                    <span className="deg">°F</span>
+
+                                </div>
+
                             </div>
 
-                            <div className="humidity">
-                            <img src="https://w7.pngwing.com/pngs/65/666/png-transparent-drawing-humidity-indicator-angle-triangle-illustrator-thumbnail.png" alt="Humidity Symbol"/>
-                            0%
-                            </div>
+                            <div className="details-extra">
 
-                            <div className="wind">
-                            <img src="https://www.pinclipart.com/picdir/middle/140-1405202_windy-weather-icon-wind-weather-symbols-clipart.png" alt="Wind Symbol"/>
-                            5 mph
-                            </div>
+                                <div className="precipitation">
+                                    <img src="https://media.istockphoto.com/vectors/water-drop-symbol-vector-rain-drop-icon-vector-id1156487494?k=6&amp;m=1156487494&amp;s=170667a&amp;w=0&amp;h=RD9wBtK827d_3rdeOvSez9bboMBf4_E_0MIEtus9cUo=" alt="Precipitation Symbol"/>
+                                    0%
+                                </div>
+
+                                <div className="humidity">
+                                    <img src="https://w7.pngwing.com/pngs/65/666/png-transparent-drawing-humidity-indicator-angle-triangle-illustrator-thumbnail.png" alt="Humidity Symbol"/>
+                                    0%
+                                </div>
+
+                                <div className="wind">
+                                    <img src="https://www.pinclipart.com/picdir/middle/140-1405202_windy-weather-icon-wind-weather-symbols-clipart.png" alt="Wind Symbol"/>
+                                    5 mph
+                                </div>
+
                             </div>
 
                         </div>

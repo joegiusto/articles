@@ -530,6 +530,9 @@ $shadow-articles: 0 0 0 1px rgba(0, 0, 0, 15%), 0 2px 3px rgba(0, 0, 0, 20%);
     transform: translateX(-50%);
     margin: 0.5rem 0;
     z-index: 200;
+    width: 70%;
+    display: flex;
+    justify-content: center;
 
     @include media-breakpoint-down(lg) {
         display: none;

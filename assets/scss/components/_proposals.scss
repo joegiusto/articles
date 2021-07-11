@@ -23,9 +23,9 @@ section.proposals-page {
 
     h1 {
         // font-family: brandon-grotesque, sans-serif;
-        font-style: normal;
-        font-weight: 900;
-        font-size: 4rem;
+        // font-style: normal;
+        // font-weight: 900;
+        // font-size: 4rem;
     }
 
     .party-stats {
@@ -51,16 +51,24 @@ section.proposals-page {
 
     .badges {
         margin-top: 2.5rem;
-        display: flex;
-        flex-direction: row;
+        // display: flex;
+        // flex-direction: row;
         margin-bottom: 2.5rem;
+        // padding-left: 0.2rem;
+
+        padding: 0.5rem;
+        display: grid;
+        grid-gap: 7.5px 7.5px;
+        grid-template-columns: repeat(3, 1fr);
 
         @include media-breakpoint-down(md) {
             overflow-x: scroll;
             margin-top: 1.5rem;
-            margin-right: -15px;
-            padding-top: 1.5rem;
-            border-top: 2px solid #000;
+            margin-bottom: 1.5rem;
+            grid-template-columns: repeat(2, 1fr);
+            // margin-right: -15px;
+            // padding-top: 1.5rem;
+            // border-top: 2px solid #000;
         }
 
         .badge {
@@ -187,6 +195,16 @@ section.proposals-page {
     }
 
     &.single {
+
+        .proposal-tag {
+            padding: 0.5rem;
+            // background-color: white;
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%) translateY(-50%);
+        }
+
         .title-fake {
             height: 4rem;
             width: 300px;
@@ -210,10 +228,10 @@ section.proposals-page {
             }
 
             .title {
-                font-family: brandon-grotesque, sans-serif;
-                font-style: normal;
-                font-weight: 900;
-                font-size: 1.5rem;
+                // font-family: brandon-grotesque, sans-serif;
+                // font-style: normal;
+                // font-weight: 900;
+                // font-size: 1.5rem;
             }
 
             .text {
