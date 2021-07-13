@@ -4,8 +4,8 @@ import React, { Component, useState } from 'react';
 import { useRouter } from 'next/router'
 import axios from 'axios'
 
-import { connectToDatabase } from '../../../util/mongodb'
-import ROUTES from '../../../components/constants/routes'
+import { connectToDatabase } from 'util/mongodb'
+import ROUTES from 'components/constants/routes'
 
 class Proposals extends Component {
     constructor(props) {

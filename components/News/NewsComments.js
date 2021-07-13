@@ -22,6 +22,9 @@ export default function NewsComments(props) {
     const [commentView, setCommentView] = useState('normal')
 
     const [comment, setComment] = useState('')
+    const [newCommentExpanded, setNewCommentExpanded] = useState(false)
+
+    const [commentSubmitError, setCommentSubmitError] = useState('')
 
     useEffect(() => {
         console.log(props.document._id)
@@ -74,31 +77,32 @@ export default function NewsComments(props) {
                             {/* <input onClick={() => this.setState({newCommentExpanded: true})} type="text" name="comment" id="comment" onChange={this.onChange} value={this.state.comment} placeholder="Add a comment"/> */}
                             {/* <textarea onClick={() => this.setState({newCommentExpanded: true})} type="text" name="comment" id="comment" onChange={this.onChange} value={this.state.comment} placeholder="Add a comment"/> */}
                             <div className='tx-div-before'></div>
-                            <TextareaAutosize className="tx-div" onClick={() => this.setState({ newCommentExpanded: true })} placeholder="Add a comment" type="text" name="comment" id="comment" onChange={e => setComment(e)} value={comment} />
+                            <TextareaAutosize className="tx-div" onClick={() => setNewCommentExpanded(true)} placeholder="Add a comment" type="text" name="comment" id="comment" onChange={e => setComment(e.target.value)} value={comment} />
                             <div className='tx-div-after'></div>
+                            {/* <button onClick={() => this.submitComment()} disabled={this.state.commentSubmitError != "" && this.state.comment === '' ? true : false} className="btn btn-articles-light">Comment</button> */}
                         </div>
 
                     </div>
 
                     {
-                        // this.state.newCommentExpanded === true ?
-                        //     <div className="comment-controls d-flex justify-content-between align-items-start">
+                        newCommentExpanded === true ?
+                            <div className="comment-controls d-flex justify-content-between align-items-start">
 
-                        //         {
-                        //             this.state.commentSubmitError === '' ?
-                        //                 <div></div>
-                        //                 :
-                        //                 <div className="badge badge-danger">{this.state.commentSubmitError}</div>
-                        //         }
+                                {
+                                    commentSubmitError === '' ?
+                                        <div></div>
+                                        :
+                                        <div className="badge badge-danger">{commentSubmitError}</div>
+                                }
 
-                        //         <div className="d-flex">
-                        //             <div onClick={() => this.setState({ newCommentExpanded: false })} className="btn btn-danger">Cancel</div>
-                        //             <button onClick={() => this.submitComment()} disabled={this.state.commentSubmitError != "" && this.state.comment === '' ? true : false} className="btn btn-articles-light">Comment</button>
-                        //         </div>
+                                <div className="d-flex">
+                                    <div onClick={() => setNewCommentExpanded(false ) + setComment('')} className="btn btn-danger">Cancel</div>
+                                    <button onClick={() => submitComment()} disabled={commentSubmitError != "" && this.state.comment === '' ? true : false} className="btn btn-articles-light">Comment</button>
+                                </div>
 
-                        //     </div>
-                        //     :
-                        //     null
+                            </div>
+                            :
+                            null
                     }
 
                     {comments?.length < 1 ?

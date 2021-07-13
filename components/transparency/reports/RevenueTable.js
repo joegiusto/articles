@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import moment from 'moment';
 
 import ROUTES from 'components/constants/routes';
+import ViewUserModal from 'components/user/ViewUserModal'
 // import orders from 'pages/api/user/orders';
 
 class RevenueTable extends Component {
@@ -195,7 +196,7 @@ class RevenueTable extends Component {
                         this.filterTableFromSubtableSelector(this.props.subtableSelector)
                         .sort((a, b) => new Date(b.date) - new Date(a.date))
                         .map(sale => 
-                        <tr onClick={() => this.props.history.push(ROUTES.TRANSPARENCY_REPORTS + `?id=${sale._id}&type=revenue`)}>
+                        <tr key={sale.date}>
 
                             {this.props.showTransactionTime ? 
                                 <td colSpan="1" className="border-right-0 ">{moment(sale.date).format("LLL")}</td>
@@ -206,7 +207,9 @@ class RevenueTable extends Component {
                             {this.props.subtableSelector != 'revenue-donations' &&  <td colSpan="1" className="border-right-0 ">{sale.type}</td>}
                             {this.props.subtableSelector === 'revenue-donations' && <td colSpan="1" className="border-right-0 ">{sale.user_id?.first_name} {sale.user_id?.last_name}</td>}
 
-                            <td colSpan="1" className="border-right-0 ">{sale.revenue_summary}</td>
+                            <td colSpan="1" className="border-right-0 ">
+                                <ViewUserModal user_id={sale?.user_id?._id} name={sale.revenue_summary} buttonType={'badge'}/>
+                            </td>
                             
                             <td colSpan="1" className="border-right-0 ">${(sale.unifiedPrice / 100).toFixed(2)}</td>
 

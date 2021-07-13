@@ -29,16 +29,12 @@ import { setMessages } from "/redux/actions/messagesActions";
 import { setIssues } from "/redux/actions/issuesActions";
 import { setMyths } from "/redux/actions/mythsActions";
 
+// import { connectToDatabase } from 'util/mongodb'
 import SocketContext from '/components/context/socket'
 
 const secret = process.env.SECRET
 
 let socket
-
-// MEMORY - Many, many, many issues later
-if (typeof window !== 'undefined') {
-    socket = io("https://a14e52bc3e8f.ngrok.io");
-}
 
 function MyApp({ Component, pageProps }) {
     const router = useRouter();
@@ -50,6 +46,11 @@ function MyApp({ Component, pageProps }) {
     })
     const [ session, loading ] = useSession()
     const Layout = Component.Layout || DefaultLayout;
+
+    if (typeof window !== 'undefined') {
+        // console.log(pageProps)
+        socket = io('https://d589a13e93c8.ngrok.io');
+    }
 
     useEffect(() => {
              
